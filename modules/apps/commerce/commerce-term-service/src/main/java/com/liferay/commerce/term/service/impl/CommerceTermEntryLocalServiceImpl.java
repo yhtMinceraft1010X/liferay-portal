@@ -416,8 +416,8 @@ public class CommerceTermEntryLocalServiceImpl
 			cTermEntryLocalization = cTermEntryLocalizationPersistence.create(
 				counterLocalService.increment());
 
-			cTermEntryLocalization.setCommerceTermEntryId(commerceTermEntryId);
 			cTermEntryLocalization.setCompanyId(companyId);
+			cTermEntryLocalization.setCommerceTermEntryId(commerceTermEntryId);
 			cTermEntryLocalization.setDescription(description);
 			cTermEntryLocalization.setLabel(label);
 			cTermEntryLocalization.setLanguageId(languageId);
