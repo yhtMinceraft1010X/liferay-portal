@@ -644,6 +644,14 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
+	macro deleteActionViaUI {
+		Click(
+			key_objectLabel = "${actionName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
 	macro deleteAllCustomObjectsViaAPI {
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = "${userEmailAddress}",
