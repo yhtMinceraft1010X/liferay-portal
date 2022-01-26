@@ -808,7 +808,6 @@ public class BundleSiteInitializerTest {
 					group.getCompanyId(), "ERC001");
 
 		Assert.assertNotNull(remoteAppEntry);
-
 		Assert.assertEquals(
 			"category.remote-apps", remoteAppEntry.getPortletCategoryName());
 		Assert.assertEquals(
