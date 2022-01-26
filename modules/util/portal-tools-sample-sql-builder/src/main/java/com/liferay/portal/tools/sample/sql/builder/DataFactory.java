@@ -392,9 +392,7 @@ public class DataFactory {
 		_counter = new SimpleCounter(totalGroupCount + 1);
 
 		_dLFileEntryIdCounter = new SimpleCounter();
-
 		_groupCounter = new SimpleCounter(1);
-
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();
