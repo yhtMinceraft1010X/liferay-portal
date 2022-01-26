@@ -821,8 +821,17 @@ public class BundleSiteInitializerTest {
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
-				group.getCompanyId(), "com.liferay.commerce.product", 3, "0",
-				role.getRoleId());
+				group.getCompanyId(), "com.liferay.commerce.product", 1,
+				String.valueOf(group.getCompanyId()), role.getRoleId());
+
+		Assert.assertNotNull(resourcePermission);
+
+		role = _roleLocalService.fetchRole(group.getCompanyId(), "Test Role 2");
+
+		resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				group.getCompanyId(), "com.liferay.commerce.product", 2,
+				String.valueOf(group.getGroupId()), role.getRoleId());
 
 		Assert.assertNotNull(resourcePermission);
 	}
