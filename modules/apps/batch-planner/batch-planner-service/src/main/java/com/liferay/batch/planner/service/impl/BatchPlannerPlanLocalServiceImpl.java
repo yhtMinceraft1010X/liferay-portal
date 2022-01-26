@@ -139,8 +139,10 @@ public class BatchPlannerPlanLocalServiceImpl
 			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 
 		if (!batchPlannerPlan.isTemplate()) {
-			throw new UnsupportedOperationException(
-				"Only templates can be updated");
+
+			// TODO Change this to RequiredBatchPlannerPlanException
+
+			throw new UnsupportedOperationException();
 		}
 
 		User user = userLocalService.getUser(userId);

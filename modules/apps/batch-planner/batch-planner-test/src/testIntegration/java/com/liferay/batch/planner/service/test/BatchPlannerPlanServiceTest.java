@@ -174,9 +174,7 @@ public class BatchPlannerPlanServiceTest {
 			Assert.fail();
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertEquals(
-				"Only templates can be updated",
-				unsupportedOperationException.getMessage());
+			Assert.assertNotNull(unsupportedOperationException);
 		}
 	}
 
