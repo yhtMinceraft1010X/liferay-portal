@@ -101,7 +101,6 @@ public class AssetListPortlet extends MVCPortlet {
 				_assetRendererFactoryClassProvider, _itemSelector,
 				renderRequest, renderResponse,
 				_getUnicodeProperties(assetListDisplayContext)));
-
 		renderRequest.setAttribute(
 			AssetListWebKeys.INFO_COLLECTION_PROVIDER_DISPLAY_CONTEXT,
 			new InfoCollectionProviderDisplayContext(
@@ -111,15 +110,13 @@ public class AssetListPortlet extends MVCPortlet {
 			new InfoCollectionProviderItemsDisplayContext(
 				_infoItemServiceTracker, renderRequest, renderResponse));
 		renderRequest.setAttribute(
+			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
+		renderRequest.setAttribute(
 			AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS,
 			new ListItemsActionDropdownItems(
 				_assetDisplayPageFriendlyURLProvider, _dlAppService,
 				_infoEditURLProviderTracker, _infoItemServiceTracker,
 				_portal.getHttpServletRequest(renderRequest)));
-
-		renderRequest.setAttribute(
-			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
-
 		renderRequest.setAttribute(
 			AssetListWebKeys.SELECT_STRUCTURE_FIELD_DISPLAY_CONTEXT,
 			new SelectStructureFieldDisplayContext(
