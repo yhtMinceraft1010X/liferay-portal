@@ -155,6 +155,8 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 						"backUrl", backURL
 					).put(
 						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
+					).put(	
+						"mappedFields", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
 					).put(
 						"formImportURL",
 						ResourceURLBuilder.createResourceURL(
