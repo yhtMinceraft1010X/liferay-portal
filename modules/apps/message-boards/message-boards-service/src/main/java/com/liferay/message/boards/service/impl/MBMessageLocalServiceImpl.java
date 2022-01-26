@@ -2615,7 +2615,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Layout layout = _layoutLocalService.fetchLayout(
 			_portal.getPlidFromPortletId(
 				message.getGroupId(), false, portletId));
-
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		if ((layout != null) && (themeDisplay != null)) {
