@@ -60,8 +60,6 @@ public class DateDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Locale locale = ddmFormFieldRenderingContext.getLocale();
-
 		return HashMapBuilder.<String, Object>put(
 			"firstDayOfWeek", _getFirstDayOfWeek()
 		).put(
@@ -72,11 +70,13 @@ public class DateDDMFormFieldTemplateContextContributor
 		).put(
 			"predefinedValue",
 			DDMFormFieldTypeUtil.getPropertyValue(
-				ddmFormField, locale, "predefinedValue")
+				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+				"predefinedValue")
 		).put(
 			"tooltip",
 			DDMFormFieldTypeUtil.getPropertyValue(
-				ddmFormField, locale, "tooltip")
+				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+				"tooltip")
 		).put(
 			"weekdaysShort",
 			Stream.of(
