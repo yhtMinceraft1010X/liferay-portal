@@ -640,7 +640,6 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("disabled", isDisabled());
 		props.put("filterDropdownItems", getFilterDropdownItems());
 		props.put("filterLabelItems", getFilterLabelItems());
-		props.put("orderDropdownItems", getOrderDropdownItems());
 
 		String namespace = getNamespace();
 
@@ -651,6 +650,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("initialSelectAllButtonVisible", isShowSelectAllButton());
 		props.put("initialSelectedItems", getSelectedItems());
 		props.put("itemsTotal", getItemsTotal());
+		props.put("orderDropdownItems", getOrderDropdownItems());
 
 		String searchActionURL = getSearchActionURL();
 
@@ -852,9 +852,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 				iconTag.doTag(pageContext);
 
-				jspWriter.write("</span>");
-
-				jspWriter.write("<span class=\"");
+				jspWriter.write("</span><span class=\"");
 			}
 
 			jspWriter.write("navbar-text-truncate\">");
@@ -917,9 +915,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			iconTag.doTag(pageContext);
 
-			jspWriter.write("</span>");
-
-			jspWriter.write("<span class=\"navbar-text-truncate\">");
+			jspWriter.write("</span><span class=\"navbar-text-truncate\">");
 			jspWriter.write(LanguageUtil.get(resourceBundle, "order"));
 			jspWriter.write("</span>");
 
