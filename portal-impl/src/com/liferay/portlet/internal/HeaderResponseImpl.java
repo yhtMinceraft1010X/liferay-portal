@@ -463,7 +463,6 @@ public class HeaderResponseImpl
 			Map<String, String> elementAttributeValues = null;
 			String elementName = null;
 			StringBundler elementTextSB = null;
-
 			boolean parsingScriptTemplate = false;
 
 			while (xmlStreamReader.hasNext()) {
