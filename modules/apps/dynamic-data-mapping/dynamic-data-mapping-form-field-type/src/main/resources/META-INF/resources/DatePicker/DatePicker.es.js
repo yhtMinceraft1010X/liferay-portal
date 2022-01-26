@@ -210,7 +210,7 @@ export default function DatePicker({
 		}
 
 		/**
-		 * TO DO: When Clay change their implementation of the default time
+		 * TODO When Clay change their implementation of the default time
 		 * value to '--:--' remember to change the code bellow of formattedTime
 		 */
 
