@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -933,7 +934,11 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(roles.toString(), 3, roles.size());
 
-		Role role = roles.get(1);
+		Role role = roles.get(0);
+
+		Assert.assertEquals(RoleConstants.USER, role.getName());
+
+		role = roles.get(1);
 
 		Assert.assertEquals("Test Role 1", role.getName());
 
@@ -947,6 +952,10 @@ public class BundleSiteInitializerTest {
 		roles = user.getRoles();
 
 		Assert.assertEquals(roles.toString(), 2, roles.size());
+
+		role = roles.get(0);
+
+		Assert.assertEquals(RoleConstants.USER, role.getName());
 
 		role = roles.get(1);
 
