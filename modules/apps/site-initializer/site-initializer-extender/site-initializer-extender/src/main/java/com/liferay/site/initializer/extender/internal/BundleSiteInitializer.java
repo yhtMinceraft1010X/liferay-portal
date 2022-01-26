@@ -2224,13 +2224,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-			if (jsonObject.getInt("scope") == ResourceConstants.SCOPE_COMPANY) {
+			int scope = jsonObject.getInt("scope");
+
+			if (scope == ResourceConstants.SCOPE_COMPANY) {
 				jsonObject.put(
 					"primKey", String.valueOf(serviceContext.getCompanyId()));
 			}
-			else if (jsonObject.getInt("scope") ==
-						ResourceConstants.SCOPE_GROUP) {
-
+			else if (scope == ResourceConstants.SCOPE_GROUP) {
 				jsonObject.put(
 					"primKey",
 					String.valueOf(serviceContext.getScopeGroupId()));
@@ -2238,9 +2238,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_resourcePermissionLocalService.addResourcePermission(
 				serviceContext.getCompanyId(),
-				jsonObject.getString("resourceName"),
-				jsonObject.getInt("scope"), jsonObject.getString("primKey"),
-				role.getRoleId(), jsonObject.getString("actionId"));
+				jsonObject.getString("resourceName"), scope,
+				jsonObject.getString("primKey"), role.getRoleId(),
+				jsonObject.getString("actionId"));
 		}
 	}
 
