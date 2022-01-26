@@ -2484,7 +2484,7 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Custom Object");
 	}
@@ -4508,7 +4508,7 @@ definition {
 
 		Navigator.openURL();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "guest");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Custom Object",
@@ -4702,7 +4702,7 @@ definition {
 
 		Navigator.openURL();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteUrlKey = "guest");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Custom Object 141623",
@@ -6654,7 +6654,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		Workflow.openWorkflowAdmin(siteUrlKey = "guest");
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Custom Object");
 	}
@@ -7102,7 +7102,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-a");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-a");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -7114,7 +7114,7 @@ definition {
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
 
-		PagesAdmin.openPagesAdmin(siteUrlKey = "site-b");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-b");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
