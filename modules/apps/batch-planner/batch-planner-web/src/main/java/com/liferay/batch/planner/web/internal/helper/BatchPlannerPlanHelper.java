@@ -221,6 +221,7 @@ public class BatchPlannerPlanHelper {
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			portletRequest, "batchPlannerPlanId");
+
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
