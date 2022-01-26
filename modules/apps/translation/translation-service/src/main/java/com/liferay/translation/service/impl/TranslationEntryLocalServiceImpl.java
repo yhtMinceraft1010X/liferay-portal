@@ -318,7 +318,7 @@ public class TranslationEntryLocalServiceImpl
 
 			if (object == null) {
 				throw new XLIFFFileException.MustHaveValidModel(
-					"Unable to get InfoItem with identifier " + classPK);
+					"Unable to get info item for class PK " + classPK);
 			}
 
 			if (object instanceof GroupedModel) {
