@@ -2976,24 +2976,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		if (StringUtil.equals(
-				cpInstancePropertiesJSONObject.getString("propertyType"),
-				"UPDATE_PRICE")) {
+		String propertyType = cpInstancePropertiesJSONObject.getString(
+			"propertyType");
 
-			cpInstance.setPrice(
-				BigDecimal.valueOf(
-					cpInstancePropertiesJSONObject.getLong("skuPrice")));
-			cpInstance.setPromoPrice(
-				BigDecimal.valueOf(
-					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
-
-			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
-				cpInstance);
-		}
-		else if (StringUtil.equals(
-					cpInstancePropertiesJSONObject.getString("propertyType"),
-					"CREATE_SUBSCRIPTION")) {
-
+		if (StringUtil.equals(propertyType, "CREATE_SUBSCRIPTION")) {
 			JSONObject subscriptionTypeSettingsJSONObject =
 				cpInstancePropertiesJSONObject.getJSONObject(
 					"subscriptionTypeSettings");
@@ -3023,6 +3009,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new UnicodeProperties(),
 					cpInstancePropertiesJSONObject.getLong(
 						"deliveryMaxSubscriptionCycles"));
+		}
+		else if (StringUtil.equals(propertyType, "UPDATE_PRICE")) {
+			cpInstance.setPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPrice")));
+			cpInstance.setPromoPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
+
+			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
+				cpInstance);
 		}
 	}
 
