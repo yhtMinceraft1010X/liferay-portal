@@ -128,8 +128,8 @@ definition {
 
 		task ("Assert that script is sanitized so page content remains unchanged") {
 			WebContentDisplayPortlet.viewContent(
-				webContentContent = "PASS",
-				webContentTitle = "Web Content Title");
+				webContentContent = "p id='demo'>FAIL</p>",
+				webContentTitle = "WC WebContent Title");
 		}
 	}
 
