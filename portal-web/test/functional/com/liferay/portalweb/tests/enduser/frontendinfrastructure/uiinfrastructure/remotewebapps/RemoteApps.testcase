@@ -484,7 +484,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var customElementType = "Custom Element";
-		var IFrameType = "IFrame";
+		var iFrameType = "IFrame";
 
 		RemoteApps.goToRemoteAppsPortlet();
 
@@ -492,7 +492,7 @@ definition {
 
 		Select(
 			locator1 = "Select#TYPE",
-			value1 = "${IFrameType}");
+			value1 = "${iFrameType}");
 
 		AssertNotVisible(
 			key_text = "HTML Element Name",
