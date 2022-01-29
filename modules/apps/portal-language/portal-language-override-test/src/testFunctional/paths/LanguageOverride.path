@@ -27,6 +27,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_PAGE_OVERRIDDEN</td>
+	<td>//span[contains(@class,'label-item-expand') and contains (.,'Overridden')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_PAGE_OVERRIDDED_CLOSE</td>
+	<td>//span[contains(.,'Override')]//following-sibling::span/button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
