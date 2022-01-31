@@ -75,6 +75,88 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7952. Verify user can select, change, and remove a default category display page"
+	@priority = "5"
+	test CanSelectChangeAndRemoveDefaultCategoryDisplayPage {
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And given the Minium site has a Categories Navigation page with a Commerce Categories Navigation widget") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation");
+
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Minium",
+				layoutName = "Categories Navigation",
+				widgetName = "Commerce Categories Navigation");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Categories Navigation");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Commerce Categories Navigation",
+				portletOption = "Configuration");
+
+			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
+		}
+
+		task ("And given the Minium site has two pages with a Category Content widget") {
+			for (var pageNum : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${pageNum}");
+			}
+
+			for (var widgetNum : list "1,2") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Minium",
+					layoutName = "Test Public Widget Page ${widgetNum}",
+					widgetName = "Category Content");
+			}
+		}
+
+		task ("When the user sets the first page as the Default Category Display page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
+
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page 1",
+				pageType = "Public");
+		}
+
+		task ("Then the page should be set as Default Category Display Page") {
+			CommerceEntry.assertDefaultDisplayPage(
+				pageName = "Test Public Widget Page 1",
+				pageType = "Public");
+		}
+
+		task ("When the user changes the Default Category Display Page") {
+			CommerceChannels.chooseDefaultDisplayPage(
+				pageName = "Test Public Widget Page 2",
+				pageType = "Public");
+		}
+
+		task ("Then the new page should be set as Default Category Display Page") {
+			CommerceEntry.assertDefaultDisplayPage(
+				pageName = "Test Public Widget Page 2",
+				pageType = "Public");
+		}
+
+		task ("When the user removes the Default Category Display Page") {
+			CommerceChannels.removeDefaultDisplayPage();
+		}
+
+		task ("Then it should show Default Category Display Page as 'None'") {
+			CommerceEntry.assertDefaultDisplayPage(pageName = "None");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7846. Create a private widget page and a private content page with a Category Content widget and define it as the default category display page, and then try if it works on the front."
 	@priority = "3"
 	test ViewDefaultCategoryDisplayPageWithPrivateWidgetAndContentPages {
