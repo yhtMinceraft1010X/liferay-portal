@@ -127,7 +127,7 @@
 			<notification>
 				<name>Creator Modification Notification</name>
 				<description>
-					<![CDATA[Your submission was rejected by ${userName}]]>
+					<![CDATA[Your submission was rejected by ${userName}.]]>
 				</description>
 				<template>
 					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
@@ -184,7 +184,7 @@
 			<notification>
 				<name>Review Completion Notification</name>
 				<description>
-					<![CDATA[Your submission was reviewed by ${userName}]]>
+					<![CDATA[Your submission was reviewed by ${userName}.]]>
 				</description>
 				<template>
 					<![CDATA[Your submission was reviewed by ${userName}<#if taskComments?has_content> with the following comments: "${taskComments}"</#if>.]]>
