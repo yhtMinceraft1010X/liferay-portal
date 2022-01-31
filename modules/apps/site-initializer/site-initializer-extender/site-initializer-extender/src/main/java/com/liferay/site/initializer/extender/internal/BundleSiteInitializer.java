@@ -236,11 +236,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Commerce references holder " + commerceReferencesHolder);
-		}
-
 		_accountResourceFactory = accountResourceFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
