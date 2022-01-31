@@ -181,7 +181,7 @@ public abstract class BaseLayoutStructureItemImporter {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to process mapping because group ",
-								siteKey, " could not be obtained"));
+								siteKey, " does not exist"));
 					}
 
 					return;
