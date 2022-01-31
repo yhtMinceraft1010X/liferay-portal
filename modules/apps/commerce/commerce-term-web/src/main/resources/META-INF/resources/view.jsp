@@ -18,14 +18,12 @@
 
 <%
 CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortletURL portletURL = commerceTermEntryDisplayContext.getPortletURL();
 %>
 
 <div class="pt-4">
-	<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+	<aui:form action="<%= commerceTermEntryDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="redirect" type="hidden" value="<%= String.valueOf(commerceTermEntryDisplayContext.getPortletURL()) %>" />
 		<aui:input name="deleteCommerceTermEntries" type="hidden" />
 
 		<clay:headless-data-set-display
@@ -37,7 +35,7 @@ PortletURL portletURL = commerceTermEntryDisplayContext.getPortletURL();
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= commerceTermEntryDisplayContext.getPortletURL() %>"
 			style="stacked"
 		/>
 	</aui:form>
