@@ -72,14 +72,8 @@ public class GetFieldValueMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				resourceRequest);
-
 			String className = ParamUtil.getString(
 				resourceRequest, "className");
-			long classTypeId = ParamUtil.getLong(
-				resourceRequest, "classTypeId");
-			String fieldName = ParamUtil.getString(resourceRequest, "name");
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -88,11 +82,19 @@ public class GetFieldValueMVCResourceCommand extends BaseMVCResourceCommand {
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
+			long classTypeId = ParamUtil.getLong(
+				resourceRequest, "classTypeId");
+
 			ClassType classType = classTypeReader.getClassType(
 				classTypeId, themeDisplay.getLocale());
 
+			String fieldName = ParamUtil.getString(resourceRequest, "name");
+
 			ClassTypeField classTypeField = classType.getClassTypeField(
 				fieldName);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				resourceRequest);
 
 			Fields fields = (Fields)serviceContext.getAttribute(
 				Fields.class.getName() + classTypeField.getClassTypeId());
