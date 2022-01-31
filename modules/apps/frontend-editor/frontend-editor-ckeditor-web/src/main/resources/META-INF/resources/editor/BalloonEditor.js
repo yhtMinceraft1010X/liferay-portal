@@ -33,7 +33,7 @@ const BalloonEditor = ({
 		...config,
 	};
 
-	if (!editorConfig.balloonEditorEnabled) {
+	if (!editorConfig.enableBalloonEditor) {
 		return null;
 	}
 
