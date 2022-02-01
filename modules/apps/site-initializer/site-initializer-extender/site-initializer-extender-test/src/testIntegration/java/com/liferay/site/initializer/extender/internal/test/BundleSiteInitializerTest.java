@@ -870,6 +870,8 @@ public class BundleSiteInitializerTest {
 			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
 		Assert.assertNotNull(sapEntry1);
+		Assert.assertTrue(sapEntry1.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntry1.isEnabled());
 
 		List<String> allowedServiceSignaturesList1 =
 			sapEntry1.getAllowedServiceSignaturesList();
@@ -878,13 +880,12 @@ public class BundleSiteInitializerTest {
 			allowedServiceSignaturesList1.toString(), 3,
 			allowedServiceSignaturesList1.size());
 
-		Assert.assertTrue(sapEntry1.isDefaultSAPEntry());
-		Assert.assertTrue(sapEntry1.isEnabled());
-
 		SAPEntry sapEntry2 = _sapEntryLocalService.fetchSAPEntry(
 			group.getCompanyId(), "TEST_SAP_ENTRY_2");
 
 		Assert.assertNotNull(sapEntry2);
+		Assert.assertFalse(sapEntry2.isDefaultSAPEntry());
+		Assert.assertTrue(sapEntry2.isEnabled());
 
 		List<String> allowedServiceSignaturesList2 =
 			sapEntry2.getAllowedServiceSignaturesList();
@@ -892,9 +893,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			allowedServiceSignaturesList2.toString(), 5,
 			allowedServiceSignaturesList2.size());
-
-		Assert.assertFalse(sapEntry2.isDefaultSAPEntry());
-		Assert.assertTrue(sapEntry2.isEnabled());
 	}
 
 	private void _assertSiteNavigationMenu(Group group) {
