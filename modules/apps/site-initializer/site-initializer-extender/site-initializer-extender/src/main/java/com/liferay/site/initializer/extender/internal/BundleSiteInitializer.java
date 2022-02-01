@@ -1646,15 +1646,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			String file = url.getFile();
+			String fileName = url.getFile();
 
-			int pos = file.lastIndexOf(CharPool.FORWARD_SLASH);
+			int index = fileName.lastIndexOf(CharPool.FORWARD_SLASH);
 
-			if ((pos == -1) || (pos >= (file.length() - 1))) {
+			if ((index == -1) || (index >= (fileName.length() - 1))) {
 				continue;
 			}
 
-			String fileName = file.substring(pos + 1);
+			fileName = fileName.substring(index + 1);
 
 			if (Validator.isNull(fileName)) {
 				continue;
