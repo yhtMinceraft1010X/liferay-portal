@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>BUTTON_MORE_INFO_PRODUCTS</td>
-	<td>//label[contains(., '${productName}')]/parent::div//span[contains(@class,'btn-more-info')]</td>
+	<td>//label[contains(., '${productName}')]/parent::div//span[contains(@class,'btn-info-panel')]</td>
 	<td></td>
 </tr>
 <tr>
