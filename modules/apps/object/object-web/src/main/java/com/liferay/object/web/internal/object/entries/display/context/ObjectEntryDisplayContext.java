@@ -84,6 +84,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -677,23 +678,21 @@ public class ObjectEntryDisplayContext {
 		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (StringUtil.equals(ddmFormField.getType(), "date")) {
-				for (Map.Entry<String, Serializable> value :
-						values.entrySet()) {
+			if (!StringUtil.equals(ddmFormField.getType(), "date")) {
+				continue;
+			}
 
-					String key = value.getKey();
-
-					if (key.equals(ddmFormField.getName())) {
-						Serializable date = value.getValue();
-
-						String dateString = date.toString();
-
-						String dateWithoutTime = dateString.replaceAll(
-							" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]", "");
-
-						values.replace(key, date, dateWithoutTime);
-					}
+			for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+				if (!Objects.equals(entry.getKey(), ddmFormField.getName())) {
+					continue;
 				}
+
+				String dateString = String.valueOf(entry.getValue());
+
+				values.replace(
+					entry.getKey(), entry.getValue(),
+					dateString.replaceAll(
+						" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]", ""));
 			}
 		}
 	}
