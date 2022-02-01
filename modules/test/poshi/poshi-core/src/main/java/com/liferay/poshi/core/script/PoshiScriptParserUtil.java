@@ -39,7 +39,7 @@ public class PoshiScriptParserUtil {
 	}
 
 	public static List<String> getMethodParameterValues(
-			String content, Pattern parameterPattern)
+			String content, Pattern pattern)
 		throws PoshiScriptParserException {
 
 		List<String> methodParameterValues = new ArrayList<>();
@@ -54,9 +54,8 @@ public class PoshiScriptParserUtil {
 
 		for (char c : content.toCharArray()) {
 			if ((c == ',') && isBalancedPoshiScript(methodParameterValue)) {
-				if (parameterPattern != null) {
-					Matcher matcher = parameterPattern.matcher(
-						methodParameterValue);
+				if (pattern != null) {
+					Matcher matcher = pattern.matcher(methodParameterValue);
 
 					if (!matcher.matches()) {
 						sb.append(c);
@@ -77,8 +76,8 @@ public class PoshiScriptParserUtil {
 			methodParameterValue = sb.toString();
 		}
 
-		if (parameterPattern != null) {
-			Matcher matcher = parameterPattern.matcher(methodParameterValue);
+		if (pattern != null) {
+			Matcher matcher = pattern.matcher(methodParameterValue);
 
 			if (!matcher.matches()) {
 				throw new PoshiScriptParserException(
