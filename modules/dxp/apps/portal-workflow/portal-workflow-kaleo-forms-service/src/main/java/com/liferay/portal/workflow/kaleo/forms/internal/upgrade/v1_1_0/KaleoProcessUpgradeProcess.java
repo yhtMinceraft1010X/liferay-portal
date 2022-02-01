@@ -170,12 +170,10 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 		Long newDDMStructureId = _getNewDDMStructureId(
 			oldDDMTemplate.getClassPK());
 
-		Locale oldLocale = LocaleThreadLocal.getSiteDefaultLocale();
+		Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			oldDDMTemplate.getDefaultLanguageId());
-
-		LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+		LocaleThreadLocal.setSiteDefaultLocale(
+			LocaleUtil.fromLanguageId(oldDDMTemplate.getDefaultLanguageId()));
 
 		try {
 			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
@@ -189,7 +187,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 			newDDMTemplateId = newDDMTemplate.getTemplateId();
 		}
 		finally {
-			LocaleThreadLocal.setSiteDefaultLocale(oldLocale);
+			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 		}
 
 		_ddmTemplateMap.put(oldDDMTemplateId, newDDMTemplateId);
