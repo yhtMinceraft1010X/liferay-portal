@@ -40,7 +40,7 @@ definition {
 			key_title = "Add Site",
 			locator1 = "IFrame#MODAL_ANY");
 
-		PortletEntry.inputName(name = "${siteName}");
+		PortletEntry.inputName(name = "Raylife");
 
 		Click(locator1 = "Button#ADD");
 
@@ -60,7 +60,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "${siteName}");
+			value1 = "Raylife");
 	}
 
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
