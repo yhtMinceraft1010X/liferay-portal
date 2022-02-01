@@ -183,7 +183,7 @@ public class BundleSiteInitializerTest {
 			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
 			_assertRemoteApp(group);
-			_assertSapEntries(group);
+			_assertSAPEntries(group);
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
@@ -865,18 +865,18 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(2, role4.getType());
 	}
 
-	private void _assertSapEntries(Group group) {
+	private void _assertSAPEntries(Group group) {
 		SAPEntry sapEntry1 = _sapEntryLocalService.fetchSAPEntry(
 			group.getCompanyId(), "TEST_SAP_ENTRY_1");
 
 		Assert.assertNotNull(sapEntry1);
 
-		List<String> allowedServiceSignatures1 =
+		List<String> allowedServiceSignaturesList1 =
 			sapEntry1.getAllowedServiceSignaturesList();
 
 		Assert.assertEquals(
-			allowedServiceSignatures1.toString(), 3,
-			allowedServiceSignatures1.size());
+			allowedServiceSignaturesList1.toString(), 3,
+			allowedServiceSignaturesList1.size());
 
 		Assert.assertTrue(sapEntry1.isDefaultSAPEntry());
 		Assert.assertTrue(sapEntry1.isEnabled());
@@ -886,12 +886,12 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(sapEntry2);
 
-		List<String> allowedServiceSignatures2 =
+		List<String> allowedServiceSignaturesList2 =
 			sapEntry2.getAllowedServiceSignaturesList();
 
 		Assert.assertEquals(
-			allowedServiceSignatures2.toString(), 5,
-			allowedServiceSignatures2.size());
+			allowedServiceSignaturesList2.toString(), 5,
+			allowedServiceSignaturesList2.size());
 
 		Assert.assertFalse(sapEntry2.isDefaultSAPEntry());
 		Assert.assertTrue(sapEntry2.isEnabled());
