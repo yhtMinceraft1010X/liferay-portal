@@ -30,6 +30,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LexiconCard.clickCard(card = "Raylife");
+
 		SelectFrame(
 			key_title = "Add Site",
 			locator1 = "IFrame#MODAL_ANY");
@@ -44,7 +46,7 @@ definition {
 			Pause(locator1 = "1500");
 		}
 
-		Refresh();
+		//Refresh();
 
 		WaitForElementPresent(
 			key_itemName = "Site Configuration",
