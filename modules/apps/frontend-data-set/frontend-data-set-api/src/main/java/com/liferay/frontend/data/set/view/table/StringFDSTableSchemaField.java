@@ -31,9 +31,9 @@ public class StringFDSTableSchemaField extends FDSTableSchemaField {
 
 	@Override
 	public JSONObject toJSONObject() {
-		JSONObject fdsTableSchemaFieldJSONObject = super.toJSONObject();
+		JSONObject jsonObject = super.toJSONObject();
 
-		return fdsTableSchemaFieldJSONObject.put("truncate", isTruncate());
+		return jsonObject.put("truncate", isTruncate());
 	}
 
 	private boolean _truncate;
