@@ -840,7 +840,6 @@ public class CPDefinitionLocalServiceImpl
 			_updateCommercePriceEntry(
 				newCPInstance, CommercePriceListConstants.TYPE_PRICE_LIST,
 				newCPInstance.getPrice(), serviceContext);
-
 			_updateCommercePriceEntry(
 				newCPInstance, CommercePriceListConstants.TYPE_PROMOTION,
 				newCPInstance.getPromoPrice(), serviceContext);

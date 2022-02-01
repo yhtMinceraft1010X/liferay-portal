@@ -406,11 +406,11 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testDuplicatedDefinitionPriceChangeDoesNotAffectParent()
+	public void testDuplicateDefinitionPriceChangeDoesNotAffectParent()
 		throws PortalException {
 
 		frutillaRule.scenario(
-			"Change Price of a duplicated product sku"
+			"Change Price of a duplicate product sku"
 		).given(
 			"A product definition"
 		).when(
@@ -433,21 +433,21 @@ public class CPDefinitionLocalServiceTest {
 
 		BigDecimal promoPrice = new BigDecimal(0);
 
-		CPDefinition duplicatedCPDefinition =
+		CPDefinition duplicateCPDefinition =
 			_cpDefinitionLocalService.copyCPDefinition(
 				cpInstance.getCPDefinitionId());
 
-		CPInstance duplicatedCPInstance = _cpInstanceLocalService.getCPInstance(
-			duplicatedCPDefinition.getCPDefinitionId(), cpInstance.getSku());
+		CPInstance duplicateCPInstance = _cpInstanceLocalService.getCPInstance(
+			duplicateCPDefinition.getCPDefinitionId(), cpInstance.getSku());
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-				duplicatedCPInstance.getGroupId());
+				duplicateCPInstance.getGroupId());
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				duplicatedCPInstance.getCPInstanceUuid());
+				duplicateCPInstance.getCPInstanceUuid());
 
 		BigDecimal newPrice = new BigDecimal(10);
 
