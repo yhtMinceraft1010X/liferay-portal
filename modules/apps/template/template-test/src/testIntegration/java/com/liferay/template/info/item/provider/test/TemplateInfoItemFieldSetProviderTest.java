@@ -131,7 +131,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldSetByClassNameAndVariationKeyWhenTemplateEntryExists()
 		throws PortalException {
 
-		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
 			_journalArticle.getDDMStructureKey(), _serviceContext);
 
@@ -152,7 +152,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				articleTemplateEntry.getTemplateEntryId(),
+				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 	}
 
@@ -224,7 +224,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		Value nameValue = nameDDMFormFieldValue.getValue();
 
-		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
 			_journalArticle.getDDMStructureKey(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
@@ -248,7 +248,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoField.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				articleTemplateEntry.getTemplateEntryId(),
+				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
 		Assert.assertEquals(
@@ -334,7 +334,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("categories"),
@@ -355,7 +355,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoField.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				articleTemplateEntry.getTemplateEntryId(),
+				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
@@ -382,7 +382,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("tagNames"),
@@ -403,7 +403,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoField.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				articleTemplateEntry.getTemplateEntryId(),
+				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
 		_assertExpectedNames(
