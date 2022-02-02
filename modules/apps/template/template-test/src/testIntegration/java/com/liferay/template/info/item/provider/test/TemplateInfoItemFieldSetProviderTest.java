@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -64,8 +65,6 @@ import com.liferay.template.test.util.TemplateTestUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import jodd.util.ArraysUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -422,7 +421,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			currentNames.toString(), expectedNames.length, currentNames.length);
 
 		for (String expectedName : expectedNames) {
-			Assert.assertTrue(ArraysUtil.contains(currentNames, expectedName));
+			Assert.assertTrue(ArrayUtil.contains(currentNames, expectedName));
 		}
 	}
 
