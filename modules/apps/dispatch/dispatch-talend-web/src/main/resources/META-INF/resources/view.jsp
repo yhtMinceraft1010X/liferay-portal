@@ -53,7 +53,6 @@ String fileEntryName = expandoValue.getData();
 					/>
 				</span>
 				<span>
-					&nbsp;
 					<%= fileEntryName %>
 				</span>
 			</p>
