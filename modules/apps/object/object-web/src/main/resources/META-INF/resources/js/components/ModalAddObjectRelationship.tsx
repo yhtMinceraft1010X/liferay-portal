@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
@@ -93,7 +94,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		objectDefinitionId2,
 		type,
 	}: TInitialValues) => {
-		const response = await Liferay.Util.fetch(apiURL, {
+		const response = await fetch(apiURL, {
 			body: JSON.stringify({
 				label: {
 					[defaultLanguageId]: label,
@@ -117,7 +118,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		else {
 			const {
 				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
+			} = (await response.json()) as {title?: string};
 
 			setError(title);
 		}
@@ -152,7 +153,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	});
 
 	const makeRequest = async () => {
-		const result = await Liferay.Util.fetch(
+		const result = await fetch(
 			'/o/object-admin/v1.0/object-definitions?page=-1',
 			{
 				headers,
@@ -160,7 +161,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 			}
 		);
 
-		const {items = []} = await result.json();
+		const {items = []} = (await result.json()) as {items?: []};
 
 		const objectDefinitions = items
 			.map(({id, name, system}: TObjectDefinition) => ({
