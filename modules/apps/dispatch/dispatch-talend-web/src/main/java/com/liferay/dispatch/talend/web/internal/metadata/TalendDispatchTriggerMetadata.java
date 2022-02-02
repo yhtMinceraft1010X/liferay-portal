@@ -71,9 +71,9 @@ public class TalendDispatchTriggerMetadata implements DispatchTriggerMetadata {
 	}
 
 	private TalendDispatchTriggerMetadata(Builder builder) {
-		_ready = builder._ready;
 		_attributes = Collections.unmodifiableMap(builder._attributes);
 		_errors = Collections.unmodifiableMap(builder._errors);
+		_ready = builder._ready;
 	}
 
 	private final Map<String, String> _attributes;

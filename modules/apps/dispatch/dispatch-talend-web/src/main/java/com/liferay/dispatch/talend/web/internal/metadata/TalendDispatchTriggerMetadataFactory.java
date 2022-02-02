@@ -79,10 +79,10 @@ public class TalendDispatchTriggerMetadataFactory
 	}
 
 	private void _setupExpando(long companyId) throws Exception {
-		ExpandoTable table;
+		ExpandoTable expandoTable = null;
 
 		try {
-			table = _expandoTableLocalService.addTable(
+			expandoTable = _expandoTableLocalService.addTable(
 				companyId, DispatchTrigger.class.getName(),
 				"DispatchArchiveFile");
 		}
@@ -92,16 +92,17 @@ public class TalendDispatchTriggerMetadataFactory
 					duplicateTableNameException, duplicateTableNameException);
 			}
 
-			table = _expandoTableLocalService.getTable(
+			expandoTable = _expandoTableLocalService.getTable(
 				companyId, DispatchTrigger.class.getName(),
 				"DispatchArchiveFile");
 		}
 
 		try {
 			_expandoColumnLocalService.addColumn(
-				table.getTableId(), "fileName", ExpandoColumnConstants.STRING);
+				expandoTable.getTableId(), "fileName",
+				ExpandoColumnConstants.STRING);
 			_expandoColumnLocalService.addColumn(
-				table.getTableId(), "dispatchTriggerId",
+				expandoTable.getTableId(), "dispatchTriggerId",
 				ExpandoColumnConstants.STRING);
 		}
 		catch (DuplicateColumnNameException duplicateColumnNameException) {
