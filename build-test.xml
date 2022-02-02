@@ -6710,23 +6710,21 @@ go</echo>
 
 		<echo append="true" file="${app.server.tomcat.dir}/conf/logging.properties">
 			<![CDATA[
-##CLUSTER LOG
-5cluster.org.apache.juli.AsyncFileHandler.level = FINER
 5cluster.org.apache.juli.AsyncFileHandler.directory = ${catalina.base}/logs
+5cluster.org.apache.juli.AsyncFileHandler.level = FINER
 5cluster.org.apache.juli.AsyncFileHandler.prefix = cluster.
 
-# just the clustering logs - all others are stock logging.properties
-org.apache.catalina.tribes.MESSAGES.level = FINE
-org.apache.catalina.tribes.MESSAGES.handlers = 5cluster.org.apache.juli.AsyncFileHandler
-
-org.apache.catalina.tribes.level = FINE
-org.apache.catalina.tribes.handlers = 5cluster.org.apache.juli.AsyncFileHandler
-
-org.apache.catalina.ha.level = FINE
-org.apache.catalina.ha.handlers = 5cluster.org.apache.juli.AsyncFileHandler
-
+org.apache.catalina.ha.deploy.handlers = 5cluster.org.apache.juli.AsyncFileHandler
 org.apache.catalina.ha.deploy.level = INFO
-org.apache.catalina.ha.deploy.handlers = 5cluster.org.apache.juli.AsyncFileHandler]]>
+
+org.apache.catalina.ha.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+org.apache.catalina.ha.level = FINE
+
+org.apache.catalina.tribes.MESSAGES.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+org.apache.catalina.tribes.MESSAGES.level = FINE
+
+org.apache.catalina.tribes.handlers = 5cluster.org.apache.juli.AsyncFileHandler
+org.apache.catalina.tribes.level = FINE]]>
 		</echo>
 
 		<replace
