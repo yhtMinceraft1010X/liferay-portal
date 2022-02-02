@@ -79,7 +79,7 @@ if (commerceNotificationTemplate != null) {
 						for (CommerceNotificationType curCommerceNotificationType : commerceNotificationTemplatesDisplayContext.getCommerceNotificationTypes()) {
 							String commerceNotificationTypeLabel = curCommerceNotificationType.getLabel(locale);
 
-							if (commerceNotificationTypeLabel.contains("C_")) {
+							if (commerceNotificationTypeLabel.startsWith("C_")) {
 								commerceNotificationTypeLabel = commerceNotificationTypeLabel.replaceAll("#", StringPool.BLANK);
 								commerceNotificationTypeLabel = commerceNotificationTypeLabel.replaceAll("C_", StringPool.BLANK);
 							}
