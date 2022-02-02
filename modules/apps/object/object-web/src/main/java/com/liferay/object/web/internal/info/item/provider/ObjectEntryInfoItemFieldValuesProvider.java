@@ -166,7 +166,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectEntry.getUserName()));
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
-					ObjectEntryInfoItemFields.userProfileImage,
+					ObjectEntryInfoItemFields.userProfileImageInfoField,
 					_getWebImage(objectEntry.getUserId())));
 
 			ThemeDisplay themeDisplay = _getThemeDisplay();
