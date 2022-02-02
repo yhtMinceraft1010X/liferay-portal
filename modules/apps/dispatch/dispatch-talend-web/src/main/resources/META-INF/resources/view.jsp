@@ -39,9 +39,7 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 			</liferay-ui:error>
 
 			<%
-			ExpandoValueLocalService expandoValueLocalService = ExpandoValueLocalServiceUtil.getService();
-
-			ExpandoValue expandoValue = expandoValueLocalService.getValue(dispatchTrigger.getCompanyId(), DispatchTrigger.class.getName(), "DispatchArchiveFile", "fileName", dispatchTrigger.getUserId());
+			ExpandoValue expandoValue = ExpandoValueLocalServiceUtil.getValue(dispatchTrigger.getCompanyId(), DispatchTrigger.class.getName(), "DispatchArchiveFile", "fileName", dispatchTrigger.getUserId());
 
 			String fileEntryName = expandoValue.getData();
 			%>
