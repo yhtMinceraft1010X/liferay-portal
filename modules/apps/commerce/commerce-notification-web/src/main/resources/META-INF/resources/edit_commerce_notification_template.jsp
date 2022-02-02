@@ -85,10 +85,11 @@ if (commerceNotificationTemplate != null) {
 								<c:when test='<%= commerceNotificationTypeLabel.contains("C_") %>'>
 
 									<%
-									String modifiedCommerceNotificationTypeLabel = commerceNotificationTypeLabel.replaceAll("C_", StringPool.BLANK);
+									commerceNotificationTypeLabel = commerceNotificationTypeLabel.replaceAll("C_", StringPool.BLANK);
+									commerceNotificationTypeLabel = commerceNotificationTypeLabel.replaceAll("#", StringPool.BLANK);
 									%>
 
-									<aui:option label='<%= modifiedCommerceNotificationTypeLabel.replaceAll("# ", StringPool.BLANK) %>' selected="<%= (commerceNotificationType != null) && commerceNotificationTypeKey.equals(type) %>" value="<%= commerceNotificationTypeKey %>" />
+									<aui:option label='<%= commerceNotificationTypeLabel %>' selected="<%= (commerceNotificationType != null) && commerceNotificationTypeKey.equals(type) %>" value="<%= commerceNotificationTypeKey %>" />
 								</c:when>
 								<c:otherwise>
 									<aui:option label="<%= curCommerceNotificationType.getLabel(locale) %>" selected="<%= (commerceNotificationType != null) && commerceNotificationTypeKey.equals(type) %>" value="<%= commerceNotificationTypeKey %>" />
