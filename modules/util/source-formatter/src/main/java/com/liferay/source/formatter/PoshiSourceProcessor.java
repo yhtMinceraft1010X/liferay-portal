@@ -61,8 +61,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 					processMessage(
 						fileName,
-						"Do not add binary archive files for test, they must " +
-							"be expanded");
+						"Do not add archive files for tests, they must be " +
+							"expanded");
 				}
 
 				iterator.remove();
