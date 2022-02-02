@@ -123,8 +123,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		_checkObjectEntryObjectDefinitionId(
-			_objectEntryService.getObjectEntry(objectEntryId),
-			objectDefinition);
+			objectDefinition,
+			_objectEntryService.getObjectEntry(objectEntryId));
 
 		_objectEntryService.deleteObjectEntry(objectEntryId);
 	}
@@ -140,7 +140,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				externalReferenceCode, companyId,
 				_getGroupId(objectDefinition, scopeKey));
 
-		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
 
 		_objectEntryService.deleteObjectEntry(objectEntry.getObjectEntryId());
 	}
@@ -239,7 +239,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
-		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry);
@@ -257,7 +257,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				externalReferenceCode, companyId,
 				_getGroupId(objectDefinition, scopeKey));
 
-		_checkObjectEntryObjectDefinitionId(objectEntry, objectDefinition);
+		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry);
@@ -274,7 +274,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			_objectEntryService.getObjectEntry(objectEntryId);
 
 		_checkObjectEntryObjectDefinitionId(
-			serviceBuilderObjectEntry, objectDefinition);
+			objectDefinition, serviceBuilderObjectEntry);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
@@ -288,12 +288,12 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(
-			com.liferay.object.model.ObjectEntry objectEntry,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		if (objectEntry.getObjectDefinitionId() !=
-				objectDefinition.getObjectDefinitionId()) {
+		if (objectDefinition.getObjectDefinitionId() !=
+				objectEntry.getObjectDefinitionId()) {
 
 			throw new NoSuchObjectEntryException();
 		}
