@@ -6688,16 +6688,6 @@ go</echo>
 	<target name="cluster-session-replication">
 		<replace
 			failOnNoReplacements="true"
-			file="${app.server.tomcat.dir}/conf/server.xml"
-		>
-			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>
-			<replacevalue><![CDATA[<Engine defaultHost="localhost" name="Catalina">
-
-    	<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>]]></replacevalue>
-		</replace>
-
-		<replace
-			failOnNoReplacements="true"
 			file="${app.server.tomcat.dir}/conf/context.xml"
 		>
 			<replacetoken><![CDATA[<Context>]]></replacetoken>
@@ -6716,14 +6706,6 @@ go</echo>
 			<replacetoken><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">]]></replacetoken>
 			<replacevalue><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<distributable />]]></replacevalue>
-		</replace>
-
-		<replace
-			failOnNoReplacements="true"
-			file="${app.server.tomcat.dir}/conf/logging.properties"
-		>
-			<replacetoken><![CDATA[3manager.org.apache.juli.AsyncFileHandler,]]></replacetoken>
-			<replacevalue><![CDATA[3manager.org.apache.juli.AsyncFileHandler, 5cluster.org.apache.juli.AsyncFileHandler,]]></replacevalue>
 		</replace>
 
 		<echo append="true" file="${app.server.tomcat.dir}/conf/logging.properties">
@@ -6746,6 +6728,16 @@ org.apache.catalina.ha.handlers = 5cluster.org.apache.juli.AsyncFileHandler
 org.apache.catalina.ha.deploy.level = INFO
 org.apache.catalina.ha.deploy.handlers = 5cluster.org.apache.juli.AsyncFileHandler]]>
 		</echo>
+
+		<replace
+			failOnNoReplacements="true"
+			file="${app.server.tomcat.dir}/conf/server.xml"
+		>
+			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>
+			<replacevalue><![CDATA[<Engine defaultHost="localhost" name="Catalina">
+
+    	<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="cluster-session-replication-log">
