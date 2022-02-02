@@ -131,9 +131,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldSetByClassNameAndVariationKeyWhenTemplateEntryExists()
 		throws PortalException {
 
-		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
-			JournalArticle.class.getName(),
-			_journalArticle.getDDMStructureKey(), _serviceContext);
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(), _serviceContext);
 
 		TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
@@ -224,11 +225,12 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		Value nameValue = nameDDMFormFieldValue.getValue();
 
-		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
-			JournalArticle.class.getName(),
-			_journalArticle.getDDMStructureKey(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
 
 		TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
@@ -334,11 +336,14 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
-			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("categories"),
-			_serviceContext);
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getDDMStructureKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TemplateTestUtil.getRepeatableFieldSampleScriptFTL(
+					"categories"),
+				_serviceContext);
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
@@ -382,11 +387,13 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		TemplateEntry journalArticleTemplateEntry = TemplateTestUtil.addTemplateEntry(
-			JournalArticle.class.getName(), journalArticle.getDDMStructureKey(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			TemplateTestUtil.getRepeatableFieldSampleScriptFTL("tagNames"),
-			_serviceContext);
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getDDMStructureKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TemplateTestUtil.getRepeatableFieldSampleScriptFTL("tagNames"),
+				_serviceContext);
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
@@ -412,10 +419,12 @@ public class TemplateInfoItemFieldSetProviderTest {
 			StringUtil.toLowerCase(tagName1), StringUtil.toLowerCase(tagName2));
 	}
 
-	private void _assertExpectedNames(String current, String... expectedNames) {
-		Assert.assertNotNull(current);
+	private void _assertExpectedNames(
+		String currentNamesString, String... expectedNames) {
 
-		String[] currentNames = current.split(StringPool.COMMA);
+		Assert.assertNotNull(currentNamesString);
+
+		String[] currentNames = currentNamesString.split(StringPool.COMMA);
 
 		Assert.assertEquals(
 			currentNames.toString(), expectedNames.length, currentNames.length);
