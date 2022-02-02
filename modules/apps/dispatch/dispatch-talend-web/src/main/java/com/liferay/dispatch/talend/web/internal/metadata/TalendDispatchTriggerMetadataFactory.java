@@ -99,10 +99,10 @@ public class TalendDispatchTriggerMetadataFactory
 
 		try {
 			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "fileName",
+				expandoTable.getTableId(), "dispatchTriggerId",
 				ExpandoColumnConstants.STRING);
 			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "dispatchTriggerId",
+				expandoTable.getTableId(), "fileName",
 				ExpandoColumnConstants.STRING);
 		}
 		catch (DuplicateColumnNameException duplicateColumnNameException) {

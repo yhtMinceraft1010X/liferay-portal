@@ -95,14 +95,13 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 				_expandoValueLocalService.addValue(
 					_portal.getCompanyId(actionRequest),
 					DispatchTrigger.class.getName(), "DispatchArchiveFile",
-					"fileName", _portal.getUserId(actionRequest),
-					uploadPortletRequest.getFileName("jobArchive"));
-
+					"dispatchTriggerId", _portal.getUserId(actionRequest),
+					String.valueOf(dispatchTriggerId));
 				_expandoValueLocalService.addValue(
 					_portal.getCompanyId(actionRequest),
 					DispatchTrigger.class.getName(), "DispatchArchiveFile",
-					"dispatchTriggerId", _portal.getUserId(actionRequest),
-					String.valueOf(dispatchTriggerId));
+					"fileName", _portal.getUserId(actionRequest),
+					uploadPortletRequest.getFileName("jobArchive"));
 			}
 			finally {
 				FileUtil.delete(jobArchiveFile);
