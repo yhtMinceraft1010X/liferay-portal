@@ -265,7 +265,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		String userName = Optional.ofNullable(
 			user
 		).map(
-			u -> u.getFirstName()
+			user -> user.getFirstName()
 		).orElseGet(
 			RandomTestUtil::randomString
 		);
@@ -273,7 +273,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		long userId = Optional.ofNullable(
 			user
 		).map(
-			u -> u.getUserId()
+			user -> user.getUserId()
 		).orElseGet(
 			RandomTestUtil::randomLong
 		);
@@ -537,7 +537,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand,
 			"_assetVocabularyLocalService", assetVocabularyLocalService);
-
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand,
 			"_contentDashboardItemFactoryTracker",
@@ -578,15 +577,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 			});
-
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand,
 			"_groupLocalService", Mockito.mock(GroupLocalService.class));
-
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_http",
 			new HttpImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_portal",
 			new PortalImpl());
