@@ -204,11 +204,11 @@ export default function EdgeInformation({errors, setErrors}) {
 						displayType="warning"
 						onClose={() => setShowWarningAlert(false)}
 						title={`${Liferay.Language.get(
-							'default-has-been-changed'
+							'default-was-changed'
 						)}:`}
 					>
 						{Liferay.Language.get(
-							'this-can-lead-to-a-series-of-changes-in-your-workflow'
+							'your-workflow-may-have-changed-because-the-default-was-changed'
 						)}
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
