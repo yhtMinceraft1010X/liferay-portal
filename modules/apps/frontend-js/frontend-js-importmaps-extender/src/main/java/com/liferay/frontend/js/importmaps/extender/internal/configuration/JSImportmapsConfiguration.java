@@ -37,6 +37,6 @@ public interface JSImportmapsConfiguration {
 		deflt = "false", description = "enable-es-module-shims-help",
 		name = "enable-es-module-shims", required = false
 	)
-	public boolean enableEsModuleShims();
+	public boolean enableESModuleShims();
 
 }

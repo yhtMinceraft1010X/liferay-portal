@@ -70,7 +70,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 			printWriter.println("</script>");
 		}
 
-		if (_jsImportmapsConfiguration.enableEsModuleShims()) {
+		if (_jsImportmapsConfiguration.enableESModuleShims()) {
 			printWriter.print("<script src=\"");
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
