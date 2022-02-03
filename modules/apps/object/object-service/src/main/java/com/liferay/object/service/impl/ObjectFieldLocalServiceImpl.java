@@ -140,7 +140,7 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			throw new ObjectFieldRelationshipTypeException(
-				"Object field cannot be deleted because it is of " +
+				"Object field cannot be deleted because it has a " +
 					"relationship type");
 		}
 
@@ -157,7 +157,7 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNull(objectField.getRelationshipType())) {
 			throw new ObjectFieldRelationshipTypeException(
-				"Object field cannot be deleted because it is not of " +
+				"Object field cannot be deleted because it does not have a " +
 					"relationship type");
 		}
 
