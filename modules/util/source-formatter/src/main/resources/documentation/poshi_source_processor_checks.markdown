@@ -1,4 +1,4 @@
-# Checks for .function, .jar, .lar, .macro, .path, .testcase, .war or .zip
+# Checks for .function, .macro or .testcase
 
 Check | Category | Description
 ----- | -------- | -----------
