@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(immediate = true, service = JSImportmapsContributor.class)
-public class FrontendJsReactWebJSImportmapsContributor
+public class FrontendJSReactWebJSImportmapsContributor
 	implements JSImportmapsContributor {
 
 	@Override
