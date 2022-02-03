@@ -60,14 +60,14 @@ public class VerifyProductTask extends DefaultTask {
 	@TaskAction
 	public void verifyProduct() throws Exception {
 		if (Objects.isNull(_bundleUrl) || _bundleUrl.isEmpty()) {
-			throw new GradleException("Liferay bundle url should not be null");
+			throw new GradleException("Liferay bundle URL should not be null");
 		}
 
 		if (Objects.isNull(_dockerImageLiferay) ||
 			_dockerImageLiferay.isEmpty()) {
 
 			throw new GradleException(
-				"Liferay docker image name should not be null");
+				"Liferay Docker image name should not be null");
 		}
 	}
 
