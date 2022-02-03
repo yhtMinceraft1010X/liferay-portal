@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -111,21 +109,16 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 				fragmentCollectionContributors.size());
 		}
 		else {
-			Stream<FragmentCollectionContributor> stream =
-				fragmentCollectionContributors.stream();
-
 			List<FragmentCollectionContributor>
-				filteredFragmentCollectionContributors = stream.filter(
+				filteredFragmentCollectionContributors = ListUtil.filter(
+					fragmentCollectionContributors,
 					fragmentCollectionContributor -> {
 						String lowerCaseName = StringUtil.toLowerCase(
 							fragmentCollectionContributor.getName());
 
 						return lowerCaseName.contains(
 							StringUtil.toLowerCase(keywords));
-					}
-				).collect(
-					Collectors.toList()
-				);
+					});
 
 			searchContainer.setResultsAndTotal(
 				() -> ListUtil.subList(
