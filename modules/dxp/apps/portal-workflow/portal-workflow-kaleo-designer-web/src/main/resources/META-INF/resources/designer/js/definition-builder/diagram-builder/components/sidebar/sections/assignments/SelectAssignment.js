@@ -49,7 +49,7 @@ const options = [
 	},
 ];
 
-const AssignmentSectionComponents = {
+const assignmentSectionComponents = {
 	assetCreator: AssetCreator,
 	resourceActions: ResourceActions,
 	roleId: Role,
@@ -67,7 +67,7 @@ const SelectAssignment = (props) => {
 	const [section, setSection] = useState(assignmentType || 'assetCreator');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
-	const AssignmentSectionComponent = AssignmentSectionComponents[section];
+	const AssignmentSectionComponent = assignmentSectionComponents[section];
 
 	useEffect(() => {
 		if (assignmentType === 'user') {
