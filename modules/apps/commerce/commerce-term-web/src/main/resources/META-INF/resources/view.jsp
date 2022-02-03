@@ -27,7 +27,7 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 		<aui:input name="deleteCommerceTermEntries" type="hidden" />
 
 		<clay:headless-data-set-display
-			apiURL="/o/headless-commerce-admin-order/v1.0/terms"
+			apiURL="/o/headless-commerce-admin-order/v1.0/terms?sort=priority:asc"
 			clayDataSetActionDropdownItems="<%= commerceTermEntryDisplayContext.getCommerceTermEntryClayDataSetActionDropdownItems() %>"
 			creationMenu="<%= commerceTermEntryDisplayContext.getCreationMenu() %>"
 			formName="fm"
