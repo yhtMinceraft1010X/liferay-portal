@@ -231,13 +231,7 @@ public interface ImportTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.multipart();
-
-			httpInvoker.part("importTask", ImportTaskSerDes.toJSON(importTask));
-
-			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
-				httpInvoker.part(entry.getKey(), entry.getValue());
-			}
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -442,13 +436,7 @@ public interface ImportTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.multipart();
-
-			httpInvoker.part("importTask", ImportTaskSerDes.toJSON(importTask));
-
-			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
-				httpInvoker.part(entry.getKey(), entry.getValue());
-			}
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -662,13 +650,7 @@ public interface ImportTaskResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.multipart();
-
-			httpInvoker.part("importTask", ImportTaskSerDes.toJSON(importTask));
-
-			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
-				httpInvoker.part(entry.getKey(), entry.getValue());
-			}
+			httpInvoker.body(object.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
