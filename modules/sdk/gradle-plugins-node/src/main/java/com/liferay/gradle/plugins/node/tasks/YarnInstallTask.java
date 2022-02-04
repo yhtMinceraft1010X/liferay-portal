@@ -56,11 +56,11 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 
 		completeArgs.add("install");
 
-		completeArgs.add("--ignore-engines");
-
 		if (isFrozenLockFile()) {
 			completeArgs.add("--frozen-lockfile");
 		}
+
+		completeArgs.add("--ignore-engines");
 
 		return completeArgs;
 	}
