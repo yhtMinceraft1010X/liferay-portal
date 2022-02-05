@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -203,17 +204,16 @@ public class SegmentsExperienceLocalServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		UnicodeProperties initialTypeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
-
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean(),
-				initialTypeSettingsUnicodeProperties,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"property", "value"
+				).build(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		UnicodeProperties actualTypeSettingsUnicodeProperties =
@@ -468,16 +468,15 @@ public class SegmentsExperienceLocalServiceTest {
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		boolean active = RandomTestUtil.randomBoolean();
 
-		UnicodeProperties initialTypeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
-
 		SegmentsExperience updatedSegmentsExperience =
 			_segmentsExperienceLocalService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsEntry.getSegmentsEntryId(), nameMap, active,
-				initialTypeSettingsUnicodeProperties);
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"property", "value"
+				).build());
 
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
@@ -729,16 +728,15 @@ public class SegmentsExperienceLocalServiceTest {
 	public void testUpdateSegmentsExperienceWithoutTypeSettings()
 		throws Exception {
 
-		UnicodeProperties initialTypeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
-
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				SegmentsEntryConstants.ID_DEFAULT, _classNameId, _classPK,
 				RandomTestUtil.randomLocaleStringMap(), true,
-				initialTypeSettingsUnicodeProperties,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"property", "value"
+				).build(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperience updatedSegmentsExperience =

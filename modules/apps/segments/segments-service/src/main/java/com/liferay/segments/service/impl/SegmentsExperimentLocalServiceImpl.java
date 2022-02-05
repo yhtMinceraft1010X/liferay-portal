@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -121,14 +122,14 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty("goal", goal);
-		typeSettingsUnicodeProperties.setProperty("goalTarget", goalTarget);
-
 		segmentsExperiment.setTypeSettings(
-			typeSettingsUnicodeProperties.toString());
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"goal", goal
+			).put(
+				"goalTarget", goalTarget
+			).buildString());
 
 		segmentsExperiment.setStatus(status);
 

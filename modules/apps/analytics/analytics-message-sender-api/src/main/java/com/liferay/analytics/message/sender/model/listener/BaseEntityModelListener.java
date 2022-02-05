@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -559,14 +559,15 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		modelIds = ArrayUtil.remove(modelIds, modelId);
 
 		if (Validator.isNotNull(preferencePropertyName)) {
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-			unicodeProperties.setProperty(
-				preferencePropertyName,
-				StringUtil.merge(modelIds, StringPool.COMMA));
-
 			try {
-				companyService.updatePreferences(companyId, unicodeProperties);
+				companyService.updatePreferences(
+					companyId,
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						preferencePropertyName,
+						StringUtil.merge(modelIds, StringPool.COMMA)
+					).build());
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

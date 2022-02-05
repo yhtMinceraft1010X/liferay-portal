@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -664,14 +663,11 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testIsConvertibleTrueWidgetPageCustomizable() throws Exception {
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			LayoutConstants.CUSTOMIZABLE_LAYOUT, Boolean.TRUE.toString());
-
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT, Boolean.TRUE.toString()
+			).buildString());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
@@ -867,17 +863,14 @@ public class LayoutConverterTest {
 		List<Map<String, List<String>>> encodedPortletIdsMaps =
 			new ArrayList<>();
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
-		typeSettingsUnicodeProperties.setProperty(
-			"lfr-theme:regular:wrap-widget-page-content",
-			Boolean.FALSE.toString());
-
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).put(
+				"lfr-theme:regular:wrap-widget-page-content",
+				Boolean.FALSE.toString()
+			).buildString());
 
 		for (Map<String, String[]> portletIdsMap : portletIdsMaps) {
 			Set<Map.Entry<String, String[]>> entries = portletIdsMap.entrySet();
@@ -1001,14 +994,11 @@ public class LayoutConverterTest {
 	private void _testConvertNoPortlets(String layoutTemplateId)
 		throws Exception {
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
-
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).buildString());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(

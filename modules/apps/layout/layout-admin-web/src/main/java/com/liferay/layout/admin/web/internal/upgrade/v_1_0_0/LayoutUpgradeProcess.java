@@ -48,10 +48,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			).build();
 
 		typeSettingsUnicodeProperties.setProperty(
-			"embeddedLayoutURL",
-			typeSettingsUnicodeProperties.getProperty("url"));
-
-		typeSettingsUnicodeProperties.remove("url");
+			"embeddedLayoutURL", typeSettingsUnicodeProperties.remove("url"));
 
 		_updateTypeSettings(plid, typeSettingsUnicodeProperties.toString());
 	}

@@ -81,11 +81,10 @@ public class AddAssetListEntryVariationMVCActionCommandTest {
 		UnicodeProperties defaultSegmentsEntryUnicodeProperties =
 			UnicodePropertiesBuilder.create(
 				true
+			).put(
+				"classNameIds",
+				StringUtil.merge(new long[] {RandomTestUtil.randomLong()})
 			).build();
-
-		defaultSegmentsEntryUnicodeProperties.setProperty(
-			"classNameIds",
-			StringUtil.merge(new long[] {RandomTestUtil.randomLong()}));
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(

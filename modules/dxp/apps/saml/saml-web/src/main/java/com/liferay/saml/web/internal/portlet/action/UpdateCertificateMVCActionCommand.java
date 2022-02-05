@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlPortletKeys;
@@ -271,13 +272,11 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			privateKeyEntry.getPrivateKey(), keyStorePassword, x509Certificate,
 			certificateUsage);
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.setProperty(
-			_getCertificateUsagePropertyKey(certificateUsage),
-			keyStorePassword);
-
-		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
+		_samlProviderConfigurationHelper.updateProperties(
+			UnicodePropertiesBuilder.put(
+				_getCertificateUsagePropertyKey(certificateUsage),
+				keyStorePassword
+			).build());
 
 		SamlTempFileEntryUtil.deleteTempFileEntry(user, selectUploadedFile);
 

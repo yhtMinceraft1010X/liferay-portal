@@ -589,7 +589,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			assetListJSONObject.getString("title"),
-			String.valueOf(new UnicodeProperties(map, true)), serviceContext);
+			String.valueOf(UnicodePropertiesBuilder.create(map, true)),
+			serviceContext);
 	}
 
 	private void _addCommerceCatalogs(
@@ -2488,26 +2489,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layout);
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					new UnicodeProperties();
-
-				typeSettingsUnicodeProperties.setProperty(
-					"name", menuItemJSONObject.getString("name"));
-
-				typeSettings = typeSettingsUnicodeProperties.toString();
+				typeSettings = UnicodePropertiesBuilder.put(
+					"name", menuItemJSONObject.getString("name")
+				).buildString();
 			}
 			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					new UnicodeProperties();
-
-				typeSettingsUnicodeProperties.setProperty(
-					"name", menuItemJSONObject.getString("name"));
-				typeSettingsUnicodeProperties.setProperty(
-					"url", menuItemJSONObject.getString("url"));
-				typeSettingsUnicodeProperties.setProperty(
-					"useNewTab", menuItemJSONObject.getString("useNewTab"));
-
-				typeSettings = typeSettingsUnicodeProperties.toString();
+				typeSettings = UnicodePropertiesBuilder.put(
+					"name", menuItemJSONObject.getString("name")
+				).put(
+					"url", menuItemJSONObject.getString("url")
+				).put(
+					"useNewTab", menuItemJSONObject.getString("useNewTab")
+				).buildString();
 			}
 			else if (type.equals("display-page")) {
 				String key = menuItemJSONObject.getString("key");
@@ -3080,9 +3073,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				cpInstancePropertiesJSONObject.getJSONObject(
 					"subscriptionTypeSettings");
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties(
-				JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject), true);
-
 			_commerceReferencesHolder.cpInstanceLocalService.
 				updateSubscriptionInfo(
 					cpInstance.getCPInstanceId(),
@@ -3093,7 +3083,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					cpInstancePropertiesJSONObject.getInt("subscriptionLength"),
 					cpInstancePropertiesJSONObject.getString(
 						"subscriptionType"),
-					unicodeProperties,
+					UnicodePropertiesBuilder.create(
+						JSONUtil.toStringMap(
+							subscriptionTypeSettingsJSONObject),
+						true
+					).build(),
 					cpInstancePropertiesJSONObject.getLong(
 						"maxSubscriptionCycles"),
 					cpInstancePropertiesJSONObject.getBoolean(

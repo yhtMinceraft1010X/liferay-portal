@@ -2191,15 +2191,14 @@ public class DataFactory {
 			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
 		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty(
-			"fragmentEntries", fragmentEntries);
-
 		layoutModel.setTypeSettings(
 			StringUtil.replace(
-				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"fragmentEntries", fragmentEntries
+				).buildString(),
+				'\n', "\\n"));
 
 		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 		layoutModel.setLastPublishDate(new Date());
@@ -6415,11 +6414,12 @@ public class DataFactory {
 		layoutModel.setType(LayoutConstants.TYPE_PORTLET);
 		layoutModel.setHidden(hidden);
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).build();
 
 		for (int i = 0; i < columns.length; i++) {
 			if (!columns[i].equals("")) {
@@ -7221,14 +7221,14 @@ public class DataFactory {
 			layoutModel.setSystem(true);
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty("published", "true");
-
 		layoutModel.setTypeSettings(
 			StringUtil.replace(
-				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"published", "true"
+				).buildString(),
+				'\n', "\\n"));
 
 		layoutModel.setLastPublishDate(new Date());
 

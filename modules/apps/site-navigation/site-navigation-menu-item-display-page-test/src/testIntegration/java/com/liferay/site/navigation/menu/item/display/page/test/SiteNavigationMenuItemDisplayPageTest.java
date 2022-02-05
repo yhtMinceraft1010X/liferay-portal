@@ -303,14 +303,13 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			"classNameId",
-			String.valueOf(
-				_portal.getClassNameId(AssetCategory.class.getName())));
-		typeSettingsUnicodeProperties.setProperty(
-			"classPK", String.valueOf(_assetCategory.getCategoryId()));
+			UnicodePropertiesBuilder.put(
+				"classNameId",
+				String.valueOf(
+					_portal.getClassNameId(AssetCategory.class.getName()))
+			).put(
+				"classPK", String.valueOf(_assetCategory.getCategoryId())
+			).build();
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -575,22 +574,19 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			"classNameId",
-			String.valueOf(
-				_portal.getClassNameId(AssetCategory.class.getName())));
-		typeSettingsUnicodeProperties.setProperty(
-			"classPK", String.valueOf(_assetCategory.getCategoryId()));
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				AssetCategory.class.getName(),
-				typeSettingsUnicodeProperties.toString(), _serviceContext);
+				UnicodePropertiesBuilder.put(
+					"classNameId",
+					String.valueOf(
+						_portal.getClassNameId(AssetCategory.class.getName()))
+				).put(
+					"classPK", String.valueOf(_assetCategory.getCategoryId())
+				).buildString(),
+				_serviceContext);
 
 		Assert.assertEquals(
 			1,

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.List;
 
@@ -85,11 +86,11 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 					ExpandoTableConstants.DEFAULT_TABLE_NAME);
 			}
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-			unicodeProperties.setProperty("hidden", "true");
-			unicodeProperties.setProperty(
-				"visible-with-update-permission", "false");
+			UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+				"hidden", "true"
+			).put(
+				"visible-with-update-permission", "false"
+			).build();
 
 			_addExpandoColumn(
 				expandoTable, "googleAccessToken", unicodeProperties);

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
@@ -79,14 +79,13 @@ public class AnalyticsConfigurationPreferencesUpgradeProcess
 
 			configuration.update(properties);
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-			unicodeProperties.setProperty(
-				"liferayAnalyticsProjectId", projectId);
-
 			_companyLocalService.updatePreferences(
 				GetterUtil.getLong(properties.get("companyId")),
-				unicodeProperties);
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"liferayAnalyticsProjectId", projectId
+				).build());
 		}
 	}
 

@@ -250,15 +250,13 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Override
 	public String getTypeSettingsFromLayout(Layout layout) {
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.setProperty(
-			"groupId", String.valueOf(layout.getGroupId()));
-		unicodeProperties.setProperty("layoutUuid", layout.getUuid());
-		unicodeProperties.setProperty(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return unicodeProperties.toString();
+		return UnicodePropertiesBuilder.put(
+			"groupId", String.valueOf(layout.getGroupId())
+		).put(
+			"layoutUuid", layout.getUuid()
+		).put(
+			"privateLayout", String.valueOf(layout.isPrivateLayout())
+		).buildString();
 	}
 
 	@Override

@@ -298,15 +298,13 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyTypeSettings() throws Exception {
-		UnicodeProperties sourceUnicodeProperties = new UnicodeProperties();
-
-		sourceUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-footer", Boolean.TRUE.toString());
-		sourceUnicodeProperties.setProperty(
-			"lfr-theme:regular:show-header", Boolean.TRUE.toString());
-
 		Layout sourceLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), sourceUnicodeProperties.toString());
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				"lfr-theme:regular:show-footer", Boolean.TRUE.toString()
+			).put(
+				"lfr-theme:regular:show-header", Boolean.TRUE.toString()
+			).buildString());
 
 		Layout targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), StringPool.BLANK);

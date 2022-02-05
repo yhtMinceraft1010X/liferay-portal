@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -244,14 +245,14 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.setProperty(
-			"liferayAnalyticsGroupIds",
-			StringUtil.merge(liferayAnalyticsGroupIds, StringPool.COMMA));
-
 		_companyService.updatePreferences(
-			themeDisplay.getCompanyId(), unicodeProperties);
+			themeDisplay.getCompanyId(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"liferayAnalyticsGroupIds",
+				StringUtil.merge(liferayAnalyticsGroupIds, StringPool.COMMA)
+			).build());
 
 		return liferayAnalyticsGroupIds;
 	}
