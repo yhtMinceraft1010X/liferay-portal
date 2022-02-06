@@ -244,32 +244,35 @@ public class JournalUtil {
 	public static boolean hasWorkflowDefinitionsLinks(
 		ThemeDisplay themeDisplay) {
 
-		int folderWorkflowDefinitionLinksCount =
+		int count =
 			WorkflowDefinitionLinkLocalServiceUtil.
 				getWorkflowDefinitionLinksCount(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					JournalFolder.class.getName());
 
-		if (folderWorkflowDefinitionLinksCount == 0) {
-			int siteWorkflowDefinitionLinksCount =
-				WorkflowDefinitionLinkLocalServiceUtil.
-					getWorkflowDefinitionLinksCount(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),
-						JournalArticle.class.getName());
+		if (count > 0) {
+			return true;
+		}
 
-			if (siteWorkflowDefinitionLinksCount == 0) {
-				int companyWorkflowDefinitionLinksCount =
-					WorkflowDefinitionLinkLocalServiceUtil.
-						getWorkflowDefinitionLinksCount(
-							themeDisplay.getCompanyId(),
-							GroupConstants.DEFAULT_PARENT_GROUP_ID,
-							JournalArticle.class.getName());
+		count =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					JournalArticle.class.getName());
 
-				if (companyWorkflowDefinitionLinksCount == 0) {
-					return false;
-				}
-			}
+		if (count == 0) {
+			return true;
+		}
+
+		count =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					JournalArticle.class.getName());
+
+		if (count == 0) {
+			return false;
 		}
 
 		return true;
