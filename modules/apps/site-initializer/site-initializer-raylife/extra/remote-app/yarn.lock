@@ -1112,7 +1112,7 @@
     "@clayui/sticker" "^3.40.0"
     classnames "^2.2.6"
 
-"@clayui/core@^3.32.0":
+"@clayui/core@3.45.1":
   version "3.45.1"
   resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.45.1.tgz#b799b2f3199c7a06804eca6623873af56d7b6f26"
   integrity sha512-OmWIqQtAz8T1fYThT6OMKVd320vIJdpBtjx8kSqVl/UXcANMQFwW1gGrefZnzMMEABaB8B4tBt078zEOQ8Js0Q==
