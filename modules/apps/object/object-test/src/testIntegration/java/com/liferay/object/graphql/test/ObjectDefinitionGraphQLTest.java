@@ -272,11 +272,6 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(_objectFieldName))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
 				"Object/" + _objectFieldName));
-	}
-
-	@Test
-	public void testGetObjectEntryMetadataFields() throws Exception {
-		String key = StringUtil.lowerCaseFirstLetter(_objectDefinitionName);
 
 		JSONObject jsonObject = _invoke(
 			new GraphQLField(
