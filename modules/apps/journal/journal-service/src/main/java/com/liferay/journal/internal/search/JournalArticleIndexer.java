@@ -463,8 +463,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Unable to obtain friendlyUrl for article id ",
-							journalArticle.getId(), " and languageId ",
+							"Unable to get friendly URL for article ID ",
+							journalArticle.getId(), " and language ID ",
 							titleAvailableLanguageId),
 						portalException);
 				}
@@ -686,13 +686,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addLocalizedFields(
-			BooleanQuery searchQuery, String field, String value,
+			BooleanQuery searchQuery, String fieldName, String value,
 			SearchContext searchContext)
 		throws Exception {
 
 		String[] localizedFieldNames =
 			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {field}, searchContext);
+				new String[] {fieldName}, searchContext);
 
 		for (String localizedFieldName : localizedFieldNames) {
 			searchQuery.addTerm(localizedFieldName, value, false);
@@ -714,14 +714,16 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field)
+			BooleanQuery searchQuery, SearchContext searchContext,
+			String fieldName)
 		throws Exception {
 
-		if (Validator.isBlank(field)) {
+		if (Validator.isBlank(fieldName)) {
 			return;
 		}
 
-		String value = GetterUtil.getString(searchContext.getAttribute(field));
+		String value = GetterUtil.getString(
+			searchContext.getAttribute(fieldName));
 
 		if (Validator.isBlank(value)) {
 			value = searchContext.getKeywords();
@@ -734,12 +736,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		if (Validator.isBlank(searchContext.getKeywords())) {
 			BooleanQuery localizedQuery = new BooleanQueryImpl();
 
-			_addLocalizedFields(localizedQuery, field, value, searchContext);
+			_addLocalizedFields(
+				localizedQuery, fieldName, value, searchContext);
 
 			_addLocalizedQuery(searchQuery, localizedQuery, searchContext);
 		}
 		else {
-			_addLocalizedFields(searchQuery, field, value, searchContext);
+			_addLocalizedFields(searchQuery, fieldName, value, searchContext);
 		}
 	}
 
