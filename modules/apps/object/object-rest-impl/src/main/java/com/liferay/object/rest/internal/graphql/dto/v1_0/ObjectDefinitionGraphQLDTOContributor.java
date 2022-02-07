@@ -64,17 +64,17 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
-				objectDefinition.getPKObjectFieldName(), Long.class, true));
+				objectDefinition.getPKObjectFieldName(), true, Long.class));
 		graphQLDTOProperties.add(
-			GraphQLDTOProperty.of("creator", Creator.class, true));
+			GraphQLDTOProperty.of("creator", true, Creator.class));
 		graphQLDTOProperties.add(
-			GraphQLDTOProperty.of("dateCreated", Date.class, true));
+			GraphQLDTOProperty.of("dateCreated", true, Date.class));
 		graphQLDTOProperties.add(
-			GraphQLDTOProperty.of("dateModified", Date.class, true));
+			GraphQLDTOProperty.of("dateModified", true, Date.class));
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("externalReferenceCode", String.class));
 		graphQLDTOProperties.add(
-			GraphQLDTOProperty.of("status", String.class, true));
+			GraphQLDTOProperty.of("status", true, String.class));
 
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties =
 			new ArrayList<>();
