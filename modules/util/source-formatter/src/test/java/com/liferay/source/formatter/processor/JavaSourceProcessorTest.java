@@ -47,6 +47,22 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testBuilder() throws Exception {
+		test(
+			"Builder.testjava",
+			new String[] {
+				"Include method call 'hashMap.put' (32) in 'HashMapBuilder' " +
+					"(28)",
+				"Inline variable definition 'company' (38) inside '" +
+					"HashMapBuilder' (40), possibly by using a lambda function",
+				"Null values are not allowed in 'HashMapBuilder'",
+				"Use 'HashMapBuilder' (52, 54)",
+				"Use 'HashMapBuilder' instead of new instance of 'HashMap'"
+			},
+			new Integer[] {28, 38, 47, 52, 58});
+	}
+
+	@Test
 	public void testCollapseImports() throws Exception {
 		test("CollapseImports.testjava");
 	}
