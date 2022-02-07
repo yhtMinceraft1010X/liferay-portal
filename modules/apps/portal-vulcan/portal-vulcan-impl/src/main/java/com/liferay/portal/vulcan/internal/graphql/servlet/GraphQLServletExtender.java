@@ -1589,17 +1589,13 @@ public class GraphQLServletExtender {
 		graphQLInputObjectTypeBuilder.name(
 			"Input" + graphQLDTOContributor.getTypeName());
 
-		Stream<GraphQLDTOProperty> stream =
-			graphQLDTOContributor.getGraphQLDTOProperties(
-			).stream();
+		for (GraphQLDTOProperty graphQLDTOProperty :
+				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-		List<GraphQLDTOProperty> properties = stream.filter(
-			graphQLDTOProperty -> !graphQLDTOProperty.isReadOnly()
-		).collect(
-			Collectors.toList()
-		);
+			if (graphQLDTOProperty.isReadOnly()) {
+				continue;
+			}
 
-		for (GraphQLDTOProperty graphQLDTOProperty : properties) {
 			GraphQLInputType graphQLInputType =
 				(GraphQLInputType)_toGraphQLType(
 					graphQLDTOProperty.getTypeClass(), graphQLTypes, true);
