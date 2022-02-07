@@ -181,7 +181,7 @@ export default withRouter(
 							emptyState={
 								<ClayEmptyState
 									description={Liferay.Language.get(
-										'sorry-there-are-no-results-found'
+										'sorry,-no-results-were-found'
 									)}
 									imgSrc={
 										context.includeContextPath +

@@ -146,7 +146,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 									<div className="lfr-object__object-custom-view-builder-empty-space">
 										<ClayEmptyState
 											description={Liferay.Language.get(
-												'sorry-there-are-no-results-for-delivery'
+												'sorry,-no-results-were-found'
 											)}
 											title={Liferay.Language.get(
 												'no-results-found'

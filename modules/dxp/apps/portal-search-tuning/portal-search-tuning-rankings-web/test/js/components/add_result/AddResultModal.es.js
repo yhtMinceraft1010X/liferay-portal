@@ -145,7 +145,7 @@ describe('AddResultModal', () => {
 
 		const modal = await findByTestId(MODAL_ID);
 
-		expect(modal).not.toHaveTextContent('sorry-there-are-no-results-found');
+		expect(modal).not.toHaveTextContent('sorry,-no-results-were-found');
 	});
 
 	it('closes the modal when the cancel button gets clicked', async () => {
