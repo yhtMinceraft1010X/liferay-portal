@@ -124,8 +124,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		Object displayObject = null;
 		String className = StringPool.BLANK;
+		Object displayObject = null;
 
 		if (jsonObject != null) {
 			className = jsonObject.getString("className");
