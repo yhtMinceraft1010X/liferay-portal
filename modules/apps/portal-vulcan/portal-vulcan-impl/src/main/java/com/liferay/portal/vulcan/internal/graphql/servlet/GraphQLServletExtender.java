@@ -1793,14 +1793,13 @@ public class GraphQLServletExtender {
 
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 			new GraphQLObjectType.Builder();
-
-		String creatorGraphQLObjectTypeName = StringUtil.replace(
+		String graphQLTypeName = StringUtil.replace(
 			Creator.class.getName(), '.', '_');
 
 		graphQLTypes.put(
-			creatorGraphQLObjectTypeName,
+			graphQLTypeName,
 			graphQLObjectTypeBuilder.name(
-				creatorGraphQLObjectTypeName
+				graphQLTypeName
 			).field(
 				_addField(Scalars.GraphQLString, "additionalName")
 			).field(
