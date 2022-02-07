@@ -89,10 +89,7 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 				return "/error.jsp";
 			}
 
-			throw new PortletException(
-				"Unable to include " +
-					"edit_cp_instance_commerce_tier_price_entry.jsp",
-				exception);
+			throw new PortletException(exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

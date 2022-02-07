@@ -59,9 +59,7 @@ public class EditAccountEntryDefaultCommerceTermEntryMVCRenderCommand
 				_portal.getHttpServletResponse(renderResponse));
 		}
 		catch (Exception exception) {
-			throw new PortletException(
-				"Unable to include select_default_commerce_term_entry.jsp",
-				exception);
+			throw new PortletException(exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

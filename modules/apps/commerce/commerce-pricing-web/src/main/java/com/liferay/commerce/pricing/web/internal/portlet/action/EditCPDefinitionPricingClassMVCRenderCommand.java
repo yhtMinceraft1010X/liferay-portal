@@ -81,9 +81,7 @@ public class EditCPDefinitionPricingClassMVCRenderCommand
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new PortletException(
-				"Unable to include edit_cp_definition_pricing_class.jsp",
-				exception);
+			throw new PortletException(exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
