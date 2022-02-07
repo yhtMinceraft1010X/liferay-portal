@@ -21,6 +21,7 @@ const MobileContainer = ({
 	children,
 	isMobile,
 	mobileSubSection = {},
+	hasAddress = '',
 }) => {
 	const forceValidation = useForceValidation();
 	const {hideInputLabel, title} = mobileSubSection;
@@ -44,7 +45,7 @@ const MobileContainer = ({
 	return (
 		<div className="flex flex-column">
 			<h2 className="mx-auto text-center text-dark">
-				{mobileSubSection.title}
+				{`${mobileSubSection.title} ${hasAddress}`}
 			</h2>
 
 			<div

@@ -19,13 +19,22 @@ import {SquareFeatControlledInput} from '../../../../../common/components/connec
 import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
 import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
 import {TIP_EVENT} from '../../../../../common/utils/events';
+import useMobileContainer from '../../../hooks/useMobileContainer';
 import {useTriggerContext} from '../../../hooks/useTriggerContext';
+import {SUBSECTION_KEYS} from '../../../utils/constants';
 import {isHabitational, isThereSwimming} from '../../../utils/propertyFields';
+import MobileContainer from '../../mobile/MobileContainer';
 
 const setFormPath = (value) => `property.${value}`;
 
 export function FormProperty({form}) {
 	const {control, getValues, setValue} = useFormContext();
+
+	const {
+		getMobileSubSection,
+		mobileContainerProps,
+		nextStep,
+	} = useMobileContainer();
 
 	const forceValidation = () => {
 		setValue(
@@ -43,95 +52,139 @@ export function FormProperty({form}) {
 
 	return (
 		<div className="card-content">
-			<ControlledSwitch
-				control={control}
-				label={`Do you own the building at ${form.basics.businessInformation.business.location.address}?`}
-				name={setFormPath('doOwnBuildingAtAddress')}
-				rules={{required: true}}
-			/>
+			<MobileContainer
+				 {...mobileContainerProps}
+				 hasAddress={`${form.basics.businessInformation.business.location.address}?`}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.DO_YOU_OWN_THE_BUILDING_AT
+				 )}
+			>	 
+				<ControlledSwitch
+					control={control}
+					label={`Do you own the building at ${form.basics.businessInformation.business.location.address}?`}
+					name={setFormPath('doOwnBuildingAtAddress')}
+					onSelect={nextStep}
+					rules={{required: true}}
+				/>
+			</MobileContainer>
 
-			<NumberControlledInput
-				control={control}
-				label="How many stories is this building?"
-				name={setFormPath('stories')}
-				rules={{
-					min: {
-						message: 'Must be equal or greater than 0.',
-						value: 0,
-					},
-					required: 'This field is required',
-				}}
-			/>
+			<MobileContainer
+				 {...mobileContainerProps}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.HOW_MANY_STORIES_IS_THIS_BUILDING
+				 )}
+			>	
+				<NumberControlledInput
+					control={control}
+					label={SUBSECTION_KEYS.HOW_MANY_STORIES_IS_THIS_BUILDING}
+					name={setFormPath('stories')}
+					rules={{
+						min: {
+							message: 'Must be equal or greater than 0.',
+							value: 0,
+						},
+						required: 'This field is required',
+					}}
+				/>
+			</MobileContainer>
+			
+			<MobileContainer
+				 {...mobileContainerProps}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.HOW_MANY_SQUARE_FEET_OF_THE_BUILDING
+				 )}
+			>	
+				<SquareFeatControlledInput
+					control={control}
+					label={SUBSECTION_KEYS.HOW_MANY_SQUARE_FEET_OF_THE_BUILDING}
+					moreInfoProps={{
+						callback: () =>
+							updateState(setFormPath('buildingSquareFeetOccupied')),
+						event: TIP_EVENT,
+						selected: isSelected(
+							setFormPath('buildingSquareFeetOccupied')
+						),
+						value: {
+							inputName: setFormPath('buildingSquareFeetOccupied'),
+							templateName: 'building-square-footage',
+							value: form?.property?.buildingSquareFeetOccupied,
+						},
+					}}
+					name={setFormPath('buildingSquareFeetOccupied')}
+					rules={{
+						required: 'This field is required',
+					}}
+				/>
+			</MobileContainer>
 
-			<SquareFeatControlledInput
-				control={control}
-				label="How many square feet of the building does your business occupy?"
-				moreInfoProps={{
-					callback: () =>
-						updateState(setFormPath('buildingSquareFeetOccupied')),
-					event: TIP_EVENT,
-					selected: isSelected(
-						setFormPath('buildingSquareFeetOccupied')
-					),
-					value: {
-						inputName: setFormPath('buildingSquareFeetOccupied'),
-						templateName: 'building-square-footage',
-						value: form?.property?.buildingSquareFeetOccupied,
-					},
-				}}
-				name={setFormPath('buildingSquareFeetOccupied')}
-				rules={{
-					required: 'This field is required',
-				}}
-			/>
-
-			<SquareFeatControlledInput
-				control={control}
-				label="How many total square feet is the building?"
-				name={setFormPath('totalBuildingSquareFeet')}
-				rules={{
-					required: 'This field is required',
-				}}
-			/>
-
-			<YearControlledInput
-				control={control}
-				label="What year was the building constructed?"
-				moreInfoProps={{
-					callback: () => updateState(setFormPath('yearBuilding')),
-					event: TIP_EVENT,
-					selected: isSelected(setFormPath('yearBuilding')),
-					value: {
-						inputName: setFormPath('yearBuilding'),
-						templateName: 'year-constructed',
-						value: form?.property?.yearBuilding,
-					},
-				}}
-				name={setFormPath('yearBuilding')}
-				rules={{
-					required: 'This field is required',
-				}}
-			/>
-
-			<ControlledSwitch
-				control={control}
-				label="Is this the primary location where you conduct business?"
-				moreInfoProps={{
-					callback: () =>
-						updateState(setFormPath('isPrimaryBusinessLocation')),
-					event: TIP_EVENT,
-					selected: isSelected(
-						setFormPath('isPrimaryBusinessLocation')
-					),
-					value: {
-						inputName: setFormPath('isPrimaryBusinessLocation'),
-						templateName: 'primary-location',
-						value: form?.property?.isPrimaryBusinessLocation,
-					},
-				}}
-				name={setFormPath('isPrimaryBusinessLocation')}
-				rules={{required: true}}
-			/>
+			<MobileContainer
+				 {...mobileContainerProps}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING
+				 )}
+			>
+				<SquareFeatControlledInput
+					control={control}
+					label={SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING}
+					name={setFormPath('totalBuildingSquareFeet')}
+					rules={{
+						required: 'This field is required',
+					}}
+				/>
+			</MobileContainer>
+			
+			<MobileContainer
+				 {...mobileContainerProps}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED
+				 )}
+			>
+				<YearControlledInput
+					control={control}
+					label={SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED}
+					moreInfoProps={{
+						callback: () => updateState(setFormPath('yearBuilding')),
+						event: TIP_EVENT,
+						selected: isSelected(setFormPath('yearBuilding')),
+						value: {
+							inputName: setFormPath('yearBuilding'),
+							templateName: 'year-constructed',
+							value: form?.property?.yearBuilding,
+						},
+					}}
+					name={setFormPath('yearBuilding')}
+					rules={{
+						required: 'This field is required',
+					}}
+				/>
+			</MobileContainer>
+			
+			<MobileContainer
+				 {...mobileContainerProps}
+				 mobileSubSection={getMobileSubSection(
+					 SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION
+				 )}
+			>
+				<ControlledSwitch
+					control={control}
+					label={SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION}
+					moreInfoProps={{
+						callback: () =>
+							updateState(setFormPath('isPrimaryBusinessLocation')),
+						event: TIP_EVENT,
+						selected: isSelected(
+							setFormPath('isPrimaryBusinessLocation')
+						),
+						value: {
+							inputName: setFormPath('isPrimaryBusinessLocation'),
+							templateName: 'primary-location',
+							value: form?.property?.isPrimaryBusinessLocation,
+						},
+					}}
+					name={setFormPath('isPrimaryBusinessLocation')}
+					rules={{required: true}}
+				/>
+			</MobileContainer>
 
 			{isHabitational(
 				form?.basics?.properties?.segment.toLowerCase()
