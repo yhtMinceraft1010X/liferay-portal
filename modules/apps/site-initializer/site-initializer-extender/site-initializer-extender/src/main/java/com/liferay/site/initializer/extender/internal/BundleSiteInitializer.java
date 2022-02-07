@@ -360,7 +360,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addAssetListEntries(
 						_ddmStructureLocalService, serviceContext));
-
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
 				() -> _addDocuments(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
