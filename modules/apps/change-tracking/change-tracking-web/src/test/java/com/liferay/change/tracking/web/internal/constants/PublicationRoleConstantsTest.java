@@ -42,13 +42,12 @@ public class PublicationRoleConstantsTest {
 
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
-		Assert.assertFalse(
-			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
-
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.UPDATE));
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
+		Assert.assertFalse(
+			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
 	}
 
 	@Test
@@ -75,7 +74,6 @@ public class PublicationRoleConstantsTest {
 
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
-
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.UPDATE));
 		Assert.assertTrue(
@@ -94,11 +92,10 @@ public class PublicationRoleConstantsTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.PERMISSIONS));
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.UPDATE));
-		Assert.assertFalse(
-			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
-
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
+		Assert.assertFalse(
+			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
 	}
 
 }
