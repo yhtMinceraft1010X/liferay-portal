@@ -20,25 +20,25 @@ package com.liferay.portal.vulcan.graphql.dto;
 public class GraphQLDTOProperty {
 
 	public static GraphQLDTOProperty of(String name, Class<?> typeClass) {
-		return new GraphQLDTOProperty(name, typeClass, false);
+		return new GraphQLDTOProperty(name, false, typeClass);
 	}
 
 	public static GraphQLDTOProperty of(
-		String name, Class<?> typeClass, boolean readOnly) {
+		String name, boolean readOnly, Class<?> typeClass) {
 
-		return new GraphQLDTOProperty(name, typeClass, readOnly);
+		return new GraphQLDTOProperty(name, readOnly, typeClass);
 	}
 
 	public GraphQLDTOProperty(String name, Class<?> typeClass) {
-		this(name, typeClass, false);
+		this(name, false, typeClass);
 	}
 
 	public GraphQLDTOProperty(
-		String name, Class<?> typeClass, boolean readOnly) {
+		String name, boolean readOnly, Class<?> typeClass) {
 
 		_name = name;
-		_typeClass = typeClass;
 		_readOnly = readOnly;
+		_typeClass = typeClass;
 	}
 
 	public String getName() {
