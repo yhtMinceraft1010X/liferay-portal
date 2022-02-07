@@ -35,7 +35,6 @@ export const SUBSECTION_KEYS = {
 	BUSINESS_YEAR_OPERATION: 'Does your business operate year round?',
 	DO_YOU_HAVE_RAYLIFE_POLICY: 'Do you have a Raylife Auto policy?',
 	DO_YOU_OWN_THE_BUILDING_AT: 'Do you own the building at ',
-
 	DO_YOU_SELL_PRODUCTS_UNDER_OWN_BRAND:
 		'Do you sell products under your own brand or label?',
 	DO_YOU_STORE_PERSONALITY_IDENTIFIABLE:
@@ -51,7 +50,7 @@ export const SUBSECTION_KEYS = {
 	HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING:
 		'How many total square feet is the building?',
 	IS_THIS_THE_PRIMARY_LOCATION:
-		'Is this the primary location where you conduct business?',	
+		'Is this the primary location where you conduct business?',
 	LEGAL_ENTITY: 'Legal Entity',
 	OWNERS_ANNUAL_PAYROLL:
 		'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?',
@@ -62,7 +61,7 @@ export const SUBSECTION_KEYS = {
 	WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY:
 		'What percentage of overall sales involve delivery?',
 	WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED:
-		'What year was the building constructed?',	
+		'What year was the building constructed?',
 	YEAR_BUSINESS_STARTED: 'What year did you start your business?',
 	YEAR_OF_INDUSTRY_EXPERIENCE: 'Years of industry experience?',
 	YOUR_NAME: 'Your Name',
@@ -258,7 +257,8 @@ export const AVAILABLE_STEPS = {
 				active: false,
 				hideContinueButton: false,
 				hideInputLabel: true,
-				title: SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING,
+				title:
+					SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING,
 			},
 			{
 				active: false,
@@ -272,7 +272,7 @@ export const AVAILABLE_STEPS = {
 				hideInputLabel: true,
 				title: SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION,
 			},
-		],	
+		],
 		section: 'property',
 		subsection: '',
 		title: 'More about',

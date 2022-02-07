@@ -53,12 +53,12 @@ export function FormProperty({form}) {
 	return (
 		<div className="card-content">
 			<MobileContainer
-				 {...mobileContainerProps}
-				 hasAddress={`${form.basics.businessInformation.business.location.address}?`}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.DO_YOU_OWN_THE_BUILDING_AT
-				 )}
-			>	 
+				{...mobileContainerProps}
+				hasAddress={`${form.basics.businessInformation.business.location.address}?`}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.DO_YOU_OWN_THE_BUILDING_AT
+				)}
+			>
 				<ControlledSwitch
 					control={control}
 					label={`Do you own the building at ${form.basics.businessInformation.business.location.address}?`}
@@ -69,11 +69,11 @@ export function FormProperty({form}) {
 			</MobileContainer>
 
 			<MobileContainer
-				 {...mobileContainerProps}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.HOW_MANY_STORIES_IS_THIS_BUILDING
-				 )}
-			>	
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.HOW_MANY_STORIES_IS_THIS_BUILDING
+				)}
+			>
 				<NumberControlledInput
 					control={control}
 					label={SUBSECTION_KEYS.HOW_MANY_STORIES_IS_THIS_BUILDING}
@@ -87,25 +87,29 @@ export function FormProperty({form}) {
 					}}
 				/>
 			</MobileContainer>
-			
+
 			<MobileContainer
-				 {...mobileContainerProps}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.HOW_MANY_SQUARE_FEET_OF_THE_BUILDING
-				 )}
-			>	
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.HOW_MANY_SQUARE_FEET_OF_THE_BUILDING
+				)}
+			>
 				<SquareFeatControlledInput
 					control={control}
 					label={SUBSECTION_KEYS.HOW_MANY_SQUARE_FEET_OF_THE_BUILDING}
 					moreInfoProps={{
 						callback: () =>
-							updateState(setFormPath('buildingSquareFeetOccupied')),
+							updateState(
+								setFormPath('buildingSquareFeetOccupied')
+							),
 						event: TIP_EVENT,
 						selected: isSelected(
 							setFormPath('buildingSquareFeetOccupied')
 						),
 						value: {
-							inputName: setFormPath('buildingSquareFeetOccupied'),
+							inputName: setFormPath(
+								'buildingSquareFeetOccupied'
+							),
 							templateName: 'building-square-footage',
 							value: form?.property?.buildingSquareFeetOccupied,
 						},
@@ -118,32 +122,37 @@ export function FormProperty({form}) {
 			</MobileContainer>
 
 			<MobileContainer
-				 {...mobileContainerProps}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING
-				 )}
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING
+				)}
 			>
 				<SquareFeatControlledInput
 					control={control}
-					label={SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING}
+					label={
+						SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING
+					}
 					name={setFormPath('totalBuildingSquareFeet')}
 					rules={{
 						required: 'This field is required',
 					}}
 				/>
 			</MobileContainer>
-			
+
 			<MobileContainer
-				 {...mobileContainerProps}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED
-				 )}
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED
+				)}
 			>
 				<YearControlledInput
 					control={control}
-					label={SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED}
+					label={
+						SUBSECTION_KEYS.WHAT_YEAR_WAS_THE_BUILDING_CONSTRUCTED
+					}
 					moreInfoProps={{
-						callback: () => updateState(setFormPath('yearBuilding')),
+						callback: () =>
+							updateState(setFormPath('yearBuilding')),
 						event: TIP_EVENT,
 						selected: isSelected(setFormPath('yearBuilding')),
 						value: {
@@ -158,19 +167,21 @@ export function FormProperty({form}) {
 					}}
 				/>
 			</MobileContainer>
-			
+
 			<MobileContainer
-				 {...mobileContainerProps}
-				 mobileSubSection={getMobileSubSection(
-					 SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION
-				 )}
+				{...mobileContainerProps}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION
+				)}
 			>
 				<ControlledSwitch
 					control={control}
 					label={SUBSECTION_KEYS.IS_THIS_THE_PRIMARY_LOCATION}
 					moreInfoProps={{
 						callback: () =>
-							updateState(setFormPath('isPrimaryBusinessLocation')),
+							updateState(
+								setFormPath('isPrimaryBusinessLocation')
+							),
 						event: TIP_EVENT,
 						selected: isSelected(
 							setFormPath('isPrimaryBusinessLocation')
