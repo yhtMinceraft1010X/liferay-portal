@@ -351,17 +351,17 @@ public class PortalClassPathUtil {
 	}
 
 	private static File[] _listClassPathFiles(Class<?>... classes) {
-		Set<File> fileSet = new HashSet<>();
+		Set<File> filesSet = new HashSet<>();
 
 		for (Class<?> clazz : classes) {
 			File[] files = _listClassPathFiles(clazz);
 
 			if (files != null) {
-				Collections.addAll(fileSet, files);
+				Collections.addAll(filesSet, files);
 			}
 		}
 
-		File[] files = fileSet.toArray(new File[0]);
+		File[] files = filesSet.toArray(new File[0]);
 
 		Arrays.sort(files);
 

@@ -90,7 +90,7 @@ public class PortalClassPathUtilTest {
 		}
 
 		Assert.assertTrue(
-			"Bootstrap class path should not contain jars with " +
+			"Bootstrap class path should not contain JARs with " +
 				"'Liferay-Releng-App' headers in Manifest.MF: " +
 					liferayReleaseApps,
 			liferayReleaseApps.isEmpty());
@@ -114,7 +114,7 @@ public class PortalClassPathUtilTest {
 		}
 
 		Assert.assertTrue(
-			"Bootstrap class path should not contain non-petra jars " +
+			"Bootstrap class path should not contain nonpetra JARs " +
 				nonpetraEntries,
 			nonpetraEntries.isEmpty());
 	}
