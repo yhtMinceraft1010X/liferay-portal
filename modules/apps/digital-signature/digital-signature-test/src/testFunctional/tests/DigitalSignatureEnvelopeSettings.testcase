@@ -60,7 +60,7 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		RecycleBin.emptyCP();		
+		RecycleBin.emptyCP();
 	}
 
 	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
@@ -196,7 +196,7 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		RecycleBin.emptyCP();		
+		RecycleBin.emptyCP();
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"

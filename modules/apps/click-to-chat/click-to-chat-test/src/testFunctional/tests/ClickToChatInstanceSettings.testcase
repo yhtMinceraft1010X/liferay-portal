@@ -34,6 +34,34 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145280. Verify if the widget's chat is hidden in the control panel if the user enable this option"
+	@priority = "4"
+	test CanHideChatWidgetInControlPanel {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "JivoChat");
+
+		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatJivochatPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+
+		FormFields.enableCheckbox(fieldName = "hideInControlPanel");
+
+		SystemSettings.saveConfiguration();
+
+		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+	}
+
 	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
 	@priority = "4"
 	test CanHubspotAccessRequiredScopes {
@@ -52,34 +80,6 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		Alert.viewErrorMessage(errorMessage = "This app hasn't been granted all required scopes to make this call");
-	}
-
-	@description = "This is a test for LPS-145280. Verify if the widget's chat is hidden in the control panel if the user enable this option"
-	@priority = "4"
-	test CanHideChatWidgetInControlPanel {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "JivoChat");
-
-		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatJivochatPassword}");		
-
-		SystemSettings.saveConfiguration();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
-
-		FormFields.enableCheckbox(fieldName = "hideInControlPanel");
-
-		SystemSettings.saveConfiguration();
-
-		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");		
 	}
 
 	@description = "This is a test for LPS-129049. Verify Chatwoot provider can be enabled and disabled."

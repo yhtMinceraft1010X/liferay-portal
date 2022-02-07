@@ -119,7 +119,7 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		RecycleBin.emptyCP();		
+		RecycleBin.emptyCP();
 	}
 
 	@description = "This is a test for LPS-131206. Verify if its possible view envelope details"
@@ -201,9 +201,7 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		RecycleBin.emptyCP();		
-
-		
+		RecycleBin.emptyCP();
 	}
 
 }
