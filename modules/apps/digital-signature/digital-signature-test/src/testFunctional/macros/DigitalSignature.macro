@@ -124,12 +124,6 @@ definition {
 	}
 
 	macro deleteEnvelope {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
 		Click(
 			key_text = "${envelopeName}",
 			locator1 = "Link#ANY");
