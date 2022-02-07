@@ -43,8 +43,7 @@ public class DuplicateUserGroupExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"A user group already exists with the name " +
-				duplicateUserGroupException.getMessage());
+			duplicateUserGroupException.getMessage());
 	}
 
 }
