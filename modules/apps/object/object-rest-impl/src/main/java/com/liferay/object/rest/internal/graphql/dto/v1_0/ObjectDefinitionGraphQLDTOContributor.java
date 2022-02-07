@@ -65,7 +65,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
 				objectDefinition.getPKObjectFieldName(), Long.class, true));
-
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("creator", Creator.class, true));
 		graphQLDTOProperties.add(
@@ -291,15 +290,17 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		Status status = objectEntry.getStatus();
+		properties.put(objectEntryIdName, objectEntry.getId());
 
 		properties.put("creator", objectEntry.getCreator());
 		properties.put("dateCreated", objectEntry.getDateCreated());
 		properties.put("dateModified", objectEntry.getDateModified());
 		properties.put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode());
+
+		Status status = objectEntry.getStatus();
+
 		properties.put("status", status.getLabel());
-		properties.put(objectEntryIdName, objectEntry.getId());
 
 		return properties;
 	}
