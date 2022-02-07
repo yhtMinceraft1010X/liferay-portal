@@ -54,7 +54,6 @@ import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -231,18 +230,6 @@ public class ShippingMethodCommerceCheckoutStep
 		_commerceOrderModelResourcePermission = modelResourcePermission;
 	}
 
-	private CommerceOrder _executeInTransaction(
-			Callable<CommerceOrder> callable)
-		throws Exception {
-
-		try {
-			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
-		}
-		catch (Throwable throwable) {
-			throw new PortalException(throwable);
-		}
-	}
-
 	private void _updateCommerceOrderShippingMethod(ActionRequest actionRequest)
 		throws Exception {
 
@@ -288,18 +275,24 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceContext, commerceOrder, commerceShippingMethodId,
 			commerceShippingOptionName, themeDisplay.getLocale());
 
-		_executeInTransaction(
-			() -> {
-				_commerceOrderLocalService.updateCommerceShippingMethod(
-					commerceOrder.getCommerceOrderId(),
-					commerceShippingMethodId, commerceShippingOptionName,
-					shippingAmount, commerceContext);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_commerceOrderLocalService.updateCommerceShippingMethod(
+						commerceOrder.getCommerceOrderId(),
+						commerceShippingMethodId, commerceShippingOptionName,
+						shippingAmount, commerceContext);
 
-				_commerceOrderLocalService.recalculatePrice(
-					commerceOrder.getCommerceOrderId(), commerceContext);
+					_commerceOrderLocalService.recalculatePrice(
+						commerceOrder.getCommerceOrderId(), commerceContext);
 
-				return null;
-			});
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
 	}
 
 	private static final TransactionConfig _transactionConfig =
