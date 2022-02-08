@@ -22,7 +22,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -45,9 +44,7 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 	}
 
 	@Override
-	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes(
-		Locale locale) {
-
+	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes() {
 		return new ArrayList(
 			_objectFieldBusinessTypeServiceTrackerMap.values());
 	}

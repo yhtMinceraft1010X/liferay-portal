@@ -136,7 +136,7 @@ public class ObjectDefinitionsFieldsDisplayContext {
 
 		for (ObjectFieldBusinessType objectFieldBusinessType :
 				_objectFieldBusinessTypeServicesTracker.
-					getObjectFieldBusinessTypes(locale)) {
+					getObjectFieldBusinessTypes()) {
 
 			if (!objectFieldBusinessType.isVisible()) {
 				continue;

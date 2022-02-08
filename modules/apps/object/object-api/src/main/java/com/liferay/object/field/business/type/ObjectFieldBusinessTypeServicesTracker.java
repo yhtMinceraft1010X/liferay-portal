@@ -25,8 +25,7 @@ public interface ObjectFieldBusinessTypeServicesTracker {
 
 	public ObjectFieldBusinessType getObjectFieldBusinessType(String name);
 
-	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes(
-		Locale locale);
+	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes();
 
 	public Set<String> getObjectFieldDBTypes();
 
