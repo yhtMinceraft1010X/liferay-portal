@@ -40,13 +40,12 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 
 	@Override
 	public ObjectFieldBusinessType getObjectFieldBusinessType(String name) {
-		return _objectFieldBusinessTypeServiceTrackerMap.getService(name);
+		return _serviceTrackerMap.getService(name);
 	}
 
 	@Override
 	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes() {
-		return new ArrayList(
-			_objectFieldBusinessTypeServiceTrackerMap.values());
+		return new ArrayList(_serviceTrackerMap.values());
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 		Set<String> objectFieldDBTypes = new HashSet<>();
 
 		for (ObjectFieldBusinessType objectFieldBusinessType :
-				_objectFieldBusinessTypeServiceTrackerMap.values()) {
+				_serviceTrackerMap.values()) {
 
 			objectFieldDBTypes.add(objectFieldBusinessType.getDBType());
 		}
@@ -64,18 +63,17 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_objectFieldBusinessTypeServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ObjectFieldBusinessType.class,
-				"object.field.business.type.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectFieldBusinessType.class,
+			"object.field.business.type.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_objectFieldBusinessTypeServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<String, ObjectFieldBusinessType>
-		_objectFieldBusinessTypeServiceTrackerMap;
+		_serviceTrackerMap;
 
 }
