@@ -167,38 +167,38 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				<div class="col-xl-3">
 
 					<%
-					CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+					CommerceAddress billingCommerceAddress = commerceOrder.getBillingAddress();
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (billingAddress == null) ? "add" : "edit") %>'
+						actionLabel='<%= LanguageUtil.get(request, (billingCommerceAddress == null) ? "add" : "edit") %>'
 						actionTargetId="billing-address-modal"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "billing-address") %>'
 					>
 						<c:choose>
-							<c:when test="<%= billingAddress == null %>">
+							<c:when test="<%= billingCommerceAddress == null %>">
 								<span class="text-muted">
 									<liferay-ui:message key="click-add-to-insert" />
 								</span>
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= billingAddress.getStreet1() %>
+									<%= billingCommerceAddress.getStreet1() %>
 								</p>
 
-								<c:if test="<%= !Validator.isBlank(billingAddress.getStreet2()) %>">
+								<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= billingAddress.getStreet2() %>
+										<%= billingCommerceAddress.getStreet2() %>
 									</p>
 
 									<p class="mb-0">
-										<%= billingAddress.getStreet3() %>
+										<%= billingCommerceAddress.getStreet3() %>
 									</p>
 								</c:if>
 
 								<p class="mb-0">
-									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(billingAddress) %>
+									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(billingCommerceAddress) %>
 								</p>
 							</c:otherwise>
 						</c:choose>
