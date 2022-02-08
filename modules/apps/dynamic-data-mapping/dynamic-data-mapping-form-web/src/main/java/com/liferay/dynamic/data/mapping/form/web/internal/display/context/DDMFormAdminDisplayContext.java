@@ -1541,6 +1541,25 @@ public class DDMFormAdminDisplayContext {
 			languageId, HtmlUtil.escape(jsonObject.getString(languageId)));
 	}
 
+	private List<DDMFormFieldType> _filterDDMFormFieldTypes(
+		List<DDMFormFieldType> ddmFormFieldTypes) {
+
+		List<String> outOfScopeDDMFormFieldTypes = Arrays.asList(
+			DDMFormFieldTypeConstants.DDM_IMAGE,
+			DDMFormFieldTypeConstants.GEOLOCATION,
+			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
+			LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT);
+
+		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
+
+		return stream.filter(
+			ddmFormFieldType -> !outOfScopeDDMFormFieldTypes.contains(
+				ddmFormFieldType.getName())
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception> _getAddFormDropdownItem() {
 		return dropdownItem -> {
 			HttpServletRequest httpServletRequest =
@@ -1726,25 +1745,6 @@ public class DDMFormAdminDisplayContext {
 
 		navigationItem.setLabel(
 			LanguageUtil.get(moduleResourceBundle, "data-providers"));
-	}
-
-	private List<DDMFormFieldType> _filterDDMFormFieldTypes(
-		List<DDMFormFieldType> ddmFormFieldTypes) {
-
-		List<String> outOfScopeDDMFormFieldTypes = Arrays.asList(
-			DDMFormFieldTypeConstants.DDM_IMAGE,
-			DDMFormFieldTypeConstants.GEOLOCATION,
-			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
-			LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT);
-
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
-
-		return stream.filter(
-			ddmFormFieldType -> !outOfScopeDDMFormFieldTypes.contains(
-				ddmFormFieldType.getName())
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private void _removeExpirationDateSetting(
