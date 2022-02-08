@@ -351,49 +351,49 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		FileEntry currentTemplateFileEntry =
+		FileEntry currentFileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId == 0) {
-			if (currentTemplateFileEntry != null) {
+			if (currentFileEntry != null) {
 				_dlAppLocalService.deleteFileEntry(
-					currentTemplateFileEntry.getFileEntryId());
+					currentFileEntry.getFileEntryId());
 			}
 
 			return;
 		}
 
-		FileEntry newTemplateFileEntry = _dlAppLocalService.getFileEntry(
+		FileEntry newFileEntry = _dlAppLocalService.getFileEntry(
 			fileEntryId);
 
-		if (!Objects.equals(newTemplateFileEntry.getExtension(), "jrxml")) {
+		if (!Objects.equals(newFileEntry.getExtension(), "jrxml")) {
 			throw new FileExtensionException();
 		}
 
-		if (currentTemplateFileEntry == null) {
-			String fileName = newTemplateFileEntry.getFileName();
+		if (currentFileEntry == null) {
+			String fileName = newFileEntry.getFileName();
 
 			int extensionIndex = fileName.indexOf(
-				newTemplateFileEntry.getExtension());
+				newFileEntry.getExtension());
 
 			String formattedFileName = StringBundler.concat(
 				fileName.substring(0, extensionIndex - 1), StringPool.UNDERLINE,
 				System.currentTimeMillis(), StringPool.PERIOD,
-				newTemplateFileEntry.getExtension());
+				newFileEntry.getExtension());
 
 			try {
 				_dlAppLocalService.addFileEntry(
 					"ORDER_PRINT_TEMPLATE", commerceChannel.getUserId(),
 					commerceChannel.getGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					newTemplateFileEntry.getFileName(),
-					newTemplateFileEntry.getMimeType(), formattedFileName,
+					newFileEntry.getFileName(),
+					newFileEntry.getMimeType(), formattedFileName,
 					StringPool.BLANK, StringPool.BLANK,
-					newTemplateFileEntry.getContentStream(),
-					newTemplateFileEntry.getSize(), null, null,
+					newFileEntry.getContentStream(),
+					newFileEntry.getSize(), null, null,
 					new ServiceContext());
 			}
 			finally {
@@ -403,14 +403,14 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			_dlAppLocalService.updateFileEntry(
 				commerceChannel.getUserId(),
-				currentTemplateFileEntry.getFileEntryId(),
-				newTemplateFileEntry.getFileName(),
-				newTemplateFileEntry.getMimeType(),
-				currentTemplateFileEntry.getTitle(),
-				currentTemplateFileEntry.getDescription(), StringPool.BLANK,
+				currentFileEntry.getFileEntryId(),
+				newFileEntry.getFileName(),
+				newFileEntry.getMimeType(),
+				currentFileEntry.getTitle(),
+				currentFileEntry.getDescription(), StringPool.BLANK,
 				DLVersionNumberIncrease.NONE,
-				newTemplateFileEntry.getContentStream(),
-				newTemplateFileEntry.getSize(), null, null,
+				newFileEntry.getContentStream(),
+				newFileEntry.getSize(), null, null,
 				new ServiceContext());
 		}
 	}
