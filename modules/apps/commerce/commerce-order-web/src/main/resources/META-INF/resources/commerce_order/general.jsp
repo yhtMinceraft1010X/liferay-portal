@@ -205,38 +205,38 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 					</commerce-ui:info-box>
 
 					<%
-					CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+					CommerceAddress shippingCommerceAddress = commerceOrder.getShippingAddress();
 					%>
 
 					<commerce-ui:info-box
-						actionLabel='<%= LanguageUtil.get(request, (shippingAddress == null) ? "add" : "edit") %>'
+						actionLabel='<%= LanguageUtil.get(request, (shippingCommerceAddress == null) ? "add" : "edit") %>'
 						actionTargetId="shipping-address-modal"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "shipping-address") %>'
 					>
 						<c:choose>
-							<c:when test="<%= shippingAddress == null %>">
+							<c:when test="<%= shippingCommerceAddress == null %>">
 								<span class="text-muted">
 									<liferay-ui:message key="click-add-to-insert" />
 								</span>
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= shippingAddress.getStreet1() %>
+									<%= shippingCommerceAddress.getStreet1() %>
 								</p>
 
-								<c:if test="<%= !Validator.isBlank(shippingAddress.getStreet2()) %>">
+								<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= shippingAddress.getStreet2() %>
+										<%= shippingCommerceAddress.getStreet2() %>
 									</p>
 
 									<p class="mb-0">
-										<%= shippingAddress.getStreet3() %>
+										<%= shippingCommerceAddress.getStreet3() %>
 									</p>
 								</c:if>
 
 								<p class="mb-0">
-									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(shippingAddress) %>
+									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(shippingCommerceAddress) %>
 								</p>
 							</c:otherwise>
 						</c:choose>
