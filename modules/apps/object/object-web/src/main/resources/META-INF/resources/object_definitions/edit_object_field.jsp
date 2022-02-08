@@ -42,10 +42,10 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="type" required="<%= true %>">
 
 						<%
-						for (Map<String, String> objectFieldBusinessTypeData : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)) {
+						for (Map<String, String> objectFieldBusinessTypeMap : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)) {
 						%>
 
-							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessTypeData.get("label")) : GetterUtil.getString(objectFieldBusinessTypeData.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessTypeData.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessTypeData.get("businessType")) %>' />
+							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessTypeMap.get("label")) : GetterUtil.getString(objectFieldBusinessTypeMap.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessTypeMap.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessTypeMap.get("businessType")) %>' />
 
 						<%
 						}
