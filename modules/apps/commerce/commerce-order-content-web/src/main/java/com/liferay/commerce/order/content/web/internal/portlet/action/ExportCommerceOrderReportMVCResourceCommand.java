@@ -80,10 +80,6 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		CommerceChannel commerceChannel =
-			_commerceChannelService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 
@@ -222,6 +218,10 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			"totalWithTaxAmountMoney",
 			commerceOrder.getTotalWithTaxAmountMoney()
 		);
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
 
 		FileEntry fileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
