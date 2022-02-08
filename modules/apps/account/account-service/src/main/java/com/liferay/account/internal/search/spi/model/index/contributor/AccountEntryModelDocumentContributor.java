@@ -63,7 +63,6 @@ public class AccountEntryModelDocumentContributor
 		long[] accountUserIds = _getAccountUserIds(accountEntry);
 
 		document.addKeyword("accountUserIds", accountUserIds);
-
 		document.addKeyword(
 			"allowNewUserMembership",
 			_isAllowNewUserMembership(accountUserIds, type));
