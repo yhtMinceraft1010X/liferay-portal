@@ -128,10 +128,15 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			);
 		}
 
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
 		hashMapWrapper.put(
 			"commerceAccountName", commerceAccount.getName()
 		).put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
+		).put(
+			"commerceOrderItemListCount", commerceOrderItems.size()
 		).put(
 			"companyId", commerceAccount.getCompanyId()
 		).put(
@@ -202,12 +207,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			);
 		}
 
-		List<CommerceOrderItem> commerceOrderItemList =
-			commerceOrder.getCommerceOrderItems();
-
 		hashMapWrapper.put(
-			"commerceOrderItemListCount", commerceOrderItemList.size()
-		).put(
 			"taxAmount",
 			_commercePriceFormatter.format(
 				commerceOrder.getCommerceCurrency(),
@@ -230,7 +230,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		PortletResponseUtil.write(
 			resourceResponse,
 			_commerceReportExporter.export(
-				commerceOrderItemList, fileEntry, hashMapWrapper.build()));
+				commerceOrderItems, fileEntry, hashMapWrapper.build()));
 	}
 
 	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
