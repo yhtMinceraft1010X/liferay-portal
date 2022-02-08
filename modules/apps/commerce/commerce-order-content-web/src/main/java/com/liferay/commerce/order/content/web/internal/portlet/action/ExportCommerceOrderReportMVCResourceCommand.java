@@ -136,7 +136,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		).put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
-			"commerceOrderItemListCount", commerceOrderItems.size()
+			"commerceOrderItemsSize", commerceOrderItems.size()
 		).put(
 			"companyId", commerceAccount.getCompanyId()
 		).put(
