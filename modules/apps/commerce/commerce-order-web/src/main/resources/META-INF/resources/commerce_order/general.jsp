@@ -129,7 +129,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0"><%= commerceAccount.getName() %></p>
-								<p class="mb-0"><%= StringPool.POUND + commerceAccount.getCommerceAccountId() %></p>
+								<p class="mb-0">#<%= commerceAccount.getCommerceAccountId() %></p>
 							</c:otherwise>
 						</c:choose>
 					</commerce-ui:info-box>
