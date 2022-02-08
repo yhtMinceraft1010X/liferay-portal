@@ -54,7 +54,7 @@ public class IntegerObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"general-integer-number-that-supports-up-to-nine-digits");
+			"add-an-integer-up-to-nine-digits");
 	}
 
 	@Override

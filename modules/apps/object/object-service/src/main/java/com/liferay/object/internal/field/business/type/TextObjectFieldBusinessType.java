@@ -49,7 +49,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"add-simple-text-field-up-to-280-characters");
+			"add-text-up-to-280-characters");
 	}
 
 	@Override

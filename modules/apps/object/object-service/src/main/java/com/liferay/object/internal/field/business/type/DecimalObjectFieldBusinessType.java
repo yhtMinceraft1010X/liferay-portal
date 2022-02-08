@@ -54,7 +54,7 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"general-decimal-number-that-supports-fractional-portions");
+			"add-a-decimal-number-that-supports-fractional-portions");
 	}
 
 	@Override

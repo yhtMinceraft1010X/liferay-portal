@@ -51,7 +51,7 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"select-between-true-or-false-values");
+			"select-between-true-or-false");
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class PrecisionDecimalObjectFieldBusinessType
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"decimal-high-precision-number-without-rounding");
+			"add-a-high-precision-decimal-number-without-rounding");
 	}
 
 	@Override

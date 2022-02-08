@@ -54,7 +54,7 @@ public class LongTextObjectFieldBusinessType
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"add-text-box-field-that-supports-up-to-65000-characters");
+			"add-text-that-up-to-65,000-characters");
 	}
 
 	@Override

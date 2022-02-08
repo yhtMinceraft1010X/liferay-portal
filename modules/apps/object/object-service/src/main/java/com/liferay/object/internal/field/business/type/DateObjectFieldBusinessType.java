@@ -49,7 +49,7 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"field-that-supports-date-values");
+			"add-a-date");
 	}
 
 	@Override

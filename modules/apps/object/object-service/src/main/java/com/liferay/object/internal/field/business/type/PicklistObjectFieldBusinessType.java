@@ -52,7 +52,7 @@ public class PicklistObjectFieldBusinessType
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"choose-between-a-predefined-list-of-values");
+			"choose-from-a-picklist");
 	}
 
 	@Override
