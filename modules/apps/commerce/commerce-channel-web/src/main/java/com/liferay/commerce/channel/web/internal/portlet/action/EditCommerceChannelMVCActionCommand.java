@@ -351,16 +351,16 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		FileEntry currentFileEntry =
+		FileEntry existingFileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId == 0) {
-			if (currentFileEntry != null) {
+			if (existingFileEntry != null) {
 				_dlAppLocalService.deleteFileEntry(
-					currentFileEntry.getFileEntryId());
+					existingFileEntry.getFileEntryId());
 			}
 
 			return;
@@ -373,7 +373,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			throw new FileExtensionException();
 		}
 
-		if (currentFileEntry == null) {
+		if (existingFileEntry == null) {
 			String fileName = newFileEntry.getFileName();
 
 			int extensionIndex = fileName.indexOf(
@@ -403,11 +403,11 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			_dlAppLocalService.updateFileEntry(
 				commerceChannel.getUserId(),
-				currentFileEntry.getFileEntryId(),
+				existingFileEntry.getFileEntryId(),
 				newFileEntry.getFileName(),
 				newFileEntry.getMimeType(),
-				currentFileEntry.getTitle(),
-				currentFileEntry.getDescription(), StringPool.BLANK,
+				existingFileEntry.getTitle(),
+				existingFileEntry.getDescription(), StringPool.BLANK,
 				DLVersionNumberIncrease.NONE,
 				newFileEntry.getContentStream(),
 				newFileEntry.getSize(), null, null,
