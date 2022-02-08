@@ -129,10 +129,10 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
-	public List<Map<String, String>> getObjectFieldBusinessTypesData(
+	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
 		Locale locale) {
 
-		List<Map<String, String>> objectFieldBusinessTypes = new ArrayList<>();
+		List<Map<String, String>> objectFieldBusinessTypeMaps = new ArrayList<>();
 
 		for (ObjectFieldBusinessType objectFieldBusinessType :
 				_objectFieldBusinessTypeServicesTracker.
@@ -142,7 +142,7 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				continue;
 			}
 
-			objectFieldBusinessTypes.add(
+			objectFieldBusinessTypeMaps.add(
 				HashMapBuilder.put(
 					"businessType", objectFieldBusinessType.getName()
 				).put(
@@ -155,7 +155,7 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				).build());
 		}
 
-		return objectFieldBusinessTypes;
+		return objectFieldBusinessTypeMaps;
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

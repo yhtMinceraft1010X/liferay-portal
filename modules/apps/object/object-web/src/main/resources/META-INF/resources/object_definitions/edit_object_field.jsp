@@ -42,7 +42,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() || Validator.isNotNull(objectField.getRelationshipType()) %>" name="type" required="<%= true %>">
 
 						<%
-						for (Map<String, String> objectFieldBusinessTypeData : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypesData(locale)) {
+						for (Map<String, String> objectFieldBusinessTypeData : objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)) {
 						%>
 
 							<aui:option label='<%= objectDefinitionsFieldsDisplayContext.isFFObjectFieldBusinessTypeConfigurationEnabled() ? GetterUtil.getString(objectFieldBusinessTypeData.get("label")) : GetterUtil.getString(objectFieldBusinessTypeData.get("dbType")) %>' selected='<%= Objects.equals(objectField.getBusinessType(), GetterUtil.getString(objectFieldBusinessTypeData.get("businessType"))) %>' value='<%= GetterUtil.getString(objectFieldBusinessTypeData.get("businessType")) %>' />
@@ -117,7 +117,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypesData(locale)
+			"objectFieldBusinessTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)
 		).put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).build()
