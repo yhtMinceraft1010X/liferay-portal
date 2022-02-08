@@ -132,7 +132,8 @@ public class ObjectDefinitionsFieldsDisplayContext {
 	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
 		Locale locale) {
 
-		List<Map<String, String>> objectFieldBusinessTypeMaps = new ArrayList<>();
+		List<Map<String, String>> objectFieldBusinessTypeMaps =
+			new ArrayList<>();
 
 		for (ObjectFieldBusinessType objectFieldBusinessType :
 				_objectFieldBusinessTypeServicesTracker.
