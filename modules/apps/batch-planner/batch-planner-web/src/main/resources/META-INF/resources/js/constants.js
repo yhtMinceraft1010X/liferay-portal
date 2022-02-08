@@ -14,6 +14,7 @@
 
 export const CSV_FORMAT = 'csv';
 export const EXPORT_FILE_NAME = 'Export.zip';
+export const FILE_MAPPED_FIELDS = 'file-mapped-fields';
 export const FILE_SCHEMA_EVENT = 'file-schema';
 
 export const HEADERS = new Headers({
@@ -36,6 +37,5 @@ export const SCHEMA_SELECTED_EVENT = 'schema-selected';
 export const TEMPLATE_CREATED = 'TEMPLATE_CREATED';
 export const TEMPLATE_SELECTED_EVENT = 'template-selected';
 export const TEMPLATE_SOILED = 'template-soiled';
-export const FILE_MAPPED_FIELDS = 'file-mapped-fields';
 
 export const IMPORT_FILE_FORMATS = [CSV_FORMAT, JSON_FORMAT, JSONL_FORMAT];
