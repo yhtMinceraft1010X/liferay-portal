@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "object.field.business.type.name=" + ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
+	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
 	service = {
 		LargeFileObjectFieldBusinessType.class, ObjectFieldBusinessType.class
 	}

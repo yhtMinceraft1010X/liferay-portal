@@ -354,10 +354,9 @@ public class ObjectFieldLocalServiceImpl
 			objectField.setDBType(objectFieldBusinessType.getDBType());
 		}
 		else if (objectFieldDBTypes.contains(dbType) &&
-				 _objectFieldDefaultBusinessTypes.containsKey(dbType)) {
+				 _businessTypes.containsKey(dbType)) {
 
-			objectField.setBusinessType(
-				_objectFieldDefaultBusinessTypes.get(dbType));
+			objectField.setBusinessType(_businessTypes.get(dbType));
 			objectField.setDBType(dbType);
 		}
 		else {
@@ -441,31 +440,30 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
+	private final Map<String, String> _businessTypes = HashMapBuilder.put(
+		"BigDecimal", "PrecisionDecimal"
+	).put(
+		"Boolean", "Boolean"
+	).put(
+		"Clob", "LongText"
+	).put(
+		"Date", "Date"
+	).put(
+		"Double", "Decimal"
+	).put(
+		"Integer", "Integer"
+	).put(
+		"Long", "LongInteger"
+	).put(
+		"String", "Text"
+	).build();
+
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	@Reference
 	private ObjectFieldBusinessTypeServicesTracker
 		_objectFieldBusinessTypeServicesTracker;
-
-	private final Map<String, String> _objectFieldDefaultBusinessTypes =
-		HashMapBuilder.put(
-			"BigDecimal", "PrecisionDecimal"
-		).put(
-			"Boolean", "Boolean"
-		).put(
-			"Clob", "LongText"
-		).put(
-			"Date", "Date"
-		).put(
-			"Double", "Decimal"
-		).put(
-			"Integer", "Integer"
-		).put(
-			"Long", "LongInteger"
-		).put(
-			"String", "Text"
-		).build();
 
 	@Reference
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;

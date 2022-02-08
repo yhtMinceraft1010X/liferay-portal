@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "object.field.business.type.name=" + ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 	service = {
 		ObjectFieldBusinessType.class, PicklistObjectFieldBusinessType.class
 	}

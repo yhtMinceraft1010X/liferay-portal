@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "object.field.business.type.name=" + ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 	service = {
 		LongIntegerObjectFieldBusinessType.class, ObjectFieldBusinessType.class
 	}

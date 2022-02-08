@@ -39,8 +39,8 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 	implements ObjectFieldBusinessTypeServicesTracker {
 
 	@Override
-	public ObjectFieldBusinessType getObjectFieldBusinessType(String name) {
-		return _serviceTrackerMap.getService(name);
+	public ObjectFieldBusinessType getObjectFieldBusinessType(String key) {
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ObjectFieldBusinessTypeServicesTrackerImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ObjectFieldBusinessType.class,
-			"object.field.business.type.name");
+			"object.field.business.type.key");
 	}
 
 	@Deactivate
