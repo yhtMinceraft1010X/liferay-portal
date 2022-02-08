@@ -42,10 +42,7 @@ const Assignments = (props) => {
 	const AssignmentSectionComponent = assignmentSectionComponents[section];
 
 	useEffect(() => {
-		if (assignmentType === 'user') {
-			setSections(assignments.sectionsData);
-		}
-		else if (assignmentType === 'roleType') {
+		if (assignmentType === 'roleType') {
 			const sectionsData = [];
 
 			for (let i = 0; i < assignments.roleType.length; i++) {
@@ -58,6 +55,9 @@ const Assignments = (props) => {
 			}
 
 			setSections(sectionsData);
+		}
+		else if (assignmentType === 'user') {
+			setSections(assignments.sectionsData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
