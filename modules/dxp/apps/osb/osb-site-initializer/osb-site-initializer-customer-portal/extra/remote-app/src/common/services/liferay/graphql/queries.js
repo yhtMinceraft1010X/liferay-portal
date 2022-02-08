@@ -317,6 +317,17 @@ export const getAccounts = gql`
 	}
 `;
 
+export const getAccountByExternalReferenceCode = gql`
+	query getAccountByExternalReferenceCode($externalReferenceCode: String!) {
+		accountByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+		) {
+			id
+			name
+		}
+	}
+`;
+
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {
