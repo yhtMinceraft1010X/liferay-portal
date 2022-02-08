@@ -28,7 +28,7 @@ class DiagramZoomHandler {
 			!event.target.closest('.diagram-tooltip-wrapper') &&
 			!event.target.closest('.dropdown-menu')
 		) {
-			this._resetActivePinsState();
+			this.resetActivePinsState();
 		}
 	}
 

@@ -51,7 +51,9 @@ function DiagramFooter({
 								/>
 							</span>
 
-							{Liferay.Language.get('expand')}
+							{expanded
+								? Liferay.Language.get('compress')
+								: Liferay.Language.get('expand')}
 						</ClayButton>
 					</ClayManagementToolbar.Item>
 
