@@ -2104,8 +2104,8 @@ public class TestrayImporter {
 					String upstreamBranchName =
 						portalGitWorkingDirectory.getUpstreamBranchName();
 
-					if (upstreamBranchName.contains("6.2") ||
-						upstreamBranchName.contains("6.1")) {
+					if (upstreamBranchName.contains("6.1") ||
+						upstreamBranchName.contains("6.2")) {
 
 						parameters.put(
 							"test.app.server.bin.dir",
