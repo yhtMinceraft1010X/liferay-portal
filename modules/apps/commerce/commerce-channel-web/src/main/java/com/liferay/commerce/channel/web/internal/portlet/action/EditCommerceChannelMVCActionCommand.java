@@ -348,14 +348,14 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		long commerceChannelId = ParamUtil.getLong(
 			actionRequest, "commerceChannelId");
 
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		FileEntry currentTemplateFileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				commerceChannel.getGroupId(), "ORDER_PRINT_TEMPLATE");
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		if (fileEntryId == 0) {
 			if (currentTemplateFileEntry != null) {
