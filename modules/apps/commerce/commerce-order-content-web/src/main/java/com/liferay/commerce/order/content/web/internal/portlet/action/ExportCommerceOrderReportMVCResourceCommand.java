@@ -169,6 +169,8 @@ public class ExportCommerceOrderReportMVCResourceCommand
 					return country.getName(themeDisplay.getLocale());
 				}
 			).put(
+				"shippingAmountMoney", commerceOrder.getShippingMoney()
+			).put(
 				"shippingAddressName", shippingAddress.getName()
 			).put(
 				"shippingAddressPhoneNumber", shippingAddress.getPhoneNumber()
@@ -191,8 +193,6 @@ public class ExportCommerceOrderReportMVCResourceCommand
 				"shippingAddressStreet3", shippingAddress.getStreet3()
 			).put(
 				"shippingAddressZip", shippingAddress.getZip()
-			).put(
-				"shippingAmountMoney", commerceOrder.getShippingMoney()
 			).put(
 				"shippingDiscountAmount",
 				_commercePriceFormatter.format(
