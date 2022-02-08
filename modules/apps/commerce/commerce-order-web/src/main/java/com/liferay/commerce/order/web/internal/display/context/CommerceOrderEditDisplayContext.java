@@ -481,7 +481,7 @@ public class CommerceOrderEditDisplayContext {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Region not found", portalException);
+				_log.debug(portalException);
 			}
 		}
 
