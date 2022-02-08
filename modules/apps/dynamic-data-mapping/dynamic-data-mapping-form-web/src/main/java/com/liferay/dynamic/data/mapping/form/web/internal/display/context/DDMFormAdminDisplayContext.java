@@ -367,7 +367,7 @@ public class DDMFormAdminDisplayContext {
 
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
 		List<DDMFormFieldType> availableDDMFormFieldTypes =
-			_removeDDMFormFieldTypesOutOfScope(
+			_filterDDMFormFieldTypes(
 				_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes());
 
 		String serializedFormFieldTypes = _serialize(
@@ -1728,10 +1728,10 @@ public class DDMFormAdminDisplayContext {
 			LanguageUtil.get(moduleResourceBundle, "data-providers"));
 	}
 
-	private List<DDMFormFieldType> _removeDDMFormFieldTypesOutOfScope(
+	private List<DDMFormFieldType> _filterDDMFormFieldTypes(
 		List<DDMFormFieldType> ddmFormFieldTypes) {
 
-		List<String> ddmFormFieldTypesOutOfScope = Arrays.asList(
+		List<String> outOfScopeDDMFormFieldTypes = Arrays.asList(
 			DDMFormFieldTypeConstants.DDM_IMAGE,
 			DDMFormFieldTypeConstants.GEOLOCATION,
 			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
@@ -1740,7 +1740,7 @@ public class DDMFormAdminDisplayContext {
 		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
 
 		return stream.filter(
-			ddmFormFieldType -> !ddmFormFieldTypesOutOfScope.contains(
+			ddmFormFieldType -> !outOfScopeDDMFormFieldTypes.contains(
 				ddmFormFieldType.getName())
 		).collect(
 			Collectors.toList()
