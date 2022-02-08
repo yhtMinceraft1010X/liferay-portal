@@ -31,12 +31,8 @@ import java.util.Map;
 public interface CommerceReportExporter {
 
 	public byte[] export(
-			Collection<?> beanCollection, Map<String, Object> parameters)
-		throws IOException;
-
-	public byte[] export(
-			Collection<?> beanCollection, Map<String, Object> parameters,
-			FileEntry fileEntry)
+			Collection<?> beanCollection, FileEntry fileEntry,
+			Map<String, Object> parameters)
 		throws IOException;
 
 }

@@ -230,7 +230,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		PortletResponseUtil.write(
 			resourceResponse,
 			_commerceReportExporter.export(
-				commerceOrderItemList, hashMapWrapper.build(), fileEntry));
+				commerceOrderItemList, fileEntry, hashMapWrapper.build()));
 	}
 
 	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
