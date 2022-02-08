@@ -127,11 +127,6 @@ public class ObjectDefinitionGraphQLTest {
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/create" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
-	}
-
-	@Test
-	public void testAddObjectEntryWithReadOnlyFieldsReturnsError()
-		throws Exception {
 
 		Assert.assertEquals(
 			"Bad Request",
