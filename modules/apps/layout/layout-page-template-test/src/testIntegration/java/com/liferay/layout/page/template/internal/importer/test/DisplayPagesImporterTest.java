@@ -219,11 +219,9 @@ public class DisplayPagesImporterTest {
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
 		Assert.assertNotNull(collectionJSONObject);
-
 		Assert.assertEquals(
 			"com.liferay.asset.kernel.model.AssetCategory",
 			collectionJSONObject.getString("itemType"));
-
 		Assert.assertEquals(
 			"com.liferay.asset.categories.admin.web.internal.info.collection." +
 				"provider.AssetCategoriesForAssetEntryRelatedInfoItem" +
