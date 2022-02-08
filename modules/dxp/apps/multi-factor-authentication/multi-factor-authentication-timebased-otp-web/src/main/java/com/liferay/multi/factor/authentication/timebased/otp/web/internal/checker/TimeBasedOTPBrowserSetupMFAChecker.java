@@ -111,8 +111,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 					_mfaTimeBasedOTPConfiguration.algorithmKeySize());
 
 			httpServletRequest.setAttribute(
-				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM,
-				_MFA_TOTP_URI_ALGORITHM);
+				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM, "SHA1");
 			httpServletRequest.setAttribute(
 				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME,
 				company.getName());
@@ -440,8 +439,6 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 		return false;
 	}
-
-	private static final String _MFA_TOTP_URI_ALGORITHM = "SHA1";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TimeBasedOTPBrowserSetupMFAChecker.class);
