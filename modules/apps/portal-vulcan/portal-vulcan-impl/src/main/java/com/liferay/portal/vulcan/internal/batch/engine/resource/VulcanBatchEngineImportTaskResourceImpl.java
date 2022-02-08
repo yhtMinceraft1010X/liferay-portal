@@ -102,17 +102,17 @@ public class VulcanBatchEngineImportTaskResourceImpl
 	}
 
 	private String _getImportStrategy() {
-		return _getQueryParamValue("importStrategy");
+		return _getQueryParameterValue("importStrategy");
 	}
 
-	private String _getQueryParamValue(String queryParam) {
+	private String _getQueryParameterValue(String queryParameterName) {
 		MultivaluedMap<String, String> queryParameters =
 			_contextUriInfo.getQueryParameters();
 
 		for (Map.Entry<String, List<String>> entry :
 				queryParameters.entrySet()) {
 
-			if (!Objects.equals(entry.getKey(), queryParam)) {
+			if (!Objects.equals(entry.getKey(), queryParameterName)) {
 				continue;
 			}
 
@@ -129,7 +129,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 	}
 
 	private String _getTaskItemDelegateName() {
-		return _getQueryParamValue("taskItemDelegateName");
+		return _getQueryParameterValue("taskItemDelegateName");
 	}
 
 	private void _initializeContext() {
