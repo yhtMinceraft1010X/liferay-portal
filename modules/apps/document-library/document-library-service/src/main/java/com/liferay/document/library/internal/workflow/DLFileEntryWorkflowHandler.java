@@ -89,12 +89,12 @@ public class DLFileEntryWorkflowHandler
 	}
 
 	@Override
-	public long getDiscussionClassPk(
+	public long getDiscussionClassPK(
 		Map<String, Serializable> workflowContext) {
 
 		try {
 			AssetRenderer<DLFileEntry> dlFileEntryAssetRenderer =
-				getAssetRenderer(super.getDiscussionClassPk(workflowContext));
+				getAssetRenderer(super.getDiscussionClassPK(workflowContext));
 
 			return dlFileEntryAssetRenderer.getClassPK();
 		}
@@ -102,7 +102,7 @@ public class DLFileEntryWorkflowHandler
 			_log.error(portalException);
 		}
 
-		return super.getDiscussionClassPk(workflowContext);
+		return super.getDiscussionClassPK(workflowContext);
 	}
 
 	@Override

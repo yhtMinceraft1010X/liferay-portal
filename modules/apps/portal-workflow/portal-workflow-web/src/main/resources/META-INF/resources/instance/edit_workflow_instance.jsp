@@ -147,7 +147,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 						<%
 						WorkflowInstance workflowInstance = (WorkflowInstance)renderRequest.getAttribute(WebKeys.WORKFLOW_INSTANCE);
 
-						long discussionClassPK = workflowHandler.getDiscussionClassPk(workflowInstance.getWorkflowContext());
+						long discussionClassPK = workflowHandler.getDiscussionClassPK(workflowInstance.getWorkflowContext());
 						%>
 
 						<liferay-ui:panel

@@ -52,7 +52,7 @@ public interface WorkflowHandler<T> {
 
 	public String getClassName();
 
-	public default long getDiscussionClassPk(
+	public default long getDiscussionClassPK(
 		Map<String, Serializable> workflowContext) {
 
 		return GetterUtil.getLong(

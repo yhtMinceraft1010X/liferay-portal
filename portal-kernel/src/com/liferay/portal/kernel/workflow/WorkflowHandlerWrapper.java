@@ -62,10 +62,10 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 	}
 
 	@Override
-	public long getDiscussionClassPk(
+	public long getDiscussionClassPK(
 		Map<String, Serializable> workflowContext) {
 
-		return _workflowHandler.getDiscussionClassPk(workflowContext);
+		return _workflowHandler.getDiscussionClassPK(workflowContext);
 	}
 
 	@Override
