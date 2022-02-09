@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -149,26 +148,24 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getStyleBookEntryName() {
+		if (_styleBookEntryName != null) {
+			return _styleBookEntryName;
+		}
+
+		_styleBookEntryName = LanguageUtil.get(
+			_httpServletRequest, "inherited");
+
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		StyleBookEntry defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(selLayout);
+		if (hasStyleBooks() && (selLayout.getStyleBookEntryId() > 0)) {
+			StyleBookEntry styleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+					selLayout.getStyleBookEntryId());
 
-		if (selLayout.getStyleBookEntryId() > 0) {
-			return defaultStyleBookEntry.getName();
+			_styleBookEntryName = styleBookEntry.getName();
 		}
 
-		if (defaultStyleBookEntry == null) {
-			return LanguageUtil.get(_httpServletRequest, "styles-from-theme");
-		}
-
-		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
-
-			return LanguageUtil.get(_httpServletRequest, "styles-from-master");
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
+		return _styleBookEntryName;
 	}
 
 	public boolean hasEditableMasterLayout() {
@@ -252,6 +249,7 @@ public class LayoutLookAndFeelDisplayContext {
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _masterLayoutName;
+	private String _styleBookEntryName;
 	private final ThemeDisplay _themeDisplay;
 
 }
