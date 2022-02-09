@@ -72,7 +72,7 @@ public class ShippingFixedOptionTermResourceImpl
 
 		if (commerceShippingFixedOption == null) {
 			throw new NoSuchShippingFixedOptionException(
-				"Unable to find payment method group rel with ID " + id);
+				"Unable to find shipping fixed option with ID " + id);
 		}
 
 		return Page.of(
