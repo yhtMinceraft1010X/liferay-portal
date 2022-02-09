@@ -445,17 +445,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void processPortletProperties(
-			String servletContextName, ClassLoader classLoader)
-		throws Exception {
-
-		_processPortletProperties(classLoader);
-	}
-
 	protected void unbindDataSource(String servletContextName) {
 		Boolean dataSourceBindState = _dataSourceBindStates.remove(
 			servletContextName);
