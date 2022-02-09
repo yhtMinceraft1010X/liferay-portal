@@ -500,10 +500,10 @@ public class ObjectEntryDisplayContext {
 			objectField.getName(),
 			objectFieldBusinessType.getDDMFormFieldTypeName());
 
-		Map<String, Object> objectFieldBusinessTypeProperties =
+		Map<String, Object> properties =
 			objectFieldBusinessType.getProperties();
 
-		objectFieldBusinessTypeProperties.forEach(
+		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));
 
 		if (StringUtil.equals(

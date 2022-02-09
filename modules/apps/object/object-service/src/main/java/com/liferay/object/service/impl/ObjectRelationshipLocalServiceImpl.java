@@ -318,7 +318,6 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setUserName(user.getFullName());
 		objectField.setListTypeDefinitionId(0);
 		objectField.setObjectDefinitionId(objectDefinitionId2);
-
 		objectField.setBusinessType(
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP);
 
