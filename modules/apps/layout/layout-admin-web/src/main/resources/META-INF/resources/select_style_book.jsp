@@ -17,9 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectStyleBookEntryDisplayContext selectStyleBookEntryDisplayContext = new SelectStyleBookEntryDisplayContext(request, layoutsAdminDisplayContext.getSelLayout(), liferayPortletResponse);
+boolean editableMasterLayout = ParamUtil.getBoolean(request, "editableMasterLayout");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectStyleBook");
+long styleBookEntryId = ParamUtil.getLong(request, "styleBookEntryId");
 
-List<StyleBookEntry> styleBookEntries = selectStyleBookEntryDisplayContext.getStyleBookEntries();
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
+
+String defaultStyleBookLabel = LanguageUtil.get(resourceBundle, "default-style-book");
+
+if (editableMasterLayout) {
+	defaultStyleBookLabel = LanguageUtil.get(resourceBundle, "inherited-from-master");
+}
+
+StyleBookEntry layoutStyleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layoutsAdminDisplayContext.getSelLayout());
+
+List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayContext.getStyleBookEntries();
 %>
 
 <aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
@@ -27,7 +39,7 @@ List<StyleBookEntry> styleBookEntries = selectStyleBookEntryDisplayContext.getSt
 		<li class="card-page-item card-page-item-asset">
 			<div class="form-check form-check-card">
 				<clay:vertical-card
-					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(selectStyleBookEntryDisplayContext.getDefaultStyleBookLabel(), selectStyleBookEntryDisplayContext.getDefaultStyleBookEntry(), renderRequest, Objects.equals(selectStyleBookEntryDisplayContext.getStyleBookEntryId(), 0L)) %>"
+					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest, Objects.equals(styleBookEntryId, 0L)) %>"
 				/>
 			</div>
 		</li>
@@ -39,7 +51,7 @@ List<StyleBookEntry> styleBookEntries = selectStyleBookEntryDisplayContext.getSt
 			<li class="card-page-item card-page-item-asset">
 				<div class="form-check form-check-card">
 					<clay:vertical-card
-						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest, Objects.equals(styleBookEntry.getStyleBookEntryId(), selectStyleBookEntryDisplayContext.getStyleBookEntryId())) %>"
+						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest, Objects.equals(styleBookEntry.getStyleBookEntryId(), styleBookEntryId)) %>"
 					/>
 				</div>
 			</li>
@@ -74,7 +86,7 @@ List<StyleBookEntry> styleBookEntries = selectStyleBookEntryDisplayContext.getSt
 			}
 
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escape(selectStyleBookEntryDisplayContext.getEventName()) %>',
+				'<%= HtmlUtil.escape(eventName) %>',
 				{
 					data: event.delegateTarget.dataset,
 				}
