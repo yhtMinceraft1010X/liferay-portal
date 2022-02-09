@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import com.liferay.taglib.search.ResultRow;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -223,20 +223,13 @@ public class DefaultWikiListPagesDisplayContext
 
 			Hits hits = indexer.search(searchContext);
 
-			List<SearchResult> searchResults =
+			List<WikiPage> pages = TransformUtil.transform(
 				SearchResultUtil.getSearchResults(
-					hits, themeDisplay.getLocale());
+					hits, themeDisplay.getLocale()),
+				searchResult -> WikiPageLocalServiceUtil.getPage(
+					searchResult.getClassPK()));
 
-			List<WikiPage> results = new ArrayList<>();
-
-			for (SearchResult searchResult : searchResults) {
-				WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
-					searchResult.getClassPK());
-
-				results.add(wikiPage);
-			}
-
-			searchContainer.setResultsAndTotal(() -> results, hits.getLength());
+			searchContainer.setResultsAndTotal(() -> pages, hits.getLength());
 		}
 		else if (navigation.equals("all-pages")) {
 			searchContainer.setResultsAndTotal(
