@@ -35,11 +35,11 @@ import javax.servlet.http.HttpServletRequest;
 public class TranslationRequestHelper {
 
 	public TranslationRequestHelper(
-		InfoItemServiceTracker infoItemServiceTracker,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		InfoItemServiceTracker infoItemServiceTracker) {
 
-		_infoItemServiceTracker = infoItemServiceTracker;
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
 	public TranslationRequestHelper(
@@ -47,8 +47,8 @@ public class TranslationRequestHelper {
 		PortletRequest portletRequest) {
 
 		this(
-			infoItemServiceTracker,
-			PortalUtil.getHttpServletRequest(portletRequest));
+			PortalUtil.getHttpServletRequest(portletRequest),
+			infoItemServiceTracker);
 	}
 
 	public String getClassName(long segmentsExperienceId) {

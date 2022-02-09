@@ -47,7 +47,6 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -176,9 +175,7 @@ public class ExportTranslationDisplayContext {
 		return experiences;
 	}
 
-	public Map<String, Object> getExportTranslationData()
-		throws PortalException, URISyntaxException {
-
+	public Map<String, Object> getExportTranslationData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"availableExportFileFormats",
 			() -> {
@@ -234,7 +231,7 @@ public class ExportTranslationDisplayContext {
 		return _title;
 	}
 
-	private Set<Locale> _getAvailableSourceLocales() throws PortalException {
+	private Set<Locale> _getAvailableSourceLocales() throws Exception {
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, _className);
@@ -297,19 +294,19 @@ public class ExportTranslationDisplayContext {
 		);
 	}
 
-	private String _getExportTranslationURLString() throws URISyntaxException {
+	private String _getExportTranslationURLString() throws Exception {
 		URIBuilder.URIBuilderWrapper uriBuilderWrapper = URIBuilder.create(
 			PortalUtil.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE +
 				"/translation/export_translation"
 		).addParameter(
 			"classNameId", String.valueOf(_classNameId)
-		).addParameter(
-			"groupId", String.valueOf(_groupId)
 		);
 
 		for (long classPK : _classPKs) {
 			uriBuilderWrapper.addParameter("classPK", String.valueOf(classPK));
 		}
+
+		uriBuilderWrapper.addParameter("groupId", String.valueOf(_groupId));
 
 		URI uri = uriBuilderWrapper.build();
 
