@@ -17,20 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request, liferayPortletResponse);
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectMasterLayout");
+long masterLayoutPlid = ParamUtil.getLong(request, "masterLayoutPlid");
+
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
+
+List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries();
 %>
 
 <aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<ul class="card-page card-page-equal-height">
 
 		<%
-		for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries()) {
+		for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
 		%>
 
 			<li class="card-page-item card-page-item-asset">
 				<div class="form-check form-check-card">
 					<clay:vertical-card
-						verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest) %>"
+						verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, Objects.equals(masterLayoutPageTemplateEntry.getPlid(), masterLayoutPlid)) %>"
 					/>
 				</div>
 			</li>
@@ -43,6 +48,6 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 </aui:form>
 
 <liferay-frontend:component
-	context="<%= selectLayoutPageTemplateEntryDisplayContext.getComponentContext() %>"
+	context='<%= HashMapBuilder.<String, Object>put("eventName", HtmlUtil.escape(eventName)).put("selector", ".select-master-layout-option").build() %>'
 	module="js/SelectCardHandler"
 />
