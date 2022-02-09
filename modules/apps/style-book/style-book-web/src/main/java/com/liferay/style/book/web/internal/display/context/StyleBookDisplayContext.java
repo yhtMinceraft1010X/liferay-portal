@@ -213,7 +213,6 @@ public class StyleBookDisplayContext {
 		StyleBookEntry styleFromThemeStyleBookEntry =
 			StyleBookEntryLocalServiceUtil.create();
 
-		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
 		styleFromThemeStyleBookEntry.setHeadId(-1);
 		styleFromThemeStyleBookEntry.setGroupId(groupId);
 		styleFromThemeStyleBookEntry.setName(
