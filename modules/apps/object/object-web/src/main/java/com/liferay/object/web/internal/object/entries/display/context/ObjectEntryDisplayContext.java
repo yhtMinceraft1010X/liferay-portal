@@ -500,12 +500,6 @@ public class ObjectEntryDisplayContext {
 			objectField.getName(),
 			objectFieldBusinessType.getDDMFormFieldTypeName());
 
-		Map<String, Object> properties =
-			objectFieldBusinessType.getProperties();
-
-		properties.forEach(
-			(key, value) -> ddmFormField.setProperty(key, value));
-
 		if (StringUtil.equals(
 				objectFieldBusinessType.getName(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
@@ -524,8 +518,11 @@ public class ObjectEntryDisplayContext {
 
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
-		ddmFormField.setReadOnly(readOnly);
-		ddmFormField.setRequired(objectField.isRequired());
+		Map<String, Object> properties =
+			objectFieldBusinessType.getProperties();
+
+		properties.forEach(
+			(key, value) -> ddmFormField.setProperty(key, value));
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			ObjectRelationship objectRelationship =
@@ -537,6 +534,9 @@ public class ObjectEntryDisplayContext {
 				"objectDefinitionId",
 				String.valueOf(objectRelationship.getObjectDefinitionId1()));
 		}
+
+		ddmFormField.setReadOnly(readOnly);
+		ddmFormField.setRequired(objectField.isRequired());
 
 		return ddmFormField;
 	}
