@@ -152,19 +152,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			WorkflowTaskManagerUtil.class, "_workflowTaskManager",
 			Mockito.mock(WorkflowTaskManager.class));
 
-		UserNotificationEvent userNotificationEvent = Mockito.mock(
-			UserNotificationEvent.class);
-
-		Mockito.when(
-			userNotificationEvent.getPayload()
-		).thenReturn(
-			JSONUtil.put(
-				"entryClassName", _VALID_ENTRY_CLASS_NAME
-			).put(
-				"workflowTaskId", _VALID_WORKFLOW_TASK_ID
-			).toJSONString()
-		);
-
 		User user1 = Mockito.mock(User.class);
 
 		Mockito.when(
