@@ -34,9 +34,9 @@ if (commerceShippingFixedOption != null) {
 
 <aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOption == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<commerce-ui:panel>
 		<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
