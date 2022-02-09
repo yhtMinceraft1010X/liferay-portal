@@ -356,7 +356,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	private int _toImportStrategy(String importStrategy) {
 		if ((importStrategy == null) ||
-			importStrategy.equals("ON_ERROR_FAIL")) {
+			importStrategy.equals(
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_STRING_ON_ERROR_FAIL)) {
 
 			return BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL;
 		}

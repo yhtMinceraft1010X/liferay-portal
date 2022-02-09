@@ -23,4 +23,10 @@ public class BatchEngineImportTaskConstants {
 
 	public static final int IMPORT_STRATEGY_ON_ERROR_FAIL = 2;
 
+	public static final String IMPORT_STRATEGY_STRING_ON_ERROR_CONTINUE =
+		"ON_ERROR_CONTINUE";
+
+	public static final String IMPORT_STRATEGY_STRING_ON_ERROR_FAIL =
+		"ON_ERROR_FAIL";
+
 }
