@@ -1,4 +1,5 @@
 # Poshi Standalone
+
 This repository contains the minimal configuration to begin writing and running Poshi tests through gradle.
 
 ## Prerequisites
@@ -50,6 +51,7 @@ webdriverBinaries {
 All Chrome versions after Chrome 73 must use the corresponding ChromeDriver version found in the previous link.
 
 #### Poshi Runner Version
+
 To change the Poshi Runner version, add the following to the bottom of [build.gradle](build.gradle):
 ```
 poshiRunner {
@@ -67,12 +69,14 @@ gradlew tasks
 ```
 
 ### Syntax and Usage Validation
+
 To run Poshi validation:
 ```
 gradlew validatePoshi
 ```
 
 ### Running a test
+
 To run a test, use the following command:
 ```
 gradlew runPoshi
@@ -85,6 +89,7 @@ test.name=TestCaseFileName#TestCaseName
 ## Testray Configuration
 
 ### Importing Testray Results
+
 To import the results into Testray use the following command:
 ```
 gradlew importTestrayResults
