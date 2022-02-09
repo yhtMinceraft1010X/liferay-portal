@@ -249,40 +249,40 @@ public class DefaultWikiListPagesDisplayContext
 								searchContainer.getOrderByCol(),
 								searchContainer.getOrderByType())),
 						curPage -> {
-							WikiPage resultPage = curPage;
-
-							if (permissionChecker.isContentReviewer(
+							if (!permissionChecker.isContentReviewer(
 									_wikiRequestHelper.getCompanyId(),
-									_wikiRequestHelper.getScopeGroupId()) ||
-								WikiPagePermission.contains(
+									_wikiRequestHelper.getScopeGroupId()) &&
+								!WikiPagePermission.contains(
 									permissionChecker, curPage,
 									ActionKeys.UPDATE)) {
 
-								WikiPage lastPage = null;
+								return curPage;
+							}
 
-								try {
-									lastPage = WikiPageLocalServiceUtil.getPage(
-										curPage.getResourcePrimKey(), false);
-								}
-								catch (PortalException portalException) {
+							WikiPage lastPage = null;
 
-									// LPS-52675
+							try {
+								lastPage = WikiPageLocalServiceUtil.getPage(
+									curPage.getResourcePrimKey(), false);
+							}
+							catch (PortalException portalException) {
 
-									if (_log.isDebugEnabled()) {
-										_log.debug(
-											portalException, portalException);
-									}
-								}
+								// LPS-52675
 
-								if ((lastPage != null) &&
-									(curPage.getVersion() <
-										lastPage.getVersion())) {
-
-									resultPage = lastPage;
+								if (_log.isDebugEnabled()) {
+									_log.debug(
+										portalException, portalException);
 								}
 							}
 
-							return resultPage;
+							if ((lastPage != null) &&
+								(curPage.getVersion() <
+									lastPage.getVersion())) {
+
+								return lastPage;
+							}
+
+							return curPage;
 						});
 				},
 				WikiPageServiceUtil.getPagesCount(
