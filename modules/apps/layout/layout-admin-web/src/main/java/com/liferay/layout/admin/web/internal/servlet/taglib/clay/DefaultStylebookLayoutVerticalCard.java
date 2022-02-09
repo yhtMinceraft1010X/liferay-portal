@@ -33,8 +33,8 @@ import javax.portlet.RenderRequest;
 public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
 	public DefaultStylebookLayoutVerticalCard(
-		String name, StyleBookEntry styleBookEntry, RenderRequest renderRequest,
-		boolean selected) {
+		String name, StyleBookEntry styleBookEntry,
+		RenderRequest renderRequest) {
 
 		_name = name;
 		_styleBookEntry = styleBookEntry;
@@ -44,21 +44,12 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
 		_resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", _themeDisplay.getLocale(), getClass());
-
-		_selected = selected;
 	}
 
 	@Override
 	public String getCssClass() {
-		String cssClass =
-			"select-style-book-option card-interactive " +
-				"card-interactive-secondary";
-
-		if (_selected) {
-			cssClass += " active";
-		}
-
-		return cssClass;
+		return "select-style-book-option card-interactive " +
+			"card-interactive-secondary active";
 	}
 
 	@Override
@@ -119,7 +110,6 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
 	private final String _name;
 	private final ResourceBundle _resourceBundle;
-	private final boolean _selected;
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;
 

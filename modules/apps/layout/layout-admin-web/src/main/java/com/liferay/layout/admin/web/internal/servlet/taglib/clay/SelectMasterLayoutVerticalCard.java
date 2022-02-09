@@ -31,10 +31,9 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 
 	public SelectMasterLayoutVerticalCard(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		RenderRequest renderRequest, boolean selected) {
+		RenderRequest renderRequest) {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
-		_selected = selected;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -42,15 +41,8 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getCssClass() {
-		String cssClass =
-			"select-master-layout-option card-interactive " +
-				"card-interactive-secondary";
-
-		if (_selected) {
-			cssClass += " active";
-		}
-
-		return cssClass;
+		return "select-master-layout-option card-interactive " +
+			"card-interactive-secondary";
 	}
 
 	@Override
@@ -97,7 +89,6 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 	}
 
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
-	private final boolean _selected;
 	private final ThemeDisplay _themeDisplay;
 
 }
