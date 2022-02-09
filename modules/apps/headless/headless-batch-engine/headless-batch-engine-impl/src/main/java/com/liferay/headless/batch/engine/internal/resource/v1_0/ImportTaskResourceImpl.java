@@ -88,7 +88,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.DELETE,
 			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			_getImportStrategy(importStrategy), taskItemDelegateName);
+			importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.DELETE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			taskItemDelegateName, _getImportStrategy(importStrategy), null);
+			taskItemDelegateName, importStrategy, null);
 	}
 
 	@Override
@@ -123,8 +123,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.CREATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className,
-			fieldNameMapping, _getImportStrategy(importStrategy),
-			taskItemDelegateName);
+			fieldNameMapping, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -139,8 +138,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.CREATE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			fieldNameMapping, _getImportStrategy(importStrategy),
-			taskItemDelegateName);
+			fieldNameMapping, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -152,7 +150,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			_getImportStrategy(importStrategy), taskItemDelegateName);
+			importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -167,7 +165,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			null, _getImportStrategy(importStrategy), taskItemDelegateName);
+			null, importStrategy, taskItemDelegateName);
 	}
 
 	@Activate
@@ -262,15 +260,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_file.getExtension(fileName));
 	}
 
-	private int _getImportStrategy(String importStrategyName) {
-		if (importStrategyName == null) {
-			return BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL;
-		}
-
-		return BatchEngineImportTaskConstants.getImportStrategy(
-			importStrategyName);
-	}
-
 	private UnsyncByteArrayOutputStream _getUnsyncByteArrayOutputStream(
 			String fileName, InputStream inputStream)
 		throws Exception {
@@ -294,7 +283,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
-			String fieldNameMappingString, int importStrategy,
+			String fieldNameMappingString, String importStrategy,
 			String taskItemDelegateName)
 		throws Exception {
 
@@ -319,7 +308,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
 			String callbackURL, String className,
 			String batchEngineTaskContentType, String fieldNameMappingString,
-			int importStrategy, String taskItemDelegateName)
+			String importStrategy, String taskItemDelegateName)
 		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
@@ -340,7 +329,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				callbackURL, className, bytes,
 				StringUtil.upperCase(batchEngineTaskContentType),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				_toMap(fieldNameMappingString), importStrategy,
+				_toMap(fieldNameMappingString),
+				_toImportStrategy(importStrategy),
 				batchEngineTaskOperation.name(),
 				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
 				taskItemDelegateName);
@@ -362,6 +352,16 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				message = batchEngineImportTaskError.getMessage();
 			}
 		};
+	}
+
+	private int _toImportStrategy(String importStrategy) {
+		if ((importStrategy == null) ||
+			importStrategy.equals("ON_ERROR_FAIL")) {
+
+			return BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL;
+		}
+
+		return BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_CONTINUE;
 	}
 
 	private ImportTask _toImportTask(

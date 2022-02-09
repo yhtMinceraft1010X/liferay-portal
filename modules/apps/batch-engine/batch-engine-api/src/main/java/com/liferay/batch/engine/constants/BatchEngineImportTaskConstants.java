@@ -19,28 +19,8 @@ package com.liferay.batch.engine.constants;
  */
 public class BatchEngineImportTaskConstants {
 
-	public static final String IMPORT_STRATEGY_NAME_ON_ERROR_CONTINUE =
-		"ON_ERROR_CONTINUE";
-
-	public static final String IMPORT_STRATEGY_NAME_ON_ERROR_FAIL =
-		"ON_ERROR_FAIL";
-
 	public static final int IMPORT_STRATEGY_ON_ERROR_CONTINUE = 1;
 
 	public static final int IMPORT_STRATEGY_ON_ERROR_FAIL = 2;
-
-	public static int getImportStrategy(String importStrategyName) {
-		if (importStrategyName.equals(IMPORT_STRATEGY_NAME_ON_ERROR_CONTINUE)) {
-			return IMPORT_STRATEGY_ON_ERROR_CONTINUE;
-		}
-		else if (importStrategyName.equals(
-					IMPORT_STRATEGY_NAME_ON_ERROR_FAIL)) {
-
-			return IMPORT_STRATEGY_ON_ERROR_FAIL;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid batch engine import task strategy " + importStrategyName);
-	}
 
 }
