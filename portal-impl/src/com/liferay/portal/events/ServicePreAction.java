@@ -880,7 +880,7 @@ public class ServicePreAction extends Action {
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchUserException, noSuchUserException);
+				_log.debug(noSuchUserException);
 			}
 
 			return null;
@@ -942,7 +942,7 @@ public class ServicePreAction extends Action {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			CookieKeys.addSupportCookie(
@@ -1855,7 +1855,7 @@ public class ServicePreAction extends Action {
 				}
 				catch (NoSuchGroupException noSuchGroupException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(noSuchGroupException, noSuchGroupException);
+						_log.warn(noSuchGroupException);
 					}
 
 					return layouts;

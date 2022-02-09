@@ -198,7 +198,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 
 				return;
@@ -211,7 +211,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(exception);
 				}
 			}
 
@@ -329,7 +329,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			catch (SecurityException securityException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(securityException, securityException);
+					_log.debug(securityException);
 				}
 
 				// We may have the permission to delete a specific file without
@@ -606,7 +606,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return false;
@@ -708,7 +708,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return false;
@@ -830,7 +830,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -844,7 +844,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return new ArrayList<>();
@@ -860,7 +860,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 		}
 
@@ -874,7 +874,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
+				_log.debug(ioException);
 			}
 
 			return new Properties();
@@ -1061,7 +1061,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (SecurityException securityException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(securityException, securityException);
+				_log.debug(securityException);
 			}
 
 			// We may have the permission to write a specific file without
