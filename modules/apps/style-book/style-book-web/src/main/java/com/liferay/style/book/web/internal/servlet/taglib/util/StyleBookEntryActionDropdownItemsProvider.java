@@ -63,16 +63,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		if (_styleBookEntry.getStyleBookEntryId() <= 0) {
-			return DropdownItemListBuilder.addGroup(
-				dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						() -> !_styleBookEntry.isDefaultStyleBookEntry(),
-						_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer()
-					).build())
-			).build();
-		}
-
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
