@@ -28,12 +28,13 @@ import javax.portlet.RenderRequest;
 /**
  * @author Víctor Galán
  */
-public class SelectStylebookLayoutVerticalCard implements VerticalCard {
+public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 
-	public SelectStylebookLayoutVerticalCard(
-		StyleBookEntry styleBookEntry, RenderRequest renderRequest,
+	public DefaultStylebookLayoutVerticalCard(
+		String name, StyleBookEntry styleBookEntry, RenderRequest renderRequest,
 		boolean selected) {
 
+		_name = name;
 		_styleBookEntry = styleBookEntry;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -58,10 +59,9 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 	@Override
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
-			"data-name", _styleBookEntry.getName()
+			"data-name", _name
 		).put(
-			"data-styleBookEntryId",
-			String.valueOf(_styleBookEntry.getStyleBookEntryId())
+			"data-styleBookEntryId", "0"
 		).put(
 			"role", "button"
 		).put(
@@ -76,7 +76,11 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getImageSrc() {
-		return _styleBookEntry.getImagePreviewURL(_themeDisplay);
+		if (_styleBookEntry != null) {
+			return _styleBookEntry.getImagePreviewURL(_themeDisplay);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -91,12 +95,16 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public String getSubtitle() {
+		if (_styleBookEntry != null) {
+			return _styleBookEntry.getName();
+		}
+
 		return StringPool.DASH;
 	}
 
 	@Override
 	public String getTitle() {
-		return _styleBookEntry.getName();
+		return _name;
 	}
 
 	@Override
@@ -104,6 +112,7 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 		return false;
 	}
 
+	private final String _name;
 	private final boolean _selected;
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;
