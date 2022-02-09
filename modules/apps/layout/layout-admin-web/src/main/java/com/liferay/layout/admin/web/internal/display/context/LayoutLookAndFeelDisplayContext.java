@@ -98,6 +98,8 @@ public class LayoutLookAndFeelDisplayContext {
 
 	public Map<String, Object> getEditMasterLayoutButtonAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
+			"editableMasterLayout", hasEditableMasterLayout()
+		).put(
 			"editMasterLayoutURL",
 			() -> {
 				if (!hasMasterLayout()) {
