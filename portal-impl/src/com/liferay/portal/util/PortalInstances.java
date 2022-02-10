@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -68,17 +69,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PortalInstances {
 
 	public static void addCompanyId(long companyId) {
-		if (ArrayUtil.contains(_companyIds, companyId)) {
-			return;
-		}
-
-		long[] companyIds = new long[_companyIds.length + 1];
-
-		System.arraycopy(_companyIds, 0, companyIds, 0, _companyIds.length);
-
-		companyIds[_companyIds.length] = companyId;
-
-		_companyIds = companyIds;
+		_companyIds.addIfAbsent(companyId);
 	}
 
 	public static long getCompanyId(HttpServletRequest httpServletRequest) {
@@ -183,7 +174,7 @@ public class PortalInstances {
 	}
 
 	public static long[] getCompanyIds() {
-		return _companyIds;
+		return ArrayUtil.toArray(_companyIds.toArray(new Long[0]));
 	}
 
 	public static long[] getCompanyIdsBySQL() throws SQLException {
@@ -213,7 +204,7 @@ public class PortalInstances {
 	}
 
 	public static long getDefaultCompanyId() {
-		return _companyIds[0];
+		return _companyIds.get(0);
 	}
 
 	public static long getDefaultCompanyIdBySQL() throws SQLException {
@@ -428,7 +419,7 @@ public class PortalInstances {
 	}
 
 	public static void reload(ServletContext servletContext) {
-		_companyIds = new long[0];
+		_companyIds.clear();
 		_webIds = null;
 
 		String[] webIds = getWebIds();
@@ -449,7 +440,7 @@ public class PortalInstances {
 			_log.error(exception);
 		}
 
-		_companyIds = ArrayUtil.remove(_companyIds, companyId);
+		_companyIds.remove(companyId);
 		_webIds = null;
 
 		getWebIds();
@@ -552,13 +543,13 @@ public class PortalInstances {
 
 	private static final Set<String> _autoLoginIgnoreHosts;
 	private static final Set<String> _autoLoginIgnorePaths;
-	private static long[] _companyIds;
+	private static final CopyOnWriteArrayList<Long> _companyIds;
 	private static final Set<String> _virtualHostsIgnoreHosts;
 	private static final Set<String> _virtualHostsIgnorePaths;
 	private static String[] _webIds;
 
 	static {
-		_companyIds = new long[0];
+		_companyIds = new CopyOnWriteArrayList<>();
 		_autoLoginIgnoreHosts = SetUtil.fromArray(
 			PropsUtil.getArray(PropsKeys.AUTO_LOGIN_IGNORE_HOSTS));
 		_autoLoginIgnorePaths = SetUtil.fromArray(
