@@ -229,7 +229,6 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 			WebKeys.LAYOUT_ASSET_ENTRY,
 			_assetEntryLocalService.getEntry(
 				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
-
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
@@ -252,10 +251,8 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLocale(LocaleUtil.US);
-
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
-
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
