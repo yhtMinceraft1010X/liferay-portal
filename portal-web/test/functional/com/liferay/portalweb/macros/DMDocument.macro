@@ -1700,6 +1700,14 @@ definition {
 			ManagementBar.clickInfo();
 		}
 
+		// Sometimes the info panel doesn't load. If that happens then collapse then expand the panel again.
+
+		if (IsElementNotPresent.isNotVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
+			ManagementBar.clickInfo();
+
+			ManagementBar.clickInfo();
+		}
+
 		AssertVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE");
 	}
 
