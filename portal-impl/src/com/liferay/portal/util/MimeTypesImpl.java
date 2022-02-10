@@ -76,7 +76,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 				customExtensionsMap.entrySet()) {
 
 			for (String mimeType : entry.getValue()) {
-				_customMimeTypes.put(mimeType, entry.getKey());
+				_contentTypes.put(mimeType, entry.getKey());
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	@Override
 	public String getContentType(InputStream inputStream, String fileName) {
-		String contentType = _customMimeTypes.get(_getExtension(fileName));
+		String contentType = _contentTypes.get(_getExtension(fileName));
 
 		if (contentType != null) {
 			return contentType;
@@ -251,7 +251,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	private static final Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);
 
-	private final Map<String, String> _customMimeTypes = new HashMap<>();
+	private final Map<String, String> _contentTypes = new HashMap<>();
 	private final Detector _detector = new DefaultDetector();
 	private final Map<String, Set<String>> _extensionsMap = new HashMap<>();
 
