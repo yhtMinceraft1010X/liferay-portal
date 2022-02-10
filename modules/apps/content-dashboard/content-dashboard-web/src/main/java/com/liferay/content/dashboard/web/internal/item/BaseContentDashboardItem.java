@@ -24,7 +24,7 @@ import java.util.Locale;
 /**
  * @author Yurena Cabrera
  */
-public abstract class ContentDashboardBaseItem<T>
+public abstract class BaseContentDashboardItem<T>
 	implements ContentDashboardItem<T> {
 
 	@Override

@@ -58,7 +58,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Cristina González
  */
 public class BlogsEntryContentDashboardItem
-	extends ContentDashboardBaseItem<BlogsEntry> {
+	extends BaseContentDashboardItem<BlogsEntry> {
 
 	public BlogsEntryContentDashboardItem(
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
