@@ -64,7 +64,7 @@ public class BlogsEntryContentDashboardItemFactory
 
 		if (assetEntry == null) {
 			throw new NoSuchModelException(
-				"Unable to find an asset entry for file entry " +
+				"Unable to find an asset entry for blogs entry " +
 					blogsEntry.getEntryId());
 		}
 
