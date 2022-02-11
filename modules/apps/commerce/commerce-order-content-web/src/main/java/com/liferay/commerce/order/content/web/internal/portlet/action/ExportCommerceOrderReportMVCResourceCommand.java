@@ -91,7 +91,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
-		Format dateFormatter = FastDateFormatFactoryUtil.getDate(
+		Format format = FastDateFormatFactoryUtil.getDate(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		if (billingAddress != null) {
@@ -162,7 +162,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		).put(
 			"requestedDeliveryDate",
 			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
-				dateFormatter.format(commerceOrder.getRequestedDeliveryDate())
+				format.format(commerceOrder.getRequestedDeliveryDate())
 		);
 
 		if (shippingAddress != null) {
