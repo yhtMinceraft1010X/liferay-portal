@@ -91,9 +91,6 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
-		Format format = FastDateFormatFactoryUtil.getDate(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
-
 		if (billingAddress != null) {
 			hashMapWrapper.put(
 				"billingAddressCity", billingAddress.getCity()
@@ -161,8 +158,16 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber()
 		).put(
 			"requestedDeliveryDate",
-			(commerceOrder.getRequestedDeliveryDate() == null) ? null :
-				format.format(commerceOrder.getRequestedDeliveryDate())
+			() -> {
+				if (commerceOrder.getRequestedDeliveryDate() == null) {
+					return null;
+				}
+
+				Format format = FastDateFormatFactoryUtil.getDate(
+					themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+				return format.format(commerceOrder.getRequestedDeliveryDate());
+			}
 		);
 
 		if (shippingAddress != null) {
