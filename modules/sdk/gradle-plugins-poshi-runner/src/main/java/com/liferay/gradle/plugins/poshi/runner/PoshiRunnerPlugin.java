@@ -638,13 +638,16 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private Properties _getPoshiProperties(
 		PoshiRunnerExtension poshiRunnerExtension) {
 
-		Properties poshiProperties = null;
+		Properties poshiProperties = new Properties();
 
 		File poshiPropertiesFile =
 			poshiRunnerExtension.getPoshiPropertiesFile();
 
-		if ((poshiPropertiesFile != null) && poshiPropertiesFile.exists()) {
-			poshiProperties = GUtil.loadProperties(poshiPropertiesFile);
+		if (poshiPropertiesFile != null) {
+			if (poshiPropertiesFile.exists()) {
+				poshiProperties.putAll(
+					GUtil.loadProperties(poshiPropertiesFile));
+			}
 
 			File poshiExtPropertiesFile = _getPoshiExtPropertiesFile(
 				poshiPropertiesFile);
