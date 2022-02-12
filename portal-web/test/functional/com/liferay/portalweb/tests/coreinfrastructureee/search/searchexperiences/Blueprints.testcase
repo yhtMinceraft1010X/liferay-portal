@@ -1666,7 +1666,9 @@ definition {
 	test SearchBlueprintsAdminTable {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(title = "Blueprint One");
+		Blueprints.createBlueprint(
+			description = "Test Description",
+			title = "Blueprint One");
 
 		PortletEntry.save();
 
@@ -1679,12 +1681,28 @@ definition {
 		Blueprints.viewEntryTitle(title = "Blueprint Two");
 
 		Blueprints.viewNoEntry(title = "Blueprint One");
+
+		Search.searchCP(searchTerm = "Description");
+
+		Blueprints.viewEntryTitle(title = "Blueprint One");
+
+		Blueprints.viewNoEntry(title = "Blueprint Two");
 	}
 
 	test SearchElementsAdminTable {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createElement(title = "Element One");
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Element One");
+
+		PortletEntry.inputDescription(description = "apple");
+
+		Button.click(button = "Create");
+
+		PortletEntry.save();
 
 		Blueprints.createElement(title = "Element Two");
 
@@ -1693,6 +1711,12 @@ definition {
 		Blueprints.viewEntryTitle(title = "Element Two");
 
 		Blueprints.viewNoEntry(title = "Element One");
+
+		Search.searchCP(searchTerm = "apple");
+
+		Blueprints.viewEntryTitle(title = "Element One");
+
+		Blueprints.viewNoEntry(title = "Element Two");
 	}
 
 	test SearchViaBlueprintsPreview {
