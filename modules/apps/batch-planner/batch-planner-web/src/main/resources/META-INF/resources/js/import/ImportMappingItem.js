@@ -57,7 +57,7 @@ const ImportMappingItem = ({
 			{selectedFileField && (
 				<input
 					hidden
-					name={`${portletNamespace}externalFieldName_${dbField.name}`}
+					name={`${portletNamespace}internalFieldName_${dbField.name}`}
 					readOnly
 					value={dbField.name}
 				/>
@@ -67,7 +67,7 @@ const ImportMappingItem = ({
 				id={inputId}
 				name={
 					selectedFileField
-						? `${portletNamespace}internalFieldName_${dbField.name}`
+						? `${portletNamespace}externalFieldName_${dbField.name}`
 						: ''
 				}
 				onChange={(event) =>

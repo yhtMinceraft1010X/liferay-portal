@@ -41,10 +41,12 @@ const TemplateSelect = ({
 	useEffect(() => {
 		function handleTemplateCreated({batchPlannerPlanId, name}) {
 			setTemplate(batchPlannerPlanId);
+
 			setTemplateOptions((options) => [
 				{label: name, value: batchPlannerPlanId},
 				...options,
 			]);
+
 			fireTemplateSelectionEvent(
 				batchPlannerPlanId,
 				NULL_TEMPLATE_VALUE,
@@ -81,7 +83,9 @@ const TemplateSelect = ({
 
 	const onChange = (event) => {
 		const newTemplateId = event.target.value;
+
 		setTemplate(newTemplateId);
+
 		fireTemplateSelectionEvent(
 			newTemplateId,
 			NULL_TEMPLATE_VALUE,
@@ -94,7 +98,7 @@ const TemplateSelect = ({
 	const selectId = `${portletNamespace}templateName`;
 
 	return (
-		<ClayForm.Group className="form-group-sm">
+		<ClayForm.Group>
 			<label htmlFor={selectId}>{Liferay.Language.get('template')}</label>
 
 			<ClaySelect
@@ -103,7 +107,7 @@ const TemplateSelect = ({
 				onChange={onChange}
 				value={selectedTemplateId}
 			>
-				<ClaySelect.Option key={0} value={NULL_TEMPLATE_VALUE} />
+				<ClaySelect.Option value={NULL_TEMPLATE_VALUE} />
 
 				{templateOptions.map((option) => (
 					<ClaySelect.Option

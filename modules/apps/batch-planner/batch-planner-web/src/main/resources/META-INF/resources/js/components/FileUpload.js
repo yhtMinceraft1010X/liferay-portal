@@ -72,15 +72,19 @@ function FileUpload({portletNamespace}) {
 	);
 
 	const inputNameId = `${portletNamespace}importFile`;
+	const acceptedExtensions = IMPORT_FILE_FORMATS.map(
+		(format) => `.${format}`
+	).join(', ');
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-			<label htmlFor={inputNameId}>{Liferay.Language.get('file')}</label>
+			<label htmlFor={inputNameId}>{`${Liferay.Language.get(
+				'file'
+			)} (${acceptedExtensions})`}</label>
 
 			<ClayInput
-				accept={IMPORT_FILE_FORMATS.map((format) => `.${format}`).join(
-					', '
-				)}
+				accept={acceptedExtensions}
+				className="h-auto"
 				id={inputNameId}
 				name={inputNameId}
 				onChange={onFileChange}
