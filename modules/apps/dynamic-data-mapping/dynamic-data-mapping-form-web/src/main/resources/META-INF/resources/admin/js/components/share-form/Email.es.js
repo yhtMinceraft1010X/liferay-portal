@@ -124,7 +124,7 @@ const Email = ({
 								<ClayForm.FeedbackGroup>
 									<ClayForm.Text>
 										{Liferay.Language.get(
-											'type-a-comma-or-press-enter-to-input-emails'
+											'type-a-comma-or-press-enter-to-input-email-addresses'
 										)}
 									</ClayForm.Text>
 								</ClayForm.FeedbackGroup>
