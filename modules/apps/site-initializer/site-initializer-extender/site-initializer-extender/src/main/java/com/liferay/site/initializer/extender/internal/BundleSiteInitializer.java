@@ -3084,8 +3084,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _relateAccountRoles(
-			JSONObject accountBriefsJSONObject,
-			String emailAddress, ServiceContext serviceContext)
+			JSONObject accountBriefsJSONObject, String emailAddress,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (!accountBriefsJSONObject.has("roleBriefs")) {
@@ -3100,24 +3100,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray("roleBriefs");
+		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
+			"roleBriefs");
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Role role = _roleLocalService.fetchRole(
 				serviceContext.getCompanyId(), jsonArray.getString(i));
 
-			if (role != null) {
-				AccountRole accountRole =
-					_accountRoleLocalService.fetchAccountRoleByRoleId(
-						role.getRoleId());
-
-				if (accountRole != null) {
-					accountRoleResource.
-						postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-							accountBriefsJSONObject.getString("externalReferenceCode"),
-							accountRole.getAccountRoleId(), emailAddress);
-				}
+			if (role == null) {
+				continue;
 			}
+
+			AccountRole accountRole =
+				_accountRoleLocalService.fetchAccountRoleByRoleId(
+					role.getRoleId());
+
+			if (accountRole == null) {
+				continue;
+			}
+
+			accountRoleResource.
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+					accountBriefsJSONObject.getString("externalReferenceCode"),
+					accountRole.getAccountRoleId(), emailAddress);
 		}
 	}
 
