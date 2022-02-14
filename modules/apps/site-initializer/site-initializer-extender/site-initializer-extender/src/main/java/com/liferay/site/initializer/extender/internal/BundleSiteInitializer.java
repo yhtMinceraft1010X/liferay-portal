@@ -2933,13 +2933,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				j++;
 
-				if (accountBriefsJSONObject.has("roleBriefs")) {
-					_relateAccountRoles(
-						accountBriefsJSONObject.getJSONArray("roleBriefs"),
-						accountBriefsJSONObject.getString(
-							"externalReferenceCode"),
-						jsonObject.getString("emailAddress"), serviceContext);
-				}
+				_relateAccountRoles(
+					accountBriefsJSONObject,
+					jsonObject.getString("emailAddress"), serviceContext);
 			}
 
 			for (; j < accountBriefsJSONArray.length(); j++) {
@@ -2952,13 +2948,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 							"externalReferenceCode"),
 						userAccount.getEmailAddress());
 
-				if (accountBriefsJSONObject.has("roleBriefs")) {
-					_relateAccountRoles(
-						accountBriefsJSONObject.getJSONArray("roleBriefs"),
-						accountBriefsJSONObject.getString(
-							"externalReferenceCode"),
-						jsonObject.getString("emailAddress"), serviceContext);
-				}
+				_relateAccountRoles(
+					accountBriefsJSONObject,
+					jsonObject.getString("emailAddress"), serviceContext);
 			}
 		}
 	}
@@ -3092,9 +3084,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _relateAccountRoles(
-			JSONArray jsonArray, String externalReferenceCode,
+			JSONObject accountBriefsJSONObject,
 			String emailAddress, ServiceContext serviceContext)
 		throws Exception {
+
+		if (!accountBriefsJSONObject.has("roleBriefs")) {
+			return;
+		}
 
 		AccountRoleResource.Builder accountRoleResourceBuilder =
 			_accountRoleResourceFactory.create();
@@ -3103,6 +3099,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			accountRoleResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
+
+		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray("roleBriefs");
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Role role = _roleLocalService.fetchRole(
@@ -3116,7 +3114,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (accountRole != null) {
 					accountRoleResource.
 						postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-							externalReferenceCode,
+							accountBriefsJSONObject.getString("externalReferenceCode"),
 							accountRole.getAccountRoleId(), emailAddress);
 				}
 			}
