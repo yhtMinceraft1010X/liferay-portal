@@ -8084,8 +8084,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the other object is inactivated (Many to Many)"
 	@priority = "4"
 	test RelationshipTabDisappearsWhenInactivatedManyToMany {
-		property portal.upstream = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",
@@ -8116,6 +8114,8 @@ definition {
 				objectName = "CustomObject${letter}");
 		}
 
+		Navigator.openURL();
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -8140,6 +8140,8 @@ definition {
 				tabName = "Relationship Tab");
 
 			Button.clickSave();
+
+			Navigator.openURL();
 		}
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
@@ -8170,6 +8172,8 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.activeCustomObject(objectName = "Custom Object B");
+
+		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
