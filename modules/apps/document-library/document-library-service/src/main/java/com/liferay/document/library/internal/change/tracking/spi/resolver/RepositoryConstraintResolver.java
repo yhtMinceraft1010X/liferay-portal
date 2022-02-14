@@ -69,16 +69,19 @@ public class RepositoryConstraintResolver
 	public void resolveConflict(
 		ConstraintResolverContext<Repository> constraintResolverContext) {
 
-		Repository sourceCTModel = constraintResolverContext.getSourceCTModel();
-
-		Repository targetCTModel = constraintResolverContext.getTargetCTModel();
+		Repository sourceRepository =
+			constraintResolverContext.getSourceCTModel();
+		Repository targetRepository =
+			constraintResolverContext.getTargetCTModel();
 
 		if (StringUtil.equals(
-				sourceCTModel.getName(), TempFileEntryUtil.class.getName()) &&
+				sourceRepository.getName(),
+				TempFileEntryUtil.class.getName()) &&
 			StringUtil.equals(
-				targetCTModel.getName(), TempFileEntryUtil.class.getName())) {
+				targetRepository.getName(),
+				TempFileEntryUtil.class.getName())) {
 
-			_repositoryLocalService.deleteRepository(targetCTModel);
+			_repositoryLocalService.deleteRepository(targetRepository);
 
 			_resolved = true;
 		}
