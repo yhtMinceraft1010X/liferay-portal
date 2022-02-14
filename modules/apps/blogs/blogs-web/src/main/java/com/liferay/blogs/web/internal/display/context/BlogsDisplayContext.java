@@ -101,17 +101,17 @@ public class BlogsDisplayContext {
 				navigationItem.setLabel(
 					LanguageUtil.format(
 						_httpServletRequest, "not-published-x",
-						getNotPublishedEntriesCount(), false));
+						getUnpublishedEntriesCount(), false));
 			}
 		).build();
 	}
 
-	public int getNotPublishedEntriesCount() {
-		if (_notPublishedEntriesCount != null) {
-			return _notPublishedEntriesCount;
+	public int getUnpublishedEntriesCount() {
+		if (_unpublishedEntriesCount != null) {
+			return _unpublishedEntriesCount;
 		}
 
-		_notPublishedEntriesCount =
+		_unpublishedEntriesCount =
 			BlogsEntryServiceUtil.getGroupUserEntriesCount(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 				new int[] {
@@ -120,7 +120,7 @@ public class BlogsDisplayContext {
 					WorkflowConstants.STATUS_SCHEDULED
 				});
 
-		return _notPublishedEntriesCount;
+		return _unpublishedEntriesCount;
 	}
 
 	public PortletURL getPortletURL() {
@@ -159,7 +159,7 @@ public class BlogsDisplayContext {
 				() -> new ArrayList<>(searchContainerResults.getResults()),
 				searchContainerResults.getTotal());
 		}
-		else if ((getNotPublishedEntriesCount() > 0) &&
+		else if ((getUnpublishedEntriesCount() > 0) &&
 				 Objects.equals(
 					 _getMVCRenderCommandName(),
 					 "/blogs/view_not_published_entries")) {
@@ -176,7 +176,7 @@ public class BlogsDisplayContext {
 						},
 						searchContainer.getStart(), searchContainer.getEnd(),
 						new EntryModifiedDateComparator())),
-				getNotPublishedEntriesCount());
+				getUnpublishedEntriesCount());
 		}
 		else {
 			searchContainer.setResultsAndTotal(
@@ -240,7 +240,7 @@ public class BlogsDisplayContext {
 		_blogsPortletInstanceConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private String _mvcRenderCommandName;
-	private Integer _notPublishedEntriesCount;
+	private Integer _unpublishedEntriesCount;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

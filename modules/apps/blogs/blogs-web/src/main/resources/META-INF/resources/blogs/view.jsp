@@ -37,7 +37,7 @@ SearchContainer<?> searchContainer = blogsDisplayContext.getSearchContainer();
 
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-<c:if test="<%= blogsDisplayContext.getNotPublishedEntriesCount() > 0 %>">
+<c:if test="<%= blogsDisplayContext.getUnpublishedEntriesCount() > 0 %>">
 	<clay:navigation-bar
 		navigationItems="<%= blogsDisplayContext.getNavigationItems() %>"
 	/>
