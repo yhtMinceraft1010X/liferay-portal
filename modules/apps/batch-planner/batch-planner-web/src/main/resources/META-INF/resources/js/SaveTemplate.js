@@ -25,21 +25,27 @@ import {
 } from './constants';
 
 function SaveTemplate({
-	forceDisable,
+	evaluateForm,
+	formIsValid,
 	formSaveAsTemplateDataQuerySelector,
 	formSaveAsTemplateURL,
 	portletNamespace,
 }) {
 	const [disable, setDisable] = useState(true);
+	const [visible, setVisible] = useState(false);
+
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
 	const useTemplateMappingRef = useRef();
 
-	const [visible, setVisible] = useState(false);
 	const onButtonClick = useCallback(() => {
-		setVisible(true);
-	}, [setVisible]);
+		evaluateForm();
+
+		if (formIsValid) {
+			setVisible(true);
+		}
+	}, [evaluateForm, formIsValid]);
 
 	useEffect(() => {
 		function handleSchemaChange({schema}) {
@@ -53,6 +59,7 @@ function SaveTemplate({
 
 		function handleTemplateSelection({template}) {
 			setDisable(!!template);
+
 			useTemplateMappingRef.current = !!template;
 		}
 
@@ -75,7 +82,7 @@ function SaveTemplate({
 	return (
 		<span className="mr-3">
 			<ClayButton
-				disabled={disable || forceDisable}
+				disabled={disable}
 				displayType="secondary"
 				id={`${portletNamespace}saveTemplate`}
 				onClick={onButtonClick}

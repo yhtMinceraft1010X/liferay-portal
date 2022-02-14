@@ -79,6 +79,7 @@ export default function ({
 
 	const handleTemplateSelectedEvent = async (event) => {
 		const {template} = event;
+
 		if (template) {
 			if (externalTypeSelect) {
 				const externalTypeOption = externalTypeSelect.querySelector(
@@ -234,6 +235,10 @@ export default function ({
 			const {components} = await response.json();
 
 			const schemaEntry = components.schemas[internalClassNameValue];
+
+			schemaEntry.required.forEach((requiredField) => {
+				schemaEntry.properties[requiredField].required = true;
+			});
 
 			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: schemaEntry.properties,

@@ -14,7 +14,7 @@
 
 import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
@@ -36,28 +36,41 @@ function ImportForm({
 	portletNamespace,
 }) {
 	const [dbFields, setDbFields] = useState();
-	const [fieldsSelections, setFieldsSelections] = useState({});
+	const [formEvaluated, setFormEvaluated] = useState(false);
 	const [fileFields, setFileFields] = useState();
+	const [fieldsSelections, setFieldsSelections] = useState({});
 	const useTemplateMappingRef = useRef();
 
-	const onFieldChange = useCallback((selectedItem, field) => {
+	const formIsValid = useMemo(() => {
+		if (!Object.keys(fieldsSelections).length) {
+			return false;
+		}
+
+		const requiredFieldNotFound = dbFields.some(
+			(dbField) => dbField.required && !fieldsSelections[dbField.name]
+		);
+
+		return !requiredFieldNotFound;
+	}, [fieldsSelections, dbFields]);
+
+	const updateFieldMapping = (fileField, dbFieldName) => {
 		setFieldsSelections((prevSelections) => ({
 			...prevSelections,
-			[field]: selectedItem,
+			[dbFieldName]: fileField,
 		}));
 
 		Liferay.fire(TEMPLATE_SOILED);
-	}, []);
+	};
 
 	useEffect(() => {
 		if (dbFields && fileFields && !useTemplateMappingRef.current) {
 			const newFieldsSelection = {};
 
-			dbFields?.forEach((field) => {
-				newFieldsSelection[field.value] = null;
+			dbFields?.forEach((dbField) => {
+				newFieldsSelection[dbField.name] = null;
 
-				if (fileFields.includes(field.value)) {
-					newFieldsSelection[field.value] = field.value;
+				if (fileFields.includes(dbField.name)) {
+					newFieldsSelection[dbField.name] = dbField.name;
 				}
 			});
 
@@ -85,6 +98,7 @@ function ImportForm({
 
 			if (template) {
 				useTemplateMappingRef.current = true;
+
 				setFieldsSelections(template.mapping);
 			}
 			else {
@@ -112,23 +126,10 @@ function ImportForm({
 	useEffect(() => {
 		if (mappedFields) {
 			setFileFields(Object.keys(mappedFields));
+
 			setDbFields(Object.values(mappedFields));
 		}
 	}, [mappedFields]);
-
-	const selectableFields =
-		dbFields?.filter(
-			(field) =>
-				!Object.values(fieldsSelections).find(
-					(selected) => selected === field.value
-				)
-		) || [];
-
-	const hasSelectedField = Object.values(fieldsSelections).find(
-		(selection) => selection !== null
-	);
-
-	const disableButtons = !(hasSelectedField && dbFields && fileFields);
 
 	return (
 		<>
@@ -141,14 +142,17 @@ function ImportForm({
 					<div className="card-body">
 						<div className="lfr-form-content">
 							<div className="autofit-section">
-								{fileFields?.map((field) => (
+								{dbFields?.map((dbField) => (
 									<ImportMappingItem
-										field={field}
-										key={field}
-										onChange={onFieldChange}
+										dbField={dbField}
+										fileFields={fileFields}
+										formEvaluated={formEvaluated}
+										key={dbField.name}
 										portletNamespace={portletNamespace}
-										selectableFields={selectableFields}
-										selectedField={fieldsSelections[field]}
+										selectedFileField={
+											fieldsSelections[dbField.name]
+										}
+										updateFieldMapping={updateFieldMapping}
 									/>
 								))}
 							</div>
@@ -163,21 +167,21 @@ function ImportForm({
 						{Liferay.Language.get('cancel')}
 					</ClayLink>
 
-					<span>
-						<SaveTemplate
-							forceDisable={disableButtons}
-							formSaveAsTemplateDataQuerySelector={
-								formDataQuerySelector
-							}
-							formSaveAsTemplateURL={formSaveAsTemplateURL}
-							portletNamespace={portletNamespace}
-						/>
-					</span>
+					<SaveTemplate
+						evaluateForm={() => setFormEvaluated(true)}
+						formIsValid={formIsValid}
+						formSaveAsTemplateDataQuerySelector={
+							formDataQuerySelector
+						}
+						formSaveAsTemplateURL={formSaveAsTemplateURL}
+						portletNamespace={portletNamespace}
+					/>
 
 					<ImportSubmit
-						disabled={disableButtons}
+						evaluateForm={() => setFormEvaluated(true)}
 						formDataQuerySelector={formDataQuerySelector}
 						formImportURL={formImportURL}
+						formIsValid={formIsValid}
 						portletNamespace={portletNamespace}
 					/>
 				</div>

@@ -20,9 +20,10 @@ import React, {useCallback, useState} from 'react';
 import ImportModal from './ImportModal';
 
 function ImportSubmit({
-	disabled,
+	evaluateForm,
 	formDataQuerySelector,
 	formImportURL,
+	formIsValid,
 	portletNamespace,
 }) {
 	const [visible, setVisible] = useState(false);
@@ -30,13 +31,16 @@ function ImportSubmit({
 		onClose: () => setVisible(false),
 	});
 	const onButtonClick = useCallback(() => {
-		setVisible(true);
-	}, [setVisible]);
+		evaluateForm(true);
+
+		if (formIsValid) {
+			setVisible(true);
+		}
+	}, [evaluateForm, formIsValid]);
 
 	return (
 		<span className="mr-3">
 			<ClayButton
-				disabled={disabled}
 				displayType="primary"
 				id={`${portletNamespace}-import-submit`}
 				onClick={onButtonClick}
@@ -59,7 +63,6 @@ function ImportSubmit({
 }
 
 ImportSubmit.propTypes = {
-	disabled: PropTypes.bool.isRequired,
 	formDataQuerySelector: PropTypes.string.isRequired,
 	formImportURL: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
