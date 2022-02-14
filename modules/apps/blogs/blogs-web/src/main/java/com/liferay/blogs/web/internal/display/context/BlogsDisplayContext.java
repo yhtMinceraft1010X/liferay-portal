@@ -106,23 +106,6 @@ public class BlogsDisplayContext {
 		).build();
 	}
 
-	public int getUnpublishedEntriesCount() {
-		if (_unpublishedEntriesCount != null) {
-			return _unpublishedEntriesCount;
-		}
-
-		_unpublishedEntriesCount =
-			BlogsEntryServiceUtil.getGroupUserEntriesCount(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				new int[] {
-					WorkflowConstants.STATUS_DRAFT,
-					WorkflowConstants.STATUS_PENDING,
-					WorkflowConstants.STATUS_SCHEDULED
-				});
-
-		return _unpublishedEntriesCount;
-	}
-
 	public PortletURL getPortletURL() {
 		if (_portletURL != null) {
 			return _portletURL;
@@ -193,6 +176,23 @@ public class BlogsDisplayContext {
 		return searchContainer;
 	}
 
+	public int getUnpublishedEntriesCount() {
+		if (_unpublishedEntriesCount != null) {
+			return _unpublishedEntriesCount;
+		}
+
+		_unpublishedEntriesCount =
+			BlogsEntryServiceUtil.getGroupUserEntriesCount(
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
+				new int[] {
+					WorkflowConstants.STATUS_DRAFT,
+					WorkflowConstants.STATUS_PENDING,
+					WorkflowConstants.STATUS_SCHEDULED
+				});
+
+		return _unpublishedEntriesCount;
+	}
+
 	public boolean isAssetEntryQuery() {
 		if ((_getAssetCategoryId() > 0) ||
 			Validator.isNotNull(_getAssetTagName())) {
@@ -240,10 +240,10 @@ public class BlogsDisplayContext {
 		_blogsPortletInstanceConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private String _mvcRenderCommandName;
-	private Integer _unpublishedEntriesCount;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
+	private Integer _unpublishedEntriesCount;
 
 }

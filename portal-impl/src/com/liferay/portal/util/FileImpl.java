@@ -462,7 +462,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 
