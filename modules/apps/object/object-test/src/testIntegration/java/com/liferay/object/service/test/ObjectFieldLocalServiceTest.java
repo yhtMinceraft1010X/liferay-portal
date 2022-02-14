@@ -84,7 +84,7 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldDBTypeException.getMessage());
 		}
 
-		// business types
+		// Business types
 
 		String[] businessTypes = {
 			"Boolean", "Date", "Decimal", "Integer", "LargeFile", "LongInteger",
@@ -97,10 +97,12 @@ public class ObjectFieldLocalServiceTest {
 					businessType, "", "Able", "able"));
 		}
 
+		String businessType = RandomTestUtil.randomString();
+
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					"LargeText", "", "Able", "able"));
+					businessType, "", "Able", "able"));
 
 			Assert.fail();
 		}
@@ -108,7 +110,7 @@ public class ObjectFieldLocalServiceTest {
 					objectFieldBusinessTypeException) {
 
 			Assert.assertEquals(
-				"Invalid business type LargeText",
+				"Invalid business type " + businessType,
 				objectFieldBusinessTypeException.getMessage());
 		}
 
