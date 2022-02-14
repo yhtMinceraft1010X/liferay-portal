@@ -2909,6 +2909,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			int j = 0;
+
 			UserAccount userAccount = UserAccount.toDTO(
 				String.valueOf(jsonObject));
 
@@ -2917,13 +2919,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getCompanyId(),
 					userAccount.getEmailAddress());
 
-			int j = 0;
-
-			JSONObject accountBriefsJSONObject = null;
-
 			if (existingUserAccount == null) {
-				accountBriefsJSONObject = accountBriefsJSONArray.getJSONObject(
-					j);
+				JSONObject accountBriefsJSONObject =
+					accountBriefsJSONArray.getJSONObject(j);
 
 				userAccountResource.
 					postAccountUserAccountByExternalReferenceCode(
@@ -2939,8 +2937,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			for (; j < accountBriefsJSONArray.length(); j++) {
-				accountBriefsJSONObject = accountBriefsJSONArray.getJSONObject(
-					j);
+				JSONObject accountBriefsJSONObject =
+					accountBriefsJSONArray.getJSONObject(j);
 
 				userAccountResource.
 					postAccountUserAccountByExternalReferenceCodeByEmailAddress(
