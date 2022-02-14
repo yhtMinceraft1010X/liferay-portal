@@ -474,10 +474,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		AccountResource.Builder accountResourceBuilder =
-			_accountResourceFactory.create();
+		AccountResource.Builder builder = _accountResourceFactory.create();
 
-		AccountResource accountResource = accountResourceBuilder.user(
+		AccountResource accountResource = builder.user(
 			serviceContext.fetchUser()
 		).build();
 
@@ -616,10 +615,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		CatalogResource.Builder catalogResourceBuilder =
+		CatalogResource.Builder builder =
 			_commerceReferencesHolder.catalogResourceFactory.create();
 
-		CatalogResource catalogResource = catalogResourceBuilder.user(
+		CatalogResource catalogResource = builder.user(
 			serviceContext.fetchUser()
 		).build();
 
@@ -2995,13 +2994,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		AccountRoleResource.Builder accountRoleResourceBuilder =
+		AccountRoleResource.Builder builder =
 			_accountRoleResourceFactory.create();
 
-		AccountRoleResource accountRoleResource =
-			accountRoleResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
+		AccountRoleResource accountRoleResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
 
 		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
 			"roleBriefs");
