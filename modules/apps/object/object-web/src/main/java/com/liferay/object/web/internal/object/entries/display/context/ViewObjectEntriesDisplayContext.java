@@ -82,11 +82,11 @@ public class ViewObjectEntriesDisplayContext {
 			if (!_objectScopeProvider.isGroupAware() ||
 				!_objectScopeProvider.isValidGroupId(groupId)) {
 
-				return _apiURL + _getNestedFields();
+				return _apiURL + _getNestedFieldsQueryString();
 			}
 
 			return StringBundler.concat(
-				_apiURL, "/scopes/", groupId, _getNestedFields());
+				_apiURL, "/scopes/", groupId, _getNestedFieldsQueryString());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -184,7 +184,7 @@ public class ViewObjectEntriesDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	private String _getNestedFields() {
+	private String _getNestedFieldsQueryString() {
 		if (!_ffObjectViewConfigurationActivator.enabled()) {
 			return StringPool.BLANK;
 		}
@@ -195,7 +195,7 @@ public class ViewObjectEntriesDisplayContext {
 
 		Stream<ObjectField> stream = objectFields.stream();
 
-		String nestedFields = stream.filter(
+		String queryString = stream.filter(
 			objectField -> Objects.equals(
 				objectField.getRelationshipType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)
@@ -213,11 +213,11 @@ public class ViewObjectEntriesDisplayContext {
 			Collectors.joining("&nestedFields=")
 		);
 
-		if (Validator.isNull(nestedFields)) {
+		if (Validator.isNull(queryString)) {
 			return StringPool.BLANK;
 		}
 
-		return "?nestedFields=" + nestedFields;
+		return "?nestedFields=" + queryString;
 	}
 
 	private String _getPermissionsURL() throws Exception {
