@@ -2933,7 +2933,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				j++;
 
-				_relateAccountRoles(
+				_associateUserAccounts(
 					accountBriefsJSONObject,
 					jsonObject.getString("emailAddress"), serviceContext);
 			}
@@ -2948,7 +2948,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							"externalReferenceCode"),
 						userAccount.getEmailAddress());
 
-				_relateAccountRoles(
+				_associateUserAccounts(
 					accountBriefsJSONObject,
 					jsonObject.getString("emailAddress"), serviceContext);
 			}
@@ -2985,6 +2985,49 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				_roleLocalService.addUserRoles(user.getUserId(), roles);
 			}
+		}
+	}
+
+	private void _associateUserAccounts(
+			JSONObject accountBriefsJSONObject, String emailAddress,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (!accountBriefsJSONObject.has("roleBriefs")) {
+			return;
+		}
+
+		AccountRoleResource.Builder accountRoleResourceBuilder =
+			_accountRoleResourceFactory.create();
+
+		AccountRoleResource accountRoleResource =
+			accountRoleResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
+			"roleBriefs");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), jsonArray.getString(i));
+
+			if (role == null) {
+				continue;
+			}
+
+			AccountRole accountRole =
+				_accountRoleLocalService.fetchAccountRoleByRoleId(
+					role.getRoleId());
+
+			if (accountRole == null) {
+				continue;
+			}
+
+			accountRoleResource.
+				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+					accountBriefsJSONObject.getString("externalReferenceCode"),
+					accountRole.getAccountRoleId(), emailAddress);
 		}
 	}
 
@@ -3081,49 +3124,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
-	}
-
-	private void _relateAccountRoles(
-			JSONObject accountBriefsJSONObject, String emailAddress,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (!accountBriefsJSONObject.has("roleBriefs")) {
-			return;
-		}
-
-		AccountRoleResource.Builder accountRoleResourceBuilder =
-			_accountRoleResourceFactory.create();
-
-		AccountRoleResource accountRoleResource =
-			accountRoleResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
-			"roleBriefs");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			Role role = _roleLocalService.fetchRole(
-				serviceContext.getCompanyId(), jsonArray.getString(i));
-
-			if (role == null) {
-				continue;
-			}
-
-			AccountRole accountRole =
-				_accountRoleLocalService.fetchAccountRoleByRoleId(
-					role.getRoleId());
-
-			if (accountRole == null) {
-				continue;
-			}
-
-			accountRoleResource.
-				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
-					accountBriefsJSONObject.getString("externalReferenceCode"),
-					accountRole.getAccountRoleId(), emailAddress);
-		}
 	}
 
 	private Map<Locale, String> _toMap(String values) {
