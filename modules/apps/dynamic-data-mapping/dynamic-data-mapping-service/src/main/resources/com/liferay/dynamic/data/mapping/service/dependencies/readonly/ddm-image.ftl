@@ -9,6 +9,7 @@
 		alt = fileJSONObject.getString("alt")
 		src = fileJSONObject.getString("data")
 	/>
+
 	<#if !validator.isNotNull(src)>
 		<#attempt>
 			<#assign fileEntry = getFileEntry(fileJSONObject) />
@@ -50,6 +51,7 @@
 					value="${getFileEntryURL(fileEntry)}"
 				/>
 			</#if>
+
 			<@liferay_aui.input
 				label="image-description"
 				name="${namespacedFieldName}Alt"
