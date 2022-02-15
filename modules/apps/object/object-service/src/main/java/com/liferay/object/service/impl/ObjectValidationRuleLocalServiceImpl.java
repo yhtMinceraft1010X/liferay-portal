@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,9 +51,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			objectDefinitionId, active, start, end);
 	}
 
+	@Override
 	public void validate(
-			long userId, long objectDefinitionId, BaseModel originalBaseModel,
-			BaseModel baseModel)
+			long userId, long objectDefinitionId,
+			BaseModel<?> originalBaseModel, BaseModel<?> baseModel)
 		throws PortalException {
 
 		List<ObjectValidationRule> objectValidationRules =
@@ -68,9 +69,9 @@ public class ObjectValidationRuleLocalServiceImpl
 					getObjectValidationRuleEngine(
 						objectValidationRule.getEngine());
 
-			HashMap<String, Object> inputObjects = new HashMap<>();
-
-			inputObjects.putAll(baseModel.getModelAttributes());
+			HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+				HashMapBuilder.<String, Object>putAll(
+					baseModel.getModelAttributes());
 
 			if (originalBaseModel != null) {
 				Map<String, Object> modelAttributes =
@@ -79,7 +80,7 @@ public class ObjectValidationRuleLocalServiceImpl
 				for (Map.Entry<String, Object> entry :
 						modelAttributes.entrySet()) {
 
-					inputObjects.put(
+					hashMapWrapper.put(
 						"original." + entry.getKey(), entry.getValue());
 				}
 			}
@@ -87,15 +88,19 @@ public class ObjectValidationRuleLocalServiceImpl
 			if (userId > 0) {
 				User user = _userLocalService.getUser(userId);
 
-				inputObjects.put("user.emailAddress", user.getEmailAddress());
-				inputObjects.put("user.firstName", user.getFirstName());
-				inputObjects.put("user.lastName", user.getLastName());
-
-				inputObjects.put("userId", userId);
+				hashMapWrapper.put(
+					"user.emailAddress", user.getEmailAddress()
+				).put(
+					"user.firstName", user.getFirstName()
+				).put(
+					"user.lastName", user.getLastName()
+				).put(
+					"userId", userId
+				);
 			}
 
 			if (!objectValidationRuleEngine.evaluate(
-					objectValidationRule.getScript(), inputObjects)) {
+					objectValidationRule.getScript(), hashMapWrapper.build())) {
 
 				throw new ObjectValidationException(
 					objectValidationRule.getErrorLabel());
