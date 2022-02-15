@@ -21,8 +21,7 @@ import java.util.Map;
  */
 public interface ObjectValidationRuleEngine {
 
-	public boolean evaluate(
-		Map<String, Object> inputObjects, String script);
+	public boolean evaluate(Map<String, Object> inputObjects, String script);
 
 	public String getName();
 
