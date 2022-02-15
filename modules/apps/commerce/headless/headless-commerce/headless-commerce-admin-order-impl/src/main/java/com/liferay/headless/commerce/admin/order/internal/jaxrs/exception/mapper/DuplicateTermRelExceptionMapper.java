@@ -55,7 +55,7 @@ public class DuplicateTermRelExceptionMapper
 			duplicateCommerceTermEntryRelException,
 		int status) {
 
-		return super.toJSON("that-qualifier-is-already-linked", status);
+		return super.toJSON("the-qualifier-is-already-linked", status);
 	}
 
 }

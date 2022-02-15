@@ -43,8 +43,8 @@ export default function ({
 			})
 			.catch((error) => {
 				const errorsMap = {
-					'that-qualifier-is-already-linked': Liferay.Language.get(
-						'that-qualifier-is-already-linked'
+					'the-qualifier-is-already-linked': Liferay.Language.get(
+						'the-qualifier-is-already-linked'
 					),
 				};
 

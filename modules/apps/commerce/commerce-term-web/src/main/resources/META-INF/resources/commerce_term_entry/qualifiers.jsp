@@ -37,7 +37,7 @@ boolean hasPermission = commerceTermEntryQualifiersDisplayContext.hasPermission(
 	<aui:input name="orderTypeQualifiers" type="hidden" value="<%= orderTypeQualifiers %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<liferay-ui:error exception="<%= DuplicateCommerceTermEntryRelException.class %>" message="that-qualifier-is-already-linked" />
+	<liferay-ui:error exception="<%= DuplicateCommerceTermEntryRelException.class %>" message="the-qualifier-is-already-linked" />
 
 	<aui:model-context bean="<%= commerceTermEntry %>" model="<%= CommerceTermEntry.class %>" />
 
