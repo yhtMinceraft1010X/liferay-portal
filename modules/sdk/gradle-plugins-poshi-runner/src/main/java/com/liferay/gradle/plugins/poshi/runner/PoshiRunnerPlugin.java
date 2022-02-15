@@ -279,7 +279,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					String chromeBinaryPath = poshiProperties.getProperty(
 						"browser.chrome.bin.file");
 
-					String url = _getChromeDriverUrl(
+					String url = _getChromeDriverURL(
 						_getChromeDriverVersion(project, chromeBinaryPath));
 
 					try {
@@ -538,7 +538,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			javaExec.getProject(), poshiRunnerExtension);
 	}
 
-	private String _getChromeDriverUrl(String chromeDriverVersion) {
+	private String _getChromeDriverURL(String chromeDriverVersion) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://chromedriver.storage.googleapis.com/");
@@ -583,13 +583,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 			if (!chromeBinaryFile.exists()) {
 				throw new IllegalArgumentException(
-					"Could not find Google Chrome binary, please set " +
+					"Unable to not find a Google Chrome binary. Manually set " +
 						"\"browser.chrome.bin.file\" in \"poshi.properties\"" +
-							" to a Google Chrome or Chromium binary");
+							" to a Google Chrome or Chromium binary.");
 			}
 		}
 
-		final String chromeBinaryCmd = chromeBinaryPath;
+		final String finalChromeBinaryPath = chromeBinaryPath;
 
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -599,7 +599,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
-					execSpec.commandLine(chromeBinaryCmd, "--version");
+					execSpec.commandLine(finalChromeBinaryPath, "--version");
 					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
 
