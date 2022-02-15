@@ -37,9 +37,7 @@ public class GroovyObjectValidationRuleEngineImpl
 		String expression, Map<String, Object> inputObjects) {
 
 		try {
-			Set<String> outputObjects = new HashSet<>();
-
-			execute(inputObjects, outputObjects, expression);
+			_execute(inputObjects, new HashSet<>(), expression);
 
 			return true;
 		}
@@ -50,7 +48,7 @@ public class GroovyObjectValidationRuleEngineImpl
 		return false;
 	}
 
-	public Map<String, Object> execute(
+	private Map<String, Object> _execute(
 			Map<String, Object> inputObjects, Set<String> outputObjects,
 			String script)
 		throws PortalException {
