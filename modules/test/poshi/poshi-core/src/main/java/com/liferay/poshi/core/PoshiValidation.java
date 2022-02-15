@@ -1093,10 +1093,10 @@ public class PoshiValidation {
 
 		List<Method> possibleMethods = new ArrayList<>();
 
-		List<Method> completeMethods = Arrays.asList(clazz.getMethods());
-
 		List<PoshiElement> childPoshiElements = poshiElement.toPoshiElements(
 			poshiElement.elements());
+
+		List<Method> completeMethods = Arrays.asList(clazz.getMethods());
 
 		for (Method possibleMethod : completeMethods) {
 			String possibleMethodName = possibleMethod.getName();
