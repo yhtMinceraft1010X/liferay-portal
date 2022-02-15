@@ -25,7 +25,7 @@ import {StyleBookContext} from './StyleBookContext';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
-	[DRAFT_STATUS.draftSaved]: Liferay.Language.get('draft-saved'),
+	[DRAFT_STATUS.draftSaved]: Liferay.Language.get('saved'),
 	[DRAFT_STATUS.notSaved]: '',
 	[DRAFT_STATUS.saving]: `${Liferay.Language.get('saving')}...`,
 };
@@ -71,13 +71,6 @@ function DraftStatus() {
 
 	return (
 		<div>
-			{draftStatus === DRAFT_STATUS.draftSaved && (
-				<ClayIcon
-					className="mt-0 style-book-editor__status-icon"
-					symbol="check-circle"
-				/>
-			)}
-
 			<span
 				className={classNames('ml-1 style-book-editor__status-text', {
 					'text-success': draftStatus === DRAFT_STATUS.draftSaved,
@@ -85,6 +78,13 @@ function DraftStatus() {
 			>
 				{STATUS_TO_LABEL[draftStatus]}
 			</span>
+
+			{draftStatus === DRAFT_STATUS.draftSaved && (
+				<ClayIcon
+					className="mt-0 style-book-editor__status-icon"
+					symbol="check-circle"
+				/>
+			)}
 		</div>
 	);
 }
