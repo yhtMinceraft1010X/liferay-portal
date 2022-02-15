@@ -150,9 +150,16 @@ function ImportForm({
 										key={dbField.name}
 										portletNamespace={portletNamespace}
 										selectedFileField={
-											fieldsSelections[dbField.name]
+											fieldsSelections[dbField.name] || ''
 										}
-										updateFieldMapping={updateFieldMapping}
+										updateFieldMapping={(
+											selectedFileField
+										) =>
+											updateFieldMapping(
+												selectedFileField,
+												dbField.name
+											)
+										}
 									/>
 								))}
 							</div>

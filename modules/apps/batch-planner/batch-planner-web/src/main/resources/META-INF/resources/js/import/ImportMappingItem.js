@@ -64,16 +64,14 @@ const ImportMappingItem = ({
 			)}
 
 			<ClaySelect
+				aria-required={dbField.required}
 				id={inputId}
 				name={
-					selectedFileField
-						? `${portletNamespace}externalFieldName_${dbField.name}`
-						: ''
+					selectedFileField &&
+					`${portletNamespace}externalFieldName_${dbField.name}`
 				}
-				onChange={(event) =>
-					updateFieldMapping(event.target.value, dbField.name)
-				}
-				value={selectedFileField || ''}
+				onChange={(event) => updateFieldMapping(event.target.value)}
+				value={selectedFileField}
 			>
 				<ClaySelect.Option label="" value="" />
 
@@ -92,8 +90,8 @@ const ImportMappingItem = ({
 ImportMappingItem.propTypes = {
 	dbField: PropTypes.shape({
 		label: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
 		required: PropTypes.bool,
-		value: PropTypes.string.isRequired,
 	}).isRequired,
 	fileFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 	formEvaluated: PropTypes.bool.isRequired,

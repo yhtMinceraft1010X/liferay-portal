@@ -35,12 +35,14 @@ function FieldsTable({portletNamespace}) {
 				const newFields = getFieldsFromSchema(event.schema);
 
 				setFields(newFields);
+
 				if (!useTemplateMappingRef.current) {
 					setSelectedFields(newFields);
 				}
 			}
 			else {
 				setFields([]);
+
 				if (!useTemplateMappingRef.current) {
 					setSelectedFields([]);
 				}
@@ -52,6 +54,7 @@ function FieldsTable({portletNamespace}) {
 
 			if (template) {
 				useTemplateMappingRef.current = true;
+
 				setSelectedFields(
 					Object.keys(template.mapping).map((fields) => ({
 						label: fields,

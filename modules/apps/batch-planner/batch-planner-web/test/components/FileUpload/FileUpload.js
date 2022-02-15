@@ -54,7 +54,9 @@ describe('FileUpload', () => {
 		const {getByLabelText} = render(<FileUpload portletNamespace="test" />);
 
 		act(() => {
-			fireEvent.change(getByLabelText('file'), {target: {files: [file]}});
+			fireEvent.change(getByLabelText(/file \((.*)\)/), {
+				target: {files: [file]},
+			});
 		});
 
 		expect(mockFileSchemaListener.mock.calls[0][0].schema).toStrictEqual(
@@ -82,7 +84,9 @@ describe('FileUpload', () => {
 		);
 
 		act(() => {
-			fireEvent.change(getByLabelText('file'), {target: {files: [file]}});
+			fireEvent.change(getByLabelText(/file \((.*)\)/), {
+				target: {files: [file]},
+			});
 		});
 
 		expect(testInput.value).toBe('TST');
