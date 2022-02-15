@@ -126,8 +126,10 @@ public class FacetPermissionCharacteristicTest {
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
-		_roleA = RoleTestUtil.addRole("role_a", RoleConstants.TYPE_REGULAR);
-		_roleB = RoleTestUtil.addRole("role_b", RoleConstants.TYPE_REGULAR);
+		_roleA = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+		_roleB = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 	}
 
 	@Test
