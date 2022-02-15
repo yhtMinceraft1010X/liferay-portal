@@ -74,7 +74,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 			return new CommerceOrderValidatorResult(
 				false,
-				_getLocalizedMessage(locale, "that-quantity-is-unavailable"));
+				_getLocalizedMessage(locale, "the-specified-quantity-is-unavailable"));
 		}
 
 		return new CommerceOrderValidatorResult(true);
@@ -106,7 +106,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
-				_getLocalizedMessage(locale, "that-quantity-is-unavailable"));
+				_getLocalizedMessage(locale, "the-specified-quantity-is-unavailable"));
 		}
 		else if ((commerceInventoryBookedQuantity != null) &&
 				 (commerceOrderItem.getQuantity() !=
@@ -114,7 +114,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
-				_getLocalizedMessage(locale, "that-quantity-is-not-allowed"));
+				_getLocalizedMessage(locale, "the-specified-quantity-is-not-allowed"));
 		}
 
 		return new CommerceOrderValidatorResult(true);
