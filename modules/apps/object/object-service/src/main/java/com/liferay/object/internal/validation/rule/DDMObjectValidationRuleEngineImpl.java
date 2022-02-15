@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
+	@Override
 	public boolean evaluate(String expression, Map<String, Object> variables) {
 		try {
 			return _evaluateExpression(expression, variables);

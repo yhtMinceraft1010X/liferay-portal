@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class GroovyObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
+	@Override
 	public boolean evaluate(
 		String expression, Map<String, Object> inputObjects) {
 
