@@ -21,9 +21,9 @@ import java.util.List;
  */
 public interface ObjectValidationRuleEngineServicesTracker {
 
-	public ObjectValidationRuleEngine getObjectValidationRuleEngine(String name);
+	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
+		String name);
 
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines();
-
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.object.validation.rule;
 
-import com.liferay.portal.kernel.model.BaseModel;
-
 import java.util.Map;
 
 /**
@@ -23,7 +21,8 @@ import java.util.Map;
  */
 public interface ObjectValidationRuleEngine {
 
-	public boolean evaluate(String expression, Map<String, Object> inputObjects);
+	public boolean evaluate(
+		String expression, Map<String, Object> inputObjects);
 
 	public String getName();
 
