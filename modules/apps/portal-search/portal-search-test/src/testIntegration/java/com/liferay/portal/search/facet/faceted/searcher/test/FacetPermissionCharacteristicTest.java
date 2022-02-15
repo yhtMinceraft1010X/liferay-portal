@@ -237,15 +237,15 @@ public class FacetPermissionCharacteristicTest {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(TestPropsValues.getCompanyId());
-		searchContext.setKeywords("article");
-		searchContext.setUserId(_serviceContext.getUserId());
-
 		Facet facet = _folderFacetFactory.newInstance(searchContext);
 
 		facet.select(selects);
 
 		searchContext.addFacet(facet);
+
+		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setKeywords("article");
+		searchContext.setUserId(_serviceContext.getUserId());
 
 		FacetedSearcher facetedSearcher =
 			_facetedSearcherManager.createFacetedSearcher();
