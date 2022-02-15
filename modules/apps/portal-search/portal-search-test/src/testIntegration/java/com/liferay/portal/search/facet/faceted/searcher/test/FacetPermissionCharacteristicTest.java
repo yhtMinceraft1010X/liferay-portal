@@ -87,6 +87,9 @@ public class FacetPermissionCharacteristicTest {
 	@Before
 	public void setUp() throws Exception {
 		_groupA = GroupTestUtil.addGroup();
+		_groupB = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(), _serviceContext);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_groupA, TestPropsValues.getUserId());
@@ -122,10 +125,6 @@ public class FacetPermissionCharacteristicTest {
 				LocaleUtil.US, ""
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-
-		_groupB = GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(), _serviceContext);
 
 		_roleA = RoleTestUtil.addRole("role_a", RoleConstants.TYPE_REGULAR);
 		_roleB = RoleTestUtil.addRole("role_b", RoleConstants.TYPE_REGULAR);
