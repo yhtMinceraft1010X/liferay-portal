@@ -91,5 +91,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "9.1.3"
+	"version": "9.1.4"
 }
