@@ -16,6 +16,8 @@ package com.liferay.object.internal.validation.rule;
 
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
 
 import java.util.HashSet;
@@ -42,10 +44,15 @@ public class GroovyObjectValidationRuleEngineImpl
 			return true;
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 
 		return false;
+	}
+
+	@Override
+	public String getName() {
+		return "groovy";
 	}
 
 	private Map<String, Object> _execute(
@@ -76,10 +83,8 @@ public class GroovyObjectValidationRuleEngineImpl
 		return results;
 	}
 
-	@Override
-	public String getName() {
-		return "groovy";
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroovyObjectValidationRuleEngineImpl.class);
 
 	@Reference
 	private Scripting _scripting;
