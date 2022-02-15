@@ -100,7 +100,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 
 			if (!objectValidationRuleEngine.evaluate(
-					objectValidationRule.getScript(), hashMapWrapper.build())) {
+					hashMapWrapper.build(), objectValidationRule.getScript())) {
 
 				throw new ObjectValidationException(
 					objectValidationRule.getErrorLabel());

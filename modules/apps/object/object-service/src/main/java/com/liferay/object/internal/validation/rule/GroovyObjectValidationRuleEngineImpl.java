@@ -15,14 +15,12 @@
 package com.liferay.object.internal.validation.rule;
 
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,19 +33,15 @@ public class GroovyObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
 	@Override
-	public boolean evaluate(
-		String expression, Map<String, Object> inputObjects) {
-
+	public boolean evaluate(Map<String, Object> inputObjects, String script) {
 		try {
-			_execute(inputObjects, new HashSet<>(), expression);
-
-			return true;
+			return _evaluate(inputObjects, script);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	@Override
@@ -55,10 +49,8 @@ public class GroovyObjectValidationRuleEngineImpl
 		return "groovy";
 	}
 
-	private Map<String, Object> _execute(
-			Map<String, Object> inputObjects, Set<String> outputObjects,
-			String script)
-		throws PortalException {
+	private boolean _evaluate(Map<String, Object> inputObjects, String script)
+		throws Exception {
 
 		Thread currentThread = Thread.currentThread();
 
@@ -68,19 +60,17 @@ public class GroovyObjectValidationRuleEngineImpl
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Map<String, Object> results = null;
-
 		try {
 			currentThread.setContextClassLoader(classLoader);
 
-			results = _scripting.eval(
-				null, inputObjects, outputObjects, "groovy", script);
+			_scripting.eval(
+				null, inputObjects, new HashSet<>(), "groovy", script);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
-		return results;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -22,7 +22,7 @@ import java.util.Map;
 public interface ObjectValidationRuleEngine {
 
 	public boolean evaluate(
-		String expression, Map<String, Object> inputObjects);
+		Map<String, Object> inputObjects, String script);
 
 	public String getName();
 

@@ -40,6 +40,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 public interface GroovyObjectActionSettings {
 
 	@DDMFormField(dataType = "string", label = "%script", type = "rich_text")
-	public String secret();
+	public String script();
 
 }

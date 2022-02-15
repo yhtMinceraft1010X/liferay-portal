@@ -16,7 +16,6 @@ package com.liferay.object.internal.validation.rule;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
@@ -35,15 +34,15 @@ public class DDMObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
 	@Override
-	public boolean evaluate(String expression, Map<String, Object> variables) {
+	public boolean evaluate(Map<String, Object> inputObjects, String script) {
 		try {
-			return _evaluateExpression(expression, variables);
+			return _evaluate(inputObjects, script);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	@Override
@@ -51,22 +50,16 @@ public class DDMObjectValidationRuleEngineImpl
 		return "ddm";
 	}
 
-	private <T> DDMExpression<T> _createExpression(String expression)
-		throws DDMExpressionException {
+	private boolean _evaluate(Map<String, Object> inputObjects, String script)
+		throws Exception {
 
-		return _ddmExpressionFactory.createExpression(
-			CreateExpressionRequest.Builder.newBuilder(
-				expression
-			).build());
-	}
+		DDMExpression<Boolean> ddmExpression =
+			_ddmExpressionFactory.createExpression(
+				CreateExpressionRequest.Builder.newBuilder(
+					script
+				).build());
 
-	private boolean _evaluateExpression(
-			String expression, Map<String, Object> variables)
-		throws DDMExpressionException {
-
-		DDMExpression<Boolean> ddmExpression = _createExpression(expression);
-
-		ddmExpression.setVariables(variables);
+		ddmExpression.setVariables(inputObjects);
 
 		return ddmExpression.evaluate();
 	}
