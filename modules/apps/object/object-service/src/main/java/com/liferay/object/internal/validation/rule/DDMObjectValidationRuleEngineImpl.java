@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class DDMObjectValidationRuleEngineImpl
 			return _evaluateExpression(expression, variables);
 		}
 		catch (Exception exception) {
-			//TODO log exception
+			_log.error(exception);
 		}
 
 		return false;
@@ -67,6 +69,9 @@ public class DDMObjectValidationRuleEngineImpl
 
 		return ddmExpression.evaluate();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMObjectValidationRuleEngineImpl.class);
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
