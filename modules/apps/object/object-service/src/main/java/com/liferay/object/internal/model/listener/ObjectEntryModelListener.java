@@ -66,13 +66,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	@Override
-	public void onBeforeCreate(ObjectEntry model)
+	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
 		try {
 			_objectValidationRuleLocalService.validate(
-				PrincipalThreadLocal.getUserId(), model.getObjectDefinitionId(),
-				null, model);
+				PrincipalThreadLocal.getUserId(),
+				objectEntry.getObjectDefinitionId(), null, objectEntry);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -80,13 +80,15 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	@Override
-	public void onBeforeUpdate(ObjectEntry originalModel, ObjectEntry model)
+	public void onBeforeUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
 		try {
 			_objectValidationRuleLocalService.validate(
-				PrincipalThreadLocal.getUserId(), model.getObjectDefinitionId(),
-				originalModel, model);
+				PrincipalThreadLocal.getUserId(),
+				objectEntry.getObjectDefinitionId(), originalObjectEntry,
+				objectEntry);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
