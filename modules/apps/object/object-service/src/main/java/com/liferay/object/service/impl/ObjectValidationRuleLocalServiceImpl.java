@@ -47,7 +47,7 @@ public class ObjectValidationRuleLocalServiceImpl
 	public List<ObjectValidationRule> getObjectValidationRules(
 		long objectDefinitionId, boolean active, int start, int end) {
 
-		return objectValidationRulePersistence.findByO_A(
+		return objectValidationRulePersistence.findByODI_A(
 			objectDefinitionId, active, start, end);
 	}
 

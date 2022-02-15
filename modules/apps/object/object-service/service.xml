@@ -437,7 +437,7 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
-		<finder name="O_A" return-type="Collection">
+		<finder name="ODI_A" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
 		</finder>
