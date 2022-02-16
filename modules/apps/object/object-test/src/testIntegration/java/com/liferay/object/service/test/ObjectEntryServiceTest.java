@@ -135,8 +135,8 @@ public class ObjectEntryServiceTest {
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteObjectEntry(_user, _user);
 		_testDeleteObjectEntry(_adminUser, _adminUser);
+		_testDeleteObjectEntry(_user, _user);
 	}
 
 	@Test
@@ -155,8 +155,8 @@ public class ObjectEntryServiceTest {
 						" must have VIEW permission for"));
 		}
 
-		_testGetObjectEntry(_user, _user);
 		_testGetObjectEntry(_adminUser, _adminUser);
+		_testGetObjectEntry(_user, _user);
 	}
 
 	@Test
