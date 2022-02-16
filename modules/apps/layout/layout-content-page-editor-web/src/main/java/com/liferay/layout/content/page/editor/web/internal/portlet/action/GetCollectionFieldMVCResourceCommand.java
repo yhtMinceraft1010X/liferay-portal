@@ -231,15 +231,6 @@ public class GetCollectionFieldMVCResourceCommand
 						infoItem);
 				}
 
-				long[] segmentsEntryIds =
-					_segmentsEntryRetriever.getSegmentsEntryIds(
-						_portal.getScopeGroupId(httpServletRequest),
-						_portal.getUserId(httpServletRequest),
-						_requestContextMapper.map(httpServletRequest));
-
-				defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-					segmentsEntryIds);
-
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(
 						layoutObjectReferenceJSONObject);
@@ -271,6 +262,15 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(end, start));
+
+				long[] segmentsEntryIds =
+					_segmentsEntryRetriever.getSegmentsEntryIds(
+						_portal.getScopeGroupId(httpServletRequest),
+						_portal.getUserId(httpServletRequest),
+						_requestContextMapper.map(httpServletRequest));
+
+				defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+					segmentsEntryIds);
 
 				// LPS-111037
 
