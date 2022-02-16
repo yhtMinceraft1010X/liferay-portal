@@ -573,6 +573,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		_commerceOrderService.updateCommerceOrder(
+			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(),
