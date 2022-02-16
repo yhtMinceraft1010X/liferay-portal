@@ -71,7 +71,7 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
-			actionRequest, _PARAMETER_NAME_PREFIX);
+			actionRequest, "preferences--");
 
 		String maxTerms = unicodeProperties.getProperty("maxTerms");
 
@@ -99,8 +99,6 @@ public class CPSpecificationtOptionFacetPortletConfigurationAction
 			super.processAction(portletConfig, actionRequest, actionResponse);
 		}
 	}
-
-	private static final String _PARAMETER_NAME_PREFIX = "preferences--";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSpecificationtOptionFacetPortletConfigurationAction.class);
