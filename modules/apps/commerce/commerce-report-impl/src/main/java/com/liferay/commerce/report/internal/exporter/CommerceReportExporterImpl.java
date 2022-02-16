@@ -89,6 +89,10 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 			JasperCompileManager.compileReport(templateInputStream);
 		}
 		catch (JRException jrException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jrException);
+			}
+
 			return false;
 		}
 
