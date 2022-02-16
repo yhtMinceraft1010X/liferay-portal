@@ -344,21 +344,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		return cpSpecificationOptionsSearchFacetTermDisplayContexts;
 	}
 
-	private List<Tuple> _getTuples(FacetCollector facetCollector) {
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<Tuple> tuples = new ArrayList<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			tuples.add(
-				new Tuple(
-					facetCollector.getFieldName(), termCollector.getFrequency(),
-					termCollector.getTerm()));
-		}
-
-		return tuples;
-	}
-
 	private CPSpecificationOption _getCPSpecificationOption(String fieldName) {
 		return _cpSpecificationOptionLocalService.fetchCPSpecificationOption(
 			PortalUtil.getCompanyId(_renderRequest),
@@ -391,6 +376,21 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		double popularity = maxCount - (maxCount - (frequency - minCount));
 
 		return 1 + (popularity * multiplier);
+	}
+
+	private List<Tuple> _getTuples(FacetCollector facetCollector) {
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		List<Tuple> tuples = new ArrayList<>(termCollectors.size());
+
+		for (TermCollector termCollector : termCollectors) {
+			tuples.add(
+				new Tuple(
+					facetCollector.getFieldName(), termCollector.getFrequency(),
+					termCollector.getTerm()));
+		}
+
+		return tuples;
 	}
 
 	private boolean _isCPDefinitionSpecificationOptionValueSelected(
