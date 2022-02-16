@@ -100,9 +100,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_user = UserTestUtil.addUser(_group.getGroupId());
-
 		_layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		_user = UserTestUtil.addUser(_group.getGroupId());
 
 		_serviceContext = new ServiceContext();
 
