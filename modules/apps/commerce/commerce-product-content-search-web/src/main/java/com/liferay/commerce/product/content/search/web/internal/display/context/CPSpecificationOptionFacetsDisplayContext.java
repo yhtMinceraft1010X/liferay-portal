@@ -68,17 +68,19 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
+		long displayStyleGroupId =
 			_cpSpecificationOptionFacetPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (_displayStyleGroupId <= 0) {
+		if (displayStyleGroupId <= 0) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+			displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
+
+		_displayStyleGroupId = displayStyleGroupId;
 
 		return _displayStyleGroupId;
 	}
