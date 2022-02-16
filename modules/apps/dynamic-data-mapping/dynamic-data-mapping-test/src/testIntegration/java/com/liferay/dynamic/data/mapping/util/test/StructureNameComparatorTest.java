@@ -80,7 +80,7 @@ public class StructureNameComparatorTest {
 	}
 
 	@Test
-	public void testComparatorWithDefaultLocale() {
+	public void testCompareWithDefaultLocale() {
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
 		ddmStructures.add(_ddmStructure2);
@@ -99,7 +99,7 @@ public class StructureNameComparatorTest {
 	}
 
 	@Test
-	public void testComparatorWithLocale() {
+	public void testCompareWithLocale() {
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
 		ddmStructures.add(_ddmStructure2);
