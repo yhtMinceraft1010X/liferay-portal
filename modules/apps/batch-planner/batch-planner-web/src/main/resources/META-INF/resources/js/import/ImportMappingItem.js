@@ -75,13 +75,21 @@ const ImportMappingItem = ({
 			>
 				<ClaySelect.Option label="" value="" />
 
-				{fileFields.map((fileField) => (
-					<ClaySelect.Option
-						key={fileField}
-						label={fileField}
-						value={fileField}
-					/>
-				))}
+				{fileFields.map((fileField) => {
+					const columnHasNoName = typeof fileField === 'number';
+
+					const label = columnHasNoName
+						? `${Liferay.Language.get('column')} ${fileField + 1}`
+						: fileField;
+
+					return (
+						<ClaySelect.Option
+							key={fileField}
+							label={label}
+							value={String(fileField)}
+						/>
+					);
+				})}
 			</ClaySelect>
 		</ClayForm.Group>
 	);
@@ -93,7 +101,9 @@ ImportMappingItem.propTypes = {
 		name: PropTypes.string.isRequired,
 		required: PropTypes.bool,
 	}).isRequired,
-	fileFields: PropTypes.arrayOf(PropTypes.string).isRequired,
+	fileFields: PropTypes.arrayOf(
+		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	).isRequired,
 	formEvaluated: PropTypes.bool.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	selectedFileField: PropTypes.string.isRequired,

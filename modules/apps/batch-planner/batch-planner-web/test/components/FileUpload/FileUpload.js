@@ -35,6 +35,8 @@ const fileContents = `currencyCode,type,name
 const fileSchema = ['currencyCode', 'type', 'name'];
 const file = new Blob([fileContents], {type: 'text/csv'});
 
+file.name = 'test.csv';
+
 describe('FileUpload', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -59,8 +61,10 @@ describe('FileUpload', () => {
 			});
 		});
 
-		expect(mockFileSchemaListener.mock.calls[0][0].schema).toStrictEqual(
-			fileSchema
+		expect(mockFileSchemaListener).toHaveBeenLastCalledWith(
+			expect.objectContaining({
+				schema: fileSchema,
+			})
 		);
 	});
 

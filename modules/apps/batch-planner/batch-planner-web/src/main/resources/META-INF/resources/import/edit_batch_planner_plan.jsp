@@ -107,6 +107,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 								/>
 
 								<clay:radio
+									disabled="<%= true %>"
 									label='<%= LanguageUtil.get(request, "use-a-file-already-on-the-server") %>'
 									name="selectFile"
 									value="server"
@@ -117,23 +118,6 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 								<react:component
 									module="js/components/FileUpload"
 								/>
-							</div>
-
-							<clay:checkbox
-								checked="<%= true %>"
-								id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-								label='<%= LanguageUtil.get(request, "this-file-contains-headers") %>'
-								name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-							/>
-
-							<div class="mt-4 row">
-								<div class="col-lg-6">
-									<aui:input name="csv-separator" type="input" value="," />
-								</div>
-
-								<div class="col-lg-6">
-									<aui:input name="csv-file-column-delimiter" type="input" value="'" />
-								</div>
 							</div>
 						</liferay-frontend:edit-form-body>
 					</div>

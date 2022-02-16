@@ -19,13 +19,59 @@ import {
 	PARSE_FILE_CHUNK_SIZE,
 } from './constants';
 
-export function extractFieldsFromCSV(content, fieldSeparator = ',') {
+export function parseCSV(content, separator) {
+	const objPattern = new RegExp(
+		'(\\' +
+			separator +
+			'|\\r?\\n|\\r|^)' +
+			'(?:"([^"]*(?:""[^"]*)*)"|' +
+			'([^"\\' +
+			separator +
+			'\\r\\n]*))',
+		'gi'
+	);
+
+	const arrData = [[]];
+	let arrMatches = objPattern.exec(content);
+
+	while (arrMatches) {
+		const strMatchedDelimiter = arrMatches[1];
+
+		if (strMatchedDelimiter.length && strMatchedDelimiter !== separator) {
+			arrData.push([]);
+		}
+
+		const strMatchedValue = arrMatches[2]
+			? arrMatches[2].replace(new RegExp('""', 'g'), '"')
+			: arrMatches[3];
+
+		arrData[arrData.length - 1].push(strMatchedValue);
+
+		arrMatches = objPattern.exec(content);
+	}
+
+	return arrData;
+}
+
+export function extractFieldsFromCSV(
+	content,
+	{csvContainsHeaders, csvSeparator}
+) {
 	if (content.indexOf('\n') > -1) {
 		const splitLines = content.split('\n');
 
 		const firstNoEmptyLine = splitLines.find((line) => line.length > 0);
 
-		return firstNoEmptyLine.split(fieldSeparator);
+		const firstLineColumns = parseCSV(firstNoEmptyLine, csvSeparator)[0];
+
+		if (csvContainsHeaders) {
+			return firstLineColumns;
+		}
+		else {
+			return new Array(firstLineColumns.length)
+				.fill()
+				.map((_, index) => index);
+		}
 	}
 }
 
@@ -128,11 +174,13 @@ const parseOperators = {
 	[JSONL_FORMAT]: extractFieldsFromJSONL,
 };
 
-export default function parseFile({file, onComplete, onError, options}) {
-	const extension = file.name
-		.substring(file.name.lastIndexOf('.') + 1)
-		.toLowerCase();
-
+export default function parseFile({
+	extension,
+	file,
+	onComplete,
+	onError,
+	options,
+}) {
 	parseInChunk({
 		chunkParser: parseOperators[extension],
 		extension,
