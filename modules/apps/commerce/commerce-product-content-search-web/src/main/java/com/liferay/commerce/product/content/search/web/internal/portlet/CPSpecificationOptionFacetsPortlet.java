@@ -72,7 +72,8 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 		try {
 			CPSpecificationOptionFacetsDisplayContext
 				cpSpecificationOptionSearchFacetDisplayContext =
-					_buildDisplayContext(renderRequest);
+					_buildCPSpecificationOptionFacetsDisplayContext(
+						renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -91,8 +92,9 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
-	private CPSpecificationOptionFacetsDisplayContext _buildDisplayContext(
-			RenderRequest renderRequest)
+	private CPSpecificationOptionFacetsDisplayContext
+			_buildCPSpecificationOptionFacetsDisplayContext(
+				RenderRequest renderRequest)
 		throws PortalException {
 
 		CPSpecificationOptionsFacetDisplayContextBuilder
