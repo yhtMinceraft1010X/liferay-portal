@@ -60,7 +60,7 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 	public List<CPSpecificationOptionsSearchFacetDisplayContext>
 		getCPSpecificationOptionsSearchFacetDisplayContexts() {
 
-		return _cpSpecificationOptionsSearchFacetDisplayContext;
+		return _cpSpecificationOptionsSearchFacetDisplayContexts;
 	}
 
 	public long getDisplayStyleGroupId() {
@@ -109,16 +109,16 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 
 	public void setCPSpecificationOptionsSearchFacetDisplayContexts(
 		List<CPSpecificationOptionsSearchFacetDisplayContext>
-			cpSpecificationOptionsSearchFacetDisplayContext) {
+			cpSpecificationOptionsSearchFacetDisplayContexts) {
 
-		_cpSpecificationOptionsSearchFacetDisplayContext =
-			cpSpecificationOptionsSearchFacetDisplayContext;
+		_cpSpecificationOptionsSearchFacetDisplayContexts =
+			cpSpecificationOptionsSearchFacetDisplayContexts;
 	}
 
 	private CPSpecificationOptionFacetPortletInstanceConfiguration
 		_cpSpecificationOptionFacetPortletInstanceConfiguration;
 	private List<CPSpecificationOptionsSearchFacetDisplayContext>
-		_cpSpecificationOptionsSearchFacetDisplayContext;
+		_cpSpecificationOptionsSearchFacetDisplayContexts;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 
