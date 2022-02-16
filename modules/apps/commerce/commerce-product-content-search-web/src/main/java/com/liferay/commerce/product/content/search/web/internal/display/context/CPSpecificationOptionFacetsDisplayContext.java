@@ -58,7 +58,7 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 	}
 
 	public List<CPSpecificationOptionsSearchFacetDisplayContext>
-		getCpSpecificationOptionsSearchFacetDisplayContext() {
+		getCPSpecificationOptionsSearchFacetDisplayContexts() {
 
 		return _cpSpecificationOptionsSearchFacetDisplayContext;
 	}
@@ -99,7 +99,7 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 		return false;
 	}
 
-	public void setCpSpecificationOptionFacetPortletInstanceConfiguration(
+	public void setCPSpecificationOptionFacetPortletInstanceConfiguration(
 		CPSpecificationOptionFacetPortletInstanceConfiguration
 			cpSpecificationOptionFacetPortletInstanceConfiguration) {
 
@@ -107,7 +107,7 @@ public class CPSpecificationOptionFacetsDisplayContext implements Serializable {
 			cpSpecificationOptionFacetPortletInstanceConfiguration;
 	}
 
-	public void setCpSpecificationOptionsSearchFacetDisplayContext(
+	public void setCPSpecificationOptionsSearchFacetDisplayContexts(
 		List<CPSpecificationOptionsSearchFacetDisplayContext>
 			cpSpecificationOptionsSearchFacetDisplayContext) {
 
