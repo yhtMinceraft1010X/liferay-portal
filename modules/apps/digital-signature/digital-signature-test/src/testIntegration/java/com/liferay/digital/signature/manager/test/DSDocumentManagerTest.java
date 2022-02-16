@@ -36,9 +36,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,8 +57,8 @@ public class DSDocumentManagerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_configurationProvider.saveCompanyConfiguration(
 			DigitalSignatureConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -84,8 +84,8 @@ public class DSDocumentManagerTest {
 			).build());
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		_configurationProvider.saveCompanyConfiguration(
 			DigitalSignatureConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -146,7 +146,7 @@ public class DSDocumentManagerTest {
 	}
 
 	@Inject
-	private ConfigurationProvider _configurationProvider;
+	private static ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private DSDocumentManager _dsDocumentManager;
