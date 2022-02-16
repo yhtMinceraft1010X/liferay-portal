@@ -100,13 +100,12 @@ public class CPSpecificationOptionFacetsPortlet extends MVCPortlet {
 				new CPSpecificationOptionsFacetDisplayContextBuilder();
 
 		cpSpecificationOptionsFacetDisplayBuilder.
-			setCpSpecificationOptionLocalService(
+			cpSpecificationOptionLocalService(
 				_cpSpecificationOptionLocalService);
-		cpSpecificationOptionsFacetDisplayBuilder.setPortletSharedSearchRequest(
+		cpSpecificationOptionsFacetDisplayBuilder.portletSharedSearchRequest(
 			portletSharedSearchRequest);
-		cpSpecificationOptionsFacetDisplayBuilder.setPortal(portal);
-		cpSpecificationOptionsFacetDisplayBuilder.setRenderRequest(
-			renderRequest);
+		cpSpecificationOptionsFacetDisplayBuilder.portal(portal);
+		cpSpecificationOptionsFacetDisplayBuilder.renderRequest(renderRequest);
 
 		return cpSpecificationOptionsFacetDisplayBuilder.build();
 	}
