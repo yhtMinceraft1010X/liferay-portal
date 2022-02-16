@@ -95,8 +95,6 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
-			List<Facet> facets = getFacets(renderRequest);
-
 			Optional<PortletPreferences> portletPreferencesOptional =
 				portletSharedSearchSettings.getPortletPreferencesOptional();
 
@@ -108,7 +106,7 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 			int maxTerms = GetterUtil.getInteger(
 				portletPreferences.getValue("maxTerms", null), 10);
 
-			for (Facet facet : facets) {
+			for (Facet facet : getFacets(renderRequest)) {
 				String cpSpecificationOptionKey =
 					CPSpecificationOptionFacetsUtil.
 						getCPSpecificationOptionKeyFromIndexFieldName(
