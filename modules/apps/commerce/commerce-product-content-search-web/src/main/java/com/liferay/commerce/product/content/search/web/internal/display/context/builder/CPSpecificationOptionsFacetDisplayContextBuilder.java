@@ -124,7 +124,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private CPSpecificationOptionsSearchFacetDisplayContext
 		_buildCPSpecificationOptionsSearchFacetDisplayContext() {
 
-		_buckets = _collectBuckets(_facet.getFacetCollector());
+		_tuples = _collectBuckets(_facet.getFacetCollector());
 
 		CPSpecificationOptionsSearchFacetDisplayContext
 			cpSpecificationOptionsSearchFacetDisplayContext =
@@ -269,13 +269,13 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private List<CPSpecificationOptionsSearchFacetTermDisplayContext>
 		_buildTermDisplayContexts() {
 
-		if (_buckets.isEmpty()) {
+		if (_tuples.isEmpty()) {
 			return Collections.emptyList();
 		}
 
 		List<CPSpecificationOptionsSearchFacetTermDisplayContext>
 			cpSpecificationOptionsSearchFacetTermDisplayContexts =
-				new ArrayList<>(_buckets.size());
+				new ArrayList<>(_tuples.size());
 
 		int maxCount = 1;
 		int minCount = 1;
@@ -286,12 +286,12 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			// so keep looking through the results until we reach the maximum
 			// number of terms or we run out of terms.
 
-			for (int i = 0, j = 0; i < _buckets.size(); i++, j++) {
+			for (int i = 0, j = 0; i < _tuples.size(); i++, j++) {
 				if (j >= _maxTerms) {
 					break;
 				}
 
-				Tuple tuple = _buckets.get(i);
+				Tuple tuple = _tuples.get(i);
 
 				Integer frequency = (Integer)tuple.getObject(1);
 
@@ -312,12 +312,12 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			multiplier = (double)5 / (maxCount - minCount);
 		}
 
-		for (int i = 0, j = 0; i < _buckets.size(); i++, j++) {
+		for (int i = 0, j = 0; i < _tuples.size(); i++, j++) {
 			if ((_maxTerms > 0) && (j >= _maxTerms)) {
 				break;
 			}
 
-			Tuple tuple = _buckets.get(i);
+			Tuple tuple = _tuples.get(i);
 
 			Integer frequency = (Integer)tuple.getObject(1);
 
@@ -419,7 +419,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		return false;
 	}
 
-	private List<Tuple> _buckets;
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
 	private String _displayStyle;
@@ -435,5 +434,6 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private RenderRequest _renderRequest;
 	private List<Long> _selectedCPSpecificationOptionIds =
 		Collections.emptyList();
+	private List<Tuple> _tuples;
 
 }
