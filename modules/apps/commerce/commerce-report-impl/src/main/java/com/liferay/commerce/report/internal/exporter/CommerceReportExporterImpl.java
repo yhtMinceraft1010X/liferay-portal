@@ -84,9 +84,9 @@ public class CommerceReportExporterImpl implements CommerceReportExporter {
 	}
 
 	@Override
-	public boolean isValidJRXMLTemplate(InputStream templateInputStream) {
+	public boolean isValidJRXMLTemplate(InputStream inputStream) {
 		try {
-			JasperCompileManager.compileReport(templateInputStream);
+			JasperCompileManager.compileReport(inputStream);
 		}
 		catch (JRException jrException) {
 			if (_log.isWarnEnabled()) {

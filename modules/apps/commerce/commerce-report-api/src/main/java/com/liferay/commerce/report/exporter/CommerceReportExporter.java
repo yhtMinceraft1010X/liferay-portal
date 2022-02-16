@@ -36,6 +36,6 @@ public interface CommerceReportExporter {
 			Map<String, Object> parameters)
 		throws IOException;
 
-	public boolean isValidJRXMLTemplate(InputStream templateInputStream);
+	public boolean isValidJRXMLTemplate(InputStream inputStream);
 
 }
