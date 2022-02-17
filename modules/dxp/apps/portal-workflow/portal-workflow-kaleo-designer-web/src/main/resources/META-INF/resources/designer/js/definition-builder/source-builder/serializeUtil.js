@@ -544,6 +544,8 @@ function serializeDefinition(
 			appendXMLNotifications(buffer, item.data.notifications);
 		}
 
+		appendXMLTaskTimers(buffer, item.data.taskTimers);
+
 		if (initial) {
 			buffer.push(XMLUtil.create('initial', initial));
 		}
@@ -567,7 +569,9 @@ function serializeDefinition(
 			buffer.push(XMLUtil.create('script', cdata(script)));
 		}
 
-		appendXMLTaskTimers(buffer, item.data.taskTimers);
+		if (xmlType === 'condition') {
+			buffer.push(XMLUtil.create('scriptLanguage', DEFAULT_LANGUAGE));
+		}
 
 		const nodeTransitions = transitions.filter(
 			(transition) => transition.source === id
