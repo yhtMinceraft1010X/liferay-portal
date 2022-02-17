@@ -12,12 +12,12 @@
  * details.
  */
 
-import { FormBasicBusinessInformation } from '../components/containers/Forms/Basics/BusinessInformation';
-import { FormBasicBusinessType } from '../components/containers/Forms/Basics/BusinessType';
-import { FormBasicProductQuote } from '../components/containers/Forms/Basics/ProductQuote';
-import { FormBusiness } from '../components/containers/Forms/Business';
-import { FormEmployees } from '../components/containers/Forms/Employees';
-import { FormProperty } from '../components/containers/Forms/Property';
+import {FormBasicBusinessInformation} from '../components/containers/Forms/Basics/BusinessInformation';
+import {FormBasicBusinessType} from '../components/containers/Forms/Basics/BusinessType';
+import {FormBasicProductQuote} from '../components/containers/Forms/Basics/ProductQuote';
+import {FormBusiness} from '../components/containers/Forms/Business';
+import {FormEmployees} from '../components/containers/Forms/Employees';
+import {FormProperty} from '../components/containers/Forms/Property';
 
 export const TOTAL_OF_FIELD = {
 	BASICS: 10,
@@ -62,7 +62,8 @@ export const SUBSECTION_KEYS = {
 	PHYSICAL_ADDRESS: 'Physical Address',
 	PHYSICAL_BUSINESS_ADDRESS: 'Physical Business Address',
 	PREMISES: 'Premises',
-	PRIMARY_LOCATION: 'Is this the primary location where you conduct business?',
+	PRIMARY_LOCATION:
+		'Is this the primary location where you conduct business?',
 	STATE: 'State',
 	SWIMMING_POOL: 'Are there swimming pool(s) on the premises?',
 	WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY:
@@ -72,7 +73,7 @@ export const SUBSECTION_KEYS = {
 	YEAR_BUSINESS_STARTED: 'What year did you start your business?',
 	YEAR_OF_INDUSTRY_EXPERIENCE: 'Years of industry experience?',
 	YOUR_NAME: 'Your Name',
-	ZIP: 'ZIP'
+	ZIP: 'ZIP',
 };
 
 export const AVAILABLE_STEPS = {

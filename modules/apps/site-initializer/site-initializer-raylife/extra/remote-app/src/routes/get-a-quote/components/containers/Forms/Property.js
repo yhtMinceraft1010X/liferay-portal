@@ -12,27 +12,27 @@
  * details.
  */
 
-import React, { useContext, useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { NumberControlledInput } from '../../../../../common/components/connectors/Controlled/Input/Number';
-import { SquareFeatControlledInput } from '../../../../../common/components/connectors/Controlled/Input/WithMask/SquareFeet';
-import { YearControlledInput } from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
-import { ControlledSwitch } from '../../../../../common/components/connectors/Controlled/Switch';
-import { TIP_EVENT } from '../../../../../common/utils/events';
-import { ActionTypes, AppContext } from '../../../context/AppContextProvider';
+import React, {useContext, useEffect} from 'react';
+import {useFormContext} from 'react-hook-form';
+import {NumberControlledInput} from '../../../../../common/components/connectors/Controlled/Input/Number';
+import {SquareFeatControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/SquareFeet';
+import {YearControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Year';
+import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
+import {TIP_EVENT} from '../../../../../common/utils/events';
+import {ActionTypes, AppContext} from '../../../context/AppContextProvider';
 import useMobileContainer from '../../../hooks/useMobileContainer';
-import { useTriggerContext } from '../../../hooks/useTriggerContext';
-import { AVAILABLE_STEPS, SUBSECTION_KEYS } from '../../../utils/constants';
-import { isHabitational, isThereSwimming } from '../../../utils/propertyFields';
+import {useTriggerContext} from '../../../hooks/useTriggerContext';
+import {AVAILABLE_STEPS, SUBSECTION_KEYS} from '../../../utils/constants';
+import {isHabitational, isThereSwimming} from '../../../utils/propertyFields';
 import MobileContainer from '../../mobile/MobileContainer';
 
 const setFormPath = (value) => `property.${value}`;
 
-export function FormProperty({ form }) {
-	const { isSelected, updateState } = useTriggerContext();
-	const { control, getValues, setValue } = useFormContext();
+export function FormProperty({form}) {
+	const {isSelected, updateState} = useTriggerContext();
+	const {control, getValues, setValue} = useFormContext();
 
-	const { dispatch } = useContext(AppContext);
+	const {dispatch} = useContext(AppContext);
 
 	const properties = form?.basics?.properties;
 	const {
@@ -45,15 +45,13 @@ export function FormProperty({ form }) {
 		setValue(
 			setFormPath('doOwnBuildingAtAddress'),
 			getValues(setFormPath('doOwnBuildingAtAddress')),
-			{ shouldValidate: true }
+			{shouldValidate: true}
 		);
 	};
 	useEffect(() => {
 		forceValidation();
 
-		if (!isHabitational(
-			form?.basics?.properties?.segment.toLowerCase()
-		)) {
+		if (!isHabitational(form?.basics?.properties?.segment.toLowerCase())) {
 			AVAILABLE_STEPS.PROPERTY.mobileSubSections.map(
 				(mobileSubSection) => {
 					if (
@@ -67,7 +65,6 @@ export function FormProperty({ form }) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
 
 	useEffect(() => {
 		const getPropertyNameIfNotValid = (isValid, propertyName) =>
@@ -98,7 +95,7 @@ export function FormProperty({ form }) {
 					label={`Do you own the building at ${form.basics.businessInformation.business.location.address}?`}
 					name={setFormPath('doOwnBuildingAtAddress')}
 					onSelect={nextStep}
-					rules={{ required: true }}
+					rules={{required: true}}
 				/>
 			</MobileContainer>
 
@@ -229,64 +226,72 @@ export function FormProperty({ form }) {
 					name={setFormPath('isPrimaryBusinessLocation')}
 					onSelect={
 						isHabitational(
-							form?.basics?.properties?.segment.toLowerCase()) ?
-							nextStep : null}
-					rules={{ required: true }}
+							form?.basics?.properties?.segment.toLowerCase()
+						)
+							? nextStep
+							: null
+					}
+					rules={{required: true}}
 				/>
 			</MobileContainer>
 
 			{isHabitational(
-				form?.basics?.properties?.segment.toLowerCase()) && (
-					<MobileContainer
-						{...mobileContainerProps}
-						mobileSubSection={getMobileSubSection(
-							SUBSECTION_KEYS.PREMISES
-						)}
-					>
-						<div className="mb-4">
-							<ControlledSwitch
-								control={control}
-								inputProps={{
-									onChange: (value) => {
-										AVAILABLE_STEPS.PROPERTY.mobileSubSections.map(
-											(mobileSubSection) => {
-												if (
-													mobileSubSection.title ===
-													SUBSECTION_KEYS.PREMISES
-												) {
-													mobileSubSection.hideContinueButton = false;
-												}
+				form?.basics?.properties?.segment.toLowerCase()
+			) && (
+				<MobileContainer
+					{...mobileContainerProps}
+					mobileSubSection={getMobileSubSection(
+						SUBSECTION_KEYS.PREMISES
+					)}
+				>
+					<div className="mb-4">
+						<ControlledSwitch
+							control={control}
+							inputProps={{
+								onChange: (value) => {
+									AVAILABLE_STEPS.PROPERTY.mobileSubSections.map(
+										(mobileSubSection) => {
+											if (
+												mobileSubSection.title ===
+												SUBSECTION_KEYS.PREMISES
+											) {
+												mobileSubSection.hideContinueButton = false;
 											}
-										);
-
-										setValue(setFormPath('isThereSwimming'), value, {
-											shouldValidate: true,
-										});
-
-										if (value === 'false') {
-											setValue(
-												setFormPath('isThereDivingBoards'),
-												''
-											);
 										}
-									},
-								}}
-								label={SUBSECTION_KEYS.SWIMMING_POOL}
-								name={setFormPath('isThereSwimming')}
-								rules={{ required: true }}
-							/>
-						</div>
+									);
 
-						{isThereSwimming(form?.property?.isThereSwimming) && (
-							<ControlledSwitch
-								control={control}
-								label={SUBSECTION_KEYS.DIVING_BOARDS}
-								name={setFormPath('isThereDivingBoards')}
-								rules={{ required: true }}
-							/>
-						)}
-					</MobileContainer>
-				)}
+									setValue(
+										setFormPath('isThereSwimming'),
+										value,
+										{
+											shouldValidate: true,
+										}
+									);
+
+									if (value === 'false') {
+										setValue(
+											setFormPath('isThereDivingBoards'),
+											''
+										);
+									}
+								},
+							}}
+							label={SUBSECTION_KEYS.SWIMMING_POOL}
+							name={setFormPath('isThereSwimming')}
+							rules={{required: true}}
+						/>
+					</div>
+
+					{isThereSwimming(form?.property?.isThereSwimming) && (
+						<ControlledSwitch
+							control={control}
+							label={SUBSECTION_KEYS.DIVING_BOARDS}
+							name={setFormPath('isThereDivingBoards')}
+							rules={{required: true}}
+						/>
+					)}
+				</MobileContainer>
+			)}
 		</div>
 	);
 }

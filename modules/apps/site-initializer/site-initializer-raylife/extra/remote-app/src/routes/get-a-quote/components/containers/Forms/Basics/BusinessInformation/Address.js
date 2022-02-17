@@ -12,22 +12,22 @@
  * details.
  */
 
-import React, { useEffect, useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { ControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input';
-import { ZIPControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/ZIP';
-import { StatesControlledSelect } from '../../../../../../../common/components/connectors/Controlled/Select/States';
-import { Input } from '../../../../../../../common/components/fragments/Forms/Input';
-import { useLocation } from '../../../../../hooks/useLocation';
-import { SUBSECTION_KEYS } from '../../../../../utils/constants';
+import React, {useEffect, useRef} from 'react';
+import {useFormContext} from 'react-hook-form';
+import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
+import {ZIPControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/ZIP';
+import {StatesControlledSelect} from '../../../../../../../common/components/connectors/Controlled/Select/States';
+import {Input} from '../../../../../../../common/components/fragments/Forms/Input';
+import {useLocation} from '../../../../../hooks/useLocation';
+import {SUBSECTION_KEYS} from '../../../../../utils/constants';
 
 const setFormPath = (value) =>
 	`basics.businessInformation.business.location.${value}`;
 
 export function BusinessInformationAddress() {
 	const ref = useRef();
-	const { setAutoComplete } = useLocation();
-	const { control, register, setValue } = useFormContext();
+	const {setAutoComplete} = useLocation();
+	const {control, register, setValue} = useFormContext();
 
 	useEffect(() => {
 		if (ref.current) {
@@ -41,7 +41,7 @@ export function BusinessInformationAddress() {
 		// We need to put shouldValidate at least in one Field
 		// to force validation to others
 
-		setValue(setFormPath('city'), address.city, { shouldValidate: true });
+		setValue(setFormPath('city'), address.city, {shouldValidate: true});
 		setValue(setFormPath('state'), address.state);
 		setValue(setFormPath('zip'), address.zip);
 		setValue(
@@ -63,7 +63,7 @@ export function BusinessInformationAddress() {
 					}}
 					label={SUBSECTION_KEYS.PHYSICAL_BUSINESS_ADDRESS}
 					name={setFormPath('address')}
-					rules={{ required: 'Business address is required.' }}
+					rules={{required: 'Business address is required.'}}
 				/>
 
 				<Input
@@ -83,7 +83,7 @@ export function BusinessInformationAddress() {
 					}}
 					label={SUBSECTION_KEYS.CITY}
 					name={setFormPath('city')}
-					rules={{ required: 'City is required.' }}
+					rules={{required: 'City is required.'}}
 				/>
 
 				<StatesControlledSelect

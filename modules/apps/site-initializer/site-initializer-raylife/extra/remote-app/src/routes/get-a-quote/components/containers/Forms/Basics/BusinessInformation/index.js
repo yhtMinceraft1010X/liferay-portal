@@ -13,35 +13,35 @@
  */
 
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { ControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input';
-import { EmailControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input/Email';
-import { WebsiteControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input/Website';
-import { PhoneControlledInput } from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
-import { useCustomEvent } from '../../../../../../../common/hooks/useCustomEvent';
-import { TIP_EVENT } from '../../../../../../../common/utils/events';
+import React, {useEffect} from 'react';
+import {useFormContext} from 'react-hook-form';
+import {ControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input';
+import {EmailControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Email';
+import {WebsiteControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/Website';
+import {PhoneControlledInput} from '../../../../../../../common/components/connectors/Controlled/Input/WithMask/Phone';
+import {useCustomEvent} from '../../../../../../../common/hooks/useCustomEvent';
+import {TIP_EVENT} from '../../../../../../../common/utils/events';
 import useMobileContainer from '../../../../../hooks/useMobileContainer';
-import { SUBSECTION_KEYS } from '../../../../../utils/constants';
+import {SUBSECTION_KEYS} from '../../../../../utils/constants';
 import MobileContainer from '../../../../mobile/MobileContainer';
 
-import { BusinessInformationAddress } from './Address';
+import {BusinessInformationAddress} from './Address';
 
 const setFormPath = (value) => `basics.businessInformation.${value}`;
 
-export function FormBasicBusinessInformation({ form, isMobile }) {
-
+export function FormBasicBusinessInformation({form, isMobile}) {
 	const [dispatchEvent] = useCustomEvent(TIP_EVENT);
-	const { getMobileSubSection, mobileContainerProps } = useMobileContainer();
+	const {getMobileSubSection, mobileContainerProps} = useMobileContainer();
 
-	const { control } = useFormContext();
+	const {control} = useFormContext();
 
 	const onFirstNameSettled = () => {
 		dispatchEvent({
 			inputName: setFormPath('firstName'),
 			templateData: {
-				firstName: ` ${form?.basics?.businessInformation?.firstName?.trim() || ''
-					}! 👋`,
+				firstName: ` ${
+					form?.basics?.businessInformation?.firstName?.trim() || ''
+				}! 👋`,
 			},
 			templateName: 'hi-template',
 			value: form?.basics?.businessInformation?.firstName,
@@ -66,7 +66,9 @@ export function FormBasicBusinessInformation({ form, isMobile }) {
 		<div className="p-0">
 			<MobileContainer
 				{...mobileContainerProps}
-				mobileSubSection={getMobileSubSection(SUBSECTION_KEYS.YOUR_NAME)}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.YOUR_NAME
+				)}
 			>
 				<div
 					className={classNames(
@@ -110,7 +112,9 @@ export function FormBasicBusinessInformation({ form, isMobile }) {
 
 			<MobileContainer
 				{...mobileContainerProps}
-				mobileSubSection={getMobileSubSection(SUBSECTION_KEYS.BUSINESS_EMAIL)}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.BUSINESS_EMAIL
+				)}
 			>
 				<EmailControlledInput
 					control={control}
@@ -138,7 +142,9 @@ export function FormBasicBusinessInformation({ form, isMobile }) {
 
 			<MobileContainer
 				{...mobileContainerProps}
-				mobileSubSection={getMobileSubSection(SUBSECTION_KEYS.BUSINESS_WEBSITE)}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.BUSINESS_WEBSITE
+				)}
 			>
 				<WebsiteControlledInput
 					control={control}
@@ -149,7 +155,9 @@ export function FormBasicBusinessInformation({ form, isMobile }) {
 
 			<MobileContainer
 				{...mobileContainerProps}
-				mobileSubSection={getMobileSubSection(SUBSECTION_KEYS.PHYSICAL_ADDRESS)}
+				mobileSubSection={getMobileSubSection(
+					SUBSECTION_KEYS.PHYSICAL_ADDRESS
+				)}
 			>
 				<BusinessInformationAddress />
 			</MobileContainer>
