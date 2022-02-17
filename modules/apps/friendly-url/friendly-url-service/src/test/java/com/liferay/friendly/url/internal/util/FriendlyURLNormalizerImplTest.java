@@ -45,7 +45,6 @@ public class FriendlyURLNormalizerImplTest {
 	public static void setUpClass() {
 		ReflectionTestUtil.setFieldValue(
 			_friendlyURLNormalizerImpl, "_http", new HttpImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			_friendlyURLNormalizerImpl, "_normalizer", new NormalizerImpl());
 	}
