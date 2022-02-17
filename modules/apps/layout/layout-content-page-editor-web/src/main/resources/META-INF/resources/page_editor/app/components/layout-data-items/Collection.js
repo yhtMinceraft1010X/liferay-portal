@@ -153,7 +153,7 @@ const Grid = ({
 				>
 					{Liferay.Util.sub(
 						Liferay.Language.get(
-							'in-edit-mode-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
+							'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
 						),
 						config.maxNumberOfItemsEditMode
 					)}
