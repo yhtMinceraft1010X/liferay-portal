@@ -12,32 +12,32 @@
  * details.
  */
 
-import React, {useContext, useEffect} from 'react';
-import {useFormContext} from 'react-hook-form';
-import {NumberControlledInput} from '../../../../../common/components/connectors/Controlled/Input/Number';
-import {PercentageControlledInput} from '../../../../../common/components/connectors/Controlled/Input/WithMask/Percentage';
-import {LegalEntityControlledSelect} from '../../../../../common/components/connectors/Controlled/Select/LegalEntity';
-import {ControlledSwitch} from '../../../../../common/components/connectors/Controlled/Switch';
-import {TIP_EVENT} from '../../../../../common/utils/events';
-import {PERCENTAGE_REGEX_MAX_100} from '../../../../../common/utils/patterns';
-import {ActionTypes, AppContext} from '../../../context/AppContextProvider';
+import React, { useContext, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { NumberControlledInput } from '../../../../../common/components/connectors/Controlled/Input/Number';
+import { PercentageControlledInput } from '../../../../../common/components/connectors/Controlled/Input/WithMask/Percentage';
+import { LegalEntityControlledSelect } from '../../../../../common/components/connectors/Controlled/Select/LegalEntity';
+import { ControlledSwitch } from '../../../../../common/components/connectors/Controlled/Switch';
+import { TIP_EVENT } from '../../../../../common/utils/events';
+import { PERCENTAGE_REGEX_MAX_100 } from '../../../../../common/utils/patterns';
+import { ActionTypes, AppContext } from '../../../context/AppContextProvider';
 import useMobileContainer from '../../../hooks/useMobileContainer';
-import {useTriggerContext} from '../../../hooks/useTriggerContext';
+import { useTriggerContext } from '../../../hooks/useTriggerContext';
 import {
 	validateOverallSales,
 	validateOwnBrandLabel,
 	validatePercentSales,
 } from '../../../utils/businessFields';
-import {SUBSECTION_KEYS} from '../../../utils/constants';
+import { SUBSECTION_KEYS } from '../../../utils/constants';
 import MobileContainer from '../../mobile/MobileContainer';
 
 const setFormPath = (value) => `business.${value}`;
 
-export function FormBusiness({form}) {
-	const {isSelected, updateState} = useTriggerContext();
-	const {control, getValues, setValue} = useFormContext();
+export function FormBusiness({ form }) {
+	const { isSelected, updateState } = useTriggerContext();
+	const { control, getValues, setValue } = useFormContext();
 
-	const {dispatch} = useContext(AppContext);
+	const { dispatch } = useContext(AppContext);
 
 	const properties = form?.basics?.properties;
 	const {
@@ -50,7 +50,7 @@ export function FormBusiness({form}) {
 		setValue(
 			setFormPath('hasAutoPolicy'),
 			getValues(setFormPath('hasAutoPolicy')),
-			{shouldValidate: true}
+			{ shouldValidate: true }
 		);
 	};
 
@@ -96,7 +96,7 @@ export function FormBusiness({form}) {
 			>
 				<NumberControlledInput
 					control={control}
-					label="Years of industry experience?"
+					label={SUBSECTION_KEYS.YEAR_OF_INDUSTRY_EXPERIENCE}
 					moreInfoProps={{
 						callback: () =>
 							updateState(setFormPath('yearsOfExperience')),
@@ -127,10 +127,10 @@ export function FormBusiness({form}) {
 			>
 				<ControlledSwitch
 					control={control}
-					label="Do you store personally identifiable information about your customers?"
+					label={SUBSECTION_KEYS.DO_YOU_STORE_PERSONALITY_IDENTIFIABLE}
 					name={setFormPath('hasStoredCustomerInformation')}
 					onSelect={nextStep}
-					rules={{required: true}}
+					rules={{ required: true }}
 				/>
 			</MobileContainer>
 
@@ -142,10 +142,10 @@ export function FormBusiness({form}) {
 			>
 				<ControlledSwitch
 					control={control}
-					label="Do you have a Raylife Auto policy?"
+					label={SUBSECTION_KEYS.DO_YOU_HAVE_RAYLIFE_POLICY}
 					name={setFormPath('hasAutoPolicy')}
 					onSelect={nextStep}
-					rules={{required: true}}
+					rules={{ required: true }}
 				/>
 			</MobileContainer>
 
@@ -157,8 +157,8 @@ export function FormBusiness({form}) {
 			>
 				<LegalEntityControlledSelect
 					control={control}
-					inputProps={{className: 'mb-5'}}
-					label="Legal Entity"
+					inputProps={{ className: 'mb-5' }}
+					label={SUBSECTION_KEYS.LEGAL_ENTITY}
 					name={setFormPath('legalEntity')}
 					rules={{
 						required: 'This field is required.',
@@ -175,7 +175,7 @@ export function FormBusiness({form}) {
 				>
 					<PercentageControlledInput
 						control={control}
-						label="Percent of sales from used merchandise?"
+						label={SUBSECTION_KEYS.PERCENT_OF_SALES_FROM_MERCHANDISE}
 						moreInfoProps={{
 							callback: () =>
 								updateState(setFormPath('salesMerchandise')),
@@ -211,10 +211,10 @@ export function FormBusiness({form}) {
 				>
 					<ControlledSwitch
 						control={control}
-						label="Do you sell products under your own brand or label?"
+						label={SUBSECTION_KEYS.DO_YOU_SELL_PRODUCTS_UNDER_OWN_BRAND}
 						name={setFormPath('hasSellProductsUnderOwnBrand')}
 						onSelect={nextStep}
-						rules={{required: true}}
+						rules={{ required: true }}
 					/>
 				</MobileContainer>
 			)}
@@ -228,7 +228,7 @@ export function FormBusiness({form}) {
 				>
 					<PercentageControlledInput
 						control={control}
-						label="What percentage of overall sales involve delivery?"
+						label={SUBSECTION_KEYS.WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY}
 						name={setFormPath('overallSales')}
 						rules={{
 							pattern: {
