@@ -16,13 +16,13 @@ export function combine(...arrays) {
 	const combinations = [];
 
 	function addCombinations(combination, restArrays) {
-		const nonEmptyArrays = restArrays.filter((array) => array.length);
+		const nonemptyArrays = restArrays.filter((array) => array.length);
 
-		if (nonEmptyArrays.length === 0 && combination.length > 0) {
+		if (nonemptyArrays.length === 0 && combination.length > 0) {
 			combinations.push(combination);
 		}
-		else if (nonEmptyArrays.length > 0) {
-			const [nextArray, ...nextRest] = nonEmptyArrays;
+		else if (nonemptyArrays.length > 0) {
+			const [nextArray, ...nextRest] = nonemptyArrays;
 
 			nextArray.forEach((element) => {
 				addCombinations([...combination, element], nextRest);
