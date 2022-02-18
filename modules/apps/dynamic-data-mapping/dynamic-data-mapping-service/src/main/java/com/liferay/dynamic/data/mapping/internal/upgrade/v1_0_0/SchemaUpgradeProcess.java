@@ -33,8 +33,10 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 	private void _alterTables() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alterColumnName("DDMContent", "xml", "data_ TEXT null");
+
 			alterColumnName("DDMStructure", "xsd", "definition TEXT null");
 			alterColumnType("DDMStructure", "description", "TEXT null");
+
 			alterColumnType("DDMTemplate", "description", "TEXT null");
 		}
 	}

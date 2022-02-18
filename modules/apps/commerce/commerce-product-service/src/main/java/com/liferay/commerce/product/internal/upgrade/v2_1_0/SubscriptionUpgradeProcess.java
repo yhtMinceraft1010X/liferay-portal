@@ -29,6 +29,7 @@ public class SubscriptionUpgradeProcess
 		addColumn("CPDefinition", "deliverySubscriptionType", "VARCHAR(75)");
 		addColumn("CPDefinition", "deliverySubTypeSettings", "TEXT");
 		addColumn("CPDefinition", "deliveryMaxSubscriptionCycles", "LONG");
+
 		addColumn("CPInstance", "deliverySubscriptionEnabled", "BOOLEAN");
 		addColumn("CPInstance", "deliverySubscriptionLength", "INTEGER");
 		addColumn("CPInstance", "deliverySubscriptionType", "VARCHAR(75)");
