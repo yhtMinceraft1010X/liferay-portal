@@ -62,9 +62,14 @@ definition {
 	macro dismissAlert {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
+		var panel = "Control Panel";
+
+		ApplicationsMenu.gotoPanel(panel = "${panel}");
+
 		ClickNoError(
-			locator1 = "Raylife#SITES",
-			title = "Liferay DXP");
+			key_category = "Sites",
+			key_portlet = "Sites",
+			locator1 = "ApplicationsMenu#PORTLET");
 
 		AssertConfirm(value1 = "");
 	}
