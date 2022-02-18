@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-123156."
+	@description = "This is a use case for LPS-123156. Verify that the publication process message is shown while the publication is in progress."
 	@priority = "4"
 	test AssertLongPublicationProcessMessage {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertLongPublicationProcessMessage";
@@ -61,7 +61,7 @@ definition {
 			remoteStaging = "true");
 	}
 
-	@description = "This is a use case for LPS-83187."
+	@description = "This is a use case for LPS-83187. Add a publish template to the staging site then verify the title of the scheduled publication after it is finished."
 	@priority = "3"
 	test AssertTemplatesTitleOfScheduledStagingPublishes {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertTemplatesTitleOfScheduledStagingPublishes";
@@ -96,7 +96,7 @@ definition {
 		Staging.viewPublishTask(publicationTitle = "My Publish Title");
 	}
 
-	@description = "This is a use case for LPS-123156."
+	@description = "This is a use case for LPS-123156. Verify that correct error message will appear when the publishing process encounters an error."
 	@priority = "4"
 	test AssertValidationErrors {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertValidationErrors";
@@ -152,7 +152,7 @@ definition {
 			publicationTitle = "sumCheck");
 	}
 
-	@description = "This is a use case for LPS-72545."
+	@description = "This is a use case for LPS-72545. Custom fields can be deleted through publishing to live."
 	@priority = "4"
 	test PublishCustomFieldDeletionviaRemoteStaging {
 		property test.name.skip.portal.instance = "RemoteStaging#PublishCustomFieldDeletionviaRemoteStaging";
@@ -308,7 +308,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This is a use case for LPS-80494."
+	@description = "This is a use case for LPS-80494. Documents can be published with link to page fields."
 	@priority = "3"
 	test StagingRemoteDMDocumentType {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteDMDocumentType";
@@ -389,6 +389,7 @@ definition {
 			assetTitle = "DM Document Type Title");
 	}
 
+	@description = "Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
 	@priority = "4"
 	test StagingRemoteLiveWebContent {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContent";
@@ -502,7 +503,7 @@ definition {
 			structureName = "Structure Name");
 	}
 
-	@description = "This is a use case for LPS-82839."
+	@description = "This is a use case for LPS-82839. Web contents can be published on remote staging."
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletCP {
 		property portal.acceptance = "true";
@@ -540,7 +541,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This is a use case for LPS-81950."
+	@description = "This is a use case for LPS-81950. Web contents can be published via their portlet."
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletPG {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentViaPortletPG";
@@ -606,7 +607,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This is a use case for LPS-81953"
+	@description = "This is a use case for LPS-81953. Web contents can be published with manually chosen ID."
 	@priority = "3"
 	test StagingRemoteLiveWebContentWithManualChosenID {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentWithManualChosenID";
@@ -688,7 +689,7 @@ definition {
 			value1 = "12345");
 	}
 
-	@description = "This is a use case for LPS-74038."
+	@description = "This is a use case for LPS-74038. Expected error message will appear on the UI when the live instance is not running on remote staging and the link to it is not visible."
 	@priority = "5"
 	test ViewInfoMessageAfterShutDownRemoteSite {
 		property test.name.skip.portal.instance = "RemoteStaging#ViewInfoMessageAfterShutDownRemoteSite";
@@ -706,7 +707,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "SocketTimeoutException");
 	}
 
-	@description = "This is a use case for LPS-81836."
+	@description = "This is a use case for LPS-81836. Web contents can be published via SAP."
 	@priority = "4"
 	test ViewSingleAssetRemotePublication {
 		property test.name.skip.portal.instance = "RemoteStaging#ViewSingleAssetRemotePublication";
