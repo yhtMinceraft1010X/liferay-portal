@@ -80,9 +80,9 @@ public class PostgreSQLDB extends BaseDB {
 		List<Index> indexes = new ArrayList<>();
 
 		// https://issues.liferay.com/browse/LPS-136307
-		// https://www.postgresql.org/docs/13/view-pg-indexes.html
-		// https://www.postgresql.org/docs/13/catalog-pg-class.html
 		// https://www.postgresql.org/docs/13/catalog-pg-index.html
+		// https://www.postgresql.org/docs/13/catalog-pg-class.html
+		// https://www.postgresql.org/docs/13/view-pg-indexes.html
 
 		String sql = StringBundler.concat(
 			"select pg_indexes.indexname, pg_indexes.tablename, ",
