@@ -23,10 +23,10 @@ public class RedirectNotFoundEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("RedirectNotFoundEntry", "ignored", "BOOLEAN");
 		alterTableAddColumn("RedirectNotFoundEntry", "userId", "LONG");
 		alterTableAddColumn(
 			"RedirectNotFoundEntry", "userName", "VARCHAR(75) null");
+		alterTableAddColumn("RedirectNotFoundEntry", "ignored", "BOOLEAN");
 	}
 
 }
