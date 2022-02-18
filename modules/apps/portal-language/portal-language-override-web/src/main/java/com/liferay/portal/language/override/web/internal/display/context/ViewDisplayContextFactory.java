@@ -172,35 +172,37 @@ public class ViewDisplayContextFactory {
 		for (String key : resourceBundle.keySet()) {
 			String value = ResourceBundleUtil.getString(resourceBundle, key);
 
-			if (keyMatchPredicate.test(key) ||
-				valueMatchPredicate.test(value)) {
+			if (!keyMatchPredicate.test(key) &&
+				!valueMatchPredicate.test(value)) {
 
-				LanguageItemDisplay languageItemDisplay =
-					new LanguageItemDisplay(key, value);
+				continue;
+			}
 
-				if (keyPLOEntriesMap.containsKey(key)) {
-					languageItemDisplay.setOverride(true);
+			LanguageItemDisplay languageItemDisplay =
+				new LanguageItemDisplay(key, value);
 
-					List<String> overrideLanguageIds = new ArrayList<>();
+			if (keyPLOEntriesMap.containsKey(key)) {
+				languageItemDisplay.setOverride(true);
 
-					for (PLOEntry ploEntry : keyPLOEntriesMap.get(key)) {
-						overrideLanguageIds.add(ploEntry.getLanguageId());
+				List<String> overrideLanguageIds = new ArrayList<>();
 
-						if (Objects.equals(
-								selectedLanguageId, ploEntry.getLanguageId())) {
+				for (PLOEntry ploEntry : keyPLOEntriesMap.get(key)) {
+					overrideLanguageIds.add(ploEntry.getLanguageId());
 
-							languageItemDisplay.setOverrideSelectedLanguageId(
-								true);
-						}
+					if (Objects.equals(
+							selectedLanguageId, ploEntry.getLanguageId())) {
+
+						languageItemDisplay.setOverrideSelectedLanguageId(
+							true);
 					}
-
-					languageItemDisplay.setOverrideLanguageIdsString(
-						_getLanguageIdsString(
-							overrideLanguageIds, selectedLanguageId));
 				}
 
-				languageItemDisplays.add(languageItemDisplay);
+				languageItemDisplay.setOverrideLanguageIdsString(
+					_getLanguageIdsString(
+						overrideLanguageIds, selectedLanguageId));
 			}
+
+			languageItemDisplays.add(languageItemDisplay);
 		}
 
 		return languageItemDisplays;
