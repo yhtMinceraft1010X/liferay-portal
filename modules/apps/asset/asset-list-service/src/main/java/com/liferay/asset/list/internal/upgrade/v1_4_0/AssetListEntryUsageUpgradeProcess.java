@@ -38,7 +38,6 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 	private void _upgradeSchema() throws Exception {
 		alterTableAddColumn(
 			"AssetListEntryUsage", "containerKey", "VARCHAR(255) null");
-
 		alterTableAddColumn("AssetListEntryUsage", "containerType", "LONG");
 		alterTableAddColumn("AssetListEntryUsage", "key_", "VARCHAR(255) null");
 		alterTableAddColumn("AssetListEntryUsage", "plid", "LONG");
