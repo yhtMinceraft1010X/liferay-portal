@@ -512,14 +512,14 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				assetEntry)
 		).buildPortletURL();
 
-		String viewURL = null;
-
 		try {
-			String noSuchEntryRedirect = viewFullContentURL.toString();
-
-			viewURL = assetRenderer.getURLViewInContext(
+			String viewURL = assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse,
-				noSuchEntryRedirect);
+				viewFullContentURL.toString());
+
+			if (Validator.isNotNull(viewURL)) {
+				return viewURL;
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -527,11 +527,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			}
 		}
 
-		if (Validator.isNull(viewURL)) {
-			viewURL = viewFullContentURL.toString();
-		}
-
-		return viewURL;
+		return viewFullContentURL.toString();
 	}
 
 	@Override
