@@ -178,8 +178,8 @@ public class ViewDisplayContextFactory {
 				continue;
 			}
 
-			LanguageItemDisplay languageItemDisplay =
-				new LanguageItemDisplay(key, value);
+			LanguageItemDisplay languageItemDisplay = new LanguageItemDisplay(
+				key, value);
 
 			if (keyPLOEntriesMap.containsKey(key)) {
 				languageItemDisplay.setOverride(true);
@@ -192,8 +192,7 @@ public class ViewDisplayContextFactory {
 					if (Objects.equals(
 							selectedLanguageId, ploEntry.getLanguageId())) {
 
-						languageItemDisplay.setOverrideSelectedLanguageId(
-							true);
+						languageItemDisplay.setOverrideSelectedLanguageId(true);
 					}
 				}
 
