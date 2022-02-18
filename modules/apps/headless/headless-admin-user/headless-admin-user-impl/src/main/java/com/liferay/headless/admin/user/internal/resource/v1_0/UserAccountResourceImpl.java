@@ -567,7 +567,7 @@ public class UserAccountResourceImpl
 			autoPassword = true;
 		}
 
-		User user;
+		User user = null;
 
 		if (contextUser.isDefaultUser()) {
 			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
