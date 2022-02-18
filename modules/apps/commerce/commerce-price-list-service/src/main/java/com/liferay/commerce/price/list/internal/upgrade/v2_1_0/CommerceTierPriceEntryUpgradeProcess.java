@@ -38,13 +38,13 @@ public class CommerceTierPriceEntryUpgradeProcess
 		addColumn("CommerceTierPriceEntry", "statusDate", "DATE");
 
 		runSQL(
-			"UPDATE CommerceTierPriceEntry SET displayDate = lastPublishDate");
+			"update CommerceTierPriceEntry set displayDate = lastPublishDate");
 		runSQL(
-			"UPDATE CommerceTierPriceEntry SET status = " +
+			"update CommerceTierPriceEntry set status = " +
 				WorkflowConstants.STATUS_APPROVED);
-		runSQL("UPDATE CommerceTierPriceEntry SET statusByUserId = userId");
-		runSQL("UPDATE CommerceTierPriceEntry SET statusByUserName = userName");
-		runSQL("UPDATE CommerceTierPriceEntry SET statusDate = modifiedDate");
+		runSQL("update CommerceTierPriceEntry set statusByUserId = userId");
+		runSQL("update CommerceTierPriceEntry set statusByUserName = userName");
+		runSQL("update CommerceTierPriceEntry set statusDate = modifiedDate");
 	}
 
 }
