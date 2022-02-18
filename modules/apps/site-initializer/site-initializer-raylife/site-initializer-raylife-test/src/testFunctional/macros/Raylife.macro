@@ -63,8 +63,8 @@ definition {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ClickNoError(
-			title = "Liferay DXP",
-			locator1 = "Raylife#SITES");
+			locator1 = "Raylife#SITES",
+			title = "Liferay DXP");
 
 		AssertConfirm(value1 = "");
 	}
