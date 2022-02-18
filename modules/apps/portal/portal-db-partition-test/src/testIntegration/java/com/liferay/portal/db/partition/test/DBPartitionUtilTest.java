@@ -154,8 +154,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			insertCompanyAndDefaultUser();
 
-			Set<Long> threadIds = new ConcurrentSkipListSet<>();
 			Set<Long> companyIds = new ConcurrentSkipListSet<>();
+			Set<Long> threadIds = new ConcurrentSkipListSet<>();
 
 			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 
@@ -174,8 +174,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					threadIds.add(thread.getId());
 				});
 
-			Assert.assertEquals(threadIds.toString(), 2, threadIds.size());
 			Assert.assertEquals(companyIds.toString(), 2, companyIds.size());
+			Assert.assertEquals(threadIds.toString(), 2, threadIds.size());
 		}
 		finally {
 			deleteCompanyAndDefaultUser();
