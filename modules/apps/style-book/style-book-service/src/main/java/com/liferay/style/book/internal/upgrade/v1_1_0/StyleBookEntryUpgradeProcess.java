@@ -33,8 +33,8 @@ public class StyleBookEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSchema() throws Exception {
-		alterTableAddColumn("StyleBookEntry", "modifiedDate", "DATE null");
 		alterTableAddColumn("StyleBookEntry", "uuid_", "VARCHAR(75) null");
+		alterTableAddColumn("StyleBookEntry", "modifiedDate", "DATE null");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			try (PreparedStatement preparedStatement1 =
