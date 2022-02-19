@@ -47,12 +47,7 @@ public class ObjectFieldSettingLocalServiceImpl
 			String value)
 		throws PortalException {
 
-		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
-			objectFieldId);
-
-		if (objectField == null) {
-			throw new NoSuchObjectFieldException();
-		}
+		_objectFieldPersistence.findByPrimaryKey(objectFieldId);
 
 		_validate(required, value);
 
