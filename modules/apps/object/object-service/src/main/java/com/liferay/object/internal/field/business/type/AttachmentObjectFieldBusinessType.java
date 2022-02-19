@@ -86,11 +86,8 @@ public class AttachmentObjectFieldBusinessType
 			_objectFieldSettingLocalService.getObjectFieldSettings(
 				objectField.getObjectFieldId());
 
-		if (ListUtil.isEmpty(objectFieldSettings)) {
-			return properties;
-		}
-
-		objectFieldSettings.forEach(
+		ListUtil.isNotEmptyForEach(
+			objectFieldSettings,
 			objectFieldSetting -> properties.put(
 				objectFieldSetting.getName(), objectFieldSetting.getValue()));
 
