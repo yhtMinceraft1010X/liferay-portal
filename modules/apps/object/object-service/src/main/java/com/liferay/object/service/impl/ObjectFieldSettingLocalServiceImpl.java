@@ -15,7 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.NoSuchObjectFieldException;
-import com.liferay.object.exception.RequiredObjectFieldSettingException;
+import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
@@ -94,7 +94,7 @@ public class ObjectFieldSettingLocalServiceImpl
 		throws PortalException {
 
 		if (required && Validator.isNull(value)) {
-			throw new RequiredObjectFieldSettingException();
+			throw new ObjectFieldSettingValueException();
 		}
 	}
 

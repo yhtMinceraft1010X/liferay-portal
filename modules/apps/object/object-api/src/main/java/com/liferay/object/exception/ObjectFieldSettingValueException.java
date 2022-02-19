@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,22 +18,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class RequiredObjectFieldSettingException extends PortalException {
+public class ObjectFieldSettingValueException extends PortalException {
 
-	public RequiredObjectFieldSettingException() {
+	public ObjectFieldSettingValueException() {
 	}
 
-	public RequiredObjectFieldSettingException(String msg) {
+	public ObjectFieldSettingValueException(String msg) {
 		super(msg);
 	}
 
-	public RequiredObjectFieldSettingException(
-		String msg, Throwable throwable) {
-
+	public ObjectFieldSettingValueException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public RequiredObjectFieldSettingException(Throwable throwable) {
+	public ObjectFieldSettingValueException(Throwable throwable) {
 		super(throwable);
 	}
 
