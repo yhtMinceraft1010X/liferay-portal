@@ -274,11 +274,13 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setName(name);
 		objectField.setRequired(required);
 
+		objectField = objectFieldPersistence.update(objectField);
+
 		_addObjectFieldSettings(
 			objectField.getUserId(), objectField.getObjectFieldId(),
 			objectFieldSettings);
 
-		return objectFieldPersistence.update(objectField);
+		return objectField;
 	}
 
 	private ObjectField _addObjectField(
