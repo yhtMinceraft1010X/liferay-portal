@@ -54,7 +54,7 @@ public class ObjectFieldSettingLocalServiceImpl
 			throw new NoSuchObjectFieldException();
 		}
 
-		_validateSettingValue(required, value);
+		_validate(required, value);
 
 		ObjectFieldSetting objectFieldSetting =
 			objectFieldSettingPersistence.create(
@@ -88,14 +88,14 @@ public class ObjectFieldSettingLocalServiceImpl
 			objectFieldSettingPersistence.fetchByPrimaryKey(
 				objectFieldSettingId);
 
-		_validateSettingValue(objectFieldSetting.isRequired(), value);
+		_validate(objectFieldSetting.isRequired(), value);
 
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSettingPersistence.update(objectFieldSetting);
 	}
 
-	private void _validateSettingValue(boolean required, String value)
+	private void _validate(boolean required, String value)
 		throws PortalException {
 
 		if (required && Validator.isNull(value)) {
