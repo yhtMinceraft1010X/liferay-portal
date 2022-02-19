@@ -339,8 +339,9 @@ public class ObjectFieldLocalServiceImpl
 
 			Optional<ObjectFieldSetting> optional = stream.filter(
 				newObjectFieldSetting ->
-					newObjectFieldSetting.getName() ==
-						oldObjectFieldSetting.getName()
+					Objects.equals(
+						newObjectFieldSetting.getName(),
+						oldObjectFieldSetting.getName())
 			).findFirst();
 
 			if (!optional.isPresent()) {
