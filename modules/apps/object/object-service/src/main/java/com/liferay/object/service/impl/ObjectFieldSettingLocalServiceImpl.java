@@ -14,9 +14,7 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;

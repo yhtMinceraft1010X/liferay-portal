@@ -54,9 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -335,16 +333,22 @@ public class ObjectFieldLocalServiceImpl
 		for (ObjectFieldSetting oldObjectFieldSetting :
 				oldObjectFieldSettings) {
 
-			Stream<ObjectFieldSetting> stream = newObjectFieldSettings.stream();
+			boolean removeOldObjectFieldSetting = true;
 
-			Optional<ObjectFieldSetting> optional = stream.filter(
-				newObjectFieldSetting ->
-					Objects.equals(
+			for (ObjectFieldSetting newObjectFieldSetting :
+					newObjectFieldSettings) {
+
+				if (Objects.equals(
 						newObjectFieldSetting.getName(),
-						oldObjectFieldSetting.getName())
-			).findFirst();
+						oldObjectFieldSetting.getName())) {
 
-			if (!optional.isPresent()) {
+					removeOldObjectFieldSetting = false;
+
+					break;
+				}
+			}
+
+			if (removeOldObjectFieldSetting) {
 				_objectFieldSettingPersistence.remove(oldObjectFieldSetting);
 			}
 		}
