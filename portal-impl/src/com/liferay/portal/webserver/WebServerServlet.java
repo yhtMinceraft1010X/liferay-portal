@@ -1668,7 +1668,7 @@ public class WebServerServlet extends HttpServlet {
 
 			return fileEntryOptional.orElseThrow(
 				() -> new NoSuchFileEntryException(
-					"No file entry found for friendly url " +
+					"No file entry found for friendly URL " +
 						Arrays.toString(pathArray)));
 		}
 		else if (pathArray.length == 3) {
