@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"dispatch.task.executor.hidden-in-ui=true",
-		"dispatch.task.executor.type=" + HiddenInUIDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI
+		"dispatch.task.executor.type=" + HiddenInUIDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI
 	},
 	service = DispatchTaskExecutor.class
 )
 public class HiddenInUIDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
-	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI =
+	public static final String DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI =
 		"test-hidden-in-ui";
 
 	@Override
@@ -49,7 +49,7 @@ public class HiddenInUIDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Override
 	public String getName() {
-		return DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI;
+		return DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI;
 	}
 
 	protected static final AtomicInteger executionCounter = new AtomicInteger(

@@ -76,7 +76,7 @@ public class DispatchTriggerDisplayContextTest {
 		Assert.assertTrue(
 			dispatchTaskExecutorTypes.contains(
 				HiddenInUIDispatchTaskExecutor.
-					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
+					DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI));
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -98,7 +98,7 @@ public class DispatchTriggerDisplayContextTest {
 		Assert.assertFalse(
 			executorTypes.contains(
 				HiddenInUIDispatchTaskExecutor.
-					DISPATCH_TASK_EXECUTOR_TYPE_TEST_HIDDEN_IN_UI));
+					DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI));
 	}
 
 	private Object _getDispatchTriggerDisplayContext(
