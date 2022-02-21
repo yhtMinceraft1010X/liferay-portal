@@ -370,7 +370,6 @@ public class LiferayJWTBearerGrantHandler
 			properties.put(
 				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID,
 				String.valueOf(companyId));
-
 			properties.put(userAuthType, subject);
 
 			return userSubject;
