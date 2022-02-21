@@ -84,7 +84,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		objectView.setObjectViewColumns(
 			_addObjectViewColumns(
 				user, objectView.getObjectViewId(), objectViewColumns));
-
 		objectView.setObjectViewSortColumns(
 			_addObjectViewSortColumns(
 				user, objectView.getObjectViewId(), objectViewSortColumns));
