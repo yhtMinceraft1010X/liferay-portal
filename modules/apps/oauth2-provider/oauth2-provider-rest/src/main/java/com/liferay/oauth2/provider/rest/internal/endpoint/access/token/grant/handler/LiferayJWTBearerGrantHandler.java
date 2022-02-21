@@ -391,8 +391,8 @@ public class LiferayJWTBearerGrantHandler
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"No such In assertion configuration for: ",
-							jwtClaims.getIssuer(), " with Key Id ",
+							"No in assertion configuration for ",
+							jwtClaims.getIssuer(), " with key ID ",
 							jwsHeaders.getKeyId()));
 				}
 
