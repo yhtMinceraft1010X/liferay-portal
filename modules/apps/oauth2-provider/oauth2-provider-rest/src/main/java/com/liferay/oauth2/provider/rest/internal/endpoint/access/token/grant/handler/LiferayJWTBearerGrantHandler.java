@@ -315,9 +315,10 @@ public class LiferayJWTBearerGrantHandler
 						PROPERTY_KEY_COMPANY_ID));
 
 			try {
-				JwsJwtCompactConsumer jwsReader = getJwsReader(assertion);
+				JwsJwtCompactConsumer jwsJwtCompactConsumer = getJwsReader(
+					assertion);
 
-				JwtToken jwtToken = jwsReader.getJwtToken();
+				JwtToken jwtToken = jwsJwtCompactConsumer.getJwtToken();
 
 				JwsHeaders jwsHeaders = jwtToken.getJwsHeaders();
 
@@ -327,8 +328,8 @@ public class LiferayJWTBearerGrantHandler
 
 				validateSignature(
 					new JwsHeaders(jwsHeaders),
-					jwsReader.getUnsignedEncodedSequence(),
-					jwsReader.getDecodedSignature());
+					jwsJwtCompactConsumer.getUnsignedEncodedSequence(),
+					jwsJwtCompactConsumer.getDecodedSignature());
 
 				validateClaims(client, jwtClaims);
 
