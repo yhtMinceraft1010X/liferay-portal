@@ -143,11 +143,11 @@ public class ObjectViewLocalServiceTest {
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
 
-		List<ObjectViewSortColumn> objectViewSortColumns =
-			objectView.getObjectViewSortColumns();
-
 		Assert.assertEquals(
 			objectViewColumns.toString(), 1, objectViewColumns.size());
+
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
 
 		Assert.assertEquals(
 			objectViewSortColumns.toString(), 1, objectViewSortColumns.size());
@@ -183,11 +183,11 @@ public class ObjectViewLocalServiceTest {
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
 
-		List<ObjectViewSortColumn> objectViewSortColumns =
-			objectView.getObjectViewSortColumns();
-
 		Assert.assertEquals(
 			objectViewColumns.toString(), 2, objectViewColumns.size());
+
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
 
 		Assert.assertEquals(
 			objectViewSortColumns.toString(), 2, objectViewSortColumns.size());
