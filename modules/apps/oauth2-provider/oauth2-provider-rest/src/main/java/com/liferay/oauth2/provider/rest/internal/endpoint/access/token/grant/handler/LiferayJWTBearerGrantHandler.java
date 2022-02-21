@@ -173,7 +173,7 @@ public class LiferayJWTBearerGrantHandler
 
 	@Override
 	protected boolean isGrantHandlerEnabled() {
-		return false;  // Release flag
+		return false;
 	}
 
 	private <U, V> void _addDefaults(Map<U, V> map, Map<U, V> defaultsMap) {

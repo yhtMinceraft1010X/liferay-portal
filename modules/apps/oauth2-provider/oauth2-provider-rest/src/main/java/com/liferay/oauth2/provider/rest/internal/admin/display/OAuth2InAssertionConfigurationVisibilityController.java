@@ -35,7 +35,7 @@ public class OAuth2InAssertionConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		return false;  // Release flag
+		return false;
 	}
 
 }
