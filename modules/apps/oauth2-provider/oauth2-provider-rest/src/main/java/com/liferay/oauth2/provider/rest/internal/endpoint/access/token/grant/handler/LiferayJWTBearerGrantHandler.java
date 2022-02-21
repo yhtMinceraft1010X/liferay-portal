@@ -320,11 +320,10 @@ public class LiferayJWTBearerGrantHandler
 
 				JwtToken jwtToken = jwsJwtCompactConsumer.getJwtToken();
 
+				JwtClaims jwtClaims = jwtToken.getClaims();
 				JwsHeaders jwsHeaders = jwtToken.getJwsHeaders();
 
-				JwtClaims jwtClaims = jwtToken.getClaims();
-
-				_initGrantHandler(companyId, jwsHeaders, jwtClaims);
+				_initGrantHandler(companyId, jwtClaims, jwsHeaders);
 
 				validateSignature(
 					new JwsHeaders(jwsHeaders),
@@ -376,7 +375,7 @@ public class LiferayJWTBearerGrantHandler
 		}
 
 		private void _initGrantHandler(
-			long companyId, JwsHeaders jwsHeaders, JwtClaims jwtClaims) {
+			long companyId, JwtClaims jwtClaims, JwsHeaders jwsHeaders) {
 
 			Map<String, Map<String, JwsSignatureVerifier>>
 				jwsSignatureVerifiers = getJwsSignatureVerifiers(companyId);
