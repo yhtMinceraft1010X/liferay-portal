@@ -15,7 +15,6 @@
 package com.liferay.remote.app.internal.upgrade.v2_5_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.remote.app.internal.upgrade.v2_5_0.util.RemoteAppEntryTable;
 
 /**
  * @author Iván Zaera Avellón
@@ -24,14 +23,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addCustomElementUseESMColumn();
-	}
-
-	private void _addCustomElementUseESMColumn() throws Exception {
-		if (!hasColumn(RemoteAppEntryTable.TABLE_NAME, "customElementUseESM")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("customElementUseESM", "BOOLEAN"));
+		if (!hasColumn("RemoteAppEntry", "customElementUseESM")) {
+			alterColumnType("RemoteAppEntry", "customElementUseESM", "BOOLEAN");
 
 			runSQL("update RemoteAppEntry set customElementUseESM = [$FALSE$]");
 		}
