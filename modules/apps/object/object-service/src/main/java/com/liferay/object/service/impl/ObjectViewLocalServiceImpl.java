@@ -137,7 +137,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		objectView.setObjectViewColumns(
 			_objectViewColumnPersistence.findByObjectViewId(
 				objectView.getObjectViewId()));
-
 		objectView.setObjectViewSortColumns(
 			_objectViewSortColumnPersistence.findByObjectViewId(
 				objectView.getObjectViewId()));
@@ -154,7 +153,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			objectView.setObjectViewColumns(
 				_objectViewColumnPersistence.findByObjectViewId(
 					objectView.getObjectViewId()));
-
 			objectView.setObjectViewSortColumns(
 				_objectViewSortColumnPersistence.findByObjectViewId(
 					objectView.getObjectViewId()));
@@ -194,7 +192,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			_addObjectViewColumns(
 				_userLocalService.getUser(objectView.getUserId()),
 				objectView.getObjectViewId(), objectViewColumns));
-
 		objectView.setObjectViewSortColumns(
 			_addObjectViewSortColumns(
 				_userLocalService.getUser(objectView.getUserId()),
