@@ -759,17 +759,17 @@ public class ObjectEntryDisplayContext {
 	private void _removeTimeFromDateString(
 		DDMFormField ddmFormField, Map<String, Serializable> values) {
 
-		Serializable dateValue = values.get(ddmFormField.getName());
+		Serializable value = values.get(ddmFormField.getName());
 
-		if (dateValue == null) {
+		if (value == null) {
 			return;
 		}
 
-		String dateString = String.valueOf(dateValue);
+		String valueString = String.valueOf(value);
 
 		values.put(
 			ddmFormField.getName(),
-			dateString.replaceAll(
+			valueString.replaceAll(
 				" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]", ""));
 	}
 
@@ -777,16 +777,13 @@ public class ObjectEntryDisplayContext {
 		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			if (StringUtil.equals(ddmFormField.getType(), "date")) {
+				_removeTimeFromDateString(ddmFormField, values);
+			}
+			else if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
 				_setDateDDMFormFieldValue(
 					ddmFormField.getNestedDDMFormFields(), values);
 			}
-
-			if (!StringUtil.equals(ddmFormField.getType(), "date")) {
-				continue;
-			}
-
-			_removeTimeFromDateString(ddmFormField, values);
 		}
 	}
 
