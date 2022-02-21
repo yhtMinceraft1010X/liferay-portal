@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.internal.upgrade.v4_0_1;
 
-import com.liferay.oauth2.provider.internal.upgrade.v4_0_1.util.OAuth2ApplicationTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,9 +24,8 @@ public class OAuth2ApplicationAllowedGrantTypesUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			OAuth2ApplicationTable.class,
-			new AlterColumnType("allowedGrantTypes", "VARCHAR(128) null"));
+		alterColumnType(
+			"OAuth2Application", "allowedGrantTypes", "VARCHAR(128) null");
 	}
 
 }
