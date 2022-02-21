@@ -216,9 +216,8 @@ public class LiferayJWTBearerGrantHandler
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Duplicated issuer name {", issuer, "} will be ",
-							"discarded. Please check your OAuth In-assertion",
-							"configuration."));
+							"Duplicate issuer name ", issuer, " will be ",
+							"discarded. Check your OAuth configuration."));
 				}
 
 				continue;
@@ -242,11 +241,7 @@ public class LiferayJWTBearerGrantHandler
 					(publicKeyUse.compareTo(PublicKeyUse.ENCRYPT) == 0)) {
 
 					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"There is an encryption key {",
-								jsonWebKey.getKeyId(),
-								"} in your OAuth In-assertion configuration."));
+						_log.info("Encryption key " + jsonWebKey.getKeyId());
 					}
 
 					continue;
@@ -258,10 +253,10 @@ public class LiferayJWTBearerGrantHandler
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Duplicated Assertion signature key {",
+								"Duplicate assertion signature key ",
 								jsonWebKey.getKeyId(),
-								"} will be discarded. Please check your OAuth ",
-								"In-assertion configuration."));
+								" will be discarded. Check your OAuth ",
+								"configuration."));
 					}
 
 					continue;
