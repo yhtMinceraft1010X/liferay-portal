@@ -56,11 +56,12 @@ public class TalendDispatchTriggerMetadataFactory
 			new TalendDispatchTriggerMetadata.Builder();
 
 		if (fileEntry != null) {
-			builder.ready(true);
-
 			builder.attribute(
 				"talend-archive-file-name",
-				_getTalendArchiveFileName(dispatchTrigger));
+				_getTalendArchiveFileName(dispatchTrigger)
+			).ready(
+				true
+			);
 
 			return builder.build();
 		}
