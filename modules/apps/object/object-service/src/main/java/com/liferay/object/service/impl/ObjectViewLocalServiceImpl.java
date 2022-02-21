@@ -104,13 +104,15 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectView deleteObjectView(ObjectView objectView) {
+		objectView = objectViewPersistence.remove(objectView);
+
 		_objectViewColumnPersistence.removeByObjectViewId(
 			objectView.getObjectViewId());
 
 		_objectViewSortColumnPersistence.removeByObjectViewId(
 			objectView.getObjectViewId());
 
-		return objectViewPersistence.remove(objectView);
+		return objectView;
 	}
 
 	@Override
