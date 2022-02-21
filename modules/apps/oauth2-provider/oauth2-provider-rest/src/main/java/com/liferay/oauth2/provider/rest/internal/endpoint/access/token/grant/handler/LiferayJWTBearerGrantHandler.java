@@ -358,7 +358,7 @@ public class LiferayJWTBearerGrantHandler
 
 			if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 
-				// To be compatible with existing design
+				// Compatibility with existing design
 
 				userSubject.setId(subject);
 
