@@ -100,7 +100,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "LanguageOverride#FILTER_BY_OVERRIDE_LANGUAGE_KEY_OVERRIDDEN_LABEL",
-				value1 = "OVERRIDDEN");
+				value1 = "Languages With Override: en_US");
 		}
 	}
 
