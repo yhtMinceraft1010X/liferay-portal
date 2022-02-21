@@ -52,7 +52,7 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		for (String url : _urls.keySet()) {
+		for (String url : _referenceCounts.keySet()) {
 			printWriter.println(
 				"<script type=\"module\" src=\"" + url + "\"></script>");
 		}
@@ -65,16 +65,16 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	public synchronized void registerURLs(String portletName, String[] urls) {
 		synchronized (this) {
-			_portletURLsMap.put(portletName, urls);
+			_urlsMap.put(portletName, urls);
 
 			for (String url : urls) {
-				Integer referenceCount = _urls.get(url);
+				Integer referenceCount = _referenceCounts.get(url);
 
 				if (referenceCount == null) {
-					_urls.put(url, _ONE);
+					_referenceCounts.put(url, _REFERENCE_COUNT_1);
 				}
 				else {
-					_urls.put(url, referenceCount + 1);
+					_referenceCounts.put(url, referenceCount + 1);
 				}
 			}
 		}
@@ -99,10 +99,10 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = null;
 	}
 
-	private static final Integer _ONE = 1;
+	private static final Integer _REFERENCE_COUNT_1 = 1;
 
 	private BundleContext _bundleContext;
-	private final ConcurrentMap<String, String[]> _portletURLsMap =
+	private final ConcurrentMap<String, Integer> _referenceCounts =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, String> _serviceTracker;
 
@@ -132,20 +132,20 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 					String portletName) {
 
 					synchronized (this) {
-						String[] urls = _portletURLsMap.remove(portletName);
+						String[] urls = _urlsMap.remove(portletName);
 
 						if (urls == null) {
 							return;
 						}
 
 						for (String url : urls) {
-							Integer referenceCount = _urls.get(url);
+							Integer referenceCount = _referenceCounts.get(url);
 
-							if (referenceCount.equals(_ONE)) {
-								_urls.remove(url);
+							if (referenceCount.equals(_REFERENCE_COUNT_1)) {
+								_referenceCounts.remove(url);
 							}
 							else {
-								_urls.put(url, referenceCount - 1);
+								_referenceCounts.put(url, referenceCount - 1);
 							}
 						}
 					}
@@ -153,7 +153,7 @@ public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			};
 
-	private final ConcurrentMap<String, Integer> _urls =
+	private final ConcurrentMap<String, String[]> _urlsMap =
 		new ConcurrentHashMap<>();
 
 }
