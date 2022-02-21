@@ -68,7 +68,7 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 			UpgradeStepFactory.addColumns(
 				OAuth2ApplicationTable.class,
 				"clientCredentialUserName VARCHAR(75) null"),
-			UpgradeStepFactory.runSql(
+			UpgradeStepFactory.runSQL(
 				"update OAuth2Application set clientCredentialUserId = " +
 					"userId, clientCredentialUserName = userName"));
 

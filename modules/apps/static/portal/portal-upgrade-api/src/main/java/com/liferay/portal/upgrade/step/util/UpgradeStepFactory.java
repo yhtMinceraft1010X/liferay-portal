@@ -74,7 +74,7 @@ public class UpgradeStepFactory {
 		};
 	}
 
-	public static UpgradeProcess runSql(String sql) {
+	public static UpgradeProcess runSQL(String sql) {
 		return new UpgradeProcess() {
 
 			@Override
