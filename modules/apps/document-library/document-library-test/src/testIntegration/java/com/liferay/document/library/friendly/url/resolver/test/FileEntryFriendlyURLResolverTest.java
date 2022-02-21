@@ -67,7 +67,7 @@ public class FileEntryFriendlyURLResolverTest {
 	}
 
 	@Test
-	public void testResolveExistingFriendlyURL() throws PortalException {
+	public void testResolveFriendlyURL() throws PortalException {
 		String urlTitle = RandomTestUtil.randomString();
 
 		_addFileEntry(urlTitle);
@@ -77,13 +77,9 @@ public class FileEntryFriendlyURLResolverTest {
 				_group.getGroupId(), urlTitle);
 
 		Assert.assertTrue(fileEntryOptional.isPresent());
-	}
 
-	@Test
-	public void testResolveNonexistantFriendlyURL() throws Exception {
-		Optional<FileEntry> fileEntryOptional =
-			_fileEntryFriendlyURLResolver.resolveFriendlyURL(
-				_group.getGroupId(), RandomTestUtil.randomString());
+		fileEntryOptional = _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		Assert.assertFalse(fileEntryOptional.isPresent());
 	}
