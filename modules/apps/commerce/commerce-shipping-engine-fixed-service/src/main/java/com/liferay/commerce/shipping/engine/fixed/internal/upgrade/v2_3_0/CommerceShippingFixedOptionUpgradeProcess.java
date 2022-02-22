@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0;
 
-import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0.util.CommerceShippingFixedOptionTable;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,11 +36,8 @@ public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn(CommerceShippingFixedOptionTable.TABLE_NAME, "key_")) {
-			alterTableAddColumn(
-				CommerceShippingFixedOptionTable.TABLE_NAME, "key_",
-				"VARCHAR(75)");
-		}
+		alterTableAddColumn(
+			"CommerceShippingFixedOption", "key_", "VARCHAR(75)");
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 			_commerceShippingFixedOptionLocalService.
