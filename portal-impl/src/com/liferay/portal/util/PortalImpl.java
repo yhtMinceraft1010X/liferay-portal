@@ -3036,9 +3036,10 @@ public class PortalImpl implements Portal {
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			layoutSet.getCompanyId());
-		int portalPort = getPortalServerPort(secureConnection);
 
 		String defaultVirtualHostName = _getDefaultVirtualHostName(company);
+
+		int portalPort = getPortalServerPort(secureConnection);
 
 		String portalURL = getPortalURL(
 			company.getVirtualHostname(), portalPort, secureConnection);
@@ -8193,14 +8194,13 @@ public class PortalImpl implements Portal {
 
 		String defaultVirtualHostName = _getDefaultVirtualHostName(
 			themeDisplay.getCompany());
+		String portalDomain = themeDisplay.getPortalDomain();
 
 		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
 
 		String virtualHostname = _getVirtualHostname(
 			virtualHostnames, themeDisplay);
-
-		String portalDomain = themeDisplay.getPortalDomain();
 
 		if ((!Validator.isBlank(portalDomain) &&
 			 !StringUtil.equalsIgnoreCase(
