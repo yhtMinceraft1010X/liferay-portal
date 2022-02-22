@@ -3038,11 +3038,7 @@ public class PortalImpl implements Portal {
 			layoutSet.getCompanyId());
 		int portalPort = getPortalServerPort(secureConnection);
 
-		String defaultVirtualHostName = _LOCALHOST;
-
-		if (Validator.isNotNull(company.getVirtualHostname())) {
-			defaultVirtualHostName = company.getVirtualHostname();
-		}
+		String defaultVirtualHostName = _getDefaultVirtualHostName(company);
 
 		String portalURL = getPortalURL(
 			company.getVirtualHostname(), portalPort, secureConnection);
@@ -3101,15 +3097,8 @@ public class PortalImpl implements Portal {
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String defaultVirtualHostName = _LOCALHOST;
-
-		Company company = themeDisplay.getCompany();
-
-		if ((company != null) &&
-			Validator.isNotNull(company.getVirtualHostname())) {
-
-			defaultVirtualHostName = company.getVirtualHostname();
-		}
+		String defaultVirtualHostName = _getDefaultVirtualHostName(
+			themeDisplay.getCompany());
 
 		String virtualHostname = null;
 
@@ -8202,15 +8191,8 @@ public class PortalImpl implements Portal {
 			Set<Locale> availableLocales)
 		throws PortalException {
 
-		String defaultVirtualHostName = _LOCALHOST;
-
-		Company company = themeDisplay.getCompany();
-
-		if ((company != null) &&
-			Validator.isNotNull(company.getVirtualHostname())) {
-
-			defaultVirtualHostName = company.getVirtualHostname();
-		}
+		String defaultVirtualHostName = _getDefaultVirtualHostName(
+			themeDisplay.getCompany());
 
 		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
@@ -8384,6 +8366,16 @@ public class PortalImpl implements Portal {
 		}
 
 		return alternateURLs;
+	}
+
+	private String _getDefaultVirtualHostName(Company company) {
+		if ((company != null) &&
+			Validator.isNotNull(company.getVirtualHostname())) {
+
+			return company.getVirtualHostname();
+		}
+
+		return _LOCALHOST;
 	}
 
 	private String _getGroupFriendlyURL(
