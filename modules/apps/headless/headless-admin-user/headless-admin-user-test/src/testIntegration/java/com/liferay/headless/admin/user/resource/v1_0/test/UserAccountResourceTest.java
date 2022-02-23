@@ -1143,18 +1143,20 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	private class TestSimpleCaptchaImpl extends SimpleCaptchaImpl {
 
-		public TestSimpleCaptchaImpl(UnsafeRunnable<CaptchaException> check) {
-			_unsafeRunnableCheck = check;
+		public TestSimpleCaptchaImpl(
+			UnsafeRunnable<CaptchaException> unsafeRunnable) {
+
+			_unsafeRunnable = unsafeRunnable;
 		}
 
 		@Override
 		public void check(HttpServletRequest httpServletRequest)
 			throws CaptchaException {
 
-			_unsafeRunnableCheck.run();
+			_unsafeRunnable.run();
 		}
 
-		private final UnsafeRunnable<CaptchaException> _unsafeRunnableCheck;
+		private final UnsafeRunnable<CaptchaException> _unsafeRunnable;
 
 	}
 
