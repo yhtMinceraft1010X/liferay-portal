@@ -99,7 +99,7 @@ definition {
 				value1 = "text-contains-error");
 
 			AssertTextEquals(
-				locator1 = "LanguageOverride#FILTER_BY_ANY_LANGUAGE_KEY_ANY_LANGUAGE_LABEL",
+				locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL",
 				value1 = "Languages With Override: en_US");
 		}
 	}

@@ -38,13 +38,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_BY_ANY_LANGUAGE_KEY_ANY_LANGUAGE_LABEL</td>
-	<td>//div[contains(@class,'autofit-col-expand')]//h6[contains (.,'Languages With Override:')]</td>
+	<td>FILTER_BY_ANY_LANGUAGE_REMOVE_ANY_LANGUAGE_FILTER</td>
+	<td>//span[contains(.,'Any Language')]//following-sibling::span/button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_BY_ANY_LANGUAGE_REMOVE_ANY_LANGUAGE_FILTER</td>
-	<td>//span[contains(.,'Any Language')]//following-sibling::span/button[contains(@class,'close')]</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_VIEW-->
+<tr>
+	<td>LANGUAGE_KEY_OVERRIDDEN_LABEL</td>
+	<td>//div[contains(@class,'autofit-col-expand')]//h6[contains (.,'Languages With Override:')]</td>
 	<td></td>
 </tr>
 <tr>
