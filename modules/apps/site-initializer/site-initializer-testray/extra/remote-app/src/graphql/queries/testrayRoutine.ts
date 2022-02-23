@@ -21,11 +21,7 @@ export const getTestrayRoutines = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayRoutines(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testrayRoutines(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					name
 					testrayRoutineId

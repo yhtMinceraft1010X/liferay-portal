@@ -59,11 +59,7 @@ export const getTestrayCases = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayCases(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testrayCases(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					...TestrayCaseFragment
 				}

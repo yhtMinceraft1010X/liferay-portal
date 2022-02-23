@@ -55,11 +55,7 @@ export const getTestraySuites = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testraySuites(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testraySuites(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					...TestraySuiteFragment
 				}

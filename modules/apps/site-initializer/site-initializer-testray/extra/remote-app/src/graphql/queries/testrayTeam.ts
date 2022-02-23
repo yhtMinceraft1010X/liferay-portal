@@ -47,11 +47,7 @@ export const getTestrayTeams = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayTeams(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testrayTeams(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					...TestrayTeamFragment
 				}

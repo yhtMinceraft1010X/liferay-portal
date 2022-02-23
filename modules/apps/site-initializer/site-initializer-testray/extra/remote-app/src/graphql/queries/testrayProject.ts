@@ -33,11 +33,7 @@ export const getTestrayProjects = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayProjects(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testrayProjects(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					description
 					name

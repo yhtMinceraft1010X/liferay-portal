@@ -30,11 +30,7 @@ export const getTestrayBuilds = gql`
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayBuilds(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			testrayBuilds(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					dateCreated
 					description
