@@ -104,7 +104,7 @@
 			"required": true,
 			"type": "Integer"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Cases Results"
 	},

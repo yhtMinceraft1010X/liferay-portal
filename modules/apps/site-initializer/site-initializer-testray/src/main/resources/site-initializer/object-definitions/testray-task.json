@@ -44,7 +44,7 @@
 			"required": false,
 			"type": "Date"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Tasks"
 	},

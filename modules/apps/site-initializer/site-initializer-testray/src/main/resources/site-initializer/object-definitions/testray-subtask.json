@@ -84,7 +84,7 @@
 			"required": false,
 			"type": "Date"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Sub Tasks"
 	},

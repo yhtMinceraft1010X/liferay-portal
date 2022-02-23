@@ -34,7 +34,7 @@
 			"required": false,
 			"type": "Boolean"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Routines"
 	},

@@ -25,7 +25,7 @@
 			"required": false,
 			"type": "String"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Projects"
 	},

@@ -24,7 +24,7 @@
 			"required": false,
 			"type": "String"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Product Versions"
 	},

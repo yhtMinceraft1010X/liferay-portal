@@ -44,7 +44,7 @@
 			"required": false,
 			"type": "Long"
 		}
-	],	
+	],
 	"pluralLabel": {
 		"en_US": "Testray Components"
 	},
