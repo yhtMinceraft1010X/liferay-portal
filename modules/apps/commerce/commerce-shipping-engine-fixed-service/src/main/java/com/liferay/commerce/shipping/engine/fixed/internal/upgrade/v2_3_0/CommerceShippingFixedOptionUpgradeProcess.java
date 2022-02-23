@@ -30,7 +30,7 @@ public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
 
 		runSQL(
 			StringBundler.concat(
-				"UPDATE CommerceShippingFixedOption SET key_ = CONCAT(",
+				"update CommerceShippingFixedOption set key_ = CONCAT(",
 				StringUtil.randomString(3),
 				", CAST_TEXT(commerceShippingMethodId))"));
 	}
