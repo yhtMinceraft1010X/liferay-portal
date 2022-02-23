@@ -28,12 +28,11 @@ public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
 		alterTableAddColumn(
 			"CommerceShippingFixedOption", "key_", "VARCHAR(75)");
 
-		String querySB = StringBundler.concat(
-			"UPDATE CommerceShippingFixedOption SET key_ = CONCAT(",
-			StringUtil.randomString(3),
-			", CAST_TEXT(commerceShippingMethodId))");
-
-		runSQL(querySB);
+		runSQL(
+			StringBundler.concat(
+				"UPDATE CommerceShippingFixedOption SET key_ = CONCAT(",
+				StringUtil.randomString(3),
+				", CAST_TEXT(commerceShippingMethodId))"));
 	}
 
 }
