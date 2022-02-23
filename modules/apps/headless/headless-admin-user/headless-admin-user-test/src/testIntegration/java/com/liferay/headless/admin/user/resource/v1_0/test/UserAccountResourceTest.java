@@ -623,21 +623,22 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_testPostUserAccountAsGuest(false, new TestSimpleCaptchaImpl(Assert::fail));
+		_testPostUserAccountAsGuest(
+			new TestSimpleCaptchaImpl(Assert::fail), false);
 
 		_testPostUserAccountAsGuest(
-			true,
 			new TestSimpleCaptchaImpl(
 				() -> {
-				}));
+				}),
+			true);
 
 		try {
 			_testPostUserAccountAsGuest(
-				true,
 				new TestSimpleCaptchaImpl(
 					() -> {
 						throw new CaptchaException();
-					}));
+					}),
+				true);
 
 			Assert.fail();
 		}
@@ -1066,7 +1067,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _testPostUserAccountAsGuest(
-			boolean enableCaptcha, Captcha captcha)
+			Captcha captcha, boolean enableCaptcha)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(UserAccountResourceTest.class);
