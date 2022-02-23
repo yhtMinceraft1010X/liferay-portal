@@ -14,51 +14,26 @@
 
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.util.List;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Luca Pellizzon
  */
 public class CommerceShippingFixedOptionUpgradeProcess extends UpgradeProcess {
 
-	public CommerceShippingFixedOptionUpgradeProcess(
-		CommerceShippingFixedOptionLocalService
-			commerceShippingFixedOptionLocalService) {
-
-		_commerceShippingFixedOptionLocalService =
-			commerceShippingFixedOptionLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"CommerceShippingFixedOption", "key_", "VARCHAR(75)");
 
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_commerceShippingFixedOptionLocalService.
-				getCommerceShippingFixedOptions(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		String querySB = StringBundler.concat(
+			"UPDATE CommerceShippingFixedOption SET key_ = CONCAT(",
+			StringUtil.randomString(3),
+			", CAST_TEXT(commerceShippingMethodId))");
 
-		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				commerceShippingFixedOptions) {
-
-			_commerceShippingFixedOptionLocalService.
-				updateCommerceShippingFixedOption(
-					commerceShippingFixedOption.
-						getCommerceShippingFixedOptionId(),
-					commerceShippingFixedOption.getAmount(),
-					commerceShippingFixedOption.getDescriptionMap(),
-					commerceShippingFixedOption.getNameMap(),
-					commerceShippingFixedOption.getPriority());
-		}
+		runSQL(querySB);
 	}
-
-	private final CommerceShippingFixedOptionLocalService
-		_commerceShippingFixedOptionLocalService;
 
 }
