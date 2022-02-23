@@ -623,18 +623,18 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_testPostUserAccountAsGuest(false, new MockCaptcha(Assert::fail));
+		_testPostUserAccountAsGuest(false, new TestSimpleCaptchaImpl(Assert::fail));
 
 		_testPostUserAccountAsGuest(
 			true,
-			new MockCaptcha(
+			new TestSimpleCaptchaImpl(
 				() -> {
 				}));
 
 		try {
 			_testPostUserAccountAsGuest(
 				true,
-				new MockCaptcha(
+				new TestSimpleCaptchaImpl(
 					() -> {
 						throw new CaptchaException();
 					}));
@@ -1077,14 +1077,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			bundleContext.registerService(
 				Captcha.class, captcha,
 				HashMapDictionaryBuilder.put(
-					"captcha.engine.impl", MockCaptcha.class.getName()
+					"captcha.engine.impl", TestSimpleCaptchaImpl.class.getName()
 				).build());
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.captcha.configuration.CaptchaConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
-						"captchaEngine", MockCaptcha.class.getName()
+						"captchaEngine", TestSimpleCaptchaImpl.class.getName()
 					).put(
 						"createAccountCaptchaEnabled", enableCaptcha
 					).build())) {
@@ -1141,9 +1141,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private UserLocalService _userLocalService;
 
-	private class MockCaptcha extends SimpleCaptchaImpl {
+	private class TestSimpleCaptchaImpl extends SimpleCaptchaImpl {
 
-		public MockCaptcha(UnsafeRunnable<CaptchaException> check) {
+		public TestSimpleCaptchaImpl(UnsafeRunnable<CaptchaException> check) {
 			_unsafeRunnableCheck = check;
 		}
 
