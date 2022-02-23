@@ -623,9 +623,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_testPostUserAccount(
-			new TestSimpleCaptchaImpl(Assert::fail), false);
-
+		_testPostUserAccount(new TestSimpleCaptchaImpl(Assert::fail), false);
 		_testPostUserAccount(
 			new TestSimpleCaptchaImpl(
 				() -> {
