@@ -31,19 +31,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FILTER_BY_OVERRIDE-->
+<!--FILTER_BY_ANY_LANGUAGE-->
 <tr>
-	<td>FILTER_BY_OVERRIDE_FILTER_LABEL</td>
+	<td>FILTER_BY_ANY_LANGUAGE_FILTER_LABEL</td>
 	<td>//li[contains(@class,'tbar-item-expand')]//span[contains(@class,'label-item-expand')][starts-with(.,'Any Language')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_BY_OVERRIDE_LANGUAGE_KEY_OVERRIDDEN_LABEL</td>
+	<td>FILTER_BY_ANY_LANGUAGE_KEY_ANY_LANGUAGE_LABEL</td>
 	<td>//div[contains(@class,'autofit-col-expand')]//h6[contains (.,'Languages With Override:')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_BY_OVERRIDE_REMOVE_OVERRIDE_FILTER</td>
+	<td>FILTER_BY_ANY_LANGUAGE_REMOVE_ANY_LANGUAGE_FILTER</td>
 	<td>//span[contains(.,'Any Language')]//following-sibling::span/button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
