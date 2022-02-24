@@ -116,7 +116,7 @@ public class ObjectEntryServiceTest {
 	public void testAddObjectEntry() throws Exception {
 		_setUser(_user);
 
-		_assertFailPermission(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 
 		_setUser(_adminUser);
 
@@ -132,7 +132,7 @@ public class ObjectEntryServiceTest {
 		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
 			_setUser(_defaultUser);
 
-			_assertFailPermission(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+			_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 
 			Role guestRole = _roleLocalService.getRole(
 				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -193,17 +193,17 @@ public class ObjectEntryServiceTest {
 		Assert.assertNotNull(
 			_objectEntryService.getObjectEntry(
 				userObjectEntry.getObjectEntryId()));
-
-		_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
+	
+		_assertPrincipalException(ActionKeys.VIEW, adminObjectEntry);
 
 		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
 			_setUser(_defaultUser);
 
-			_assertFailPermission(ActionKeys.VIEW, adminObjectEntry);
+			_assertPrincipalException(ActionKeys.VIEW, adminObjectEntry);
 
 			ObjectEntry defaultUserObjectEntry = _addObjectEntry(_defaultUser);
 
-			_assertFailPermission(ActionKeys.VIEW, defaultUserObjectEntry);
+			_assertPrincipalException(ActionKeys.VIEW, defaultUserObjectEntry);
 
 			Role guestRole = _roleLocalService.getRole(
 				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -257,7 +257,7 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _assertFailPermission(String action, ObjectEntry objectEntry)
+	private void _assertPrincipalException(String action, ObjectEntry objectEntry)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
