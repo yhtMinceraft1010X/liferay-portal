@@ -448,7 +448,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					_invoke(() -> _addWorkflows(serviceContext));
+					_invoke(() -> _addWorkflowDefinitions(serviceContext));
 
 					return null;
 				});
@@ -3000,9 +3000,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addWorkflows(ServiceContext serviceContext) throws Exception {
+	private void _addWorkflowDefinitions(ServiceContext serviceContext)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/workflows");
+			"/site-initializer/workflow-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -3026,10 +3028,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			JSONObject workflowJSONObject = JSONFactoryUtil.createJSONObject(
-				_read(resourcePath + "workflow.json"));
+				_read(resourcePath + ".json"));
 
 			workflowJSONObject.put(
-				"content", _read(resourcePath + "workflow.xml"));
+				"content", _read(resourcePath + ".xml"));
 
 			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
 				workflowJSONObject.toString());
@@ -3039,7 +3041,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					workflowDefinition);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-				_read(resourcePath + "workflow.properties.json"));
+				_read(resourcePath + ".properties.json"));
 
 			if (jsonArray == null) {
 				continue;
