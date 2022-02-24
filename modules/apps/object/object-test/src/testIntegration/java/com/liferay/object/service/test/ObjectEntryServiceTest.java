@@ -16,6 +16,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.configuration.activator.FFGuestResourcePermissionConfigurationUtil;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -115,7 +116,7 @@ public class ObjectEntryServiceTest {
 	public void testAddObjectEntry() throws Exception {
 		_setUser(_user);
 
-		_assertFailPermission("ADD_OBJECT_ENTRY", null);
+		_assertFailPermission(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 
 		_setUser(_adminUser);
 
@@ -131,7 +132,7 @@ public class ObjectEntryServiceTest {
 		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
 			_setUser(_defaultUser);
 
-			_assertFailPermission("ADD_OBJECT_ENTRY", null);
+			_assertFailPermission(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 
 			Role guestRole = _roleLocalService.getRole(
 				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -141,7 +142,7 @@ public class ObjectEntryServiceTest {
 				_objectDefinition.getResourceName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
-				guestRole.getRoleId(), "ADD_OBJECT_ENTRY");
+				guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 			Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
