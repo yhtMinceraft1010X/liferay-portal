@@ -391,8 +391,8 @@ public interface Http {
 
 			if (_body != null) {
 				throw new IllegalArgumentException(
-					"File part cannot be added because a body has already " +
-						"been set");
+					"Input stream part cannot be added because a body has " +
+						"already been set");
 			}
 
 			if (_inputStreamParts == null) {
