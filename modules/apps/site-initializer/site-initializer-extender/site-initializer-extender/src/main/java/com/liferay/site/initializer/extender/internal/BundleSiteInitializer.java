@@ -3027,8 +3027,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			JSONObject workflowDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
-				_read(resourcePath + ".json"));
+			JSONObject workflowDefinitionJSONObject =
+				JSONFactoryUtil.createJSONObject(_read(resourcePath + ".json"));
 
 			workflowDefinitionJSONObject.put(
 				"content", _read(resourcePath + ".content.xml"));
