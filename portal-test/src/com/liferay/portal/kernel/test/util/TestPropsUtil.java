@@ -91,7 +91,7 @@ public class TestPropsUtil {
 		}
 
 		for (String key : keys) {
-			if (!_ignoredPrintKeys.contains(key)) {
+			if (!_doNotPrintKeys.contains(key)) {
 				System.out.println(key + "=" + _props.getProperty(key));
 			}
 		}
@@ -103,7 +103,7 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static final Set<String> _ignoredPrintKeys = SetUtil.fromArray(
+	private static final Set<String> _doNotPrintKeys = SetUtil.fromArray(
 		"digital.signature.account.base.uri", "digital.signature.api.accountId",
 		"digital.signature.api.username", "digital.signature.integration.key",
 		"digital.signature.rsa.private.key",
