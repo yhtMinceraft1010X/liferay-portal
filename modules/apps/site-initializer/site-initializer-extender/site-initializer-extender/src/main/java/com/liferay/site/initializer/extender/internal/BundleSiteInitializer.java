@@ -3040,15 +3040,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(
 					workflowDefinition);
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			JSONArray propertiesJSONArray = JSONFactoryUtil.createJSONArray(
 				_read(resourcePath + ".properties.json"));
 
-			if (jsonArray == null) {
+			if (propertiesJSONArray == null) {
 				continue;
 			}
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject propertiesJSONObject = jsonArray.getJSONObject(i);
+			for (int i = 0; i < propertiesJSONArray.length(); i++) {
+				JSONObject propertiesJSONObject =
+					propertiesJSONArray.getJSONObject(i);
 
 				String className = propertiesJSONObject.getString("className");
 
