@@ -247,14 +247,18 @@ public abstract class BaseUpgradeResourceBlock extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(16);
 
+		sb.append("select ResourceBlock.companyId, ");
+
 		String tableName = getTableName();
+
+		sb.append(tableName);
+
+		sb.append(".");
 
 		String primaryKeyName = getPrimaryKeyName();
 
-		sb.append("select ResourceBlock.companyId, ");
-		sb.append(tableName);
-		sb.append(".");
 		sb.append(primaryKeyName);
+
 		sb.append(", ResourceBlockPermission.roleId, ");
 
 		if (hasUserId()) {
