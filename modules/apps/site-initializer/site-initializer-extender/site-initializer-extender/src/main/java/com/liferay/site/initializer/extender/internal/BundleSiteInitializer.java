@@ -414,11 +414,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
 				_invoke(() -> _addListTypeDefinitions(serviceContext));
 
+			ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+				_objectDefinitionResourceFactory.create();
+
+			ObjectDefinitionResource objectDefinitionResource =
+				objectDefinitionResourceBuilder.user(
+					serviceContext.fetchUser()
+				).build();
+
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
 						listTypeDefinitionIdsStringUtilReplaceValues,
-						serviceContext, siteNavigationMenuItemSettingsBuilder));
+						objectDefinitionResource, serviceContext,
+						siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
 				() -> _addCPDefinitions(
@@ -448,7 +457,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					_invoke(() -> _addWorkflowDefinitions(serviceContext));
+					_invoke(
+						() -> _addWorkflowDefinitions(
+							objectDefinitionResource, serviceContext));
 
 					return null;
 				});
@@ -1992,6 +2003,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
+			ObjectDefinitionResource objectDefinitionResource,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
@@ -2006,14 +2018,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return objectDefinitionIdsStringUtilReplaceValues;
 		}
-
-		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource =
-			objectDefinitionResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".object-entries.json")) {
@@ -3000,7 +3004,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addWorkflowDefinitions(ServiceContext serviceContext)
+	private void _addWorkflowDefinitions(
+			ObjectDefinitionResource objectDefinitionResource,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -3009,14 +3015,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
 		}
-
-		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource =
-			objectDefinitionResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		WorkflowDefinitionResource.Builder workflowDefinitionResourceBuilder =
 			_workflowDefinitionResourceFactory.create();
