@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,7 +103,7 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static final List<String> _ignoredPrintKeys = Arrays.asList(
+	private static final Set<String> _ignoredPrintKeys = SetUtil.fromArray(
 		"digital.signature.account.base.uri", "digital.signature.api.accountId",
 		"digital.signature.api.username", "digital.signature.integration.key",
 		"digital.signature.rsa.private.key",
