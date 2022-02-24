@@ -191,7 +191,8 @@ public class BatchPlannerPlanHelper {
 			!templateBatchPlannerPlan.isTemplate()) {
 
 			throw new IllegalArgumentException(
-				"Provided batch planner plan id is not valid template");
+				"Bbatch planner plan " + batchPlannerPlanId +
+					" is not a template");
 		}
 
 		BatchPlannerPlan batchPlannerPlan =
