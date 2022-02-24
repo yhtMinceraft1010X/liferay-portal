@@ -3031,7 +3031,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_read(resourcePath + ".json"));
 
 			workflowDefinitionJSONObject.put(
-				"content", _read(resourcePath + ".xml"));
+				"content", _read(resourcePath + ".content.xml"));
 
 			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
 				workflowDefinitionJSONObject.toString());
