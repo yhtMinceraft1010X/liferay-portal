@@ -108,7 +108,7 @@ public abstract class BaseBadColumnNamesUpgradeProcess extends UpgradeProcess {
 
 		for (String[] alterColumnName : alterColumnNames) {
 
-			// Special alter for reserved words like System in MySQL
+			// Special alter for reserved words like SYSTEM in MySQL
 
 			if (db.getDBType() == DBType.MYSQL) {
 				runSQL(
