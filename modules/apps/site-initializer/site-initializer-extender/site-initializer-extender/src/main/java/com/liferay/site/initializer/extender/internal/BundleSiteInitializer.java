@@ -3027,14 +3027,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			JSONObject workflowJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject workflowDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 				_read(resourcePath + ".json"));
 
-			workflowJSONObject.put(
+			workflowDefinitionJSONObject.put(
 				"content", _read(resourcePath + ".xml"));
 
 			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
-				workflowJSONObject.toString());
+				workflowDefinitionJSONObject.toString());
 
 			workflowDefinition =
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(
