@@ -114,10 +114,6 @@ public class ObjectEntryServiceTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		_setUser(_user);
-
-		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
-
 		_setUser(_adminUser);
 
 		Assert.assertNotNull(
@@ -154,6 +150,10 @@ public class ObjectEntryServiceTest {
 						TestPropsValues.getGroupId(),
 						_defaultUser.getUserId())));
 		}
+
+		_setUser(_user);
+
+		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 	}
 
 	@Test
@@ -193,7 +193,7 @@ public class ObjectEntryServiceTest {
 		Assert.assertNotNull(
 			_objectEntryService.getObjectEntry(
 				userObjectEntry.getObjectEntryId()));
-	
+
 		_assertPrincipalException(ActionKeys.VIEW, adminObjectEntry);
 
 		if (FFGuestResourcePermissionConfigurationUtil.enabled()) {
@@ -257,7 +257,8 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _assertPrincipalException(String action, ObjectEntry objectEntry)
+	private void _assertPrincipalException(
+			String action, ObjectEntry objectEntry)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
