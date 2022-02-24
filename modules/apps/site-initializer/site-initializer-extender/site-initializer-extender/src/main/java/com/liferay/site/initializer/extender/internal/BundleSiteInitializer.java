@@ -3033,12 +3033,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			workflowDefinitionJSONObject.put(
 				"content", _read(resourcePath + ".content.xml"));
 
-			WorkflowDefinition workflowDefinition = WorkflowDefinition.toDTO(
-				workflowDefinitionJSONObject.toString());
-
-			workflowDefinition =
+			WorkflowDefinition workflowDefinition =
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(
-					workflowDefinition);
+					WorkflowDefinition.toDTO(
+						workflowDefinitionJSONObject.toString()));
 
 			String propertiesJSON = _read(resourcePath + ".properties.json");
 
