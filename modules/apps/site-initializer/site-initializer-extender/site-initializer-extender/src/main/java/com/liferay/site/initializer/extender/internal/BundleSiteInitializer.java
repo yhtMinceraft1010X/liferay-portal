@@ -3051,6 +3051,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONObject propertiesJSONObject =
 					propertiesJSONArray.getJSONObject(i);
 
+				long groupId = 0;
+
+				if (StringUtil.equals(
+						propertiesJSONObject.getString("scope"), "site")) {
+
+					groupId = serviceContext.getScopeGroupId();
+				}
+
 				String className = propertiesJSONObject.getString("className");
 
 				if (StringUtil.equals(
@@ -3077,14 +3085,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 					className = StringBundler.concat(
 						className, "#", objectDefinition.getId());
-				}
-
-				long groupId = 0;
-
-				if (StringUtil.equals(
-						propertiesJSONObject.getString("scope"), "site")) {
-
-					groupId = serviceContext.getScopeGroupId();
 				}
 
 				_workflowDefinitionLinkLocalService.
