@@ -3010,19 +3010,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		WorkflowDefinitionResource.Builder workflowDefinitionResourceBuilder =
-			_workflowDefinitionResourceFactory.create();
-
-		WorkflowDefinitionResource workflowDefinitionResource =
-			workflowDefinitionResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
 			_objectDefinitionResourceFactory.create();
 
 		ObjectDefinitionResource objectDefinitionResource =
 			objectDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		WorkflowDefinitionResource.Builder workflowDefinitionResourceBuilder =
+			_workflowDefinitionResourceFactory.create();
+
+		WorkflowDefinitionResource workflowDefinitionResource =
+			workflowDefinitionResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
 
