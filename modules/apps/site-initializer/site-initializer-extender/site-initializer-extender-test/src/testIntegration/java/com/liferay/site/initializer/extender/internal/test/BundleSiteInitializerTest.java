@@ -486,7 +486,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(productSpecification);
 		Assert.assertEquals(
-			"product-specification-test-1", productSpecification.getSpecificationKey());
+			"product-specification-test-1",
+			productSpecification.getSpecificationKey());
 	}
 
 	private void _assertCPDefinition(Group group) throws Exception {
