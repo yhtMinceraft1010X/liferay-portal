@@ -73,32 +73,6 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		return _commerceOrder;
 	}
 
-	public List<CommerceShippingFixedOption>
-			getFilteredCommerceShippingFixedOptions()
-		throws PortalException {
-
-		List<CommerceShippingFixedOption> filteredCommerceShippingFixedOptions =
-			new ArrayList<>();
-
-		CommerceOrder commerceOrder = getCommerceOrder();
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				getCommerceShippingMethods()) {
-
-			List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-				_commerceShippingFixedOptionLocalService.
-					getCommerceOrderTypeCommerceShippingFixedOptions(
-						commerceOrder.getCompanyId(),
-						commerceOrder.getCommerceOrderTypeId(),
-						commerceShippingMethod.getCommerceShippingMethodId());
-
-			filteredCommerceShippingFixedOptions.addAll(
-				commerceShippingFixedOptions);
-		}
-
-		return filteredCommerceShippingFixedOptions;
-	}
-
 	public List<CommerceShippingMethod> getCommerceShippingMethods()
 		throws PortalException {
 
@@ -155,6 +129,32 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		return ListUtil.sort(
 			commerceShippingOptions,
 			new CommerceShippingOptionLabelComparator());
+	}
+
+	public List<CommerceShippingFixedOption>
+			getFilteredCommerceShippingFixedOptions()
+		throws PortalException {
+
+		List<CommerceShippingFixedOption> filteredCommerceShippingFixedOptions =
+			new ArrayList<>();
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		for (CommerceShippingMethod commerceShippingMethod :
+				getCommerceShippingMethods()) {
+
+			List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+				_commerceShippingFixedOptionLocalService.
+					getCommerceOrderTypeCommerceShippingFixedOptions(
+						commerceOrder.getCompanyId(),
+						commerceOrder.getCommerceOrderTypeId(),
+						commerceShippingMethod.getCommerceShippingMethodId());
+
+			filteredCommerceShippingFixedOptions.addAll(
+				commerceShippingFixedOptions);
+		}
+
+		return filteredCommerceShippingFixedOptions;
 	}
 
 	public List<CommerceShippingOption> getFilteredCommerceShippingOptions(
