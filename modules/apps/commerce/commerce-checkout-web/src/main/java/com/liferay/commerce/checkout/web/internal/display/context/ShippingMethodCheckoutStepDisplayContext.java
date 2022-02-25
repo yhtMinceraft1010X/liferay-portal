@@ -164,7 +164,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			CommerceShippingMethod commerceShippingMethod)
 		throws PortalException {
 
-		List<CommerceShippingOption> commerceShippingOptionsFiltered =
+		List<CommerceShippingOption> filteredCommerceShippingOptions =
 			new ArrayList<>();
 		List<CommerceShippingOption> commerceShippingOptions =
 			getCommerceShippingOptions(commerceShippingMethod);
@@ -180,12 +180,12 @@ public class ShippingMethodCheckoutStepDisplayContext {
 				String key = commerceShippingFixedOption.getKey();
 
 				if (key.equals(commerceShippingOption.getName())) {
-					commerceShippingOptionsFiltered.add(commerceShippingOption);
+					filteredCommerceShippingOptions.add(commerceShippingOption);
 				}
 			}
 		}
 
-		return commerceShippingOptionsFiltered;
+		return filteredCommerceShippingOptions;
 	}
 
 	private CommerceContext _getCommerceContext() {
