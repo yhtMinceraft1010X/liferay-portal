@@ -171,7 +171,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		else {
 			Liferay.Util.openToast({
 				message: Liferay.Language.get(
-					'default-view-must-be-at-least-one-column'
+					'default-view-must-have-at-least-one-column'
 				),
 				type: 'danger',
 			});
