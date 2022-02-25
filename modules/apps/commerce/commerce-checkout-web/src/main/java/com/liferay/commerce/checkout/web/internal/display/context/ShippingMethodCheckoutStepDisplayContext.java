@@ -92,10 +92,8 @@ public class ShippingMethodCheckoutStepDisplayContext {
 						commerceOrder.getCommerceOrderTypeId(),
 						commerceShippingMethod.getCommerceShippingMethodId());
 
-			if (!ListUtil.isEmpty(commerceShippingFixedOptions)) {
-				filteredCommerceShippingFixedOptions.addAll(
-					commerceShippingFixedOptions);
-			}
+			filteredCommerceShippingFixedOptions.addAll(
+				commerceShippingFixedOptions);
 		}
 
 		return filteredCommerceShippingFixedOptions;
