@@ -28,16 +28,16 @@ public class MimeTypeSizeLimitUtil {
 
 	public static <E extends Throwable> void parseMimeTypeSizeLimit(
 			String mimeTypeSizeLimit,
-			UnsafeBiConsumer<String, Long, E> biConsumer)
+			UnsafeBiConsumer<String, Long, E> unsafeBiConsumer)
 		throws E {
 
 		String[] parts = StringUtil.split(mimeTypeSizeLimit, CharPool.COLON);
 
 		if (parts.length != 2) {
-			biConsumer.accept(null, null);
+			unsafeBiConsumer.accept(null, null);
 		}
 		else {
-			biConsumer.accept(
+			unsafeBiConsumer.accept(
 				_parseMimeTypeName(StringUtil.trim(parts[0])),
 				_parseSizeLimit(StringUtil.trim(parts[1])));
 		}
