@@ -56,7 +56,7 @@ public class JNDIUtil {
 		do {
 			lookupClassLoaders.add(classLoader);
 
-			// Add branched declaring ClassLoader to lookup list
+			// Add branched declaring class loader
 
 			Class<?> clazz = classLoader.getClass();
 
@@ -66,7 +66,7 @@ public class JNDIUtil {
 				lookupClassLoaders.add(declaringClassLoader);
 			}
 
-			// Add aggregated foreign ClassLoaders to lookup list
+			// Add aggregated foreign class loaders
 
 			if (classLoader instanceof AggregateClassLoader) {
 				AggregateClassLoader aggregateClassLoader =
