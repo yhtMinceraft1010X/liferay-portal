@@ -40,11 +40,10 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		throws IOException {
 
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
+		_inputStream = inputStream;
 
 		_enclosingCharacter = (String)parameters.getOrDefault(
 			"enclosingCharacter", null);
-
-		_inputStream = inputStream;
 
 		_delimiterRegex = _getDelimiterRegex(_enclosingCharacter);
 
