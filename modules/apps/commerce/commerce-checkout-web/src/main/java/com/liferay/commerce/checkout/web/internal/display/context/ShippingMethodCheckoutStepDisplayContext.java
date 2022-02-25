@@ -77,29 +77,28 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			getFilteredCommerceShippingFixedOptions()
 		throws PortalException {
 
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+		List<CommerceShippingFixedOption> filteredCommerceShippingFixedOptions =
 			new ArrayList<>();
-		List<CommerceShippingMethod> commerceShippingMethods =
-			getCommerceShippingMethods();
+
 		CommerceOrder commerceOrder = getCommerceOrder();
 
 		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
+				getCommerceShippingMethods()) {
 
-			List<CommerceShippingFixedOption> commerceShippingFixedOptionList =
+			List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 				_commerceShippingFixedOptionLocalService.
 					getCommerceOrderTypeCommerceShippingFixedOptions(
 						commerceOrder.getCompanyId(),
 						commerceOrder.getCommerceOrderTypeId(),
 						commerceShippingMethod.getCommerceShippingMethodId());
 
-			if (!ListUtil.isEmpty(commerceShippingFixedOptionList)) {
-				commerceShippingFixedOptions.addAll(
-					commerceShippingFixedOptionList);
+			if (!ListUtil.isEmpty(commerceShippingFixedOptions)) {
+				filteredCommerceShippingFixedOptions.addAll(
+					commerceShippingFixedOptions);
 			}
 		}
 
-		return commerceShippingFixedOptions;
+		return filteredCommerceShippingFixedOptions;
 	}
 
 	public List<CommerceShippingMethod> getCommerceShippingMethods()
@@ -166,13 +165,12 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 		List<CommerceShippingOption> filteredCommerceShippingOptions =
 			new ArrayList<>();
+
 		List<CommerceShippingOption> commerceShippingOptions =
 			getCommerceShippingOptions(commerceShippingMethod);
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			getFilteredCommerceShippingFixedOptions();
 
 		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				commerceShippingFixedOptions) {
+				getFilteredCommerceShippingFixedOptions()) {
 
 			for (CommerceShippingOption commerceShippingOption :
 					commerceShippingOptions) {
