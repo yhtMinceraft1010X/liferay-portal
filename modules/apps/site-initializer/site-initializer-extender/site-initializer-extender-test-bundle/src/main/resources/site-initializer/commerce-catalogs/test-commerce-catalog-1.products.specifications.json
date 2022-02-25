@@ -3,10 +3,10 @@
 		"cpDefinitionExternalReferenceCode": "TEST001",
 		"description": "",
 		"facetable": false,
-		"key": "test-1",
+		"key": "product-specification-test-1",
 		"productSpecificationValue": {
 			"en_US": "1"
 		},
-		"title": "Test"
+		"title": "Product Specification Test 1"
 	}
 ]

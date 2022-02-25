@@ -457,7 +457,7 @@ public class BundleSiteInitializerTest {
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-				serviceContext.getCompanyId(), "test-1");
+				serviceContext.getCompanyId(), "product-specification-test-1");
 
 		Assert.assertNotNull(cpSpecificationOption);
 
@@ -486,7 +486,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(productSpecification);
 		Assert.assertEquals(
-			"test-1", productSpecification.getSpecificationKey());
+			"product-specification-test-1", productSpecification.getSpecificationKey());
 	}
 
 	private void _assertCPDefinition(Group group) throws Exception {
