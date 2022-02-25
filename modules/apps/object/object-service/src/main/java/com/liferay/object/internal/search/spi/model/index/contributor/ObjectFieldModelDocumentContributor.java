@@ -37,14 +37,14 @@ public class ObjectFieldModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, ObjectField objectField) {
-		document.addKeyword(
-			"objectDefinitionId", objectField.getObjectDefinitionId());
+		document.addText(Field.NAME, objectField.getName());
 		document.addLocalizedText(
 			"label",
 			LocalizationUtil.populateLocalizationMap(
 				objectField.getLabelMap(), objectField.getDefaultLanguageId(),
 				0));
-		document.addText(Field.NAME, objectField.getName());
+		document.addKeyword(
+			"objectDefinitionId", objectField.getObjectDefinitionId());
 		document.remove(Field.USER_NAME);
 	}
 
