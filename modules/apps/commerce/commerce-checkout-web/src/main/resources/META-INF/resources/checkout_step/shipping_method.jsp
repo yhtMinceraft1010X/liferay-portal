@@ -55,7 +55,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 
 				<%
 				for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
-					List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getShippingOptionFilteredList(commerceShippingMethod);
+					List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getFilteredCommerceShippingOptions(commerceShippingMethod);
 				%>
 
 					<c:if test="<%= commerceShippingOptions.isEmpty() %>">

@@ -74,7 +74,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	}
 
 	public List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptionFilteredList()
+			getFilteredCommerceShippingFixedOptions()
 		throws PortalException {
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
@@ -160,7 +160,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			new CommerceShippingOptionLabelComparator());
 	}
 
-	public List<CommerceShippingOption> getShippingOptionFilteredList(
+	public List<CommerceShippingOption> getFilteredCommerceShippingOptions(
 			CommerceShippingMethod commerceShippingMethod)
 		throws PortalException {
 
@@ -169,7 +169,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		List<CommerceShippingOption> commerceShippingOptions =
 			getCommerceShippingOptions(commerceShippingMethod);
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			getCommerceShippingFixedOptionFilteredList();
+			getFilteredCommerceShippingFixedOptions();
 
 		for (CommerceShippingFixedOption commerceShippingFixedOption :
 				commerceShippingFixedOptions) {
