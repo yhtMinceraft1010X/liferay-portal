@@ -62,7 +62,8 @@ public class SystemObjectDefinitionMetadataModelListener
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, baseModel);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+			(BaseModel)baseModel.clone());
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class SystemObjectDefinitionMetadataModelListener
 
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
-			baseModel);
+			(BaseModel)baseModel.clone());
 	}
 
 	@Override
