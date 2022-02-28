@@ -230,7 +230,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Analytics endpoint URL is null");
+			_log.debug("Analytics configuration endpoint URL is null");
 		}
 
 		throw new IllegalStateException(
