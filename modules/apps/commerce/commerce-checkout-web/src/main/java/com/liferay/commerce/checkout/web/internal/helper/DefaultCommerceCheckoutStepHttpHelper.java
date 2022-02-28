@@ -121,11 +121,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			String languageId, boolean visible)
 		throws PortalException {
 
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
 		if ((!commerceOrder.isGuestOrder() &&
 			 !_commerceOrderPortletResourcePermission.contains(
