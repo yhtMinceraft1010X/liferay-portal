@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.analytics.batch.exportimport.internal.helper;
+package com.liferay.analytics.batch.exportimport.internal.manager;
 
 import com.liferay.analytics.batch.exportimport.client.AnalyticsBatchClient;
 import com.liferay.analytics.batch.exportimport.client.UploadType;
-import com.liferay.analytics.batch.exportimport.helper.AnalyticsBatchExportImportHelper;
 import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineExportTaskHelper;
 import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineImportTaskHelper;
 import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineTaskHelperFactory;
+import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,9 +42,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = AnalyticsBatchExportImportHelper.class)
-public class AnalyticsBatchExportImportHelperImpl
-	implements AnalyticsBatchExportImportHelper {
+@Component(immediate = true, service = AnalyticsBatchExportImportManager.class)
+public class AnalyticsBatchExportImportManagerImpl
+	implements AnalyticsBatchExportImportManager {
 
 	@Override
 	public void exportToAnalyticsCloud(
@@ -68,8 +68,8 @@ public class AnalyticsBatchExportImportHelperImpl
 
 		BatchEngineExportTaskHelper batchEngineExportTaskHelper =
 			_batchEngineTaskHelperFactory.getBatchEngineExportTaskHelper(
-				batchEngineExportTaskItemDelegateName, companyId, fieldNamesList,
-				parameters, resourceName, userId);
+				batchEngineExportTaskItemDelegateName, companyId,
+				fieldNamesList, parameters, resourceName, userId);
 
 		if (batchEngineExportTaskHelper.execute()) {
 			int totalItemsCount =
@@ -180,7 +180,7 @@ public class AnalyticsBatchExportImportHelperImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsBatchExportImportHelperImpl.class);
+		AnalyticsBatchExportImportManagerImpl.class);
 
 	@Reference
 	private AnalyticsBatchClient _analyticsBatchClient;
