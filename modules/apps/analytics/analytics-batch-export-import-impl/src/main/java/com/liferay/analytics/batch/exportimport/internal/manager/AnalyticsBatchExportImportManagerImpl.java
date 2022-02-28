@@ -124,7 +124,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			_notify(
 				notificationUnsafeConsumer,
-				"Completed uploading " + resourceName);
+				"Completed uploading resource " + resourceName);
 		}
 		else {
 			throw new PortalException(
@@ -142,7 +142,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		_notify(
 			notificationUnsafeConsumer,
-			"Checking updates for: " + resourceName);
+			"Checking changes for resource " + resourceName);
 
 		File resourceFile = _analyticsBatchClient.download(
 			companyId, resourceLastModifiedDate, resourceName);
@@ -150,13 +150,13 @@ public class AnalyticsBatchExportImportManagerImpl
 		if (resourceFile == null) {
 			_notify(
 				notificationUnsafeConsumer,
-				"No updates for resource: " + resourceName);
+				"There are no changes for resource " + resourceName);
 
 			return;
 		}
 
 		_notify(
-			notificationUnsafeConsumer, "Importing resource: " + resourceName);
+			notificationUnsafeConsumer, "Importing resource " + resourceName);
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -178,16 +178,16 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			_notify(
 				notificationUnsafeConsumer,
-				String.format(
-					"Imported %s items for resource: %s",
-					batchEngineImportTask.getTotalItemsCount(), resourceName));
+				StringBundler.concat(
+					"Imported ", batchEngineImportTask.getTotalItemsCount(),
+					" items for resource ", resourceName));
 
 			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
 				batchEngineImportTask);
 		}
 		else {
 			throw new PortalException(
-				"Importing resource failed for: " + resourceName);
+				"Unable to import resource " + resourceName);
 		}
 	}
 
