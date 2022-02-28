@@ -59,7 +59,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 		if (!_isEnabled(companyId)) {
 			throw new IllegalStateException(
-				"Analytics batch client is not enabled");
+				"Analytics batch client is disabled");
 		}
 
 		Http.Options options = _getOptions(companyId);
@@ -112,7 +112,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 		if (!_isEnabled(companyId)) {
 			throw new IllegalStateException(
-				"Analytics batch client is not enabled");
+				"Analytics batch client is disabled");
 		}
 
 		Http.Options options = _getOptions(companyId);
@@ -252,7 +252,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	private boolean _isEnabled(long companyId) {
 		if (!analyticsConfigurationTracker.isActive()) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Analytics configuration tracker is not active");
+				_log.debug("Analytics configuration tracker is inactive");
 			}
 
 			return false;
