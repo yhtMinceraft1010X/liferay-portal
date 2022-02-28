@@ -49,7 +49,7 @@ public class AnalyticsBatchExportImportHelperImpl
 	@Override
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
-			List<String> fieldList,
+			List<String> fieldNamesList,
 			UnsafeConsumer<String, Exception> notificationHandler,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception {
@@ -68,7 +68,7 @@ public class AnalyticsBatchExportImportHelperImpl
 
 		BatchEngineExportTaskHelper batchEngineExportTaskHelper =
 			_batchEngineTaskHelperFactory.getBatchEngineExportTaskHelper(
-				batchEngineExportTaskItemDelegateName, companyId, fieldList,
+				batchEngineExportTaskItemDelegateName, companyId, fieldNamesList,
 				parameters, resourceName, userId);
 
 		if (batchEngineExportTaskHelper.execute()) {

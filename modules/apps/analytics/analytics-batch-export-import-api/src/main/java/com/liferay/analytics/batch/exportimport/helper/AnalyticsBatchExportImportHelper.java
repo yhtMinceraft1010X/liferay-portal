@@ -27,7 +27,7 @@ public interface AnalyticsBatchExportImportHelper {
 
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
-			List<String> fieldList,
+			List<String> fieldNamesList,
 			UnsafeConsumer<String, Exception> notificationHandler,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception;
