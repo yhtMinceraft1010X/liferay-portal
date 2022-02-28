@@ -28,14 +28,14 @@ public interface AnalyticsBatchExportImportManager {
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
 			List<String> fieldNamesList,
-			UnsafeConsumer<String, Exception> notificationHandler,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception;
 
 	public void importFromAnalyticsCloud(
 			String batchEngineImportTaskItemDelegateName, long companyId,
 			Map<String, String> fieldMapping,
-			UnsafeConsumer<String, Exception> notificationHandler,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception;
 

@@ -58,11 +58,12 @@ public class AnalyticsBatchExportImportManagerImpl
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
 			List<String> fieldNamesList,
-			UnsafeConsumer<String, Exception> notificationHandler,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception {
 
-		_notify(notificationHandler, "Exporting resource: " + resourceName);
+		_notify(
+			notificationUnsafeConsumer, "Exporting resource: " + resourceName);
 
 		Map<String, Serializable> parameters = new HashMap<>();
 
@@ -93,18 +94,20 @@ public class AnalyticsBatchExportImportManagerImpl
 			int totalItemsCount = batchEngineExportTask.getTotalItemsCount();
 
 			_notify(
-				notificationHandler,
+				notificationUnsafeConsumer,
 				String.format(
 					"Exported %s items for resource: %s", totalItemsCount,
 					resourceName));
 
 			if (totalItemsCount == 0) {
-				_notify(notificationHandler, "Nothing to upload");
+				_notify(notificationUnsafeConsumer, "Nothing to upload");
 
 				return;
 			}
 
-			_notify(notificationHandler, "Uploading resource: " + resourceName);
+			_notify(
+				notificationUnsafeConsumer,
+				"Uploading resource: " + resourceName);
 
 			InputStream contentInputStream =
 				_batchEngineExportTaskLocalService.openContentInputStream(
@@ -119,7 +122,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				batchEngineExportTask);
 
 			_notify(
-				notificationHandler,
+				notificationUnsafeConsumer,
 				"Uploading resource complete for: " + resourceName);
 		}
 		else {
@@ -132,24 +135,27 @@ public class AnalyticsBatchExportImportManagerImpl
 	public void importFromAnalyticsCloud(
 			String batchEngineImportTaskItemDelegateName, long companyId,
 			Map<String, String> fieldMapping,
-			UnsafeConsumer<String, Exception> notificationHandler,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception {
 
-		_notify(notificationHandler, "Checking updates for: " + resourceName);
+		_notify(
+			notificationUnsafeConsumer,
+			"Checking updates for: " + resourceName);
 
 		File resourceFile = _analyticsBatchClient.download(
 			companyId, resourceLastModifiedDate, resourceName);
 
 		if (resourceFile == null) {
 			_notify(
-				notificationHandler,
+				notificationUnsafeConsumer,
 				"No updates for resource: " + resourceName);
 
 			return;
 		}
 
-		_notify(notificationHandler, "Importing resource: " + resourceName);
+		_notify(
+			notificationUnsafeConsumer, "Importing resource: " + resourceName);
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -170,7 +176,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
 
 			_notify(
-				notificationHandler,
+				notificationUnsafeConsumer,
 				String.format(
 					"Imported %s items for resource: %s",
 					batchEngineImportTask.getTotalItemsCount(), resourceName));
@@ -198,7 +204,7 @@ public class AnalyticsBatchExportImportManagerImpl
 	}
 
 	private void _notify(
-			UnsafeConsumer<String, Exception> notificationHandler,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			String message)
 		throws Exception {
 
@@ -206,11 +212,11 @@ public class AnalyticsBatchExportImportManagerImpl
 			_log.debug(message);
 		}
 
-		if (notificationHandler == null) {
+		if (notificationUnsafeConsumer == null) {
 			return;
 		}
 
-		notificationHandler.accept(message);
+		notificationUnsafeConsumer.accept(message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
