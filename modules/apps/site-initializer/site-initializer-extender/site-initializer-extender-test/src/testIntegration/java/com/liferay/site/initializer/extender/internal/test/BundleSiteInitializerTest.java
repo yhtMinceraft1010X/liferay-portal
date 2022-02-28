@@ -180,7 +180,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceCatalogs(group);
 			_assertCommerceChannel(group);
 			_assertCommerceInventoryWarehouse(group);
-			_assertCommerceSpecificationsProducts(serviceContext);
+			_assertCommerceSpecificationProducts(serviceContext);
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
 			_assertDDMStructure(group);
@@ -451,7 +451,7 @@ public class BundleSiteInitializerTest {
 			commerceNotificationTemplate.getName());
 	}
 
-	private void _assertCommerceSpecificationsProducts(
+	private void _assertCommerceSpecificationProducts(
 			ServiceContext serviceContext)
 		throws Exception {
 
