@@ -24,10 +24,10 @@ import java.util.Date;
  */
 public interface AnalyticsBatchClient {
 
-	public File downloadResource(
+	public File download(
 		long companyId, Date resourceLastModifiedDate, String resourceName);
 
-	public void uploadResource(
+	public void upload(
 		long companyId, InputStream resourceInputStream, String resourceName,
 		UploadType uploadType);
 

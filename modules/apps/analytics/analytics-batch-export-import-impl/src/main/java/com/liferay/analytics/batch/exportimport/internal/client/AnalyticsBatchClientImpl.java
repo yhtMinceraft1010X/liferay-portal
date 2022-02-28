@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 	@Override
-	public File downloadResource(
+	public File download(
 		long companyId, Date resourceLastModifiedDate, String resourceName) {
 
 		if (!_isEnabled(companyId)) {
@@ -106,7 +106,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	}
 
 	@Override
-	public void uploadResource(
+	public void upload(
 		long companyId, InputStream resourceInputStream, String resourceName,
 		UploadType uploadType) {
 

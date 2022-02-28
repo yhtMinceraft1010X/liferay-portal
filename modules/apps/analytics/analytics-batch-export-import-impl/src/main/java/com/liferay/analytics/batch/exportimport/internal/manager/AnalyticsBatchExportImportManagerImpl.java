@@ -110,7 +110,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				_batchEngineExportTaskLocalService.openContentInputStream(
 					batchEngineExportTask.getBatchEngineExportTaskId());
 
-			_analyticsBatchClient.uploadResource(
+			_analyticsBatchClient.upload(
 				companyId, contentInputStream, resourceName, uploadType);
 
 			contentInputStream.close();
@@ -138,7 +138,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		_notify(notificationHandler, "Checking updates for: " + resourceName);
 
-		File resourceFile = _analyticsBatchClient.downloadResource(
+		File resourceFile = _analyticsBatchClient.download(
 			companyId, resourceLastModifiedDate, resourceName);
 
 		if (resourceFile == null) {
