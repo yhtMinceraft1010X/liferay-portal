@@ -16,10 +16,16 @@ package com.liferay.analytics.batch.exportimport.internal.manager;
 
 import com.liferay.analytics.batch.exportimport.client.AnalyticsBatchClient;
 import com.liferay.analytics.batch.exportimport.client.UploadType;
-import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineExportTaskHelper;
-import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineImportTaskHelper;
-import com.liferay.analytics.batch.exportimport.internal.batch.BatchEngineTaskHelperFactory;
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
+import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskContentType;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +36,8 @@ import com.liferay.portal.kernel.search.Field;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.nio.file.Files;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -66,14 +74,23 @@ public class AnalyticsBatchExportImportManagerImpl
 			uploadType = UploadType.INCREMENTAL;
 		}
 
-		BatchEngineExportTaskHelper batchEngineExportTaskHelper =
-			_batchEngineTaskHelperFactory.getBatchEngineExportTaskHelper(
-				batchEngineExportTaskItemDelegateName, companyId,
-				fieldNamesList, parameters, resourceName, userId);
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				companyId, userId, null, resourceName,
+				BatchEngineTaskContentType.JSONL.name(),
+				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
+				parameters, batchEngineExportTaskItemDelegateName);
 
-		if (batchEngineExportTaskHelper.execute()) {
-			int totalItemsCount =
-				batchEngineExportTaskHelper.getTotalItemsCount();
+		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineExportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus.equals(
+				BatchEngineTaskExecuteStatus.COMPLETED)) {
+
+			int totalItemsCount = batchEngineExportTask.getTotalItemsCount();
 
 			_notify(
 				notificationHandler,
@@ -90,14 +107,16 @@ public class AnalyticsBatchExportImportManagerImpl
 			_notify(notificationHandler, "Uploading resource: " + resourceName);
 
 			InputStream contentInputStream =
-				batchEngineExportTaskHelper.getContentInputStream();
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId());
 
 			_analyticsBatchClient.uploadResource(
 				companyId, contentInputStream, resourceName, uploadType);
 
 			contentInputStream.close();
 
-			batchEngineExportTaskHelper.clean();
+			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+				batchEngineExportTask);
 
 			_notify(
 				notificationHandler,
@@ -132,26 +151,41 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		_notify(notificationHandler, "Importing resource: " + resourceName);
 
-		BatchEngineImportTaskHelper batchEngineImportTaskHelper =
-			_batchEngineTaskHelperFactory.getBatchEngineImportTaskHelper(
-				batchEngineImportTaskItemDelegateName, companyId, fieldMapping,
-				resourceFile, resourceName, userId);
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				companyId, userId, 50, null, resourceName,
+				Files.readAllBytes(resourceFile.toPath()),
+				BatchEngineTaskContentType.JSONL.name(),
+				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldMapping,
+				BatchEngineTaskOperation.CREATE.name(), null,
+				batchEngineImportTaskItemDelegateName);
 
-		if (batchEngineImportTaskHelper.execute()) {
+		_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineImportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus.equals(
+				BatchEngineTaskExecuteStatus.COMPLETED)) {
+
 			_notify(
 				notificationHandler,
 				String.format(
 					"Imported %s items for resource: %s",
-					batchEngineImportTaskHelper.getTotalItemsCount(),
-					resourceName));
+					batchEngineImportTask.getTotalItemsCount(), resourceName));
 
-			batchEngineImportTaskHelper.clean();
+			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
+				batchEngineImportTask);
 		}
 		else {
 			throw new PortalException(
 				"Importing resource failed for: " + resourceName);
 		}
 	}
+
+	@Reference
+	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
 	private Serializable _getFilter(Date resourceLastModifiedDate) {
 		StringBundler sb = new StringBundler(3);
@@ -186,6 +220,17 @@ public class AnalyticsBatchExportImportManagerImpl
 	private AnalyticsBatchClient _analyticsBatchClient;
 
 	@Reference
-	private BatchEngineTaskHelperFactory _batchEngineTaskHelperFactory;
+	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
+
+	@Reference
+	private BatchEngineExportTaskLocalService
+		_batchEngineExportTaskLocalService;
+
+	@Reference
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
+
+	@Reference
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
 
 }
