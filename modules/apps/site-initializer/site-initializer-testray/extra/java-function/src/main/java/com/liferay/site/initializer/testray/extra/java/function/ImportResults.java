@@ -156,8 +156,10 @@ public class ImportResults {
 
 		long buildId = responseJSONObject.getLong("id");
 
-		if(runName != null){
+		if (runName != null){
 			long runId = fetchOrAddTestrayRun(buildId,runName);
+
+			System.out.println(runId);
 		}
 	}
 
