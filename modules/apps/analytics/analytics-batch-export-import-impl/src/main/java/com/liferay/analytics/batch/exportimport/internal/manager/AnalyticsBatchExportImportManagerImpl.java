@@ -67,12 +67,12 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		Map<String, Serializable> parameters = new HashMap<>();
 
-		UploadType uploadType = UploadType.FULL;
-
 		if (resourceLastModifiedDate != null) {
-			parameters.put("filter", _getFilter(resourceLastModifiedDate));
-
-			uploadType = UploadType.INCREMENTAL;
+			parameters.put(
+				"filter",
+				StringBundler.concat(
+					Field.getSortableFieldName(Field.MODIFIED_DATE), " ge ",
+					resourceLastModifiedDate.getTime()));
 		}
 
 		BatchEngineExportTask batchEngineExportTask =
@@ -114,7 +114,9 @@ public class AnalyticsBatchExportImportManagerImpl
 					batchEngineExportTask.getBatchEngineExportTaskId());
 
 			_analyticsBatchClient.upload(
-				companyId, contentInputStream, resourceName, uploadType);
+				companyId, contentInputStream, resourceName,
+				(resourceLastModifiedDate != null) ? UploadType.INCREMENTAL :
+					UploadType.FULL);
 
 			contentInputStream.close();
 
@@ -192,16 +194,6 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
-
-	private Serializable _getFilter(Date resourceLastModifiedDate) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(Field.getSortableFieldName(Field.MODIFIED_DATE));
-		sb.append(" ge ");
-		sb.append(resourceLastModifiedDate.getTime());
-
-		return sb.toString();
-	}
 
 	private void _notify(
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
