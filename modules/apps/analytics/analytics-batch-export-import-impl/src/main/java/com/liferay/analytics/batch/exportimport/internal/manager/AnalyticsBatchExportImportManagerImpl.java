@@ -63,7 +63,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		throws Exception {
 
 		_notify(
-			notificationUnsafeConsumer, "Exporting resource: " + resourceName);
+			notificationUnsafeConsumer, "Exporting resource " + resourceName);
 
 		Map<String, Serializable> parameters = new HashMap<>();
 
@@ -106,7 +106,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			_notify(
 				notificationUnsafeConsumer,
-				"Uploading resource: " + resourceName);
+				"Uploading resource " + resourceName);
 
 			InputStream contentInputStream =
 				_batchEngineExportTaskLocalService.openContentInputStream(
@@ -124,11 +124,11 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			_notify(
 				notificationUnsafeConsumer,
-				"Uploading resource complete for: " + resourceName);
+				"Completed uploading " + resourceName);
 		}
 		else {
 			throw new PortalException(
-				"Exporting resource failed for: " + resourceName);
+				"Unable to export resource " + resourceName);
 		}
 	}
 
