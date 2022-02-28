@@ -91,16 +91,15 @@ public class AnalyticsBatchExportImportManagerImpl
 		if (batchEngineTaskExecuteStatus.equals(
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
 
-			int totalItemsCount = batchEngineExportTask.getTotalItemsCount();
-
 			_notify(
 				notificationUnsafeConsumer,
-				String.format(
-					"Exported %s items for resource: %s", totalItemsCount,
-					resourceName));
+				StringBundler.concat(
+					"Exported ", batchEngineExportTask.getTotalItemsCount(),
+					" items for resource ", resourceName));
 
-			if (totalItemsCount == 0) {
-				_notify(notificationUnsafeConsumer, "Nothing to upload");
+			if (batchEngineExportTask.getTotalItemsCount() == 0) {
+				_notify(
+					notificationUnsafeConsumer, "There are no items to upload");
 
 				return;
 			}
