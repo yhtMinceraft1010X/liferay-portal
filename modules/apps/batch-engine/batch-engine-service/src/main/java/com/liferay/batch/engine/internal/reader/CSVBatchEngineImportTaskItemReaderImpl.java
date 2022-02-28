@@ -43,7 +43,6 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		_containsHeaders = Boolean.valueOf(
 			(String)parameters.getOrDefault(
 				"containsHeaders", StringPool.TRUE));
-
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
 		_inputStream = inputStream;
 

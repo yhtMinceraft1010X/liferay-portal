@@ -164,7 +164,6 @@ public class BatchPlannerUriInfo implements UriInfo {
 
 	private BatchPlannerUriInfo(Builder builder) {
 		_pathParameters = builder._pathParameters;
-
 		_queryParameters = builder._queryParameters;
 	}
 
