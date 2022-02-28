@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.InputStream;
@@ -210,13 +211,36 @@ public class AnalyticsBatchExportImportManagerImpl
 	@Reference
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
+	private void _checkCompany(long companyId) {
+		if (_analyticsConfigurationTracker.isActive()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Analytics configuration tracker is inactive");
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (Validator.isNotNull(
+				analyticsConfiguration.liferayAnalyticsEndpointURL())) {
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Analytics endpoint URL is null");
+		}
+
+		throw new IllegalStateException(
+			"Analytics batch export/import is disabled");
+	}
+
 	private File _download(
 		long companyId, Date resourceLastModifiedDate, String resourceName) {
 
-		if (!_isEnabled(companyId)) {
-			throw new IllegalStateException(
-				"Analytics batch client is disabled");
-		}
+		_checkCompany(companyId);
 
 		Http.Options options = _getOptions(companyId);
 
@@ -279,29 +303,6 @@ public class AnalyticsBatchExportImportManagerImpl
 			analyticsConfiguration.liferayAnalyticsProjectId());
 
 		return options;
-	}
-
-	private boolean _isEnabled(long companyId) {
-		if (!_analyticsConfigurationTracker.isActive()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Analytics configuration tracker is inactive");
-			}
-
-			return false;
-		}
-
-		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Analytics endpoint URL is null");
-			}
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private void _notify(
@@ -389,10 +390,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		long companyId, InputStream resourceInputStream,
 		Date resourceLastModifiedDate, String resourceName) {
 
-		if (!_isEnabled(companyId)) {
-			throw new IllegalStateException(
-				"Analytics batch client is disabled");
-		}
+		_checkCompany(companyId);
 
 		Http.Options options = _getOptions(companyId);
 
