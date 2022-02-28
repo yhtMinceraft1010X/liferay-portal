@@ -28,7 +28,7 @@ import Select from './Form/Select';
 
 const userComputer = {
 	description: Liferay.Language.get(
-		'the-files-can-be-stored-in-a-object-entry-or-in-a-specific-folder-from-documents-and-media'
+		'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
 	),
 	label: Liferay.Language.get('upload-directly-from-users-computer'),
 };
