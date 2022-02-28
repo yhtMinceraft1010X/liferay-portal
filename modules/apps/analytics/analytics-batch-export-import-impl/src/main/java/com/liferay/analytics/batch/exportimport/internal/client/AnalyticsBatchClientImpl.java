@@ -155,10 +155,8 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 				(response.getResponseCode() >= 300)) {
 
 				throw new Exception(
-					String.format(
-						"HTTP %s error during resource upload. %s",
-						response.getResponseCode(),
-						StringUtil.read(inputStream)));
+					"Upload failed with HTTP response code: " +
+						response.getResponseCode());
 			}
 
 			if (_log.isDebugEnabled()) {
