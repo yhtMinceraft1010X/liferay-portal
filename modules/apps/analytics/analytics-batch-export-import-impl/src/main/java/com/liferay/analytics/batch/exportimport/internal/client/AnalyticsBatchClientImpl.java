@@ -65,9 +65,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 		if (resourceLastModifiedDate != null) {
 			options.addHeader(
-				"If-Modified-Since",
-				_modifiedSinceHeaderDateFormatter.format(
-					resourceLastModifiedDate));
+				"If-Modified-Since", _format.format(resourceLastModifiedDate));
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
@@ -298,7 +296,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBatchClientImpl.class);
 
-	private static final Format _modifiedSinceHeaderDateFormatter =
+	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz");
 
