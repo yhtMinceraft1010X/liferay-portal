@@ -42,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.text.Format;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -251,7 +252,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	private boolean _isEnabled(long companyId) {
 		if (!analyticsConfigurationTracker.isActive()) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Analytics configuration tracker not active");
+				_log.debug("Analytics configuration tracker is not active");
 			}
 
 			return false;
@@ -262,7 +263,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Analytics endpoint URL null");
+				_log.debug("Analytics endpoint URL is null");
 			}
 
 			return false;
@@ -272,22 +273,24 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	}
 
 	private void _processInvalidTokenMessage(long companyId, String message) {
-		if (message.equals("INVALID_TOKEN")) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Disconnecting data source for company ", companyId,
-						". Cause: ", message));
-			}
+		if (!Objects.equals(message, "INVALID_TOKEN")) {
+			return;
+		}
 
-			_disconnectDataSource(companyId);
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Disconnecting data source for company ", companyId, ": ",
+					message));
+		}
 
-			analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
+		_disconnectDataSource(companyId);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Deleted all analytics messages for company " + companyId);
-			}
+		analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Deleted all analytics messages for company " + companyId);
 		}
 	}
 
