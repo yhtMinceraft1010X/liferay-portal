@@ -70,7 +70,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		options.setLocation(
 			_http.addParameter(
@@ -127,7 +127,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		options.addPart("uploadType", uploadType.name());
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		options.setLocation(
 			analyticsConfiguration.liferayAnalyticsEndpointURL() +
@@ -168,21 +168,9 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		}
 	}
 
-	@Reference
-	protected AnalyticsConfigurationTracker analyticsConfigurationTracker;
-
-	@Reference
-	protected AnalyticsMessageLocalService analyticsMessageLocalService;
-
-	@Reference
-	protected CompanyLocalService companyLocalService;
-
-	@Reference
-	protected ConfigurationProvider configurationProvider;
-
 	private void _disconnectDataSource(long companyId) {
 		try {
-			companyLocalService.updatePreferences(
+			_companyLocalService.updatePreferences(
 				companyId,
 				UnicodePropertiesBuilder.create(
 					true
@@ -214,7 +202,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		}
 
 		try {
-			configurationProvider.deleteCompanyConfiguration(
+			_configurationProvider.deleteCompanyConfiguration(
 				AnalyticsConfiguration.class, companyId);
 		}
 		catch (Exception exception) {
@@ -229,7 +217,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 	private Http.Options _getOptions(long companyId) {
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		Http.Options options = new Http.Options();
 
@@ -248,7 +236,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	}
 
 	private boolean _isEnabled(long companyId) {
-		if (!analyticsConfigurationTracker.isActive()) {
+		if (!_analyticsConfigurationTracker.isActive()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Analytics configuration tracker is inactive");
 			}
@@ -257,7 +245,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
 			if (_log.isDebugEnabled()) {
@@ -284,7 +272,7 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 
 		_disconnectDataSource(companyId);
 
-		analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
+		_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -298,6 +286,18 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz");
+
+	@Reference
+	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+
+	@Reference
+	private AnalyticsMessageLocalService _analyticsMessageLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;
