@@ -63,7 +63,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		throws Exception {
 
 		_notify(
-			notificationUnsafeConsumer, "Exporting resource " + resourceName);
+			"Exporting resource " + resourceName, notificationUnsafeConsumer);
 
 		Map<String, Serializable> parameters = new HashMap<>();
 
@@ -92,21 +92,21 @@ public class AnalyticsBatchExportImportManagerImpl
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
 
 			_notify(
-				notificationUnsafeConsumer,
 				StringBundler.concat(
 					"Exported ", batchEngineExportTask.getTotalItemsCount(),
-					" items for resource ", resourceName));
+					" items for resource ", resourceName),
+				notificationUnsafeConsumer);
 
 			if (batchEngineExportTask.getTotalItemsCount() == 0) {
 				_notify(
-					notificationUnsafeConsumer, "There are no items to upload");
+					"There are no items to upload", notificationUnsafeConsumer);
 
 				return;
 			}
 
 			_notify(
-				notificationUnsafeConsumer,
-				"Uploading resource " + resourceName);
+				"Uploading resource " + resourceName,
+				notificationUnsafeConsumer);
 
 			InputStream contentInputStream =
 				_batchEngineExportTaskLocalService.openContentInputStream(
@@ -123,8 +123,8 @@ public class AnalyticsBatchExportImportManagerImpl
 				batchEngineExportTask);
 
 			_notify(
-				notificationUnsafeConsumer,
-				"Completed uploading resource " + resourceName);
+				"Completed uploading resource " + resourceName,
+				notificationUnsafeConsumer);
 		}
 		else {
 			throw new PortalException(
@@ -141,22 +141,22 @@ public class AnalyticsBatchExportImportManagerImpl
 		throws Exception {
 
 		_notify(
-			notificationUnsafeConsumer,
-			"Checking changes for resource " + resourceName);
+			"Checking changes for resource " + resourceName,
+			notificationUnsafeConsumer);
 
 		File resourceFile = _analyticsBatchClient.download(
 			companyId, resourceLastModifiedDate, resourceName);
 
 		if (resourceFile == null) {
 			_notify(
-				notificationUnsafeConsumer,
-				"There are no changes for resource " + resourceName);
+				"There are no changes for resource " + resourceName,
+				notificationUnsafeConsumer);
 
 			return;
 		}
 
 		_notify(
-			notificationUnsafeConsumer, "Importing resource " + resourceName);
+			"Importing resource " + resourceName, notificationUnsafeConsumer);
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -177,10 +177,10 @@ public class AnalyticsBatchExportImportManagerImpl
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
 
 			_notify(
-				notificationUnsafeConsumer,
 				StringBundler.concat(
 					"Imported ", batchEngineImportTask.getTotalItemsCount(),
-					" items for resource ", resourceName));
+					" items for resource ", resourceName),
+				notificationUnsafeConsumer);
 
 			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
 				batchEngineImportTask);
@@ -195,8 +195,8 @@ public class AnalyticsBatchExportImportManagerImpl
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
 	private void _notify(
-			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
-			String message)
+			String message,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
