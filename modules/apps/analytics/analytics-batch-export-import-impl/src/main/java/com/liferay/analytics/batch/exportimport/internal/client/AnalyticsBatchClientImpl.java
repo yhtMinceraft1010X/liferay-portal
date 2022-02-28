@@ -120,12 +120,10 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.MULTIPART_FORM_DATA +
 				"; boundary=__MULTIPART_BOUNDARY__");
-
-		options.addPart("uploadType", uploadType.name());
-
 		options.addInputStreamPart(
 			"file", resourceName, resourceInputStream,
 			ContentTypes.MULTIPART_FORM_DATA);
+		options.addPart("uploadType", uploadType.name());
 
 		AnalyticsConfiguration analyticsConfiguration =
 			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
