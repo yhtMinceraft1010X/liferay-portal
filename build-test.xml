@@ -5571,6 +5571,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/license/dependencies/@{dxp.license.file}"
 							todir="${liferay.home}/deploy"
 						/>
+
 						<beanshell>
 							<![CDATA[
 								import java.time.ZoneId;
@@ -5579,18 +5580,19 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 								DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
 
-								ZoneId GMT = ZoneId.of("GMT");
+								ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("GMT"));
 
-								ZonedDateTime now = ZonedDateTime.now(GMT);
+								// License expiration leeway
 
-								//License expiration leeway
-								ZonedDateTime expiration = now.minusDays(2);
+								zonedDateTime = zonedDateTime.minusDays(2);
 
-								//License expiration delay
-								expiration = expiration.plusMinutes(5);
+								// License expiration delay
 
-								System.out.println(dateTimeFormatter.format(expiration));
-								project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+								zonedDateTime = zonedDateTime.plusMinutes(5);
+
+								System.out.println(dateTimeFormatter.format(zonedDateTime));
+
+								project.setProperty("expiration.date", dateTimeFormatter.format(zonedDateTime));
 							]]>
 						</beanshell>
 					</then>
