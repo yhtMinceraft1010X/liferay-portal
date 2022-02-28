@@ -128,7 +128,13 @@ public class ContentDashboardSearchContextBuilder {
 				).mapToLong(
 					jsonObject -> jsonObject.getLong("classPK")
 				).toArray());
+		}
 
+		if (_end != null) {
+			searchContext.setEnd(_end);
+		}
+
+		if (!ArrayUtil.isEmpty(contentDashboardItemSubtypePayloads)) {
 			searchContext.setEntryClassNames(
 				Stream.of(
 					contentDashboardItemSubtypePayloads
@@ -156,10 +162,6 @@ public class ContentDashboardSearchContextBuilder {
 				).toArray(
 					size -> new String[size]
 				));
-		}
-
-		if (_end != null) {
-			searchContext.setEnd(_end);
 		}
 
 		long groupId = ParamUtil.getLong(_httpServletRequest, "scopeId");
