@@ -39,11 +39,10 @@ public class BatchEngineExportTaskHelper {
 		String resourceName, long userId) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
-
 		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 
 		_batchEngineExportTask =
-			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+			batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				companyId, userId, null, resourceName,
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
