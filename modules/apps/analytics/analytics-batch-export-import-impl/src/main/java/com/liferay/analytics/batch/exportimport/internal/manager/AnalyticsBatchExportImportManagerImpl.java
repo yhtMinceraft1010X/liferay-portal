@@ -158,7 +158,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		throws Exception {
 
 		_notify(
-			"Checking changes for resource " + resourceName,
+			"Checking modifications for resource " + resourceName,
 			notificationUnsafeConsumer);
 
 		File resourceFile = _download(
@@ -166,7 +166,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		if (resourceFile == null) {
 			_notify(
-				"There are no changes for resource " + resourceName,
+				"There are no modifications for resource " + resourceName,
 				notificationUnsafeConsumer);
 
 			return;
