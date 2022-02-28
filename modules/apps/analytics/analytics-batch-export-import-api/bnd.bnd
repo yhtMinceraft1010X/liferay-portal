@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Analytics Batch Export Import API
 Bundle-SymbolicName: com.liferay.analytics.batch.exportimport.api
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.analytics.batch.exportimport.client,\
-	com.liferay.analytics.batch.exportimport.manager
+Export-Package: com.liferay.analytics.batch.exportimport.manager

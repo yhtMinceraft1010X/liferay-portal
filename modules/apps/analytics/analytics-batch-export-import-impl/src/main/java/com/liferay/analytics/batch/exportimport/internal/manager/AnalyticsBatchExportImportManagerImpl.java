@@ -14,9 +14,10 @@
 
 package com.liferay.analytics.batch.exportimport.internal.manager;
 
-import com.liferay.analytics.batch.exportimport.client.AnalyticsBatchClient;
-import com.liferay.analytics.batch.exportimport.client.UploadType;
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
+import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
@@ -29,20 +30,36 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.net.HttpURLConnection;
+
 import java.nio.file.Files;
+
+import java.text.Format;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,10 +129,9 @@ public class AnalyticsBatchExportImportManagerImpl
 				_batchEngineExportTaskLocalService.openContentInputStream(
 					batchEngineExportTask.getBatchEngineExportTaskId());
 
-			_analyticsBatchClient.upload(
-				companyId, contentInputStream, resourceName,
-				(resourceLastModifiedDate != null) ? UploadType.INCREMENTAL :
-					UploadType.FULL);
+			_upload(
+				companyId, contentInputStream, resourceLastModifiedDate,
+				resourceName);
 
 			contentInputStream.close();
 
@@ -144,7 +160,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			"Checking changes for resource " + resourceName,
 			notificationUnsafeConsumer);
 
-		File resourceFile = _analyticsBatchClient.download(
+		File resourceFile = _download(
 			companyId, resourceLastModifiedDate, resourceName);
 
 		if (resourceFile == null) {
@@ -194,6 +210,100 @@ public class AnalyticsBatchExportImportManagerImpl
 	@Reference
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
+	private File _download(
+		long companyId, Date resourceLastModifiedDate, String resourceName) {
+
+		if (!_isEnabled(companyId)) {
+			throw new IllegalStateException(
+				"Analytics batch client is disabled");
+		}
+
+		Http.Options options = _getOptions(companyId);
+
+		if (resourceLastModifiedDate != null) {
+			options.addHeader(
+				"If-Modified-Since", _format.format(resourceLastModifiedDate));
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		options.setLocation(
+			_http.addParameter(
+				analyticsConfiguration.liferayAnalyticsEndpointURL() +
+					"/dxp-batch-entities",
+				"resourceName", resourceName));
+
+		try {
+			InputStream inputStream = _http.URLtoInputStream(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() ==
+					HttpURLConnection.HTTP_FORBIDDEN) {
+
+				JSONObject responseJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						StringUtil.read(inputStream));
+
+				_processInvalidTokenMessage(
+					companyId, responseJSONObject.getString("message"));
+			}
+
+			if (inputStream != null) {
+				return FileUtil.createTempFile(inputStream);
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+
+		return null;
+	}
+
+	private Http.Options _getOptions(long companyId) {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			"OSB-Asah-Data-Source-ID",
+			analyticsConfiguration.liferayAnalyticsDataSourceId());
+		options.addHeader(
+			"OSB-Asah-Faro-Backend-Security-Signature",
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature());
+		options.addHeader(
+			"OSB-Asah-Project-ID",
+			analyticsConfiguration.liferayAnalyticsProjectId());
+
+		return options;
+	}
+
+	private boolean _isEnabled(long companyId) {
+		if (!_analyticsConfigurationTracker.isActive()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Analytics configuration tracker is inactive");
+			}
+
+			return false;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Analytics endpoint URL is null");
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _notify(
 			String message,
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer)
@@ -210,11 +320,147 @@ public class AnalyticsBatchExportImportManagerImpl
 		notificationUnsafeConsumer.accept(message);
 	}
 
+	private void _processInvalidTokenMessage(long companyId, String message) {
+		if (!Objects.equals(message, "INVALID_TOKEN")) {
+			return;
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Disconnecting data source for company ", companyId, ": ",
+					message));
+		}
+
+		try {
+			_companyLocalService.updatePreferences(
+				companyId,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"liferayAnalyticsConnectionType", ""
+				).put(
+					"liferayAnalyticsDataSourceId", ""
+				).put(
+					"liferayAnalyticsEndpointURL", ""
+				).put(
+					"liferayAnalyticsFaroBackendSecuritySignature", ""
+				).put(
+					"liferayAnalyticsFaroBackendURL", ""
+				).put(
+					"liferayAnalyticsGroupIds", ""
+				).put(
+					"liferayAnalyticsProjectId", ""
+				).put(
+					"liferayAnalyticsURL", ""
+				).build());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics preferences for company " +
+						companyId,
+					exception);
+			}
+		}
+
+		try {
+			_configurationProvider.deleteCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics configuration for company " +
+						companyId,
+					exception);
+			}
+		}
+
+		_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Deleted all analytics messages for company " + companyId);
+		}
+	}
+
+	private void _upload(
+		long companyId, InputStream resourceInputStream,
+		Date resourceLastModifiedDate, String resourceName) {
+
+		if (!_isEnabled(companyId)) {
+			throw new IllegalStateException(
+				"Analytics batch client is disabled");
+		}
+
+		Http.Options options = _getOptions(companyId);
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE,
+			ContentTypes.MULTIPART_FORM_DATA +
+				"; boundary=__MULTIPART_BOUNDARY__");
+		options.addInputStreamPart(
+			"file", resourceName, resourceInputStream,
+			ContentTypes.MULTIPART_FORM_DATA);
+		options.addPart(
+			"uploadType",
+			(resourceLastModifiedDate != null) ? "INCREMENTAL" : "FULL");
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		options.setLocation(
+			analyticsConfiguration.liferayAnalyticsEndpointURL() +
+				"/dxp-batch-entities");
+
+		options.setPost(true);
+
+		try {
+			InputStream inputStream = _http.URLtoInputStream(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() ==
+					HttpURLConnection.HTTP_FORBIDDEN) {
+
+				JSONObject responseJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						StringUtil.read(inputStream));
+
+				_processInvalidTokenMessage(
+					companyId, responseJSONObject.getString("message"));
+			}
+
+			if ((response.getResponseCode() < 200) ||
+				(response.getResponseCode() >= 300)) {
+
+				throw new Exception(
+					"Upload failed with HTTP response code: " +
+						response.getResponseCode());
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upload completed successfully");
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBatchExportImportManagerImpl.class);
 
+	private static final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"EEE, dd MMM yyyy HH:mm:ss zzz");
+
 	@Reference
-	private AnalyticsBatchClient _analyticsBatchClient;
+	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+
+	@Reference
+	private AnalyticsMessageLocalService _analyticsMessageLocalService;
 
 	@Reference
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
@@ -229,5 +475,14 @@ public class AnalyticsBatchExportImportManagerImpl
 	@Reference
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
 
 }
