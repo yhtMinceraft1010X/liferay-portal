@@ -35,7 +35,7 @@ public class BatchEngineExportTaskHelper {
 		BatchEngineExportTaskExecutor batchEngineExportTaskExecutor,
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		String batchEngineImportTaskItemDelegateName, long companyId,
-		List<String> filedList, Map<String, Serializable> parameters,
+		List<String> fieldNamesList, Map<String, Serializable> parameters,
 		String resourceName, long userId) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
@@ -46,7 +46,7 @@ public class BatchEngineExportTaskHelper {
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				companyId, userId, null, resourceName,
 				BatchEngineTaskContentType.JSONL.name(),
-				BatchEngineTaskExecuteStatus.INITIAL.name(), filedList,
+				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
 				parameters, batchEngineImportTaskItemDelegateName);
 	}
 
