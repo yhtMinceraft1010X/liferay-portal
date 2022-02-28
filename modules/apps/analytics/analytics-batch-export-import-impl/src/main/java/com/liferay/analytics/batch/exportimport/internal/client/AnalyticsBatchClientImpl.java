@@ -168,53 +168,6 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 		}
 	}
 
-	private void _disconnectDataSource(long companyId) {
-		try {
-			_companyLocalService.updatePreferences(
-				companyId,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"liferayAnalyticsConnectionType", ""
-				).put(
-					"liferayAnalyticsDataSourceId", ""
-				).put(
-					"liferayAnalyticsEndpointURL", ""
-				).put(
-					"liferayAnalyticsFaroBackendSecuritySignature", ""
-				).put(
-					"liferayAnalyticsFaroBackendURL", ""
-				).put(
-					"liferayAnalyticsGroupIds", ""
-				).put(
-					"liferayAnalyticsProjectId", ""
-				).put(
-					"liferayAnalyticsURL", ""
-				).build());
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics preferences for company " +
-						companyId,
-					exception);
-			}
-		}
-
-		try {
-			_configurationProvider.deleteCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics configuration for company " +
-						companyId,
-					exception);
-			}
-		}
-	}
-
 	private Http.Options _getOptions(long companyId) {
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
@@ -270,7 +223,50 @@ public class AnalyticsBatchClientImpl implements AnalyticsBatchClient {
 					message));
 		}
 
-		_disconnectDataSource(companyId);
+		try {
+			_companyLocalService.updatePreferences(
+				companyId,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"liferayAnalyticsConnectionType", ""
+				).put(
+					"liferayAnalyticsDataSourceId", ""
+				).put(
+					"liferayAnalyticsEndpointURL", ""
+				).put(
+					"liferayAnalyticsFaroBackendSecuritySignature", ""
+				).put(
+					"liferayAnalyticsFaroBackendURL", ""
+				).put(
+					"liferayAnalyticsGroupIds", ""
+				).put(
+					"liferayAnalyticsProjectId", ""
+				).put(
+					"liferayAnalyticsURL", ""
+				).build());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics preferences for company " +
+						companyId,
+					exception);
+			}
+		}
+
+		try {
+			_configurationProvider.deleteCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics configuration for company " +
+						companyId,
+					exception);
+			}
+		}
 
 		_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
 
