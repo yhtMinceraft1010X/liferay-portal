@@ -477,7 +477,7 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent, journalArticle.getGroupId())));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	@Override
@@ -662,11 +662,11 @@ public class StructuredContentResourceImpl
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null, _createServiceContext(structuredContent, groupId)));
+				null, _createServiceContext(groupId, structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-		StructuredContent structuredContent, long groupId) {
+		long groupId, StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
@@ -1096,7 +1096,7 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent, journalArticle.getGroupId())));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	private void _validateContentFields(
