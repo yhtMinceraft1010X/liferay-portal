@@ -94,7 +94,7 @@ definition {
 			siteTemplate = "true");
 	}
 
-	@description = "This is a use case for LPS-51432 and LPS-95113. Pages associated with a site template cannot be deleted and removing a page on a site template will delete the same page on the connected sites if propagation is enabled."
+	@description = "This is a use case for LPS-51432 and LPS-95113. Pages associated with a site template cannot be deleted and removing a parent page on a site template will delete the same page and the child page also on the connected sites, if propagation is enabled."
 	@priority = "4"
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
@@ -169,7 +169,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
-	@description = "User can edit the permission of a page on site templates both in the pages menu and on the page itself."
+	@description = "User can edit the permission of a page on site templates in the page admin menu."
 	@priority = "4"
 	test EditSiteTemplateGuestPermissions {
 		SiteTemplates.addCP(siteTemplateName = "${siteTemplateName}");
@@ -224,7 +224,7 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
-	@description = "This is a use case for LPS-42067. Portlet preferences doesn't change when the same portlet with the same name is created on different pages. "
+	@description = "This is a use case for LPS-42067. Portlet preferences are configurable and stay unchanged when the same portlet with the same name is created on different pages."
 	@priority = "4"
 	test PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -329,7 +329,7 @@ definition {
 			pageName = "Public Pages");
 	}
 
-	@description = "LRQA-73456. Site template preferences and contents are inherited on templates which are connected to user groups."
+	@description = "LRQA-73456. Site template preferences and contents are inherited on User group sites."
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -392,7 +392,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "This is a use case for LRQA-73458. The preferences and contents of a personal site will be inherited from site templates."
+	@description = "This is a use case for LRQA-73458. The preferences and contents of a personal site will inherit from site templates."
 	@priority = "3"
 	test SitesTemplateResourceInheritance {
 		property portal.release = "false";
