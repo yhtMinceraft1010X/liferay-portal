@@ -169,6 +169,51 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "This is a use case for LPS-81629. Newly created pages are visible next to the home page on site template and on the site created from that template."
+	@priority = "3"
+	test AllPageIsVisibleAfterAddingNewPages {
+		property test.name.skip.portal.instance = "SitetemplatesUsecase#AllPageIsVisibleAfterAddingNewPages";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page1 Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Home",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page2 Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Page1 Name",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page1 Name",
+			siteName = "Site Name");
+	}
+
 	@description = "User can edit the permission of a page on site templates in the page admin menu."
 	@priority = "4"
 	test EditSiteTemplateGuestPermissions {
