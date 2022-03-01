@@ -208,7 +208,7 @@ public class CurrentAccountEntryManagerImpl
 		}
 		catch (PortalException portalException) {
 			if (_log.isInfoEnabled()) {
-				_log.info(portalException, portalException);
+				_log.info(portalException);
 			}
 		}
 
