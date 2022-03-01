@@ -204,11 +204,11 @@ public class StructuredContentDTOConverter
 								journalArticle.getModelClassName(),
 								journalArticle.getResourcePrimKey());
 
-						if (assetEntry != null) {
-							return assetEntry.getPriority();
+						if (assetEntry == null) {
+							return null;
 						}
 
-						return null;
+						return assetEntry.getPriority();
 					});
 			}
 		};
