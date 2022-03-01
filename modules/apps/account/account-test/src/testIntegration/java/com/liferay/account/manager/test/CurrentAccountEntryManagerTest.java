@@ -94,7 +94,7 @@ public class CurrentAccountEntryManagerTest {
 	public void testGetCurrentAccountEntryForGroupWithRestrictedTypes()
 		throws Exception {
 
-		AccountEntry expectedAccountEntry = null;
+		AccountEntry accountEntry = null;
 
 		String[] allowedTypes = {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};
 
@@ -105,7 +105,7 @@ public class CurrentAccountEntryManagerTest {
 				allowedTypes, 0, 1);
 
 		if (!accountEntries.isEmpty()) {
-			expectedAccountEntry = accountEntries.get(0);
+			accountEntry = accountEntries.get(0);
 		}
 
 		Group group = GroupTestUtil.addGroup();
@@ -117,7 +117,7 @@ public class CurrentAccountEntryManagerTest {
 				_accountEntryLocalService);
 
 		Assert.assertEquals(
-			expectedAccountEntry,
+			accountEntry,
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -130,7 +130,7 @@ public class CurrentAccountEntryManagerTest {
 		_setAllowedTypes(group.getGroupId(), allowedTypes);
 
 		Assert.assertEquals(
-			expectedAccountEntry,
+			accountEntry,
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}
