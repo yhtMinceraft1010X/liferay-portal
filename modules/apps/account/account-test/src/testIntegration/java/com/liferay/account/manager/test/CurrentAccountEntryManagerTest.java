@@ -146,6 +146,24 @@ public class CurrentAccountEntryManagerTest {
 	}
 
 	@Test
+	public void testGetCurrentAccountEntryWithNoViewPermission()
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		User user = UserTestUtil.addUser();
+
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			accountEntry.getAccountEntryId(), TestPropsValues.getGroupId(),
+			user.getUserId());
+
+		Assert.assertNull(
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				TestPropsValues.getGroupId(), user.getUserId()));
+	}
+
+	@Test
 	public void testSetCurrentAccountEntry() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
