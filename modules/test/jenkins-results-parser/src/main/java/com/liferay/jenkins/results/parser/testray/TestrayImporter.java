@@ -40,6 +40,7 @@ import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
+import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -303,11 +304,9 @@ public class TestrayImporter {
 					testrayBuildDate, testrayBuildDescription, testrayBuildSHA);
 			}
 
-			Job job = getJob();
-
 			if (testrayBuild == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.build.id");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.build.id", testBaseDir);
 
 				testrayBuildID = jobProperty.getValue();
 
@@ -320,8 +319,8 @@ public class TestrayImporter {
 			}
 
 			if (testrayBuild == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.build.name");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.build.name", testBaseDir);
 
 				testrayBuildName = jobProperty.getValue();
 
@@ -550,11 +549,9 @@ public class TestrayImporter {
 						_replaceEnvVars(testrayProductVersionName));
 			}
 
-			Job job = getJob();
-
 			if (testrayProductVersion == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.product.version.id");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.product.version.id", testBaseDir);
 
 				testrayProductVersionID = jobProperty.getValue();
 
@@ -568,8 +565,8 @@ public class TestrayImporter {
 			}
 
 			if (testrayProductVersion == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.product.version.name");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.product.version.name", testBaseDir);
 
 				testrayProductVersionName = jobProperty.getValue();
 
@@ -581,6 +578,8 @@ public class TestrayImporter {
 							_replaceEnvVars(testrayProductVersionName));
 				}
 			}
+
+			Job job = getJob();
 
 			String jobName = job.getJobName();
 
@@ -659,11 +658,9 @@ public class TestrayImporter {
 					_replaceEnvVars(testrayProjectName));
 			}
 
-			Job job = getJob();
-
 			if (testrayProject == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.project.id");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.project.id", testBaseDir);
 
 				testrayProjectID = jobProperty.getValue();
 
@@ -676,8 +673,8 @@ public class TestrayImporter {
 			}
 
 			if (testrayProject == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.project.name");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.project.name", testBaseDir);
 
 				testrayProjectName = jobProperty.getValue();
 
@@ -765,11 +762,9 @@ public class TestrayImporter {
 					_replaceEnvVars(testrayRoutineName));
 			}
 
-			Job job = getJob();
-
 			if (testrayRoutine == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.routine.id");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.routine.id", testBaseDir);
 
 				testrayRoutineID = jobProperty.getValue();
 
@@ -782,8 +777,8 @@ public class TestrayImporter {
 			}
 
 			if (testrayRoutine == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					job, "testray.routine.name");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.routine.name", testBaseDir);
 
 				testrayRoutineName = jobProperty.getValue();
 
@@ -843,8 +838,8 @@ public class TestrayImporter {
 			}
 
 			if (testrayServer == null) {
-				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-					getJob(), "testray.server.url");
+				JobProperty jobProperty = _getJobProperty(
+					"testray.server.url", testBaseDir);
 
 				testrayServerURL = jobProperty.getValue();
 
@@ -1498,14 +1493,28 @@ public class TestrayImporter {
 			upstreamBranchName, upstreamDirPath, upstreamRepository);
 	}
 
+	private JobProperty _getJobProperty(
+		String basePropertyName, File testBaseDir) {
+
+		Job job = getJob();
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			return JobPropertyFactory.newJobProperty(
+				basePropertyName, job, testBaseDir,
+				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+		}
+
+		return JobPropertyFactory.newJobProperty(basePropertyName, job);
+	}
+
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 			_topLevelBuild.getBranchName());
 	}
 
 	private String _getSlackBody(File testBaseDir) {
-		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), "testray.slack.body");
+		JobProperty jobProperty = _getJobProperty(
+			"testray.slack.body", testBaseDir);
 
 		String slackBody = jobProperty.getValue();
 
@@ -1527,8 +1536,8 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackChannels(File testBaseDir) {
-		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), "testray.slack.channels");
+		JobProperty jobProperty = _getJobProperty(
+			"testray.slack.channels", testBaseDir);
 
 		String slackChannels = jobProperty.getValue();
 
@@ -1540,8 +1549,8 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackIconEmoji(File testBaseDir) {
-		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), "testray.slack.icon.emoji");
+		JobProperty jobProperty = _getJobProperty(
+			"testray.slack.icon.emoji", testBaseDir);
 
 		String slackIconEmoji = jobProperty.getValue();
 
@@ -1553,8 +1562,8 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackSubject(File testBaseDir) {
-		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), "testray.slack.subject");
+		JobProperty jobProperty = _getJobProperty(
+			"testray.slack.subject", testBaseDir);
 
 		String slackSubject = jobProperty.getValue();
 
@@ -1570,8 +1579,8 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackUsername(File testBaseDir) {
-		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), "testray.slack.username");
+		JobProperty jobProperty = _getJobProperty(
+			"testray.slack.username", testBaseDir);
 
 		String slackUsername = jobProperty.getValue();
 
