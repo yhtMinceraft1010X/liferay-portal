@@ -1960,10 +1960,10 @@ public class DataFactory {
 
 		// PK fields
 
-		long counter = _counter.get();
+		long commerceShippingFixedOptionId = _counter.get();
 
 		commerceShippingFixedOptionModel.setCommerceShippingFixedOptionId(
-			counter);
+			commerceShippingFixedOptionId);
 
 		// Group instance
 
@@ -1989,7 +1989,7 @@ public class DataFactory {
 		commerceShippingFixedOptionModel.setDescription(null);
 		commerceShippingFixedOptionModel.setAmount(BigDecimal.valueOf(15));
 		commerceShippingFixedOptionModel.setKey(
-			StringUtil.randomString(3) + counter);
+			StringUtil.randomString(3) + commerceShippingFixedOptionId);
 		commerceShippingFixedOptionModel.setPriority(0);
 
 		return commerceShippingFixedOptionModel;
