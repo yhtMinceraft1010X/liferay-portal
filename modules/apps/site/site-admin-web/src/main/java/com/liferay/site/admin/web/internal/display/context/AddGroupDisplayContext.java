@@ -40,12 +40,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AddGroupDisplayContext {
 
 	public AddGroupDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		boolean disablePrivateLayouts) {
+		boolean disablePrivateLayouts, HttpServletRequest httpServletRequest,
+		RenderResponse renderResponse) {
 
+		_disablePrivateLayouts = disablePrivateLayouts;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
-		_disablePrivateLayouts = disablePrivateLayouts;
 	}
 
 	public String getAddGroupURL() {

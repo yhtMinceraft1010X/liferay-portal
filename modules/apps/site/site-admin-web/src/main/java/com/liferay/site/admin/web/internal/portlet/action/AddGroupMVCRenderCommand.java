@@ -81,8 +81,8 @@ public class AddGroupMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new AddGroupDisplayContext(
-				_portal.getHttpServletRequest(renderRequest), renderResponse,
-				disablePrivateLayouts));
+				disablePrivateLayouts,
+				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		return "/add_group.jsp";
 	}
