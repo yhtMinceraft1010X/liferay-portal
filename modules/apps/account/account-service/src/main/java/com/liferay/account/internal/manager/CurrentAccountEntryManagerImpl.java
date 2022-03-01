@@ -61,8 +61,15 @@ public class CurrentAccountEntryManagerImpl
 	public AccountEntry getCurrentAccountEntry(long groupId, long userId)
 		throws PortalException {
 
+		User user = _userLocalService.fetchUser(userId);
+
+		if ((user == null) || user.isDefaultUser()) {
+			return _accountEntryLocalService.getGuestAccountEntry(
+				CompanyThreadLocal.getCompanyId());
+		}
+
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_userLocalService.getUser(userId));
+			user);
 
 		AccountEntry accountEntry = _getAccountEntryFromHttpSession(groupId);
 
@@ -161,17 +168,9 @@ public class CurrentAccountEntryManagerImpl
 			String[] allowedTypes, long userId)
 		throws PortalException {
 
-		User user = _userLocalService.fetchUser(userId);
-
-		if ((user == null) || user.isDefaultUser()) {
-			return _accountEntryLocalService.getGuestAccountEntry(
-				CompanyThreadLocal.getCompanyId());
-		}
-
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				user.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
 				allowedTypes, 0, 1);
 
 		if (accountEntries.size() == 1) {
