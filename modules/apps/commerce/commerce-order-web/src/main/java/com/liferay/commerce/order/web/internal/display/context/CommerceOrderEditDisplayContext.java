@@ -148,15 +148,6 @@ public class CommerceOrderEditDisplayContext {
 				themeDisplay.getTimeZone());
 	}
 
-	public boolean containsManageCommerceOrderPaymentMethodsPermission() {
-		ThemeDisplay themeDisplay =
-			_commerceOrderRequestHelper.getThemeDisplay();
-
-		return _commerceOrderPortletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null,
-			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS);
-	}
-
 	public String getCommerceAccountThumbnailURL() throws PortalException {
 		if (_commerceOrder == null) {
 			return StringPool.BLANK;
@@ -705,6 +696,15 @@ public class CommerceOrderEditDisplayContext {
 		).setParameter(
 			"commerceOrderId", _commerceOrder.getCommerceOrderId()
 		).buildPortletURL();
+	}
+
+	public boolean hasManageCommerceOrderPaymentMethodsPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _commerceOrderPortletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS);
 	}
 
 	private List<StepModel> _getWorkflowSteps() {
