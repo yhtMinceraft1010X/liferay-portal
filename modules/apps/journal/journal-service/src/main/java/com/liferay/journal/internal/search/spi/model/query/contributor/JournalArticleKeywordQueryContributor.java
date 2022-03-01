@@ -123,8 +123,8 @@ public class JournalArticleKeywordQueryContributor
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to add localized localizedQuery:",
-						localizedQuery, " booleanClauseOccur:",
+						"Unable to add localized localized query ",
+						localizedQuery, " with boolean clause occur ",
 						booleanClauseOccur),
 					parseException);
 			}

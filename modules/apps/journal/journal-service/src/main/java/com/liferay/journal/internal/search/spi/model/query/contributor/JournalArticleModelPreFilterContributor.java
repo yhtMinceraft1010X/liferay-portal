@@ -118,7 +118,7 @@ public class JournalArticleModelPreFilterContributor
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception.getMessage(), exception);
+					_log.debug(exception);
 				}
 			}
 		}
