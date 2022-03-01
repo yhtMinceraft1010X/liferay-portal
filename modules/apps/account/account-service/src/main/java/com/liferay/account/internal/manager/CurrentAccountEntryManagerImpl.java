@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -266,9 +265,6 @@ public class CurrentAccountEntryManagerImpl
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
