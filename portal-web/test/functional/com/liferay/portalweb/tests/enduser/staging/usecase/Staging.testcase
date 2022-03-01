@@ -1489,7 +1489,7 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContent.addWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.addWithWorkflow(
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
@@ -1625,7 +1625,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.addWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.addWithWorkflow(
 			webContentContent = "Web Content Content 1",
 			webContentTitle = "Web Content Title 1");
 
@@ -1633,7 +1633,7 @@ definition {
 			pageName = "Staging Test Page 2",
 			siteName = "Site Name");
 
-		WebContent.addWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.addWithWorkflow(
 			webContentContent = "Web Content Content 2",
 			webContentTitle = "Web Content Title 2");
 
