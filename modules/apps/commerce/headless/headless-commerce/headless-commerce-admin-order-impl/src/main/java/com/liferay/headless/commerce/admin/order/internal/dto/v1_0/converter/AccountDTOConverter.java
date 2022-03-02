@@ -49,7 +49,7 @@ public class AccountDTOConverter
 	public Account toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceAccount commerceAccount = null;
+		CommerceAccount commerceAccount;
 
 		if ((Long)dtoConverterContext.getId() ==
 				CommerceAccountConstants.ACCOUNT_ID_GUEST) {
