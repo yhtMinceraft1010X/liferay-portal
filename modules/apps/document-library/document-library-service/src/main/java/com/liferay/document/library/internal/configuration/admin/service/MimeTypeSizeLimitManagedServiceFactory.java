@@ -80,13 +80,11 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_companyIds.put(pid, companyId);
-
 			_companyConfigurationBeans.put(
 				companyId,
 				ConfigurableUtil.createConfigurable(
 					MimeTypeSizeLimitConfiguration.class, dictionary));
-
+			_companyIds.put(pid, companyId);
 			_mimeTypeSizeLimitsMap.remove(companyId);
 		}
 	}

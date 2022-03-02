@@ -77,12 +77,11 @@ public class PersonalMenuConfigurationTrackerImpl
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_companyIds.put(pid, companyId);
-
 			_companyConfigurationBeans.put(
 				companyId,
 				ConfigurableUtil.createConfigurable(
 					PersonalMenuConfiguration.class, dictionary));
+			_companyIds.put(pid, companyId);
 		}
 	}
 

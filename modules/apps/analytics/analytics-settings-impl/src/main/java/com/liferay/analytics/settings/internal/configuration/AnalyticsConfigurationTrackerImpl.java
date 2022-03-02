@@ -196,12 +196,11 @@ public class AnalyticsConfigurationTrackerImpl
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_companyIds.put(pid, companyId);
-
 			_analyticsConfigurations.put(
 				companyId,
 				ConfigurableUtil.createConfigurable(
 					AnalyticsConfiguration.class, dictionary));
+			_companyIds.put(pid, companyId);
 		}
 
 		if (!_initializedCompanyIds.contains(companyId)) {
