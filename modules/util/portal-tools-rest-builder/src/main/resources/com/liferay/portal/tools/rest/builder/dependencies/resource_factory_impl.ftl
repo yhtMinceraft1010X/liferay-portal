@@ -63,11 +63,7 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _${schemaVarName}ResourceProxyProviderFunction.apply(
-					(proxy, method,arguments) -> _invoke(
-						method, arguments, _checkPermissions,
-							_httpServletRequest, _httpServletResponse,
-								_preferredLocale, _user));
+				return _${schemaVarName}ResourceProxyProviderFunction.apply((proxy, method,arguments) -> _invoke(method, arguments, _checkPermissions, _httpServletRequest, _httpServletResponse, _preferredLocale, _user));
 			}
 
 			@Override
@@ -124,6 +120,26 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 		${schemaName}Resource.FactoryHolder.factory = null;
 	}
 
+	private static Function<InvocationHandler, ${schemaName}Resource> _getProxyProviderFunction() {
+		Class<?> proxyClass = ProxyUtil.getProxyClass(${schemaName}Resource.class.getClassLoader(), ${schemaName}Resource.class);
+
+		try {
+			Constructor<${schemaName}Resource> constructor = (Constructor<${schemaName}Resource>)proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException reflectiveOperationException) {
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
 	private Object _invoke(Method method, Object[] arguments, boolean checkPermissions, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale preferredLocale, User user) throws Throwable {
 		String name = PrincipalThreadLocal.getName();
 
@@ -170,6 +186,8 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
+
+	private static final Function<InvocationHandler, ${schemaName}Resource> _${schemaVarName}ResourceProxyProviderFunction = _getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -251,27 +269,5 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 		private final User _user;
 
 	}
-
-	private static Function<InvocationHandler, ${schemaName}Resource> _getProxyProviderFunction() {
-		Class<?> proxyClass = ProxyUtil.getProxyClass(${schemaName}Resource.class.getClassLoader(), ${schemaName}Resource.class);
-
-		try {
-			Constructor<${schemaName}Resource> constructor = (Constructor<${schemaName}Resource>)proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException reflectiveOperationException) {
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
-	}
-
-	private static final Function<InvocationHandler, ${schemaName}Resource> _${schemaVarName}ResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }
