@@ -58,7 +58,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			return 0;
 		}
 
-		Map<String, Long> map = _companyMimeTypeSizeLimitCache.computeIfAbsent(
+		Map<String, Long> map = _mimeTypeSizeLimitsMap.computeIfAbsent(
 			companyId, this::_computeCompanyMimeTypeSizeLimit);
 
 		return map.getOrDefault(mimeType, 0L);
@@ -87,13 +87,13 @@ public class MimeTypeSizeLimitManagedServiceFactory
 				ConfigurableUtil.createConfigurable(
 					MimeTypeSizeLimitConfiguration.class, dictionary));
 
-			_companyMimeTypeSizeLimitCache.remove(companyId);
+			_mimeTypeSizeLimitsMap.remove(companyId);
 		}
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_companyMimeTypeSizeLimitCache = new ConcurrentHashMap<>();
+		_mimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
 		_systemMimeTypeSizeLimitConfiguration =
 			ConfigurableUtil.createConfigurable(
 				MimeTypeSizeLimitConfiguration.class, properties);
@@ -101,7 +101,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 
 	@Deactivate
 	protected void deactivate() {
-		_companyMimeTypeSizeLimitCache = null;
+		_mimeTypeSizeLimitsMap = null;
 	}
 
 	private Map<String, Long> _computeCompanyMimeTypeSizeLimit(long companyId) {
@@ -135,14 +135,13 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			long companyId = _pidCompanyIdMapping.remove(pid);
 
 			_companyConfigurationBeans.remove(companyId);
-
-			_companyMimeTypeSizeLimitCache.remove(companyId);
+			_mimeTypeSizeLimitsMap.remove(companyId);
 		}
 	}
 
 	private final Map<Long, MimeTypeSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
-	private Map<Long, Map<String, Long>> _companyMimeTypeSizeLimitCache;
+	private Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
 	private final Map<String, Long> _pidCompanyIdMapping =
 		new ConcurrentHashMap<>();
 	private volatile MimeTypeSizeLimitConfiguration
