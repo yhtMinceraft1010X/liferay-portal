@@ -481,14 +481,14 @@ public class ExpressionVisitorImplTest {
 		@Override
 		public Map<String, EntityField> getEntityFieldsMap() {
 			return Stream.of(
-				new IntegerEntityField("id", locale -> "id"),
-				new StringEntityField("title", locale -> "title"),
 				new ComplexEntityField(
 					"complexField",
 					Collections.singletonList(
 						new StringEntityField(
 							"fieldInsideComplexField",
-							locale -> "fieldInsideComplexFieldInternal")))
+							locale -> "fieldInsideComplexFieldInternal"))),
+				new IntegerEntityField("id", locale -> "id"),
+				new StringEntityField("title", locale -> "title")
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())
 			);
