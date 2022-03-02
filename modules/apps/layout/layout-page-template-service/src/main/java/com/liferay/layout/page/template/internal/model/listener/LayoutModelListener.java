@@ -175,16 +175,16 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		Layout pageTemplateLayout = _layoutLocalService.getLayout(
+		Layout layoutPageTemplateEntryLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		_layoutPageTemplateStructureLocalService.
 			fetchLayoutPageTemplateStructure(
-				pageTemplateLayout.getGroupId(), pageTemplateLayout.getPlid(),
-				true);
+				layoutPageTemplateEntryLayout.getGroupId(),
+				layoutPageTemplateEntryLayout.getPlid(), true);
 
 		draftLayout = _layoutCopyHelper.copyLayout(
-			pageTemplateLayout, draftLayout);
+			layoutPageTemplateEntryLayout, draftLayout);
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
