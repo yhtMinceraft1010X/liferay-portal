@@ -103,8 +103,7 @@ public class PersonalMenuConfigurationTrackerImpl
 
 	private final Map<Long, PersonalMenuConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
-	private final Map<String, Long> _companyIds =
-		new ConcurrentHashMap<>();
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private volatile PersonalMenuConfiguration _systemPersonalMenuConfiguration;
 
 }

@@ -141,9 +141,8 @@ public class MimeTypeSizeLimitManagedServiceFactory
 
 	private final Map<Long, MimeTypeSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
-	private final Map<String, Long> _companyIds =
-		new ConcurrentHashMap<>();
 	private volatile MimeTypeSizeLimitConfiguration
 		_systemMimeTypeSizeLimitConfiguration;
 

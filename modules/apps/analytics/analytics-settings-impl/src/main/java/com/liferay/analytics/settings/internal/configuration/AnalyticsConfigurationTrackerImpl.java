@@ -788,6 +788,8 @@ public class AnalyticsConfigurationTrackerImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -804,9 +806,6 @@ public class AnalyticsConfigurationTrackerImpl
 
 	@Reference
 	private MessageBus _messageBus;
-
-	private final Map<String, Long> _companyIds =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private RoleLocalService _roleLocalService;

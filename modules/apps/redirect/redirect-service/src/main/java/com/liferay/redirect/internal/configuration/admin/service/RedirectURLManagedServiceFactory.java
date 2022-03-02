@@ -100,8 +100,7 @@ public class RedirectURLManagedServiceFactory implements ManagedServiceFactory {
 
 	private final Map<Long, RedirectURLConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
-	private final Map<String, Long> _companyIds =
-		new ConcurrentHashMap<>();
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private volatile RedirectURLConfiguration _systemRedirectURLConfiguration;
 
 }
