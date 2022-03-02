@@ -80,7 +80,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_pidCompanyIdMapping.put(pid, companyId);
+			_companyIds.put(pid, companyId);
 
 			_companyConfigurationBeans.put(
 				companyId,
@@ -131,8 +131,8 @@ public class MimeTypeSizeLimitManagedServiceFactory
 	}
 
 	private void _unmapPid(String pid) {
-		if (_pidCompanyIdMapping.containsKey(pid)) {
-			long companyId = _pidCompanyIdMapping.remove(pid);
+		if (_companyIds.containsKey(pid)) {
+			long companyId = _companyIds.remove(pid);
 
 			_companyConfigurationBeans.remove(companyId);
 			_mimeTypeSizeLimitsMap.remove(companyId);
@@ -142,7 +142,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 	private final Map<Long, MimeTypeSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
-	private final Map<String, Long> _pidCompanyIdMapping =
+	private final Map<String, Long> _companyIds =
 		new ConcurrentHashMap<>();
 	private volatile MimeTypeSizeLimitConfiguration
 		_systemMimeTypeSizeLimitConfiguration;

@@ -77,7 +77,7 @@ public class PersonalMenuConfigurationTrackerImpl
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_pidCompanyIdMapping.put(pid, companyId);
+			_companyIds.put(pid, companyId);
 
 			_companyConfigurationBeans.put(
 				companyId,
@@ -94,8 +94,8 @@ public class PersonalMenuConfigurationTrackerImpl
 	}
 
 	private void _unmapPid(String pid) {
-		if (_pidCompanyIdMapping.containsKey(pid)) {
-			long companyId = _pidCompanyIdMapping.remove(pid);
+		if (_companyIds.containsKey(pid)) {
+			long companyId = _companyIds.remove(pid);
 
 			_companyConfigurationBeans.remove(companyId);
 		}
@@ -103,7 +103,7 @@ public class PersonalMenuConfigurationTrackerImpl
 
 	private final Map<Long, PersonalMenuConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
-	private final Map<String, Long> _pidCompanyIdMapping =
+	private final Map<String, Long> _companyIds =
 		new ConcurrentHashMap<>();
 	private volatile PersonalMenuConfiguration _systemPersonalMenuConfiguration;
 
