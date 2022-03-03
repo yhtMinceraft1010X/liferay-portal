@@ -59,15 +59,15 @@ public class AccountEntryCommercePaymentMethodDisplaySearchContainerFactory {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, CommercePaymentMethod> commercePaymentMethodMap =
+		Map<String, CommercePaymentMethod> commercePaymentMethods =
 			commercePaymentMethodRegistry.getCommercePaymentMethods();
 
 		searchContainer.setResultsAndTotal(
 			() -> TransformUtil.transform(
-				commercePaymentMethodMap.values(),
+				commercePaymentMethods.values(),
 				commercePaymentMethod -> new CommercePaymentMethodDisplay(
 					commercePaymentMethod, themeDisplay.getLocale())),
-			commercePaymentMethodMap.size());
+			commercePaymentMethods.size());
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
