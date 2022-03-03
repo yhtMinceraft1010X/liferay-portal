@@ -261,9 +261,9 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	public String getSelectSiteNavigationMenuTypeLabel() {
-		int type = getSelectSiteNavigationMenuType();
-
 		String typeKey = "select";
+
+		int type = getSelectSiteNavigationMenuType();
 
 		if (type == SiteNavigationConstants.TYPE_PRIMARY) {
 			typeKey = "primary-navigation";
@@ -466,17 +466,16 @@ public class SiteNavigationMenuDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (scopeGroup.isPrivateLayoutsEnabled() &&
-			scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout()) {
+		if (layout.isPrivateLayout() && scopeGroup.hasPrivateLayouts() &&
+			scopeGroup.isPrivateLayoutsEnabled()) {
 
 			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
 
-		if (scopeGroup.hasPublicLayouts() && layout.isPublicLayout()) {
+		if (layout.isPublicLayout() && scopeGroup.hasPublicLayouts()) {
 			return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
 		}
 
