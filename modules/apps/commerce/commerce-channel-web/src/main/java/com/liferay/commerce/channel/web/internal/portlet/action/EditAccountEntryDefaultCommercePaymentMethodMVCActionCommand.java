@@ -51,11 +51,11 @@ public class EditAccountEntryDefaultCommercePaymentMethodMVCActionCommand
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
 
-		String commercePaymentMethodKey = ParamUtil.getString(
-			actionRequest, "commercePaymentMethodKey");
-
 		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
 			accountEntryId);
+
+		String commercePaymentMethodKey = ParamUtil.getString(
+			actionRequest, "commercePaymentMethodKey");
 
 		accountEntry.setDefaultCPaymentMethodKey(commercePaymentMethodKey);
 
