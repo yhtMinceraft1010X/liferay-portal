@@ -33,7 +33,7 @@ public class COREntryConstants {
 
 	public static final String
 		TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUBTOTAL =
-			"minimum-order-amount-field-apply-to-order-sub-total";
+			"minimum-order-amount-field-apply-to-order-subtotal";
 
 	public static final String
 		TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_TOTAL =
