@@ -147,8 +147,12 @@ deploySidecar {
 
 		project.copy {
 			fileMode = 0777
+			includeEmptyDirs = false
 
-			include "elasticsearch-${sidecarElasticsearchServerVersion}/**"
+			exclude "elasticsearch-${sidecarElasticsearchServerVersion}/modules/ingest-geoip/**"
+			exclude "elasticsearch-${sidecarElasticsearchServerVersion}/modules/x-pack-ml/platform/linux-x86_64/bin/controller"
+			include "elasticsearch-${sidecarElasticsearchServerVersion}/lib/**"
+			include "elasticsearch-${sidecarElasticsearchServerVersion}/modules/**"
 
 			into buildDir
 			from tarTree(elasticsearchDistributionFile)
