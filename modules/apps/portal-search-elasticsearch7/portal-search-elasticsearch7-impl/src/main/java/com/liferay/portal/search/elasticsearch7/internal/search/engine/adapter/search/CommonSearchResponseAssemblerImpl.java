@@ -41,7 +41,7 @@ import org.elasticsearch.index.search.MatchQueryParser;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.profile.SearchProfileShardResult;
+import org.elasticsearch.search.profile.ProfileShardResult;
 import org.elasticsearch.search.profile.query.QueryProfileShardResult;
 import org.elasticsearch.xcontent.ToXContent;
 import org.elasticsearch.xcontent.XContentBuilder;
@@ -134,15 +134,15 @@ public class CommonSearchResponseAssemblerImpl
 		",\"zero_terms_query\":\"" + MatchQueryParser.DEFAULT_ZERO_TERMS_QUERY +
 			"\"";
 
-	private String _getSearchProfileShardResultString(
-			SearchProfileShardResult searchProfileShardResult)
+	private String _getProfileShardResultString(
+			ProfileShardResult profileShardResult)
 		throws IOException {
 
 		XContentBuilder xContentBuilder = XContentFactory.contentBuilder(
 			XContentType.JSON);
 
 		List<QueryProfileShardResult> queryProfileShardResults =
-			searchProfileShardResult.getQueryProfileResults();
+			profileShardResult.getQueryProfileResults();
 
 		queryProfileShardResults.forEach(
 			queryProfileShardResult -> {
@@ -167,22 +167,21 @@ public class CommonSearchResponseAssemblerImpl
 	private void _setExecutionProfile(
 		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
 
-		Map<String, SearchProfileShardResult> searchProfileShardResults =
+		Map<String, ProfileShardResult> profileShardResults =
 			searchResponse.getProfileResults();
 
-		if (MapUtil.isEmpty(searchProfileShardResults)) {
+		if (MapUtil.isEmpty(profileShardResults)) {
 			return;
 		}
 
 		Map<String, String> executionProfile = new HashMap<>();
 
-		searchProfileShardResults.forEach(
-			(shardKey, searchProfileShardResult) -> {
+		profileShardResults.forEach(
+			(shardKey, profileShardResult) -> {
 				try {
 					executionProfile.put(
 						shardKey,
-						_getSearchProfileShardResultString(
-							searchProfileShardResult));
+						_getProfileShardResultString(profileShardResult));
 				}
 				catch (IOException ioException) {
 					if (_log.isInfoEnabled()) {
