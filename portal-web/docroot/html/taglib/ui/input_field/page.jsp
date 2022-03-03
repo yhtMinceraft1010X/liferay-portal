@@ -529,7 +529,7 @@ if (hints != null) {
 								languagesDropdownDirection="<%= languagesDropdownDirection %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
-								onKeyDown='<%= "Liferay.Util.disableEsc();" %>'
+								onKeyDown="Liferay.Util.disableEsc();"
 								placeholder="<%= placeholder %>"
 								style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>'
 								type="textarea"
