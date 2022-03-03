@@ -24,8 +24,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 List<CommerceTermEntry> paymentCommerceTermEntries = commerceOrderEditDisplayContext.getPaymentTermsEntries();
 
 long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
-
-HashMap<Long, String> terms = new HashMap<Long, String>();
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderPaymentTermsActionURL" />
@@ -53,6 +51,10 @@ HashMap<Long, String> terms = new HashMap<Long, String>();
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:error key="paymentTermsInvalid" message="please-select-a-payment-terms" />
+
+			<%
+			Map<Long, String> terms = new HashMap<Long, String>();
+			%>
 
 			<aui:form action="<%= editCommerceOrderPaymentTermsActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updatePaymentTerms" />

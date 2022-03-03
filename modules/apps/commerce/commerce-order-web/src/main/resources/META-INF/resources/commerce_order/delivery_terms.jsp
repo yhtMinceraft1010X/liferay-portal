@@ -24,8 +24,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 List<CommerceTermEntry> deliveryTermsEntries = commerceOrderEditDisplayContext.getDeliveryTermsEntries();
 
 long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId();
-
-HashMap<Long, String> terms = new HashMap<Long, String>();
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderDeliveryTermsActionURL" />
@@ -53,6 +51,10 @@ HashMap<Long, String> terms = new HashMap<Long, String>();
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-a-delivery-terms" />
+
+			<%
+			Map<Long, String> terms = new HashMap<Long, String>();
+			%>
 
 			<aui:form action="<%= editCommerceOrderDeliveryTermsActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateDeliveryTerms" />
