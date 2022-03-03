@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Bryan Engler
  */
-public class ElasticsearchDistribution implements Distribution {
+public class Elasticsearch_7_10_2_Distribution implements Distribution {
 
 	@Override
 	public Distributable getElasticsearchDistributable() {
