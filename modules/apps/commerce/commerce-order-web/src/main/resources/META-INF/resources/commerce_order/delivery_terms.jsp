@@ -50,7 +50,7 @@ long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId(
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-a-delivery-terms" />
+			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-delivery-terms" />
 
 			<%
 			Map<Long, String> terms = new HashMap<Long, String>();

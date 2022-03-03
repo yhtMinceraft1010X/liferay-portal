@@ -44,7 +44,7 @@ long deliveryCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutSte
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-a-delivery-terms" />
+			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-delivery-terms" />
 
 			<ul class="list-group">
 

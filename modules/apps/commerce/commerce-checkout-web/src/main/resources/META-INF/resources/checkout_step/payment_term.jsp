@@ -44,7 +44,7 @@ long paymentCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutStep
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:error key="paymentTermsInvalid" message="please-select-a-payment-terms" />
+			<liferay-ui:error key="paymentTermsInvalid" message="please-select-payment-terms" />
 
 			<ul class="list-group">
 

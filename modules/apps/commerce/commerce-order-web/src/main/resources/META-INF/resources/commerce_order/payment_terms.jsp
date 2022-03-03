@@ -50,7 +50,7 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:error key="paymentTermsInvalid" message="please-select-a-payment-terms" />
+			<liferay-ui:error key="paymentTermsInvalid" message="please-select-payment-terms" />
 
 			<%
 			Map<Long, String> terms = new HashMap<Long, String>();
