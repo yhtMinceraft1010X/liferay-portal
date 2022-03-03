@@ -16,7 +16,6 @@ package com.liferay.commerce.account.internal.upgrade.v9_2_0;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -66,11 +64,12 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 			});
 	}
 
-	private void _addResourcePermission(long companyId, Role role, String actionId)
+	private void _addResourcePermission(
+			long companyId, Role role, String actionId)
 		throws PortalException {
 
 		_resourcePermissionLocalService.addResourcePermission(
-			company.getCompanyId(), "com.liferay.commerce.order",
+			companyId, "com.liferay.commerce.order",
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			role.getRoleId(), actionId);
@@ -82,11 +81,13 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		Role role = _roleLocalService.fetchRole(companyId, name);
 
 		if (role == null) {
-			break;
+			return;
 		}
 
-		_addResourcePermission(companyId, role, "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS");
-		_addResourcePermission(companyId, role, "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS");
+		_addResourcePermission(
+			companyId, role, "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS");
+		_addResourcePermission(
+			companyId, role, "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS");
 	}
 
 	private final CompanyLocalService _companyLocalService;
