@@ -9,61 +9,34 @@
  * distribution rights of the Software.
  */
 
-import ClayModal, {useModal} from '@clayui/modal';
-import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import {Button} from '../../../../../common/components';
-import InviteTeamMembersForm from '../../../../../common/containers/setup-forms/InviteTeamMembersForm';
 import ManageProductUser from '../../../components/ManageProductUsers';
-
-const InvitesModal = ({observer, onClose, project}) => {
-	return (
-		<ClayModal center observer={observer}>
-			<InviteTeamMembersForm
-				handlePage={onClose}
-				leftButton="Cancel"
-				project={project}
-			/>
-		</ClayModal>
-	);
-};
+import TeamMembersTable from '../../../containers/TeamMembersTable';
 
 const TeamMembers = () => {
 	const {project, subscriptionGroups} = useOutletContext();
 
-	const [visible, setVisible] = useState(false);
-	const modalProps = useModal({
-		onClose: () => setVisible(false),
-	});
-
 	return (
-		<>
-			{visible && <InvitesModal {...modalProps} project={project} />}
-			<div className="cp-team-members-overview mr-8">
-				<div className="align-items-center d-flex justify-content-between">
-					<div>
-						<h1 className="m-0">Team Members</h1>
+		<div>
+			<div>
+				<h1 className="m-0">Team Members</h1>
 
-						<p className="mb-0 mt-1 text-neutral-7 text-paragraph-sm">
-							Team members have access to this project in Customer
-							Portal.
-						</p>
-					</div>
-
-					<Button
-						className="btn-outline-primary invite-button"
-						onClick={() => setVisible(true)}
-						prependIcon="plus"
-					>
-						Invite
-					</Button>
-				</div>
+				<p className="mb-0 mt-1 text-neutral-7 text-paragraph-sm">
+					Team members have access to this project in Customer Portal.
+				</p>
 			</div>
-			<ManageProductUser
-				project={project}
-				subscriptionGroups={subscriptionGroups}
-			/>
-		</>
+
+			<div className="mt-4">
+				<TeamMembersTable project={project} />
+			</div>
+
+			<div className="mt-5">
+				<ManageProductUser
+					project={project}
+					subscriptionGroups={subscriptionGroups}
+				/>
+			</div>
+		</div>
 	);
 };
 
