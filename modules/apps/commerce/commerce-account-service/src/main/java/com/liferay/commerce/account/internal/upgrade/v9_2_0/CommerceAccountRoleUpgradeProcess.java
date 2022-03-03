@@ -52,44 +52,41 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 			"com.liferay.commerce.order",
 			Collections.singletonList("MANAGE_COMMERCE_ORDER_PAYMENT_METHODS"));
 
-		_companyLocalService.forEachCompany(this::_updateCommerceAccountRoles);
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				_updateCommerceAccountRoles(
+					companyId,
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+				_updateCommerceAccountRoles(
+					companyId,
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER);
+				_updateCommerceAccountRoles(
+					companyId,
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER);
+			});
 	}
 
-	private void _addResourcePermission(Company company, Role role)
+	private void _addResourcePermission(long companyId, Role role, String actionId)
 		throws PortalException {
 
-		for (String actionId :
-				new String[] {
-					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS"
-				}) {
-
-			_resourcePermissionLocalService.addResourcePermission(
-				company.getCompanyId(), "com.liferay.commerce.order",
-				ResourceConstants.SCOPE_GROUP_TEMPLATE,
-				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-				role.getRoleId(), actionId);
-		}
+		_resourcePermissionLocalService.addResourcePermission(
+			company.getCompanyId(), "com.liferay.commerce.order",
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), actionId);
 	}
 
-	private void _updateCommerceAccountRoles(Company company)
+	private void _updateCommerceAccountRoles(long companyId, String name)
 		throws PortalException {
 
-		for (String name :
-				Arrays.asList(
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER,
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
+		Role role = _roleLocalService.fetchRole(companyId, name);
 
-			Role role = _roleLocalService.fetchRole(
-				company.getCompanyId(), name);
-
-			if (role == null) {
-				break;
-			}
-
-			_addResourcePermission(company, role);
+		if (role == null) {
+			break;
 		}
+
+		_addResourcePermission(companyId, role, "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS");
+		_addResourcePermission(companyId, role, "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS");
 	}
 
 	private final CompanyLocalService _companyLocalService;
