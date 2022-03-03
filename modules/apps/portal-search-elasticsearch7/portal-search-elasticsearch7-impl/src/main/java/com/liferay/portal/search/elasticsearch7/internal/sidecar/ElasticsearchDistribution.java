@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
-import com.liferay.petra.string.StringBundler;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,33 +22,33 @@ import java.util.List;
  */
 public class ElasticsearchDistribution implements Distribution {
 
-	public static final String VERSION = "7.17.0";
-
 	@Override
 	public Distributable getElasticsearchDistributable() {
 		return new DistributableImpl(
-			StringBundler.concat(
-				"https://artifacts.elastic.co/downloads/elasticsearch",
-				"/elasticsearch-", VERSION, "-no-jdk-linux-x86_64.tar.gz"),
+			"https://artifacts.elastic.co/downloads/elasticsearch" +
+				"/elasticsearch-7.17.0-no-jdk-linux-x86_64.tar.gz",
 			_ELASTICSEARCH_CHECKSUM);
 	}
 
 	@Override
 	public List<Distributable> getPluginDistributables() {
 		return Arrays.asList(
-			new DistributableImpl(getPluginUrl("analysis-icu"), _ICU_CHECKSUM),
 			new DistributableImpl(
-				getPluginUrl("analysis-kuromoji"), _KUROMOJI_CHECKSUM),
+				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
+					"/analysis-icu/analysis-icu-7.17.0.zip",
+				_ICU_CHECKSUM),
 			new DistributableImpl(
-				getPluginUrl("analysis-smartcn"), _SMARTCN_CHECKSUM),
+				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
+					"/analysis-kuromoji/analysis-kuromoji-7.17.0.zip",
+				_KUROMOJI_CHECKSUM),
 			new DistributableImpl(
-				getPluginUrl("analysis-stempel"), _STEMPEL_CHECKSUM));
-	}
-
-	protected String getPluginUrl(String plugin) {
-		return StringBundler.concat(
-			"https://artifacts.elastic.co/downloads/elasticsearch-plugins/",
-			plugin, "/", plugin, "-", VERSION, ".zip");
+				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
+					"/analysis-smartcn/analysis-smartcn-7.17.0.zip",
+				_SMARTCN_CHECKSUM),
+			new DistributableImpl(
+				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
+					"/analysis-stempel/analysis-stempel-7.17.0.zip",
+				_STEMPEL_CHECKSUM));
 	}
 
 	private static final String _ELASTICSEARCH_CHECKSUM =
