@@ -97,7 +97,6 @@ public class ElasticsearchDateRangeFilterTest
 
 				try {
 					indexingTestHelper.search();
-
 					Assert.fail();
 				}
 				catch (ElasticsearchStatusException
