@@ -140,8 +140,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 		}
 		else if (ArrayUtil.isNotEmpty(objectView.getObjectViewSortColumns())) {
 			throw new ObjectViewSortColumnException(
-				"ObjectViewSortColumn is under feature flag and can not be " +
-					"used");
+				"ObjectViewSortColumn is not yet supported");
 		}
 
 		return objectViewSortColumns;
