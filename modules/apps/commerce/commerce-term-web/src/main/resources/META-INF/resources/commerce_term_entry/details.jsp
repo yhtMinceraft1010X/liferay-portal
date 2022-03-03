@@ -60,6 +60,7 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 						</aui:input>
 
 						<aui:input name="priority" />
+
 						<aui:input label='<%= HtmlUtil.escape("active") %>' name="active" type="toggle-switch" value="<%= commerceTermEntry.isActive() %>" />
 					</div>
 
