@@ -241,7 +241,7 @@ public class StructuredContentResourceTest
 				StructuredContent structuredContent)
 		throws Exception {
 
-		return _postSiteStructuredContentDraft(
+		return structuredContentResource.postSiteStructuredContentDraft(
 			testGroup.getGroupId(), structuredContent);
 	}
 
@@ -297,14 +297,6 @@ public class StructuredContentResourceTest
 						setTitle(structuredContent.getTitle());
 					}
 				}));
-	}
-
-	private StructuredContent _postSiteStructuredContentDraft(
-			Long siteId, StructuredContent structuredContent)
-		throws Exception {
-
-		return structuredContentResource.postSiteStructuredContentDraft(
-			siteId, structuredContent);
 	}
 
 	private String _read(String fileName) throws Exception {
