@@ -29,6 +29,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
@@ -417,11 +418,7 @@ public class ObjectFieldLocalServiceImpl
 				objectField.getObjectDefinitionId());
 
 		for (ObjectView objectView : objectViews) {
-			_objectViewColumnPersistence.removeByOVI_OFN(
-				objectView.getObjectViewId(), objectField.getName());
-
-			_objectViewSortColumnPersistence.removeByOVI_OFN(
-				objectView.getObjectViewId(), objectField.getName());
+			_objectViewLocalService.deleteObjectView(objectView);
 		}
 
 		if (Objects.equals(
@@ -577,6 +574,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;
+
+	@Reference
+	private ObjectViewLocalService _objectViewLocalService;
 
 	@Reference
 	private ObjectViewPersistence _objectViewPersistence;
