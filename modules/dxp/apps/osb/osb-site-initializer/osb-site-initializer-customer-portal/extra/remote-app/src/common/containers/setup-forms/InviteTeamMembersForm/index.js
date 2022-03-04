@@ -45,6 +45,7 @@ const InviteTeamMembersPage = ({
 	errors,
 	handlePage,
 	leftButton,
+	mutateUserData,
 	project,
 	sessionId,
 	setFieldValue,
@@ -69,6 +70,9 @@ const InviteTeamMembersPage = ({
 	const [accountRolesOptions, setAccountRolesOptions] = useState([]);
 	const [accountRoles, setAccountRoles] = useState([]);
 	const [availableAdminsRoles, setAvailableAdminsRoles] = useState(1);
+	const [isLoadingUserInvitation, setIsLoadingUserInvitation] = useState(
+		false
+	);
 
 	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 	const projectHasSLAGoldPlatinum =
@@ -208,9 +212,10 @@ const InviteTeamMembersPage = ({
 		const filledEmails = values?.invites?.filter(({email}) => email) || [];
 
 		if (filledEmails.length) {
-			await Promise.all(
+			setIsLoadingUserInvitation(true);
+			const newMembersData = await Promise.all(
 				filledEmails.map(async ({email, role}) => {
-					addTeamMemberInvitation({
+					const invitedUser = await addTeamMemberInvitation({
 						variables: {
 							TeamMembersInvitation: {
 								email,
@@ -220,7 +225,7 @@ const InviteTeamMembersPage = ({
 						},
 					});
 
-					associateUserAccount({
+					await associateUserAccount({
 						variables: {
 							accountKey: project.accountKey,
 							accountRoleId: role.id,
@@ -228,17 +233,28 @@ const InviteTeamMembersPage = ({
 						},
 					});
 
-					associateContactRoleNameByEmailByProject(
+					await associateContactRoleNameByEmailByProject(
 						project.accountKey,
 						licenseKeyDownloadURL,
 						sessionId,
 						encodeURI(email),
 						role.name
 					);
+
+					return invitedUser;
 				})
 			);
 
-			if (!addTeamMemberError && !associateUserAccountError) {
+			setIsLoadingUserInvitation(false);
+
+			if (
+				!addTeamMemberError &&
+				!associateUserAccountError &&
+				newMembersData
+			) {
+				if (mutateUserData) {
+					mutateUserData(newMembersData);
+				}
 				handlePage();
 			}
 		}
@@ -272,8 +288,9 @@ const InviteTeamMembersPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled}
+						disabled={baseButtonDisabled || isLoadingUserInvitation}
 						displayType="primary"
+						isLoading={isLoadingUserInvitation}
 						onClick={handleSubmit}
 					>
 						Send Invitations
