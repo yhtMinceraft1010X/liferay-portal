@@ -90,10 +90,9 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		boolean published = GetterUtil.getBoolean(
-			layout.getTypeSettingsProperty("published"));
+		if (!GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty("published"))) {
 
-		if (!published) {
 			return;
 		}
 
