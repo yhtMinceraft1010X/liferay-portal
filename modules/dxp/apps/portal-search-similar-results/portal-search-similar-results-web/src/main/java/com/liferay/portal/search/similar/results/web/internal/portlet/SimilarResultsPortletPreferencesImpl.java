@@ -102,15 +102,9 @@ public class SimilarResultsPortletPreferencesImpl
 	}
 
 	@Override
-	public SearchScope getSearchScope() {
-		return SearchScope.getSearchScope(getSearchScopeString());
-	}
-
-	@Override
-	public String getSearchScopeString() {
+	public String getSearchScope() {
 		return _portletPreferencesHelper.getString(
-			PREFERENCE_KEY_SEARCH_SCOPE,
-			SearchScope.THIS_SITE.getParameterString());
+			PREFERENCE_KEY_SEARCH_SCOPE, "this-site");
 	}
 
 	@Override

@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 page import="com.liferay.portal.search.similar.results.web.internal.configuration.SimilarResultsPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.similar.results.web.internal.display.context.SimilarResultsDisplayContext" %><%@
 page import="com.liferay.portal.search.similar.results.web.internal.display.context.SimilarResultsDocumentDisplayContext" %><%@
-page import="com.liferay.portal.search.similar.results.web.internal.portlet.SearchScope" %><%@
 page import="com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferences" %><%@
 page import="com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.similar.results.web.internal.util.PortletPreferencesJspUtil" %>
@@ -76,9 +75,9 @@ SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarR
 				collapsible="<%= true %>"
 				label="advanced-configuration"
 			>
-				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= similarResultsPortletPreferences.getSearchScopeString() %>">
-					<aui:option label="this-site" value="<%= SearchScope.THIS_SITE.getParameterString() %>" />
-					<aui:option label="everything" value="<%= SearchScope.EVERYTHING.getParameterString() %>" />
+				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= similarResultsPortletPreferences.getSearchScope() %>">
+					<aui:option label="this-site" value="this-site" />
+					<aui:option label="everything" value="everything" />
 				</aui:select>
 
 				<aui:input helpMessage="fields-help" label="fields" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="text" value="<%= similarResultsPortletPreferences.getFields() %>" />

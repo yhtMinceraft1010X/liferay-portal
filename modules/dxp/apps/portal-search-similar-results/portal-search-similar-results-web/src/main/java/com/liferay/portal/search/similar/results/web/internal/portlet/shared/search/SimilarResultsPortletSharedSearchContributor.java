@@ -35,7 +35,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsContributorsRegistry;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
 import com.liferay.portal.search.similar.results.web.internal.constants.SimilarResultsPortletKeys;
-import com.liferay.portal.search.similar.results.web.internal.portlet.SearchScope;
 import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferences;
 import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferencesImpl;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
@@ -47,6 +46,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.RenderRequest;
@@ -187,8 +187,9 @@ public class SimilarResultsPortletSharedSearchContributor
 		SimilarResultsPortletPreferences similarResultsPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		if (similarResultsPortletPreferences.getSearchScope() ==
-				SearchScope.THIS_SITE) {
+		if (Objects.equals(
+				similarResultsPortletPreferences.getSearchScope(),
+				"this-site")) {
 
 			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setGroupIds(

@@ -83,9 +83,7 @@ public interface SimilarResultsPortletPreferences {
 
 	public Integer getMinWordLength();
 
-	public SearchScope getSearchScope();
-
-	public String getSearchScopeString();
+	public String getSearchScope();
 
 	public String getStopWords();
 
