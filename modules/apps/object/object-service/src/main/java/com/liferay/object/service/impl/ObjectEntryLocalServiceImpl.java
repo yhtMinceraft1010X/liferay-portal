@@ -285,7 +285,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getPrimaryKey());
 
 		_deleteFileEntries(
-			objectDefinition.getObjectDefinitionId(), Collections.emptyMap(),
+			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getValues());
 
 		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
@@ -741,7 +741,7 @@ public class ObjectEntryLocalServiceImpl
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
 		_deleteFileEntries(
-			objectEntry.getObjectDefinitionId(), values, transientValues);
+			values, objectEntry.getObjectDefinitionId(), transientValues);
 
 		_reindex(objectEntry);
 
@@ -778,7 +778,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _deleteFileEntries(
-		long objectDefinitionId, Map<String, Serializable> newValues,
+		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
 
 		List<ObjectField> objectFields =
