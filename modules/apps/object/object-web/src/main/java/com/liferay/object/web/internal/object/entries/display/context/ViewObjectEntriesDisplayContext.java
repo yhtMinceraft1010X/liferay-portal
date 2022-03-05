@@ -171,17 +171,19 @@ public class ViewObjectEntriesDisplayContext {
 
 		FDSSortItemList fdsSortItemList = new FDSSortItemList();
 
-		if (objectView != null) {
-			for (ObjectViewSortColumn objectViewSortColumn :
-					objectView.getObjectViewSortColumns()) {
+		if (objectView == null) {
+			return fdsSortItemList;
+		}
 
-				fdsSortItemList.add(
-					FDSSortItemBuilder.setDirection(
-						objectViewSortColumn.getSortOrder()
-					).setKey(
-						objectViewSortColumn.getObjectFieldName()
-					).build());
-			}
+		for (ObjectViewSortColumn objectViewSortColumn :
+				objectView.getObjectViewSortColumns()) {
+
+			fdsSortItemList.add(
+				FDSSortItemBuilder.setDirection(
+					objectViewSortColumn.getSortOrder()
+				).setKey(
+					objectViewSortColumn.getObjectFieldName()
+				).build());
 		}
 
 		return fdsSortItemList;
