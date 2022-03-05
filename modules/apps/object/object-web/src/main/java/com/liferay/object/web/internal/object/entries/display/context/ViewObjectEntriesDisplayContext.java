@@ -166,7 +166,7 @@ public class ViewObjectEntriesDisplayContext {
 	}
 
 	public FDSSortItemList getFDSSortItemList() {
-		ObjectView objectView = _objectViewLocalService.getDefaultObjectView(
+		ObjectView objectView = _objectViewLocalService.fetchDefaultObjectView(
 			_objectDefinition.getObjectDefinitionId());
 
 		FDSSortItemList fdsSortItemList = new FDSSortItemList();

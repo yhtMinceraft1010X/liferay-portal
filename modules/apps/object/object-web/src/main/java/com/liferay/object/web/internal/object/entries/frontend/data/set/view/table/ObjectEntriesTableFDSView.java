@@ -72,7 +72,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		ObjectView defaultObjectView =
-			_objectViewLocalService.getDefaultObjectView(
+			_objectViewLocalService.fetchDefaultObjectView(
 				_objectDefinition.getObjectDefinitionId());
 
 		if (defaultObjectView == null) {

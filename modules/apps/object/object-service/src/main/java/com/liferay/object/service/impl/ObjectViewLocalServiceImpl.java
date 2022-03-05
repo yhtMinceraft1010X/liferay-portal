@@ -116,7 +116,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	@Override
-	public ObjectView getDefaultObjectView(long objectDefinitionId) {
+	public ObjectView fetchDefaultObjectView(long objectDefinitionId) {
 		ObjectView objectView = objectViewPersistence.fetchByODI_DOV_First(
 			objectDefinitionId, true, null);
 

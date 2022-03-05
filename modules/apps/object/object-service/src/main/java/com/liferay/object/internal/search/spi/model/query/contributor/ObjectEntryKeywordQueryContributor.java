@@ -112,7 +112,7 @@ public class ObjectEntryKeywordQueryContributor
 				searchContext.getAttribute("useObjectView"))) {
 
 			ObjectView defaultObjectView =
-				_objectViewLocalService.getDefaultObjectView(
+				_objectViewLocalService.fetchDefaultObjectView(
 					objectDefinitionId);
 
 			if (defaultObjectView != null) {
