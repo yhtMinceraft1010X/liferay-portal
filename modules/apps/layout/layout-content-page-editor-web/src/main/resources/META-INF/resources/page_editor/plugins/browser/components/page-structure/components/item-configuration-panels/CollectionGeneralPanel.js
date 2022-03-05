@@ -129,7 +129,7 @@ export function CollectionGeneralPanel({item}) {
 				? [
 						{
 							label: Liferay.Language.get(
-								'pre-filter-collection'
+								'prefilter-collection'
 							),
 							onClick: () => setFilterConfigurationVisible(true),
 							symbolLeft: 'filter',

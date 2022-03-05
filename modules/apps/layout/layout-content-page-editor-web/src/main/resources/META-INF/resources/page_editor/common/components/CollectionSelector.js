@@ -69,7 +69,7 @@ export default function CollectionSelector({
 					<ClayIcon className="mr-2 mt-0" symbol="info-panel-open" />
 
 					<span className="text-2">
-						{Liferay.Language.get('collection-pre-filtered')}
+						{Liferay.Language.get('collection-prefiltered')}
 					</span>
 				</p>
 			)}

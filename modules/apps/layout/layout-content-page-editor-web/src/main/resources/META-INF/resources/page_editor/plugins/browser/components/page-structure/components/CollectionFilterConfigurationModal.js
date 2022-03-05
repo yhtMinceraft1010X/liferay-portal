@@ -102,7 +102,7 @@ export default function CollectionFilterConfigurationModal({
 			observer={observer}
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('pre-filter-collection')}
+				{Liferay.Language.get('prefilter-collection')}
 			</ClayModal.Header>
 
 			<ClayModal.Body className="pt-0">
@@ -115,7 +115,7 @@ export default function CollectionFilterConfigurationModal({
 				<div className="pb-4 pt-3 px-4">
 					<p className="mb-4 page-editor__collection-filter-configuration-modal__type-label">
 						{Liferay.Language.get(
-							'by-pre-filtering-the-collection-you-narrow-down-the-results-that-appear-on-the-page'
+							'by-prefiltering-the-collection-you-narrow-down-the-results-that-appear-on-the-page'
 						)}
 					</p>
 
