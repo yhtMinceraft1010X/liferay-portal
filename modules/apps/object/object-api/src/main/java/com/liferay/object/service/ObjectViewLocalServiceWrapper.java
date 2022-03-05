@@ -242,6 +242,14 @@ public class ObjectViewLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectView fetchDefaultObjectView(
+		long objectDefinitionId) {
+
+		return _objectViewLocalService.fetchDefaultObjectView(
+			objectDefinitionId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectView fetchObjectView(
 		long objectViewId) {
 
@@ -268,13 +276,6 @@ public class ObjectViewLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _objectViewLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectView getDefaultObjectView(
-		long objectDefinitionId) {
-
-		return _objectViewLocalService.getDefaultObjectView(objectDefinitionId);
 	}
 
 	@Override

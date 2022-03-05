@@ -218,6 +218,10 @@ public class ObjectViewLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectView fetchDefaultObjectView(long objectDefinitionId) {
+		return getService().fetchDefaultObjectView(objectDefinitionId);
+	}
+
 	public static ObjectView fetchObjectView(long objectViewId) {
 		return getService().fetchObjectView(objectViewId);
 	}
@@ -239,10 +243,6 @@ public class ObjectViewLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
-	}
-
-	public static ObjectView getDefaultObjectView(long objectDefinitionId) {
-		return getService().getDefaultObjectView(objectDefinitionId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
