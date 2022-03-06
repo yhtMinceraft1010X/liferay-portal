@@ -883,14 +883,12 @@ public class AccountEntryLocalServiceImpl
 					DSLQueryFactoryUtil.selectDistinct(
 						AccountEntryTable.INSTANCE.accountEntryId),
 					userId, parentAccountEntryId, keywords, types, status)));
-
 		accountEntryIds.addAll(
 			dslQuery(
 				_getOwnerAccountEntriesGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(
 						AccountEntryTable.INSTANCE.accountEntryId),
 					userId, parentAccountEntryId, keywords, types, status)));
-
 		accountEntryIds.addAll(
 			dslQuery(
 				_getUerAccountEntriesGroupByStep(
