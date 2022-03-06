@@ -1267,6 +1267,14 @@
     "@clayui/shared" "^3.45.0"
     classnames "^2.2.6"
 
+"@clayui/popover@^3.47.0":
+  version "3.47.0"
+  resolved "https://registry.yarnpkg.com/@clayui/popover/-/popover-3.47.0.tgz#e3fc95f2619388c43262d2b5a1e05aaa9206e81c"
+  integrity sha512-d6VqL8pFWU4sv3cHd9SBXaS9RWQ0hvVjndWflpFZ96iNVCHro6Kg/I5U+RIZGTDhK2Q/ntpnlWjSujr8X6mwhw==
+  dependencies:
+    "@clayui/shared" "^3.47.0"
+    classnames "^2.2.6"
+
 "@clayui/provider@^3.40.0":
   version "3.40.0"
   resolved "https://registry.yarnpkg.com/@clayui/provider/-/provider-3.40.0.tgz#a2d68aba76a62856c9bb02ead23037052c29f571"
@@ -1278,6 +1286,17 @@
   version "3.45.0"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.45.0.tgz#f8b2a3c01cc1e8715aca711bc14a2e4c9290f517"
   integrity sha512-LIsdCubYbNwgxxIj9U0su1y8xyOWrABwXl1jtRAVB4l8AfIzhun16nTctAikwlj9WprERwVugfn9lLeJK991JQ==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/link" "^3.45.0"
+    "@clayui/provider" "^3.40.0"
+    classnames "^2.2.6"
+    dom-align "^1.10.2"
+
+"@clayui/shared@^3.47.0":
+  version "3.47.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.47.0.tgz#dd309ee137c40e581328925ba341de1376f2a307"
+  integrity sha512-DQWKn/Yjmgqqa/Dm9oPZ+iUlyQRk7ju3nrp69xNdbgTTZO4lVV4fk37PqzzerIlkxSNxazNuxng8vNIRY+F+2g==
   dependencies:
     "@clayui/button" "^3.40.0"
     "@clayui/link" "^3.45.0"
