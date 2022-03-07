@@ -144,12 +144,27 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
-					"preview", _getPreviewJSONObject(contentDashboardItem)
+					"preview",
+					Optional.ofNullable(
+						contentDashboardItem.getPreview()
+					).map(
+						ContentDashboardItem.Preview::toJSONObject
+					).orElse(
+						null
+					)
 				).put(
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
 				).put(
-					"subType", _getSubtype(contentDashboardItem, locale)
+					"subType",
+					Optional.ofNullable(
+						contentDashboardItem.getContentDashboardItemSubtype()
+					).map(
+						contentDashboardItemSubtype ->
+							contentDashboardItemSubtype.getLabel(locale)
+					).orElse(
+						StringPool.BLANK
+					)
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(
@@ -295,18 +310,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			});
 	}
 
-	private JSONObject _getPreviewJSONObject(
-		ContentDashboardItem contentDashboardItem) {
-
-		return Optional.ofNullable(
-			contentDashboardItem.getPreview()
-		).map(
-			ContentDashboardItem.Preview::toJSONObject
-		).orElse(
-			null
-		);
-	}
-
 	private JSONObject _getSpecificFieldsJSONObject(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
@@ -342,19 +345,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		}
 
 		return "String";
-	}
-
-	private String _getSubtype(
-		ContentDashboardItem contentDashboardItem, Locale locale) {
-
-		return Optional.ofNullable(
-			contentDashboardItem.getContentDashboardItemSubtype()
-		).map(
-			contentDashboardItemSubtype -> contentDashboardItemSubtype.getLabel(
-				locale)
-		).orElse(
-			StringPool.BLANK
-		);
 	}
 
 	private JSONObject _getUserJSONObject(
