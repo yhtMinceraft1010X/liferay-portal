@@ -84,9 +84,9 @@ public class ObjectRelatedModelsProviderTest {
 	public static void setUpClass() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		_user = UserTestUtil.addUser();
-		_userRole = RoleLocalServiceUtil.getRole(
+		_role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Before
@@ -477,7 +477,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
-			scope, String.valueOf(primKey), _userRole.getRoleId(),
+			scope, String.valueOf(primKey), _role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
 		Assert.assertEquals(
@@ -488,13 +488,13 @@ public class ObjectRelatedModelsProviderTest {
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
-			scope, String.valueOf(primKey), _userRole.getRoleId(),
+			scope, String.valueOf(primKey), _role.getRoleId(),
 			ActionKeys.VIEW);
 	}
 
 	private static PermissionChecker _originalPermissionChecker;
 	private static User _user;
-	private static Role _userRole;
+	private static Role _role;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
