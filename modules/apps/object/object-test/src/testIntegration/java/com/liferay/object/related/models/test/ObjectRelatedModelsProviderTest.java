@@ -353,12 +353,8 @@ public class ObjectRelatedModelsProviderTest {
 		_setUser(_user);
 
 		_testViewPermission(
-			2, objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
-		_testViewPermission(
-			1, objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			objectEntryA.getObjectEntryId(),
-			ResourceConstants.SCOPE_INDIVIDUAL);
+			objectRelatedModelsProvider, objectRelationship, objectEntry1,
+			objectEntryA.getObjectEntryId());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
@@ -429,18 +425,15 @@ public class ObjectRelatedModelsProviderTest {
 		_setUser(_user);
 
 		_testViewPermission(
-			2, objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
-		_testViewPermission(
-			1, objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			objectEntry2.getObjectEntryId(),
-			ResourceConstants.SCOPE_INDIVIDUAL);
+			objectRelatedModelsProvider, objectRelationship, objectEntry1,
+			objectEntry2.getObjectEntryId());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 	}
 
-	private ObjectRelationship _createObjectRelationship(String relationshipType)
+	private ObjectRelationship _createObjectRelationship(
+			String relationshipType)
 		throws Exception {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
@@ -460,7 +453,7 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private void _testViewPermission(
-			int expectedCount,
+			int expectedRelatedModelsCount,
 			ObjectRelatedModelsProvider<ObjectEntry>
 				objectRelatedModelsProvider,
 			ObjectRelationship objectRelationship,
@@ -479,20 +472,35 @@ public class ObjectRelatedModelsProviderTest {
 			new String[] {ActionKeys.VIEW});
 
 		Assert.assertEquals(
-			expectedCount,
+			expectedRelatedModelsCount,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				0, objectRelationship.getObjectRelationshipId(),
 				parentObjectEntry.getObjectEntryId()));
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
-			scope, String.valueOf(primKey), _role.getRoleId(),
-			ActionKeys.VIEW);
+			scope, String.valueOf(primKey), _role.getRoleId(), ActionKeys.VIEW);
+	}
+
+	private void _testViewPermission(
+			ObjectRelatedModelsProvider<ObjectEntry>
+				objectRelatedModelsProvider,
+			ObjectRelationship objectRelationship,
+			ObjectEntry parentObjectEntry, long primKey)
+		throws Exception {
+
+		_testViewPermission(
+			2, objectRelatedModelsProvider, objectRelationship,
+			parentObjectEntry, TestPropsValues.getCompanyId(),
+			ResourceConstants.SCOPE_COMPANY);
+		_testViewPermission(
+			1, objectRelatedModelsProvider, objectRelationship,
+			parentObjectEntry, primKey, ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 
 	private static PermissionChecker _originalPermissionChecker;
-	private static User _user;
 	private static Role _role;
+	private static User _user;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
