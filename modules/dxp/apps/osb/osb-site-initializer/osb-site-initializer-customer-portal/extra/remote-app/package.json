@@ -41,7 +41,7 @@
 		"react-router-dom": "^6.2.1",
 		"react-scripts": "^4.0.3"
 	},
-	"name": "@liferay/site-initializer-customer-portal",
+	"name": "@liferay/osb-site-initializer-customer-portal-remote-app",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
