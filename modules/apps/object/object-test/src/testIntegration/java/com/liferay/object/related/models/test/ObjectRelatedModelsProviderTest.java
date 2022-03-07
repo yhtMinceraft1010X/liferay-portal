@@ -84,9 +84,7 @@ public class ObjectRelatedModelsProviderTest {
 	public static void setUpClass() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
 		_user = UserTestUtil.addUser();
-
 		_userRole = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 	}
