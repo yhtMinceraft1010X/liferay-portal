@@ -140,7 +140,7 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntry1to1ObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _createRelationship(
+		ObjectRelationship objectRelationship = _createObjectRelationship(
 			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
@@ -263,7 +263,7 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntry1toMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _createRelationship(
+		ObjectRelationship objectRelationship = _createObjectRelationship(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
@@ -371,7 +371,7 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntryMtoMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _createRelationship(
+		ObjectRelationship objectRelationship = _createObjectRelationship(
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
@@ -444,7 +444,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelationship);
 	}
 
-	private ObjectRelationship _createRelationship(String relationshipType)
+	private ObjectRelationship _createObjectRelationship(String relationshipType)
 		throws Exception {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
