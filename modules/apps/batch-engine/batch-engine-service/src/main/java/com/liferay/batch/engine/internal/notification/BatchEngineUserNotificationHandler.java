@@ -50,15 +50,15 @@ public class BatchEngineUserNotificationHandler
 
 		String status = serviceContext.translate(
 			jsonObject.getString("status"));
-		String batchEngineTaskType = serviceContext.translate(
+		String taskType = serviceContext.translate(
 			jsonObject.getString("taskType"));
 
 		return String.format(
 			"<h2 class=\"title\">%s</h2><div class=\"body\">%s</div>",
 			serviceContext.translate(
-				"x-batch-engine-task-x", batchEngineTaskType, status),
+				"x-batch-engine-task-x", taskType, status),
 			serviceContext.translate(
-				"x-batch-engine-task-for-x-x", batchEngineTaskType,
+				"x-batch-engine-task-for-x-x", taskType,
 				jsonObject.getString("className"), status));
 	}
 
