@@ -128,13 +128,9 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			deleteKBFolder(childKBFolder.getKbFolderId());
 		}
 
-		// Resources
-
 		resourceLocalService.deleteResource(
 			kbFolder.getCompanyId(), KBFolder.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, kbFolder.getKbFolderId());
-
-		// Expando
 
 		_expandoRowLocalService.deleteRows(kbFolder.getKbFolderId());
 

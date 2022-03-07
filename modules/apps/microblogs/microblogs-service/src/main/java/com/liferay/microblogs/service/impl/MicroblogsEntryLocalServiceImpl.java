@@ -243,18 +243,18 @@ public class MicroblogsEntryLocalServiceImpl
 
 			microblogsEntryPersistence.remove(curMicroblogsEntry);
 
-			// Asset
-
-			_assetEntryLocalService.deleteEntry(
-				MicroblogsEntry.class.getName(),
-				curMicroblogsEntry.getMicroblogsEntryId());
-
 			// Resource
 
 			resourceLocalService.deleteResource(
 				curMicroblogsEntry.getCompanyId(),
 				MicroblogsEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
+				curMicroblogsEntry.getMicroblogsEntryId());
+
+			// Asset
+
+			_assetEntryLocalService.deleteEntry(
+				MicroblogsEntry.class.getName(),
 				curMicroblogsEntry.getMicroblogsEntryId());
 
 			// Social
