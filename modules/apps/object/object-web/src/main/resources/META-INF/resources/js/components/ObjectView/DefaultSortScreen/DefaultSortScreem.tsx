@@ -56,7 +56,7 @@ export function DefaultSortScreen() {
 					description: Liferay.Language.get(
 						'start-creating-a-sort-to-display-specific-data'
 					),
-					title: Liferay.Language.get('no-default-sort-created-yet'),
+					title: Liferay.Language.get('no-default-sort-was-created-yet'),
 				}}
 				isDefaultSort
 				objectColumns={objectViewSortColumns ?? []}
