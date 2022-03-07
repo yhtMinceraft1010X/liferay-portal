@@ -355,7 +355,6 @@ public class ObjectRelatedModelsProviderTest {
 		_testViewPermission(
 			2, objectRelatedModelsProvider, objectRelationship, objectEntry1,
 			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
-
 		_testViewPermission(
 			1, objectRelatedModelsProvider, objectRelationship, objectEntry1,
 			objectEntryA.getObjectEntryId(),
@@ -432,7 +431,6 @@ public class ObjectRelatedModelsProviderTest {
 		_testViewPermission(
 			2, objectRelatedModelsProvider, objectRelationship, objectEntry1,
 			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
-
 		_testViewPermission(
 			1, objectRelatedModelsProvider, objectRelationship, objectEntry1,
 			objectEntry2.getObjectEntryId(),
