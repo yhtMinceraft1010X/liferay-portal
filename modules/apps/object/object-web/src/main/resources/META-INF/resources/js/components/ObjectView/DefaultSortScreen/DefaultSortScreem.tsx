@@ -46,7 +46,7 @@ export function DefaultSortScreen() {
 				title={`${Liferay.Language.get('info')}:`}
 			>
 				{Liferay.Language.get(
-					'the-hierarchy-of-the-default-sorting-will-be-defined-by-the-vertical-order-of-the-fields-you-can-re-arrange-by-using-the-drag-and-drop'
+					'the-hierarchy-of-the-default-sorting-will-be-defined-by-the-vertical-order-of-the-fields'
 				)}
 			</ClayAlert>
 
