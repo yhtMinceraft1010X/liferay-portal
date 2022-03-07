@@ -243,12 +243,12 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private String _toString(
-		Map<String, Object> specificFields, String fieldName) {
+		Map<String, Object> specificInformation, String fieldName) {
 
 		return Optional.ofNullable(
-			specificFields
+			specificInformation
 		).map(
-			safeSpecificFields -> safeSpecificFields.get(fieldName)
+			safeSpecificInformation -> safeSpecificInformation.get(fieldName)
 		).filter(
 			Objects::nonNull
 		).map(

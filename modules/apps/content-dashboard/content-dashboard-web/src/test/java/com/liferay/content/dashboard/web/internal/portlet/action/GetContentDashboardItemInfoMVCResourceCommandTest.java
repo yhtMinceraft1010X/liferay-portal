@@ -223,7 +223,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 			Assert.assertEquals(
 				specificFieldJSONObject.getString("title"), entry.getKey());
-
 			Assert.assertEquals(
 				specificFieldJSONObject.getString("value"), entry.getValue());
 		}
