@@ -146,8 +146,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"preview", _getPreviewJSONObject(contentDashboardItem)
 				).put(
-					"preview", _getPreviewJSONObject(contentDashboardItem)
-				).put(
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
 				).put(
