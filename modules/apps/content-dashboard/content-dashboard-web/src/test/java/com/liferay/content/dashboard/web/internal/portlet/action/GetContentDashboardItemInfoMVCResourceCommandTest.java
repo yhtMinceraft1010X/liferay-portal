@@ -417,9 +417,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			_getContentDashboardItemInfoMVCResourceCommand, "_language",
 			new LanguageImpl());
 		ReflectionTestUtil.setFieldValue(
-			_getContentDashboardItemInfoMVCResourceCommand, "_language",
-			new LanguageImpl());
-		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_portal",
 			new PortalImpl());
 
