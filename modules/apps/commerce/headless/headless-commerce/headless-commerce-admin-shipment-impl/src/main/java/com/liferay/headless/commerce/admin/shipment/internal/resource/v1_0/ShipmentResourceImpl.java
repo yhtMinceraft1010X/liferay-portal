@@ -425,6 +425,17 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			CommerceShipment commerceShipment, Shipment shipment)
 		throws Exception {
 
+		// Shipping address
+
+		ShippingAddress shippingAddress = shipment.getShippingAddress();
+
+		if (shippingAddress != null) {
+			ShippingAddressUtil.updateShippingAddress(
+				_commerceAddressService, _commerceShipmentService,
+				commerceShipment, _countryService, _regionService,
+				shippingAddress, _serviceContextHelper);
+		}
+
 		// Shipment items
 
 		ShipmentItem[] shipmentItems = shipment.getShipmentItems();
@@ -439,17 +450,6 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 					_commerceShipmentItemService, shipmentItem,
 					_serviceContextHelper);
 			}
-		}
-
-		// Shipping address
-
-		ShippingAddress shippingAddress = shipment.getShippingAddress();
-
-		if (shippingAddress != null) {
-			ShippingAddressUtil.updateShippingAddress(
-				_commerceAddressService, _commerceShipmentService,
-				commerceShipment, _countryService, _regionService,
-				shippingAddress, _serviceContextHelper);
 		}
 
 		return commerceShipment;
