@@ -92,12 +92,6 @@ public class ObjectViewLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteObjectFieldFromObjectView(
-		com.liferay.object.model.ObjectField objectField) {
-
-		getService().deleteObjectFieldFromObjectView(objectField);
-	}
-
 	/**
 	 * Deletes the object view with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -338,6 +332,12 @@ public class ObjectViewLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void unassociateObjectField(
+		com.liferay.object.model.ObjectField objectField) {
+
+		getService().unassociateObjectField(objectField);
 	}
 
 	public static ObjectView updateObjectView(

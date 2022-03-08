@@ -106,8 +106,6 @@ public interface ObjectViewLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteObjectFieldFromObjectView(ObjectField objectField);
-
 	/**
 	 * Deletes the object view with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -305,6 +303,8 @@ public interface ObjectViewLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void unassociateObjectField(ObjectField objectField);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectView updateObjectView(
