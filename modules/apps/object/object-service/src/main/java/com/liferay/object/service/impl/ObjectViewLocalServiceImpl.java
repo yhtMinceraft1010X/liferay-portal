@@ -92,21 +92,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		return objectView;
 	}
 
-	@Override
-	public void deleteObjectFieldFromObjectView(ObjectField objectField) {
-		List<ObjectView> objectViews =
-			objectViewPersistence.findByObjectDefinitionId(
-				objectField.getObjectDefinitionId());
-
-		for (ObjectView objectView : objectViews) {
-			_objectViewColumnPersistence.removeByOVI_OFN(
-				objectView.getObjectViewId(), objectField.getName());
-
-			_objectViewSortColumnPersistence.removeByOVI_OFN(
-				objectView.getObjectViewId(), objectField.getName());
-		}
-	}
-
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectView deleteObjectView(long objectViewId)
@@ -179,6 +164,21 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		}
 
 		return objectViews;
+	}
+
+	@Override
+	public void unassociateObjectField(ObjectField objectField) {
+		List<ObjectView> objectViews =
+			objectViewPersistence.findByObjectDefinitionId(
+				objectField.getObjectDefinitionId());
+
+		for (ObjectView objectView : objectViews) {
+			_objectViewColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+
+			_objectViewSortColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

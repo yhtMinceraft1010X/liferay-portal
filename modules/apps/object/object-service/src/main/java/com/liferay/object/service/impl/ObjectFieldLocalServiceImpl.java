@@ -442,7 +442,7 @@ public class ObjectFieldLocalServiceImpl
 		_objectLayoutColumnPersistence.removeByObjectFieldId(
 			objectField.getObjectFieldId());
 
-		_objectViewLocalService.deleteObjectFieldFromObjectView(objectField);
+		_objectViewLocalService.unassociateObjectField(objectField);
 
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
