@@ -329,7 +329,7 @@ public class CommerceOrderItemLocalServiceImpl
 			String[] externalReferenceCodes)
 		throws PortalException {
 
-		List<Long> commerceOrderItemIdList = dslQuery(
+		List<Long> commerceOrderItemIdsList = dslQuery(
 			DSLQueryFactoryUtil.selectDistinct(
 				CommerceOrderItemTable.INSTANCE.commerceOrderItemId
 			).from(
@@ -360,7 +360,7 @@ public class CommerceOrderItemLocalServiceImpl
 				)
 			));
 
-		for (long commerceOrderItemId : commerceOrderItemIdList) {
+		for (long commerceOrderItemId : commerceOrderItemIdsList) {
 			commerceOrderItemLocalService.deleteCommerceOrderItem(
 				commerceOrderItemId);
 		}
