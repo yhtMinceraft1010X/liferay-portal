@@ -358,19 +358,23 @@ public class OrganizationResourceImpl
 					contextCompany.getCompanyId(), externalReferenceCode);
 
 		String type = OrganizationConstants.TYPE_ORGANIZATION;
+
+		if (serviceBuilderOrganization != null) {
+			type = serviceBuilderOrganization.getType();
+		}
+
+		long countryId = _getCountryId(organization);
+
 		long statusId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
 		boolean site = false;
 
 		if (serviceBuilderOrganization != null) {
-			type = serviceBuilderOrganization.getType();
 			statusId = serviceBuilderOrganization.getStatusId();
 
 			Group group = serviceBuilderOrganization.getGroup();
 
 			site = group.isSite();
 		}
-
-		long countryId = _getCountryId(organization);
 
 		serviceBuilderOrganization =
 			_organizationService.addOrUpdateOrganization(
