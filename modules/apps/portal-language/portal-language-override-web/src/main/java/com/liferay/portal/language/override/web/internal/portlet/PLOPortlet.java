@@ -114,9 +114,9 @@ public class PLOPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
 		try {
+			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
 			List<PLOEntry> ploEntries = _ploEntryService.getPLOEntries(
 				_portal.getCompanyId(resourceRequest));
 
