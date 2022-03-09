@@ -125,10 +125,10 @@ public class PLOPortlet extends MVCPortlet {
 				stream.collect(
 					Collectors.groupingBy(PLOEntry::getLanguageId));
 
-			StringBundler sb = new StringBundler();
-
 			for (Map.Entry<String, List<PLOEntry>> entry :
 					map.entrySet()) {
+
+				StringBundler sb = new StringBundler();
 
 				for (PLOEntry ploEntry : entry.getValue()) {
 					sb.append(ploEntry.getKey());
@@ -140,8 +140,6 @@ public class PLOPortlet extends MVCPortlet {
 				zipWriter.addEntry(
 					"Language_" + entry.getKey() + ".properties",
 					sb.toString());
-
-				sb.setIndex(0);
 			}
 
 			PortletResponseUtil.sendFile(
