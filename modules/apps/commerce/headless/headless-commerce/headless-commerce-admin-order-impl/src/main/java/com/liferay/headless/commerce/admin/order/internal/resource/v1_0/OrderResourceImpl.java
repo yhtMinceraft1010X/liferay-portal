@@ -69,10 +69,12 @@ import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
@@ -477,6 +479,30 @@ public class OrderResourceImpl
 		return null;
 	}
 
+	private String[] _getOrderItemExternalReferenceCodes(
+		OrderItem[] orderItems) {
+
+		Stream<OrderItem> stream = Arrays.stream(orderItems);
+
+		return stream.map(
+			OrderItem::getExternalReferenceCode
+		).distinct(
+		).toArray(
+			String[]::new
+		);
+	}
+
+	private Long[] _getOrderItemIds(OrderItem[] orderItems) {
+		Stream<OrderItem> stream = Arrays.stream(orderItems);
+
+		return stream.map(
+			OrderItem::getId
+		).distinct(
+		).toArray(
+			Long[]::new
+		);
+	}
+
 	private String _getVersion(UriInfo uriInfo) {
 		String version = "";
 
@@ -499,11 +525,13 @@ public class OrderResourceImpl
 		OrderItem[] orderItems = order.getOrderItems();
 
 		if (orderItems != null) {
-			_commerceOrderItemService.deleteCommerceOrderItems(
-				commerceOrder.getCommerceOrderId());
+			_commerceOrderItemService.deleteMissingCommerceOrderItems(
+				commerceOrder.getCommerceOrderId(),
+				_getOrderItemIds(orderItems),
+				_getOrderItemExternalReferenceCodes(orderItems));
 
 			for (OrderItem orderItem : orderItems) {
-				OrderItemUtil.addCommerceOrderItem(
+				OrderItemUtil.addOrUpdateCommerceOrderItem(
 					_cpInstanceService, _commerceOrderItemService,
 					_commerceOrderModelResourcePermission, orderItem,
 					commerceOrder,
