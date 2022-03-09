@@ -120,8 +120,6 @@ public class OrderItemUtil {
 				orderItem.getExternalReferenceCode());
 		}
 
-		// Pricing
-
 		PortletResourcePermission portletResourcePermission =
 			commerceOrderModelResourcePermission.getPortletResourcePermission();
 
