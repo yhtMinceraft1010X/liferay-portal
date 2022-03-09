@@ -225,18 +225,6 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		long commerceOrderId = counterLocalService.increment();
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.create(
-			commerceOrderId);
-
-		commerceOrder.setGroupId(groupId);
-		commerceOrder.setCompanyId(user.getCompanyId());
-		commerceOrder.setUserId(userId);
-		commerceOrder.setUserName(user.getFullName());
-		commerceOrder.setCommerceAccountId(commerceAccountId);
-		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
-
 		if (commerceOrderTypeId <= 0) {
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByGroupId(
@@ -255,6 +243,17 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
+		long commerceOrderId = counterLocalService.increment();
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.create(
+			commerceOrderId);
+
+		commerceOrder.setGroupId(groupId);
+		commerceOrder.setCompanyId(user.getCompanyId());
+		commerceOrder.setUserId(userId);
+		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setCommerceAccountId(commerceAccountId);
+		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrder.setCommerceOrderTypeId(commerceOrderTypeId);
 		commerceOrder.setBillingAddressId(billingAddressId);
 		commerceOrder.setShippingAddressId(shippingAddressId);
