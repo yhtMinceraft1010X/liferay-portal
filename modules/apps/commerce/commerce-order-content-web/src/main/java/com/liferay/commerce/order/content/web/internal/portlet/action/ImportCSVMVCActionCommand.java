@@ -169,8 +169,8 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				uploadPortletRequest.getFileName(_PARAMETER_NAME),
-				curFileName -> _exists(
-					curFileName, groupId, themeDisplay.getUserId()));
+				fileName -> _exists(
+					fileName, groupId, themeDisplay.getUserId()));
 
 			return TempFileEntryUtil.addTempFileEntry(
 				groupId, themeDisplay.getUserId(), _TEMP_FOLDER_NAME,
@@ -179,10 +179,10 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private boolean _exists(String curFileName, long groupId, long userId) {
+	private boolean _exists(String fileName, long groupId, long userId) {
 		try {
 			FileEntry fileEntry = TempFileEntryUtil.getTempFileEntry(
-				groupId, userId, _TEMP_FOLDER_NAME, curFileName);
+				groupId, userId, _TEMP_FOLDER_NAME, fileName);
 
 			if (fileEntry != null) {
 				return true;
