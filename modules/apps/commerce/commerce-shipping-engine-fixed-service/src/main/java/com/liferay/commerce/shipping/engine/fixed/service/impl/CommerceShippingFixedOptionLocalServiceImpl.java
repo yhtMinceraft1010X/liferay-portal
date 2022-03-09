@@ -79,10 +79,6 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 
 		long commerceShippingFixedOptionId = counterLocalService.increment();
 
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			commerceShippingFixedOptionPersistence.create(
-				commerceShippingFixedOptionId);
-
 		if (Validator.isBlank(key)) {
 			key = _getKey(user.getCompanyId(), nameMap);
 		}
@@ -91,6 +87,10 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		}
 
 		_validate(commerceShippingFixedOptionId, user.getCompanyId(), key);
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			commerceShippingFixedOptionPersistence.create(
+				commerceShippingFixedOptionId);
 
 		commerceShippingFixedOption.setGroupId(groupId);
 		commerceShippingFixedOption.setCompanyId(user.getCompanyId());
