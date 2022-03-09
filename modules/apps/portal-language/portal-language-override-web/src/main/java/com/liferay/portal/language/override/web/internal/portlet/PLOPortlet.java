@@ -110,50 +110,6 @@ public class PLOPortlet extends MVCPortlet {
 			LocalizationUtil.getLocalizationMap(actionRequest, "value"));
 	}
 
-	private void _exportPLOEntries(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		try {
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
-			List<PLOEntry> ploEntries = _ploEntryService.getPLOEntries(
-				_portal.getCompanyId(resourceRequest));
-
-			Stream<PLOEntry> stream = ploEntries.stream();
-
-			Map<String, List<PLOEntry>> map =
-				stream.collect(
-					Collectors.groupingBy(PLOEntry::getLanguageId));
-
-			for (Map.Entry<String, List<PLOEntry>> entry :
-					map.entrySet()) {
-
-				StringBundler sb = new StringBundler();
-
-				for (PLOEntry ploEntry : entry.getValue()) {
-					sb.append(ploEntry.getKey());
-					sb.append(StringPool.EQUAL);
-					sb.append(ploEntry.getValue());
-					sb.append(StringPool.NEW_LINE);
-				}
-
-				zipWriter.addEntry(
-					"Language_" + entry.getKey() + ".properties",
-					sb.toString());
-			}
-
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse,
-				StringUtil.randomString() + ".zip",
-				new FileInputStream(zipWriter.getFile()),
-				ContentTypes.APPLICATION_ZIP);
-		}
-		catch (IOException | PortalException exception) {
-			throw new PortletException(exception);
-		}
-	}
-
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -182,6 +138,47 @@ public class PLOPortlet extends MVCPortlet {
 		_setAttributes(renderRequest, renderResponse);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	private void _exportPLOEntries(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		try {
+			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+			List<PLOEntry> ploEntries = _ploEntryService.getPLOEntries(
+				_portal.getCompanyId(resourceRequest));
+
+			Stream<PLOEntry> stream = ploEntries.stream();
+
+			Map<String, List<PLOEntry>> map = stream.collect(
+				Collectors.groupingBy(PLOEntry::getLanguageId));
+
+			for (Map.Entry<String, List<PLOEntry>> entry : map.entrySet()) {
+				StringBundler sb = new StringBundler();
+
+				for (PLOEntry ploEntry : entry.getValue()) {
+					sb.append(ploEntry.getKey());
+					sb.append(StringPool.EQUAL);
+					sb.append(ploEntry.getValue());
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				zipWriter.addEntry(
+					"Language_" + entry.getKey() + ".properties",
+					sb.toString());
+			}
+
+			PortletResponseUtil.sendFile(
+				resourceRequest, resourceResponse,
+				StringUtil.randomString() + ".zip",
+				new FileInputStream(zipWriter.getFile()),
+				ContentTypes.APPLICATION_ZIP);
+		}
+		catch (IOException | PortalException exception) {
+			throw new PortletException(exception);
+		}
 	}
 
 	private Object _getPortletDisplayContext(
