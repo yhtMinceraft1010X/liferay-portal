@@ -100,16 +100,11 @@ if (organization != null) {
 	>
 		<div align="middle">
 			<c:if test="<%= organization != null %>">
-
-				<%
-				long logoId = organization.getLogoId();
-				%>
-
 				<label class="control-label"></label>
 
 				<liferay-ui:logo-selector
 					currentLogoURL="<%= organization.getLogoURL() %>"
-					defaultLogo="<%= logoId == 0 %>"
+					defaultLogo="<%= organization.getLogoId() == 0 %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					logoDisplaySelector=".organization-logo"
 					tempImageFileName="<%= String.valueOf(groupId) %>"
