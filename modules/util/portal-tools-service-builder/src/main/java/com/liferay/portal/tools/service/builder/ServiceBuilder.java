@@ -6554,8 +6554,6 @@ public class ServiceBuilder {
 
 			finderColumnElement.addAttribute("name", "externalReferenceCode");
 
-			finderElement.addAttribute("unique", "true");
-
 			finderElements.add(finderElement);
 		}
 
