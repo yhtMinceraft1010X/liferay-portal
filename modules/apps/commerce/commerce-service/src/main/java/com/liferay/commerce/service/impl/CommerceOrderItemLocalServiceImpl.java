@@ -1740,6 +1740,7 @@ public class CommerceOrderItemLocalServiceImpl
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
 			quantity);
 
+		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
 		commerceOrderItem.setGroupId(commerceOrder.getGroupId());
 		commerceOrderItem.setCompanyId(user.getCompanyId());
 		commerceOrderItem.setUserId(user.getUserId());
@@ -1748,7 +1749,6 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrder.getCommerceOrderId());
 		commerceOrderItem.setCPInstanceId(cpInstance.getCPInstanceId());
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
-		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setShippedQuantity(shippedQuantity);
 
