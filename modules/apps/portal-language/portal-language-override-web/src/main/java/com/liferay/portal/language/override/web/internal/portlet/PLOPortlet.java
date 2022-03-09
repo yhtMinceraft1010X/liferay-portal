@@ -119,18 +119,18 @@ public class PLOPortlet extends MVCPortlet {
 			List<PLOEntry> ploEntries = _ploEntryService.getPLOEntries(
 				_portal.getCompanyId(resourceRequest));
 
-			Stream<PLOEntry> ploEntriesStream = ploEntries.stream();
+			Stream<PLOEntry> stream = ploEntries.stream();
 
-			Map<String, List<PLOEntry>> ploEntriesMap =
-				ploEntriesStream.collect(
+			Map<String, List<PLOEntry>> map =
+				stream.collect(
 					Collectors.groupingBy(PLOEntry::getLanguageId));
 
 			StringBundler sb = new StringBundler();
 
-			for (Map.Entry<String, List<PLOEntry>> ploMapEntry :
-					ploEntriesMap.entrySet()) {
+			for (Map.Entry<String, List<PLOEntry>> entry :
+					map.entrySet()) {
 
-				for (PLOEntry ploEntry : ploMapEntry.getValue()) {
+				for (PLOEntry ploEntry : entry.getValue()) {
 					sb.append(ploEntry.getKey());
 					sb.append(StringPool.EQUAL);
 					sb.append(ploEntry.getValue());
@@ -138,7 +138,7 @@ public class PLOPortlet extends MVCPortlet {
 				}
 
 				zipWriter.addEntry(
-					"Language_" + ploMapEntry.getKey() + ".properties",
+					"Language_" + entry.getKey() + ".properties",
 					sb.toString());
 
 				sb.setIndex(0);
