@@ -110,7 +110,7 @@ public class PLOPortlet extends MVCPortlet {
 			LocalizationUtil.getLocalizationMap(actionRequest, "value"));
 	}
 
-	public void exportPLOEntries(
+	private void _exportPLOEntries(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
@@ -162,7 +162,7 @@ public class PLOPortlet extends MVCPortlet {
 		String resourceID = resourceRequest.getResourceID();
 
 		if (resourceID.equals("exportPLOEntries")) {
-			exportPLOEntries(resourceRequest, resourceResponse);
+			_exportPLOEntries(resourceRequest, resourceResponse);
 		}
 	}
 
