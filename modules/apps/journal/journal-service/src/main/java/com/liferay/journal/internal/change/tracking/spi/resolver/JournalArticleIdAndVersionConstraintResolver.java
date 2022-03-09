@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Samuel Trong Tran
  */
 @Component(service = ConstraintResolver.class)
-public class ArticleIdAndJournalArticleVersionConstraintResolver
+public class JournalArticleIdAndVersionConstraintResolver
 	extends BaseJournalArticleVersionConstraintResolver {
 
 	@Override
