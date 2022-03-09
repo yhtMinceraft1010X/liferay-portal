@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -144,7 +145,7 @@ public class PLOPortlet extends MVCPortlet {
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"LiferayPortalLanguageTranslations.zip",
+				StringUtil.randomString() + ".zip",
 				new FileInputStream(zipWriter.getFile()),
 				ContentTypes.APPLICATION_ZIP);
 		}
