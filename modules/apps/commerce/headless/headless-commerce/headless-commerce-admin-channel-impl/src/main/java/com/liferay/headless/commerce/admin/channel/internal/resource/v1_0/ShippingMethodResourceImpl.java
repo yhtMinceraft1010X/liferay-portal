@@ -106,41 +106,41 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 				setDescription(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isNotNull(
 								commerceShippingMethod.getDescriptionMap())) {
 
-							CommerceShippingEngine commerceShippingEngine =
-								commerceShippingEngines.get(
-									commerceShippingMethod.getEngineKey());
-
-							return HashMapBuilder.put(
-								contextAcceptLanguage.getPreferredLanguageId(),
-								commerceShippingEngine.getDescription(
-									contextAcceptLanguage.getPreferredLocale())
-							).build();
+							return LanguageUtils.getLanguageIdMap(
+								commerceShippingMethod.getNameMap());
 						}
 
-						return LanguageUtils.getLanguageIdMap(
-							commerceShippingMethod.getNameMap());
+						CommerceShippingEngine commerceShippingEngine =
+							commerceShippingEngines.get(
+								commerceShippingMethod.getEngineKey());
+
+						return HashMapBuilder.put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							commerceShippingEngine.getDescription(
+								contextAcceptLanguage.getPreferredLocale())
+						).build();
 					});
 				setName(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isNotNull(
 								commerceShippingMethod.getNameMap())) {
 
-							CommerceShippingEngine commerceShippingEngine =
-								commerceShippingEngines.get(
-									commerceShippingMethod.getEngineKey());
-
-							return HashMapBuilder.put(
-								contextAcceptLanguage.getPreferredLanguageId(),
-								commerceShippingEngine.getName(
-									contextAcceptLanguage.getPreferredLocale())
-							).build();
+							return LanguageUtils.getLanguageIdMap(
+								commerceShippingMethod.getNameMap());
 						}
 
-						return LanguageUtils.getLanguageIdMap(
-							commerceShippingMethod.getNameMap());
+						CommerceShippingEngine commerceShippingEngine =
+							commerceShippingEngines.get(
+								commerceShippingMethod.getEngineKey());
+
+						return HashMapBuilder.put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							commerceShippingEngine.getName(
+								contextAcceptLanguage.getPreferredLocale())
+						).build();
 					});
 			}
 		};
