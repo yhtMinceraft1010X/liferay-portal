@@ -36,7 +36,7 @@ import org.osgi.framework.Bundle;
 /**
  * @author Rafael Praxedes
  */
-public class BundleSiteInitializerUtil {
+public class SiteInitializerUtil {
 
 	public static String read(Bundle bundle, String fileName, URL url)
 		throws Exception {

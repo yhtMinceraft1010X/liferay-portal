@@ -143,7 +143,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.extender.internal.commerce.CommerceBundleSiteInitializerContributor;
-import com.liferay.site.initializer.extender.internal.util.BundleSiteInitializerUtil;
+import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -482,7 +482,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addAccounts(ServiceContext serviceContext) throws Exception {
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/accounts.json", _servletContext);
 
 		if (json == null) {
@@ -514,7 +514,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 			new HashMap<>();
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/asset-list-entries.json", _servletContext);
 
 		if (json == null) {
@@ -702,7 +702,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL,
-				BundleSiteInitializerUtil.read(
+				SiteInitializerUtil.read(
 					_bundle, "ddm-template.ftl", url),
 				false, false, null, null, serviceContext);
 		}
@@ -725,7 +725,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		resourcePath = resourcePath.substring(0, resourcePath.length() - 1);
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			resourcePath + ".metadata.json", _servletContext);
 
 		if (json != null) {
@@ -820,7 +820,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Map<String, String> values = new HashMap<>();
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath + ".metadata.json", _servletContext);
 
 			if (json != null) {
@@ -1093,7 +1093,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				journalFolderId = documentFolderId;
 			}
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -1133,7 +1133,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("articleId"), false, 1, titleMap, null,
 					titleMap,
 					StringUtil.replace(
-						BundleSiteInitializerUtil.read(
+						SiteInitializerUtil.read(
 							StringUtil.replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						"[$", "$]", documentsStringUtilReplaceValues),
@@ -1191,7 +1191,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			BundleSiteInitializerUtil.read(
+			SiteInitializerUtil.read(
 				resourcePath + "page.json", _servletContext));
 
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
@@ -1204,17 +1204,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			jsonObject.getBoolean("private"),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			BundleSiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
-			BundleSiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
-			BundleSiteInitializerUtil.toMap(
+			SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
+			SiteInitializerUtil.toMap(
 				jsonObject.getString("description_i18n")),
-			BundleSiteInitializerUtil.toMap(
+			SiteInitializerUtil.toMap(
 				jsonObject.getString("keywords_i18n")),
-			BundleSiteInitializerUtil.toMap(
+			SiteInitializerUtil.toMap(
 				jsonObject.getString("robots_i18n")),
 			type, null, jsonObject.getBoolean("hidden"),
 			jsonObject.getBoolean("system"),
-			BundleSiteInitializerUtil.toMap(
+			SiteInitializerUtil.toMap(
 				jsonObject.getString("friendlyURL_i18n")),
 			serviceContext);
 	}
@@ -1227,10 +1227,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			BundleSiteInitializerUtil.read(
+			SiteInitializerUtil.read(
 				resourcePath + "page.json", _servletContext));
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			resourcePath + "page-definition.json", _servletContext);
 
 		if (json == null) {
@@ -1396,7 +1396,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						String.valueOf(serviceContext.getScopeGroupId())
 					});
 
-				String css = BundleSiteInitializerUtil.read(
+				String css = SiteInitializerUtil.read(
 					FileUtil.getPath(urlPath) + "/css.css", _servletContext);
 
 				if (Validator.isNotNull(css)) {
@@ -1508,7 +1508,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(
@@ -1548,7 +1548,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"LIST_TYPE_DEFINITION_ID:" + listTypeDefinition.getName(),
 				String.valueOf(listTypeDefinition.getId()));
 
-			String listTypeEntriesJSON = BundleSiteInitializerUtil.read(
+			String listTypeEntriesJSON = SiteInitializerUtil.read(
 				StringUtil.replace(
 					resourcePath, ".json", ".list-type-entries.json"),
 				_servletContext);
@@ -1621,7 +1621,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			json = StringUtil.replace(
@@ -1678,7 +1678,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-			String objectEntriesJSON = BundleSiteInitializerUtil.read(
+			String objectEntriesJSON = SiteInitializerUtil.read(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".object-entries.json"),
 				_servletContext);
@@ -1749,7 +1749,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			json = StringUtil.replace(
@@ -1809,7 +1809,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/remote-app-entries.json", _servletContext);
 
 		if (json == null) {
@@ -1858,7 +1858,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							"[$", "$]", documentsStringUtilReplaceValues),
 						false, StringPool.BLANK, StringPool.BLANK,
 						jsonObject.getBoolean("instanceable"),
-						BundleSiteInitializerUtil.toMap(
+						SiteInitializerUtil.toMap(
 							jsonObject.getString("name_i18n")),
 						jsonObject.getString("portletCategoryName"),
 						sb.toString(), StringPool.BLANK);
@@ -1882,7 +1882,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			resourcePath, _servletContext);
 
 		if (json == null) {
@@ -1962,14 +1962,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
 					Collections.singletonMap(serviceContext.getLocale(), name),
-					BundleSiteInitializerUtil.toMap(
+					SiteInitializerUtil.toMap(
 						jsonObject.getString("description")));
 			}
 			else {
 				role = _roleLocalService.addRole(
 					serviceContext.getUserId(), null, 0, name,
 					Collections.singletonMap(serviceContext.getLocale(), name),
-					BundleSiteInitializerUtil.toMap(
+					SiteInitializerUtil.toMap(
 						jsonObject.getString("description")),
 					jsonObject.getInt("type"), jsonObject.getString("subtype"),
 					serviceContext);
@@ -2017,7 +2017,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/roles.json", _servletContext);
 
 		if (json == null) {
@@ -2038,7 +2038,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addSAPEntries(ServiceContext serviceContext)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/sap-entries.json", _servletContext);
 
 		if (json == null) {
@@ -2064,7 +2064,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getBoolean("defaultSAPEntry", true),
 					jsonObject.getBoolean("enabled", true),
 					jsonObject.getString("name"),
-					BundleSiteInitializerUtil.toMap(
+					SiteInitializerUtil.toMap(
 						jsonObject.getString("title_i18n")),
 					serviceContext);
 			}
@@ -2079,7 +2079,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getBoolean("defaultSAPEntry", true),
 					jsonObject.getBoolean("enabled", true),
 					jsonObject.getString("name"),
-					BundleSiteInitializerUtil.toMap(
+					SiteInitializerUtil.toMap(
 						jsonObject.getString("title_i18n")),
 					serviceContext);
 			}
@@ -2091,7 +2091,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String resourcePath = "site-initializer/site-configuration.json";
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			resourcePath, _servletContext);
 
 		if (json == null) {
@@ -2238,7 +2238,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemSettings)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/site-navigation-menus.json", _servletContext);
 
 		if (json == null) {
@@ -2268,7 +2268,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			parentResourcePath + ".metadata.json", _servletContext);
 
 		if (json == null) {
@@ -2329,7 +2329,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(json);
@@ -2433,7 +2433,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String json = BundleSiteInitializerUtil.read(
+			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
 			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
@@ -2537,7 +2537,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addUserAccounts(ServiceContext serviceContext)
 		throws Exception {
 
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/user-accounts.json", _servletContext);
 
 		if (json == null) {
@@ -2609,7 +2609,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addUserRoles(ServiceContext serviceContext) throws Exception {
-		String json = BundleSiteInitializerUtil.read(
+		String json = SiteInitializerUtil.read(
 			"/site-initializer/user-roles.json", _servletContext);
 
 		if (json == null) {
@@ -2665,12 +2665,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			JSONObject workflowDefinitionJSONObject =
 				JSONFactoryUtil.createJSONObject(
-					BundleSiteInitializerUtil.read(
+					SiteInitializerUtil.read(
 						resourcePath + ".json", _servletContext));
 
 			workflowDefinitionJSONObject.put(
 				"content",
-				BundleSiteInitializerUtil.read(
+				SiteInitializerUtil.read(
 					resourcePath + ".content.xml", _servletContext));
 
 			WorkflowDefinition workflowDefinition =
@@ -2678,7 +2678,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					WorkflowDefinition.toDTO(
 						workflowDefinitionJSONObject.toString()));
 
-			String propertiesJSON = BundleSiteInitializerUtil.read(
+			String propertiesJSON = SiteInitializerUtil.read(
 				resourcePath + ".properties.json", _servletContext);
 
 			if (propertiesJSON == null) {
@@ -2931,14 +2931,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			resourcePath += "/public";
 		}
 
-		String metadataJSON = BundleSiteInitializerUtil.read(
+		String metadataJSON = SiteInitializerUtil.read(
 			resourcePath + "/metadata.json", _servletContext);
 
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			(metadataJSON == null) ? "{}" : metadataJSON);
 
 		String css = GetterUtil.getString(
-			BundleSiteInitializerUtil.read(
+			SiteInitializerUtil.read(
 				resourcePath + "/css.css", _servletContext));
 
 		_layoutSetLocalService.updateLookAndFeel(
@@ -2963,7 +2963,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		String js = BundleSiteInitializerUtil.read(
+		String js = SiteInitializerUtil.read(
 			resourcePath + "/js.js", _servletContext);
 
 		if (Validator.isNotNull(js)) {
