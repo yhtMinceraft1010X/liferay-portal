@@ -66,6 +66,15 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				commerceShippingMethod -> new ShippingMethod() {
 					{
 						active = commerceShippingMethod.isActive();
+						engineKey = commerceShippingMethod.getEngineKey();
+						id =
+							commerceShippingMethod.
+								getCommerceShippingMethodId();
+						priority = commerceShippingMethod.getPriority();
+						shippingOptions = _getShippingOptions(
+							commerceShippingMethod.
+								getCommerceShippingMethodId());
+
 						setDescription(
 							() -> {
 								if (Validator.isNull(
@@ -90,10 +99,6 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 								return LanguageUtils.getLanguageIdMap(
 									commerceShippingMethod.getNameMap());
 							});
-						engineKey = commerceShippingMethod.getEngineKey();
-						id =
-							commerceShippingMethod.
-								getCommerceShippingMethodId();
 						setName(
 							() -> {
 								if (Validator.isNull(
@@ -117,10 +122,6 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 								return LanguageUtils.getLanguageIdMap(
 									commerceShippingMethod.getNameMap());
 							});
-						priority = commerceShippingMethod.getPriority();
-						shippingOptions = _getShippingOptions(
-							commerceShippingMethod.
-								getCommerceShippingMethodId());
 					}
 				}),
 			pagination,
