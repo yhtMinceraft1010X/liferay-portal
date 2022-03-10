@@ -91,19 +91,21 @@ public class ObjectEntryDTOConverter
 
 		if (uriInfo == null) {
 			return _toDTO(
-				dtoConverterContext, objectEntry,
-				Math.min(1, PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH));
+				dtoConverterContext,
+				Math.min(1, PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+				objectEntry);
 		}
 
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();
 
 		return _toDTO(
-			dtoConverterContext, objectEntry,
+			dtoConverterContext,
 			Math.min(
 				GetterUtil.getInteger(
 					queryParameters.getFirst("nestedFieldsDepth"), 1),
-				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH));
+				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+			objectEntry);
 	}
 
 	private DTOConverterContext _getDTOConverterContext(
@@ -163,9 +165,8 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry _toDTO(
-			DTOConverterContext dtoConverterContext,
-			com.liferay.object.model.ObjectEntry objectEntry,
-			int nestedFieldsDepth)
+			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _getObjectDefinition(
@@ -182,8 +183,8 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = _toProperties(
-					dtoConverterContext, objectDefinition, objectEntry,
-					nestedFieldsDepth);
+					dtoConverterContext, nestedFieldsDepth, objectDefinition,
+					objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -202,10 +203,9 @@ public class ObjectEntryDTOConverter
 	}
 
 	private Map<String, Object> _toProperties(
-			DTOConverterContext dtoConverterContext,
+			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
 			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry,
-			int nestedFieldsDepth)
+			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
 		Map<String, Object> map = new HashMap<>();
@@ -305,9 +305,9 @@ public class ObjectEntryDTOConverter
 							_toDTO(
 								_getDTOConverterContext(
 									dtoConverterContext, objectEntryId),
+								nestedFieldsDepth - 1,
 								_objectEntryLocalService.getObjectEntry(
-									objectEntryId),
-								nestedFieldsDepth - 1));
+									objectEntryId)));
 					}
 				}
 
