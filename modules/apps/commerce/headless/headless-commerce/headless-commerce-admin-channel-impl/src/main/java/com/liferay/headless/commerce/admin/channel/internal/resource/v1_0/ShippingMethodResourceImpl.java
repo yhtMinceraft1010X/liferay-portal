@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -56,74 +57,11 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(channelId);
 
-		Map<String, CommerceShippingEngine> commerceShippingEngines =
-			_commerceShippingEngineRegistry.getCommerceShippingEngines();
-
 		return Page.of(
 			TransformUtil.transform(
 				_commerceShippingMethodService.getCommerceShippingMethods(
 					commerceChannel.getGroupId()),
-				commerceShippingMethod -> new ShippingMethod() {
-					{
-						active = commerceShippingMethod.isActive();
-						engineKey = commerceShippingMethod.getEngineKey();
-						id =
-							commerceShippingMethod.
-								getCommerceShippingMethodId();
-						priority = commerceShippingMethod.getPriority();
-						shippingOptions = _getShippingOptions(
-							commerceShippingMethod.
-								getCommerceShippingMethodId());
-
-						setDescription(
-							() -> {
-								if (Validator.isNull(
-										commerceShippingMethod.
-											getDescriptionMap())) {
-
-									CommerceShippingEngine
-										commerceShippingEngine =
-											commerceShippingEngines.get(
-												commerceShippingMethod.
-													getEngineKey());
-
-									return HashMapBuilder.put(
-										contextAcceptLanguage.
-											getPreferredLanguageId(),
-										commerceShippingEngine.getDescription(
-											contextAcceptLanguage.
-												getPreferredLocale())
-									).build();
-								}
-
-								return LanguageUtils.getLanguageIdMap(
-									commerceShippingMethod.getNameMap());
-							});
-						setName(
-							() -> {
-								if (Validator.isNull(
-										commerceShippingMethod.getNameMap())) {
-
-									CommerceShippingEngine
-										commerceShippingEngine =
-											commerceShippingEngines.get(
-												commerceShippingMethod.
-													getEngineKey());
-
-									return HashMapBuilder.put(
-										contextAcceptLanguage.
-											getPreferredLanguageId(),
-										commerceShippingEngine.getName(
-											contextAcceptLanguage.
-												getPreferredLocale())
-									).build();
-								}
-
-								return LanguageUtils.getLanguageIdMap(
-									commerceShippingMethod.getNameMap());
-							});
-					}
-				}),
+				this::_toShippingMethod),
 			pagination,
 			_commerceShippingMethodService.getCommerceShippingMethodsCount(
 				commerceChannel.getGroupId(), true));
@@ -148,6 +86,64 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				}
 			},
 			ShippingOption.class);
+	}
+
+	private ShippingMethod _toShippingMethod(
+			CommerceShippingMethod commerceShippingMethod)
+		throws PortalException {
+
+		Map<String, CommerceShippingEngine> commerceShippingEngines =
+			_commerceShippingEngineRegistry.getCommerceShippingEngines();
+
+		return new ShippingMethod() {
+			{
+				active = commerceShippingMethod.isActive();
+				engineKey = commerceShippingMethod.getEngineKey();
+				id = commerceShippingMethod.getCommerceShippingMethodId();
+				priority = commerceShippingMethod.getPriority();
+				shippingOptions = _getShippingOptions(
+					commerceShippingMethod.getCommerceShippingMethodId());
+
+				setDescription(
+					() -> {
+						if (Validator.isNull(
+								commerceShippingMethod.getDescriptionMap())) {
+
+							CommerceShippingEngine commerceShippingEngine =
+								commerceShippingEngines.get(
+									commerceShippingMethod.getEngineKey());
+
+							return HashMapBuilder.put(
+								contextAcceptLanguage.getPreferredLanguageId(),
+								commerceShippingEngine.getDescription(
+									contextAcceptLanguage.getPreferredLocale())
+							).build();
+						}
+
+						return LanguageUtils.getLanguageIdMap(
+							commerceShippingMethod.getNameMap());
+					});
+				setName(
+					() -> {
+						if (Validator.isNull(
+								commerceShippingMethod.getNameMap())) {
+
+							CommerceShippingEngine commerceShippingEngine =
+								commerceShippingEngines.get(
+									commerceShippingMethod.getEngineKey());
+
+							return HashMapBuilder.put(
+								contextAcceptLanguage.getPreferredLanguageId(),
+								commerceShippingEngine.getName(
+									contextAcceptLanguage.getPreferredLocale())
+							).build();
+						}
+
+						return LanguageUtils.getLanguageIdMap(
+							commerceShippingMethod.getNameMap());
+					});
+			}
+		};
 	}
 
 	@Reference
