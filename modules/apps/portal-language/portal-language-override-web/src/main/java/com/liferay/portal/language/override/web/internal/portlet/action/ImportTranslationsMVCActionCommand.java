@@ -99,15 +99,15 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		Enumeration<String> languageKeyEnumeration =
+		Enumeration<String> enumeration =
 			(Enumeration<String>)languageProperties.propertyNames();
 
-		while (languageKeyEnumeration.hasMoreElements()) {
-			String languageKey = languageKeyEnumeration.nextElement();
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
 
 			_ploEntryService.addOrUpdatePLOEntry(
-				languageKey, languageId,
-				languageProperties.getProperty(languageKey));
+				key, languageId,
+				languageProperties.getProperty(key));
 		}
 	}
 
