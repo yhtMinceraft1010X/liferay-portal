@@ -120,6 +120,11 @@ public class ObjectEntryModelDocumentContributor
 			_log.debug("Object entry " + objectEntry);
 		}
 
+		document.add(
+			new Field(
+				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+				document.get(Field.ENTRY_CLASS_PK)));
+
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
 
@@ -138,11 +143,6 @@ public class ObjectEntryModelDocumentContributor
 
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
-
-		document.add(
-			new Field(
-				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
-				document.get(Field.ENTRY_CLASS_PK)));
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
