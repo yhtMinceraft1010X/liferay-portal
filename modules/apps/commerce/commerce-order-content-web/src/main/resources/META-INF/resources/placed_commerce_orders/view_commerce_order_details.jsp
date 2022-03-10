@@ -48,8 +48,6 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 if (commerceOrder != null) {
 	commerceAccount = commerceOrder.getCommerceAccount();
 }
-
-boolean hasViewBillingAddressPermission = commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount);
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
@@ -166,7 +164,7 @@ boolean hasViewBillingAddressPermission = commerceOrderContentDisplayContext.has
 		<div class="commerce-panel">
 			<div class="commerce-panel__title"><liferay-ui:message key="billing-address" /></div>
 			<div class="commerce-panel__content">
-				<c:if test="<%= hasViewBillingAddressPermission && (billingCommerceAddress != null) %>">
+				<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) && (billingCommerceAddress != null) %>">
 					<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
 
 					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">

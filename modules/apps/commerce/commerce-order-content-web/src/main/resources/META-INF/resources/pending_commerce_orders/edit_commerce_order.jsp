@@ -56,8 +56,6 @@ List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.get
 List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
 
 List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES);
-
-boolean hasViewBillingAddressPermission = commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount);
 %>
 
 <c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">
@@ -257,7 +255,7 @@ boolean hasViewBillingAddressPermission = commerceOrderContentDisplayContext.has
 				<div class="commerce-panel__content">
 					<div class="row">
 						<div class="col-md-12">
-							<c:if test="<%= hasViewBillingAddressPermission %>">
+							<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
 								<c:choose>
 									<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 										<dl class="commerce-list">
