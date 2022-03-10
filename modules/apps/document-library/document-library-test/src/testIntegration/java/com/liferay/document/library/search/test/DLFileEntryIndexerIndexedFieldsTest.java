@@ -135,8 +135,6 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		Document document = dlSearchFixture.searchOnlyOneSearchHit(
 			searchTerm, LocaleUtil.JAPAN);
 
-		document = indexedFieldsFixture.postProcessDocument(document);
-
 		Map<String, String> map = new HashMap<>();
 
 		populateExpectedFieldValues(fileEntry, map);
@@ -198,15 +196,14 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	}
 
 	protected void populateDates(FileEntry fileEntry, Map<String, String> map) {
-
 		Date createDate = fileEntry.getCreateDate();
 
-		indexedFieldsFixture.populateDate(
-			Field.CREATE_DATE, createDate, map);
+		indexedFieldsFixture.populateDate(Field.CREATE_DATE, createDate, map);
+
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, fileEntry.getModifiedDate(), map);
-		indexedFieldsFixture.populateDate(
-			Field.PUBLISH_DATE, createDate, map);
+
+		indexedFieldsFixture.populateDate(Field.PUBLISH_DATE, createDate, map);
 
 		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
@@ -215,11 +212,12 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			FileEntry fileEntry, Map<String, String> map)
 		throws Exception {
 
-		AssetEntry assetEntry = _getAssetEntry(fileEntry);
-
-		long assetEntryId = _getAssetEntryId(assetEntry);
+		long assetEntryId = _getAssetEntryId(_getAssetEntry(fileEntry));
 
 		map.put(Field.ASSET_ENTRY_ID, String.valueOf(assetEntryId));
+
+		map.put(
+			Field.ASSET_ENTRY_ID + "_sortable", String.valueOf(assetEntryId));
 
 		map.put(Field.CLASS_NAME_ID, "0");
 		map.put(Field.CLASS_PK, "0");
@@ -238,9 +236,10 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(Field.USER_ID, String.valueOf(fileEntry.getUserId()));
 		map.put(
 			Field.USER_NAME, StringUtil.toLowerCase(fileEntry.getUserName()));
-		map.put(Field.ASSET_ENTRY_ID + "_sortable", String.valueOf(assetEntryId));
 		map.put("classTypeId", "0");
 		map.put("content_ja_JP", getContents(fileEntry));
+		map.put("contentLength_ja_JP", "5");
+		map.put("contentLength_ja_JP_sortable", "5");
 		map.put(
 			"dataRepositoryId", String.valueOf(fileEntry.getRepositoryId()));
 		map.put("ddmContent", "text/plain; charset=UTF-8 UTF-8");
@@ -266,8 +265,6 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(
 			"versionCount_sortable", String.valueOf(fileEntry.getVersion()));
 		map.put("visible", "true");
-		map.put("contentLength_ja_JP", "5");
-		map.put("contentLength_ja_JP_sortable", "5");
 
 		populateDates(fileEntry, map);
 
