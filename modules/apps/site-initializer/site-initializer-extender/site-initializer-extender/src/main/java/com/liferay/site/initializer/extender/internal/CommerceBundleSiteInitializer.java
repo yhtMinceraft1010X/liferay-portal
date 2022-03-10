@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.commerce;
+package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
@@ -89,8 +89,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = CommerceBundleSiteInitializerContributor.class)
-public class CommerceBundleSiteInitializerContributor {
+@Component(service = CommerceBundleSiteInitializer.class)
+public class CommerceBundleSiteInitializer {
 
 	public void addCPDefinitions(
 			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
@@ -199,8 +199,7 @@ public class CommerceBundleSiteInitializerContributor {
 
 		String resourcePath = "/site-initializer/commerce-channel.json";
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		if (json == null) {
 			return null;
@@ -369,8 +368,7 @@ public class CommerceBundleSiteInitializerContributor {
 				serviceContext.fetchUser()
 			).build();
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -416,8 +414,7 @@ public class CommerceBundleSiteInitializerContributor {
 			ServletContext servletContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -446,8 +443,7 @@ public class CommerceBundleSiteInitializerContributor {
 			ServletContext servletContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -542,8 +538,7 @@ public class CommerceBundleSiteInitializerContributor {
 			ServletContext servletContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -563,8 +558,7 @@ public class CommerceBundleSiteInitializerContributor {
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -645,7 +639,7 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceBundleSiteInitializerContributor.class);
+		CommerceBundleSiteInitializer.class);
 
 	@Reference
 	private CatalogResource.Factory _catalogResourceFactory;

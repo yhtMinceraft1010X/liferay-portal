@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.extender.internal.commerce.CommerceBundleSiteInitializerContributor;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -170,10 +169,9 @@ public class SiteInitializerExtension {
 			_dependencyManager.createServiceDependency();
 
 		serviceDependency.setCallbacks(
-			"setCommerceBundleSiteInitializerContributor", null);
+			"setCommerceBundleSiteInitializer", null);
 		serviceDependency.setRequired(false);
-		serviceDependency.setService(
-			CommerceBundleSiteInitializerContributor.class);
+		serviceDependency.setService(CommerceBundleSiteInitializer.class);
 
 		_component.add(serviceDependency);
 

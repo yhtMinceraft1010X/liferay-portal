@@ -142,7 +142,6 @@ import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.extender.internal.commerce.CommerceBundleSiteInitializerContributor;
 import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -325,8 +324,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Commerce bundle site initializer contributor " +
-					_commerceBundleSiteInitializerContributor);
+				"Commerce bundle site initializer " +
+					_commerceBundleSiteInitializer);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -469,12 +468,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceBundleSiteInitializerContributor(
-		CommerceBundleSiteInitializerContributor
-			commerceBundleSiteInitializerContributor) {
+	protected void setCommerceBundleSiteInitializer(
+		CommerceBundleSiteInitializer commerceBundleSiteInitializer) {
 
-		_commerceBundleSiteInitializerContributor =
-			commerceBundleSiteInitializerContributor;
+		_commerceBundleSiteInitializer = commerceBundleSiteInitializer;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -624,14 +621,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if ((_commerceBundleSiteInitializerContributor == null) ||
+		if ((_commerceBundleSiteInitializer == null) ||
 			!GetterUtil.getBoolean(
 				PropsUtil.get("enterprise.product.commerce.enabled"))) {
 
 			return;
 		}
 
-		_commerceBundleSiteInitializerContributor.addCPDefinitions(
+		_commerceBundleSiteInitializer.addCPDefinitions(
 			_bundle, documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			_servletContext);
@@ -702,8 +699,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL,
-				SiteInitializerUtil.read(
-					_bundle, "ddm-template.ftl", url),
+				SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
 				false, false, null, null, serviceContext);
 		}
 	}
@@ -1206,16 +1202,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")),
 			SiteInitializerUtil.toMap(jsonObject.getString("title_i18n")),
-			SiteInitializerUtil.toMap(
-				jsonObject.getString("description_i18n")),
-			SiteInitializerUtil.toMap(
-				jsonObject.getString("keywords_i18n")),
-			SiteInitializerUtil.toMap(
-				jsonObject.getString("robots_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("description_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("keywords_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
 			type, null, jsonObject.getBoolean("hidden"),
 			jsonObject.getBoolean("system"),
-			SiteInitializerUtil.toMap(
-				jsonObject.getString("friendlyURL_i18n")),
+			SiteInitializerUtil.toMap(jsonObject.getString("friendlyURL_i18n")),
 			serviceContext);
 	}
 
@@ -1882,8 +1874,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, _servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
 
 		if (json == null) {
 			return;
@@ -2091,8 +2082,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String resourcePath = "site-initializer/site-configuration.json";
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, _servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
 
 		if (json == null) {
 			return;
@@ -3000,8 +2990,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private CommerceBundleSiteInitializerContributor
-		_commerceBundleSiteInitializerContributor;
+	private CommerceBundleSiteInitializer _commerceBundleSiteInitializer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
