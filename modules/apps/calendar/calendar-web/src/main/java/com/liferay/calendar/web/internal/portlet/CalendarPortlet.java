@@ -1331,7 +1331,6 @@ public class CalendarPortlet extends MVCPortlet {
 
 		long[] calendarIds = ParamUtil.getLongValues(
 			resourceRequest, "calendarIds");
-
 		TimeZone timeZone = _getTimeZone(resourceRequest);
 
 		if (!ArrayUtil.isEmpty(calendarIds)) {
