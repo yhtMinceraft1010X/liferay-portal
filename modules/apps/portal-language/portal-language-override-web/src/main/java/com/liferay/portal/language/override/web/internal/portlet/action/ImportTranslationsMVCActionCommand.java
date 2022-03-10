@@ -106,8 +106,7 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 			String key = enumeration.nextElement();
 
 			_ploEntryService.addOrUpdatePLOEntry(
-				key, languageId,
-				languageProperties.getProperty(key));
+				key, languageId, languageProperties.getProperty(key));
 		}
 	}
 
