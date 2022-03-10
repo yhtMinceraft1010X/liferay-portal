@@ -11,16 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.commerce.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Crescenzo Rega
+ * @author Alessio Antonio Rendina
  */
-public class CommerceOrderDefaultBillingAddressException
-	extends PortalException {
+public class CommerceOrderDefaultBillingAddressException extends PortalException {
 
 	public CommerceOrderDefaultBillingAddressException() {
 	}
@@ -29,9 +27,7 @@ public class CommerceOrderDefaultBillingAddressException
 		super(msg);
 	}
 
-	public CommerceOrderDefaultBillingAddressException(
-		String msg, Throwable throwable) {
-
+	public CommerceOrderDefaultBillingAddressException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 

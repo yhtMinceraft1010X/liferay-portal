@@ -883,6 +883,7 @@
 		<exception>CommerceOrderAccountLimit</exception>
 		<exception>CommerceOrderBillingAddress</exception>
 		<exception>CommerceOrderDate</exception>
+		<exception>CommerceOrderDefaultBillingAddress</exception>
 		<exception>CommerceOrderGuestCheckout</exception>
 		<exception>CommerceOrderItemRequestedDeliveryDate</exception>
 		<exception>CommerceOrderNoteContent</exception>
