@@ -89,8 +89,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = CommerceBundleSiteInitializer.class)
-public class CommerceBundleSiteInitializer {
+@Component(service = CommerceSiteInitializer.class)
+public class CommerceSiteInitializer {
 
 	public void addCPDefinitions(
 			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
@@ -639,7 +639,7 @@ public class CommerceBundleSiteInitializer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceBundleSiteInitializer.class);
+		CommerceSiteInitializer.class);
 
 	@Reference
 	private CatalogResource.Factory _catalogResourceFactory;

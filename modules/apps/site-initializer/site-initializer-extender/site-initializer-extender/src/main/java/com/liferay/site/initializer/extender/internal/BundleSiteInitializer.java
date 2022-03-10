@@ -323,9 +323,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Commerce bundle site initializer " +
-					_commerceBundleSiteInitializer);
+			_log.debug("Commerce site initializer " + _commerceSiteInitializer);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -468,10 +466,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceBundleSiteInitializer(
-		CommerceBundleSiteInitializer commerceBundleSiteInitializer) {
+	protected void setCommerceSiteInitializer(
+		CommerceSiteInitializer commerceSiteInitializer) {
 
-		_commerceBundleSiteInitializer = commerceBundleSiteInitializer;
+		_commerceSiteInitializer = commerceSiteInitializer;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -621,14 +619,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if ((_commerceBundleSiteInitializer == null) ||
+		if ((_commerceSiteInitializer == null) ||
 			!GetterUtil.getBoolean(
 				PropsUtil.get("enterprise.product.commerce.enabled"))) {
 
 			return;
 		}
 
-		_commerceBundleSiteInitializer.addCPDefinitions(
+		_commerceSiteInitializer.addCPDefinitions(
 			_bundle, documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			_servletContext);
@@ -2990,7 +2988,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private CommerceBundleSiteInitializer _commerceBundleSiteInitializer;
+	private CommerceSiteInitializer _commerceSiteInitializer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

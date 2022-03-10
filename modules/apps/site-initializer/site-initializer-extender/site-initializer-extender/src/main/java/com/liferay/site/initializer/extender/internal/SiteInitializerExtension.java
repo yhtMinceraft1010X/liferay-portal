@@ -168,10 +168,9 @@ public class SiteInitializerExtension {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		serviceDependency.setCallbacks(
-			"setCommerceBundleSiteInitializer", null);
+		serviceDependency.setCallbacks("setCommerceSiteInitializer", null);
 		serviceDependency.setRequired(false);
-		serviceDependency.setService(CommerceBundleSiteInitializer.class);
+		serviceDependency.setService(CommerceSiteInitializer.class);
 
 		_component.add(serviceDependency);
 
