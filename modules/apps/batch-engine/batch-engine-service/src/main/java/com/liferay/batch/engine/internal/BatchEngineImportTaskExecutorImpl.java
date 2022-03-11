@@ -147,9 +147,6 @@ public class BatchEngineImportTaskExecutorImpl
 			new BatchEngineTaskItemDelegateExecutorFactory(
 				_batchEngineTaskMethodRegistry, null, null, null);
 
-		_batchEngineImportStrategyFactory =
-			new BatchEngineImportStrategyFactory();
-
 		setUserNotificationEventLocalService(
 			_userNotificationEventLocalService);
 	}
@@ -289,7 +286,8 @@ public class BatchEngineImportTaskExecutorImpl
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory;
+	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory =
+		new BatchEngineImportStrategyFactory();
 
 	@Reference
 	private BatchEngineImportTaskErrorLocalService
