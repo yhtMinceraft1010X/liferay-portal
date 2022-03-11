@@ -74,7 +74,7 @@ public class FileEntryLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testProvideFileEntryWithInvalidFileEntryId() {
+	public void testGetLayoutDisplayPageObjectProviderFileEntryWithInvalidFileEntryId() {
 		Assert.assertNull(
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				_fileEntry.getGroupId(),
@@ -82,14 +82,14 @@ public class FileEntryLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testProvideFileEntryWithInvalidUrlTitle() {
+	public void testGetLayoutDisplayPageObjectProviderFileEntryWithInvalidUrlTitle() {
 		Assert.assertNull(
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				_fileEntry.getGroupId(), RandomTestUtil.randomString()));
 	}
 
 	@Test
-	public void testProvideFileEntryWithValidFileEntryId() {
+	public void testGetLayoutDisplayPageObjectProviderFileEntryWithValidFileEntryId() {
 		Assert.assertNotNull(
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				_fileEntry.getGroupId(),
@@ -97,7 +97,9 @@ public class FileEntryLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testProvideFileEntryWithValidUrlTitle() throws Exception {
+	public void testGetLayoutDisplayPageObjectProviderFileEntryWithValidUrlTitle()
+		throws Exception {
+
 		Assert.assertNotNull(
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				_fileEntry.getGroupId(), _fileEntry.getTitle()));
