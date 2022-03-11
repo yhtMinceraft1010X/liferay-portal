@@ -125,7 +125,7 @@ public class UpgradeCompanyIdTest {
 	private static final int _COLUMN_VALUE = 99999;
 
 	private static final String _MAPPING_TABLE_NAME =
-		"UpgradeCompanyIdMappingTest";
+		"UpgradeCompanyIdTestMapping";
 
 	private static final String _TABLE_NAME = "UpgradeCompanyIdTest";
 
