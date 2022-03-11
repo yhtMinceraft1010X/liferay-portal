@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Order Completion</name>
-	<description>Workflow to complete the order lifecycle after payment</description>
+	<description>Complete the order after payment.</description>
 	<version>1</version>
 	<state>
 		<name>StartNode</name>
@@ -57,8 +57,11 @@
 						CommerceOrder commerceOrder = CommerceOrderLocalServiceUtil.getCommerceOrder(kaleoInstanceToken.getClassPK());
 
 						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+
 						commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+
 						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
 						CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 
 						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
