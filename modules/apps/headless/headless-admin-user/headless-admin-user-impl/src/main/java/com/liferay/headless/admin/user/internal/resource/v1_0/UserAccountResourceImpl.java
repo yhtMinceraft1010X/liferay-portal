@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
@@ -408,7 +409,8 @@ public class UserAccountResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), userAccount.getJobTitle());
+				_getSuffixId(userAccount), userAccount.getJobTitle(),
+				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		User user = accountEntryUserRel.getUser();
 

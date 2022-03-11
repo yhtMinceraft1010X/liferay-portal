@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -99,7 +100,10 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 							accountEntryId, themeDisplay.getUserId(),
 							screenName, emailAddress,
 							LocaleUtil.fromLanguageId(languageId), firstName,
-							middleName, lastName, prefixId, suffixId, jobTitle);
+							middleName, lastName, prefixId, suffixId, jobTitle,
+							ServiceContextFactory.getInstance(
+								AccountEntryUserRel.class.getName(),
+								actionRequest));
 			}
 			else {
 				accountEntryUserRel =
@@ -107,7 +111,10 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						accountEntryId, themeDisplay.getUserId(), screenName,
 						emailAddress, LocaleUtil.fromLanguageId(languageId),
 						firstName, middleName, lastName, prefixId, suffixId,
-						jobTitle);
+						jobTitle,
+						ServiceContextFactory.getInstance(
+							AccountEntryUserRel.class.getName(),
+							actionRequest));
 			}
 
 			String portletId = _portal.getPortletId(actionRequest);
