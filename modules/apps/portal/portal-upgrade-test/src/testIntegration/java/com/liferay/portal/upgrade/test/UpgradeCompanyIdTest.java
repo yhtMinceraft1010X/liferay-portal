@@ -62,8 +62,6 @@ public class UpgradeCompanyIdTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_upgradeProcess = new UpgradeCompanyIdCustom();
-
 		_upgradeProcess.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME, " (", _COLUMN_NAME,
@@ -90,10 +88,6 @@ public class UpgradeCompanyIdTest {
 	public void tearDown() throws Exception {
 		_upgradeProcess.runSQL("drop table " + _TABLE_NAME);
 		_upgradeProcess.runSQL("drop table " + _MAPPING_TABLE_NAME);
-
-		if (_company != null) {
-			_companyLocalService.deleteCompany(_company);
-		}
 	}
 
 	@Test
@@ -107,7 +101,7 @@ public class UpgradeCompanyIdTest {
 
 	@Test
 	public void testUpgradeWithNullValues() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
 		_upgradeProcess.runSQL(
 			StringBundler.concat(
@@ -121,6 +115,8 @@ public class UpgradeCompanyIdTest {
 		}
 		catch (Exception exception) {
 		}
+
+		_companyLocalService.deleteCompany(company);
 	}
 
 	private static final String _COLUMN_NAME = "id";
@@ -132,14 +128,13 @@ public class UpgradeCompanyIdTest {
 
 	private static final String _TABLE_NAME = "UpgradeCompanyIdTest";
 
-	private Company _company;
-
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
-	private static UpgradeCompanyIdCustom _upgradeProcess;
+	private UpgradeCompanyIdCustom _upgradeProcess =
+		new UpgradeCompanyIdCustom();
 
 	private class UpgradeCompanyIdCustom extends UpgradeCompanyId {
 
