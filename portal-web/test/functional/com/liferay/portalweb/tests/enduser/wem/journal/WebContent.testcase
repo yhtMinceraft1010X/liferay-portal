@@ -1455,7 +1455,7 @@ definition {
 				pageName = "Test Page Name",
 				pageType = "Public Pages");
 
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("View publishing fails and no error in console") {
