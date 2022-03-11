@@ -100,7 +100,7 @@ public class UpgradeCompanyIdTest {
 	}
 
 	@Test
-	public void testUpgradeWithNullValues() throws Exception {
+	public void testUpgradeNullValues() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		_upgradeProcess.runSQL(
