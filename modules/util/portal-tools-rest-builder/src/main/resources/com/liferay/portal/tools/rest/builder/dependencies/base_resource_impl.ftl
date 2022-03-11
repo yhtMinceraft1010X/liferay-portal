@@ -663,9 +663,11 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+
 	<#if generateBatch>
 		protected UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
 	</#if>
+
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
