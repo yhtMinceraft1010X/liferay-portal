@@ -131,7 +131,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			</div>
 		</liferay-frontend:edit-form-body>
 
-		<div class="mt-4" id="<portlet:namespace />formButtons">
+		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
 				<clay:link
 					displayType="secondary"

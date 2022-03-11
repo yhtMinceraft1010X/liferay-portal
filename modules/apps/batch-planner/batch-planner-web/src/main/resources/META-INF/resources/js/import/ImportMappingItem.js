@@ -62,6 +62,7 @@ const ImportMappingItem = ({
 
 					<ClaySelect
 						aria-required={required}
+						disabled={!fileFields}
 						id={inputId}
 						name={
 							selectedFileField &&
@@ -74,24 +75,25 @@ const ImportMappingItem = ({
 					>
 						<ClaySelect.Option label="" value="" />
 
-						{fileFields.map((fileField) => {
-							const columnHasNoName =
-								typeof fileField === 'number';
+						{fileFields &&
+							fileFields.map((fileField) => {
+								const columnHasNoName =
+									typeof fileField === 'number';
 
-							const label = columnHasNoName
-								? `${Liferay.Language.get('column')} ${
-										fileField + 1
-								  }`
-								: fileField;
+								const label = columnHasNoName
+									? `${Liferay.Language.get('column')} ${
+											fileField + 1
+									  }`
+									: fileField;
 
-							return (
-								<ClaySelect.Option
-									key={fileField}
-									label={label}
-									value={String(fileField)}
-								/>
-							);
-						})}
+								return (
+									<ClaySelect.Option
+										key={fileField}
+										label={label}
+										value={String(fileField)}
+									/>
+								);
+							})}
 					</ClaySelect>
 				</ClayForm.Group>
 			</ClayTable.Cell>

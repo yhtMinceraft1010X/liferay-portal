@@ -112,11 +112,9 @@ function ImportForm({
 
 	useEffect(() => {
 		function handleSchemaUpdated({schema}) {
-			if (schema) {
-				const newDBFields = getFieldsFromSchema(schema);
+			const newDBFields = getFieldsFromSchema(schema);
 
-				setDbFields(newDBFields);
-			}
+			setDbFields(newDBFields);
 		}
 
 		function handleFileSchemaUpdate({firstItemDetails, schema}) {
@@ -143,8 +141,7 @@ function ImportForm({
 	}, []);
 
 	const formIsVisible = !!(
-		fileFields?.length > 0 &&
-		!!(dbFields.optional.length + dbFields.required.length)
+		dbFields.optional.length + dbFields.required.length
 	);
 
 	return (
@@ -156,7 +153,7 @@ function ImportForm({
 					</h4>
 
 					<div className="card-body p-0">
-						<ClayTable borderless>
+						<ClayTable borderless hover={false}>
 							<TableFieldsHeader />
 
 							<ClayTable.Body>
@@ -267,33 +264,29 @@ function ImportForm({
 				</div>
 			)}
 
-			<div className="mt-4" id="formButtons">
-				<div className="sheet-footer">
-					<ClayLink className="btn btn-secondary" href={backUrl}>
-						{Liferay.Language.get('cancel')}
-					</ClayLink>
+			<div className="mt-4 sheet-footer">
+				<ClayLink className="btn btn-secondary" href={backUrl}>
+					{Liferay.Language.get('cancel')}
+				</ClayLink>
 
-					<SaveTemplate
-						evaluateForm={() => setFormEvaluated(true)}
-						formIsValid={formIsValid}
-						formIsVisible={formIsVisible}
-						formSaveAsTemplateDataQuerySelector={
-							formDataQuerySelector
-						}
-						formSaveAsTemplateURL={formSaveAsTemplateURL}
-						portletNamespace={portletNamespace}
-						type="import"
-					/>
+				<SaveTemplate
+					evaluateForm={() => setFormEvaluated(true)}
+					formIsValid={formIsValid}
+					formIsVisible={formIsVisible}
+					formSaveAsTemplateDataQuerySelector={formDataQuerySelector}
+					formSaveAsTemplateURL={formSaveAsTemplateURL}
+					portletNamespace={portletNamespace}
+					type="import"
+				/>
 
-					<ImportSubmit
-						evaluateForm={() => setFormEvaluated(true)}
-						formDataQuerySelector={formDataQuerySelector}
-						formImportURL={formImportURL}
-						formIsValid={formIsValid}
-						formIsVisible={formIsVisible}
-						portletNamespace={portletNamespace}
-					/>
-				</div>
+				<ImportSubmit
+					evaluateForm={() => setFormEvaluated(true)}
+					formDataQuerySelector={formDataQuerySelector}
+					formImportURL={formImportURL}
+					formIsValid={formIsValid}
+					formIsVisible={formIsVisible}
+					portletNamespace={portletNamespace}
+				/>
 			</div>
 		</>
 	);

@@ -18,6 +18,10 @@ const getFieldsFromSchema = (schema) => {
 		required: [],
 	};
 
+	if (!schema) {
+		return dbFields;
+	}
+
 	for (const [label, property] of Object.entries(schema)) {
 		if (property.writeOnly || property.readOnly || label.startsWith('x-')) {
 			continue;
