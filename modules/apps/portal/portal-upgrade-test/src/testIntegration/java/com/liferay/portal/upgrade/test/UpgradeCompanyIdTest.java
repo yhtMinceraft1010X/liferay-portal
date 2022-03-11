@@ -114,6 +114,7 @@ public class UpgradeCompanyIdTest {
 			Assert.fail("Expected exception was not thrown");
 		}
 		catch (Exception exception) {
+			Assert.assertNotNull(exception);
 		}
 
 		_companyLocalService.deleteCompany(company);
