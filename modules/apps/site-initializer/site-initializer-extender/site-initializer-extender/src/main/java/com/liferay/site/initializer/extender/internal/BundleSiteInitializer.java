@@ -2720,7 +2720,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				long typePK = 0;
 
-				if (StringUtil.equals(
+				if ((_commerceSiteInitializer != null) &&
+					StringUtil.equals(
 						className,
 						_commerceSiteInitializer.getCommerceOrderClassName())) {
 
