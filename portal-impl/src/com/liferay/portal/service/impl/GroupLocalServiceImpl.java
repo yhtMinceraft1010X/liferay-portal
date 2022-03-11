@@ -180,7 +180,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -453,7 +452,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
-		group.setModifiedDate(new Date());
 		group.setClassNameId(classNameId);
 		group.setClassPK(classPK);
 		group.setParentGroupId(parentGroupId);
@@ -1059,7 +1057,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (!group.isStagingGroup() && group.isOrganization() &&
 				group.isSite()) {
 
-				group.setModifiedDate(new Date());
 				group.setSite(false);
 
 				group = groupPersistence.update(group);
@@ -1330,8 +1327,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		}
 
-		group.setModifiedDate(new Date());
-
 		groupPersistence.update(group);
 	}
 
@@ -1340,8 +1335,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
-
-		group.setModifiedDate(new Date());
 
 		int stagingGroupCount = group.getRemoteStagingGroupCount() + 1;
 
@@ -3691,7 +3684,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getClassNameId(), group.getClassPK(), friendlyURL);
 		}
 
-		group.setModifiedDate(new Date());
 		group.setFriendlyURL(friendlyURL);
 
 		return groupPersistence.update(group);
@@ -3776,7 +3768,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		validateParentGroup(group.getGroupId(), parentGroupId);
 
-		group.setModifiedDate(new Date());
 		group.setParentGroupId(parentGroupId);
 		group.setTreePath(group.buildTreePath());
 		group.setGroupKey(groupKey);
@@ -3932,7 +3923,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		group.setModifiedDate(new Date());
 		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return groupPersistence.update(group);
@@ -3954,7 +3944,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		group.setModifiedDate(new Date());
 		group.setSite(site);
 
 		return groupPersistence.update(group);
