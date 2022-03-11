@@ -34,8 +34,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 boolean createNewPage = WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE);
 
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-
-WikiSearchDisplayContext wikiSearchDisplayContext = new WikiSearchDisplayContext(request, renderRequest, renderResponse, wikiPortletInstanceSettingsHelper);
 %>
 
 <aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
@@ -55,6 +53,10 @@ WikiSearchDisplayContext wikiSearchDisplayContext = new WikiSearchDisplayContext
 			title='<%= LanguageUtil.get(request, "search-pages") %>'
 		/>
 	</div>
+
+	<%
+	WikiSearchDisplayContext wikiSearchDisplayContext = new WikiSearchDisplayContext(request, renderRequest, renderResponse, wikiPortletInstanceSettingsHelper);
+	%>
 
 	<liferay-ui:search-container
 		searchContainer="<%= wikiSearchDisplayContext.getSearchContainer() %>"
