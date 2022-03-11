@@ -125,7 +125,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -152,8 +152,6 @@ public class AccountEntryUserRelLocalServiceImpl
 		long[] roleIds = null;
 		long[] userGroupIds = null;
 		boolean sendEmail = true;
-
-		ServiceContext serviceContext = null;
 
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -238,7 +236,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
@@ -253,9 +251,10 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		deleteAccountEntryUserRelsByAccountEntryId(accountEntryId);
 
-		return addAccountEntryUserRel(
+		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			serviceContext);
 	}
 
 	@Override
