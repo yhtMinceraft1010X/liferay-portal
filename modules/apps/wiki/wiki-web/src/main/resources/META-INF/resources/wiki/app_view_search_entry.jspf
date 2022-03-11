@@ -25,10 +25,11 @@ if (Validator.isNotNull(description)) {
 
 Summary summary = new Summary(wikiPage.getTitle(), description);
 
-Hits hits = wikiSearchDisplayContext.getHits();
-
 summary.setEscape(true);
 summary.setHighlight(wikiPortletInstanceSettingsHelper.isEnableHighlighting());
+
+Hits hits = wikiSearchDisplayContext.getHits();
+
 summary.setQueryTerms(hits.getQueryTerms());
 %>
 
