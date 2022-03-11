@@ -66,10 +66,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					.dataset;
 
 				Liferay.Util.openModal({
-					iframeBodyCssClass: '',
 					disableAutoClose: true,
 					height: '60vh',
 					id: '<portlet:namespace />addSiteDialog',
+					iframeBodyCssClass: '',
 					size: 'md',
 					title: '<liferay-ui:message key="add-site" />',
 					url: data.addSiteUrl,
