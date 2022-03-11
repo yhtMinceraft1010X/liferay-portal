@@ -40,12 +40,14 @@ public class AccountEntryUserRelServiceUtil {
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, java.util.Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			serviceContext);
 	}
 
 	public static AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
@@ -70,12 +72,14 @@ public class AccountEntryUserRelServiceUtil {
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, java.util.Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addPersonTypeAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+			firstName, middleName, lastName, prefixId, suffixId, jobTitle,
+			serviceContext);
 	}
 
 	public static void deleteAccountEntryUserRelByEmailAddress(

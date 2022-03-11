@@ -55,7 +55,8 @@ public class AccountEntryUserRelServiceHttp {
 				HttpPrincipal httpPrincipal, long accountEntryId,
 				long creatorUserId, String screenName, String emailAddress,
 				java.util.Locale locale, String firstName, String middleName,
-				String lastName, long prefixId, long suffixId, String jobTitle)
+				String lastName, long prefixId, long suffixId, String jobTitle,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,7 +67,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, creatorUserId, screenName,
 				emailAddress, locale, firstName, middleName, lastName, prefixId,
-				suffixId, jobTitle);
+				suffixId, jobTitle, serviceContext);
 
 			Object returnObj = null;
 
@@ -184,7 +185,8 @@ public class AccountEntryUserRelServiceHttp {
 				HttpPrincipal httpPrincipal, long accountEntryId,
 				long creatorUserId, String screenName, String emailAddress,
 				java.util.Locale locale, String firstName, String middleName,
-				String lastName, long prefixId, long suffixId, String jobTitle)
+				String lastName, long prefixId, long suffixId, String jobTitle,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -196,7 +198,7 @@ public class AccountEntryUserRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, creatorUserId, screenName,
 				emailAddress, locale, firstName, middleName, lastName, prefixId,
-				suffixId, jobTitle);
+				suffixId, jobTitle, serviceContext);
 
 			Object returnObj = null;
 
@@ -346,7 +348,8 @@ public class AccountEntryUserRelServiceHttp {
 		new Class[] {
 			long.class, long.class, String.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, String.class
+			long.class, long.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addAccountEntryUserRelByEmailAddressParameterTypes1 = new Class[] {
@@ -359,7 +362,8 @@ public class AccountEntryUserRelServiceHttp {
 		_addPersonTypeAccountEntryUserRelParameterTypes3 = new Class[] {
 			long.class, long.class, String.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, String.class
+			long.class, long.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_deleteAccountEntryUserRelByEmailAddressParameterTypes4 = new Class[] {

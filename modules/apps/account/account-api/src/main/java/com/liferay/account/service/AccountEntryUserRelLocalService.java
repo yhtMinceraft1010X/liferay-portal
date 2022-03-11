@@ -86,7 +86,7 @@ public interface AccountEntryUserRelLocalService
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
@@ -102,7 +102,7 @@ public interface AccountEntryUserRelLocalService
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
-			String jobTitle)
+			String jobTitle, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
