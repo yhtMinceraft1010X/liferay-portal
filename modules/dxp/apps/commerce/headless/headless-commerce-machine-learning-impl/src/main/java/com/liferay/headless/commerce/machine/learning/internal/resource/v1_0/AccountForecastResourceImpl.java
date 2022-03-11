@@ -22,7 +22,6 @@ import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.CommerceMLForecastCompositeResourcePrimaryKey;
 import com.liferay.headless.commerce.machine.learning.internal.helper.v1_0.CommerceAccountPermissionHelper;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -58,7 +57,8 @@ public class AccountForecastResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AccountForecast, Exception> unsafeConsumer =
+		contextBatchUnsafeConsumer.accept(
+			accountForecasts,
 			accountForecast -> {
 				CommerceAccountCommerceMLForecast
 					commerceAccountCommerceMLForecast =
@@ -88,9 +88,7 @@ public class AccountForecastResourceImpl
 				_commerceAccountCommerceMLForecastManager.
 					addCommerceAccountCommerceMLForecast(
 						commerceAccountCommerceMLForecast);
-			};
-
-		contextBatchUnsafeConsumer.accept(accountForecasts, unsafeConsumer);
+			});
 	}
 
 	@Override
