@@ -199,6 +199,8 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 				commerceOrder.getShippingOptionName(),
 				_serviceContextHelper.getServiceContext(contextUser));
 
+		_updateCommerceShipment(commerceShipment, shipment);
+
 		_updateNestedResources(commerceShipment, shipment);
 
 		return _toShipment(commerceShipment.getCommerceShipmentId());
@@ -442,7 +444,7 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 
 		if (shipmentItems != null) {
 			_commerceShipmentItemService.deleteCommerceShipmentItems(
-				commerceShipment.getCommerceShipmentId(), false);
+				commerceShipment.getCommerceShipmentId(), true);
 
 			for (ShipmentItem shipmentItem : shipmentItems) {
 				ShipmentItemUtil.addOrUpdateShipmentItem(
