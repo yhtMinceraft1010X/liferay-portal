@@ -178,10 +178,10 @@ public class BatchEngineImportTaskExecutorImpl
 			_transactionConfig,
 			() -> {
 				batchEngineTaskItemDelegateExecutor.saveItems(
-					BatchEngineTaskOperation.valueOf(
-						batchEngineImportTask.getOperation()),
 					_batchEngineImportStrategyFactory.create(
 						batchEngineImportTask),
+					BatchEngineTaskOperation.valueOf(
+						batchEngineImportTask.getOperation()),
 					items);
 
 				batchEngineImportTask.setProcessedItemsCount(
