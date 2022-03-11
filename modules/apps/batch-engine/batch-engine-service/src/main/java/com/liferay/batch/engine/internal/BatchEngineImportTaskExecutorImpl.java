@@ -286,8 +286,9 @@ public class BatchEngineImportTaskExecutorImpl
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory =
-		new BatchEngineImportStrategyFactory();
+	private final BatchEngineImportStrategyFactory
+		_batchEngineImportStrategyFactory =
+			new BatchEngineImportStrategyFactory();
 
 	@Reference
 	private BatchEngineImportTaskErrorLocalService

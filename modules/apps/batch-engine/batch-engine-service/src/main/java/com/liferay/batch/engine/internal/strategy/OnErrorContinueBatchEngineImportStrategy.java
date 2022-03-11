@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.strategy;
 
-import com.liferay.batch.engine.internal.util.BatchEngineImportTaskErrorUtil;
-import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.petra.function.UnsafeConsumer;
 
 import java.util.Collection;
@@ -24,7 +22,7 @@ import java.util.Collection;
  * @author Matija Petanjek
  */
 public class OnErrorContinueBatchEngineImportStrategy
-	implements BatchEngineImportStrategy {
+	extends BaseBatchEngineImportStrategy {
 
 	public OnErrorContinueBatchEngineImportStrategy(
 		long batchEngineImportTaskId, long companyId, int processedItemsCount,
@@ -51,10 +49,10 @@ public class OnErrorContinueBatchEngineImportStrategy
 				unsafeConsumer.accept(item);
 			}
 			catch (Exception exception) {
-				BatchEngineImportTaskErrorUtil.addBatchEngineImportTaskError(
-					_batchEngineImportTaskId, _companyId,
-					exception.getMessage(), _processedItemsCount + index, item,
-					_userId);
+				addBatchEngineImportTaskError(
+					_companyId, _userId, _batchEngineImportTaskId,
+					item.toString(), _processedItemsCount + index,
+					exception.getMessage());
 			}
 		}
 	}

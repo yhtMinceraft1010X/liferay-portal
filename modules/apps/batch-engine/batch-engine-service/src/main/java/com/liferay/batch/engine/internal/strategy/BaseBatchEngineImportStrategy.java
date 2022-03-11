@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.util;
+package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
+import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 /**
  * @author Matija Petanjek
+ * @author Brian Wing Shun Chan
  */
-public class BatchEngineImportTaskErrorUtil {
+public abstract class BaseBatchEngineImportStrategy
+	implements BatchEngineImportStrategy {
 
-	public static void addBatchEngineImportTaskError(
-		long batchEngineImportTaskId, long companyId, String errorMessage,
-		int importFileIndex, Object item, long userId) {
+	protected void addBatchEngineImportTaskError(
+		long companyId, long userId, long batchEngineImportTaskId, String item,
+		int itemIndex, String message) {
 
 		try {
 			TransactionInvokerUtil.invoke(
@@ -34,8 +37,8 @@ public class BatchEngineImportTaskErrorUtil {
 				() -> {
 					BatchEngineImportTaskErrorLocalServiceUtil.
 						addBatchEngineImportTaskError(
-							companyId, userId, batchEngineImportTaskId,
-							item.toString(), importFileIndex, errorMessage);
+							companyId, userId, batchEngineImportTaskId, item,
+							itemIndex, message);
 
 					return null;
 				});
