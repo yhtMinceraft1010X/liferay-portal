@@ -275,6 +275,7 @@ definition {
 	@priority = "5"
 	test CanEditItsOwnEntryWithOnlyAddPermission {
 		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "ObjectPermission#CanEditItsOwnEntryWithOnlyAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -816,6 +817,7 @@ definition {
 	@priority = "5"
 	test CanViewItsOwnEntryWithOnlyAddPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanViewItsOwnEntryWithOnlyAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
