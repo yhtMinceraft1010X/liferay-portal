@@ -220,10 +220,10 @@ const ActivationStatusDXPCloud = ({
 			});
 
 			if (data) {
-				const ActivationStatusDateRange = getActivationStatusDateRange(
+				const activationStatusDateRange = getActivationStatusDateRange(
 					data.c?.accountSubscriptionTerms?.items
 				);
-				setActivationStatusDate(ActivationStatusDateRange);
+				setActivationStatusDate(activationStatusDateRange);
 			}
 		};
 
