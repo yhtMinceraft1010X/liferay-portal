@@ -30,9 +30,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Javier Gamarra
  */
+@ProviderType
 public interface VulcanBatchEngineTaskItemDelegate<T> {
 
 	public void create(
