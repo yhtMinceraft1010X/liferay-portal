@@ -1151,7 +1151,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Workflow Definition 1", workflowDefinitionTest1.getTitle());
 		Assert.assertEquals(
-			"This is a description for Test Workflow Definition 1",
+			"This is a description for Test Workflow Definition 1.",
 			workflowDefinitionTest1.getDescription());
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
@@ -1174,7 +1174,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test workflow Definition 2", workflowDefinitionTest2.getTitle());
 		Assert.assertEquals(
-			"This is a description for Test workflow Definition 2",
+			"This is a description for Test workflow Definition 2.",
 			workflowDefinitionTest2.getDescription());
 
 		WorkflowDefinitionLink workflowDefinitionLink2 =
