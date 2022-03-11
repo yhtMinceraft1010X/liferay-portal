@@ -99,7 +99,7 @@ public class DDMStructureContentDashboardItemSubtypeTest {
 	}
 
 	@Test
-	public void testNoEquals() throws PortalException {
+	public void testNotEquals() throws PortalException {
 		DDMStructure ddmStructure1 = _getDDMStructure("structureName");
 
 		DDMStructureContentDashboardItemSubtype

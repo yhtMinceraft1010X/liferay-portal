@@ -101,7 +101,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 	}
 
 	@Test
-	public void testNoEquals() throws PortalException {
+	public void testNotEquals() throws PortalException {
 		DLFileEntryType dLFileEntryType1 = _getDLFileEntryType(
 			"fileEntryTypeName");
 
