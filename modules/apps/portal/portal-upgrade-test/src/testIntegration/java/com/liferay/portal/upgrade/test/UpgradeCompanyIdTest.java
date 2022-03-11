@@ -62,8 +62,6 @@ public class UpgradeCompanyIdTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = null;
-
 		_upgradeProcess = new UpgradeCompanyIdCustom();
 
 		_upgradeProcess.runSQL(
@@ -134,7 +132,7 @@ public class UpgradeCompanyIdTest {
 
 	private static final String _TABLE_NAME = "UpgradeCompanyIdTest";
 
-	private static Company _company;
+	private Company _company;
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
