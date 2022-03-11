@@ -134,7 +134,8 @@ public class UpgradeCompanyIdTest {
 
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
-	private UpgradeCompanyIdCustom _upgradeProcess =
+
+	private final UpgradeCompanyIdCustom _upgradeProcess =
 		new UpgradeCompanyIdCustom();
 
 	private class UpgradeCompanyIdCustom extends UpgradeCompanyId {
