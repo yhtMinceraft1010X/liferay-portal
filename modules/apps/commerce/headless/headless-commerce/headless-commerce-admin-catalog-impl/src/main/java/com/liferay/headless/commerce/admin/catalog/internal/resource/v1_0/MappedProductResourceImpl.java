@@ -29,6 +29,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.M
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -70,7 +71,8 @@ public class MappedProductResourceImpl
 
 		List<CSDiagramPin> csDiagramPins =
 			_csDiagramPinService.getCSDiagramPins(
-				csDiagramEntry.getCPDefinitionId(), -1, -1);
+				csDiagramEntry.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		for (CSDiagramPin csDiagramPin : csDiagramPins) {
 			if ((csDiagramEntry.getCPDefinitionId() ==
