@@ -202,9 +202,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, fileEntry.getModifiedDate(), map);
-
 		indexedFieldsFixture.populateDate(Field.PUBLISH_DATE, createDate, map);
-
 		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
 
@@ -215,7 +213,6 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		long assetEntryId = _getAssetEntryId(_getAssetEntry(fileEntry));
 
 		map.put(Field.ASSET_ENTRY_ID, String.valueOf(assetEntryId));
-
 		map.put(
 			Field.ASSET_ENTRY_ID + "_sortable", String.valueOf(assetEntryId));
 
