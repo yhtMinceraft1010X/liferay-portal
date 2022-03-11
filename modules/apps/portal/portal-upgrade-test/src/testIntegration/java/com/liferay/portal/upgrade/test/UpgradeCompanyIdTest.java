@@ -111,7 +111,7 @@ public class UpgradeCompanyIdTest {
 		try {
 			_upgradeProcess.upgrade();
 
-			Assert.fail("Expected exception was not thrown");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertNotNull(exception);
