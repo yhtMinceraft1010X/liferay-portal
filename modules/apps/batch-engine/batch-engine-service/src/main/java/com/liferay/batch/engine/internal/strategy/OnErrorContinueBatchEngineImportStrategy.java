@@ -15,6 +15,8 @@
 package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collection;
 
@@ -49,6 +51,10 @@ public class OnErrorContinueBatchEngineImportStrategy
 				unsafeConsumer.accept(item);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				addBatchEngineImportTaskError(
 					_companyId, _userId, _batchEngineImportTaskId,
 					item.toString(), _processedItemsCount + index,
@@ -56,6 +62,9 @@ public class OnErrorContinueBatchEngineImportStrategy
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OnErrorContinueBatchEngineImportStrategy.class);
 
 	private final long _batchEngineImportTaskId;
 	private final long _companyId;
