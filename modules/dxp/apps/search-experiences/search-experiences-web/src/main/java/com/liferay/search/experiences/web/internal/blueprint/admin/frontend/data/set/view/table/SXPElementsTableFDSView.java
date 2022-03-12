@@ -45,9 +45,8 @@ public class SXPElementsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaField titleFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("title", "title");
 
-		titleFDSTableSchemaField.setSortable(true);
-
 		titleFDSTableSchemaField.setContentRenderer("actionLink");
+		titleFDSTableSchemaField.setSortable(true);
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
 			"description", "description");
@@ -61,7 +60,6 @@ public class SXPElementsTableFDSView extends BaseTableFDSView {
 				"createDate", "created");
 
 		createDateFDSTableSchemaField.setContentRenderer("dateTime");
-
 		createDateFDSTableSchemaField.setSortable(true);
 
 		FDSTableSchemaField modifiedDateFDSTableSchemaField =
@@ -69,7 +67,6 @@ public class SXPElementsTableFDSView extends BaseTableFDSView {
 				"modifiedDate", "modified");
 
 		modifiedDateFDSTableSchemaField.setContentRenderer("dateTime");
-
 		modifiedDateFDSTableSchemaField.setSortable(true);
 
 		return fdsTableSchemaBuilder.build();
