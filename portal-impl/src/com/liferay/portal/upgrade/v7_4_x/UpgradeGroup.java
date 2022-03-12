@@ -16,9 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-
 /**
  * @author Marcos Martins
  */
@@ -30,14 +27,9 @@ public class UpgradeGroup extends UpgradeProcess {
 			alterTableAddColumn("Group_", "modifiedDate", "DATE");
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Group_ set modifiedDate = ? where modifiedDate is " +
-					"null")) {
-
-			preparedStatement.setDate(1, new Date(System.currentTimeMillis()));
-
-			preparedStatement.execute();
-		}
+		runSQL(
+			"update Group_ set modifiedDate = CURRENT_TIMESTAMP where " +
+				"modifiedDate is null");
 	}
 
 }
