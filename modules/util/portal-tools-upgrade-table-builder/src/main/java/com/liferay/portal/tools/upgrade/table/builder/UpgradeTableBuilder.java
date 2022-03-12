@@ -275,11 +275,9 @@ public class UpgradeTableBuilder {
 		StringBundler sb = new StringBundler(34);
 
 		sb.append(_getCopyright());
-
 		sb.append("\n\npackage ");
 		sb.append(packagePath);
 		sb.append(";\n\n");
-
 		sb.append(
 			"import com.liferay.portal.kernel.upgrade.UpgradeProcess;\n\n");
 		sb.append("/**\n");
@@ -331,7 +329,6 @@ public class UpgradeTableBuilder {
 				content.indexOf("=", y) + 1, content.indexOf(";", y)));
 
 		sb.append(";\n\n");
-
 		sb.append("}");
 
 		return sb.toString();
@@ -418,7 +415,6 @@ public class UpgradeTableBuilder {
 		sb.append("\n\npackage ");
 		sb.append(packagePath);
 		sb.append(";\n\n");
-
 		sb.append("import java.sql.Types;\n\n");
 
 		if (content.contains("TABLE_COLUMNS_MAP")) {
@@ -471,7 +467,6 @@ public class UpgradeTableBuilder {
 		}
 
 		sb.append("\t};\n\n");
-
 		sb.append("}");
 
 		return sb.toString();
@@ -510,13 +505,13 @@ public class UpgradeTableBuilder {
 	}
 
 	private int _getVersion() throws IOException {
-		Path path;
+		Path path = null;
 
 		if (_osgiModule) {
 			path = Paths.get(_baseDirName, "service.xml");
 		}
 		else {
-			Path[] pathArray = new Path[1];
+			Path[] paths = new Path[1];
 
 			Files.walkFileTree(
 				Paths.get(_baseDirName),
@@ -528,7 +523,7 @@ public class UpgradeTableBuilder {
 						throws IOException {
 
 						if (path.endsWith("service.xml")) {
-							pathArray[0] = path;
+							paths[0] = path;
 
 							return FileVisitResult.TERMINATE;
 						}
@@ -538,17 +533,17 @@ public class UpgradeTableBuilder {
 
 				});
 
-			path = pathArray[0];
+			path = paths[0];
 		}
 
 		String content = _read(path);
 
 		int index = content.indexOf("http://www.liferay.com/dtd/");
 
-		String dtdUrl = content.substring(
+		String url = content.substring(
 			content.indexOf(index), content.indexOf("\">", index));
 
-		Matcher matcher = _dtdVersionPattern.matcher(dtdUrl);
+		Matcher matcher = _dtdVersionPattern.matcher(url);
 
 		if (matcher.matches()) {
 			String version = StringUtil.removeSubstring(matcher.group(1), "_");
