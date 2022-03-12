@@ -32,6 +32,7 @@ public class CommerceAccountGroupCommerceAccountRelTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

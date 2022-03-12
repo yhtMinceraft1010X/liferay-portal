@@ -32,6 +32,7 @@ public class ObjectViewTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

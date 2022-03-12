@@ -32,6 +32,7 @@ public class CommerceCatalogTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

@@ -32,6 +32,7 @@ public class ObjectValidationRuleTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

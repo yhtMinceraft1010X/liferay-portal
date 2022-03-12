@@ -32,6 +32,7 @@ public class ObjectFieldSettingTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

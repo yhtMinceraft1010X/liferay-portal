@@ -32,6 +32,7 @@ public class FragmentEntryVersionTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

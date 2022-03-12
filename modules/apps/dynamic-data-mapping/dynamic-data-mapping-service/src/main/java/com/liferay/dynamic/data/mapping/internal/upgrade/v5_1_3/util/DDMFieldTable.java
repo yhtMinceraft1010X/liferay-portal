@@ -32,6 +32,7 @@ public class DDMFieldTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

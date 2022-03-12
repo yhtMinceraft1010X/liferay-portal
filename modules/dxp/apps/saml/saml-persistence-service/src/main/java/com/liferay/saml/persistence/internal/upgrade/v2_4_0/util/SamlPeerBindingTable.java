@@ -32,6 +32,7 @@ public class SamlPeerBindingTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

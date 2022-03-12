@@ -32,6 +32,7 @@ public class CPInstanceOptionValueRelTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

@@ -32,6 +32,7 @@ public class CommerceChannelTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

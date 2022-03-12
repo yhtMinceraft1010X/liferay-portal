@@ -32,6 +32,7 @@ public class CommerceOrderTypeRelTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

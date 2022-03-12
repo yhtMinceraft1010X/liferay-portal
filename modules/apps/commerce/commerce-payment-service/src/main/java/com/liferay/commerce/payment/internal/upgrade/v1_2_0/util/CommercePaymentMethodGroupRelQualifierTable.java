@@ -32,6 +32,7 @@ public class CommercePaymentMethodGroupRelQualifierTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

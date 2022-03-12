@@ -32,6 +32,7 @@ public class CommerceShippingFixedOptionQualifierTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

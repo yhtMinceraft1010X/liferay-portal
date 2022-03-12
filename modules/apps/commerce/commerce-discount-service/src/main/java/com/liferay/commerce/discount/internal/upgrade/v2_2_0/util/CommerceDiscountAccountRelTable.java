@@ -32,6 +32,7 @@ public class CommerceDiscountAccountRelTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

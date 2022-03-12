@@ -32,6 +32,7 @@ public class BatchEngineImportTaskErrorTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

@@ -32,6 +32,7 @@ public class ObjectViewSortColumnTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

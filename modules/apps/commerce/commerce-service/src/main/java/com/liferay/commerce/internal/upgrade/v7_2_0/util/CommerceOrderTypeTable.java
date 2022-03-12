@@ -32,6 +32,7 @@ public class CommerceOrderTypeTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 

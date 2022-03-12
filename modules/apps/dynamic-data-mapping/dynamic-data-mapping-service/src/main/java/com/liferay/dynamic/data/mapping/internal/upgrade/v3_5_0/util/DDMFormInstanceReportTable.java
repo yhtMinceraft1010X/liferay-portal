@@ -32,6 +32,7 @@ public class DDMFormInstanceReportTable {
 					runSQL(_TABLE_SQL_CREATE);
 				}
 			}
+
 		};
 	}
 
