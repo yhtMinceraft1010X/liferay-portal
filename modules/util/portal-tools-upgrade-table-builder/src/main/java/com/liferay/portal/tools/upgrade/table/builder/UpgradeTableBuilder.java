@@ -301,7 +301,7 @@ public class UpgradeTableBuilder {
 		sb.append("\t\t\t\tif (!hasTable(_TABLE_NAME)) {\n");
 		sb.append("\t\t\t\t\trunSQL(_TABLE_SQL_CREATE);\n");
 		sb.append("\t\t\t\t}\n");
-		sb.append("\t\t\t}\n");
+		sb.append("\t\t\t}\n\n");
 		sb.append("\t\t};\n");
 		sb.append("\t}\n\n");
 		sb.append("\tprivate static final String _TABLE_NAME =");
