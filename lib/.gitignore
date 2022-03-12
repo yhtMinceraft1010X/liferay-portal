@@ -111,7 +111,6 @@
 /portal/commons-pool.jar
 /portal/crypt.jar
 /portal/dom4j.jar
-/portal/fontbox.jar
 /portal/hibernate-core.jar
 /portal/hikaricp.jar
 /portal/httpclient.jar
@@ -124,8 +123,6 @@
 /portal/jackson-core.jar
 /portal/jackson-databind.jar
 /portal/jackson-module-jaxb-annotations.jar
-/portal/jai-imageio-core.jar
-/portal/jai-imageio-jpeg2000.jar
 /portal/javassist.jar
 /portal/jaxb-api.jar
 /portal/jaxb-runtime.jar
@@ -134,10 +131,8 @@
 /portal/jaxrs-api.jar
 /portal/jaxws-api.jar
 /portal/jaxws-rt.jar
-/portal/jbig2-imageio.jar
 /portal/jcl-over-slf4j.jar
 /portal/jdom2.jar
-/portal/jempbox.jar
 /portal/jericho-html.jar
 /portal/jersey-common.jar
 /portal/jhlabs-filters.jar
@@ -151,7 +146,6 @@
 /portal/log4j-core.jar
 /portal/mchange-commons-java.jar
 /portal/mimepull.jar
-/portal/pdfbox.jar
 /portal/persistence.jar
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
