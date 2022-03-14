@@ -60,6 +60,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -264,43 +265,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(
-							PortletURLBuilder.create(
-								PortletURLUtil.clone(
-									currentURLObj, liferayPortletResponse)
-							).setParameter(
-								"contentDashboardItemSubtypePayload",
-								() -> {
-									Stream
-										<? extends ContentDashboardItemSubtype>
-											stream =
-												contentDashboardItemSubtypes.
-													stream();
-
-									InfoItemReference infoItemReference =
-										contentDashboardItemSubtype.
-											getInfoItemReference();
-
-									return stream.filter(
-										curContentDashboardItemSubtype -> {
-											InfoItemReference
-												curInfoItemReference =
-													curContentDashboardItemSubtype.
-														getInfoItemReference();
-
-											return !Objects.equals(
-												curInfoItemReference,
-												infoItemReference);
-										}
-									).map(
-										curContentDashboardItemSubtype ->
-											curContentDashboardItemSubtype.
-												toJSONString(_locale)
-									).toArray(
-										String[]::new
-									);
-								}
-							).buildString()));
+						_getRemoveContentDashboardItemSubtypePayloadsURL(
+							contentDashboardItemSubtypes,
+							contentDashboardItemSubtype));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						StringBundler.concat(
@@ -822,6 +789,41 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				}
 			}
 		};
+	}
+
+	private String _getRemoveContentDashboardItemSubtypePayloadsURL(
+			List<? extends ContentDashboardItemSubtype>
+				contentDashboardItemSubtypes,
+			ContentDashboardItemSubtype<?> contentDashboardItemSubtype)
+		throws PortletException {
+
+		try (Stream<? extends ContentDashboardItemSubtype> stream =
+				contentDashboardItemSubtypes.stream()) {
+
+			InfoItemReference infoItemReference =
+				contentDashboardItemSubtype.getInfoItemReference();
+
+			return PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+			).setParameter(
+				"contentDashboardItemSubtypePayload",
+				() -> stream.filter(
+					curContentDashboardItemSubtype -> {
+						InfoItemReference curInfoItemReference =
+							curContentDashboardItemSubtype.
+								getInfoItemReference();
+
+						return !Objects.equals(
+							curInfoItemReference, infoItemReference);
+					}
+				).map(
+					curContentDashboardItemSubtype ->
+						curContentDashboardItemSubtype.toJSONString(_locale)
+				).toArray(
+					String[]::new
+				)
+			).buildString();
+		}
 	}
 
 	private String _getScopeLabel(long scopeId) {
