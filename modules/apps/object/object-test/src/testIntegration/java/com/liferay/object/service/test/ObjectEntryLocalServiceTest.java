@@ -532,13 +532,11 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		String fileContent = StringUtil.merge(RandomTestUtil.randomStrings(20));
-
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			fileContent.getBytes(), null, null,
+			RandomTestUtil.randomBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
@@ -1252,13 +1250,11 @@ public class ObjectEntryLocalServiceTest {
 		String portrait = "In the beginning was the Logos";
 		String script = RandomTestUtil.randomString(1500);
 
-		String fileContent = StringUtil.merge(RandomTestUtil.randomStrings(20));
-
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			fileContent.getBytes(), null, null,
+			RandomTestUtil.randomBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectEntryLocalService.updateObjectEntry(
