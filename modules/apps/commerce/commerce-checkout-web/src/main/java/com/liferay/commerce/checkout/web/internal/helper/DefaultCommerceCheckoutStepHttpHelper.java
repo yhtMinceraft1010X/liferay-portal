@@ -192,8 +192,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return false;
 		}
 
-		if (commerceOrder.isOpen() &&
-			(commerceOrder.getDeliveryCommerceTermEntryId() <= 0)) {
+		if ((commerceOrder.getDeliveryCommerceTermEntryId() <= 0) &&
+			commerceOrder.isOpen()) {
 
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
@@ -383,8 +383,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return false;
 		}
 
-		if (commerceOrder.isOpen() &&
-			(commerceOrder.getPaymentCommerceTermEntryId() <= 0)) {
+		if ((commerceOrder.getPaymentCommerceTermEntryId() <= 0) &&
+			commerceOrder.isOpen()) {
 
 			CommerceAccount commerceAccount =
 				commerceOrder.getCommerceAccount();
