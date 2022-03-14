@@ -378,63 +378,6 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", "john@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", RandomTestUtil.randomString()
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.ObjectFieldNotMapped
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object field name \"listTypeEntryKeyRequired\" is not " +
-					"mapped to a valid list type entry");
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "Judas"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.RequiredValue
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"No value was provided for required object field " +
-					"\"emailAddress\"");
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", "john@liferay.com"
-				).put(
-					"firstName", "Judas"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.RequiredValue
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"No value was provided for required object field " +
-					"\"listTypeEntryKeyRequired\"");
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
 					"emailAddress", "matthew@liferay.com"
 				).put(
 					"firstName", RandomTestUtil.randomString(281)
@@ -447,9 +390,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.Exceeds280Characters
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"The maximum length is 280 characters for text fields");
+			Assert.assertEquals(
+				"The maximum length is 280 characters for text fields",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -467,9 +410,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds integer field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds integer field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -487,49 +430,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds integer field allowed size");
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"ageOfDeath", "9223372036854775808"
-				).put(
-					"emailAddress", "matthew@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.ExceedsLongSize
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds long field allowed size");
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"ageOfDeath", "-9223372036854775809"
-				).put(
-					"emailAddress", "matthew@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.ExceedsLongSize
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds integer field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -547,9 +450,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsLongMaxSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds maximum long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds maximum long field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -567,9 +470,102 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsLongMinSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds minimum long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds minimum long field allowed size",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"ageOfDeath", "9223372036854775808"
+				).put(
+					"emailAddress", "matthew@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.ExceedsLongSize
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Object entry value exceeds long field allowed size",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"ageOfDeath", "-9223372036854775809"
+				).put(
+					"emailAddress", "matthew@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.ExceedsLongSize
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Object entry value exceeds long field allowed size",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "john@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", RandomTestUtil.randomString()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.ListTypeEntry
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Object field name \"listTypeEntryKeyRequired\" is not " +
+					"mapped to a valid list type entry",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Judas"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"emailAddress\"",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "john@liferay.com"
+				).put(
+					"firstName", "Judas"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"listTypeEntryKeyRequired\"",
+				objectEntryValuesException.getMessage());
 		}
 	}
 
@@ -1523,9 +1519,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.Exceeds280Characters
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"The maximum length is 280 characters for text fields");
+			Assert.assertEquals(
+				"The maximum length is 280 characters for text fields",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -1541,9 +1537,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds integer field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds integer field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -1559,45 +1555,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds integer field allowed size");
-		}
-
-		try {
-			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"ageOfDeath", "9223372036854775808"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.ExceedsLongSize
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds long field allowed size");
-		}
-
-		try {
-			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"ageOfDeath", "-9223372036854775809"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.ExceedsLongSize
-					objectEntryValuesException) {
-
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds integer field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -1613,9 +1573,9 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsLongMaxSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds maximum long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds maximum long field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 
 		try {
@@ -1631,9 +1591,45 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException.ExceedsLongMinSize
 					objectEntryValuesException) {
 
-			_assertObjectEntryValuesExceptionMessage(
-				objectEntryValuesException.getMessage(),
-				"Object entry value exceeds minimum long field allowed size");
+			Assert.assertEquals(
+				"Object entry value exceeds minimum long field allowed size",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"ageOfDeath", "9223372036854775808"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.ExceedsLongSize
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Object entry value exceeds long field allowed size",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"ageOfDeath", "-9223372036854775809"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.ExceedsLongSize
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"Object entry value exceeds long field allowed size",
+				objectEntryValuesException.getMessage());
 		}
 	}
 
@@ -1696,12 +1692,6 @@ public class ObjectEntryLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
-	}
-
-	private void _assertObjectEntryValuesExceptionMessage(
-		String actualMessage, String expectedMessage) {
-
-		Assert.assertTrue(actualMessage.contains(expectedMessage));
 	}
 
 	private int _count() throws Exception {
