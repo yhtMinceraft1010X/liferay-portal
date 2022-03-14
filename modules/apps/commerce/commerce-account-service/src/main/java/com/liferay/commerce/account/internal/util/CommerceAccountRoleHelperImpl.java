@@ -190,14 +190,13 @@ public class CommerceAccountRoleHelperImpl
 
 		_setRolePermissions(
 			serviceContext.getCompanyId(),
+			String.valueOf(serviceContext.getCompanyId()),
+			companyResourceActionIds, role, ResourceConstants.SCOPE_COMPANY);
+		_setRolePermissions(
+			serviceContext.getCompanyId(),
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			groupResourceActionIds, role,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE);
-
-		_setRolePermissions(
-			serviceContext.getCompanyId(),
-			String.valueOf(serviceContext.getCompanyId()),
-			companyResourceActionIds, role, ResourceConstants.SCOPE_COMPANY);
 	}
 
 	@Reference
