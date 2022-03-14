@@ -133,8 +133,9 @@ public class BatchPlannerPlanLocalServiceImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to update batch planner for batch engine ERC ",
-						batchEngineTaskERC, " and export ", export));
+						"Unable to update batch planner plan for batch engine ",
+						"task ERC ", batchEngineTaskERC, " and export ",
+						export));
 			}
 
 			return null;
