@@ -134,7 +134,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
-	public BatchPlannerPlan updateBatchPlannerLogBatchPlannerPlanActive(
+	public BatchPlannerPlan updateActive(
 			boolean active, String batchEngineTaskERC, boolean export)
 		throws PortalException {
 

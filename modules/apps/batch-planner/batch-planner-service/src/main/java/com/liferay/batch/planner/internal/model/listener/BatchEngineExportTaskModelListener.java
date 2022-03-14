@@ -50,7 +50,7 @@ public class BatchEngineExportTaskModelListener
 
 		try {
 			_batchPlannerPlanLocalService.
-				updateBatchPlannerLogBatchPlannerPlanActive(
+				updateActive(
 					false,
 					String.valueOf(
 						batchEngineExportTask.getBatchEngineExportTaskId()),
