@@ -32,6 +32,6 @@ public class FriendlyURLResolverConstants {
 	public static final String URL_SEPARATOR_OBJECT_ENTRY = "/l/";
 
 	public static final String URL_SEPARATOR_PORTAL_RESERVED =
-		Portal.PATH_MODULE;
+		Portal.PATH_MODULE + "/";
 
 }
