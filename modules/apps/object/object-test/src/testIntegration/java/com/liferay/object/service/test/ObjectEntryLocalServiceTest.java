@@ -564,7 +564,9 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
+		catch (ObjectEntryValuesException.ExceedsLongMinSize
+					objectEntryValuesException) {
+
 			_assertObjectEntryValuesExceptionMessage(
 				objectEntryValuesException.getMessage(),
 				"Object entry value exceeds minimum long field allowed size");
