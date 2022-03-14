@@ -439,12 +439,10 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		sb.append("/documents");
 
-		String urlSeparatorFileEntry =
+		String urlSeparator =
 			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
 
-		sb.append(
-			urlSeparatorFileEntry.substring(
-				0, urlSeparatorFileEntry.length() - 1));
+		sb.append(urlSeparator.substring(0, urlSeparator.length() - 1));
 
 		Group group = themeDisplay.getScopeGroup();
 
