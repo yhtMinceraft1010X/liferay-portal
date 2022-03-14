@@ -87,19 +87,19 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		nameField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"description", "description");
 
-		ClayTableSchemaField priorityField =
+		ClayTableSchemaField priorityClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"priority", "priority");
 
-		priorityField.setSortable(true);
+		priorityClayTableSchemaField.setSortable(true);
 
 		return clayTableSchemaBuilder.build();
 	}
