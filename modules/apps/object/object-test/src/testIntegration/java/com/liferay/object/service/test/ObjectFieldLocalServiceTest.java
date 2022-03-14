@@ -586,9 +586,9 @@ public class ObjectFieldLocalServiceTest {
 				_createObjectFieldSetting("repeatable", false, "True")));
 
 		_assertObjectFieldSetting(
-			objectField.getObjectFieldId(), "helpText", true, "Help Text");
+			"helpText", objectField.getObjectFieldId(), true, "Help Text");
 		_assertObjectFieldSetting(
-			objectField.getObjectFieldId(), "repeatable", false, "True");
+			"repeatable", objectField.getObjectFieldId(), false, "True");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
@@ -601,9 +601,9 @@ public class ObjectFieldLocalServiceTest {
 					"placeholder", false, "Placeholder")));
 
 		_assertObjectFieldSetting(
-			objectField.getObjectFieldId(), "helpText", true, "New Help Text");
+			"helpText", objectField.getObjectFieldId(), true, "New Help Text");
 		_assertObjectFieldSetting(
-			objectField.getObjectFieldId(), "placeholder", false,
+			"placeholder", objectField.getObjectFieldId(), false,
 			"Placeholder");
 
 		Assert.assertNull(
@@ -716,7 +716,7 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	private void _assertObjectFieldSetting(
-			long objectFieldId, String name, boolean required, String value)
+			String name, long objectFieldId, boolean required, String value)
 		throws Exception {
 
 		ObjectFieldSetting objectFieldSetting =
