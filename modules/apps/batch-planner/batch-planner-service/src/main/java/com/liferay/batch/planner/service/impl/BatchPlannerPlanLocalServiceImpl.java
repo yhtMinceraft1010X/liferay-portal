@@ -121,19 +121,6 @@ public class BatchPlannerPlanLocalServiceImpl
 		return batchPlannerPlan;
 	}
 
-	@Override
-	public BatchPlannerPlan updateActive(
-			long batchPlannerPlanId, boolean active)
-		throws PortalException {
-
-		BatchPlannerPlan batchPlannerPlan =
-			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
-
-		batchPlannerPlan.setActive(active);
-
-		return batchPlannerPlanPersistence.update(batchPlannerPlan);
-	}
-
 	public BatchPlannerPlan updateActive(
 			boolean active, String batchEngineTaskERC, boolean export)
 		throws PortalException {
@@ -154,6 +141,19 @@ public class BatchPlannerPlanLocalServiceImpl
 		}
 
 		return updateActive(batchPlannerLog.getBatchPlannerPlanId(), active);
+	}
+
+	@Override
+	public BatchPlannerPlan updateActive(
+			long batchPlannerPlanId, boolean active)
+		throws PortalException {
+
+		BatchPlannerPlan batchPlannerPlan =
+			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
+
+		batchPlannerPlan.setActive(active);
+
+		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
 	@Override

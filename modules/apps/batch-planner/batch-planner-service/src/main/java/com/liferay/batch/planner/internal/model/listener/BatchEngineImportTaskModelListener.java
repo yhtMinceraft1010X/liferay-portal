@@ -49,12 +49,11 @@ public class BatchEngineImportTaskModelListener
 		throws ModelListenerException {
 
 		try {
-			_batchPlannerPlanLocalService.
-				updateActive(
-					false,
-					String.valueOf(
-						batchEngineImportTask.getBatchEngineImportTaskId()),
-					true);
+			_batchPlannerPlanLocalService.updateActive(
+				false,
+				String.valueOf(
+					batchEngineImportTask.getBatchEngineImportTaskId()),
+				true);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
