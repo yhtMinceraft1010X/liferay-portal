@@ -337,22 +337,20 @@ public class BatchPlannerPlanLocalServiceWrapper
 
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan updateActive(
+			boolean active, String batchEngineTaskERC, boolean export)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanLocalService.updateActive(
+			active, batchEngineTaskERC, export);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan updateActive(
 			long batchPlannerPlanId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanLocalService.updateActive(
 			batchPlannerPlanId, active);
-	}
-
-	@Override
-	public com.liferay.batch.planner.model.BatchPlannerPlan
-			updateBatchPlannerLogBatchPlannerPlanActive(
-				boolean active, String batchEngineTaskERC, boolean export)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _batchPlannerPlanLocalService.
-			updateBatchPlannerLogBatchPlannerPlanActive(
-				active, batchEngineTaskERC, export);
 	}
 
 	/**

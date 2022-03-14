@@ -300,18 +300,17 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan updateActive(
+			boolean active, String batchEngineTaskERC, boolean export)
+		throws PortalException {
+
+		return getService().updateActive(active, batchEngineTaskERC, export);
+	}
+
+	public static BatchPlannerPlan updateActive(
 			long batchPlannerPlanId, boolean active)
 		throws PortalException {
 
 		return getService().updateActive(batchPlannerPlanId, active);
-	}
-
-	public static BatchPlannerPlan updateBatchPlannerLogBatchPlannerPlanActive(
-			boolean active, String batchEngineTaskERC, boolean export)
-		throws PortalException {
-
-		return getService().updateBatchPlannerLogBatchPlannerPlanActive(
-			active, batchEngineTaskERC, export);
 	}
 
 	/**
