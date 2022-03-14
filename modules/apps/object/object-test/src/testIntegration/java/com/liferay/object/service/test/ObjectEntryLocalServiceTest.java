@@ -1249,6 +1249,9 @@ public class ObjectEntryLocalServiceTest {
 
 		Date birthdayDate = calendar.getTime();
 
+		String portrait = "In the beginning was the Logos";
+		String script = RandomTestUtil.randomString(1500);
+
 		String fileContent = StringUtil.merge(RandomTestUtil.randomStrings(20));
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -1257,9 +1260,6 @@ public class ObjectEntryLocalServiceTest {
 			StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			fileContent.getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext());
-
-		String portrait = "In the beginning was the Logos";
-		String script = RandomTestUtil.randomString(1500);
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
