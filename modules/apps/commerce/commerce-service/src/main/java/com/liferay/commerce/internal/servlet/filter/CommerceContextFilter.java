@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.internal.events;
+package com.liferay.commerce.internal.servlet.filter;
 
 import com.liferay.commerce.internal.context.CommerceGroupThreadLocal;
 import com.liferay.portal.kernel.log.Log;
