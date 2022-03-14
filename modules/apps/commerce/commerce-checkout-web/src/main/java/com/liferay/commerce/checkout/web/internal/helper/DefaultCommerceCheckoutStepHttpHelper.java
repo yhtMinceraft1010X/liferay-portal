@@ -125,7 +125,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			String languageId)
 		throws PortalException {
 
-		if (commerceOrder.getCommerceShippingMethodId() < 1) {
+		if (commerceOrder.getCommerceShippingMethodId() <= 0) {
 			return false;
 		}
 
@@ -193,7 +193,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		}
 
 		if (commerceOrder.isOpen() &&
-			(commerceOrder.getDeliveryCommerceTermEntryId() < 1)) {
+			(commerceOrder.getDeliveryCommerceTermEntryId() <= 0)) {
 
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
@@ -235,7 +235,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			_commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
 				commerceOrder.getGroupId());
 
-		if (commercePaymentMethodGroupRelsCount < 1) {
+		if (commercePaymentMethodGroupRelsCount <= 0) {
 			return false;
 		}
 
@@ -384,7 +384,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		}
 
 		if (commerceOrder.isOpen() &&
-			(commerceOrder.getPaymentCommerceTermEntryId() < 1)) {
+			(commerceOrder.getPaymentCommerceTermEntryId() <= 0)) {
 
 			CommerceAccount commerceAccount =
 				commerceOrder.getCommerceAccount();
