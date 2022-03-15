@@ -898,7 +898,6 @@ public class BundleSiteInitializerTest {
 			"TEST-PORTLET-SETTINGS-1");
 
 		Assert.assertNotNull(ddmTemplate);
-
 		Assert.assertEquals(
 			"TEST PORTLET SETTINGS 1",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
