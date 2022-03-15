@@ -72,15 +72,14 @@ public class ProcessConfigUtil {
 			}
 		}
 
-		builder.setRuntimeClassPath(
-			StringBundler.concat(
-				_getSelfJarPath(), File.pathSeparator,
-				portalProcessConfig.getRuntimeClassPath()));
-
 		builder.setReactClassLoader(
 			AggregateClassLoader.getAggregateClassLoader(
 				PortalClassLoaderUtil.getClassLoader(),
 				ProcessConfigUtil.class.getClassLoader()));
+		builder.setRuntimeClassPath(
+			StringBundler.concat(
+				_getSelfJarPath(), File.pathSeparator,
+				portalProcessConfig.getRuntimeClassPath()));
 
 		_processConfig = builder.build();
 	}

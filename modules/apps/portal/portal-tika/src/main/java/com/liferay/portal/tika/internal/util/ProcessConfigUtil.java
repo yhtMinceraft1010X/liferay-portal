@@ -75,6 +75,11 @@ public class ProcessConfigUtil {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder(
 			portalProcessConfig);
 
+		builder.setReactClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				PortalClassLoaderUtil.getClassLoader(),
+				ProcessConfigUtil.class.getClassLoader()));
+
 		StringBundler sb = new StringBundler();
 
 		sb.append(_getSelfJarPath());
@@ -85,11 +90,6 @@ public class ProcessConfigUtil {
 		sb.append(portalProcessConfig.getRuntimeClassPath());
 
 		builder.setRuntimeClassPath(sb.toString());
-
-		builder.setReactClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				PortalClassLoaderUtil.getClassLoader(),
-				ProcessConfigUtil.class.getClassLoader()));
 
 		_processConfig = builder.build();
 	}
