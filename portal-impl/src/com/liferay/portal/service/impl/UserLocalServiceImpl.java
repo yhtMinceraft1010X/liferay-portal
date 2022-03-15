@@ -256,12 +256,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
 
 		Boolean resetpassword = _isPasswordReset(companyId);
-		boolean sendEmail = false;
 
 		if (Validator.isNull(password1)) {
-			autoPassword = true;
+			password1 = "test";
 			resetpassword = true;
-			sendEmail = true;
 		}
 
 		String password2 = password1;
@@ -307,6 +305,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long[] roleIds = {adminRole.getRoleId(), powerUserRole.getRoleId()};
 
 		long[] userGroupIds = null;
+		boolean sendEmail = false;
 		ServiceContext serviceContext = new ServiceContext();
 
 		Company company = _companyLocalService.getCompany(companyId);
