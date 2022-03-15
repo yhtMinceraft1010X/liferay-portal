@@ -1613,8 +1613,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
-				serviceContext.getCompanyId(), true, true,
-				WorkflowConstants.STATUS_APPROVED);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
 				objectDefinitions) {
