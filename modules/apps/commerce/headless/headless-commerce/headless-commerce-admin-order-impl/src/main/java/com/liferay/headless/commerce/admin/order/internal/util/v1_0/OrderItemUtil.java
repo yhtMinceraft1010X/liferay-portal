@@ -258,7 +258,6 @@ public class OrderItemUtil {
 		else {
 			decimalQuantity = (BigDecimal)GetterUtil.get(
 				orderItem.getDecimalQuantity(), decimalQuantity);
-
 			quantity = GetterUtil.get(orderItem.getQuantity(), quantity);
 
 			if (decimalQuantity == BigDecimal.ZERO) {
