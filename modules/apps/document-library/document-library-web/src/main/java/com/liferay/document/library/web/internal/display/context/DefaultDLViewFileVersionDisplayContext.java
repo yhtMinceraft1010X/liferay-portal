@@ -436,13 +436,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(themeDisplay.getPortalURL());
-
 		sb.append("/documents");
-
-		String urlSeparator =
-			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
-
-		sb.append(urlSeparator.substring(0, urlSeparator.length() - 1));
+		sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY);
 
 		Group group = themeDisplay.getScopeGroup();
 
