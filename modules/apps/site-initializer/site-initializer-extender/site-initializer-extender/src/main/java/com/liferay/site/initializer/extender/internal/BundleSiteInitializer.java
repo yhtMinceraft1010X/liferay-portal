@@ -378,9 +378,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addTaxonomyVocabularies(
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
-			_invoke(() -> _updateLayoutSets(serviceContext));
 
-			_invoke(() -> _addWidgetTemplates(serviceContext));
+			_invoke(() -> _addPortletSettings(serviceContext));
+			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -2648,10 +2648,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addWidgetTemplates(ServiceContext serviceContext)
+	private void _addPortletSettings(ServiceContext serviceContext)
 		throws Exception {
 
-		String resourcePath = "/site-initializer/widget-templates.json";
+		String resourcePath = "/site-initializer/portlet-settings.json";
 
 		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
 
@@ -2664,7 +2664,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_portletSettingsImporter.importPortletSettings(
 			JSONFactoryUtil.createJSONArray(json), _classLoader,
-			StringUtil.replace(resourcePath, ".json", "/"),
+			"/site-initializer/portlet-settings/",
 			serviceContext.getScopeGroupId(), group.getGroupId(),
 			serviceContext.getUserId());
 	}

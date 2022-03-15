@@ -198,13 +198,13 @@ public class BundleSiteInitializerTest {
 			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
 			_assertPermissions(group);
+			_assertPortletSettings(group);
 			_assertRemoteApp(group);
 			_assertSAPEntries(group);
 			_assertSiteConfiguration(group.getGroupId());
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
-			_assertWidgetTemplates(group);
 			_assertWorkflowDefinitions(group, serviceContext);
 		}
 		finally {
@@ -1118,16 +1118,16 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Role 3", role.getName());
 	}
 
-	private void _assertWidgetTemplates(Group group) {
+	private void _assertPortletSettings(Group group) {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			group.getGroupId(),
 			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
-			"TEST-WIDGET-TEMPLATE-1");
+			"TEST-PORTLET-SETTINGS-1");
 
 		Assert.assertNotNull(ddmTemplate);
 
 		Assert.assertEquals(
-			"TEST WIDGET TEMPLATE 1",
+			"TEST PORTLET SETTINGS 1",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
