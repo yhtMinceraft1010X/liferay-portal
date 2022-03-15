@@ -515,10 +515,9 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldDBTypeException("Blob type is not indexable");
 		}
 
-		if (((!Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING) &&
-			  !Objects.equals(
-				  businessType,
-				  ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) ||
+		if (((!Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+			  !Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) ||
 			 indexedAsKeyword) &&
 			!Validator.isBlank(indexedLanguageId)) {
 
