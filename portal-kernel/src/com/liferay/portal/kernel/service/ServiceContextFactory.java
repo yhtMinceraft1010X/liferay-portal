@@ -82,7 +82,7 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = _getInstance(httpServletRequest);
 
-		if (className == null) {
+		if ((className == null) || (httpServletRequest == null)) {
 			return serviceContext;
 		}
 
@@ -170,6 +170,10 @@ public class ServiceContextFactory {
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
+
+		if (httpServletRequest == null) {
+			return serviceContext;
+		}
 
 		// Theme display
 
