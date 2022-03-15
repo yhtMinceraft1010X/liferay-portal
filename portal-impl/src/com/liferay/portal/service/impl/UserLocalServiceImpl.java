@@ -255,13 +255,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
 
-		Boolean resetpassword = false;
-
-		if (Validator.isNull(password1)) {
-			password1 = "test";
-			resetpassword = true;
-		}
-
 		String password2 = password1;
 
 		boolean autoScreenName = false;
@@ -325,7 +318,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), resetpassword);
+		updatePasswordReset(
+			defaultAdminUser.getUserId(), _isPasswordReset(companyId));
 
 		return defaultAdminUser;
 	}
