@@ -8859,8 +8859,6 @@ browser.launcher.url=
 
 setup.wizard.enabled=false
 
-default.admin.password=test
-
 passwords.default.policy.change.required=false
 
 mail.send.blacklist=
