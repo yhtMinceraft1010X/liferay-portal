@@ -61,30 +61,20 @@ public class OnDemandAdminTicketGeneratorImpl
 		throws PortalException {
 
 		User requestorUser = _userLocalService.getUser(userId);
-
+		String password = PropsValues.DEFAULT_ADMIN_PASSWORD;
 		Date date = requestorUser.getBirthday();
-
 		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		boolean autoPassword = false;
-		boolean sendEmail = false;
-
-		String password = PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-		if (Validator.isNull(password)) {
-			autoPassword = true;
-			sendEmail = true;
-		}
-
 		User user = _userLocalService.addUser(
-			requestorUser.getUserId(), company.getCompanyId(), autoPassword,
-			password, password, true, null, requestorUser.getEmailAddress(),
-			requestorUser.getLocale(), requestorUser.getFirstName(),
-			requestorUser.getMiddleName(), requestorUser.getLastName(), 0, 0,
-			requestorUser.getMale(), date.getMonth(), date.getDay(),
-			date.getYear(), null, null, null, new long[] {role.getRoleId()},
-			null, sendEmail, new ServiceContext());
+			requestorUser.getUserId(), company.getCompanyId(),
+			Validator.isNull(password), password, password, true, null,
+			requestorUser.getEmailAddress(), requestorUser.getLocale(),
+			requestorUser.getFirstName(), requestorUser.getMiddleName(),
+			requestorUser.getLastName(), 0, 0, requestorUser.getMale(),
+			date.getMonth(), date.getDay(), date.getYear(), null, null, null,
+			new long[] {role.getRoleId()}, null, Validator.isNull(password),
+			new ServiceContext());
 
 		String screenName = _getScreenName(
 			requestorUser.getUserId(), user.getUserId());
