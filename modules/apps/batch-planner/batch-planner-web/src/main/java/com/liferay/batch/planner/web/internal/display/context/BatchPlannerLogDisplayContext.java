@@ -18,6 +18,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
+import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
@@ -177,10 +178,17 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 
 			builder.action(
 				LanguageUtil.get(httpServletRequest, "export")
+			).batchEngineExportTaskERC(
+				String.valueOf(
+					batchEngineExportTask.getBatchEngineExportTaskId())
+			).processedItemsCount(
+				batchEngineExportTask.getProcessedItemsCount()
 			).status(
 				BatchPlannerLogConstants.getStatus(
 					BatchEngineTaskExecuteStatus.valueOf(
 						batchEngineExportTask.getExecuteStatus()))
+			).totalItemsCount(
+				batchEngineExportTask.getTotalItemsCount()
 			);
 		}
 		else {
@@ -191,6 +199,13 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 
 			builder.action(
 				LanguageUtil.get(httpServletRequest, "import")
+			).batchEngineImportTaskERC(
+				String.valueOf(
+					batchEngineImportTask.getBatchEngineImportTaskId())
+			).failedItemsCount(
+				BatchEngineImportTaskErrorLocalServiceUtil.
+					getBatchEngineImportTaskErrorsCount(
+						batchEngineImportTask.getBatchEngineImportTaskId())
 			).processedItemsCount(
 				batchEngineImportTask.getProcessedItemsCount()
 			).status(
