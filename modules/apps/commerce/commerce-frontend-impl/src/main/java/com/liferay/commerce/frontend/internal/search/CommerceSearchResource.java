@@ -173,8 +173,8 @@ public class CommerceSearchResource {
 	}
 
 	private SearchItemModel _getSearchItemModel(
-			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay,
-			long commerceAccountId)
+			long commerceAccountId, CPCatalogEntry cpCatalogEntry,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		SearchItemModel searchItemModel = new SearchItemModel(
@@ -353,7 +353,6 @@ public class CommerceSearchResource {
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);
-
 		searchContext.setKeywords(queryString);
 
 		CPQuery cpQuery = new CPQuery();
@@ -377,7 +376,7 @@ public class CommerceSearchResource {
 
 			searchItemModels.add(
 				_getSearchItemModel(
-					cpCatalogEntry, themeDisplay, commerceAccountId));
+					commerceAccountId, cpCatalogEntry, themeDisplay));
 		}
 
 		String url = _commerceSearchUtil.getCatalogFriendlyURL(themeDisplay);
