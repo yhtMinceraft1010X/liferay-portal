@@ -8816,11 +8816,11 @@ enterprise.product.notification.enabled=false
 
 company.security.strangers.verify=false
 
+default.admin.password=test
+
 browser.launcher.url=
 
 setup.wizard.enabled=false
-
-default.admin.password=test
 
 passwords.default.policy.change.required=false
 
