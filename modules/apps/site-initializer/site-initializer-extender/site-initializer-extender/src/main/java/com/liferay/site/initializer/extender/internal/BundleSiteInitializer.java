@@ -1812,6 +1812,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addUserRoles(serviceContext);
 	}
 
+	private void _addPortletSettings(ServiceContext serviceContext)
+		throws Exception {
+
+		String resourcePath = "/site-initializer/portlet-settings.json";
+
+		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		Group group = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
+		_portletSettingsImporter.importPortletSettings(
+			JSONFactoryUtil.createJSONArray(json), _classLoader,
+			"/site-initializer/portlet-settings/",
+			serviceContext.getScopeGroupId(), group.getGroupId(),
+			serviceContext.getUserId());
+	}
+
 	private Map<String, String> _addRemoteAppEntries(
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -2646,27 +2667,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_roleLocalService.addUserRoles(user.getUserId(), roles);
 			}
 		}
-	}
-
-	private void _addPortletSettings(ServiceContext serviceContext)
-		throws Exception {
-
-		String resourcePath = "/site-initializer/portlet-settings.json";
-
-		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		Group group = _groupLocalService.getCompanyGroup(
-			serviceContext.getCompanyId());
-
-		_portletSettingsImporter.importPortletSettings(
-			JSONFactoryUtil.createJSONArray(json), _classLoader,
-			"/site-initializer/portlet-settings/",
-			serviceContext.getScopeGroupId(), group.getGroupId(),
-			serviceContext.getUserId());
 	}
 
 	private void _addWorkflowDefinitions(

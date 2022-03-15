@@ -891,6 +891,20 @@ public class BundleSiteInitializerTest {
 		_assertResourcePermission(group);
 	}
 
+	private void _assertPortletSettings(Group group) {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
+			"TEST-PORTLET-SETTINGS-1");
+
+		Assert.assertNotNull(ddmTemplate);
+
+		Assert.assertEquals(
+			"TEST PORTLET SETTINGS 1",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
 	private void _assertRemoteApp(Group group) throws Exception {
 		RemoteAppEntry remoteAppEntry =
 			_remoteAppEntryLocalService.
@@ -1116,20 +1130,6 @@ public class BundleSiteInitializerTest {
 		role = roles.get(1);
 
 		Assert.assertEquals("Test Role 3", role.getName());
-	}
-
-	private void _assertPortletSettings(Group group) {
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			group.getGroupId(),
-			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
-			"TEST-PORTLET-SETTINGS-1");
-
-		Assert.assertNotNull(ddmTemplate);
-
-		Assert.assertEquals(
-			"TEST PORTLET SETTINGS 1",
-			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
 	private void _assertWorkflowDefinitions(
