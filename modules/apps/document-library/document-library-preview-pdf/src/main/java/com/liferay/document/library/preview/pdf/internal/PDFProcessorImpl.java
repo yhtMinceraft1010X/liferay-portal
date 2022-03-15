@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
+import com.liferay.document.library.preview.pdf.internal.util.ProcessConfigUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.process.ProcessCallable;

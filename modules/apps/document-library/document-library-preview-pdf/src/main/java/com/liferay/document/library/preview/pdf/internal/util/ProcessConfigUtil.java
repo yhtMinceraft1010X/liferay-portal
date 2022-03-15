@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.pdf.internal;
+package com.liferay.document.library.preview.pdf.internal.util;
 
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.string.CharPool;
