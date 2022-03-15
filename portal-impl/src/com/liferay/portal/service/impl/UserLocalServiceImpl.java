@@ -251,17 +251,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		long creatorUserId = 0;
-		boolean autoPassword = false;
-		boolean passwordReset = _isPasswordReset(companyId);
-		boolean sendEmail = false;
 
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-		if (Validator.isNull(password1)) {
-			autoPassword = true;
-			passwordReset = true;
-			sendEmail = true;
-		}
 
 		String password2 = password1;
 
@@ -314,18 +305,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		serviceContext.setPortalURL(company.getPortalURL(0));
 
 		User defaultAdminUser = addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			creatorUserId, companyId, Validator.isNull(password1), password1,
+			password2, autoScreenName, screenName, emailAddress, facebookId,
+			openId, locale, firstName, middleName, lastName, prefixId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, Validator.isNull(password1),
+			serviceContext);
 
 		updateEmailAddressVerified(defaultAdminUser.getUserId(), true);
 
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
+		updatePasswordReset(
+			defaultAdminUser.getUserId(),
+			Validator.isNull(password1) ? true : _isPasswordReset(companyId));
 
 		return defaultAdminUser;
 	}
