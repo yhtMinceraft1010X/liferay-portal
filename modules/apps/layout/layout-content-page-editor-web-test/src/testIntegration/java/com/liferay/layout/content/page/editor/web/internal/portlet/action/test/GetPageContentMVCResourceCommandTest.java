@@ -75,6 +75,7 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -508,6 +509,12 @@ public class GetPageContentMVCResourceCommandTest {
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
 
+		mockLiferayResourceRequest.addParameter(
+			"segmentsExperienceId",
+			String.valueOf(
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
+
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -566,6 +573,9 @@ public class GetPageContentMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 
