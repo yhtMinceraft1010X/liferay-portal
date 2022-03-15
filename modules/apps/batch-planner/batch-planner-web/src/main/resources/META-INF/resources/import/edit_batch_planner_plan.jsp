@@ -93,7 +93,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 								<clay:checkbox
 									checked="<%= true %>"
 									id='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
-									label='<%= LanguageUtil.get(request, "stop-the-import-if-there-is-an-error") %>'
+									label='<%= LanguageUtil.get(request, "stop-the-import-on-error") %>'
 									name='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
 								/>
 							</div>
