@@ -255,7 +255,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
 
-		Boolean resetpassword = _isPasswordReset(companyId);
+		Boolean resetpassword = false;
 
 		if (Validator.isNull(password1)) {
 			password1 = "test";
