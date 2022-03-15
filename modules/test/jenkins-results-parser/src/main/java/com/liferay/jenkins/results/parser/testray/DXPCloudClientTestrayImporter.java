@@ -108,7 +108,7 @@ public class DXPCloudClientTestrayImporter {
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
-			"to-be-done/" + resultsTarGzFile.getName(), resultsTarGzFile);
+			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 
 		JenkinsResultsParserUtil.delete(testrayResultsDir);
 		JenkinsResultsParserUtil.delete(resultsTarGzFile);

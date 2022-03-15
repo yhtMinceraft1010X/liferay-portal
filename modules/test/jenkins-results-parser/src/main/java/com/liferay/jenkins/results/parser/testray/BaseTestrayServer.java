@@ -177,7 +177,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
-			"to-be-done/" + resultsTarGzFile.getName(), resultsTarGzFile);
+			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 
 	private synchronized void _initTestrayProjects() {
