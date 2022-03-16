@@ -80,7 +80,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				<c:if test="<%= discontinuedDate != null %>">
 
 					<%
-					Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM dd, yyyy", locale, timeZone);
+					Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM dd, yyyy", locale, timeZone);
 					%>
 
 					<p class="my-2">
@@ -88,7 +88,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 							<%= LanguageUtil.get(request, "end-of-life") %>
 						</span>
 						<span>
-							<%= dateFormat.format(discontinuedDate) %>
+							<%= format.format(discontinuedDate) %>
 						</span>
 					</p>
 				</c:if>
