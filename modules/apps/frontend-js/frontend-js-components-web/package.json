@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-state-web": "*"
 	},
 	"main": "index.js",
 	"name": "frontend-js-components-web",
