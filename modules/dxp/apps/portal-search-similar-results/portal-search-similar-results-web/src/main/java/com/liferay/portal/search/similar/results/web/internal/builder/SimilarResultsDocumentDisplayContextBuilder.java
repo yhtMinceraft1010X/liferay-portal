@@ -670,13 +670,13 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			}
 
 			@Override
-			public long getScopeGroupId() {
-				return _themeDisplay.getScopeGroupId();
+			public Object getRouteParameter(String name) {
+				return _similarResultsRoute.getRouteParameter(name);
 			}
 
 			@Override
-			public Object getRouteParameter(String name) {
-				return _similarResultsRoute.getRouteParameter(name);
+			public long getScopeGroupId() {
+				return _themeDisplay.getScopeGroupId();
 			}
 
 			@Override

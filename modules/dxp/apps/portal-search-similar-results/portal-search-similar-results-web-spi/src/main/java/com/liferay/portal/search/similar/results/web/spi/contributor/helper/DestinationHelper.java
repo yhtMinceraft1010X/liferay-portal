@@ -35,9 +35,9 @@ public interface DestinationHelper {
 
 	public long getClassPK();
 
-	public long getScopeGroupId();
-
 	public Object getRouteParameter(String name);
+
+	public long getScopeGroupId();
 
 	public String getUID();
 
