@@ -110,10 +110,10 @@ public class OrganizationResourceImpl
 			String externalReferenceCode, String organizationId)
 		throws Exception {
 
-		long accountId = _accountResourceDTOConverter.getAccountEntryId(
-			externalReferenceCode);
-
-		deleteAccountOrganization(accountId, organizationId);
+		deleteAccountOrganization(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			organizationId);
 	}
 
 	@Override
@@ -172,11 +172,10 @@ public class OrganizationResourceImpl
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		long accountId = _accountResourceDTOConverter.getAccountEntryId(
-			externalReferenceCode);
-
 		return getAccountOrganizationsPage(
-			accountId, search, filter, pagination, sorts);
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -303,10 +302,10 @@ public class OrganizationResourceImpl
 			String externalReferenceCode, String organizationId)
 		throws Exception {
 
-		long accountId = _accountResourceDTOConverter.getAccountEntryId(
-			externalReferenceCode);
-
-		postAccountOrganization(accountId, organizationId);
+		postAccountOrganization(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			organizationId);
 	}
 
 	@Override
