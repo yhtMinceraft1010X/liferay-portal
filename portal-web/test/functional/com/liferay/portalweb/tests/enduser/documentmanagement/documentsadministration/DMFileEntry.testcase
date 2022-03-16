@@ -2474,6 +2474,15 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "static.gif");
 	}
 
+	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NoZipFileIsCreatedIfDownloadResultsInError {
+
+		// TODO LPS-149394
+
+	}
+
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
 	@priority = "3"
 	@refactordone

@@ -57,6 +57,15 @@ definition {
 
 	}
 
+	@description = "This test covers LPS-141587. It validates that if the 'Delete Application Data Before Importing' option is selected the Doc Lib will not increase in size after the LAR import."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DLSizeDoesNotIncreaseIfAppDataIsDeletedBeforeImport {
+
+		// TODO LPS-149404
+
+	}
+
 	@description = "This is a use case for LPS-50760."
 	@priority = "4"
 	@refactordone
@@ -178,6 +187,15 @@ definition {
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
 			value1 = "5 of 11 Selected");
+	}
+
+	@description = "This test covers LPS-103231. It validates that the owner name from a document cannot execute XSS from the info panel."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test XSSCannotBeExecutedFromTheOwnerNameInTheInfoPanel {
+
+		// TODO LPS-129153
+
 	}
 
 }
