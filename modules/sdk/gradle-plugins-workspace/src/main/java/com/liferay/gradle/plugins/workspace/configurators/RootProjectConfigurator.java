@@ -1254,21 +1254,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			distBundleTask, workspaceExtension);
 
 		distBundleTar.setDescription(
-			"Assembles a Liferay bundle(tar.gz) for the current environment.");
+			"Assembles a Liferay bundle (tar.gz) for the current environment.");
 		distBundleTar.setGroup(BUNDLE_GROUP);
 
 		Task distBundleTarAll = GradleUtil.addTask(
 			project, DIST_BUNDLE_TAR_ALL_TASK_NAME, DefaultTask.class);
 
 		distBundleTarAll.setDescription(
-			"Assembles a Liferay bundle(tar.gz) for each environment.");
+			"Assembles a Liferay bundle (tar.gz) for each environment.");
 		distBundleTarAll.setGroup(BUNDLE_GROUP);
 
 		Task distBundleZipAll = GradleUtil.addTask(
 			project, DIST_BUNDLE_ZIP_ALL_TASK_NAME, DefaultTask.class);
 
 		distBundleZipAll.setDescription(
-			"Assembles a Liferay bundle(zip) for each environment.");
+			"Assembles a Liferay bundle (zip) for each environment.");
 		distBundleZipAll.setGroup(BUNDLE_GROUP);
 
 		Task distBundleZip = _addTaskDistBundle(
@@ -1276,7 +1276,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			distBundleTask, workspaceExtension);
 
 		distBundleZip.setDescription(
-			"Assembles a Liferay bundle(zip) for the current environment.");
+			"Assembles a Liferay bundle (zip) for the current environment.");
 		distBundleZip.setGroup(BUNDLE_GROUP);
 
 		project.afterEvaluate(
@@ -1339,7 +1339,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			distBundleTarTask.setCompression(Compression.GZIP);
 			distBundleTarTask.setDescription(
-				"Assembles a Liferay bundle(tar.gz) for " + environment + ".");
+				"Assembles a Liferay bundle (tar.gz) for " + environment + ".");
 
 			distBundleTarAll.dependsOn(distBundleTarTask);
 
@@ -1350,7 +1350,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				workspaceExtension);
 
 			distBundleZipTask.setDescription(
-				"Assembles a Liferay bundle(zip) for " + environment + ".");
+				"Assembles a Liferay bundle (zip) for " + environment + ".");
 
 			distBundleZipAll.dependsOn(distBundleZipTask);
 		}
