@@ -99,8 +99,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		if (roleIds.length > 1) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"More than one role id was returned for the Guest user. " +
-						"This may cause Guest users to have more permissions " +
+					"More than one role ID was returned for the guest user. " +
+						"This may cause guest users to have more permissions " +
 							"than intended.");
 			}
 
