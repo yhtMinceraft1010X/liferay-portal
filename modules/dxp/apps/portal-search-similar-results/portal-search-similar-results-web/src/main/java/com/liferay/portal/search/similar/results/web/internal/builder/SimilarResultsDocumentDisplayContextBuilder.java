@@ -670,7 +670,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			}
 
 			@Override
-			public long getCurrentGroupId() {
+			public long getScopeGroupId() {
 				return _themeDisplay.getScopeGroupId();
 			}
 
