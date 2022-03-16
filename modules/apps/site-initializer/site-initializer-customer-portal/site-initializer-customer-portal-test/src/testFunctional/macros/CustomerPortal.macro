@@ -15,6 +15,48 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro addIdPCForCustomerPortal {
+		AssertClick(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
+			value1 = "Add Identity Provider");
+
+		Type(
+			locator1 = "TextInput#SAML_NAME_FIELD",
+			value1 = "${idpNameId}");
+
+		Type(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
+			value1 = "${idpEntityId}");
+
+		Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
+
+		if (isSet(idpMetadataURL)) {
+			Type(
+				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+				value1 = "${idpMetadataURL}");
+		}
+
+		if (isSet(nameIdentifierFormat)) {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "${nameIdentifierFormat}");
+		}
+		else {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "Email Address");
+		}
+
+		if (isSet(idpAttributeMappingText)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
+				idpAttributeMapping = "${idpAttributeMapping}",
+				idpAttributeMappingText = "${idpAttributeMappingText}");
+		}
+		else if (isSet(idpAttributeMapping)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+		}
+	}
+
 	macro checkToggleHideWidget {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
@@ -98,6 +140,160 @@ definition {
 		Alert.viewSuccessMessage();
 
 		CustomerPortal.customerPortalApisTearDown();
+	}
+
+	macro replaceCertificateAndPrivateKey {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		AssertClick(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE",
+			value1 = "Replace Certificate");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
+			value1 = "Liferay QA");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD",
+			value1 = "Liferay");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
+			value1 = "USA");
+
+		if ("${certificateUsage}" == "SIGNING") {
+			Select(
+				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
+				value1 = "RSA");
+		}
+
+		Select(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
+			value1 = "2048");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD",
+			value1 = "${samlKeyPassword}");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+
+		AssertElementPresent(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
+	}
+
+	macro setUpForCP20 {
+		task ("Login in Okta") {
+
+			//var userEmailAddress = PropsUtil.get("okta.cp.email");
+			//var userPassword = PropsUtil.get("okta.cp.password");
+
+			var userEmailAddress = "garrettz@mbopartners.com.broken";
+			var userPassword = "q4F63ZEH3njnnA34S761";
+
+			Navigator.openSpecificURL(url = "https://login-dev.liferay.com/");
+
+			Type(
+				locator1 = "CustomerPortalSite#OKTA_USERNAME",
+				value1 = "${userEmailAddress}");
+
+			Type(
+				locator1 = "CustomerPortalSite#OKTA_PASSWORD",
+				value1 = "${userPassword}");
+
+			Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
+		}
+
+		Navigator.openURL();
+
+		task ("Configure SAML Admin general info") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			SAMLRole.configure(
+				samlEntityId = "customer2.liferay.com",
+				samlRoleType = "Service Provider");
+
+			if (IsElementPresent(locator1 = "CustomerPortalSite#CERTIFICATE", value = "SIGNING")) {
+				CustomerPortal.replaceCertificateAndPrivateKey(
+					certificateUsage = "SIGNING",
+					samlKeyPassword = "QATEST");
+
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "ENCRYPTION",
+					samlKeyPassword = "QATEST");
+
+				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+			}
+			else {
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "SIGNING",
+					samlKeyPassword = "QATEST");
+
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "ENCRYPTION",
+					samlKeyPassword = "QATEST");
+
+				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+			}
+		}
+
+		task ("Configure IdP Connections") {
+
+			//var entityId = PropsUtil.get("okta.cp.entityId");
+			//var metadataURL = PropsUtil.get("okta.cp.metadataURL");
+
+			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
+			var metadataURL = "https://provisioning.liferay.com/documents/20124/139691/customer-2.0-local-metadata.xml/eeac6c00-20b9-dafd-3059-4151d02d487b";
+
+			SAMLNavigation.gotoIdentityProviderConnections();
+
+			CustomerPortal.addIdPCForCustomerPortal(
+				idpAttributeMapping = "emailAddress,UUID,screenName,lastName,firstName",
+				idpEntityId = "${entityId}",
+				idpMetadataURL = "${metadataURL}",
+				idpNameId = "CP2",
+				nameIdentifierFormat = "Unspecified");
+
+			PortletEntry.save();
+		}
+	}
+
+	macro tearDownForOktaAndSAML {
+		task ("Teardown") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			SAMLNavigation.gotoIdentityProviderConnections();
+
+			SAMLPortlet.deleteSAMLConnection(samlEntityId = "${entityId}");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+			SAMLRole.deleteCertificate();
+
+			CustomerPortal.customerPortalTearDown();
+		}
 	}
 
 	macro viewKoroneikiInfo {
