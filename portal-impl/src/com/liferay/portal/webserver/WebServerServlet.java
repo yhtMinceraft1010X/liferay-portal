@@ -1781,7 +1781,7 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private static final String _PATH_SEPARATOR_FILE_ENTRY =
-		FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY.substring(1);
+		FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY;
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(
