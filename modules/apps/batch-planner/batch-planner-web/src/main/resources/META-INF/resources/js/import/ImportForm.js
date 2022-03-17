@@ -95,8 +95,7 @@ function ImportForm({
 		const dbFieldsUnordered = [...dbFields.optional, ...dbFields.required];
 
 		if (
-			dbFields.optional.length &&
-			dbFields.required.length &&
+			dbFields.optional.length + dbFields.required.length &&
 			fileFields &&
 			!useTemplateMappingRef.current
 		) {
