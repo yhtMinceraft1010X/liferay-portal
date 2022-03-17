@@ -359,9 +359,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(keywords);
 
-				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 				multiMatchQuery.addFields(
 					CPField.SKUS, CPField.SKUS + ".reverse");
+				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 
 				booleanQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
 
