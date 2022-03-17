@@ -101,7 +101,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 3);
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
@@ -156,7 +155,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 1);
 		whenGetID(extendedAttributeDefinition, "String");
 
@@ -214,7 +212,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 3);
 		whenGetID(extendedAttributeDefinition, "String");
 
@@ -268,7 +265,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
@@ -317,7 +313,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Integer");
 
@@ -366,7 +361,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Integer");
 
@@ -415,7 +409,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Select");
 
@@ -469,7 +462,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition});
-
 		whenGetCardinality(extendedAttributeDefinition, -3);
 		whenGetID(extendedAttributeDefinition, "Boolean");
 
