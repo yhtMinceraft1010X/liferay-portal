@@ -29,13 +29,14 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.internal.resource.v1_0.report.ImportTaskFailedItemsCSVReport;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -47,9 +48,12 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -126,9 +130,35 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		java.io.File file = null;
 
 		try {
-			file = _importTaskFailedItemsCSVReport.create(
-				_batchEngineImportTaskErrorLocalService.
-					getBatchEngineImportTaskErrors(importTaskId));
+			file = FileUtil.createTempFile("failed-items", "csv");
+
+			try (BufferedWriter bufferedWriter = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(file)))) {
+
+				bufferedWriter.write("item, itemIndex, message");
+
+				bufferedWriter.newLine();
+
+				for (BatchEngineImportTaskError batchEngineImportTaskError :
+						_batchEngineImportTaskErrorLocalService.
+							getBatchEngineImportTaskErrors(importTaskId)) {
+
+					bufferedWriter.write(
+						StringBundler.concat(
+							batchEngineImportTaskError.getItem(),
+							StringPool.COMMA_AND_SPACE,
+							batchEngineImportTaskError.getItemIndex(),
+							StringPool.COMMA_AND_SPACE,
+							batchEngineImportTaskError.getMessage()));
+
+					bufferedWriter.newLine();
+				}
+			}
+			catch (Exception exception) {
+				FileUtil.delete(file);
+
+				throw exception;
+			}
 
 			FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -469,9 +499,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Reference
 	private File _file;
-
-	@Reference
-	private ImportTaskFailedItemsCSVReport _importTaskFailedItemsCSVReport;
 
 	private final Map<String, Integer> _itemClassBatchSizeMap = new HashMap<>();
 
