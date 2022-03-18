@@ -1,8 +1,6 @@
-.dropdown-menu {
-	.dropdown.open > &,
-	.overlay-content .open > & {
-		display: block;
-	}
+.dropdown.open > .dropdown-menu,
+.overlay-content .open > .dropdown-menu {
+	display: block;
 }
 
 .dropdown-menu .dropdown-item.active {
