@@ -35,6 +35,9 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 
@@ -119,6 +122,32 @@ public class Main {
 		}
 
 		return attributeNode.getTextContent();
+	}
+
+	private long _getObjectEntryId(
+			String name, String objectDefinitionShortName)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
+			HashMapBuilder.put(
+				"fields", "id"
+			).put(
+				"filter", "name eq '" + name + "'"
+			).build());
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		JSONArray jsonArray = responseJSONObject.getJSONArray("items");
+
+		if (jsonArray.isEmpty()) {
+			return 0;
+		}
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		return jsonObject.getLong("id");
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {
@@ -231,9 +260,28 @@ public class Main {
 
 		String testrayProjectName = propertiesMap.get("testray.project.name");
 
-		System.out.println(testrayProjectName);
+		long testrayProjectId = _getObjectEntryId(
+			testrayProjectName, "projects");
 
-		_invoke(null, null, null, null, null);
+		if (testrayProjectId == 0) {
+			HttpInvoker.HttpResponse httpResponse = _invoke(
+				_toJSON(
+					HashMapBuilder.put(
+						"name", testrayProjectName
+					).build()),
+				null, HttpInvoker.HttpMethod.POST, "projects", null);
+
+			JSONObject responseJSONObject = new JSONObject(
+				httpResponse.getContent());
+
+			responseJSONObject.getLong("id");
+		}
+	}
+
+	private String _toJSON(Map<String, String> map) {
+		JSONObject jsonObject = new JSONObject(map);
+
+		return jsonObject.toString();
 	}
 
 	private final String _liferayLogin;
