@@ -265,7 +265,7 @@ AUI.add(
 
 					instance._renderIcons();
 
-					instance.inputContainer.addClass('sr-only');
+					instance.inputContainer.addClass('hide-accessible');
 
 					instance._applyARIARoles();
 				},

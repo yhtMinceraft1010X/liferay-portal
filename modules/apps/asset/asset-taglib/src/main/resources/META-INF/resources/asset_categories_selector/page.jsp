@@ -42,7 +42,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 										symbol="asterisk"
 									/>
 
-									<span class="sr-only">
+									<span class="hide-accessible">
 										<liferay-ui:message key="required" />
 									</span>
 								</span>

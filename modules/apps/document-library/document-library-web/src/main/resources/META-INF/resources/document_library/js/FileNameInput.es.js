@@ -23,7 +23,7 @@ const RequiredMark = () => (
 		<span className="inline-item-after reference-mark text-warning">
 			<ClayIcon symbol="asterisk" />
 		</span>
-		<span className="sr-only">
+		<span className="hide-accessible">
 			{Liferay.Language.get('required')}
 		</span>
 	</>

@@ -55,7 +55,7 @@ const DestinationUrlInput = ({
 				<span className="inline-item-after reference-mark">
 					<ClayIcon symbol="asterisk" />
 
-					<span className="sr-only">
+					<span className="hide-accessible">
 						{Liferay.Language.get('required')}
 					</span>
 				</span>
