@@ -27,10 +27,12 @@ public class MainHttpFunction implements HttpFunction {
 	public void service(HttpRequest httpRequest, HttpResponse httpResponse)
 		throws Exception {
 
-		Main.uploadToTestray(
+		Main main = new Main(
 			_getSystemEnv("LIFERAY_LOGIN"), _getSystemEnv("LIFERAY_PASSWORD"),
 			_getSystemEnv("LIFERAY_URL"), _getSystemEnv("S3_API_KEY_PATH"),
 			_getSystemEnv("S3_BUCKET_NAME"));
+
+		main.uploadToTestray();
 	}
 
 	private String _getSystemEnv(String name) {
