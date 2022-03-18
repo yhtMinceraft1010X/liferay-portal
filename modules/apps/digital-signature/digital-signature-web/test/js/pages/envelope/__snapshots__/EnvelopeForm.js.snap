@@ -41,7 +41,7 @@ exports[`EnvelopeForm renders 1`] = `
                 </svg>
               </span>
               <span
-                class="sr-only"
+                class="hide-accessible"
               >
                 required
               </span>
@@ -98,7 +98,7 @@ exports[`EnvelopeForm renders 1`] = `
                       </svg>
                     </span>
                     <span
-                      class="sr-only"
+                      class="hide-accessible"
                     >
                       required
                     </span>
@@ -137,7 +137,7 @@ exports[`EnvelopeForm renders 1`] = `
                       </svg>
                     </span>
                     <span
-                      class="sr-only"
+                      class="hide-accessible"
                     >
                       required
                     </span>
@@ -213,7 +213,7 @@ exports[`EnvelopeForm renders 1`] = `
                 </svg>
               </span>
               <span
-                class="sr-only"
+                class="hide-accessible"
               >
                 required
               </span>
