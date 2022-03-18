@@ -1,7 +1,5 @@
-@import 'atlas-variables';
-
 .lfr-spa-loading-bar {
-	background: $primary;
+	background: #2fa4f5;
 	display: none;
 	height: 2px;
 	left: 0;
@@ -9,8 +7,8 @@
 	right: 0;
 	top: 0;
 	z-index: 2000;
+}
 
-	.lfr-spa-loading & {
-		display: block;
-	}
+.lfr-spa-loading .lfr-spa-loading-bar {
+	display: block;
 }
