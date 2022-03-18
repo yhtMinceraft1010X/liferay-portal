@@ -39,7 +39,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,8 +49,6 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 
@@ -127,13 +124,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception {
 
-		java.io.File file = null;
-
-		try {
-			file = FileUtil.createTempFile("failed-items", "csv");
-
+		StreamingOutput streamingOutput = outputStream -> {
 			try (BufferedWriter bufferedWriter = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(file)))) {
+					new OutputStreamWriter(outputStream))) {
 
 				bufferedWriter.write("item, itemIndex, message");
 
@@ -154,29 +147,14 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 					bufferedWriter.newLine();
 				}
 			}
-			catch (Exception exception) {
-				FileUtil.delete(file);
+		};
 
-				throw exception;
-			}
-
-			FileInputStream fileInputStream = new FileInputStream(file);
-
-			StreamingOutput streamingOutput =
-				outputStream -> StreamUtil.transfer(
-					fileInputStream, outputStream);
-
-			return Response.ok(
-				streamingOutput
-			).header(
-				"Content-Disposition", "attachment; filename=" + file.getName()
-			).build();
-		}
-		finally {
-			if (file != null) {
-				FileUtil.delete(file);
-			}
-		}
+		return Response.ok(
+			streamingOutput
+		).header(
+			"Content-Disposition",
+			"attachment; filename=" + StringUtil.randomString() + ".csv"
+		).build();
 	}
 
 	@Override
