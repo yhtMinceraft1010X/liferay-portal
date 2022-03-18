@@ -28,8 +28,13 @@ import java.nio.file.Path;
 
 import java.util.Properties;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
+
+import org.w3c.dom.Document;
 
 /**
  * @author Brian Wing Shun Chan
@@ -100,9 +105,17 @@ public class Main {
 
 			archiver.extract(tempFilePath.toFile(), tempDirectoryFile);
 
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
 			for (File file : tempDirectoryFile.listFiles()) {
 				try {
-					_processFile(file);
+					Document document = documentBuilder.parse(file);
+
+					_processDocument(document);
 				}
 				finally {
 					file.delete();
@@ -120,8 +133,8 @@ public class Main {
 		}
 	}
 
-	private static void _processFile(File file) throws Exception {
-		System.out.println(file);
+	private static void _processDocument(Document document) throws Exception {
+		System.out.println(document);
 	}
 
 }
