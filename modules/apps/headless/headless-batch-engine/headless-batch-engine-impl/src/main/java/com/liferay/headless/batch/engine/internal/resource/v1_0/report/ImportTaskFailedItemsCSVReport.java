@@ -43,7 +43,8 @@ public class ImportTaskFailedItemsCSVReport {
 		try (BufferedWriter bufferedWriter = new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream(file)))) {
 
-			bufferedWriter.write(_CSV_REPORT_HEADER);
+			bufferedWriter.write("item, itemIndex, message");
+
 			bufferedWriter.newLine();
 
 			for (BatchEngineImportTaskError batchEngineImportTaskError :
@@ -70,7 +71,5 @@ public class ImportTaskFailedItemsCSVReport {
 			throw exception;
 		}
 	}
-
-	private static final String _CSV_REPORT_HEADER = "item, itemIndex, message";
 
 }
