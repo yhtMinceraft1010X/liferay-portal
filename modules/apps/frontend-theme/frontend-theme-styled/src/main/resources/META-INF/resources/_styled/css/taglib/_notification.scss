@@ -1,3 +1,13 @@
+.alert-notifications.alert-notifications-fixed {
+	@include media-breakpoint-down(sm) {
+		top: inherit;
+
+		.alert {
+			max-width: none;
+		}
+	}
+}
+
 .lfr-notification-container {
 	bottom: 1.25rem;
 	left: 1.25rem;
