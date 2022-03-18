@@ -33,7 +33,7 @@ const Separator = ({name, style, ...otherProps}) => {
 
 	return (
 		<FieldBase name={name} {...otherProps}>
-			<hr className="separator" ref={elRef} />
+			<div className="separator" ref={elRef} />
 
 			<input name={name} type="hidden" />
 		</FieldBase>

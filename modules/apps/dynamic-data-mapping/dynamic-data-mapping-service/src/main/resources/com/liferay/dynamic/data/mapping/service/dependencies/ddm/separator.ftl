@@ -9,7 +9,7 @@
 	label=escape(label)
 >
 	<div class="form-group">
-		<hr class="separator" style="${escapeAttribute(style)}" />
+		<div class="separator" style="${escapeAttribute(style)}"></div>
 	</div>
 
 	${fieldStructure.children}

@@ -117,7 +117,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								/>
 							</liferay-ui:search-container-row>
 
-							<hr class="separator" />
+							<div class="separator"></div>
 
 							<liferay-ui:search-iterator
 								searchResultCssClass="show-quick-actions-on-hover table table-autofit"

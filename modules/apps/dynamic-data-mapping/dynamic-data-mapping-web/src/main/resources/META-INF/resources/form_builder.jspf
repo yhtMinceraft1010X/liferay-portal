@@ -40,7 +40,7 @@ if (Validator.isNotNull(script)) {
 }
 %>
 
-<hr class="separator" />
+<div class="separator"><!-- --></div>
 
 <div class="alert alert-danger hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 

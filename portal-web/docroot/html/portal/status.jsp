@@ -140,7 +140,7 @@ else if (Validator.isNotNull(exception)) {
 	</c:otherwise>
 </c:choose>
 
-<hr class="separator" />
+<div class="separator"><!-- --></div>
 
 <a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 

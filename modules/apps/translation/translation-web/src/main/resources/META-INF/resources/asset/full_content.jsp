@@ -43,7 +43,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 
 				<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
 
-				<hr class="separator" />
+				<div class="separator"><!-- --></div>
 			</clay:col>
 
 			<clay:col
@@ -60,7 +60,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 
 				<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
 
-				<hr class="separator" />
+				<div class="separator"><!-- --></div>
 			</clay:col>
 		</clay:row>
 

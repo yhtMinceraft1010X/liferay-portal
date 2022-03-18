@@ -47,7 +47,7 @@ RulesEngine rulesEngine = (RulesEngine)request.getAttribute(RulesEngine.class.ge
 
 				<%= user.getGreeting() %>
 
-				<hr class="separator" />
+				<div class="separator"><!-- --></div>
 
 				<c:choose>
 					<c:when test="<%= !assetEntries.isEmpty() %>">
@@ -76,7 +76,7 @@ RulesEngine rulesEngine = (RulesEngine)request.getAttribute(RulesEngine.class.ge
 								template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
 							/>
 
-							<hr class="separator" />
+							<div class="separator"><!-- --></div>
 
 						<%
 						}
