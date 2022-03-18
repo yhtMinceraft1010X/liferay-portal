@@ -54,7 +54,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	@Override
 	@Test
 	public void testDeleteAccountByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
 
 		assertHttpResponseStatusCode(
@@ -76,14 +75,12 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testGetAccountsPage();
 
 		Account account1 = testGetAccountsPage_addAccount(randomAccount());
-
 		Account account2 = testGetAccountsPage_addAccount(randomAccount());
 
-		Organization organization = OrganizationTestUtil.addOrganization();
-
 		_testGetAccountsPage(Arrays.asList(account1, account2));
-
 		_testGetAccountsPage(Collections.emptyList());
+
+		Organization organization = OrganizationTestUtil.addOrganization();
 
 		_commerceAccountOrganizationRelLocalService.
 			addCommerceAccountOrganizationRel(

@@ -219,7 +219,6 @@ public class AccountResourceImpl
 						"organizationIds",
 						_organizationLocalService.getUserOrganizationIds(
 							contextUser.getUserId(), true));
-
 					searchContext.setCompanyId(contextCompany.getCompanyId());
 				}
 
