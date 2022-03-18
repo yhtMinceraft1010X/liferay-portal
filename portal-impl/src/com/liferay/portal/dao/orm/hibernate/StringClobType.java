@@ -54,12 +54,12 @@ public class StringClobType implements Serializable, UserType {
 	}
 
 	@Override
-	public boolean equals(Object x, Object y) {
-		if (Objects.equals(x, y)) {
+	public boolean equals(Object object1, Object object2) {
+		if (Objects.equals(object1, object2)) {
 			return true;
 		}
-		else if (((x == null) || x.equals(StringPool.BLANK)) &&
-				 ((y == null) || y.equals(StringPool.BLANK))) {
+		else if (((object1 == null) || object1.equals(StringPool.BLANK)) &&
+				 ((object2 == null) || object2.equals(StringPool.BLANK))) {
 
 			return true;
 		}
@@ -68,8 +68,8 @@ public class StringClobType implements Serializable, UserType {
 	}
 
 	@Override
-	public int hashCode(Object x) throws HibernateException {
-		return x.hashCode();
+	public int hashCode(Object object) throws HibernateException {
+		return object.hashCode();
 	}
 
 	@Override
@@ -87,20 +87,20 @@ public class StringClobType implements Serializable, UserType {
 			return null;
 		}
 
-		StringBuilder result = new StringBuilder(4096);
+		StringBuilder stringBuilder = new StringBuilder(4096);
 
 		try {
 			char[] chars = new char[4096];
 
 			for (int i = reader.read(chars); i > 0; i = reader.read(chars)) {
-				result.append(chars, 0, i);
+				stringBuilder.append(chars, 0, i);
 			}
 		}
 		catch (IOException ioException) {
 			throw new SQLException(ioException.getMessage());
 		}
 
-		return result.toString();
+		return stringBuilder.toString();
 	}
 
 	@Override
@@ -111,10 +111,10 @@ public class StringClobType implements Serializable, UserType {
 		if (value != null) {
 			String string = (String)value;
 
-			StringReader reader = new StringReader(string);
+			StringReader stringReader = new StringReader(string);
 
 			preparedStatement.setCharacterStream(
-				index, reader, string.length());
+				index, stringReader, string.length());
 		}
 		else {
 			preparedStatement.setNull(index, sqlTypes()[0]);
