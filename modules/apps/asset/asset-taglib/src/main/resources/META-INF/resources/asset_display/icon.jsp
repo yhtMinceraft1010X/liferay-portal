@@ -38,10 +38,10 @@ AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory)request.get
 
 	<div class="card-row card-row-layout-fixed card-row-padded card-row-valign-top">
 		<div class="card-col-content lfr-card-details-column">
-			<span class="font-weight-bold lfr-card-title-text small text-truncate">
+			<span class="lfr-card-title-text text-truncate">
 				<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 			</span>
-			<span class="font-weight-normal lfr-card-subtitle-text small text-truncate">
+			<span class="lfr-card-subtitle-text text-truncate">
 				<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale)) %>
 			</span>
 		</div>
