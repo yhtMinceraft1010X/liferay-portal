@@ -136,3 +136,11 @@ $light-color: #e7e7ed;
 		}
 	}
 }
+
+.lfr-discussion-reply-popover {
+	width: 25rem;
+
+	@include media-breakpoint-up(sm) {
+		max-width: 25rem;
+	}
+}

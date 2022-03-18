@@ -21,8 +21,6 @@ import React, {useState} from 'react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import UserIcon from './UserIcon';
 
-import '../../css/main.scss';
-
 function ReplyPopover({
 	ariaLabel,
 	contentHTML,
