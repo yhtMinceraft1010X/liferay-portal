@@ -150,7 +150,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="font-weight-bold table-cell-expand"
+								cssClass="important table-cell-expand"
 								href="<%= rowURL %>"
 								name="name"
 								value="<%= HtmlUtil.escape(cProductCPDefinition.getName(themeDisplay.getLanguageId())) %>"

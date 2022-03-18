@@ -58,7 +58,7 @@ CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishLis
 				modelVar="commerceWishList"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="font-weight-bold table-cell-expand"
+					cssClass="important table-cell-expand"
 					href="<%= commerceWishListDisplayContext.getRowURL(commerceWishList.getCommerceWishListId()) %>"
 					name="name"
 					value="<%= HtmlUtil.escape(commerceWishList.getName()) %>"

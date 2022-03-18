@@ -44,7 +44,7 @@ CommerceShipmentContentDisplayContext commerceShipmentContentDisplayContext = (C
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="font-weight-bold table-list-title"
+			cssClass="important table-list-title"
 			href="<%= rowURL %>"
 			name="shipment-number"
 			property="commerceShipmentId"

@@ -89,7 +89,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 					modelVar="region"
 				>
 					<liferay-ui:search-container-column-text
-						cssClass="font-weight-bold table-cell-expand"
+						cssClass="important table-cell-expand"
 						href='<%=
 							PortletURLBuilder.createRenderURL(
 								renderResponse

@@ -77,7 +77,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 		</c:choose>
 
 		<liferay-ui:search-container-column-text
-			cssClass="font-weight-bold table-cell-expand"
+			cssClass="important table-cell-expand"
 			name="name"
 			value="<%= HtmlUtil.escape(cpCatalogEntry.getName()) %>"
 		/>

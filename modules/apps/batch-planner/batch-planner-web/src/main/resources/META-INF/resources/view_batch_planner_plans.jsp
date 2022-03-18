@@ -62,7 +62,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
-					cssClass="font-weight-bold"
+					cssClass="important"
 					href="<%= rowURL %>"
 					name="name"
 					value="<%= HtmlUtil.escape(batchPlannerPlan.getName()) %>"
