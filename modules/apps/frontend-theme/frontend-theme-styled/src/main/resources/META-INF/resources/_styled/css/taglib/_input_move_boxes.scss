@@ -97,10 +97,8 @@
 			}
 		}
 	}
+}
 
-	.selector-container {
-		.mobile & {
-			display: none;
-		}
-	}
+.mobile .taglib-move-boxes .selector-container {
+	display: none;
 }
