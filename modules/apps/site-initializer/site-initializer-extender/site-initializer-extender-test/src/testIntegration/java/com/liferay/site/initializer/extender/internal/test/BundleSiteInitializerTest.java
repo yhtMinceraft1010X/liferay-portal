@@ -140,6 +140,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -173,6 +175,14 @@ public class BundleSiteInitializerTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter(
+			"currentURL", "http://www.liferay.com");
+
+		serviceContext.setRequest(mockHttpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
