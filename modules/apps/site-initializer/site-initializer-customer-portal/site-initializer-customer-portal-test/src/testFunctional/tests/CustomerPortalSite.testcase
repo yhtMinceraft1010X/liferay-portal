@@ -4,6 +4,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Customer Portal";
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 
 	setUp {
 		TestCase.setUpPortalInstance();
