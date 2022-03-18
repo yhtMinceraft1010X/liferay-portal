@@ -96,19 +96,13 @@ public class ExpandoColumnLocalServiceImpl
 	public void deleteColumn(ExpandoColumn column) throws PortalException {
 		addDeletionSystemEvent(column);
 
-		// Column
-
 		expandoColumnPersistence.remove(column);
-
-		// Values
-
-		expandoValueLocalService.deleteColumnValues(column.getColumnId());
-
-		// Resources
 
 		resourceLocalService.deleteResource(
 			column.getCompanyId(), ExpandoColumn.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, column.getColumnId());
+
+		expandoValueLocalService.deleteColumnValues(column.getColumnId());
 	}
 
 	@Override
