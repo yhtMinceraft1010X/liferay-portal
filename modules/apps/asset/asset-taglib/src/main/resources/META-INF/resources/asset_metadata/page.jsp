@@ -21,10 +21,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-me
 String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-metadata:metadataFields");
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <dl class="taglib-asset-metadata">
 	<c:choose>
 		<c:when test="<%= metadataFields.length == 1 %>">
