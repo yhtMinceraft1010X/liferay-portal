@@ -128,6 +128,13 @@ public class Main {
 			String name, String objectDefinitionShortName)
 		throws Exception {
 
+		Long objectEntryId = _objectEntryIds.get(
+			objectDefinitionShortName + "#" + name);
+
+		if (objectEntryId != null) {
+			return objectEntryId;
+		}
+
 		HttpInvoker.HttpResponse httpResponse = _invoke(
 			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
 			HashMapBuilder.put(
@@ -147,7 +154,12 @@ public class Main {
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		return jsonObject.getLong("id");
+		objectEntryId = jsonObject.getLong("id");
+
+		_objectEntryIds.put(
+			objectDefinitionShortName + "#" + name, objectEntryId);
+
+		return objectEntryId;
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {
@@ -176,6 +188,33 @@ public class Main {
 		}
 
 		return map;
+	}
+
+	private long _getTestrayProjectId(String testrayProjectName)
+		throws Exception {
+
+		long testrayProjectId = _getObjectEntryId(
+			testrayProjectName, "projects");
+
+		if (testrayProjectId != 0) {
+			return testrayProjectId;
+		}
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			_toJSON(
+				HashMapBuilder.put(
+					"name", testrayProjectName
+				).build()),
+			null, HttpInvoker.HttpMethod.POST, "projects", null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		testrayProjectId = responseJSONObject.getLong("id");
+
+		_objectEntryIds.put("projects#" + testrayProjectName, testrayProjectId);
+
+		return testrayProjectId;
 	}
 
 	private HttpInvoker.HttpResponse _invoke(
@@ -260,22 +299,7 @@ public class Main {
 
 		String testrayProjectName = propertiesMap.get("testray.project.name");
 
-		long testrayProjectId = _getObjectEntryId(
-			testrayProjectName, "projects");
-
-		if (testrayProjectId == 0) {
-			HttpInvoker.HttpResponse httpResponse = _invoke(
-				_toJSON(
-					HashMapBuilder.put(
-						"name", testrayProjectName
-					).build()),
-				null, HttpInvoker.HttpMethod.POST, "projects", null);
-
-			JSONObject responseJSONObject = new JSONObject(
-				httpResponse.getContent());
-
-			responseJSONObject.getLong("id");
-		}
+		_getTestrayProjectId(testrayProjectName);
 	}
 
 	private String _toJSON(Map<String, String> map) {
@@ -287,6 +311,7 @@ public class Main {
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
+	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;
 
