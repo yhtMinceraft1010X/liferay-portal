@@ -244,11 +244,12 @@ public class CommerceProductUpgradeStepRegistrator
 			new CTModelUpgradeProcess(
 				"CommerceCatalog", "CommerceChannel", "CommerceChannelRel",
 				"CPAttachmentFileEntry", "CPDefinition", "CPDefinitionLink",
-				"CPDefinitionOptionRel", "CPDefinitionOptionValueRel",
-				"CPDSpecificationOptionValue", "CPDisplayLayout", "CPInstance",
-				"CPInstanceOptionValueRel", "CPMeasurementUnit", "CPOption",
-				"CPOptionCategory", "CPOptionValue", "CProduct",
-				"CPSpecificationOption", "CPTaxCategory"));
+				"CPDefinitionLocalization", "CPDefinitionOptionRel",
+				"CPDefinitionOptionValueRel", "CPDSpecificationOptionValue",
+				"CPDisplayLayout", "CPInstance", "CPInstanceOptionValueRel",
+				"CPMeasurementUnit", "CPOption", "CPOptionCategory",
+				"CPOptionValue", "CProduct", "CPSpecificationOption",
+				"CPTaxCategory"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
