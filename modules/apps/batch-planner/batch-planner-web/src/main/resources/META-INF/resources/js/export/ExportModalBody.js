@@ -60,8 +60,8 @@ const ExportModalBody = ({errorMessage, percentage, readyToDownload}) => {
 							symbol="document-default"
 						/>
 
-						<div className="d-flex flex-column">
-							<span>{EXPORT_FILE_NAME}</span>
+						<div>
+							<p className="mb-0">{EXPORT_FILE_NAME}</p>
 
 							<ClayLabel displayType={labelType}>
 								{label}
