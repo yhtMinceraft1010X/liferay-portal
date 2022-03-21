@@ -7,7 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
-	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalizationCTServiceImpl" id="CPDefinitionLocalizationCTService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceCatalogLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceCatalogLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl" id="com.liferay.commerce.product.service.CommerceCatalogService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceCatalogModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CommerceCatalogModelArgumentsResolver" />
@@ -35,6 +34,7 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalizationCTServiceImpl" id="CPDefinitionLocalizationCTService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
