@@ -230,7 +230,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
-			group, WorkflowConstants.STATUS_APPROVED, title);
+			group, title, WorkflowConstants.STATUS_APPROVED);
 
 		if (importPageDefinition) {
 			String name = PrincipalThreadLocal.getName();

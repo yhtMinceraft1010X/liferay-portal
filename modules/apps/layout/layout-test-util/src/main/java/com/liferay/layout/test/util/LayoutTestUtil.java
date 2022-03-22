@@ -198,7 +198,7 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypeContentPublishedLayout(
-			Group group, int status, String name)
+			Group group, String name, int status)
 		throws Exception {
 
 		Layout layout = addTypeContentLayout(group, name);
