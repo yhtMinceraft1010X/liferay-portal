@@ -269,7 +269,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NoChangeOnSegmentProfileSelectedPoint {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9260
@@ -471,7 +470,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test SegmentMembershipGraphExistAndShowsMembers {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9258
@@ -539,7 +537,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectedSegmentMembershipPointCanClearDateSelection {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9257
@@ -612,7 +609,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9261
@@ -685,7 +681,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9252
@@ -760,7 +755,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
-		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9251
