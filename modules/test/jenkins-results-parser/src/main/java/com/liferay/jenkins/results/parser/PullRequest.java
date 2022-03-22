@@ -520,7 +520,7 @@ public class PullRequest {
 	}
 
 	public boolean hasRequiredPassingTestSuites() {
-		Properties buildProperties;
+		Properties buildProperties = null;
 
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();

@@ -266,7 +266,7 @@ public class JobFactory {
 		String repositoryName, String testSuiteName,
 		String upstreamBranchName) {
 
-		String key;
+		String key = null;
 
 		if (jsonObject != null) {
 			jobName = jsonObject.getString("job_name");

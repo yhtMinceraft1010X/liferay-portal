@@ -68,7 +68,6 @@ public abstract class GitRepositoryJob extends BaseJob {
 		jsonObject = super.getJSONObject();
 
 		jsonObject.put("branch", _getBranchJSONObject());
-
 		jsonObject.put("git_repository_dir", gitRepositoryDir);
 		jsonObject.put("upstream_branch_name", _upstreamBranchName);
 
