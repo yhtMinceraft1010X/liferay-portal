@@ -84,10 +84,9 @@ public class CollectionLayoutStructureItemImporter
 
 			Boolean displayAllPages = (Boolean)definitionMap.get(
 				"displayAllPages");
-			Boolean showAllItems = (Boolean)definitionMap.get("showAllItems");
 
 			if (displayAllPages == null) {
-				displayAllPages = showAllItems;
+				displayAllPages = (Boolean)definitionMap.get("showAllItems");
 			}
 
 			collectionStyledLayoutStructureItem.setDisplayAllPages(
