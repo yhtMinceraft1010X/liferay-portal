@@ -28,8 +28,8 @@ public interface CommerceCheckoutStepServicesTracker {
 		String commerceCheckoutStepName);
 
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
-			boolean onlyActive, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean onlyActive)
 		throws Exception;
 
 	public CommerceCheckoutStep getNextCommerceCheckoutStep(

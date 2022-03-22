@@ -77,8 +77,8 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 	@Override
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
-			boolean onlyActive, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean onlyActive)
 		throws Exception {
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps = new ArrayList<>();
@@ -126,7 +126,7 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
 			getCommerceCheckoutSteps(
-				false, httpServletRequest, httpServletResponse);
+				httpServletRequest, httpServletResponse, false);
 
 		CommerceCheckoutStep currentCommerceCheckoutStep =
 			getCommerceCheckoutStep(commerceCheckoutStepName);
@@ -167,7 +167,7 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
 			getCommerceCheckoutSteps(
-				true, httpServletRequest, httpServletResponse);
+				httpServletRequest, httpServletResponse, true);
 
 		int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
 			getCommerceCheckoutStep(commerceCheckoutStepName));
