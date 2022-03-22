@@ -80,7 +80,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 			return Response.ok(
 				streamingOutput
 			).header(
-				"content-disposition", "attachment; filename=export.zip"
+				"content-disposition",
+				"attachment; filename=" + StringUtil.randomString() + ".zip"
 			).build();
 		}
 

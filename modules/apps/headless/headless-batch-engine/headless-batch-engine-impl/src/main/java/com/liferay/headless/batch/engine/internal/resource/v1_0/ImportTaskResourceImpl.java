@@ -146,7 +146,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return Response.ok(
 			streamingOutput
 		).header(
-			"content-disposition", "attachment; filename=import.zip"
+			"content-disposition",
+			"attachment; filename=" + StringUtil.randomString() + ".zip"
 		).build();
 	}
 
