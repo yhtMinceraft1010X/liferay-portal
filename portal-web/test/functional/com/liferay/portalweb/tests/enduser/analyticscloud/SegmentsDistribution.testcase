@@ -134,7 +134,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanDistributionChartFilteredNumber {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Chart fails to appear when filtering with a number property.
 		// AC Refactor ticket: LRAC-9328

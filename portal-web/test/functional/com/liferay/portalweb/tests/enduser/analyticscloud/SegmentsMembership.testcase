@@ -269,7 +269,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NoChangeOnSegmentProfileSelectedPoint {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9260
@@ -471,7 +471,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test SegmentMembershipGraphExistAndShowsMembers {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9258
@@ -539,7 +539,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectedSegmentMembershipPointCanClearDateSelection {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9257
@@ -612,7 +612,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9261
@@ -685,7 +685,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9252
@@ -760,7 +760,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
-		property portal.upstream = "quarantine";
+		
 
 		// AC Refactor: Segment data takes time to appear.
 		// AC Refactor ticket: LRAC-9251
