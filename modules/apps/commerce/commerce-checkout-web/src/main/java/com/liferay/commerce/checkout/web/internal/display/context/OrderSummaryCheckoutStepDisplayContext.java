@@ -96,7 +96,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CPInstanceHelper cpInstanceHelper,
 		HttpServletRequest httpServletRequest,
 		PercentageFormatter percentageFormatter,
-		PortletResourcePermission portletResourcePermission, Portal portal) {
+		Portal portal,
+		PortletResourcePermission portletResourcePermission) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
@@ -110,8 +111,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
 		_percentageFormatter = percentageFormatter;
-		_portletResourcePermission = portletResourcePermission;
 		_portal = portal;
+		_portletResourcePermission = portletResourcePermission;
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
