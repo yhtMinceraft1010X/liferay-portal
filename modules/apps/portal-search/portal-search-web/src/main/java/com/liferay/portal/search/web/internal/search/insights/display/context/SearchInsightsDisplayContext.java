@@ -31,11 +31,11 @@ public class SearchInsightsDisplayContext implements Serializable {
 	}
 
 	public String getRequestString() {
-		return _getPrettyPrintedJSONString(_requestString);
+		return _getPrettyPrintedJSON(_requestString);
 	}
 
 	public String getResponseString() {
-		return _getPrettyPrintedJSONString(_responseString);
+		return _getPrettyPrintedJSON(_responseString);
 	}
 
 	public void setHelpMessage(String helpMessage) {
@@ -50,10 +50,9 @@ public class SearchInsightsDisplayContext implements Serializable {
 		_responseString = responseString;
 	}
 
-	private String _getPrettyPrintedJSONString(String jsonString) {
+	private String _getPrettyPrintedJSON(String json) {
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				jsonString);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 			return jsonObject.toString(4);
 		}
@@ -62,7 +61,7 @@ public class SearchInsightsDisplayContext implements Serializable {
 				_log.warn(exception);
 			}
 
-			return jsonString;
+			return json;
 		}
 	}
 
