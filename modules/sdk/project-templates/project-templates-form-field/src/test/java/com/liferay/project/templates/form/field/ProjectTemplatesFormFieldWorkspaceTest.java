@@ -261,7 +261,6 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
-
 			Assert.assertTrue(Files.exists(gradleOutputPath));
 		}
 	}
@@ -296,7 +295,6 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
-
 			Assert.assertTrue(Files.exists(gradleOutputPath));
 		}
 	}
@@ -336,7 +334,6 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
-
 			Assert.assertTrue(Files.exists(gradleOutputPath));
 		}
 	}
