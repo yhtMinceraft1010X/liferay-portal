@@ -456,34 +456,34 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 			</c:if>
 
 			<%
-			CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+			CommerceAddress commerceBillingAddress = commerceOrder.getBillingAddress();
 			%>
 
-			<c:if test="<%= (billingAddress != null) && orderSummaryCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
+			<c:if test="<%= (commerceBillingAddress != null) && orderSummaryCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
 				<address class="billing-address">
 					<h5>
 						<liferay-ui:message key="billing-address" />
 					</h5>
 
 					<%
-					request.setAttribute("address.jsp-commerceAddress", billingAddress);
+					request.setAttribute("address.jsp-commerceAddress", commerceBillingAddress);
 					%>
 
-					<%= HtmlUtil.escape(billingAddress.getName()) %> <br />
-					<%= HtmlUtil.escape(billingAddress.getStreet1()) %> <br />
+					<%= HtmlUtil.escape(commerceBillingAddress.getName()) %> <br />
+					<%= HtmlUtil.escape(commerceBillingAddress.getStreet1()) %> <br />
 
-					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet2()) %>">
-						<%= HtmlUtil.escape(billingAddress.getStreet2()) %> <br />
+					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getStreet2()) %>">
+						<%= HtmlUtil.escape(commerceBillingAddress.getStreet2()) %> <br />
 					</c:if>
 
-					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet3()) %>">
-						<%= HtmlUtil.escape(billingAddress.getStreet3()) %> <br />
+					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getStreet3()) %>">
+						<%= HtmlUtil.escape(commerceBillingAddress.getStreet3()) %> <br />
 					</c:if>
 
-					<%= HtmlUtil.escape(billingAddress.getCity()) %> <br />
+					<%= HtmlUtil.escape(commerceBillingAddress.getCity()) %> <br />
 
 					<%
-					Country country = billingAddress.getCountry();
+					Country country = commerceBillingAddress.getCountry();
 					%>
 
 					<c:if test="<%= country != null %>">
