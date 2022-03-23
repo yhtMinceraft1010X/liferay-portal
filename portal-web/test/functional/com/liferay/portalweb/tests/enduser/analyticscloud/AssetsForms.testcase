@@ -40,7 +40,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
-
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
@@ -156,6 +155,7 @@ definition {
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
 		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,ac2";
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
