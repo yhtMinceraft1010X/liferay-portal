@@ -108,15 +108,13 @@ public class Main {
 
 				blob.copyTo(
 					_s3BucketName, name.replaceFirst("inbox", "processed"));
-
-				blob.delete();
 			}
 			catch (Exception exception) {
 				blob.copyTo(
 					_s3BucketName, name.replaceFirst("inbox", "errored"));
-
-				blob.delete();
 			}
+
+			blob.delete();
 		}
 	}
 
