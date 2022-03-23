@@ -586,7 +586,7 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"upload", false, Collections.emptyList());
 		}
-		catch (ObjectFieldSettingValueException
+		catch (ObjectFieldSettingValueException.MissingRequiredValues
 					objectFieldSettingValueException) {
 
 			Assert.assertEquals(
