@@ -90,12 +90,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichBrowsersBeingUsed {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-9001
 
 		ACNavigation.switchTabInCard(tabName = "Browsers");
 
@@ -107,12 +103,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-9002
 
 		ACAssets.viewTechnologyDeviceViewsAndPercentage(
 			actionValue = "1 Views",

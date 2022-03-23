@@ -60,8 +60,6 @@ definition {
 	@priority = "5"
 	test AllIndividualAttributesAppearInList {
 
-		// AC Refactor ticket: LRAC-9707
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",

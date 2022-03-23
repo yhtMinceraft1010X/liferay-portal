@@ -201,8 +201,6 @@ definition {
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
 
-		// AC Refactor ticket: LRAC-9707
-
 		ACUtils.createDMAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -347,9 +345,7 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
-
-		// AC Refactor ticket: LRAC-9707
-
+		
 		ACUtils.createFormAndAddToPage();
 
 		Navigator.openURL();

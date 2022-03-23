@@ -210,8 +210,6 @@ definition {
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
 
-		// AC Refactor ticket: LRAC-9707
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

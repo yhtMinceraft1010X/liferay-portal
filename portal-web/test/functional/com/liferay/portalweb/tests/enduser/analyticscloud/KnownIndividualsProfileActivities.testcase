@@ -205,8 +205,6 @@ definition {
 	@priority = "3"
 	test AssertKnownIndividualChartPopover {
 
-		// AC Refactor ticket: LRAC-9707
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",

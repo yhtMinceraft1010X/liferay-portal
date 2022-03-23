@@ -60,12 +60,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
-	@ignore = "true"
 	@priority = "5"
 	test ShowNumberOfUniqueVisitorsAndViews {
-
-		// AC Refactor: data doesn't appear on time
-		// AC Refactor ticket: LRAC-8728
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

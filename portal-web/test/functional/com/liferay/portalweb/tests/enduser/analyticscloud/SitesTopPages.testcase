@@ -155,12 +155,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
-	@ignore = "true"
 	@priority = "3"
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
-
-		// AC Refactor: the issue is due to data not appearing on time
-		// AC Refactor ticket: LRAC-8961
 
 		var num = "1,2";
 		var usernameList = "ac,liferay";
@@ -420,12 +416,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8294 | Test Summary: Show Top 5 Visited Pages"
-	@ignore = "true"
 	@priority = "5"
 	test ShowTop5VisitedPages {
-
-		// AC Refactor: This test is flaky due to timing issues
-		// AC Refactor ticket: LRAC-8764
 
 		var n = "1,2,3,4,5";
 		var u = "1,2,3,4";

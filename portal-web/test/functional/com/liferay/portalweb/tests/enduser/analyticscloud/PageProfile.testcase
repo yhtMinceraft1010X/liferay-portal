@@ -36,12 +36,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8112 | Test Summary: Assert clicking on a page in the pages lists navigates to the page profile"
-	@ignore = "true"
 	@priority = "5"
 	test ClickOnPageInPagesListsNavigatesToPageProfile {
-
-		// AC Refactor: the issue is due to data not appearing on time
-		// AC Refactor ticket: LRAC-8990
 
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

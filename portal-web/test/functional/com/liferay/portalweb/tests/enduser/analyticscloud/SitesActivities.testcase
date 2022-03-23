@@ -530,12 +530,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"
-	@ignore = "true"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowPagesDashboards {
-
-		// AC Refactor: the issue is due to data not appearing on time
-		// AC Refactor ticket: LRAC-8827
 
 		task ("Site and blogs creation and connection with AC") {
 			ACUtils.createBlogsAndAddToPage();

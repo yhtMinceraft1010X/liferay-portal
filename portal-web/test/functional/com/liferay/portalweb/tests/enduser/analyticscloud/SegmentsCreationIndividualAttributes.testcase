@@ -129,8 +129,6 @@ definition {
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertySite {
 
-		// AC Refactor ticket: LRAC-9707
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac1@liferay.com",
