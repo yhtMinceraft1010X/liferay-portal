@@ -25,6 +25,33 @@ import java.util.Set;
  */
 public class ObjectFieldSettingValueException extends PortalException {
 
+	public static class InvalidValue extends ObjectFieldSettingValueException {
+
+		public InvalidValue(
+			String objectFieldName, String objectFieldSettingName,
+			String objectFieldSettingValue) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is invalid for object field %s",
+					objectFieldSettingValue, objectFieldSettingName,
+					objectFieldName));
+		}
+
+		public InvalidValue(
+			String objectFieldName, String objectFieldSettingName,
+			String objectFieldSettingValue, Throwable throwable) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is invalid for object field %s",
+					objectFieldSettingValue, objectFieldSettingName,
+					objectFieldName),
+				throwable);
+		}
+
+	}
+
 	public static class MissingRequiredValues
 		extends ObjectFieldSettingValueException {
 
@@ -37,36 +64,6 @@ public class ObjectFieldSettingValueException extends PortalException {
 					StringUtil.merge(
 						objectFieldSettingsNames, StringPool.COMMA_AND_SPACE),
 					objectFieldName));
-		}
-
-	}
-
-	public static class InvalidValue
-		extends ObjectFieldSettingValueException {
-
-		public InvalidValue(
-			String objectFieldName, String objectFieldSettingName,
-			String objectFieldSettingValue) {
-
-			super(
-				String.format(
-					"The value %s of setting %s is invalid for object field " +
-						"%s",
-					objectFieldSettingValue, objectFieldSettingName,
-					objectFieldName));
-		}
-
-		public InvalidValue(
-			String objectFieldName, String objectFieldSettingName,
-			String objectFieldSettingValue, Throwable throwable) {
-
-			super(
-				String.format(
-					"The value %s of setting %s is invalid for object field " +
-						"%s",
-					objectFieldSettingValue, objectFieldSettingName,
-					objectFieldName),
-				throwable);
 		}
 
 	}
