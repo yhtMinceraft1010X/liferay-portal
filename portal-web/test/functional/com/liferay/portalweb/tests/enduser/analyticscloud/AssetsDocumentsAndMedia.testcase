@@ -215,6 +215,7 @@ definition {
 		// AC Quarantine reason: The percentage of the downloads does not match the correct one
 		// AC Quarantine ticket: LRAC-9806
 
+		property portal.upstream = "quarantine";
 		var userNames = "ac,ac2,ac3";
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
 

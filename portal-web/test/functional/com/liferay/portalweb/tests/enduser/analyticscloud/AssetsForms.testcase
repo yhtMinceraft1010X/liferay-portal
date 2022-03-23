@@ -38,12 +38,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
-	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
-
-		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
-		// AC Refactor ticket: LRAC-9467
 
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
@@ -159,6 +155,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8424 | Test Summary: Forms audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
+		property portal.upstream = "quarantine";
 		var usernameList = "ac,ac2";
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
