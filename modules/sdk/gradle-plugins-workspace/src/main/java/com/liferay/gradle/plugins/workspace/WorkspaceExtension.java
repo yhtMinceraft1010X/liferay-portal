@@ -531,7 +531,7 @@ public class WorkspaceExtension {
 							Files.newBufferedReader(downloadPath))) {
 
 						Map<String, ProductInfo> productInfos =
-							_getProductInfoFromReader(jsonReader);
+							_getProductInfos(jsonReader);
 
 						return productInfos.get(product);
 					}
@@ -544,7 +544,7 @@ public class WorkspaceExtension {
 							new InputStreamReader(inputStream))) {
 
 						Map<String, ProductInfo> productInfos =
-							_getProductInfoFromReader(jsonReader);
+							_getProductInfos(jsonReader);
 
 						return productInfos.get(product);
 					}
@@ -557,9 +557,7 @@ public class WorkspaceExtension {
 			});
 	}
 
-	private Map<String, ProductInfo> _getProductInfoFromReader(
-		JsonReader jsonReader) {
-
+	private Map<String, ProductInfo> _getProductInfos(JsonReader jsonReader) {
 		Gson gson = new Gson();
 
 		TypeToken<Map<String, ProductInfo>> typeToken =
