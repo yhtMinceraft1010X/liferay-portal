@@ -364,6 +364,8 @@ export const getAccountSubscriptionGroups = gql`
 					accountKey
 					activationStatus
 					name
+					tabOrder
+					menuOrder
 				}
 			}
 		}
