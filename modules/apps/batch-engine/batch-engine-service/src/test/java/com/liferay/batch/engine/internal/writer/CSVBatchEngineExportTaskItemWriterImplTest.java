@@ -58,7 +58,6 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 		_testWriteRows(
 			Arrays.asList(
 				"createDate", "description", "id", "name_en", "name_hr"));
-
 		_testWriteRows(
 			Arrays.asList(
 				"createDate", "description", "id", "name_en", "name_hr"),
@@ -70,7 +69,6 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 	@Test
 	public void testWriteRowsWithDefinedFieldNames3() throws Exception {
 		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
-
 		_testWriteRows(
 			Arrays.asList("createDate", "id", "name_en"),
 			HashMapBuilder.<String, Serializable>put(
