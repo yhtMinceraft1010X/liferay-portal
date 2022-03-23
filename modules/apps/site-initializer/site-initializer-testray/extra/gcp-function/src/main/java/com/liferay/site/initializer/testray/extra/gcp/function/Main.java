@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -135,15 +136,42 @@ public class Main {
 		return attributeNode.getTextContent();
 	}
 
+	private long _postObjectEntry(
+			Map<String, String> headers, String name,
+			String objectDefinitionShortName)
+		throws Exception {
+
+		JSONObject headersJSONObject = new JSONObject(
+			(headers != null) ? headers : Collections.emptyMap());
+
+		headersJSONObject.put("name", name);
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			headersJSONObject.toString(),
+			null, HttpInvoker.HttpMethod.POST, objectDefinitionShortName, null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		long id = responseJSONObject.getLong("id");
+
+		if (id > 0) {
+			_objectEntryJSONObjects.put(
+				objectDefinitionShortName + "#" + name, responseJSONObject);
+		}
+
+		return id;		
+	}
+
 	private long _getObjectEntryId(
 			String name, String objectDefinitionShortName)
 		throws Exception {
 
-		Long objectEntryId = _objectEntryIds.get(
+		JSONObject objectEntryJSONObject = _objectEntryJSONObjects.get(
 			objectDefinitionShortName + "#" + name);
 
-		if (objectEntryId != null) {
-			return objectEntryId;
+		if (objectEntryJSONObject != null) {
+			return objectEntryJSONObject.getLong("id");
 		}
 
 		HttpInvoker.HttpResponse httpResponse = _invoke(
@@ -163,14 +191,12 @@ public class Main {
 			return 0;
 		}
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+		objectEntryJSONObject = jsonArray.getJSONObject(0);
 
-		objectEntryId = jsonObject.getLong("id");
+		_objectEntryJSONObjects.put(
+			objectDefinitionShortName + "#" + name, objectEntryJSONObject);
 
-		_objectEntryIds.put(
-			objectDefinitionShortName + "#" + name, objectEntryId);
-
-		return objectEntryId;
+		return objectEntryJSONObject.getLong("id");
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {
@@ -252,39 +278,27 @@ public class Main {
 		long testrayRoutineId = _getTestrayRoutineId(
 			testrayProjectId, propertiesMap.get("testray.build.type"));
 
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			_toJSON(
-				HashMapBuilder.put(
-					"description", _getTestrayBuildDescription(propertiesMap)
-				).put(
-					"dueDate", propertiesMap.get("testray.build.time")
-				).put(
-					"gitHash", propertiesMap.get("git.id")
-				).put(
-					"githubCompareURLs",
-					propertiesMap.get("liferay.compare.urls")
-				).put(
-					"name", testrayBuildName
-				).put(
-					"r_productVersionToBuilds_c_productVersionId",
-					String.valueOf(testrayProductVersionId)
-				).put(
-					"r_projectToBuilds_c_projectId",
-					String.valueOf(testrayProjectId)
-				).put(
-					"r_routineToBuilds_c_routineId",
-					String.valueOf(testrayRoutineId)
-				).build()),
-			null, HttpInvoker.HttpMethod.POST, "builds", null);
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		testrayBuildId = responseJSONObject.getLong("id");
-
-		_objectEntryIds.put("builds#" + testrayBuildName, testrayBuildId);
-
-		return testrayBuildId;
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"description", _getTestrayBuildDescription(propertiesMap)
+			).put(
+				"dueDate", propertiesMap.get("testray.build.time")
+			).put(
+				"gitHash", propertiesMap.get("git.id")
+			).put(
+				"githubCompareURLs",
+				propertiesMap.get("liferay.compare.urls")
+			).put(
+				"r_productVersionToBuilds_c_productVersionId",
+				String.valueOf(testrayProductVersionId)
+			).put(
+				"r_projectToBuilds_c_projectId",
+				String.valueOf(testrayProjectId)
+			).put(
+				"r_routineToBuilds_c_routineId",
+				String.valueOf(testrayRoutineId)
+			).build(),
+			testrayBuildName, "builds");
 	}
 
 	private long _getTestrayProductVersionId(
@@ -298,26 +312,12 @@ public class Main {
 			return testrayProductVersionId;
 		}
 
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			_toJSON(
-				HashMapBuilder.put(
-					"name", testrayProductVersionName
-				).put(
-					"r_projectToProductVersions_c_projectId",
-					String.valueOf(testrayProjectId)
-				).build()),
-			null, HttpInvoker.HttpMethod.POST, "productversions", null);
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		testrayProductVersionId = responseJSONObject.getLong("id");
-
-		_objectEntryIds.put(
-			"productversions#" + testrayProductVersionName,
-			testrayProductVersionId);
-
-		return testrayProductVersionId;
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"r_projectToProductVersions_c_projectId",
+				String.valueOf(testrayProjectId)
+			).build(),
+			testrayProductVersionName, "productversions");
 	}
 
 	private long _getTestrayProjectId(String testrayProjectName)
@@ -330,21 +330,7 @@ public class Main {
 			return testrayProjectId;
 		}
 
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			_toJSON(
-				HashMapBuilder.put(
-					"name", testrayProjectName
-				).build()),
-			null, HttpInvoker.HttpMethod.POST, "projects", null);
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		testrayProjectId = responseJSONObject.getLong("id");
-
-		_objectEntryIds.put("projects#" + testrayProjectName, testrayProjectId);
-
-		return testrayProjectId;
+		return _postObjectEntry(null, testrayProjectName, "projects");
 	}
 
 	private long _getTestrayRoutineId(
@@ -358,24 +344,12 @@ public class Main {
 			return testrayRoutineId;
 		}
 
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			_toJSON(
-				HashMapBuilder.put(
-					"name", testrayRoutineName
-				).put(
-					"r_routineToProjects_c_projectId",
-					String.valueOf(testrayProjectId)
-				).build()),
-			null, HttpInvoker.HttpMethod.POST, "routines", null);
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		testrayRoutineId = responseJSONObject.getLong("id");
-
-		_objectEntryIds.put("routines#" + testrayRoutineName, testrayRoutineId);
-
-		return testrayRoutineId;
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"r_routineToProjects_c_projectId",
+				String.valueOf(testrayProjectId)
+			).build(),
+			testrayRoutineName, "routines");
 	}
 
 	private HttpInvoker.HttpResponse _invoke(
@@ -467,16 +441,10 @@ public class Main {
 		_getTestrayBuildId(propertiesMap, testrayBuildName, testrayProjectId);
 	}
 
-	private String _toJSON(Map<String, String> map) {
-		JSONObject jsonObject = new JSONObject(map);
-
-		return jsonObject.toString();
-	}
-
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
-	private final Map<String, Long> _objectEntryIds = new HashMap<>();
+	private final Map<String, JSONObject> _objectEntryJSONObjects = new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;
 
