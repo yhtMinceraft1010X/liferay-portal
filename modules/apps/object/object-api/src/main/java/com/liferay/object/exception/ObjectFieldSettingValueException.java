@@ -25,21 +25,6 @@ import java.util.Set;
  */
 public class ObjectFieldSettingValueException extends PortalException {
 
-	public ObjectFieldSettingValueException() {
-	}
-
-	public ObjectFieldSettingValueException(String msg) {
-		super(msg);
-	}
-
-	public ObjectFieldSettingValueException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public ObjectFieldSettingValueException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MissingRequiredValues
 		extends ObjectFieldSettingValueException {
 
@@ -84,6 +69,14 @@ public class ObjectFieldSettingValueException extends PortalException {
 				throwable);
 		}
 
+	}
+
+	private ObjectFieldSettingValueException(String msg) {
+		super(msg);
+	}
+
+	private ObjectFieldSettingValueException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
 }

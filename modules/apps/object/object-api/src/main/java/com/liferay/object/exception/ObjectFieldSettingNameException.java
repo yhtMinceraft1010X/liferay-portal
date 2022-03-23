@@ -25,21 +25,6 @@ import java.util.Set;
  */
 public class ObjectFieldSettingNameException extends PortalException {
 
-	public ObjectFieldSettingNameException() {
-	}
-
-	public ObjectFieldSettingNameException(String msg) {
-		super(msg);
-	}
-
-	public ObjectFieldSettingNameException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public ObjectFieldSettingNameException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class NotAllowedNames
 		extends ObjectFieldSettingNameException {
 
@@ -54,6 +39,10 @@ public class ObjectFieldSettingNameException extends PortalException {
 					objectFieldName));
 		}
 
+	}
+
+	private ObjectFieldSettingNameException(String msg) {
+		super(msg);
 	}
 
 }
