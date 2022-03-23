@@ -200,7 +200,6 @@ definition {
 	@description = "Create a segment with behavior of downloading a document"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
-
 		ACUtils.createDMAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -345,7 +344,6 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
-		
 		ACUtils.createFormAndAddToPage();
 
 		Navigator.openURL();

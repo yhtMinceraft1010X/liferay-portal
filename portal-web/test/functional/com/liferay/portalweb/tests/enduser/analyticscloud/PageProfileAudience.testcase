@@ -39,8 +39,9 @@ definition {
 
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9409
-		
+
 		property portal.upstream = "quarantine";
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 

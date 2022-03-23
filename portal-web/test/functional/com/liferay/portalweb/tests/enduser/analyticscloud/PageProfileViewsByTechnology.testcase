@@ -92,7 +92,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
 	@priority = "5"
 	test ShowsWhichBrowsersBeingUsed {
-
 		ACNavigation.switchTabInCard(tabName = "Browsers");
 
 		ACAssets.viewTechnologyBrowsersMetric(
@@ -105,7 +104,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
-
 		ACAssets.viewTechnologyDeviceViewsAndPercentage(
 			actionValue = "1 Views",
 			cardTitle = "Views by Technology",

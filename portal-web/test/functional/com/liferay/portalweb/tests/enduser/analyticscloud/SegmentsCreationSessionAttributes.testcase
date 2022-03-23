@@ -46,7 +46,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9204 | Test Summary: Add segment using a session property 'Device'"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingDevice {
-
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

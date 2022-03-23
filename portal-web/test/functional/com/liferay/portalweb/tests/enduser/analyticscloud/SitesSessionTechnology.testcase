@@ -102,7 +102,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8313 | Test Summary: Session technology card shows what devices are accessing the site the most"
 	@priority = "5"
 	test ShowsDevicesAccessingSiteMost {
-
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

@@ -204,7 +204,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
 	@priority = "3"
 	test AssertKnownIndividualChartPopover {
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",

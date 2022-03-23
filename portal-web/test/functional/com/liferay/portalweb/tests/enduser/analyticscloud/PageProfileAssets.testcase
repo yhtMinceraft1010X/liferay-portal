@@ -38,7 +38,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8368 | Test Summary: Page profile assets card shows which assets are on the page"
 	@priority = "5"
 	test ShowsWhichAssetsOnPage {
-
 		task ("Create Blog and WC to Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 
