@@ -362,9 +362,7 @@ public class ObjectFieldLocalServiceImpl
 		objectFieldBusinessType.validateObjectFieldSettings(
 			objectField.getName(), objectFieldSettings);
 
-		for (ObjectFieldSetting newObjectFieldSetting :
-				objectFieldSettings) {
-
+		for (ObjectFieldSetting newObjectFieldSetting : objectFieldSettings) {
 			ObjectFieldSetting oldObjectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
 					objectField.getObjectFieldId(),
