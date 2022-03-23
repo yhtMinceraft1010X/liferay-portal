@@ -50,8 +50,8 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 			super(
 				String.format(
-					"The value %s of setting %s is not valid for object " +
-						"field %s",
+					"The value %s of setting %s is invalid for object field " +
+						"%s",
 					objectFieldSettingValue, objectFieldSettingName,
 					objectFieldName));
 		}
@@ -62,8 +62,8 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 			super(
 				String.format(
-					"The value %s of setting %s is not valid for object " +
-						"field %s",
+					"The value %s of setting %s is invalid for object field " +
+						"%s",
 					objectFieldSettingValue, objectFieldSettingName,
 					objectFieldName),
 				throwable);
