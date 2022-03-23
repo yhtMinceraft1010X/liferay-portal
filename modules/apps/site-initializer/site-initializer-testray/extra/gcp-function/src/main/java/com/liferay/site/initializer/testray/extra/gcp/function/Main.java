@@ -189,7 +189,10 @@ public class Main {
 			return 0;
 		}
 
+		// TODO Cache just the ID if we never need more
+
 		objectEntryJSONObject = jsonArray.getJSONObject(0);
+
 
 		_objectEntryJSONObjects.put(
 			objectDefinitionShortName + "#" + name, objectEntryJSONObject);
