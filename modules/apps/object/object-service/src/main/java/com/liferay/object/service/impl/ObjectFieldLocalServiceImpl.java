@@ -112,7 +112,7 @@ public class ObjectFieldLocalServiceImpl
 					dbTableName, objectField.getDBColumnName(), dbType));
 		}
 
-		_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
+		_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
 
 		return objectField;
 	}
@@ -264,7 +264,7 @@ public class ObjectFieldLocalServiceImpl
 		if (objectDefinition.isApproved()) {
 			objectField = objectFieldPersistence.update(objectField);
 
-			_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
+			_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
 
 			return objectField;
 		}
@@ -303,7 +303,7 @@ public class ObjectFieldLocalServiceImpl
 			_objectFieldSettingPersistence.removeByObjectFieldId(objectFieldId);
 		}
 
-		_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
+		_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
 
 		return objectField;
 	}
@@ -351,8 +351,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _addOrUpdateObjectFieldSettings(
-			List<ObjectFieldSetting> newObjectFieldSettings,
-			ObjectField objectField)
+			ObjectField objectField,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectFieldBusinessType objectFieldBusinessType =
@@ -360,10 +360,10 @@ public class ObjectFieldLocalServiceImpl
 				objectField.getBusinessType());
 
 		objectFieldBusinessType.validateObjectFieldSettings(
-			objectField.getName(), newObjectFieldSettings);
+			objectField.getName(), objectFieldSettings);
 
 		for (ObjectFieldSetting newObjectFieldSetting :
-				newObjectFieldSettings) {
+				objectFieldSettings) {
 
 			ObjectFieldSetting oldObjectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
