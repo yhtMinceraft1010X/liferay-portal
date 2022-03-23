@@ -134,33 +134,6 @@ public class Main {
 		return attributeNode.getTextContent();
 	}
 
-	private long _postObjectEntry(
-			Map<String, String> headers, String name,
-			String objectDefinitionShortName)
-		throws Exception {
-
-		JSONObject headersJSONObject = new JSONObject(
-			(headers != null) ? headers : Collections.emptyMap());
-
-		headersJSONObject.put("name", name);
-
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			headersJSONObject.toString(),
-			null, HttpInvoker.HttpMethod.POST, objectDefinitionShortName, null);
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		long id = responseJSONObject.getLong("id");
-
-		if (id > 0) {
-			_objectEntryJSONObjects.put(
-				objectDefinitionShortName + "#" + name, responseJSONObject);
-		}
-
-		return id;		
-	}
-
 	private long _getObjectEntryId(
 			String name, String objectDefinitionShortName)
 		throws Exception {
@@ -192,7 +165,6 @@ public class Main {
 		// TODO Cache just the ID if we never need more
 
 		objectEntryJSONObject = jsonArray.getJSONObject(0);
-
 
 		_objectEntryJSONObjects.put(
 			objectDefinitionShortName + "#" + name, objectEntryJSONObject);
@@ -287,8 +259,7 @@ public class Main {
 			).put(
 				"gitHash", propertiesMap.get("git.id")
 			).put(
-				"githubCompareURLs",
-				propertiesMap.get("liferay.compare.urls")
+				"githubCompareURLs", propertiesMap.get("liferay.compare.urls")
 			).put(
 				"r_productVersionToBuilds_c_productVersionId",
 				String.valueOf(testrayProductVersionId)
@@ -383,6 +354,33 @@ public class Main {
 		return httpInvoker.invoke();
 	}
 
+	private long _postObjectEntry(
+			Map<String, String> headers, String name,
+			String objectDefinitionShortName)
+		throws Exception {
+
+		JSONObject headersJSONObject = new JSONObject(
+			(headers != null) ? headers : Collections.emptyMap());
+
+		headersJSONObject.put("name", name);
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			headersJSONObject.toString(), null, HttpInvoker.HttpMethod.POST,
+			objectDefinitionShortName, null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		long id = responseJSONObject.getLong("id");
+
+		if (id > 0) {
+			_objectEntryJSONObjects.put(
+				objectDefinitionShortName + "#" + name, responseJSONObject);
+		}
+
+		return id;
+	}
+
 	private void _processArchive(byte[] bytes) throws Exception {
 		Path tempDirectoryPath = null;
 		Path tempFilePath = null;
@@ -445,7 +443,8 @@ public class Main {
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
-	private final Map<String, JSONObject> _objectEntryJSONObjects = new HashMap<>();
+	private final Map<String, JSONObject> _objectEntryJSONObjects =
+		new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;
 
