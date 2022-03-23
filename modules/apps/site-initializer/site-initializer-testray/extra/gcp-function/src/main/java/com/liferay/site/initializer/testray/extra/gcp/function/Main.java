@@ -230,9 +230,9 @@ public class Main {
 
 		StringBundler sb = new StringBundler(15);
 
-		if (propertiesMap.get("liferay.portal.git.id") != null) {
-			sb.append("Portal hash: ");
-			sb.append(propertiesMap.get("liferay.portal.git.id"));
+		if (propertiesMap.get("liferay.portal.bundle") != null) {
+			sb.append("Bundle: ");
+			sb.append(propertiesMap.get("liferay.portal.bundle"));
 			sb.append(StringPool.SEMICOLON);
 			sb.append(StringPool.NEW_LINE);
 		}
@@ -251,9 +251,9 @@ public class Main {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		if (propertiesMap.get("liferay.portal.bundle") != null) {
-			sb.append("Bundle: ");
-			sb.append(propertiesMap.get("liferay.portal.bundle"));
+		if (propertiesMap.get("liferay.portal.git.id") != null) {
+			sb.append("Portal hash: ");
+			sb.append(propertiesMap.get("liferay.portal.git.id"));
 			sb.append(StringPool.SEMICOLON);
 		}
 
