@@ -41,10 +41,10 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 	}
 
-	public static class MustSetValidValue
+	public static class InvalidValue
 		extends ObjectFieldSettingValueException {
 
-		public MustSetValidValue(
+		public InvalidValue(
 			String objectFieldName, String objectFieldSettingName,
 			String objectFieldSettingValue) {
 
@@ -56,7 +56,7 @@ public class ObjectFieldSettingValueException extends PortalException {
 					objectFieldName));
 		}
 
-		public MustSetValidValue(
+		public InvalidValue(
 			String objectFieldName, String objectFieldSettingName,
 			String objectFieldSettingValue, Throwable throwable) {
 

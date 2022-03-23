@@ -249,7 +249,7 @@ public class AttachmentObjectFieldBusinessType
 		if (!Objects.equals(objectFieldSettingValue, "documentsAndMedia") &&
 			!Objects.equals(objectFieldSettingValue, "userComputer")) {
 
-			throw new ObjectFieldSettingValueException.MustSetValidValue(
+			throw new ObjectFieldSettingValueException.InvalidValue(
 				objectFieldName, "fileSource", objectFieldSettingValue);
 		}
 	}
@@ -263,13 +263,13 @@ public class AttachmentObjectFieldBusinessType
 				objectFieldSettingValue);
 
 			if (maximumFileSize.signum() == -1) {
-				throw new ObjectFieldSettingValueException.MustSetValidValue(
+				throw new ObjectFieldSettingValueException.InvalidValue(
 					objectFieldName, "maximumFileSize",
 					objectFieldSettingValue);
 			}
 		}
 		catch (NumberFormatException numberFormatException) {
-			throw new ObjectFieldSettingValueException.MustSetValidValue(
+			throw new ObjectFieldSettingValueException.InvalidValue(
 				objectFieldName, "maximumFileSize", objectFieldSettingValue,
 				numberFormatException);
 		}
