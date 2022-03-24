@@ -120,9 +120,9 @@ public class Main {
 	}
 
 	private void _addTestrayFactor(
-			long testrayRunId, long testrayCategoryId,
+			long testrayCategoryId,
 			String testrayFactorCategoryName, String testrayFactorOptionName,
-			long testrayOptionId)
+			long testrayOptionId, long testrayRunId)
 		throws Exception {
 
 		_postObjectEntry(
@@ -315,7 +315,7 @@ public class Main {
 	}
 
 	private long _getTestrayFactorOptionId(
-			String testrayFactorOptionName, long testrayFactorCategoryId)
+			long testrayFactorCategoryId, String testrayFactorOptionName)
 		throws Exception {
 
 		long testrayFactorOptionId = _getObjectEntryId(
@@ -408,12 +408,12 @@ public class Main {
 			String testrayFactorOptionName = _getAttributeValue("option", node);
 
 			long testrayFactorOptionId = _getTestrayFactorOptionId(
-				testrayFactorOptionName, testrayFactorCategoryId);
+				testrayFactorCategoryId, testrayFactorOptionName);
 
 			_addTestrayFactor(
-				testrayRunId, testrayFactorCategoryId,
+				testrayFactorCategoryId,
 				testrayFactorCategoryName, testrayFactorOptionName,
-				testrayFactorOptionId);
+				testrayFactorOptionId, testrayRunId);
 
 			sb.append(testrayFactorCategoryId);
 
