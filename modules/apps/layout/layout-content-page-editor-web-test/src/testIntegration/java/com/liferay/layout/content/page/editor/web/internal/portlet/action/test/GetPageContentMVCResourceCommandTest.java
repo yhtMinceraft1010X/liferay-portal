@@ -488,6 +488,8 @@ public class GetPageContentMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
+		mockLiferayResourceRequest.addParameter(
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 		mockLiferayResourceRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, null);
 
@@ -505,9 +507,6 @@ public class GetPageContentMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
-
-		mockLiferayResourceRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
