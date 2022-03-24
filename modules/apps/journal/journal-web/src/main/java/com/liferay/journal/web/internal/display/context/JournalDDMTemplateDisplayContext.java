@@ -291,6 +291,8 @@ public class JournalDDMTemplateDisplayContext {
 	}
 
 	private OrderByComparator<DDMTemplate> _getOrderByComparator() {
+		OrderByComparator<DDMTemplate> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		String orderByType = getOrderByType();
@@ -300,8 +302,6 @@ public class JournalDDMTemplateDisplayContext {
 		}
 
 		String orderByCol = getOrderByCol();
-
-		OrderByComparator<DDMTemplate> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
 			orderByComparator = new TemplateIdComparator(orderByAsc);

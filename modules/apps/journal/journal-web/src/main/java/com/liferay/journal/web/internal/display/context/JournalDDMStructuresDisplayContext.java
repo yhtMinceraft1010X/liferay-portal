@@ -199,6 +199,8 @@ public class JournalDDMStructuresDisplayContext {
 	}
 
 	private OrderByComparator<DDMStructure> _getOrderByComparator() {
+		OrderByComparator<DDMStructure> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		String orderByType = getOrderByType();
@@ -208,8 +210,6 @@ public class JournalDDMStructuresDisplayContext {
 		}
 
 		String orderByCol = getOrderByCol();
-
-		OrderByComparator<DDMStructure> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
 			orderByComparator = new StructureIdComparator(orderByAsc);
