@@ -108,7 +108,7 @@ public class ContentElementResourceTest
 	protected ContentElement randomContentElement() throws Exception {
 		ContentElement contentElement = super.randomContentElement();
 
-		_assignValueInMap(
+		_put(
 			contentElement, "priority", RandomTestUtil.randomDouble());
 
 		return contentElement;
@@ -157,12 +157,12 @@ public class ContentElementResourceTest
 				contentElement.getTitle(), contentElement.getTitle(),
 				contentElement.getTitle(), priority));
 
-		_assignValueInMap(contentElement, "priority", priority);
+		_put(contentElement, "priority", priority);
 
 		return contentElement;
 	}
 
-	private void _assignValueInMap(
+	private void _put(
 		ContentElement contentElement, String fieldName, Object fieldValue) {
 
 		_fieldValueMaps.computeIfAbsent(
@@ -178,9 +178,9 @@ public class ContentElementResourceTest
 
 		return (entityField, contentElement1, contentElement2) -> {
 			BeanUtils.setProperty(contentElement1, entityField.getName(), 0.1);
-			_assignValueInMap(contentElement1, entityField.getName(), 0.1);
+			_put(contentElement1, entityField.getName(), 0.1);
 			BeanUtils.setProperty(contentElement2, entityField.getName(), 0.5);
-			_assignValueInMap(contentElement2, entityField.getName(), 0.5);
+			_put(contentElement2, entityField.getName(), 0.5);
 		};
 	}
 
