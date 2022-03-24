@@ -293,12 +293,12 @@ public class JournalTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
 		if (priority != null) {
 			serviceContext.setAssetPriority(priority);
 		}
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addArticle(
 			groupId, folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
