@@ -166,7 +166,7 @@ public class ContentElementResourceTest
 		ContentElement contentElement, String fieldName, Object fieldValue) {
 
 		_fieldValueMaps.computeIfAbsent(
-			contentElement, k -> new HashMap<>()
+			contentElement, key -> new HashMap<>()
 		).put(
 			fieldName, fieldValue
 		);
