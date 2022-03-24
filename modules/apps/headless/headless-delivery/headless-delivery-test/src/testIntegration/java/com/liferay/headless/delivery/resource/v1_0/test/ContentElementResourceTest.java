@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,14 +40,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContentElementResourceTest
 	extends BaseContentElementResourceTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_fieldValueMaps = new IdentityHashMap<>();
-	}
 
 	@Override
 	@Test
@@ -198,6 +189,7 @@ public class ContentElementResourceTest
 		};
 	}
 
-	private Map<ContentElement, Map<String, Object>> _fieldValueMaps;
+	private final Map<ContentElement, Map<String, Object>> _fieldValueMaps =
+		new IdentityHashMap<>();
 
 }
