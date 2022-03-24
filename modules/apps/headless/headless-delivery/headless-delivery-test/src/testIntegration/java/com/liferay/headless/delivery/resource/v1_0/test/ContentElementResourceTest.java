@@ -56,7 +56,7 @@ public class ContentElementResourceTest
 		throws Exception {
 
 		testGetAssetLibraryContentElementsPageWithSort(
-			EntityField.Type.DOUBLE, _getSortDoubleFieldsConsumer());
+			EntityField.Type.DOUBLE, _getUnsafeTriConsumer());
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ContentElementResourceTest
 		throws Exception {
 
 		testGetSiteContentElementsPageWithSort(
-			EntityField.Type.DOUBLE, _getSortDoubleFieldsConsumer());
+			EntityField.Type.DOUBLE, _getUnsafeTriConsumer());
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class ContentElementResourceTest
 
 	private UnsafeTriConsumer
 		<EntityField, ContentElement, ContentElement, Exception>
-			_getSortDoubleFieldsConsumer() {
+			_getUnsafeTriConsumer() {
 
 		return (entityField, contentElement1, contentElement2) -> {
 			BeanUtils.setProperty(contentElement1, entityField.getName(), 0.1);
