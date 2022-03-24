@@ -120,7 +120,7 @@ public class Main {
 	}
 
 	private void _addTestrayFactor(
-			long testrayCategoryId,
+			long testrayFactorCategoryId,
 			String testrayFactorCategoryName, String testrayFactorOptionName,
 			long testrayOptionId, long testrayRunId)
 		throws Exception {
@@ -132,7 +132,7 @@ public class Main {
 				"classPK", String.valueOf(testrayRunId)
 			).put(
 				"r_factorCategoryToFactors_c_factorCategoryId",
-				String.valueOf(testrayCategoryId)
+				String.valueOf(testrayFactorCategoryId)
 			).put(
 				"r_factorOptionToFactors_c_factorOptionId",
 				String.valueOf(testrayOptionId)
