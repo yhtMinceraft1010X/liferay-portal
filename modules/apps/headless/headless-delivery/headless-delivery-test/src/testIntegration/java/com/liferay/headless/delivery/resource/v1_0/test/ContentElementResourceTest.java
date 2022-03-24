@@ -87,9 +87,7 @@ public class ContentElementResourceTest
 			sb.append(" ");
 			sb.append(operator);
 			sb.append(" ");
-			sb.append(
-				String.valueOf(
-					_get(contentElement, entityFieldName)));
+			sb.append(String.valueOf(_get(contentElement, entityFieldName)));
 
 			return sb.toString();
 		}
@@ -108,8 +106,7 @@ public class ContentElementResourceTest
 	protected ContentElement randomContentElement() throws Exception {
 		ContentElement contentElement = super.randomContentElement();
 
-		_put(
-			contentElement, "priority", RandomTestUtil.randomDouble());
+		_put(contentElement, "priority", RandomTestUtil.randomDouble());
 
 		return contentElement;
 	}
@@ -124,8 +121,7 @@ public class ContentElementResourceTest
 			assetLibraryId);
 
 		return _addContentElement(
-			contentElement,
-			(Double)_get(contentElement, "priority"),
+			contentElement, (Double)_get(contentElement, "priority"),
 			depotEntry.getGroupId());
 	}
 
@@ -135,8 +131,7 @@ public class ContentElementResourceTest
 		throws Exception {
 
 		return _addContentElement(
-			contentElement,
-			(Double)_get(contentElement, "priority"), siteId);
+			contentElement, (Double)_get(contentElement, "priority"), siteId);
 	}
 
 	@Override
@@ -162,14 +157,14 @@ public class ContentElementResourceTest
 		return contentElement;
 	}
 
-	private void _put(
-		ContentElement contentElement, String fieldName, Object fieldValue) {
+	private Object _get(ContentElement contentElement, String fieldName) {
+		Map<String, Object> fieldValueMap = _fieldValueMaps.get(contentElement);
 
-		_fieldValueMaps.computeIfAbsent(
-			contentElement, key -> new HashMap<>()
-		).put(
-			fieldName, fieldValue
-		);
+		if (fieldValueMap == null) {
+			return null;
+		}
+
+		return fieldValueMap.getOrDefault(fieldName, null);
 	}
 
 	private UnsafeTriConsumer
@@ -184,16 +179,14 @@ public class ContentElementResourceTest
 		};
 	}
 
-	private Object _get(
-		ContentElement contentElement, String fieldName) {
+	private void _put(
+		ContentElement contentElement, String fieldName, Object fieldValue) {
 
-		Map<String, Object> fieldValueMap = _fieldValueMaps.get(contentElement);
-
-		if (fieldValueMap == null) {
-			return null;
-		}
-
-		return fieldValueMap.getOrDefault(fieldName, null);
+		_fieldValueMaps.computeIfAbsent(
+			contentElement, key -> new HashMap<>()
+		).put(
+			fieldName, fieldValue
+		);
 	}
 
 	private ContentElement _toContentElement(JournalArticle journalArticle) {
