@@ -23,7 +23,6 @@ import com.google.cloud.storage.StorageOptions;
 import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.site.initializer.testray.extra.gcp.function.constants.TestrayConstants;
 
 import java.io.File;
 import java.io.InputStream;
@@ -439,8 +438,7 @@ public class Main {
 				"externalReferencePK", propertiesMap.get("testray.run.id")
 			).put(
 				"externalReferenceType",
-				String.valueOf(
-					TestrayConstants.TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI)
+				String.valueOf(_TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI)
 			).put(
 				"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
 			).put(
@@ -584,6 +582,8 @@ public class Main {
 		_getTestrayRunId(
 			element, propertiesMap, testrayBuildId, testrayRunName);
 	}
+
+	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 
 	private final String _liferayLogin;
 	private final String _liferayPassword;
