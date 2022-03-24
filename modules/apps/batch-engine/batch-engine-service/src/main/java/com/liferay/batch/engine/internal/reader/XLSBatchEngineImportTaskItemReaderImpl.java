@@ -98,10 +98,11 @@ public class XLSBatchEngineImportTaskItemReaderImpl
 			}
 			else {
 				FieldNameValueMapHandlerFactory.FieldNameValueMapHandler
-					handler = FieldNameValueMapHandlerFactory.getHandler(
-						fieldName);
+					fieldNameValueMapHandler =
+						FieldNameValueMapHandlerFactory.
+							getFieldNameValueMapHandler(fieldName);
 
-				handler.handle(
+				fieldNameValueMapHandler.handle(
 					fieldName, fieldNameValueMap, cell.getStringCellValue());
 			}
 		}

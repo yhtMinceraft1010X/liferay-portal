@@ -80,10 +80,13 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 				continue;
 			}
 
-			FieldNameValueMapHandlerFactory.FieldNameValueMapHandler handler =
-				FieldNameValueMapHandlerFactory.getHandler(fieldName);
+			FieldNameValueMapHandlerFactory.FieldNameValueMapHandler
+				fieldNameValueMapHandler =
+					FieldNameValueMapHandlerFactory.getFieldNameValueMapHandler(
+						fieldName);
 
-			handler.handle(fieldName, fieldNameValueMap, values[i]);
+			fieldNameValueMapHandler.handle(
+				fieldName, fieldNameValueMap, values[i]);
 		}
 
 		return fieldNameValueMap;

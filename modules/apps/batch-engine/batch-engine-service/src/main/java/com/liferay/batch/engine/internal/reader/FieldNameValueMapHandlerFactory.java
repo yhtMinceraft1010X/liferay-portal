@@ -22,7 +22,9 @@ import java.util.Map;
  */
 public class FieldNameValueMapHandlerFactory {
 
-	public static FieldNameValueMapHandler getHandler(String fieldName) {
+	public static FieldNameValueMapHandler getFieldNameValueMapHandler(
+		String fieldName) {
+
 		if (fieldName.lastIndexOf(I18nFieldNameValueMapHandler._I18N_SUFFIX) >
 				-1) {
 
