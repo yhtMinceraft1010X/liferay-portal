@@ -120,9 +120,8 @@ public class Main {
 	}
 
 	private void _addTestrayFactor(
-			long testrayFactorCategoryId,
-			String testrayFactorCategoryName, long testrayFactorOptionId,
-			String testrayFactorOptionName,
+			long testrayFactorCategoryId, String testrayFactorCategoryName,
+			long testrayFactorOptionId, String testrayFactorOptionName,
 			long testrayRunId)
 		throws Exception {
 
@@ -412,9 +411,8 @@ public class Main {
 				testrayFactorCategoryId, testrayFactorOptionName);
 
 			_addTestrayFactor(
-				testrayFactorCategoryId,
-				testrayFactorCategoryName, testrayFactorOptionId,
-				testrayFactorOptionName, testrayRunId);
+				testrayFactorCategoryId, testrayFactorCategoryName,
+				testrayFactorOptionId, testrayFactorOptionName, testrayRunId);
 
 			sb.append(testrayFactorCategoryId);
 
