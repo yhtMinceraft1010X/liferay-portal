@@ -71,8 +71,7 @@ public class ModularTrashEntryServiceWrapper extends TrashEntryServiceWrapper {
 
 	@Override
 	public TrashEntryList getEntries(long groupId) throws PrincipalException {
-		throw new UnsupportedOperationException(
-			getClass() + " does not support getEntries() method.");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -81,8 +80,7 @@ public class ModularTrashEntryServiceWrapper extends TrashEntryServiceWrapper {
 			OrderByComparator<TrashEntry> orderByComparator)
 		throws PrincipalException {
 
-		throw new UnsupportedOperationException(
-			getClass() + " does not support getEntries() method.");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
