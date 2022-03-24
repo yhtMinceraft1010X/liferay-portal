@@ -151,15 +151,15 @@ public class ContentElementResourceTest
 			ContentElement contentElement, Double priority, Long siteId)
 		throws Exception {
 
-		ContentElement element = _toContentElement(
+		contentElement = _toContentElement(
 			JournalTestUtil.addArticle(
 				siteId, 0L, String.valueOf(contentElement.getId()),
 				contentElement.getTitle(), contentElement.getTitle(),
 				contentElement.getTitle(), priority));
 
-		_assignValueInMap(element, "priority", priority);
+		_assignValueInMap(contentElement, "priority", priority);
 
-		return element;
+		return contentElement;
 	}
 
 	private void _assignValueInMap(
