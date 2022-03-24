@@ -343,8 +343,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			expectedAccountRoles, (List<AccountRole>)page.getItems());
 		assertValid(page);
 
-		// Filter string
-
 		AccountRole accountRole3 =
 			testGetAccountAccountRolesPage_addAccountRole(
 				accountId, randomAccountRole());
