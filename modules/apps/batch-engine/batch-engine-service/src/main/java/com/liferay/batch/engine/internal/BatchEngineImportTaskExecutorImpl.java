@@ -172,7 +172,7 @@ public class BatchEngineImportTaskExecutorImpl
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor,
-			int processedItemsCount, List<Object> items)
+			List<Object> items, int processedItemsCount)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
@@ -286,8 +286,8 @@ public class BatchEngineImportTaskExecutorImpl
 				if (items.size() == batchEngineImportTask.getBatchSize()) {
 					_commitItems(
 						batchEngineImportTask,
-						batchEngineTaskItemDelegateExecutor,
-						processedItemsCount, items);
+						batchEngineTaskItemDelegateExecutor, items,
+						processedItemsCount);
 
 					processedItemsCount = 0;
 
@@ -298,7 +298,7 @@ public class BatchEngineImportTaskExecutorImpl
 			if (!items.isEmpty()) {
 				_commitItems(
 					batchEngineImportTask, batchEngineTaskItemDelegateExecutor,
-					processedItemsCount, items);
+					items, processedItemsCount);
 			}
 		}
 	}
