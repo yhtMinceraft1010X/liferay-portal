@@ -415,7 +415,6 @@ public class Main {
 				testrayFactorOptionId, testrayFactorOptionName, testrayRunId);
 
 			sb.append(testrayFactorCategoryId);
-
 			sb.append(testrayFactorOptionId);
 		}
 
