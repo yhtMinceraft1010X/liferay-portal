@@ -947,7 +947,7 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@clayui/button@^3.40.0":
+"@clayui/button@3.40.0", "@clayui/button@^3.40.0":
   version "3.40.0"
   resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.40.0.tgz#4a25d8edf820c1d8c3f0a0ea6fe2e6a2998b0e8b"
   integrity sha512-KB9S58B1aWFKs0oPEKOZC6ZPz4NrrUfgs3fggtIPH6fsjQO7vCTC+IQHD1oTX3WD/YwlawUQBZfWYESN5kXopw==
@@ -955,36 +955,26 @@
     "@clayui/icon" "^3.40.0"
     classnames "^2.2.6"
 
-"@clayui/css@^3.46.0":
-  version "3.46.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.46.0.tgz#91382f8ba03c4ddedc9ca4145b347c82049725a4"
-  integrity sha512-NgnXxl7xdAbuB9S+0eQUCiR1oqZcAR7uVfr0b8tV8GGcHv91NKQSKgp4myvuQvT+PH1wkxNMTmh15kbCqgrkKA==
+"@clayui/css@3.50.0":
+  version "3.50.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.50.0.tgz#27535b21f6e158bfe914148481818a4238ffba4d"
+  integrity sha512-FwVtFSjol+y+bfLIw2dXkVPmMFctnPG/MA3Bo6uu6pCGWBogP94x5L/laeiAzrAhkyayCETysR6dPQPoP/M06Q==
 
-"@clayui/drop-down@^3.45.0":
-  version "3.45.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.45.0.tgz#51ef862b6397851ee03d95df1f66b6360dfdc45b"
-  integrity sha512-2jMh5S2Pd3WObuOQsRa10HQAGLtMZD9iU0zHZ6jLC4BT1IJ2YVMNBrFmFpOesGGMw16s9Sm/EJ+W1dq8X/l8Tw==
+"@clayui/drop-down@3.49.0":
+  version "3.49.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.49.0.tgz#5997cc321817d30f0c3dc2aa29c7a4aa645688cd"
+  integrity sha512-WSACzPA0NeADbx85qmeZJyI/1NIJiobfNw6lV9/AqaukEnGRSu0uPjfbJKaOkYl05NDMIYEBLpr/OOrI7272Zg==
   dependencies:
     "@clayui/button" "^3.40.0"
-    "@clayui/form" "^3.45.0"
+    "@clayui/form" "^3.49.0"
     "@clayui/icon" "^3.40.0"
     "@clayui/link" "^3.45.0"
-    "@clayui/shared" "^3.45.0"
+    "@clayui/shared" "^3.49.0"
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/form@^3.45.0":
-  version "3.45.0"
-  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.45.0.tgz#14815eec25adb000d50715a62a8b87f77b9e8045"
-  integrity sha512-QHEzcJ7t+UuVEBle5rV4RS/gyMU1UdhZ7X6Xpj9vncimUurIUI7muQANrQMkJJUhKmwRxKaLeOmh7SjBbGsGAA==
-  dependencies:
-    "@clayui/button" "^3.40.0"
-    "@clayui/icon" "^3.40.0"
-    "@clayui/shared" "^3.45.0"
-    classnames "^2.2.6"
-
-"@clayui/form@^3.49.0":
+"@clayui/form@3.49.0", "@clayui/form@^3.49.0":
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.49.0.tgz#65d1042a58589c135b259fd21394e6547833cbad"
   integrity sha512-1D5nqemuMdS1ItjrrViB53WRxnAzE1mNKG+4FT55N3UIyazcJaTYOAkeQUTQINdv7OnY1jP37SSLofT2tCgRiQ==
@@ -994,7 +984,7 @@
     "@clayui/shared" "^3.49.0"
     classnames "^2.2.6"
 
-"@clayui/icon@^3.40.0":
+"@clayui/icon@3.40.0", "@clayui/icon@^3.40.0":
   version "3.40.0"
   resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.40.0.tgz#e00efd08f9becf4aecd046bef9496a26aa2f3318"
   integrity sha512-w9AjhqaW7Oy434QkdNA41O+SdVyhc8MImF7A7BnPKLkvI49+9MHjv6EIaXUtbyOlEFpbvPHr4yY8t2Um/tBhGQ==
@@ -1015,17 +1005,6 @@
   integrity sha512-imdWXteZ4DlsDl3Vcrd3mj3z/JRUjtXwnXEyw1HR2K9O6LmwIyW3rnsogUnd9QY/i2ACSZC7Fyaarx5XyrF9nA==
   dependencies:
     "@clayui/icon" "^3.40.0"
-
-"@clayui/shared@^3.45.0":
-  version "3.45.0"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.45.0.tgz#f8b2a3c01cc1e8715aca711bc14a2e4c9290f517"
-  integrity sha512-LIsdCubYbNwgxxIj9U0su1y8xyOWrABwXl1jtRAVB4l8AfIzhun16nTctAikwlj9WprERwVugfn9lLeJK991JQ==
-  dependencies:
-    "@clayui/button" "^3.40.0"
-    "@clayui/link" "^3.45.0"
-    "@clayui/provider" "^3.40.0"
-    classnames "^2.2.6"
-    dom-align "^1.10.2"
 
 "@clayui/shared@^3.49.0":
   version "3.49.0"
@@ -2424,7 +2403,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.6, classnames@^2.3.1:
+classnames@2.3.1, classnames@^2.2.6:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
@@ -3074,7 +3053,7 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dom-align@^1.10.2, dom-align@^1.12.2:
+dom-align@^1.12.2:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.12.2.tgz#0f8164ebd0c9c21b0c790310493cd855892acd4b"
   integrity sha512-pHuazgqrsTFrGU2WLDdXxCFabkdQDx72ddkraZNih1KsMcN5qsRSTR9O4VJRlwTPCPb5COYg3LOfiMHHcPInHg==
@@ -7009,15 +6988,15 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@16.8.6:
-  version "16.8.6"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
-  integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
+react-dom@16.12.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
+  integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.6"
+    scheduler "^0.18.0"
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -7034,15 +7013,14 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@16.8.6:
-  version "16.8.6"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
-  integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
+react@16.12.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.6"
 
 read-chunk@^3.2.0:
   version "3.2.0"
@@ -7495,10 +7473,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scheduler@^0.13.6:
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
-  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
+scheduler@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
+  integrity sha512-agTSHR1Nbfi6ulI0kYNK0203joW2Y5W4po4l+v03tOoiJKpTBbxpNhWDvqc/4IcOw+KLmSiQLTasZ4cab2/UWQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
