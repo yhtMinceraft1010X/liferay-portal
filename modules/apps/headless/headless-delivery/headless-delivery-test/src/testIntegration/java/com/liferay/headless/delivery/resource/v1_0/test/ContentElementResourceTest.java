@@ -47,7 +47,7 @@ public class ContentElementResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_contentElementFieldValueMap = new IdentityHashMap<>();
+		_fieldValueMaps = new IdentityHashMap<>();
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class ContentElementResourceTest
 	private void _assignValueInMap(
 		ContentElement contentElement, String fieldName, Object fieldValue) {
 
-		_contentElementFieldValueMap.computeIfAbsent(
+		_fieldValueMaps.computeIfAbsent(
 			contentElement, k -> new HashMap<>()
 		).put(
 			fieldName, fieldValue
@@ -187,7 +187,7 @@ public class ContentElementResourceTest
 	private Object _getValueFromMap(
 		ContentElement contentElement, String fieldName) {
 
-		Map<String, Object> fieldValueMap = _contentElementFieldValueMap.get(
+		Map<String, Object> fieldValueMap = _fieldValueMaps.get(
 			contentElement);
 
 		if (fieldValueMap == null) {
@@ -207,6 +207,6 @@ public class ContentElementResourceTest
 	}
 
 	private Map<ContentElement, Map<String, Object>>
-		_contentElementFieldValueMap;
+		_fieldValueMaps;
 
 }
