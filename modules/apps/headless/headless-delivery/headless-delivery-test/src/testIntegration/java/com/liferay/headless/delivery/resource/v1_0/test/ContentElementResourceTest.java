@@ -89,7 +89,7 @@ public class ContentElementResourceTest
 			sb.append(" ");
 			sb.append(
 				String.valueOf(
-					_getValueFromMap(contentElement, entityFieldName)));
+					_get(contentElement, entityFieldName)));
 
 			return sb.toString();
 		}
@@ -125,7 +125,7 @@ public class ContentElementResourceTest
 
 		return _addContentElement(
 			contentElement,
-			(Double)_getValueFromMap(contentElement, "priority"),
+			(Double)_get(contentElement, "priority"),
 			depotEntry.getGroupId());
 	}
 
@@ -136,7 +136,7 @@ public class ContentElementResourceTest
 
 		return _addContentElement(
 			contentElement,
-			(Double)_getValueFromMap(contentElement, "priority"), siteId);
+			(Double)_get(contentElement, "priority"), siteId);
 	}
 
 	@Override
@@ -184,7 +184,7 @@ public class ContentElementResourceTest
 		};
 	}
 
-	private Object _getValueFromMap(
+	private Object _get(
 		ContentElement contentElement, String fieldName) {
 
 		Map<String, Object> fieldValueMap = _fieldValueMaps.get(contentElement);
