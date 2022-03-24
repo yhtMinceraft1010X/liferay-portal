@@ -121,8 +121,9 @@ public class Main {
 
 	private void _addTestrayFactor(
 			long testrayFactorCategoryId,
-			String testrayFactorCategoryName, String testrayFactorOptionName,
-			long testrayOptionId, long testrayRunId)
+			String testrayFactorCategoryName, long testrayFactorOptionId,
+			String testrayFactorOptionName,
+			long testrayRunId)
 		throws Exception {
 
 		_postObjectEntry(
@@ -135,7 +136,7 @@ public class Main {
 				String.valueOf(testrayFactorCategoryId)
 			).put(
 				"r_factorOptionToFactors_c_factorOptionId",
-				String.valueOf(testrayOptionId)
+				String.valueOf(testrayFactorOptionId)
 			).put(
 				"testrayFactorCategoryName", testrayFactorCategoryName
 			).put(
@@ -412,8 +413,8 @@ public class Main {
 
 			_addTestrayFactor(
 				testrayFactorCategoryId,
-				testrayFactorCategoryName, testrayFactorOptionName,
-				testrayFactorOptionId, testrayRunId);
+				testrayFactorCategoryName, testrayFactorOptionId,
+				testrayFactorOptionName, testrayRunId);
 
 			sb.append(testrayFactorCategoryId);
 
