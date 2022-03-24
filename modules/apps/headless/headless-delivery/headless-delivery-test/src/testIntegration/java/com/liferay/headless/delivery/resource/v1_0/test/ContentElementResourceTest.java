@@ -187,8 +187,7 @@ public class ContentElementResourceTest
 	private Object _getValueFromMap(
 		ContentElement contentElement, String fieldName) {
 
-		Map<String, Object> fieldValueMap = _fieldValueMaps.get(
-			contentElement);
+		Map<String, Object> fieldValueMap = _fieldValueMaps.get(contentElement);
 
 		if (fieldValueMap == null) {
 			return null;
@@ -206,7 +205,6 @@ public class ContentElementResourceTest
 		};
 	}
 
-	private Map<ContentElement, Map<String, Object>>
-		_fieldValueMaps;
+	private Map<ContentElement, Map<String, Object>> _fieldValueMaps;
 
 }
