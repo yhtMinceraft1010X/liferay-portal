@@ -171,7 +171,6 @@
 /portal/tomcat-juli.jar
 /portal/transaction.jar
 /portal/wstx.jar
-/portal/xbean-spring.jar
 /portal/xercesImpl.jar
 /portal/xml-apis.jar
 /portal/xmlsec.jar
