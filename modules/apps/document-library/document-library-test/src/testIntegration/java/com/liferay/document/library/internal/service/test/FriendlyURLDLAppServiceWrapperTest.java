@@ -67,19 +67,15 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 						"enabled", true
 					).build())) {
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
-
-			byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
-
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, group.getGroupId(), parentFolder.getFolderId(),
 				StringUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM,
 				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK, bytes, null, null,
-				serviceContext);
+				StringUtil.randomString(), StringPool.BLANK,
+				TestDataConstants.TEST_BYTE_ARRAY, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -87,7 +83,6 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 					fileEntry.getFileEntryId());
 
 			Assert.assertNotNull(friendlyURLEntry);
-
 			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 		}
 	}
@@ -101,22 +96,18 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 						"enabled", true
 					).build())) {
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
-
-			InputStream inputStream = new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY);
-
-			File file = FileUtil.createTempFile(inputStream);
-
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, group.getGroupId(), parentFolder.getFolderId(),
 				StringUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM,
 				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK, file, null, null,
-				serviceContext);
+				StringUtil.randomString(), StringPool.BLANK,
+				FileUtil.createTempFile(
+					new UnsyncByteArrayInputStream(
+						TestDataConstants.TEST_BYTE_ARRAY)),
+				null, null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -124,7 +115,6 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 					fileEntry.getFileEntryId());
 
 			Assert.assertNotNull(friendlyURLEntry);
-
 			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 		}
 	}
@@ -140,22 +130,17 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 						"enabled", true
 					).build())) {
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
-
-			InputStream inputStream = new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY);
-
-			long size = 0;
-
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, group.getGroupId(), parentFolder.getFolderId(),
 				StringUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM,
 				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK, inputStream, size,
-				null, null, serviceContext);
+				StringUtil.randomString(), StringPool.BLANK,
+				new UnsyncByteArrayInputStream(
+					TestDataConstants.TEST_BYTE_ARRAY),
+				0, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -163,7 +148,6 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 					fileEntry.getFileEntryId());
 
 			Assert.assertNotNull(friendlyURLEntry);
-
 			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 		}
 	}
@@ -183,10 +167,9 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId());
 
-			InputStream inputStream = new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY);
-
-			File file = FileUtil.createTempFile(inputStream);
+			File file = FileUtil.createTempFile(
+				new UnsyncByteArrayInputStream(
+					TestDataConstants.TEST_BYTE_ARRAY));
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, group.getGroupId(), parentFolder.getFolderId(),
