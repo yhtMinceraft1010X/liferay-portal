@@ -1099,8 +1099,7 @@ public class StringUtilTest {
 	@Test
 	public void testUpperCaseFirstLetter() {
 		Assert.assertEquals(
-			"Hello World", 
-			StringUtil.upperCaseFirstLetter("hello World"));
+			"Hello World", StringUtil.upperCaseFirstLetter("hello World"));
 		Assert.assertEquals("", StringUtil.upperCaseFirstLetter(""));
 		Assert.assertNull(StringUtil.upperCaseFirstLetter(null));
 	}
