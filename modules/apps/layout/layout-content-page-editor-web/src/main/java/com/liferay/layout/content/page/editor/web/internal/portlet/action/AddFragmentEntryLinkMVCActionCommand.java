@@ -142,13 +142,13 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (exception instanceof NoSuchEntryException) {
+		if (exception instanceof FragmentEntryContentException) {
+			errorMessage = exception.getMessage();
+		}
+		else if (exception instanceof NoSuchEntryException) {
 			errorMessage =
 				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
 					"deleted";
-		}
-		else if (exception instanceof FragmentEntryContentException) {
-			errorMessage = exception.getMessage();
 		}
 
 		return JSONUtil.put(

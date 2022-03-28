@@ -52,6 +52,8 @@ public class LayoutStructure {
 		}
 
 		try {
+			Set<String> deletedItemIds = new HashSet<>();
+
 			JSONObject layoutStructureJSONObject =
 				JSONFactoryUtil.createJSONObject(layoutStructure);
 
@@ -63,11 +65,8 @@ public class LayoutStructure {
 
 			Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 				new HashMap<>(itemsJSONObject.length());
-
 			Map<String, LayoutStructureItem> layoutStructureItems =
 				new HashMap<>(itemsJSONObject.length());
-
-			Set<String> deletedItemIds = new HashSet<>();
 
 			for (String key : itemsJSONObject.keySet()) {
 				LayoutStructureItem layoutStructureItem =
@@ -130,11 +129,11 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructure() {
-		_fragmentLayoutStructureItems = new HashMap<>();
+		_deletedItemIds = new HashSet<>();
 		_deletedLayoutStructureItems = new HashMap<>();
+		_fragmentLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
 		_mainItemId = StringPool.BLANK;
-		_deletedItemIds = new HashSet<>();
 	}
 
 	public LayoutStructureItem addCollectionItemLayoutStructureItem(
@@ -591,11 +590,11 @@ public class LayoutStructure {
 			deletedLayoutStructureItem.getPosition(),
 			deletedLayoutStructureItem.getItemId());
 
-		_deletedLayoutStructureItems.remove(itemId);
-
 		_deletedItemIds.remove(itemId);
 		_deletedItemIds.removeAll(
 			deletedLayoutStructureItem.getChildrenItemIds());
+
+		_deletedLayoutStructureItems.remove(itemId);
 	}
 
 	public LayoutStructureItem updateItemConfig(
