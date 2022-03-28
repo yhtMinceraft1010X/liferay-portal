@@ -111,8 +111,8 @@ public abstract class BaseCSSBuilderJniTestCase extends BaseCSSBuilderTestCase {
 		Assert.assertTrue(
 			output,
 			output.contains(
-				"Using Dart Sass compiler. Other sass compilers are no " +
-					"longer supported"));
+				"Using Dart Sass compiler because other sass compilers are " +
+					"no longer supported"));
 	}
 
 	@Test
@@ -122,8 +122,8 @@ public abstract class BaseCSSBuilderJniTestCase extends BaseCSSBuilderTestCase {
 		Assert.assertTrue(
 			output,
 			output.contains(
-				"Using Dart Sass compiler. Other sass compilers are no " +
-					"longer supported"));
+				"Using Dart Sass compiler because other sass compilers are " +
+					"no longer supported"));
 	}
 
 }

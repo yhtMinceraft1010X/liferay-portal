@@ -299,8 +299,8 @@ public class CSSBuilder implements AutoCloseable {
 				 sassCompilerClassName.equals("ruby")) {
 
 			System.out.println(
-				"Using Dart Sass compiler. Other sass compilers are no " +
-					"longer supported");
+				"Using Dart Sass compiler because other sass compilers are " +
+					"no longer supported");
 		}
 
 		try {
