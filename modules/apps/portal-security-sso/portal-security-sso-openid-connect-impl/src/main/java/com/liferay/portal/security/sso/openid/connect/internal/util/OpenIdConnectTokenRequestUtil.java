@@ -106,7 +106,6 @@ public class OpenIdConnectTokenRequestUtil {
 
 		ClientID clientID = new ClientID(openIdConnectProvider.getClientId());
 		Secret secret = new Secret(openIdConnectProvider.getClientSecret());
-
 		OpenIdConnectProviderImpl openIdConnectProviderImpl =
 			(OpenIdConnectProviderImpl)openIdConnectProvider;
 
@@ -118,7 +117,7 @@ public class OpenIdConnectTokenRequestUtil {
 		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Token request query: " + httpRequest.getQuery());
+			_log.debug("Query: " + httpRequest.getQuery());
 		}
 
 		try {

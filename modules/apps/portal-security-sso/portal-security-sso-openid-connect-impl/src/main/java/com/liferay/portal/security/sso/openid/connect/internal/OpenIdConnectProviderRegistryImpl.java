@@ -203,12 +203,11 @@ public class OpenIdConnectProviderRegistryImpl
 					continue;
 				}
 
-				String[] keyValues = parameter.split("=");
-
-				String[] values = keyValues[1].split(" ");
+				String[] parameterParts = parameter.split("=");
 
 				customAuthorizationRequestParameters.put(
-					keyValues[0], Arrays.asList(values));
+					parameterParts[0],
+					Arrays.asList(parameterParts[1].split(" ")));
 			}
 
 			Map<String, List<String>> customTokenRequestParameters =
@@ -222,12 +221,11 @@ public class OpenIdConnectProviderRegistryImpl
 					continue;
 				}
 
-				String[] keyValues = parameter.split("=");
-
-				String[] values = keyValues[1].split(" ");
+				String[] parameterParts = parameter.split("=");
 
 				customTokenRequestParameters.put(
-					keyValues[0], Arrays.asList(values));
+					parameterParts[0],
+					Arrays.asList(parameterParts[1].split(" ")));
 			}
 
 			return new OpenIdConnectProviderImpl(
