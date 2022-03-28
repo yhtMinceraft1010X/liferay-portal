@@ -540,6 +540,7 @@ public class JournalManagementToolbarDisplayContext
 								"parentFolderId",
 								String.valueOf(
 									_journalDisplayContext.getFolderId()));
+							dropdownItem.setIcon("folder");
 
 							String label = "folder";
 
@@ -547,7 +548,6 @@ public class JournalManagementToolbarDisplayContext
 								label = "subfolder";
 							}
 
-							dropdownItem.setIcon("folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, label));
 						});
