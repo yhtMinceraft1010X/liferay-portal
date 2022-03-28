@@ -100,15 +100,10 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		long minLong = Long.MIN_VALUE;
 
 		populateNumbers(SCREEN_NAMES[0], 1e-11, 8e-5F, maxInt, minLong);
-
 		populateNumbers(SCREEN_NAMES[1], 3e-11, 7e-5F, maxInt - 1, minLong + 1);
-
 		populateNumbers(SCREEN_NAMES[2], 5e-11, 6e-5F, maxInt - 2, minLong + 2);
-
 		populateNumbers(SCREEN_NAMES[3], 2e-11, 5e-5F, maxInt - 3, minLong + 3);
-
 		populateNumbers(SCREEN_NAMES[4], 4e-11, 4e-5F, maxInt - 4, minLong + 4);
-
 		populateNumbers(SCREEN_NAMES[5], 6e-11, 3e-5F, maxInt - 5, minLong + 5);
 	}
 
@@ -132,7 +127,6 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		document.addKeyword(
 			"firstName", screenName.replaceFirst("user", StringPool.BLANK));
 		document.addKeyword("lastName", "Smith");
-
 		document.addText("screenName", screenName);
 
 		document.addNumber(FIELD_DOUBLE, doubles.get(screenName));
