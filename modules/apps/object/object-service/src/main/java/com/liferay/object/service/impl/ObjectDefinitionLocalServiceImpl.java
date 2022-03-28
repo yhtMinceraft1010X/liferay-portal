@@ -294,9 +294,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 
-		// TODO Deleting an object definition should delete related object
-		// relationships
-
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipPersistence.findByObjectDefinitionId1(
 					objectDefinition.getObjectDefinitionId())) {
