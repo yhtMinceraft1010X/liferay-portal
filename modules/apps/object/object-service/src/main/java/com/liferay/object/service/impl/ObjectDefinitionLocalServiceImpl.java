@@ -46,6 +46,7 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -305,8 +306,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipLocalService.
-					getObjectRelationshipsByObjectDefinitionId2(
+				_objectRelationshipPersistence.findByObjectDefinitionId2(
 						objectDefinition.getObjectDefinitionId())) {
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
@@ -1260,5 +1260,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
 	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;
+
+	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
 
 }
