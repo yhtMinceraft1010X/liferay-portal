@@ -179,7 +179,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 						Configuration.ConfigurationAttribute.READ_ONLY);
 				}
 				catch (Throwable throwable) {
-					_log.error("ERROR ", throwable);
+					_log.error(throwable);
 				}
 			}
 		}
