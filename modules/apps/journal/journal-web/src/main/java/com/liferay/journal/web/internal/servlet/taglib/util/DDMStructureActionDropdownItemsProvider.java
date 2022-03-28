@@ -146,7 +146,6 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"ddmStructureId", _ddmStructure.getStructureId()
 				).buildString());
-
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
@@ -171,7 +170,6 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"dataDefinitionId", _ddmStructure.getStructureId()
 				).buildString());
-
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
@@ -192,7 +190,6 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"ddmStructureId", _ddmStructure.getStructureId()
 				).buildString());
-
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
@@ -219,7 +216,6 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _ddmStructure.getGroupId()
 				).buildString());
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit-default-values"));
 		};
@@ -261,7 +257,6 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"classPK", _ddmStructure.getStructureId()
 				).buildString());
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "manage-templates"));
 		};
