@@ -430,7 +430,6 @@ public class WebFormPortlet extends MVCPortlet {
 								WebFormUtil.class.getName(), databaseTableName,
 								fieldName, row.getClassPK(),
 								StringPool.BLANK)));
-
 					sb.append(csvSeparator);
 				}
 
