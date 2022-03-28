@@ -307,7 +307,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipPersistence.findByObjectDefinitionId2(
-						objectDefinition.getObjectDefinitionId())) {
+					objectDefinition.getObjectDefinitionId())) {
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
@@ -1223,6 +1223,9 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+
+	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
@@ -1260,8 +1263,5 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
 	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;
-
-	@Reference
-	private ObjectRelationshipPersistence _objectRelationshipPersistence;
 
 }
