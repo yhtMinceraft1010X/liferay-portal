@@ -298,7 +298,7 @@ public class ObjectDefinitionLocalServiceImpl
 		// relationships
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipLocalService.getObjectRelationships(
+				_objectRelationshipPersistence.findByObjectDefinitionId1(
 					objectDefinition.getObjectDefinitionId())) {
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
