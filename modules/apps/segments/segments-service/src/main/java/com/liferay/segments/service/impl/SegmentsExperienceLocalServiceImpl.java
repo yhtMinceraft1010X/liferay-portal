@@ -590,10 +590,12 @@ public class SegmentsExperienceLocalServiceImpl
 		throws PortalException {
 
 		segmentsExperimentPersistence.remove(segmentsExperiment);
-		segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
-			segmentsExperiment.getSegmentsExperimentId());
+
 		resourceLocalService.deleteResource(
 			segmentsExperiment, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
+			segmentsExperiment.getSegmentsExperimentId());
 	}
 
 	private int _getHighestPriority(
