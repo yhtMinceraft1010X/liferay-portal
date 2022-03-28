@@ -148,7 +148,7 @@ public class SybaseDB extends BaseDB {
 		else {
 			throw new SQLException(
 				StringBundler.concat(
-					"Primary key with name", primaryKeyConstraintName,
+					"Primary key with name ", primaryKeyConstraintName,
 					" does not exist"));
 		}
 	}
