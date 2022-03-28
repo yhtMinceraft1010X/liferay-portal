@@ -93,7 +93,6 @@ public class AssetCategoryActionDropdownItemsProvider {
 								).setParameter(
 									"vocabularyId", category.getVocabularyId()
 								).buildString());
-
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
