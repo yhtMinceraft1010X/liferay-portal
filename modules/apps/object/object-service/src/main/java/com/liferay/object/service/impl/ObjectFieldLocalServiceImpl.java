@@ -176,12 +176,14 @@ public class ObjectFieldLocalServiceImpl
 				_objectFieldPersistence.findByObjectDefinitionId(
 					objectDefinitionId)) {
 
-			if (Validator.isNull(objectField.getRelationshipType())) {
-				objectFieldPersistence.remove(objectField);
-
-				_objectFieldSettingPersistence.removeByObjectFieldId(
-					objectField.getObjectFieldId());
+			if (Validator.isNotNull(objectField.getRelationshipType())) {
+				continue;
 			}
+
+			objectFieldPersistence.remove(objectField);
+
+			_objectFieldSettingPersistence.removeByObjectFieldId(
+				objectField.getObjectFieldId());
 		}
 	}
 
