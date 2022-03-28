@@ -69,10 +69,10 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByCol(_getOrderByCol());
 		_searchContainer.setOrderByType(_getOrderByType());
 
-		long companyId = PortalUtil.getCompanyId(renderRequest);
-
 		String navigation = ParamUtil.getString(
 			renderRequest, "navigation", "all");
+
+		long companyId = PortalUtil.getCompanyId(renderRequest);
 
 		String searchByField = ParamUtil.getString(
 			renderRequest, "searchByField", "name");
