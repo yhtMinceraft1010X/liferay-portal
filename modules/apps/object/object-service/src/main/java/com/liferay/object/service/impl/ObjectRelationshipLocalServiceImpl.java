@@ -164,6 +164,9 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship = objectRelationshipPersistence.remove(
 			objectRelationship);
 
+		_objectLayoutTabPersistence.removeByObjectRelationshipId(
+			objectRelationship.getObjectRelationshipId());
+
 		if (Objects.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
@@ -186,9 +189,6 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipPersistence.remove(
 				reverseObjectRelationship.getObjectRelationshipId());
 		}
-
-		_objectLayoutTabPersistence.removeByObjectRelationshipId(
-			objectRelationship.getObjectRelationshipId());
 
 		return objectRelationship;
 	}
