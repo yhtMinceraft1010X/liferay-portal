@@ -1151,8 +1151,6 @@ definition {
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		ProcessBuilderKaleoDesignerReact.viewSourceDiagramToolTipDisplayed(content = "Source View");
-
-
 	}
 
 	@description = "Verify that Start node can't have incoming transition"
