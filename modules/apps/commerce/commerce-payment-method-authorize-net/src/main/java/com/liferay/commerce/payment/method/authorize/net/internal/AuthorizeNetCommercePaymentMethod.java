@@ -192,9 +192,12 @@ public class AuthorizeNetCommercePaymentMethod
 
 		getHostedPaymentPageController.execute();
 
-		GetHostedPaymentPageResponse getHostedPaymentPageResponse = getHostedPaymentPageController.getApiResponse();
+		GetHostedPaymentPageResponse getHostedPaymentPageResponse =
+			getHostedPaymentPageController.getApiResponse();
 
-		if ((getHostedPaymentPageResponse != null) && (getHostedPaymentPageResponse.getToken() != null)) {
+		if ((getHostedPaymentPageResponse != null) &&
+			(getHostedPaymentPageResponse.getToken() != null)) {
+
 			String token = getHostedPaymentPageResponse.getToken();
 
 			String redirectURL =
@@ -215,7 +218,8 @@ public class AuthorizeNetCommercePaymentMethod
 
 			List<String> resultMessages = new ArrayList<>();
 
-			MessagesType messagesType = response.getMessages();
+			MessagesType messagesType =
+				getHostedPaymentPageResponse.getMessages();
 
 			List<MessagesType.Message> messages = messagesType.getMessage();
 
