@@ -571,7 +571,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletPreferences,
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
 					companyId, true)));
-
 		assetEntryQuery.setEnablePermissions(false);
 
 		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
