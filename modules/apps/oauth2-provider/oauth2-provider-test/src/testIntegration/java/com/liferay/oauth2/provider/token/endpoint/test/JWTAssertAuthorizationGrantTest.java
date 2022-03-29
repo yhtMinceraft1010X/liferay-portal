@@ -64,7 +64,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				_getToken(
-					_getDefaultAuthorizationGrant(),
+					_getTestAuthorizationGrant(),
 					_TEST_CLIENT_PASSWORD_CLIENT_AUTHENTICATION)));
 	}
 
@@ -103,7 +103,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 			null, getTokenWebTarget(), Function.identity());
 	}
 
-	private TestAuthorizationGrant _getDefaultAuthorizationGrant() {
+	private TestAuthorizationGrant _getTestAuthorizationGrant() {
 		User user = null;
 
 		try {
