@@ -311,11 +311,11 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws ObjectViewSortColumnException {
 
+		List<String> objectFieldNames = new ArrayList<>();
+
 		List<ObjectField> objectFields =
 			_objectFieldPersistence.findByObjectDefinitionId(
 				objectView.getObjectDefinitionId());
-
-		List<String> objectFieldNames = new ArrayList<>();
 
 		for (ObjectField objectField : objectFields) {
 			objectFieldNames.add(objectField.getName());
