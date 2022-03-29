@@ -354,23 +354,6 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _isScope(Scope.PORTLET_INSTANCE);
 	}
 
-	public boolean isReadOnly() {
-		if (_configuration == null) {
-			return false;
-		}
-
-		Set<Configuration.ConfigurationAttribute> configurationAttributes =
-			_configuration.getAttributes();
-
-		if (configurationAttributes.contains(
-				Configuration.ConfigurationAttribute.READ_ONLY)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isStrictScope() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(

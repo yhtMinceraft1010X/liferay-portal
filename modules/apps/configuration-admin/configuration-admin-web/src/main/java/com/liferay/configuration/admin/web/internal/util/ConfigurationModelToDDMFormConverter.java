@@ -76,12 +76,6 @@ public class ConfigurationModelToDDMFormConverter {
 		_addRequiredDDMFormFields(ddmForm);
 		_addOptionalDDMFormFields(ddmForm);
 
-		if (_configurationModel.isReadOnly()) {
-			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-				ddmFormField.setReadOnly(true);
-			}
-		}
-
 		return ddmForm;
 	}
 
