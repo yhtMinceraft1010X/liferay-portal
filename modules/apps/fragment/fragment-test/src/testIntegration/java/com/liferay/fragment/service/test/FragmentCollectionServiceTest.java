@@ -165,16 +165,13 @@ public class FragmentCollectionServiceTest {
 
 	@Test
 	public void testGetFragmentCollectionFileEntries() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		String name = RandomTestUtil.randomString();
-
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), RandomTestUtil.randomString(), name,
-				StringPool.BLANK, serviceContext);
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
 		List<FileEntry> originalFragmentCollectionFileEntries =
 			_fragmentCollectionService.getFragmentCollectionFileEntries(
@@ -463,16 +460,14 @@ public class FragmentCollectionServiceTest {
 
 	@Test
 	public void testUpdateFragmentCollection() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
 		String name = RandomTestUtil.randomString();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
 				_group.getGroupId(), RandomTestUtil.randomString(), name,
-				StringPool.BLANK, serviceContext);
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
 		FragmentCollection persistedFragmentCollection =
 			_fragmentCollectionPersistence.findByPrimaryKey(
