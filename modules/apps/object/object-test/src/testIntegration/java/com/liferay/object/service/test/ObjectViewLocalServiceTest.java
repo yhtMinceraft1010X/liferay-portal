@@ -220,14 +220,14 @@ public class ObjectViewLocalServiceTest {
 	}
 
 	private String _addObjectField(
-			String objectFieldLabel, String objectFieldLName)
+			String objectFieldLabel, String objectFieldName)
 		throws Exception {
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap(objectFieldLabel),
-			objectFieldLName, true, Collections.emptyList());
+			objectFieldName, true, Collections.emptyList());
 
 		return objectField.getName();
 	}
