@@ -41,13 +41,13 @@ import java.util.List;
 public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 
 	public LayoutRevisionUpgradeProcess(
-		LayoutLocalService layoutLocalService,
 		LayoutBranchLocalService layoutBranchLocalService,
+		LayoutLocalService layoutLocalService,
 		LayoutRevisionLocalService layoutRevisionLocalService,
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 
-		_layoutLocalService = layoutLocalService;
 		_layoutBranchLocalService = layoutBranchLocalService;
+		_layoutLocalService = layoutLocalService;
 		_layoutRevisionLocalService = layoutRevisionLocalService;
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
