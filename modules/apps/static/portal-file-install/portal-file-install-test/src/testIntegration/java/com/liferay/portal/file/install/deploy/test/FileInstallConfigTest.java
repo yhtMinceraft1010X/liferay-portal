@@ -333,7 +333,6 @@ public class FileInstallConfigTest {
 			_configuration.getAttributes();
 
 		Assert.assertTrue(
-			"Configuration is not READ_ONLY",
 			configurationAttributes.contains(ConfigurationAttribute.READ_ONLY));
 	}
 
