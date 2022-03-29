@@ -53,6 +53,10 @@ public class CSDiagramEntryKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		_queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, CPField.SHORT_DESCRIPTION, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, CPField.SHORT_DESCRIPTION, false);
+		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
@@ -62,10 +66,6 @@ public class CSDiagramEntryKeywordQueryContributor
 			booleanQuery, searchContext, Field.NAME, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "sequence", false);
-		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, CPField.SHORT_DESCRIPTION, false);
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, CPField.SHORT_DESCRIPTION, false);
 
 		try {
 			if (!Validator.isBlank(keywords)) {
