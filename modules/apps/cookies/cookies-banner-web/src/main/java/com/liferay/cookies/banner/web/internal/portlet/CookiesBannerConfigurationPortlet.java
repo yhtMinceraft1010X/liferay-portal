@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.show-portlet-access-denied=false",
 		"com.liferay.portlet.show-portlet-inactive=false",
 		"com.liferay.portlet.use-default-template=false",
-		"javax.portlet.display-name=Cookie Banner Configuration",
+		"javax.portlet.display-name=Cookies Banner Configuration",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/cookies_banner_configuration/view.jsp",
