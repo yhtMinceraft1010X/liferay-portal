@@ -164,7 +164,7 @@ public class FragmentCollectionServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionResources() throws Exception {
+	public void testGetFragmentCollectionFileEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
@@ -176,8 +176,8 @@ public class FragmentCollectionServiceTest {
 				_group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK, serviceContext);
 
-		List<FileEntry> originalFragmentCollectionResources =
-			_fragmentCollectionService.getFragmentCollectionResources(
+		List<FileEntry> originalFragmentCollectionFileEntries =
+			_fragmentCollectionService.getFragmentCollectionFileEntries(
 				fragmentCollection.getFragmentCollectionId());
 
 		_portletFileRepository.addPortletFileEntry(
@@ -188,13 +188,13 @@ public class FragmentCollectionServiceTest {
 			fragmentCollection.getResourcesFolderId(), new byte[0],
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 
-		List<FileEntry> actualFragmentCollectionResources =
-			_fragmentCollectionService.getFragmentCollectionResources(
+		List<FileEntry> actualFragmentCollectionFileEntries =
+			_fragmentCollectionService.getFragmentCollectionFileEntries(
 				fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertEquals(
-			actualFragmentCollectionResources.size(),
-			originalFragmentCollectionResources.size() + 1);
+			originalFragmentCollectionFileEntries.size() + 1,
+			actualFragmentCollectionFileEntries.size());
 	}
 
 	@Test

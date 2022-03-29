@@ -122,7 +122,7 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
-	public List<FileEntry> getFragmentCollectionResources(
+	public List<FileEntry> getFragmentCollectionFileEntries(
 			long fragmentCollectionId)
 		throws PortalException {
 
