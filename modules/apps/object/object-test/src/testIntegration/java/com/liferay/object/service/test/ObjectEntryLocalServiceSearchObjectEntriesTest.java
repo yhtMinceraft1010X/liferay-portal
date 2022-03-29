@@ -189,16 +189,13 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-143064"))) {
 			_testCharacterDataType(
 				false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-				ObjectFieldConstants.DB_TYPE_CLOB, true, false);
-
+				ObjectFieldConstants.DB_TYPE_CLOB, false, false);
 			_testCharacterDataType(
 				false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-				ObjectFieldConstants.DB_TYPE_CLOB, false, false);
-
+				ObjectFieldConstants.DB_TYPE_CLOB, true, false);
 			_testCharacterDataType(
 				false, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
 				ObjectFieldConstants.DB_TYPE_CLOB, true, true);
-
 			_testCharacterDataType(
 				true, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
 				ObjectFieldConstants.DB_TYPE_CLOB, true, false);
@@ -457,16 +454,13 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testString() throws Exception {
 		_testCharacterDataType(
 			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, false);
-
+			ObjectFieldConstants.DB_TYPE_STRING, false, false);
 		_testCharacterDataType(
 			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false);
-
+			ObjectFieldConstants.DB_TYPE_STRING, true, false);
 		_testCharacterDataType(
 			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, true);
-
 		_testCharacterDataType(
 			true, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false);
