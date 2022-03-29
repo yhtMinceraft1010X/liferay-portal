@@ -82,6 +82,7 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.setHref(
 								_layoutsAdminDisplayContext.getEditLayoutURL(
 									layout));
+							dropdownItem.setIcon("pencil");
 
 							String label = LanguageUtil.get(
 								_httpServletRequest, "edit");
@@ -94,7 +95,6 @@ public class LayoutActionDropdownItemsProvider {
 									"edit-conversion-draft");
 							}
 
-							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(label);
 						}
 					).add(
@@ -137,6 +137,7 @@ public class LayoutActionDropdownItemsProvider {
 							dropdownItem.setHref(
 								_layoutsAdminDisplayContext.getViewLayoutURL(
 									layout));
+							dropdownItem.setIcon("view");
 
 							String label = LanguageUtil.get(
 								_httpServletRequest, "view");
@@ -146,7 +147,6 @@ public class LayoutActionDropdownItemsProvider {
 									_httpServletRequest, "preview");
 							}
 
-							dropdownItem.setIcon("view");
 							dropdownItem.setLabel(label);
 
 							if (layout.isTypeContent() &&
