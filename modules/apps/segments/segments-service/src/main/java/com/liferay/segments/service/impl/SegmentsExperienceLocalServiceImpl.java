@@ -320,16 +320,6 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		// Segments experiments
-
-		for (SegmentsExperiment segmentsExperiment :
-			segmentsExperimentPersistence.findByS_C_C(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				_getPublishedLayoutClassPK(classPK))) {
-
-			_deleteSegmentsExperiment(segmentsExperiment);
-		}
-
 		// Segments experiences
 
 		List<SegmentsExperience> segmentsExperiences =
@@ -339,6 +329,16 @@ public class SegmentsExperienceLocalServiceImpl
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			segmentsExperienceLocalService.deleteSegmentsExperience(
 				segmentsExperience);
+		}
+
+		// Segments experiments
+
+		for (SegmentsExperiment segmentsExperiment :
+				segmentsExperimentPersistence.findByS_C_C(
+					SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+					_getPublishedLayoutClassPK(classPK))) {
+
+			_deleteSegmentsExperiment(segmentsExperiment);
 		}
 	}
 
