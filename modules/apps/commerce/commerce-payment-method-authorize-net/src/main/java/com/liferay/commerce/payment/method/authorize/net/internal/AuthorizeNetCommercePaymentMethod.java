@@ -179,24 +179,23 @@ public class AuthorizeNetCommercePaymentMethod
 		GetHostedPaymentPageRequest getHostedPaymentPageRequest =
 			new GetHostedPaymentPageRequest();
 
-		getHostedPaymentPageRequest.setTransactionRequest(
-			_getTransactionRequestType(commerceOrder));
-
 		getHostedPaymentPageRequest.setHostedPaymentSettings(
 			_getArrayOfSetting(
 				commerceOrder.getGroupId(),
 				authorizeNetCommercePaymentRequest.getCancelUrl(),
 				authorizeNetCommercePaymentRequest.getReturnUrl()));
+		getHostedPaymentPageRequest.setTransactionRequest(
+			_getTransactionRequestType(commerceOrder));
 
-		GetHostedPaymentPageController controller =
+		GetHostedPaymentPageController getHostedPaymentPageController =
 			new GetHostedPaymentPageController(getHostedPaymentPageRequest);
 
-		controller.execute();
+		getHostedPaymentPageController.execute();
 
-		GetHostedPaymentPageResponse response = controller.getApiResponse();
+		GetHostedPaymentPageResponse getHostedPaymentPageResponse = getHostedPaymentPageController.getApiResponse();
 
-		if ((response != null) && (response.getToken() != null)) {
-			String token = response.getToken();
+		if ((getHostedPaymentPageResponse != null) && (getHostedPaymentPageResponse.getToken() != null)) {
+			String token = getHostedPaymentPageResponse.getToken();
 
 			String redirectURL =
 				AuthorizeNetCommercePaymentMethodConstants.SANDBOX_REDIRECT_URL;
@@ -216,9 +215,9 @@ public class AuthorizeNetCommercePaymentMethod
 
 			List<String> resultMessages = new ArrayList<>();
 
-			MessagesType responseMessages = response.getMessages();
+			MessagesType messagesType = response.getMessages();
 
-			List<MessagesType.Message> messages = responseMessages.getMessage();
+			List<MessagesType.Message> messages = messagesType.getMessage();
 
 			for (MessagesType.Message message : messages) {
 				resultMessages.add(message.getText());
