@@ -435,8 +435,12 @@ public class SegmentsExperienceLocalServiceTest {
 	@Test
 	public void testFetchDefaultSegmentsExperienceId() throws PortalException {
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				TestPropsValues.getUserId(), _classPK,
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				SegmentsEntryConstants.ID_DEFAULT,
+				SegmentsExperienceConstants.KEY_DEFAULT, _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(), 0, true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
