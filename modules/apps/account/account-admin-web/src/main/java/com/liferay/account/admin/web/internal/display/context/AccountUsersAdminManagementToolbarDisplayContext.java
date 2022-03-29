@@ -340,9 +340,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 								).setParameter(
 									"accountEntriesNavigation", (String)null
 								).buildString());
-
 							labelItem.setCloseable(true);
-
 							labelItem.setLabel(
 								LanguageUtil.get(
 									httpServletRequest, "no-assigned-account"));
@@ -359,9 +357,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 								).setNavigation(
 									(String)null
 								).buildString());
-
 							labelItem.setCloseable(true);
-
 							labelItem.setLabel(
 								String.format(
 									"%s: %s",

@@ -228,9 +228,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					).setNavigation(
 						(String)null
 					).buildString());
-
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					String.format(
 						"%s: %s",
@@ -247,9 +245,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 					).setParameter(
 						"type", (String)null
 					).buildString());
-
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					String.format(
 						"%s: %s", LanguageUtil.get(httpServletRequest, "type"),

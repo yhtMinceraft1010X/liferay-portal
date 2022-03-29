@@ -124,9 +124,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).setNavigation(
 						(String)null
 					).buildString());
-
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					String.format(
 						"%s: %s",

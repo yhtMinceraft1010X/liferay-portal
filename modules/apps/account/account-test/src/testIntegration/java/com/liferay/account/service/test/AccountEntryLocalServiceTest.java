@@ -118,11 +118,9 @@ public class AccountEntryLocalServiceTest {
 		Group group = accountEntry.getAccountEntryGroup();
 
 		Assert.assertNotNull(group);
-
 		Assert.assertEquals(
 			_classNameLocalService.getClassNameId(AccountEntry.class),
 			group.getClassNameId());
-
 		Assert.assertEquals(
 			accountEntry.getAccountEntryId(), group.getClassPK());
 
@@ -194,7 +192,6 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertNotNull(
 			_accountEntryLocalService.fetchAccountEntry(
 				accountEntry.getAccountEntryId()));
-
 		Assert.assertEquals(
 			1,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
@@ -1042,7 +1039,6 @@ public class AccountEntryLocalServiceTest {
 	private void _assertDeleted(long accountEntryId) throws Exception {
 		Assert.assertNull(
 			_accountEntryLocalService.fetchAccountEntry(accountEntryId));
-
 		Assert.assertEquals(
 			0,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
