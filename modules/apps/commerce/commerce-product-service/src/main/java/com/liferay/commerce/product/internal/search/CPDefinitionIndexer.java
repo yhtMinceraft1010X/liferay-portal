@@ -599,18 +599,14 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		document.addKeyword(
 			CPField.CHANNEL_FILTER_ENABLED,
 			cpDefinition.isChannelFilterEnabled());
-
 		document.addKeyword(
 			CPField.IS_IGNORE_SKU_COMBINATIONS,
 			cpDefinition.isIgnoreSKUCombinations());
-
 		document.addKeyword(CPField.PRODUCT_ID, cpDefinition.getCProductId());
-
 		document.addText(
 			CPField.OPTION_NAMES, ArrayUtil.toStringArray(optionNames));
 		document.addNumber(
 			CPField.OPTION_IDS, ArrayUtil.toLongArray(optionIds));
-
 		document.addText(
 			CPField.SKUS,
 			_cpInstanceLocalService.getSKUs(cpDefinition.getCPDefinitionId()));
