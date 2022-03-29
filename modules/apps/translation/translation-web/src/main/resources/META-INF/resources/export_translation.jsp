@@ -24,8 +24,6 @@ ExportTranslationDisplayContext exportTranslationDisplayContext = (ExportTransla
 portletDisplay.setURLBack(exportTranslationDisplayContext.getRedirect());
 
 renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
-
-Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getExportTranslationData();
 %>
 
 <div class="translation">
@@ -64,6 +62,10 @@ Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getE
 
 					</div>
 				</div>
+
+				<%
+				Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getExportTranslationData();
+				%>
 
 				<c:choose>
 					<c:when test='<%= (boolean)exportTranslationData.get("multiplePagesSelected") %>'>
