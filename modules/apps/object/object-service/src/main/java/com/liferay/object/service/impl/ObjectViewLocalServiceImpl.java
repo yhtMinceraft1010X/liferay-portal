@@ -212,7 +212,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		objectView = objectViewPersistence.update(objectView);
 
 		try {
-			_validateSortColumn(objectView, objectViewSortColumns);
+			_validate(objectView, objectViewSortColumns);
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			throw new ObjectViewSortColumnException(
@@ -261,7 +261,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		throws ObjectViewSortColumnException {
 
 		try {
-			_validateSortColumn(objectView, objectViewSortColumns);
+			_validate(objectView, objectViewSortColumns);
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			throw new ObjectViewSortColumnException(
@@ -306,7 +306,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validateSortColumn(
+	private void _validate(
 			ObjectView objectView,
 			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws ObjectViewSortColumnException {
