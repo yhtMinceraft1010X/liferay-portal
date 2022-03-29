@@ -72,25 +72,25 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 	public void testGrantWithCorrectAudience() throws Exception {
 		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
-		TestJWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
+		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
 				_TEST_CLIENT_ID_01, null, user.getUuid(), getTokenWebTarget());
 
 		Assert.assertTrue(
-			Validator.isNotNull(_getToken(jwtAssertionAuthorizationGrant)));
+			Validator.isNotNull(_getToken(testJWTAssertionAuthorizationGrant)));
 	}
 
 	@Test
 	public void testGrantWithWrongAudience() throws Exception {
 		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
-		TestJWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
+		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
 				_TEST_CLIENT_ID_01, null, user.getUuid(),
 				getJsonWebTarget("wrongPath"));
 
 		Assert.assertTrue(
-			Validator.isNull(_getToken(jwtAssertionAuthorizationGrant)));
+			Validator.isNull(_getToken(testJWTAssertionAuthorizationGrant)));
 	}
 
 	@Override
