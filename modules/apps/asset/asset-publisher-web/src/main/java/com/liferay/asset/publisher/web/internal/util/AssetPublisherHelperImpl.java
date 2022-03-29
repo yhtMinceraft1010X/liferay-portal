@@ -420,11 +420,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		assetEntryQuery.setClassTypeIds(
 			GetterUtil.getLongValues(
 				portletPreferences.getValues("classTypeIds", null)));
-
 		assetEntryQuery.setEnablePermissions(
 			GetterUtil.getBoolean(
 				portletPreferences.getValue("enablePermissions", null)));
-
 		assetEntryQuery.setExcludeZeroViewCount(
 			GetterUtil.getBoolean(
 				portletPreferences.getValue("excludeZeroViewCount", null)));
