@@ -52,7 +52,7 @@ public class RichTextObjectFieldBusinessType
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"create-a-rich-text-content");
+			"create-rich-text-content");
 	}
 
 	@Override
