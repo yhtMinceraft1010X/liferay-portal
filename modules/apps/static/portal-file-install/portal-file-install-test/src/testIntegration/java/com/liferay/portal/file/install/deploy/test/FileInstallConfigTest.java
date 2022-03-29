@@ -31,6 +31,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -57,7 +58,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.Configuration.ConfigurationAttribute;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.cm.ManagedServiceFactory;
@@ -285,7 +285,7 @@ public class FileInstallConfigTest {
 		String line = StringBundler.concat("testKey=\"", special, "\"");
 
 		_configuration = _createConfiguration(
-			configurationPid, line, StandardCharsets.UTF_8);
+			StandardCharsets.UTF_8, configurationPid, line);
 
 		Dictionary<String, Object> dictionary = _configuration.getProperties();
 
@@ -294,7 +294,7 @@ public class FileInstallConfigTest {
 		_deleteConfiguration();
 
 		_configuration = _createConfiguration(
-			configurationPid, line, StandardCharsets.ISO_8859_1);
+			StandardCharsets.ISO_8859_1, configurationPid, line);
 
 		dictionary = _configuration.getProperties();
 
@@ -326,33 +326,26 @@ public class FileInstallConfigTest {
 			configurationPid.concat(".config"));
 
 		_configuration = _createConfiguration(
-			configurationPid, "testKey=\"testValue\"", Charset.defaultCharset(),
+			Charset.defaultCharset(), configurationPid, "testKey=\"testValue\"",
 			true);
 
-		Set<ConfigurationAttribute> configurationAttributes =
+		Set<Configuration.ConfigurationAttribute> configurationAttributes =
 			_configuration.getAttributes();
 
 		Assert.assertTrue(
-			configurationAttributes.contains(ConfigurationAttribute.READ_ONLY));
+			configurationAttributes.contains(
+				Configuration.ConfigurationAttribute.READ_ONLY));
 	}
 
 	private Configuration _createConfiguration(
-			String configurationPid, String content)
+			Charset charset, String configurationPid, String content)
 		throws Exception {
 
-		return _createConfiguration(
-			configurationPid, content, Charset.defaultCharset());
+		return _createConfiguration(charset, configurationPid, content, false);
 	}
 
 	private Configuration _createConfiguration(
-			String configurationPid, String content, Charset charset)
-		throws Exception {
-
-		return _createConfiguration(configurationPid, content, charset, false);
-	}
-
-	private Configuration _createConfiguration(
-			String configurationPid, String content, Charset charset,
+			Charset charset, String configurationPid, String content,
 			boolean readOnly)
 		throws Exception {
 
@@ -389,6 +382,14 @@ public class FileInstallConfigTest {
 		}
 
 		return configurations[0];
+	}
+
+	private Configuration _createConfiguration(
+			String configurationPid, String content)
+		throws Exception {
+
+		return _createConfiguration(
+			Charset.defaultCharset(), configurationPid, content);
 	}
 
 	private void _createFacotryConfiguration(
