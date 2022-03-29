@@ -44,8 +44,10 @@ public class CookiesBannerDisplayContext {
 		).buildString();
 	}
 
-	//TODO Wire with settings
 	public String getContent(Locale locale) {
+
+		// TODO
+
 		return "";
 	}
 
