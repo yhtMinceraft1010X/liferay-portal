@@ -403,7 +403,6 @@ public class AssetListAssetEntryProviderImpl
 		assetEntryQuery.setOrderByType1(
 			GetterUtil.getString(
 				unicodeProperties.getProperty("orderByType1", "ASC")));
-
 		assetEntryQuery.setOrderByType2(
 			GetterUtil.getString(
 				unicodeProperties.getProperty("orderByType2", "ASC")));

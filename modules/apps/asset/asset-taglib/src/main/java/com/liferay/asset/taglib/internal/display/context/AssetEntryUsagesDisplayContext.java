@@ -282,7 +282,6 @@ public class AssetEntryUsagesDisplayContext {
 			layoutURL = PortalUtil.getLayoutFriendlyURL(
 				LayoutLocalServiceUtil.fetchLayout(assetEntryUsage.getPlid()),
 				themeDisplay);
-
 			layoutURL = HttpUtil.setParameter(
 				layoutURL, "previewAssetEntryId",
 				String.valueOf(assetEntryUsage.getAssetEntryId()));

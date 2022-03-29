@@ -93,7 +93,6 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
-
 		assetDisplayPageEntry.setPlid(
 			_getPlid(groupId, classNameId, classPK, layoutPageTemplateEntryId));
 

@@ -134,9 +134,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 					).setParameter(
 						"scope", (String)null
 					).buildString());
-
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					String.format(
 						"%s: %s", LanguageUtil.get(httpServletRequest, "scope"),
