@@ -205,7 +205,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setDiscontinued(discontinued);
 		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
 		cpInstance.setReplacementCProductId(replacementCProductId);
-
 		cpInstance.setDiscontinuedDate(
 			PortalUtil.getDate(
 				discontinuedDateMonth, discontinuedDateDay,
