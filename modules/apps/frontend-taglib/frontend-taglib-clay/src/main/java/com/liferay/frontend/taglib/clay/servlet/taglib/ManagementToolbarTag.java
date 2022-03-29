@@ -1247,21 +1247,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("\"><div class=\"tbar-section\"><span class=\"");
 			jspWriter.write("component-text text-truncate-inline\"><span");
 			jspWriter.write(" class=\"text-truncate\">");
-
 			jspWriter.write(
 				LanguageUtil.format(
 					resourceBundle, "x-results-for",
 					new Object[] {getItemsTotal()}));
-
-			jspWriter.write("<strong>");
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(StringPool.QUOTE);
+			jspWriter.write("<strong> \"");
 			jspWriter.write(searchValue);
-			jspWriter.write(StringPool.QUOTE);
-
-			jspWriter.write("</strong>");
-
-			jspWriter.write("</span></span></div></li>");
+			jspWriter.write("\"</strong></span></span></div></li>");
 
 			if (filterLabelItems != null) {
 				for (int i = 0; i < filterLabelItems.size(); i++) {
