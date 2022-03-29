@@ -265,8 +265,6 @@ public class GetPageContentMVCResourceCommandTest {
 
 	@Test
 	public void testFragmentEntryLinkMapped() throws Exception {
-		JournalArticle journalArticle = _createJournalArticle();
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -275,10 +273,10 @@ public class GetPageContentMVCResourceCommandTest {
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
+		JournalArticle journalArticle = _createJournalArticle();
 
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
@@ -322,8 +320,6 @@ public class GetPageContentMVCResourceCommandTest {
 	public void testFragmentEntryLinkMappedInAnotherSegmentsExperience()
 		throws Exception {
 
-		JournalArticle journalArticle = _createJournalArticle();
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -332,10 +328,10 @@ public class GetPageContentMVCResourceCommandTest {
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
+		JournalArticle journalArticle = _createJournalArticle();
 
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
@@ -512,6 +508,7 @@ public class GetPageContentMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
