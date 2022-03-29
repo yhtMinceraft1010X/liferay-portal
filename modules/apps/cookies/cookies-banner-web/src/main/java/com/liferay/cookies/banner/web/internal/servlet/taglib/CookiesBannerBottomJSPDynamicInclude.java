@@ -73,7 +73,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/entry.jsp";
+		return "/dynamic_include/view.jsp";
 	}
 
 	@Override
