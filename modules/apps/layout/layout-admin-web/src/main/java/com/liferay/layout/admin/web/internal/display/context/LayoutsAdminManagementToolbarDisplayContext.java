@@ -78,7 +78,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "convertSelectedPages");
-
 				dropdownItem.putData(
 					"convertLayoutURL",
 					PortletURLBuilder.createActionURL(
@@ -88,7 +87,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).buildString());
-
 				dropdownItem.setIcon("page");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -120,7 +118,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedPages");
-
 				dropdownItem.putData(
 					"deleteLayoutURL",
 					PortletURLBuilder.createActionURL(
@@ -130,7 +127,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).buildString());
-
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
