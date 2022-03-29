@@ -1984,18 +1984,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.html.parser.impl.jar!jericho-html.jar</file-name>
-				<version>3.1</version>
-				<project-name>Jericho HTML Parser</project-name>
-				<project-url>http://jericho.htmlparser.net</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Lesser General Public License (LGPL)</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.image.impl.jar!im4java.jar</file-name>
 				<version>1.2.0</version>
 				<project-name>im4java</project-name>
@@ -2697,6 +2685,18 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.html.parser.impl.jar!jericho-html.jar</file-name>
+				<version>3.1</version>
+				<project-name>Jericho HTML Parser</project-name>
+				<project-url>http://jericho.htmlparser.net</project-url>
+				<licenses>
+					<license>
+						<license-name>GNU Lesser General Public License (LGPL)</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl.txt</license-url>
 					</license>
 				</licenses>
 			</library>
