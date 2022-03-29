@@ -136,15 +136,15 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 		TestAuthorizationGrant testAuthorizationGrant,
 		TestClientAuthentication testClientAuthentication) {
 
-		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+		MultivaluedMap<String, String> multivaluedMap =
+			new MultivaluedHashMap<>();
 
-		formData.putAll(
+		multivaluedMap.putAll(
 			testAuthorizationGrant.getAuthorizationGrantParameters());
-
-		formData.putAll(
+		multivaluedMap.putAll(
 			testClientAuthentication.getClientAuthenticationParameters());
 
-		return _invocationBuilder.post(Entity.form(formData));
+		return _invocationBuilder.post(Entity.form(multivaluedMap));
 	}
 
 	private static final String _TEST_CLIENT_ID_01 = "test_client_id_01";
