@@ -40,10 +40,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -282,22 +281,14 @@ public class AccountGroupResourceImpl
 			long commerceAccountId, Pagination pagination)
 		throws Exception {
 
-		List<AccountGroup> accountGroups = new ArrayList<>();
-
-		List<CommerceAccountGroup> commerceAccountGroups =
-			_commerceAccountGroupService.
-				getCommerceAccountGroupsByCommerceAccountId(
-					commerceAccountId, pagination.getStartPosition(),
-					pagination.getEndPosition());
-
-		for (CommerceAccountGroup commerceAccountGroup :
-				commerceAccountGroups) {
-
-			accountGroups.add(_toAccountGroup(commerceAccountGroup));
-		}
-
 		return Page.of(
-			accountGroups, pagination,
+			TransformUtil.transform(
+				_commerceAccountGroupService.
+					getCommerceAccountGroupsByCommerceAccountId(
+						commerceAccountId, pagination.getStartPosition(),
+						pagination.getEndPosition()),
+				commerceAccountGroup -> _toAccountGroup(commerceAccountGroup)),
+			pagination,
 			_commerceAccountGroupService.
 				getCommerceAccountGroupsByCommerceAccountIdCount(
 					commerceAccountId));
