@@ -258,12 +258,12 @@ public class FrontendTokenDefinitionImplTest {
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
 				jsonFactory, resourceBundleLoader, "theme_id");
 
-		JSONObject actualJSONObject = frontendTokenDefinitionImpl.getJSONObject(
+		JSONObject jsonObject = frontendTokenDefinitionImpl.getJSONObject(
 			LocaleUtil.ENGLISH);
 
 		Assert.assertEquals(
 			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT.toMap(),
-			actualJSONObject.toMap());
+			jsonObject.toMap());
 	}
 
 	private void _assertCollectionEquals(
