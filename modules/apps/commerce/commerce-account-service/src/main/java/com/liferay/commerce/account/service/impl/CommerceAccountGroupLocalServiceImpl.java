@@ -256,7 +256,7 @@ public class CommerceAccountGroupLocalServiceImpl
 		long commerceAccountId) {
 
 		return commerceAccountGroupCommerceAccountRelLocalService.
-			getCommerceAccountGroupCommerceAccountRelsByCommerceAccountIdCount(
+			getCommerceAccountGroupCommerceAccountRelsCountByCommerceAccountId(
 				commerceAccountId);
 	}
 
