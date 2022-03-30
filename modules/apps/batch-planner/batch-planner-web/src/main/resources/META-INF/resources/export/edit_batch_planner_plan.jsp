@@ -21,6 +21,8 @@ long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId")
 
 boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
 
+EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
@@ -37,11 +39,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			<h4 class="card-header"><%= LanguageUtil.get(request, "export-settings") %></h4>
 
 			<div class="card-body">
-
-				<%
-				EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-				%>
-
 				<liferay-frontend:edit-form-body>
 					<div id="<portlet:namespace />templateSelect"></div>
 
