@@ -19,6 +19,10 @@
 <div>
 	<span aria-hidden="true" class="loading-animation"></span>
 
+	<%
+	SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	%>
+
 	<react:component
 		module="js/index.es"
 		props='<%=
@@ -31,7 +35,7 @@
 			).put(
 				"maxPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES
 			).put(
-				"timeFormat", _getTimeFormat(locale)
+				"timeFormat", simpleDateFormat.toPattern()
 			).put(
 				"userId", themeDisplay.getUserId()
 			).put(
@@ -40,11 +44,3 @@
 		%>'
 	/>
 </div>
-
-<%!
-private static String _getTimeFormat(Locale locale) {
-	SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-
-	return simpleDateFormat.toPattern();
-}
-%>
