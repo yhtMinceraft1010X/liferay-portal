@@ -78,12 +78,6 @@ public class SegmentsEntryRoleContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_configurationTemporarySwapper = new ConfigurationTemporarySwapper(
-			"com.liferay.segments.configuration.SegmentsConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"roleSegmentationEnabled", true
-			).build());
-
 		_companyConfigurationTemporarySwapper =
 			new CompanyConfigurationTemporarySwapper(
 				TestPropsValues.getCompanyId(),
@@ -93,6 +87,11 @@ public class SegmentsEntryRoleContributorTest {
 					"roleSegmentationEnabled", true
 				).build(),
 				SettingsFactoryUtil.getSettingsFactory());
+		_configurationTemporarySwapper = new ConfigurationTemporarySwapper(
+			"com.liferay.segments.configuration.SegmentsConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"roleSegmentationEnabled", true
+			).build());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -111,8 +110,8 @@ public class SegmentsEntryRoleContributorTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_configurationTemporarySwapper.close();
 		_companyConfigurationTemporarySwapper.close();
+		_configurationTemporarySwapper.close();
 
 		ServiceContextThreadLocal.popServiceContext();
 	}
