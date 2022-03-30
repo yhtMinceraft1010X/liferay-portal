@@ -31,7 +31,7 @@
 			).put(
 				"maxPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES
 			).put(
-				"timeFormat", WorkflowMetricsUtil.getTimeFormat(locale)
+				"timeFormat", _getTimeFormat(locale)
 			).put(
 				"userId", themeDisplay.getUserId()
 			).put(
@@ -40,3 +40,11 @@
 		%>'
 	/>
 </div>
+
+<%!
+private static String _getTimeFormat(Locale locale) {
+	SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+
+	return simpleDateFormat.toPattern();
+}
+%>
