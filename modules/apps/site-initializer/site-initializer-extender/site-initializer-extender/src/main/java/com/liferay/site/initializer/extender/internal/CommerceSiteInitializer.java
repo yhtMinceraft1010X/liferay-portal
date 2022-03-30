@@ -597,7 +597,7 @@ public class CommerceSiteInitializer {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to create a default product commerce product " +
-						"display page from JSON: " + json);
+						"display layout from JSON: " + json);
 			}
 
 			return;
