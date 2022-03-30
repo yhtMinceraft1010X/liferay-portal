@@ -48,15 +48,15 @@ public class UncompressUtilTest {
 	public void setUp() throws IOException {
 		_tempDir = Files.createTempDirectory(null);
 
-		_evilFileTargetDir = _tempDir.resolve(
+		_badFileTargetDir = _tempDir.resolve(
 			"../../../../../../../../../../../../../../../../../../../../.." +
 				"/../../../../../../../../../../../../../../../../../../.." +
-					"/tmp/evil.txt");
+					"/tmp/bad.txt");
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PathUtil.deleteDir(_evilFileTargetDir);
+		PathUtil.deleteDir(_badFileTargetDir);
 		PathUtil.deleteDir(_tempDir);
 	}
 
@@ -96,7 +96,7 @@ public class UncompressUtilTest {
 
 		_assertExists("good.txt");
 
-		Assert.assertFalse(Files.exists(_evilFileTargetDir));
+		Assert.assertFalse(Files.exists(_badFileTargetDir));
 	}
 
 	private void _assertExists(String name) {
@@ -135,7 +135,7 @@ public class UncompressUtilTest {
 		return path.resolve(fileName);
 	}
 
-	private Path _evilFileTargetDir;
+	private Path _badFileTargetDir;
 	private Path _tempDir;
 
 }
