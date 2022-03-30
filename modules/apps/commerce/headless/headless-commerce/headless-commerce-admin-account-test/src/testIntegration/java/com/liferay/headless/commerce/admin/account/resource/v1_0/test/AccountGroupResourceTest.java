@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -87,6 +86,11 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
 				RandomTestUtil.randomString(), _serviceContext);
 
+		_commerceAccountGroupCommerceAccountRelLocalService.
+			addCommerceAccountGroupCommerceAccountRel(
+				commerceAccountGroup1.getCommerceAccountGroupId(),
+				commerceAccount.getCommerceAccountId(), _serviceContext);
+
 		CommerceAccountGroup commerceAccountGroup2 =
 			_commerceAccountGroupLocalService.addCommerceAccountGroup(
 				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
@@ -94,21 +98,16 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 		_commerceAccountGroupCommerceAccountRelLocalService.
 			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup1.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
-
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
 				commerceAccountGroup2.getCommerceAccountGroupId(),
 				commerceAccount.getCommerceAccountId(), _serviceContext);
 
-		Page<AccountGroup> accountIdAccountGroupsPage =
+		Page<AccountGroup> page =
 			accountGroupResource.
 				getAccountByExternalReferenceCodeAccountGroupsPage(
 					commerceAccount.getExternalReferenceCode(),
 					Pagination.of(1, 20));
 
-		Assert.assertEquals(2, accountIdAccountGroupsPage.getTotalCount());
+		Assert.assertEquals(2, page.getTotalCount());
 
 		List<Long> commerceAccountGroupsIds = new ArrayList<>();
 
@@ -117,9 +116,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		commerceAccountGroupsIds.add(
 			commerceAccountGroup2.getCommerceAccountGroupId());
 
-		Collection<AccountGroup> items = accountIdAccountGroupsPage.getItems();
-
-		for (AccountGroup accountGroup : items) {
+		for (AccountGroup accountGroup : page.getItems()) {
 			Assert.assertTrue(
 				commerceAccountGroupsIds.contains(accountGroup.getId()));
 		}
@@ -146,6 +143,11 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
 				RandomTestUtil.randomString(), _serviceContext);
 
+		_commerceAccountGroupCommerceAccountRelLocalService.
+			addCommerceAccountGroupCommerceAccountRel(
+				commerceAccountGroup1.getCommerceAccountGroupId(),
+				commerceAccount.getCommerceAccountId(), _serviceContext);
+
 		CommerceAccountGroup commerceAccountGroup2 =
 			_commerceAccountGroupLocalService.addCommerceAccountGroup(
 				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
@@ -153,19 +155,14 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 		_commerceAccountGroupCommerceAccountRelLocalService.
 			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup1.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
-
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
 				commerceAccountGroup2.getCommerceAccountGroupId(),
 				commerceAccount.getCommerceAccountId(), _serviceContext);
 
-		Page<AccountGroup> accountIdAccountGroupsPage =
+		Page<AccountGroup> page =
 			accountGroupResource.getAccountIdAccountGroupsPage(
 				commerceAccount.getCommerceAccountId(), Pagination.of(1, 20));
 
-		Assert.assertEquals(2, accountIdAccountGroupsPage.getTotalCount());
+		Assert.assertEquals(2, page.getTotalCount());
 
 		List<Long> commerceAccountGroupsIds = new ArrayList<>();
 
@@ -174,9 +171,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		commerceAccountGroupsIds.add(
 			commerceAccountGroup2.getCommerceAccountGroupId());
 
-		Collection<AccountGroup> items = accountIdAccountGroupsPage.getItems();
-
-		for (AccountGroup accountGroup : items) {
+		for (AccountGroup accountGroup : page.getItems()) {
 			Assert.assertTrue(
 				commerceAccountGroupsIds.contains(accountGroup.getId()));
 		}
