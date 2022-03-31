@@ -142,6 +142,7 @@ public class MappedProductDTOConverter
 					mappedProductDTOConverterContext.getLocale(), 1);
 				quantity = csDiagramEntry.getQuantity();
 				sequence = csDiagramEntry.getSequence();
+				sku = csDiagramEntry.getSku();
 
 				setAvailability(
 					() -> {
@@ -317,14 +318,6 @@ public class MappedProductDTOConverter
 						}
 
 						return null;
-					});
-				setSku(
-					() -> {
-						if (cpInstance == null) {
-							return null;
-						}
-
-						return cpInstance.getSku();
 					});
 				setSkuExternalReferenceCode(
 					() -> {
