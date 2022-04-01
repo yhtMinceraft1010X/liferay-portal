@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
-import java.io.PrintWriter;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -79,10 +77,6 @@ public class ImageGalleryInfoItemRenderer
 				httpServletRequest, "product.gallery.info.item.renderer");
 
 			String componentId = randomKey + "GalleryComponent";
-
-			String module = "commerce-frontend-js/components/gallery/Gallery";
-
-			PrintWriter writer = httpServletResponse.getWriter();
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -133,8 +127,10 @@ public class ImageGalleryInfoItemRenderer
 			).build();
 
 			_reactRenderer.renderReact(
-				new ComponentDescriptor(module, componentId), data,
-				httpServletRequest, writer);
+				new ComponentDescriptor(
+					"commerce-frontend-js/components/gallery/Gallery",
+					componentId),
+				data, httpServletRequest, httpServletResponse.getWriter());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
