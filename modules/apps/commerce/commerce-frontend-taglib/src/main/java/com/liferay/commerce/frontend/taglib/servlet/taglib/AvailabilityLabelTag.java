@@ -45,18 +45,11 @@ public class AvailabilityLabelTag extends IncludeTag {
 					_infoItemRendererTracker.getInfoItemRenderer(
 						"cpDefinition-availability-label");
 
-			CPDefinition cpDefinition =
-				CPDefinitionLocalServiceUtil.getCPDefinition(
-					_cpCatalogEntry.getCPDefinitionId());
-
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
-
-			HttpServletResponse httpServletResponse =
-				(HttpServletResponse)pageContext.getResponse();
-
 			infoItemRenderer.render(
-				cpDefinition, httpServletRequest, httpServletResponse);
+				CPDefinitionLocalServiceUtil.getCPDefinition(
+					_cpCatalogEntry.getCPDefinitionId()),
+				(HttpServletRequest)pageContext.getRequest(),
+				(HttpServletResponse)pageContext.getResponse());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
