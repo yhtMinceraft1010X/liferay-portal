@@ -130,7 +130,7 @@ public class CheckboxTag extends BaseContainerTag {
 
 		props.put("name", _name);
 
-		if (Validator.isNotNull(getValue())) {
+		if (Validator.isNotNull(_value)) {
 			props.put("value", _value);
 		}
 
