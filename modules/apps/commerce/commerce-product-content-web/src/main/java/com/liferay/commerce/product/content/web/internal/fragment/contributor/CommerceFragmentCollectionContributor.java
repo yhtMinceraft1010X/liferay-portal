@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.info;
+package com.liferay.commerce.product.content.web.internal.fragment.contributor;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
