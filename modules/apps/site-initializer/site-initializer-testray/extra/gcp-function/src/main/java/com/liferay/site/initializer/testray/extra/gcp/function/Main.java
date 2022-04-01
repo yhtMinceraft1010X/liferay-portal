@@ -102,7 +102,7 @@ public class Main {
 		Storage storage = StorageOptions.newBuilder(
 		).setCredentials(
 			GoogleCredentials.fromStream(
-				Main.class.getResourceAsStream(_s3APIKeyPath))
+				Main.class.getResourceAsStream("/" + _s3APIKeyPath))
 		).build(
 		).getService();
 
