@@ -178,6 +178,8 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
+		String objectFieldName = objectField.getName();
+
 		if (StringUtil.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
@@ -189,7 +191,6 @@ public class ObjectEntryModelDocumentContributor
 				objectField, values);
 		}
 
-		String objectFieldName = objectField.getName();
 		String valueString = String.valueOf(value);
 
 		if (objectField.isIndexedAsKeyword()) {
