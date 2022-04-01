@@ -223,6 +223,14 @@ class UserNameFields extends PortletBase {
 		this.userNameFieldsNode.classList.remove('hide');
 	}
 
+	_setElement(selector) {
+		if (typeof selector === 'string') {
+			return this.one(selector);
+		}
+
+		return selector;
+	}
+
 	/**
 	 * Stores the current user name fields data and creates the loading
 	 * indicator
@@ -233,14 +241,6 @@ class UserNameFields extends PortletBase {
 		this._cacheData();
 
 		this._createLoadingIndicator();
-	}
-
-	_setElement(selector) {
-		if (typeof selector === 'string') {
-			return this.one(selector);
-		}
-
-		return selector;
 	}
 }
 
