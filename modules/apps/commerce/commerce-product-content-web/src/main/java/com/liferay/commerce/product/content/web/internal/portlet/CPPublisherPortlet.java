@@ -79,9 +79,8 @@ public class CPPublisherPortlet extends MVCPortlet {
 				new CPPublisherDisplayContext(
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDataSourceRegistry,
-					_cpDefinitionHelper, _cpPublisherWebHelper,
+					_cpDefinitionHelper, _cpFriendlyURL, _cpPublisherWebHelper,
 					_cpTypeServicesTracker, _friendlyURLEntryLocalService,
-					_cpFriendlyURL,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(

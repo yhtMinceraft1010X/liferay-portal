@@ -78,11 +78,11 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDataSourceRegistry cpDataSourceRegistry,
-			CPDefinitionHelper cpDefinitionHelper,
+			CPDefinitionHelper cpDefinitionHelper, CPFriendlyURL cpFriendlyURL,
 			CPPublisherWebHelper cpPublisherWebHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
-			CPFriendlyURL cpFriendlyURL, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		super(
@@ -91,11 +91,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
-		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 		_cpFriendlyURL = cpFriendlyURL;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 
 		_cProductId = _getCProductId();
-
 		_delta = ParamUtil.getInteger(
 			httpServletRequest, "delta", getPaginationDelta());
 	}
