@@ -306,7 +306,8 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"No friendly URL found for " + _getCProductId(), exception);
+					"No friendly URL entry found for " + _getCProductId(),
+					exception);
 			}
 
 			return StringPool.BLANK;
