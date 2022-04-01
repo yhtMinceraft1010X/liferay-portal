@@ -510,12 +510,10 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.COMPLETED.toString(),
 			_batchEngineImportTask.getExecuteStatus());
-
 		Assert.assertEquals(
 			itemsCount, _batchEngineImportTask.getProcessedItemsCount());
 		Assert.assertEquals(
 			itemsCount, _batchEngineImportTask.getTotalItemsCount());
-
 		Assert.assertEquals(
 			itemsCount - invalidItemRowNumbers.size(),
 			blogsEntryLocalService.getBlogsEntriesCount());

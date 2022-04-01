@@ -282,9 +282,9 @@ public class BatchEngineImportTaskExecutorImpl
 						batchEngineTaskItemDelegateExecutor, items,
 						processedItemsCount);
 
-					ItemIndexThreadLocal.remove();
-
 					items.clear();
+
+					ItemIndexThreadLocal.remove();
 				}
 			}
 
