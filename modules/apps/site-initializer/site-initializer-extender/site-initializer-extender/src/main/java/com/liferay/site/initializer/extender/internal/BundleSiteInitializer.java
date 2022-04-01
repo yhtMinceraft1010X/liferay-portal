@@ -1275,25 +1275,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
 					"pageElements");
 
-				if (JSONUtil.isEmpty(jsonArray)) {
-					continue;
-				}
+				if (!JSONUtil.isEmpty(jsonArray)) {
+					LayoutPageTemplateStructure layoutPageTemplateStructure =
+						_layoutPageTemplateStructureLocalService.
+							fetchLayoutPageTemplateStructure(
+								draftLayout.getGroupId(), draftLayout.getPlid(),
+								true);
 
-				LayoutPageTemplateStructure layoutPageTemplateStructure =
-					_layoutPageTemplateStructureLocalService.
-						fetchLayoutPageTemplateStructure(
-							draftLayout.getGroupId(), draftLayout.getPlid(),
-							true);
+					LayoutStructure layoutStructure = LayoutStructure.of(
+						layoutPageTemplateStructure.
+							getDefaultSegmentsExperienceData());
 
-				LayoutStructure layoutStructure = LayoutStructure.of(
-					layoutPageTemplateStructure.
-						getDefaultSegmentsExperienceData());
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					_layoutPageTemplatesImporter.importPageElement(
-						draftLayout, layoutStructure,
-						layoutStructure.getMainItemId(), jsonArray.getString(i),
-						i);
+					for (int i = 0; i < jsonArray.length(); i++) {
+						_layoutPageTemplatesImporter.importPageElement(
+							draftLayout, layoutStructure,
+							layoutStructure.getMainItemId(),
+							jsonArray.getString(i), i);
+					}
 				}
 			}
 		}
