@@ -608,7 +608,7 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 
-		// Required settings
+		// Missing required values
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -652,7 +652,7 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldSettingValueException.getMessage());
 		}
 
-		// Not allowed settings
+		// Not allowed names
 
 		try {
 			_objectFieldLocalService.addCustomObjectField(
@@ -673,7 +673,7 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldSettingNameException.getMessage());
 		}
 
-		// Attachment business type
+		// Business type attachment
 
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
@@ -711,7 +711,7 @@ public class ObjectFieldLocalServiceTest {
 		_assertObjectFieldSetting(
 			"maximumFileSize", objectField.getObjectFieldId(), "10");
 
-		// Text business type
+		// Business type text
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
