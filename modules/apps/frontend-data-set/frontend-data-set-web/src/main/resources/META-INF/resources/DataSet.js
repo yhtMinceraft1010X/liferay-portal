@@ -32,6 +32,10 @@ import {AppContext} from './AppContext';
 import DataSetContext from './DataSetContext';
 import {updateViewComponent} from './actions/updateViewComponent';
 import ManagementBar from './management_bar/ManagementBar';
+import {
+	getFilterSelectedItemsLabel,
+	getOdataFilterString,
+} from './management_bar/components/filters/Filter';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import {
@@ -60,7 +64,7 @@ const DataSet = ({
 	creationMenu,
 	currentURL,
 	customDataRenderers,
-	filters: filtersProp,
+	filters: initFilters,
 	formId,
 	formName,
 	id,
@@ -97,7 +101,23 @@ const DataSet = ({
 		showPagination &&
 			(pagination.initialDelta || pagination.deltas[0].label)
 	);
-	const [filters, setFilters] = useState(filtersProp);
+
+	const [filters, setFilters] = useState(() => {
+		return initFilters.map((filter) => {
+			const preloadedData = filter.preloadedData;
+
+			if (preloadedData) {
+				filter.active = true;
+				filter.selectedData = preloadedData;
+
+				filter.odataFilterString = getOdataFilterString(filter);
+				filter.selectedItemsLabel = getFilterSelectedItemsLabel(filter);
+			}
+
+			return filter;
+		});
+	});
+
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [items, setItems] = useState(itemsProp);
 	const [itemsChanges, setItemsChanges] = useState({});
@@ -344,9 +364,7 @@ const DataSet = ({
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
-				filters={filters}
 				fluid={style === 'fluid'}
-				onFiltersChange={setFilters}
 				selectAllItems={() =>
 					selectItems(items.map((item) => item[selectedItemsKey]))
 				}
@@ -595,6 +613,30 @@ const DataSet = ({
 			});
 	}
 
+	const setFilter = ({
+		active,
+		id,
+		odataFilterString,
+		selectedData,
+		selectedItemsLabel,
+		value,
+	}) => {
+		setFilters((filters) => {
+			return filters.map((filter) => ({
+				...filter,
+				...(filter.id === id
+					? {
+							active,
+							odataFilterString,
+							selectedData,
+							selectedItemsLabel,
+							value,
+					  }
+					: {}),
+			}));
+		});
+	};
+
 	return (
 		<DataSetContext.Provider
 			value={{
@@ -603,6 +645,7 @@ const DataSet = ({
 				createInlineItem,
 				customDataRenderers,
 				executeAsyncItemAction,
+				filters,
 				formId,
 				formName,
 				formRef,
@@ -627,6 +670,8 @@ const DataSet = ({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
+				setFilter,
+				setFilters,
 				sidePanelId: dataSetSupportSidePanelId,
 				sorting,
 				style,
