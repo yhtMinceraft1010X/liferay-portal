@@ -15,7 +15,6 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
-import com.liferay.object.exception.ObjectValidationRuleException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.model.ObjectEntry;
@@ -237,7 +236,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			if (!objectValidationRuleEngine.evaluate(
 					hashMapWrapper.build(), objectValidationRule.getScript())) {
 
-				throw new ObjectValidationRuleException(
+				throw new ObjectValidationRuleScriptException(
 					objectValidationRule.getErrorLabel(
 						LocaleUtil.getMostRelevantLocale()));
 			}

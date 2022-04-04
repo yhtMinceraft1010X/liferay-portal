@@ -599,7 +599,6 @@
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipReverse</exception>
 		<exception>ObjectRelationshipType</exception>
-		<exception>ObjectValidationRule</exception>
 		<exception>ObjectValidationRuleEngine</exception>
 		<exception>ObjectValidationRuleName</exception>
 		<exception>ObjectValidationRuleScript</exception>
