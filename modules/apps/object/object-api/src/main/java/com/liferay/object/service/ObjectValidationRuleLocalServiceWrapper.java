@@ -138,12 +138,11 @@ public class ObjectValidationRuleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteObjectValidationRuleByObjectDefinitionId(
-			Long objectDefinitionId)
+	public void deleteObjectValidationRules(Long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectValidationRuleLocalService.
-			deleteObjectValidationRuleByObjectDefinitionId(objectDefinitionId);
+		_objectValidationRuleLocalService.deleteObjectValidationRules(
+			objectDefinitionId);
 	}
 
 	/**

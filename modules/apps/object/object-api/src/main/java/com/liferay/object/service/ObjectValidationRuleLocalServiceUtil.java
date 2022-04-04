@@ -128,12 +128,10 @@ public class ObjectValidationRuleLocalServiceUtil {
 		return getService().deleteObjectValidationRule(objectValidationRule);
 	}
 
-	public static void deleteObjectValidationRuleByObjectDefinitionId(
-			Long objectDefinitionId)
+	public static void deleteObjectValidationRules(Long objectDefinitionId)
 		throws PortalException {
 
-		getService().deleteObjectValidationRuleByObjectDefinitionId(
-			objectDefinitionId);
+		getService().deleteObjectValidationRules(objectDefinitionId);
 	}
 
 	/**

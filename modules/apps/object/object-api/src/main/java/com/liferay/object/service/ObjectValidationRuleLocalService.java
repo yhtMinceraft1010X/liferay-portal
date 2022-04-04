@@ -136,8 +136,7 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule deleteObjectValidationRule(
 		ObjectValidationRule objectValidationRule);
 
-	public void deleteObjectValidationRuleByObjectDefinitionId(
-			Long objectDefinitionId)
+	public void deleteObjectValidationRules(Long objectDefinitionId)
 		throws PortalException;
 
 	/**
