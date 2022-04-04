@@ -35,7 +35,7 @@ public class NameMapUtil {
 		for (Map.Entry<? extends K, ? extends V> entry :
 				sourceNameMap.entrySet()) {
 
-			Locale locale;
+			Locale locale = null;
 
 			if (entry.getKey() instanceof Locale) {
 				locale = (Locale)entry.getKey();
