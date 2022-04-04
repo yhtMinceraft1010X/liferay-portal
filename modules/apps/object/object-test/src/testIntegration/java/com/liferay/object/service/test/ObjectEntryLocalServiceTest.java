@@ -1063,8 +1063,8 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
-				LocalizedMapUtil.getLocalizedMap("Email Validation"),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"isEmailAddress(emailAddress)");
 
 		ObjectEntry objectEntry = null;
@@ -1084,7 +1084,7 @@ public class ObjectEntryLocalServiceTest {
 		catch (ModelListenerException modelListenerException) {
 			String message = modelListenerException.getMessage();
 
-			Assert.assertTrue(message.contains("Field must be an email"));
+			Assert.assertTrue(message.contains(RandomTestUtil.randomString()));
 		}
 
 		objectEntry = _addObjectEntry(
@@ -1106,8 +1106,8 @@ public class ObjectEntryLocalServiceTest {
 		_objectValidationRuleLocalService.updateObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId(), false,
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Field must be an email"),
-			LocalizedMapUtil.getLocalizedMap("Email Validation"),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"isEmailAddress(emailAddress)");
 
 		objectEntry = _addObjectEntry(

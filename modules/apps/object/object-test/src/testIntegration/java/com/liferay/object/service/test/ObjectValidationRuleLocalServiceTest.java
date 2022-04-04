@@ -218,8 +218,10 @@ public class ObjectValidationRuleLocalServiceTest {
 				_objectValidationRuleLocalService.updateObjectValidationRule(
 					RandomTestUtil.randomLong(), false,
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
 					"isEmailAddress(textField)");
 
 			Assert.fail();
