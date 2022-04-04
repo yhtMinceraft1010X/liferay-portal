@@ -177,15 +177,15 @@ public class ObjectValidationRuleLocalServiceImpl
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws PortalException {
 
-		List<ObjectValidationRule> objectValidationRules =
-			objectValidationRuleLocalService.getObjectValidationRules(
-				objectDefinitionId, true);
-
 		Map<String, Serializable> values = null;
 
 		if (objectEntry != null) {
 			values = _objectEntryLocalService.getValues(objectEntry);
 		}
+
+		List<ObjectValidationRule> objectValidationRules =
+			objectValidationRuleLocalService.getObjectValidationRules(
+				objectDefinitionId, true);
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
