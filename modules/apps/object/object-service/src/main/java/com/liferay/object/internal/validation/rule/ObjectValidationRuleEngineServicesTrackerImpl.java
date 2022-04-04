@@ -42,17 +42,17 @@ public class ObjectValidationRuleEngineServicesTrackerImpl
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
 		String key) {
 
-		return serviceTrackerMap.getService(key);
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines() {
-		return new ArrayList(serviceTrackerMap.values());
+		return new ArrayList(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ObjectValidationRuleEngine.class, null,
 			new ServiceReferenceMapper<String, ObjectValidationRuleEngine>() {
 
@@ -73,10 +73,10 @@ public class ObjectValidationRuleEngineServicesTrackerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		serviceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
-	protected ServiceTrackerMap<String, ObjectValidationRuleEngine>
-		serviceTrackerMap;
+	private ServiceTrackerMap<String, ObjectValidationRuleEngine>
+		_serviceTrackerMap;
 
 }
