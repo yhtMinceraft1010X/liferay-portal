@@ -311,9 +311,8 @@ public class ObjectDefinitionLocalServiceImpl
 				objectRelationship);
 		}
 
-		_objectValidationRuleLocalService.
-			deleteObjectValidationRuleByObjectDefinitionId(
-				objectDefinition.getObjectDefinitionId());
+		_objectValidationRuleLocalService.deleteObjectValidationRules(
+			objectDefinition.getObjectDefinitionId());
 
 		objectDefinitionPersistence.remove(objectDefinition);
 

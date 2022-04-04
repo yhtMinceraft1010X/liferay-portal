@@ -110,8 +110,7 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	@Override
-	public void deleteObjectValidationRuleByObjectDefinitionId(
-			Long objectDefinitionId)
+	public void deleteObjectValidationRules(Long objectDefinitionId)
 		throws PortalException {
 
 		for (ObjectValidationRule objectValidationRule :
