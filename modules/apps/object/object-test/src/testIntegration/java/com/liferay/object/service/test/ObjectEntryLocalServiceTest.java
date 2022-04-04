@@ -1057,7 +1057,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testObjectValidationRuleAddObjectEntry() throws Exception {
+	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule =
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
