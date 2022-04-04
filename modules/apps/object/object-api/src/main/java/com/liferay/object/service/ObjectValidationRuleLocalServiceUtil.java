@@ -388,12 +388,12 @@ public class ObjectValidationRuleLocalServiceUtil {
 
 	public static void validate(
 			long userId, long objectDefinitionId,
-			com.liferay.portal.kernel.model.BaseModel<?> originalBaseModel,
-			com.liferay.portal.kernel.model.BaseModel<?> baseModel)
+			com.liferay.object.model.ObjectEntry originalObjectEntry,
+			com.liferay.object.model.ObjectEntry objectEntry)
 		throws PortalException {
 
 		getService().validate(
-			userId, objectDefinitionId, originalBaseModel, baseModel);
+			userId, objectDefinitionId, originalObjectEntry, objectEntry);
 	}
 
 	public static ObjectValidationRuleLocalService getService() {
