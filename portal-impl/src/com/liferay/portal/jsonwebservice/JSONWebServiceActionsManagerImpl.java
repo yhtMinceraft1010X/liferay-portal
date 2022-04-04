@@ -241,9 +241,7 @@ public class JSONWebServiceActionsManagerImpl
 			return -1;
 		}
 
-		String[] beanNames = beanLocator.getNames();
-
-		for (String beanName : beanNames) {
+		for (String beanName : beanLocator.getNames()) {
 			try {
 				JSONWebServiceRegistratorUtil.processBean(
 					contextName, contextPath, beanLocator.locate(beanName));
