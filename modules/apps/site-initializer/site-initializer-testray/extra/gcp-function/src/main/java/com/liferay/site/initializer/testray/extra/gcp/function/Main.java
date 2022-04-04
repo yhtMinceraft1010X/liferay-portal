@@ -1037,25 +1037,19 @@ public class Main {
 
 		Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		String testrayProjectName = propertiesMap.get("testray.project.name");
-
-		long testrayProjectId = _getTestrayProjectId(testrayProjectName);
-
-		String testrayBuildName = propertiesMap.get("testray.build.name");
+		long testrayProjectId = _getTestrayProjectId(
+			propertiesMap.get("testray.project.name"));
 
 		long testrayBuildId = _getTestrayBuildId(
-			propertiesMap, testrayBuildName, testrayProjectId);
-
-		String testrayRunName = propertiesMap.get("testray.run.id");
-
-		long testrayRunId = _getTestrayRunId(
-			element, propertiesMap, testrayBuildId, testrayRunName);
-
-		String testrayBuildTime = propertiesMap.get("testray.build.time");
+			propertiesMap, propertiesMap.get("testray.build.name"),
+			testrayProjectId);
 
 		_addTestrayCases(
-			element, testrayBuildId, testrayBuildTime, testrayProjectId,
-			testrayRunId);
+			element, testrayBuildId, propertiesMap.get("testray.build.time"),
+			testrayProjectId,
+			_getTestrayRunId(
+				element, propertiesMap, testrayBuildId,
+				propertiesMap.get("testray.run.id")));
 
 		_addTestrayTask(
 			testrayBuildId, propertiesMap.get("testray.build.name"));
