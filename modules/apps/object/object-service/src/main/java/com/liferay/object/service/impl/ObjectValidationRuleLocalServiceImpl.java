@@ -25,7 +25,6 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineServicesTracker;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -175,14 +174,12 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Override
 	public void validate(
 			long userId, long objectDefinitionId,
-			BaseModel<?> originalBaseModel, BaseModel<?> baseModel)
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws PortalException {
 
 		List<ObjectValidationRule> objectValidationRules =
 			objectValidationRuleLocalService.getObjectValidationRules(
 				objectDefinitionId, true);
-
-		ObjectEntry objectEntry = (ObjectEntry)baseModel;
 
 		Map<String, Serializable> values = null;
 
@@ -200,15 +197,15 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 				HashMapBuilder.<String, Object>putAll(
-					baseModel.getModelAttributes());
+					objectEntry.getModelAttributes());
 
 			if ((objectEntry != null) && (values != null)) {
 				hashMapWrapper.putAll(values);
 			}
 
-			if (originalBaseModel != null) {
+			if (originalObjectEntry != null) {
 				Map<String, Object> modelAttributes =
-					originalBaseModel.getModelAttributes();
+					originalObjectEntry.getModelAttributes();
 
 				for (Map.Entry<String, Object> entry :
 						modelAttributes.entrySet()) {
