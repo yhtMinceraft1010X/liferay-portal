@@ -108,10 +108,6 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 		Assert.assertEquals(
 			objectView.getObjectDefinitionId(),
 			copiedObjectView.getObjectDefinitionId());
-		Assert.assertTrue(
-			equals(
-				NameMapUtil.copy(objectView.getName()),
-				(Map)copiedObjectView.getName()));
 
 		ObjectViewColumn[] objectViewColumns =
 			objectView.getObjectViewColumns();
@@ -151,6 +147,11 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 				objectViewSortColumn.getSortOrderAsString(),
 				objectViewSortColumnCopy.getSortOrderAsString());
 		}
+
+		Assert.assertTrue(
+			equals(
+				NameMapUtil.copy(objectView.getName()),
+				(Map)copiedObjectView.getName()));
 
 		assertValid(copiedObjectView);
 	}
