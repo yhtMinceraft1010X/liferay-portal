@@ -871,6 +871,8 @@ public class Main {
 	private long _increment(String filter, String objectDefinitionShortName)
 		throws Exception {
 
+		// TODO Make this a feature in objects
+
 		HttpInvoker.HttpResponse httpResponse = _invoke(
 			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
 			HashMapBuilder.put(
