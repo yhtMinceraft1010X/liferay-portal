@@ -109,7 +109,8 @@ public class Main {
 			FileHandler fileHandler = new FileHandler(
 				StringBundler.concat(
 					localDateTime.getYear(), "-", localDateTime.getMonthValue(),
-					"-", localDateTime.getDayOfMonth(), ".log"));
+					"-", localDateTime.getDayOfMonth(), ".log"),
+				true);
 
 			fileHandler.setFormatter(new SimpleFormatter());
 
