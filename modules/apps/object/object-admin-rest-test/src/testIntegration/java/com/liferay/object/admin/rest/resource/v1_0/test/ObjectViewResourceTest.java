@@ -116,7 +116,8 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 
 		for (int i = 0; i < objectViewColumns.length; i++) {
 			ObjectViewColumn objectViewColumn = objectViewColumns[i];
-			ObjectViewColumn copiedObjectViewColumn = copiedObjectViewColumns[i];
+			ObjectViewColumn copiedObjectViewColumn =
+				copiedObjectViewColumns[i];
 
 			Assert.assertEquals(
 				objectViewColumn.getObjectFieldName(),
