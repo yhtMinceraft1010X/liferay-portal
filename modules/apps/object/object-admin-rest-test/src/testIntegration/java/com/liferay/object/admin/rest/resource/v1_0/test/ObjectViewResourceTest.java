@@ -115,31 +115,31 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 
 		ObjectViewColumn[] objectViewColumns =
 			objectView.getObjectViewColumns();
-		ObjectViewColumn[] objectViewColumnsCopy =
+		ObjectViewColumn[] copiedObjectViewColumns =
 			copiedObjectView.getObjectViewColumns();
 
 		for (int i = 0; i < objectViewColumns.length; i++) {
 			ObjectViewColumn objectViewColumn = objectViewColumns[i];
-			ObjectViewColumn objectViewColumnCopy = objectViewColumnsCopy[i];
+			ObjectViewColumn copiedObjectViewColumn = copiedObjectViewColumns[i];
 
 			Assert.assertEquals(
 				objectViewColumn.getObjectFieldName(),
-				objectViewColumnCopy.getObjectFieldName());
+				copiedObjectViewColumn.getObjectFieldName());
 			Assert.assertEquals(
 				objectViewColumn.getPriority(),
-				objectViewColumnCopy.getPriority());
+				copiedObjectViewColumn.getPriority());
 		}
 
 		ObjectViewSortColumn[] objectViewSortColumns =
 			objectView.getObjectViewSortColumns();
-		ObjectViewSortColumn[] objectViewSortColumnsCopy =
+		ObjectViewSortColumn[] copiedObjectViewSortColumns =
 			copiedObjectView.getObjectViewSortColumns();
 
 		for (int i = 0; i < objectViewSortColumns.length; i++) {
 			ObjectViewSortColumn objectViewSortColumn =
 				objectViewSortColumns[i];
 			ObjectViewSortColumn objectViewSortColumnCopy =
-				objectViewSortColumnsCopy[i];
+				copiedObjectViewSortColumns[i];
 
 			Assert.assertEquals(
 				objectViewSortColumn.getObjectFieldName(),
