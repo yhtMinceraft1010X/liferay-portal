@@ -42,44 +42,41 @@ public class ObjectValidationRuleEngineServicesTrackerImpl
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
 		String key) {
 
-		return objectValidationRuleEngineServiceTrackerMap.getService(key);
+		return serviceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines() {
-		return new ArrayList(
-			objectValidationRuleEngineServiceTrackerMap.values());
+		return new ArrayList(serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		objectValidationRuleEngineServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ObjectValidationRuleEngine.class, null,
-				new ServiceReferenceMapper
-					<String, ObjectValidationRuleEngine>() {
+		serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectValidationRuleEngine.class, null,
+			new ServiceReferenceMapper<String, ObjectValidationRuleEngine>() {
 
-					@Override
-					public void map(
-						ServiceReference<ObjectValidationRuleEngine>
-							serviceReference,
-						Emitter<String> emitter) {
+				@Override
+				public void map(
+					ServiceReference<ObjectValidationRuleEngine>
+						serviceReference,
+					Emitter<String> emitter) {
 
-						ObjectValidationRuleEngine objectValidationRuleEngine =
-							bundleContext.getService(serviceReference);
+					ObjectValidationRuleEngine objectValidationRuleEngine =
+						bundleContext.getService(serviceReference);
 
-						emitter.emit(objectValidationRuleEngine.getName());
-					}
+					emitter.emit(objectValidationRuleEngine.getName());
+				}
 
-				});
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		objectValidationRuleEngineServiceTrackerMap.close();
+		serviceTrackerMap.close();
 	}
 
 	protected ServiceTrackerMap<String, ObjectValidationRuleEngine>
-		objectValidationRuleEngineServiceTrackerMap;
+		serviceTrackerMap;
 
 }

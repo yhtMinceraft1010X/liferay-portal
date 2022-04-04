@@ -49,16 +49,15 @@ public class ObjectValidationRuleEngineServicesTrackerImplTest
 			objectValidationRuleEngineServicesTrackerImpl =
 				new ObjectValidationRuleEngineServicesTrackerImpl();
 
-		objectValidationRuleEngineServicesTrackerImpl.
-			objectValidationRuleEngineServiceTrackerMap =
-				_objectValidationRuleEngineServiceTrackerMap;
+		objectValidationRuleEngineServicesTrackerImpl.serviceTrackerMap =
+			_serviceTrackerMap;
 
 		objectValidationRuleEngineServicesTrackerImpl.
 			getObjectValidationRuleEngine(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM);
 
 		Mockito.verify(
-			_objectValidationRuleEngineServiceTrackerMap, Mockito.times(1)
+			_serviceTrackerMap, Mockito.times(1)
 		).getService(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM
 		);
@@ -70,20 +69,19 @@ public class ObjectValidationRuleEngineServicesTrackerImplTest
 			objectValidationRuleEngineServicesTrackerImpl =
 				new ObjectValidationRuleEngineServicesTrackerImpl();
 
-		objectValidationRuleEngineServicesTrackerImpl.
-			objectValidationRuleEngineServiceTrackerMap =
-				_objectValidationRuleEngineServiceTrackerMap;
+		objectValidationRuleEngineServicesTrackerImpl.serviceTrackerMap =
+			_serviceTrackerMap;
 
 		objectValidationRuleEngineServicesTrackerImpl.
 			getObjectValidationRuleEngines();
 
 		Mockito.verify(
-			_objectValidationRuleEngineServiceTrackerMap, Mockito.times(1)
+			_serviceTrackerMap, Mockito.times(1)
 		).values();
 	}
 
 	@Mock
 	private ServiceTrackerMap<String, ObjectValidationRuleEngine>
-		_objectValidationRuleEngineServiceTrackerMap;
+		_serviceTrackerMap;
 
 }
