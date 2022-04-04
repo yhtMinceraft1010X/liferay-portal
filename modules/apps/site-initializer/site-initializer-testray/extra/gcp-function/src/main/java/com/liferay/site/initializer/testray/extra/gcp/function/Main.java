@@ -868,7 +868,8 @@ public class Main {
 			testrayTeamName, "teams");
 	}
 
-	private long _increment(String filter, String objectDefinitionShortName)
+	private long _increment(
+			String filterString, String objectDefinitionShortName)
 		throws Exception {
 
 		// TODO Make this a feature in objects
@@ -878,14 +879,7 @@ public class Main {
 			HashMapBuilder.put(
 				"fields", "id"
 			).put(
-				"filter",
-				() -> {
-					if (filter != null) {
-						return filter;
-					}
-
-					return null;
-				}
+				"filter", () -> filterString
 			).build());
 
 		JSONObject responseJSONObject = new JSONObject(
