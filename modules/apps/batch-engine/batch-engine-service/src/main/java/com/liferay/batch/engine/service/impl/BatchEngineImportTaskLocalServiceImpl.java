@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
@@ -44,23 +43,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchEngineImportTaskLocalServiceImpl
 	extends BatchEngineImportTaskLocalServiceBaseImpl {
-
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public BatchEngineImportTask addBatchEngineImportTask(
-			long companyId, long userId, long batchSize, String callbackURL,
-			String className, byte[] content, String contentType,
-			String executeStatus, Map<String, String> fieldNameMappingMap,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName)
-		throws PortalException {
-
-		return addBatchEngineImportTask(
-			null, companyId, userId, batchSize, callbackURL, className, content,
-			contentType, executeStatus, fieldNameMappingMap,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-			operation, parameters, taskItemDelegateName);
-	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
