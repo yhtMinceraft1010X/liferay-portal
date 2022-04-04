@@ -63,11 +63,6 @@ public class ObjectValidationRuleServiceTest {
 	public void setUp() throws Exception {
 		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_originalName = PrincipalThreadLocal.getName();
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		_user = TestPropsValues.getUser();
-
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
@@ -79,7 +74,9 @@ public class ObjectValidationRuleServiceTest {
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
 						"textField")));
-
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 		_systemObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), "Test", null,
@@ -91,6 +88,7 @@ public class ObjectValidationRuleServiceTest {
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
 						"textField")));
+		_user = TestPropsValues.getUser();
 	}
 
 	@After
