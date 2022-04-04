@@ -105,16 +105,10 @@ public class Main {
 		try {
 			LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
 
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(localDateTime.getYear());
-			sb.append("-");
-			sb.append(localDateTime.getMonthValue());
-			sb.append("-");
-			sb.append(localDateTime.getDayOfMonth());
-			sb.append(".log");
-
-			FileHandler fileHandler = new FileHandler(sb.toString());
+			FileHandler fileHandler = new FileHandler(
+				StringBundler.concat(
+					localDateTime.getYear(), "-", localDateTime.getMonthValue(),
+					"-", localDateTime.getDayOfMonth(), ".log"));
 
 			fileHandler.setFormatter(new SimpleFormatter());
 
