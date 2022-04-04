@@ -78,10 +78,10 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 	@Test
 	public void testAttachment() throws Exception {
-		ObjectFieldBuilder builder = new ObjectFieldBuilder();
+		ObjectFieldBuilder objectFieldBuilder = new ObjectFieldBuilder();
 
 		_testAttachment(
-			builder.businessType(
+			objectFieldBuilder.businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_LONG
@@ -98,11 +98,11 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 		_testAttachment(
-			builder.indexedAsKeyword(
+			objectFieldBuilder.indexedAsKeyword(
 				true
 			).build());
 		_testAttachment(
-			builder.indexed(
+			objectFieldBuilder.indexed(
 				false
 			).build());
 	}
@@ -585,12 +585,12 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		if (objectField.isIndexed()) {
 			_assertKeywords(
-				"document.tx", objectField.isIndexedAsKeyword() ? 1 : 0);
-			_assertKeywords(
 				"DOCUMENT.TX", objectField.isIndexedAsKeyword() ? 1 : 0);
-			_assertKeywords("ocument.txt", 0);
-			_assertKeywords("document.txt", 1);
 			_assertKeywords("DOCUMENT.TXT", 1);
+			_assertKeywords(
+				"document.tx", objectField.isIndexedAsKeyword() ? 1 : 0);
+			_assertKeywords("document.txt", 1);
+			_assertKeywords("ocument.txt", 0);
 		}
 		else {
 			_assertKeywords("document.txt", 0);
