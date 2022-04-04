@@ -73,11 +73,11 @@ public class ObjectValidationRuleLocalServiceTest {
 	@Test
 	public void testAddObjectValidationRule() throws Exception {
 
-		// Engine is invalid
+		// Engine "abcdefghijklmnopqrstuvwxyz" does not exist
 
 		try {
 			_testAddObjectValidationRule(
-				RandomTestUtil.randomString(), "Test",
+				"abcdefghijklmnopqrstuvwxyz", "Test",
 				"isEmailAddress(textField)");
 
 			Assert.fail();
@@ -86,7 +86,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					objectValidationRuleEngineException) {
 
 			Assert.assertEquals(
-				"Engine is invalid",
+				"Engine \"abcdefghijklmnopqrstuvwxyz\" does not exist",
 				objectValidationRuleEngineException.getMessage());
 		}
 
