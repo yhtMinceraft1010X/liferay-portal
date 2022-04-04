@@ -23,6 +23,7 @@ import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
@@ -177,10 +178,11 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				companyId, userId, 50, null, resourceName,
+				null, companyId, userId, 50, null, resourceName,
 				Files.readAllBytes(resourceFile.toPath()),
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldMapping,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), null,
 				batchEngineImportTaskItemDelegateName);
 
