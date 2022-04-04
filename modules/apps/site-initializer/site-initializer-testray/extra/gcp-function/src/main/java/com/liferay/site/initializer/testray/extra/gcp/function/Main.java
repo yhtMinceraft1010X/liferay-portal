@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -115,7 +116,7 @@ public class Main {
 			_logger.addHandler(fileHandler);
 		}
 		catch (Exception exception) {
-			_logger.severe(exception.getMessage());
+			_logger.log(Level.SEVERE, exception.getMessage(), exception);
 		}
 	}
 
@@ -140,6 +141,7 @@ public class Main {
 
 			try {
 				_logger.info("Processing archive " + name);
+
 				_processArchive(blob.getContent());
 
 				blob.copyTo(
@@ -148,7 +150,8 @@ public class Main {
 						_s3InboxFolderName, _s3ProcessedFolderName));
 			}
 			catch (Exception exception) {
-				_logger.severe(exception.getMessage());
+				_logger.log(Level.SEVERE, exception.getMessage(), exception);
+
 				blob.copyTo(
 					_s3BucketName,
 					name.replaceFirst(
@@ -1007,14 +1010,15 @@ public class Main {
 
 			for (File file : tempDirectoryFile.listFiles()) {
 				try {
-					_logger.info("Processing document " + file.getName());
+					_logger.info("Parsing document " + file.getName());
 
 					Document document = documentBuilder.parse(file);
 
 					_processDocument(document);
 				}
 				catch (Exception exception) {
-					_logger.severe(exception.getMessage());
+					_logger.log(
+						Level.SEVERE, exception.getMessage(), exception);
 				}
 				finally {
 					file.delete();
