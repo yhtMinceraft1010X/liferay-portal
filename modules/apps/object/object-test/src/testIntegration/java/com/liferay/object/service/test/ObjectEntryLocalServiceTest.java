@@ -222,18 +222,6 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		/*Destination destination = MessageBusUtil.getDestination(
-			_objectDefinition.getDestinationName());
-
-		destination.register(
-			new MessageListener() {
-
-				public void receive(Message message) {
-					_messages.add(message);
-				}
-
-			});*/
-
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "PrecisionDecimal",
@@ -280,82 +268,6 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(1);
-
-		/*Assert.assertEquals(4, _messages.size());
-
-		Message message = _messages.poll();
-
-		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
-			(String)message.getPayload());
-
-		Assert.assertEquals(
-			"onBeforeCreate", payloadJSONObject.getString("webhookEventKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"Peter",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertNull(
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry"));
-
-		message = _messages.poll();
-
-		payloadJSONObject = _jsonFactory.createJSONObject(
-			(String)message.getPayload());
-
-		Assert.assertEquals(
-			"onAfterCreate", payloadJSONObject.getString("webhookEventKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"Peter",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertNull(
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry"));
-
-		message = _messages.poll();
-
-		payloadJSONObject = _jsonFactory.createJSONObject(
-			(String)message.getPayload());
-
-		Assert.assertEquals(
-			"onBeforeUpdate", payloadJSONObject.getString("webhookEventKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));
-
-		message = _messages.poll();
-
-		payloadJSONObject = _jsonFactory.createJSONObject(
-			(String)message.getPayload());
-
-		Assert.assertEquals(
-			"onAfterUpdate", payloadJSONObject.getString("webhookEventKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));*/
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
