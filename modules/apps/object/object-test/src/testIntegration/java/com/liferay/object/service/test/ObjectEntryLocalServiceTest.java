@@ -586,6 +586,123 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"isEmailAddress(emailAddress)");
+
+		ObjectEntry objectEntry = null;
+
+		try {
+			objectEntry = _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", RandomTestUtil.randomString()
+				).put(
+					"emailAddressRequired", "john@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains(RandomTestUtil.randomString()));
+		}
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", "john@liferay.com"
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(objectEntry);
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId(), false,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"isEmailAddress(emailAddress)");
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", RandomTestUtil.randomString()
+			).put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(objectEntry);
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
+			LocalizedMapUtil.getLocalizedMap("Name Validation"),
+			"equals(lastName, middleName)");
+
+		try {
+			objectEntry = _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "john@liferay.com"
+				).put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"lastName", RandomTestUtil.randomString()
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"middleName", RandomTestUtil.randomString()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains("Names must be equals"));
+		}
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", "john@liferay.com"
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"lastName", "Doe"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"middleName", "Doe"
+			).build());
+
+		Assert.assertNotNull(objectEntry);
+
+		values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals("Doe", values.get("lastName"));
+		Assert.assertEquals("Doe", values.get("middleName"));
+	}
+
+	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
 		_assertCount(0);
 
@@ -1054,123 +1171,6 @@ public class ObjectEntryLocalServiceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
-	}
-
-	@Test
-	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
-		ObjectValidationRule objectValidationRule =
-			_objectValidationRuleLocalService.addObjectValidationRule(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"isEmailAddress(emailAddress)");
-
-		ObjectEntry objectEntry = null;
-
-		try {
-			objectEntry = _addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", RandomTestUtil.randomString()
-				).put(
-					"emailAddressRequired", "john@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ModelListenerException modelListenerException) {
-			String message = modelListenerException.getMessage();
-
-			Assert.assertTrue(message.contains(RandomTestUtil.randomString()));
-		}
-
-		objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddress", "john@liferay.com"
-			).put(
-				"emailAddressRequired", "bob@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		Assert.assertNotNull(objectEntry);
-
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
-
-		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule.getObjectValidationRuleId(), false,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"isEmailAddress(emailAddress)");
-
-		objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddress", RandomTestUtil.randomString()
-			).put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		Assert.assertNotNull(objectEntry);
-
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
-			LocalizedMapUtil.getLocalizedMap("Name Validation"),
-			"equals(lastName, middleName)");
-
-		try {
-			objectEntry = _addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", "john@liferay.com"
-				).put(
-					"emailAddressRequired", "bob@liferay.com"
-				).put(
-					"lastName", RandomTestUtil.randomString()
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).put(
-					"middleName", RandomTestUtil.randomString()
-				).build());
-
-			Assert.fail();
-		}
-		catch (ModelListenerException modelListenerException) {
-			String message = modelListenerException.getMessage();
-
-			Assert.assertTrue(message.contains("Names must be equals"));
-		}
-
-		objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddress", "john@liferay.com"
-			).put(
-				"emailAddressRequired", "bob@liferay.com"
-			).put(
-				"lastName", "Doe"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"middleName", "Doe"
-			).build());
-
-		Assert.assertNotNull(objectEntry);
-
-		values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertEquals("Doe", values.get("lastName"));
-		Assert.assertEquals("Doe", values.get("middleName"));
 	}
 
 	@Test
