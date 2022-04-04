@@ -252,7 +252,8 @@ public class ObjectValidationRuleLocalServiceImpl
 				getObjectValidationRuleEngine(engine);
 
 		if (objectValidationRuleEngine == null) {
-			throw new ObjectValidationRuleEngineException("Engine is invalid");
+			throw new ObjectValidationRuleEngineException(
+				"Engine \"" + engine + "\" does not exist");
 		}
 	}
 
