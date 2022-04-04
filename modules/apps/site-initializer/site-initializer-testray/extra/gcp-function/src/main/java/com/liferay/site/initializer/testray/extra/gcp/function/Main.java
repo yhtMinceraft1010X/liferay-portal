@@ -924,8 +924,7 @@ public class Main {
 			String content = httpResponse.getContent();
 
 			_logger.warning("Unable to process: " + path);
-			_logger.warning(
-				"Unable to process HTTP response content: " + content);
+			_logger.warning("HTTP response content: " + content);
 			_logger.warning(
 				"HTTP response message: " + httpResponse.getMessage());
 			_logger.warning(
