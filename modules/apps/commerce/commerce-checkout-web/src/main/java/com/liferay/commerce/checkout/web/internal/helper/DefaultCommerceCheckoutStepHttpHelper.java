@@ -545,7 +545,6 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		throws PortalException {
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
