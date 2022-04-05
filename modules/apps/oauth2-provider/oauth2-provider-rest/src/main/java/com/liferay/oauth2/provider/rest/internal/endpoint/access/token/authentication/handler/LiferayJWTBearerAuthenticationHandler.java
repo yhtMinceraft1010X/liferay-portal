@@ -88,7 +88,7 @@ public class LiferayJWTBearerAuthenticationHandler
 
 		if (Validator.isNotNull(clientId) && !clientId.equals(claimSubject)) {
 			throw new NotAuthorizedException(
-				"ClientId parameter does not match JWT subject");
+				"Client ID parameter does not match JWT subject");
 		}
 
 		message.put(OAuthConstants.CLIENT_ID, claimSubject);
@@ -131,7 +131,6 @@ public class LiferayJWTBearerAuthenticationHandler
 				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID));
 
 		String issuer = (String)jwtToken.getClaim(JwtConstants.CLAIM_ISSUER);
-
 		String kid = (String)jwtToken.getJwsHeader(JoseConstants.HEADER_KEY_ID);
 
 		try {
