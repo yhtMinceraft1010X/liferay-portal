@@ -102,6 +102,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -651,6 +652,56 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("Doe", values.get("lastName"));
 		Assert.assertEquals("Doe", values.get("middleName"));
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId(), false,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"equals(lastName, middleName)");
+
+		Class<?> clazz = getClass();
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			LocalizedMapUtil.getLocalizedMap("Must be over 18 years old"),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".groovy")));
+
+		try {
+			objectEntry = _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"birthday", "2010-12-25"
+				).put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains("Must be over 18 years old"));
+		}
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"birthday", "2000-12-25"
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		Assert.assertNotNull(objectEntry);
 	}
 
 	@Test
@@ -1757,6 +1808,9 @@ public class ObjectEntryLocalServiceTest {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
+
+	@Rule
+	public TestName testName = new TestName();
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
 		throws Exception {
