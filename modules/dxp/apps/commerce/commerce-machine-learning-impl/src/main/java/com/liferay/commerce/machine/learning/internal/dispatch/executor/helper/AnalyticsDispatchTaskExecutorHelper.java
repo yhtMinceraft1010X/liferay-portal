@@ -20,6 +20,7 @@ import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
@@ -249,13 +250,14 @@ public class AnalyticsDispatchTaskExecutorHelper {
 
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				dispatchTrigger.getCompanyId(), dispatchTrigger.getUserId(), 20,
-				null,
+				null, dispatchTrigger.getCompanyId(),
+				dispatchTrigger.getUserId(), 20, null,
 				batchEngineTaskItemDelegateResourceMapper.getResourceName(),
 				Files.readAllBytes(resourceFile.toPath()),
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				batchEngineTaskItemDelegateResourceMapper.getFieldMapping(),
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), null,
 				batchEngineTaskItemDelegateResourceMapper.
 					getBatchEngineTaskItemDelegate());
