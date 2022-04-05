@@ -67,18 +67,16 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 				_getToken(
 					_getDefaultAuthorizationGrant(),
 					_testClientPasswordClientAuthentication)));
-
 		Assert.assertTrue(
 			Validator.isNotNull(
 				_getToken(
 					_getDefaultAuthorizationGrant(),
-					_testJWTAssertionClientAuthentication01)));
-
+					_testJWTAssertionClientAuthentication1)));
 		Assert.assertTrue(
 			Validator.isNotNull(
 				_getToken(
 					_getDefaultAuthorizationGrant(),
-					_testJWTAssertionClientAuthentication02)));
+					_testJWTAssertionClientAuthentication2)));
 	}
 
 	@Test
@@ -87,7 +85,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
-				_TEST_CLIENT_ID_01, null, user.getUuid(), getTokenWebTarget());
+				_TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());
 
 		Assert.assertTrue(
 			Validator.isNotNull(_getToken(testJWTAssertionAuthorizationGrant)));
@@ -99,7 +97,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
-				_TEST_CLIENT_ID_01, null, user.getUuid(),
+				_TEST_CLIENT_ID_1, null, user.getUuid(),
 				getJsonWebTarget("wrongPath"));
 
 		Assert.assertTrue(
@@ -123,7 +121,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 			user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
 			return new TestJWTAssertionAuthorizationGrant(
-				_TEST_CLIENT_ID_01, null, user.getUuid(), getTokenWebTarget());
+				_TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -159,7 +157,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 		return _invocationBuilder.post(Entity.form(multivaluedMap));
 	}
 
-	private static final String _TEST_CLIENT_ID_01 = "test_client_id_01";
+	private static final String _TEST_CLIENT_ID_1 = "test_client_id_1";
 
 	private static final String _TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
@@ -170,18 +168,18 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 	private final TestClientPasswordClientAuthentication
 		_testClientPasswordClientAuthentication =
 			new TestClientPasswordClientAuthentication(
-				_TEST_CLIENT_ID_01,
+				_TEST_CLIENT_ID_1,
 				JWTAssertAuthorizationGrantTest._TEST_CLIENT_SECRET);
 	private final TestJWTAssertionClientAuthentication
-		_testJWTAssertionClientAuthentication01 =
+		_testJWTAssertionClientAuthentication1 =
 			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), _TEST_CLIENT_ID_01, false,
-				_TEST_CLIENT_ID_01);
+				getTokenWebTarget(), _TEST_CLIENT_ID_1, false,
+				_TEST_CLIENT_ID_1);
 	private final TestJWTAssertionClientAuthentication
-		_testJWTAssertionClientAuthentication02 =
+		_testJWTAssertionClientAuthentication2 =
 			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), _TEST_CLIENT_ID_01, true,
-				_TEST_CLIENT_ID_01);
+				getTokenWebTarget(), _TEST_CLIENT_ID_1, true,
+				_TEST_CLIENT_ID_1);
 
 	private static class JWTBearerGrantTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
@@ -192,7 +190,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 				"com.liferay.oauth2.provider.rest.internal.configuration." +
 					"OAuth2InAssertionConfiguration",
 				HashMapDictionaryBuilder.<String, Object>put(
-					"oauth2.in.assertion.issuer", _TEST_CLIENT_ID_01
+					"oauth2.in.assertion.issuer", _TEST_CLIENT_ID_1
 				).put(
 					"oauth2.in.assertion.signature.json.web.key.set",
 					JWTAssertionUtil.JWKS
@@ -204,7 +202,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 				PortalUtil.getDefaultCompanyId());
 
 			createOAuth2Application(
-				user.getCompanyId(), user, _TEST_CLIENT_ID_01,
+				user.getCompanyId(), user, _TEST_CLIENT_ID_1,
 				Arrays.asList(GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
