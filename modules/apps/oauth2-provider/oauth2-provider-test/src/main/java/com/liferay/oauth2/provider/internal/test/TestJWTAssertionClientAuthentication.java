@@ -31,13 +31,12 @@ public class TestJWTAssertionClientAuthentication
 		String issuer) {
 
 		_clientAuthenticationParameters.add(
-			"client_assertion_type",
-			"urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
-
-		_clientAuthenticationParameters.add(
 			"client_assertion",
 			JWTAssertionUtil.getJWTAssertion(
 				audienceWebTarget.getUri(), clientId, issuer));
+		_clientAuthenticationParameters.add(
+			"client_assertion_type",
+			"urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
 
 		if (clientIdInForm) {
 			_clientAuthenticationParameters.add("client_id", clientId);
