@@ -108,10 +108,10 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	public void clearSession(long companyId) {
 		if (companyId == CompanyConstants.SYSTEM) {
-			_sessionMap.clear();
+			_sessions.clear();
 		}
 
-		_sessionMap.remove(companyId);
+		_sessions.remove(companyId);
 	}
 
 	@Override
@@ -147,8 +147,8 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	public Session getSession() {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (_sessionMap.get(companyId) != null) {
-			return _sessionMap.get(companyId);
+		if (_sessions.get(companyId) != null) {
+			return _sessions.get(companyId);
 		}
 
 		Session session = InfrastructureUtil.getMailSession();
@@ -159,7 +159,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 					PropsKeys.MAIL_SESSION_MAIL,
 					PropsValues.MAIL_SESSION_MAIL))) {
 
-			_sessionMap.put(companyId, session);
+			_sessions.put(companyId, session);
 
 			return session;
 		}
@@ -312,7 +312,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			session = Session.getInstance(properties);
 		}
 
-		_sessionMap.put(companyId, session);
+		_sessions.put(companyId, session);
 
 		return session;
 	}
@@ -389,6 +389,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	private static final MethodKey _updatePasswordMethodKey = new MethodKey(
 		Hook.class, "updatePassword", long.class, long.class, String.class);
 
-	private final Map<Long, Session> _sessionMap = new HashMap<>();
+	private final Map<Long, Session> _sessions = new HashMap<>();
 
 }
