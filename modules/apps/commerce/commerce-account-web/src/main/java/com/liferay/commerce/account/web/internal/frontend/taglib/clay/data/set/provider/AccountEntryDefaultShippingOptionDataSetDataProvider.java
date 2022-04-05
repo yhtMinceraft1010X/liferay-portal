@@ -59,11 +59,10 @@ public class AccountEntryDefaultShippingOptionDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-		Locale locale = _portal.getLocale(httpServletRequest);
-
 		long accountEntryId = ParamUtil.getLong(
 			httpServletRequest, "accountEntryId");
+		long companyId = _portal.getCompanyId(httpServletRequest);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		return TransformUtil.transform(
 			_commerceChannelService.search(
