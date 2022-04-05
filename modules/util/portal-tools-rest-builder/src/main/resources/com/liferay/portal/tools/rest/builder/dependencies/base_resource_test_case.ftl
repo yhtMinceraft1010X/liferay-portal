@@ -2660,27 +2660,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 }
 
-<#macro generateGetterMethod
-	javaMethodParameter
-	javaMethodSignature
-	testNamePrefix
->
-	protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-		throw new UnsupportedOperationException("This method needs to be implemented");
-	}
-</#macro>
-
 <#macro generateGetterMethods
 	javaMethodSignature
 	missingGetterJavaMethodParametersMap
 	testNamePrefix
 >
 	<#list missingGetterJavaMethodParametersMap?values as javaMethodParameter>
-		<@generateGetterMethod
-			javaMethodParameter=javaMethodParameter
-			javaMethodSignature=javaMethodSignature
-			testNamePrefix=testNamePrefix
-		/>
+		protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
+			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
 	</#list>
 </#macro>
 
