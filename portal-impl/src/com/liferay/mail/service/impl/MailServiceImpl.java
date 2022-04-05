@@ -38,10 +38,10 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -389,6 +389,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	private static final MethodKey _updatePasswordMethodKey = new MethodKey(
 		Hook.class, "updatePassword", long.class, long.class, String.class);
 
-	private final Map<Long, Session> _sessions = new HashMap<>();
+	private final Map<Long, Session> _sessions = new ConcurrentHashMap<>();
 
 }
