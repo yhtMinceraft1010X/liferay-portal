@@ -328,7 +328,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@generateGetterMethods
+			<@getTestGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1084,7 +1084,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@generateGetterMethods
+			<@getTestGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1403,7 +1403,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@generateGetterMethods
+			<@getTestGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1731,7 +1731,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@generateGetterMethods
+			<@getTestGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="testGraphQL"
@@ -2660,18 +2660,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 }
 
-<#macro generateGetterMethods
-	javaMethodSignature
-	missingGetterJavaMethodParametersMap
-	testNamePrefix
->
-	<#list missingGetterJavaMethodParametersMap?values as javaMethodParameter>
-		protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-			throw new UnsupportedOperationException("This method needs to be implemented");
-		}
-	</#list>
-</#macro>
-
 <#macro getDefaultParameter
 	javaMethodParameter
 >
@@ -2772,4 +2760,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#elseif freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && hasMultipartFiles>
 		, multipartFiles
 	</#if>
+</#macro>
+
+<#macro getTestGetterMethods
+	javaMethodSignature
+	missingGetterJavaMethodParametersMap
+	testNamePrefix
+>
+	<#list missingGetterJavaMethodParametersMap?values as javaMethodParameter>
+		protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
+			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+	</#list>
 </#macro>
