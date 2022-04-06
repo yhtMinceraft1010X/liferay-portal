@@ -100,7 +100,6 @@ public class CollectionLayoutStructureItemMapper
 						setCollectionViewports(
 							_getCollectionViewports(
 								collectionStyledLayoutStructureItem));
-
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =
@@ -112,7 +111,6 @@ public class CollectionLayoutStructureItemMapper
 										"styles"),
 									saveMappingConfiguration);
 							});
-
 						setFragmentViewports(
 							() -> {
 								JSONObject itemConfigJSONObject =

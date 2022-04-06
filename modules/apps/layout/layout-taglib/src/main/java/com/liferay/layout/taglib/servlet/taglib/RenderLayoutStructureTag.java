@@ -285,6 +285,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					}
 
 					rowTag.setCssClass(cssClassSB.toString());
+
 					rowTag.setPageContext(pageContext);
 
 					rowTag.doStartTag();
