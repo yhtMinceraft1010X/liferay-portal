@@ -124,6 +124,9 @@ public class DDMFormBuilderContextFactoryHelper {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setContainerId("settings");
+		ddmFormRenderingContext.setDDMFormValues(
+			_createDDMFormFieldSettingContextDDMFormValues(
+				ddmForm, ddmFormField));
 
 		if (_ddmStructureVersionOptional.isPresent()) {
 			DDMStructureVersion ddmStructureVersion =
@@ -137,9 +140,6 @@ public class DDMFormBuilderContextFactoryHelper {
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);
 		ddmFormRenderingContext.setPortletNamespace(_portletNamespace);
-		ddmFormRenderingContext.setDDMFormValues(
-			_createDDMFormFieldSettingContextDDMFormValues(
-				ddmForm, ddmFormField));
 
 		return _ddmFormTemplateContextFactory.create(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
