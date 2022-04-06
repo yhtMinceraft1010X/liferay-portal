@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
+%>
+
 <react:component
 	module="js/IconConfiguration"
 	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"

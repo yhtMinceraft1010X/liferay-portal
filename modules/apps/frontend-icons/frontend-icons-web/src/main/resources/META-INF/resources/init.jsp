@@ -23,7 +23,3 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<%
-FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
-%>
