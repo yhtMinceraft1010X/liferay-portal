@@ -17,3 +17,8 @@
 # Bundle Version 1.0.4
 #
 670773ae8abef5625c0cff03c5fb74929b789e43^..bd397b02428e304b8c5eedf1b7a6f1dfe2f3df87=COMMERCE-7554 COMMERCE-7556
+
+#
+# Bundle Version 1.0.5
+#
+bd397b02428e304b8c5eedf1b7a6f1dfe2f3df87^..b71b4e9034b858d9077ae3ecd1d0ab69b18b3c14=COMMERCE-8994
