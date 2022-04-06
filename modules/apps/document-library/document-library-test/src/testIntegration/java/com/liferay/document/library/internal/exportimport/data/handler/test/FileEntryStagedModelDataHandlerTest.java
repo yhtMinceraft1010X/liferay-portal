@@ -202,46 +202,6 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportImportFileExtension() throws Exception {
-		String fileName = "PDF_Test.pdf";
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-			ContentTypes.APPLICATION_PDF,
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
-
-		exportImportStagedModel(fileEntry);
-
-		FileEntry importedFileEntry =
-			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-				fileEntry.getUuid(), liveGroup.getGroupId());
-
-		Assert.assertEquals("pdf", importedFileEntry.getExtension());
-
-		String title = RandomTestUtil.randomString() + ".awesome";
-
-		fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), StringPool.BLANK,
-			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, DLVersionNumberIncrease.MINOR, (byte[])null, null,
-			null, serviceContext);
-
-		exportImportStagedModel(fileEntry);
-
-		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-			fileEntry.getUuid(), liveGroup.getGroupId());
-
-		Assert.assertEquals("pdf", importedFileEntry.getExtension());
-		Assert.assertEquals(title, importedFileEntry.getTitle());
-	}
-
-	@Test
 	public void testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntry()
 		throws Exception {
 
@@ -308,6 +268,46 @@ public class FileEntryStagedModelDataHandlerTest
 			Assert.assertEquals(
 				"urltitle", importedFriendlyURLEntry.getUrlTitle());
 		}
+	}
+
+	@Test
+	public void testExportImportFileExtension() throws Exception {
+		String fileName = "PDF_Test.pdf";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.APPLICATION_PDF,
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+			null, serviceContext);
+
+		exportImportStagedModel(fileEntry);
+
+		FileEntry importedFileEntry =
+			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals("pdf", importedFileEntry.getExtension());
+
+		String title = RandomTestUtil.randomString() + ".awesome";
+
+		fileEntry = DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringPool.BLANK,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, (byte[])null, null,
+			null, serviceContext);
+
+		exportImportStagedModel(fileEntry);
+
+		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals("pdf", importedFileEntry.getExtension());
+		Assert.assertEquals(title, importedFileEntry.getTitle());
 	}
 
 	@Test
