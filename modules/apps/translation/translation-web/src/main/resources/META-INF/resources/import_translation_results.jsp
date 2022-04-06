@@ -169,7 +169,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 										<div class="btn-group-item">
 											<clay:link
 												displayType="secondary"
-												download='<%= LanguageUtil.get(resourceBundle, "download-csv-error-report-filename") %>'
+												download='<%= StringUtil.randomString() + ".csv" %>'
 												href="<%= importTranslationResultsDisplayContext.getFailureMessagesCSVDataURL(locale) %>"
 												label="download-csv-error-report"
 												small="<%= true %>"
