@@ -110,7 +110,7 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportFileFriendlyURLEntries() throws Exception {
+	public void testExportFileEntryFriendlyURLEntries() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
@@ -242,7 +242,7 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportImportFileFriendlyURLEntriesUpdatingFile()
+	public void testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntry()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -410,7 +410,7 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testImportFileFriendlyURLEntries() throws Exception {
+	public void testImportFileEntryFriendlyURLEntries() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
