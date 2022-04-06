@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FrontendIconsImporter {
 
 	public void importFrontendIcons(
-			long companyId, String name, String spritemap)
+			long companyId, String name, String svgSpritemap)
 		throws Exception;
 
 }

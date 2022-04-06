@@ -36,12 +36,12 @@ import java.util.List;
 public class SVGUtil {
 
 	public static List<FrontendIconsResource> getFrontendIconsResources(
-		String svgContent) {
+		String svgSpritemap) {
 
 		List<FrontendIconsResource> frontendIconsResources = new ArrayList<>();
 
 		try {
-			Document document = SAXReaderUtil.read(svgContent);
+			Document document = SAXReaderUtil.read(svgSpritemap);
 
 			Element rootElement = document.getRootElement();
 

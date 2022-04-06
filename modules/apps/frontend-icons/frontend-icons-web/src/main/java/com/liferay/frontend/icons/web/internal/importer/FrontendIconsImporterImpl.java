@@ -30,14 +30,14 @@ public class FrontendIconsImporterImpl implements FrontendIconsImporter {
 
 	@Override
 	public void importFrontendIcons(
-			long companyId, String name, String spritemap)
+			long companyId, String name, String svgSpritemap)
 		throws Exception {
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			new FrontendIconsResourcePack(name);
 
 		frontendIconsResourcePack.addFrontendIconsResources(
-			SVGUtil.getFrontendIconsResources(spritemap));
+			SVGUtil.getFrontendIconsResources(svgSpritemap));
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			companyId, frontendIconsResourcePack);
