@@ -1216,10 +1216,10 @@ public class FileEntryStagedModelDataHandler
 
 		Stream<FriendlyURLEntry> stream = friendlyURLEntries.stream();
 
-		Stream<String> stringStream = stream.map(FriendlyURLEntry::getUrlTitle);
+		Stream<String> urlTitlesStream = stream.map(
+			FriendlyURLEntry::getUrlTitle);
 
-		List<String> fileEntriesUrlTitles = stringStream.collect(
-			Collectors.toList());
+		List<String> urlTitles = urlTitlesStream.collect(Collectors.toList());
 
 		List<FriendlyURLEntry> importedFriendlyURLEntries =
 			_friendlyURLEntryLocalService.getFriendlyURLEntries(
@@ -1227,33 +1227,23 @@ public class FileEntryStagedModelDataHandler
 				_portal.getClassNameId(FileEntry.class),
 				importedFileEntry.getFileEntryId());
 
-		List<Long> friendlyURLEntryIdsToDelete = new ArrayList<>();
-
 		for (FriendlyURLEntry importedFriendlyURLEntry :
 				importedFriendlyURLEntries) {
 
-			if (!fileEntriesUrlTitles.contains(
-					importedFriendlyURLEntry.getUrlTitle())) {
-
-				friendlyURLEntryIdsToDelete.add(
+			if (!urlTitles.contains(importedFriendlyURLEntry.getUrlTitle())) {
+				_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 					importedFriendlyURLEntry.getFriendlyURLEntryId());
 			}
 			else {
-				fileEntriesUrlTitles.remove(
-					importedFriendlyURLEntry.getUrlTitle());
+				urlTitles.remove(importedFriendlyURLEntry.getUrlTitle());
 			}
 		}
 
-		for (String urlTitle : fileEntriesUrlTitles) {
+		for (String urlTitle : urlTitles) {
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				importedFileEntry.getGroupId(),
 				_classNameLocalService.getClassNameId(FileEntry.class),
 				importedFileEntry.getFileEntryId(), urlTitle, serviceContext);
-		}
-
-		for (Long friendlyURLEntryId : friendlyURLEntryIdsToDelete) {
-			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				friendlyURLEntryId);
 		}
 	}
 
