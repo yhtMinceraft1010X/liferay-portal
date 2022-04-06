@@ -884,13 +884,6 @@ public interface PropsKeys {
 	public static final String DL_FILE_INDEXING_IGNORE_EXTENSIONS =
 		"dl.file.indexing.ignore.extensions";
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static final String DL_FILE_INDEXING_INTERVAL =
-		"dl.file.indexing.interval";
-
 	public static final String DL_FILE_INDEXING_MAX_SIZE =
 		"dl.file.indexing.max.size";
 

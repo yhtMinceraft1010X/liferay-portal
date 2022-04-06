@@ -740,13 +740,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static final int DL_FILE_INDEXING_INTERVAL = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.DL_FILE_INDEXING_INTERVAL));
-
 	public static final int DL_FILE_INDEXING_MAX_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DL_FILE_INDEXING_MAX_SIZE));
 
