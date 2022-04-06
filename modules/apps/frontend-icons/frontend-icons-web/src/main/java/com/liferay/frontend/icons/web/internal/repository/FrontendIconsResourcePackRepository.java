@@ -172,7 +172,7 @@ public class FrontendIconsResourcePackRepository {
 		"com.liferay.frontend.icons.web";
 
 	private static final String _ROOT_FOLDER_NAME =
-		"com.liferay.frontend.icons.web.icon.packs";
+		FrontendIconsResourcePack.class.getName();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendIconsResourcePackRepository.class);
