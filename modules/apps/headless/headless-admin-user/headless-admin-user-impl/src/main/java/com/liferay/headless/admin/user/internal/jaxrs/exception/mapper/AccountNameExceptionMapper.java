@@ -42,7 +42,8 @@ public class AccountNameExceptionMapper
 		AccountEntryNameException accountEntryNameException) {
 
 		return new Problem(
-			null, Response.Status.BAD_REQUEST, "An account name is required",
+			null, Response.Status.BAD_REQUEST,
+			accountEntryNameException.getMessage(),
 			AccountEntryNameException.class.getSimpleName());
 	}
 
