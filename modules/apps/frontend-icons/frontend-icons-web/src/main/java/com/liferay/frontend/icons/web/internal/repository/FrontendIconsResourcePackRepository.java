@@ -70,7 +70,7 @@ public class FrontendIconsResourcePackRepository {
 			ContentTypes.IMAGE_SVG_XML, false);
 	}
 
-	public void deleteIconResourcePack(long companyId, String name)
+	public void deleteFrontendIconsResourcePack(long companyId, String name)
 		throws PortalException {
 
 		Company company = _companyLocalService.getCompany(companyId);
