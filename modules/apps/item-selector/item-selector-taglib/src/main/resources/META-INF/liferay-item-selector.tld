@@ -155,7 +155,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of file types restriction</description>
 			<name>mimeTypeRestriction</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
