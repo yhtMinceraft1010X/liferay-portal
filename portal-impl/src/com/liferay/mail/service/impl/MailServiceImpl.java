@@ -148,13 +148,11 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	public Session getSession() {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		Session session = _sessions.get(companyId);
-
-		if (session != null) {
-			return session;
+		if (_sessions.get(companyId) != null) {
+			return _sessions.get(companyId);
 		}
 
-		session = InfrastructureUtil.getMailSession();
+		Session session = InfrastructureUtil.getMailSession();
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.MAIL_SESSION_MAIL,
