@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,7 +63,7 @@ public class GroovyObjectValidationRuleEngineImpl
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Map<String, Object> results = new HashMap<>();
+		Map<String, Object> results = Collections.emptyMap();
 
 		try {
 			currentThread.setContextClassLoader(classLoader);
