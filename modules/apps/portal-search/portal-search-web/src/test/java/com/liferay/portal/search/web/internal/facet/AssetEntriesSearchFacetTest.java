@@ -45,7 +45,6 @@ public class AssetEntriesSearchFacetTest {
 	@Before
 	public void setUp() {
 		assetRendererFactory1 = Mockito.mock(AssetRendererFactory.class);
-
 		assetRendererFactory2 = Mockito.mock(AssetRendererFactory.class);
 
 		_assetRendererFactoryRegistry = Mockito.mock(
