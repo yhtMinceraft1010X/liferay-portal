@@ -112,7 +112,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			Stream<Configuration> companyConfigurationStream = Stream.of(
+			Stream<Configuration> companyConfigurationsStream = Stream.of(
 				Optional.ofNullable(
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
@@ -123,7 +123,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				).orElse(
 					new Configuration[0]
 				));
-			Stream<Configuration> configurationStream = Stream.of(
+			Stream<Configuration> configurationsStream = Stream.of(
 				Optional.ofNullable(
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
@@ -136,7 +136,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				));
 
 			return Stream.concat(
-				companyConfigurationStream, configurationStream
+				companyConfigurationsStream, configurationsStream
 			).filter(
 				configuration -> _isDefined(
 					assetVocabularyName, companyId, configuration,
