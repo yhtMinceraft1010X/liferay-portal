@@ -37,9 +37,9 @@ public class AttachmentValidator {
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectFieldId, "acceptedFileExtensions");
 
-		String objectFieldSettingValue = objectFieldSetting.getValue();
+		String value = objectFieldSetting.getValue();
 
-		return objectFieldSettingValue.split("\\s*,\\s*");
+		return value.split("\\s*,\\s*");
 	}
 
 	public long getMaximumFileSize(long objectFieldId) {

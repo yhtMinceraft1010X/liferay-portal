@@ -444,6 +444,36 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		try {
+			_updateObjectFieldSetting(
+				"upload", "acceptedFileExtensions", "jpg, png");
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(), null, null,
+				ServiceContextTestUtil.getServiceContext());
+
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "peter@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"upload", fileEntry.getFileEntryId()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.InvalidFileExtension
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"The file extension txt is invalid for object field \"upload\"",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
 			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddressRequired", "john@liferay.com"
@@ -493,38 +523,6 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				"No value was provided for required object field " +
 					"\"listTypeEntryKeyRequired\"",
-				objectEntryValuesException.getMessage());
-		}
-
-		// Invalid file extension for attachment field
-
-		try {
-			_updateObjectFieldSetting(
-				"upload", "acceptedFileExtensions", "jpg, png");
-
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomBytes(), null, null,
-				ServiceContextTestUtil.getServiceContext());
-
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddressRequired", "peter@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).put(
-					"upload", fileEntry.getFileEntryId()
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.InvalidFileExtension
-					objectEntryValuesException) {
-
-			Assert.assertEquals(
-				"The file extension txt is invalid for object field \"upload\"",
 				objectEntryValuesException.getMessage());
 		}
 	}
