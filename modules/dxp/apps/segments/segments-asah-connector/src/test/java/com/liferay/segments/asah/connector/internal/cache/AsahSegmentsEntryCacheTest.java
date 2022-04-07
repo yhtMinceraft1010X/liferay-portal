@@ -46,7 +46,6 @@ public class AsahSegmentsEntryCacheTest {
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryCache, "_portalCache", _portalCache);
-
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryCache, "_segmentsAsahConfigurationProvider",
 			new SegmentsAsahConfigurationProvider() {

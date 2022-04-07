@@ -46,7 +46,6 @@ public class AsahInterestTermCacheTest {
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			_asahInterestTermCache, "_portalCache", _portalCache);
-
 		ReflectionTestUtil.setFieldValue(
 			_asahInterestTermCache, "_segmentsAsahConfigurationProvider",
 			new SegmentsAsahConfigurationProvider() {
