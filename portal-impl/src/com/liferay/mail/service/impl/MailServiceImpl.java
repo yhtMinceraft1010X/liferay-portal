@@ -24,9 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -38,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -103,15 +100,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	@Clusterable
 	@Override
 	public void clearSession() {
-		clearSession(CompanyConstants.SYSTEM);
-	}
-
-	public void clearSession(long companyId) {
-		if (companyId == CompanyConstants.SYSTEM) {
-			_sessionMap.clear();
-		}
-
-		_sessionMap.remove(companyId);
+		_session = null;
 	}
 
 	@Override
@@ -145,85 +134,56 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Override
 	public Session getSession() {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (_sessionMap.get(companyId) != null) {
-			return _sessionMap.get(companyId);
+		if (_session != null) {
+			return _session;
 		}
 
 		Session session = InfrastructureUtil.getMailSession();
 
 		if (!PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.MAIL_SESSION_MAIL,
-				PrefsPropsUtil.getBoolean(
-					PropsKeys.MAIL_SESSION_MAIL,
-					PropsValues.MAIL_SESSION_MAIL))) {
+				PropsKeys.MAIL_SESSION_MAIL, PropsValues.MAIL_SESSION_MAIL)) {
 
-			_sessionMap.put(companyId, session);
+			_session = session;
 
-			return session;
+			return _session;
 		}
 
 		String advancedPropertiesString = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
-				PropsValues.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES));
+			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
+			PropsValues.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES);
 		String pop3Host = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
-				PropsValues.MAIL_SESSION_MAIL_POP3_HOST));
+			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
+			PropsValues.MAIL_SESSION_MAIL_POP3_HOST);
 		String pop3Password = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
-				PropsValues.MAIL_SESSION_MAIL_POP3_PASSWORD));
+			PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
+			PropsValues.MAIL_SESSION_MAIL_POP3_PASSWORD);
 		int pop3Port = PrefsPropsUtil.getInteger(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-			PrefsPropsUtil.getInteger(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-				PropsValues.MAIL_SESSION_MAIL_POP3_PORT));
+			PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
+			PropsValues.MAIL_SESSION_MAIL_POP3_PORT);
 		String pop3User = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-				PropsValues.MAIL_SESSION_MAIL_POP3_USER));
+			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
+			PropsValues.MAIL_SESSION_MAIL_POP3_USER);
 		String smtpHost = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_HOST));
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_HOST);
 		String smtpPassword = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_PASSWORD));
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_PASSWORD);
 		int smtpPort = PrefsPropsUtil.getInteger(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-			PrefsPropsUtil.getInteger(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_PORT));
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_PORT);
 		boolean smtpStartTLSEnable = PrefsPropsUtil.getBoolean(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
-			PrefsPropsUtil.getBoolean(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE));
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE);
 		String smtpUser = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_USER));
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
+			PropsValues.MAIL_SESSION_MAIL_SMTP_USER);
 		String storeProtocol = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
-				PropsValues.MAIL_SESSION_MAIL_STORE_PROTOCOL));
+			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
+			PropsValues.MAIL_SESSION_MAIL_STORE_PROTOCOL);
 		String transportProtocol = PrefsPropsUtil.getString(
-			companyId, PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
-			PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
-				PropsValues.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL));
+			PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
+			PropsValues.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL);
 
 		Properties properties = session.getProperties();
 
@@ -295,7 +255,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		}
 
 		if (smtpAuth) {
-			session = Session.getInstance(
+			_session = Session.getInstance(
 				properties,
 				new Authenticator() {
 
@@ -309,12 +269,10 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 				});
 		}
 		else {
-			session = Session.getInstance(properties);
+			_session = Session.getInstance(properties);
 		}
 
-		_sessionMap.put(companyId, session);
-
-		return session;
+		return _session;
 	}
 
 	@Override
@@ -389,6 +347,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 	private static final MethodKey _updatePasswordMethodKey = new MethodKey(
 		Hook.class, "updatePassword", long.class, long.class, String.class);
 
-	private final Map<Long, Session> _sessionMap = new HashMap<>();
+	private Session _session;
 
 }
