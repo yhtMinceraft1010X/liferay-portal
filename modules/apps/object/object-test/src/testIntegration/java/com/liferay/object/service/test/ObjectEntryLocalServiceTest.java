@@ -444,8 +444,16 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		try {
-			_updateObjectFieldSetting(
-				"upload", "acceptedFileExtensions", "jpg, png");
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getObjectDefinitionId(), "upload");
+
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					objectField.getObjectFieldId(), "acceptedFileExtensions");
+
+			_objectFieldSettingLocalService.updateObjectFieldSetting(
+				objectFieldSetting.getObjectFieldSettingId(),
+				"jpg, png");
 
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
@@ -1984,23 +1992,6 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
-	}
-
-	private void _updateObjectFieldSetting(
-			String objectFieldName, String objectFieldSettingName,
-			String objectFieldSettingValue)
-		throws Exception {
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), objectFieldName);
-
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), objectFieldSettingName);
-
-		_objectFieldSettingLocalService.updateObjectFieldSetting(
-			objectFieldSetting.getObjectFieldSettingId(),
-			objectFieldSettingValue);
 	}
 
 	@Inject
