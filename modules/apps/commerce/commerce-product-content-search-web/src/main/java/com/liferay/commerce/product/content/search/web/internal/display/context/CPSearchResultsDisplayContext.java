@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -204,6 +206,18 @@ public class CPSearchResultsDisplayContext {
 		}
 
 		return _displayStyleGroupId;
+	}
+
+	public String getNames() {
+		List<CPType> cpTypes = getCPTypes();
+
+		Stream<CPType> cpTypesStream = cpTypes.stream();
+
+		return cpTypesStream.map(
+			cpType -> cpType.getLabel(_cpRequestHelper.getLocale())
+		).collect(
+			Collectors.joining(",")
+		);
 	}
 
 	public String getOrderByCol() {
