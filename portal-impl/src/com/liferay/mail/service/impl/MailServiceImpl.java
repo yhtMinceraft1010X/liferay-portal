@@ -103,6 +103,12 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		_session = null;
 	}
 
+	@Clusterable
+	@Override
+	public void clearSession(long companyId) {
+		_session = null;
+	}
+
 	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
 		if (_log.isDebugEnabled()) {
