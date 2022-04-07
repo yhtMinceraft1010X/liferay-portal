@@ -144,8 +144,9 @@ public class ObjectValidationRuleLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
-				LocalizedMapUtil.getLocalizedMap("Email Validation"),
+				LocalizedMapUtil.getLocalizedMap(
+					"Field must be an email address"),
+				LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
 				"isEmailAddress(textField)");
 
 		Assert.assertTrue(objectValidationRule.isActive());
@@ -153,10 +154,10 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			objectValidationRule.getEngine());
 		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Field must be an email"),
+			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
 			objectValidationRule.getErrorLabelMap());
 		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Email Validation"),
+			LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
 			objectValidationRule.getNameMap());
 		Assert.assertEquals(
 			"isEmailAddress(textField)", objectValidationRule.getScript());
@@ -196,8 +197,9 @@ public class ObjectValidationRuleLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
-				LocalizedMapUtil.getLocalizedMap("Email Validation"),
+				LocalizedMapUtil.getLocalizedMap(
+					"Field must be an email address"),
+				LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
 				"isEmailAddress(textField)");
 
 		Assert.assertTrue(objectValidationRule.isActive());
@@ -205,10 +207,10 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			objectValidationRule.getEngine());
 		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Field must be an email"),
+			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
 			objectValidationRule.getErrorLabelMap());
 		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Email Validation"),
+			LocalizedMapUtil.getLocalizedMap("Email Address Validation"),
 			objectValidationRule.getNameMap());
 		Assert.assertEquals(
 			"isEmailAddress(textField)", objectValidationRule.getScript());
