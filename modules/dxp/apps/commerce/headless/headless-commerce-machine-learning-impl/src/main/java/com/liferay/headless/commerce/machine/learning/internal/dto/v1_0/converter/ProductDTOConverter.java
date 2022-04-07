@@ -75,12 +75,9 @@ public class ProductDTOConverter
 		}
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
-
 		CProduct cProduct = cpDefinition.getCProduct();
-
 		CPType cpType = _cpTypeServicesTracker.getCPType(
 			cpDefinition.getProductTypeName());
-
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
 		return new Product() {
