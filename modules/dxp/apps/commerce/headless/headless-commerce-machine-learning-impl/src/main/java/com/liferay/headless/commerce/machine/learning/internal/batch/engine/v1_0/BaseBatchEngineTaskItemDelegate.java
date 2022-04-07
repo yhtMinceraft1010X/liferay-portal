@@ -61,12 +61,10 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-
-				searchContext.setGroupIds(new long[] {0});
-
 				searchContext.setAttribute(
 					"useSearchResultPermissionFilter", Boolean.FALSE);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {0});
 
 				if (contextUser.getLocale() != null) {
 					searchContext.setLocale(contextUser.getLocale());
