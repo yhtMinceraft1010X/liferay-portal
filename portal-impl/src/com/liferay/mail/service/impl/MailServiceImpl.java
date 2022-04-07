@@ -106,7 +106,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		clearSession(CompanyConstants.SYSTEM);
 	}
 
-	@Override
 	public void clearSession(long companyId) {
 		if (companyId == CompanyConstants.SYSTEM) {
 			_sessions.clear();
