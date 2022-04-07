@@ -49,9 +49,10 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		String entityField = String.valueOf(properties.get("entityField"));
+		String entityFieldName = String.valueOf(
+			properties.get("entityFieldName"));
 
-		if (Validator.isNull(entityField)) {
+		if (Validator.isNull(entityFieldName)) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
@@ -61,8 +62,8 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		}
 
 		if (_isDefined(
-				String.valueOf(properties.get("assetVocabulary")),
-				String.valueOf(properties.get("companyId")), entityField)) {
+				String.valueOf(properties.get("assetVocabularyName")),
+				String.valueOf(properties.get("companyId")), entityFieldName)) {
 
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
@@ -85,17 +86,19 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-		String assetVocabulary, String companyId, Configuration configuration,
-		String entityField) {
+		String assetVocabularyName, String companyId,
+		Configuration configuration, String entityFieldName) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		if ((Objects.equals(
-				assetVocabulary, properties.get("assetVocabulary")) &&
-			 Objects.equals(entityField, properties.get("entityField"))) ||
+				assetVocabularyName, properties.get("assetVocabularyName")) &&
+			 Objects.equals(
+				 entityFieldName, properties.get("entityFieldName"))) ||
 			(Objects.equals(
 				companyId, String.valueOf(properties.get("companyId"))) &&
-			 Objects.equals(entityField, properties.get("entityField")))) {
+			 Objects.equals(
+				 entityFieldName, properties.get("entityFieldName")))) {
 
 			return true;
 		}
@@ -104,7 +107,8 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-			String assetVocabulary, String companyId, String entityField)
+			String assetVocabularyName, String companyId,
+			String entityFieldName)
 		throws ConfigurationModelListenerException {
 
 		try {
@@ -135,7 +139,8 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				companyConfigurationStream, configurationStream
 			).filter(
 				configuration -> _isDefined(
-					assetVocabulary, companyId, configuration, entityField)
+					assetVocabularyName, companyId, configuration,
+					entityFieldName)
 			).findFirst(
 			).isPresent();
 		}
