@@ -523,8 +523,6 @@ public class CPDefinitionLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		// CPDefinition
-
 		CPDefinition originalCPDefinition =
 			cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
@@ -578,8 +576,6 @@ public class CPDefinitionLocalServiceImpl
 
 		newCPDefinition = cpDefinitionPersistence.update(newCPDefinition);
 
-		// AssetEntry
-
 		long cpDefinitionClassNameId = classNameLocalService.getClassNameId(
 			CPDefinition.class);
 
@@ -595,8 +591,6 @@ public class CPDefinitionLocalServiceImpl
 
 			_assetEntryLocalService.addAssetEntry(newAssetEntry);
 		}
-
-		// CPDefinitionLocalization
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations =
 			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
@@ -626,8 +620,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionLocalization);
 		}
 
-		// CPAttachmentFileEntry
-
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryPersistence.findByC_C(
 				cpDefinitionClassNameId, cpDefinitionId);
@@ -647,8 +639,6 @@ public class CPDefinitionLocalServiceImpl
 			cpAttachmentFileEntryPersistence.update(newCPAttachmentFileEntry);
 		}
 
-		// CPDefinitionLink
-
 		List<CPDefinitionLink> cpDefinitionLinks =
 			cpDefinitionLinkPersistence.findByCPDefinitionId(cpDefinitionId);
 
@@ -664,8 +654,6 @@ public class CPDefinitionLocalServiceImpl
 
 			cpDefinitionLinkPersistence.update(newCPDefinitionLink);
 		}
-
-		// CPDefinitionOptionRel
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			cpDefinitionOptionRelPersistence.findByCPDefinitionId(
@@ -693,8 +681,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionOptionRel);
 
 			newCPDefinitionOptionRels.add(newCPDefinitionOptionRel);
-
-			// CPDefinitionOptionValueRel
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionValueRelPersistence.
@@ -725,8 +711,6 @@ public class CPDefinitionLocalServiceImpl
 
 		reindexCPDefinitionOptionRels(newCPDefinition);
 
-		// CPDefinitionSpecificationOptionValue
-
 		List<CPDefinitionSpecificationOptionValue>
 			cpDefinitionSpecificationOptionValues =
 				cpDefinitionSpecificationOptionValuePersistence.
@@ -754,8 +738,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionSpecificationOptionValue);
 		}
 
-		// CPDisplayLayout
-
 		List<CPDisplayLayout> cpDisplayLayouts =
 			cpDisplayLayoutPersistence.findByC_C(
 				cpDefinitionClassNameId, cpDefinitionId);
@@ -772,8 +754,6 @@ public class CPDefinitionLocalServiceImpl
 
 			cpDisplayLayoutPersistence.update(newCPDisplayLayout);
 		}
-
-		// CPInstance
 
 		List<CPInstance> cpInstances =
 			cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
@@ -870,8 +850,6 @@ public class CPDefinitionLocalServiceImpl
 			cpInstancePersistence.update(newCPInstance);
 		}
 
-		// CPVersionContributors
-
 		List<CPVersionContributor> cpVersionContributors =
 			CPVersionContributorRegistryUtil.getCPVersionContributors();
 
@@ -880,8 +858,6 @@ public class CPDefinitionLocalServiceImpl
 
 			cpVersionContributor.onUpdate(cpDefinitionId, newCPDefinitionId);
 		}
-
-		// CProduct
 
 		if (cpDefinitionLocalService.isVersionable(originalCPDefinition)) {
 			cProductLocalService.updatePublishedCPDefinitionId(
