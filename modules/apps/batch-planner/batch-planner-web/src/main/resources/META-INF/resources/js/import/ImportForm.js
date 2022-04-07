@@ -159,7 +159,7 @@ function ImportForm({
 		if (!formIsValid) {
 			openToast({
 				message: Liferay.Language.get(
-					'you-must-map-all-required-fields-before-continuing'
+					'you-must-map-all-the-required-fields-before-continuing'
 				),
 				title: Liferay.Language.get('error'),
 				type: 'danger',
