@@ -104,10 +104,9 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	@Override
-	public List<CommerceShippingOption>
-			getEnabledCommerceShippingOptions(
-				CommerceContext commerceContext, CommerceOrder commerceOrder,
-				Locale locale)
+	public List<CommerceShippingOption> getEnabledCommerceShippingOptions(
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws CommerceShippingEngineException {
 
 		List<CommerceShippingOption> commerceShippingOptions =

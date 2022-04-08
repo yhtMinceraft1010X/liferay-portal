@@ -662,10 +662,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 					commerceShippingMethod.getEngineKey());
 
 			List<CommerceShippingOption> commerceShippingOptions =
-				commerceShippingEngine.
-					getEnabledCommerceShippingOptions(
-						commerceContext, commerceOrder,
-						_portal.getLocale(httpServletRequest));
+				commerceShippingEngine.getEnabledCommerceShippingOptions(
+					commerceContext, commerceOrder,
+					_portal.getLocale(httpServletRequest));
 
 			if (commerceShippingOptions.isEmpty()) {
 				continue;
