@@ -56,20 +56,16 @@ public class FrontendComponentsTopHeadDynamicInclude
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<script>var Liferay = window.Liferay || {};");
-
 		sb.append("Liferay.__FF__ = Liferay.__FF__ || {};");
-
 		sb.append(
 			_buildFeatureFlagJSGlobalVariable(
 				"enableClayTreeView",
 				_ffFrontendJSComponentsConfiguration.enableClayTreeView()));
-
 		sb.append(
 			_buildFeatureFlagJSGlobalVariable(
 				"enableCustomDialogs",
 				GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.enableCustomDialogs"))));
-
 		sb.append("</script>");
 
 		printWriter.println(sb);
@@ -91,15 +87,9 @@ public class FrontendComponentsTopHeadDynamicInclude
 	private String _buildFeatureFlagJSGlobalVariable(
 		String featureFlagName, boolean validator) {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("Liferay.__FF__.");
-		sb.append(featureFlagName);
-		sb.append(" = ");
-		sb.append(validator);
-		sb.append(StringPool.SEMICOLON);
-
-		return sb.toString();
+		return StringBundler.concat(
+			"Liferay.__FF__.", featureFlagName, " = ", validator,
+			StringPool.SEMICOLON);
 	}
 
 	private volatile FFFrontendJSComponentsConfiguration
