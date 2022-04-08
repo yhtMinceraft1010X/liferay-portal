@@ -101,7 +101,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption>
-			getEnabledCommerceShippingOptionsForOrder(
+			getEnabledCommerceShippingOptions(
 				CommerceContext commerceContext, CommerceOrder commerceOrder,
 				Locale locale)
 		throws CommerceShippingEngineException {

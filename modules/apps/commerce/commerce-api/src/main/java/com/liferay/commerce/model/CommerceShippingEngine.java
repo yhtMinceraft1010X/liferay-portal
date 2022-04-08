@@ -36,7 +36,7 @@ public interface CommerceShippingEngine {
 	public String getDescription(Locale locale);
 
 	public List<CommerceShippingOption>
-			getEnabledCommerceShippingOptionsForOrder(
+			getEnabledCommerceShippingOptions(
 				CommerceContext commerceContext, CommerceOrder commerceOrder,
 				Locale locale)
 		throws CommerceShippingEngineException;
