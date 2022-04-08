@@ -17,7 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,10 +70,8 @@ public class ImageImpl extends ImageBaseImpl {
 				else {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							StringBundler.concat(
-								"Image", image.toString(),
-								"was not found in its company. Attempting in ",
-								"the default company."));
+							"Get image " + imageId +
+								" from the default company");
 					}
 
 					inputStream = DLStoreUtil.getFileAsStream(
@@ -87,7 +84,7 @@ public class ImageImpl extends ImageBaseImpl {
 			_textObj = bytes;
 		}
 		catch (Exception exception) {
-			_log.error("Error reading image " + imageId, exception);
+			_log.error("Unable to read image " + imageId, exception);
 		}
 
 		return _textObj;
