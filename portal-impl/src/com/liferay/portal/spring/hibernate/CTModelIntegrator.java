@@ -84,7 +84,8 @@ public class CTModelIntegrator implements Integrator {
 			else {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to find CT model class for " + mappedClass);
+						"Unable to find change tracking model class for " +
+							mappedClass);
 				}
 			}
 		}

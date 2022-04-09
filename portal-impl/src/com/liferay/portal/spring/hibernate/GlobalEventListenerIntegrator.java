@@ -49,7 +49,6 @@ public class GlobalEventListenerIntegrator implements Integrator {
 
 		eventListenerRegistry.setListeners(
 			EventType.LOAD, ResetOriginalValuesLoadEventListener.INSTANCE);
-
 		eventListenerRegistry.setListeners(
 			EventType.POST_LOAD,
 			ResetOriginalValuesPostLoadEventListener.INSTANCE);

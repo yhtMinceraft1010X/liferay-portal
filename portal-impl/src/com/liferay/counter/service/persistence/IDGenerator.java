@@ -28,7 +28,7 @@ public class IDGenerator implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(
-		SharedSessionContractImplementor session, Object object) {
+		SharedSessionContractImplementor sharedSessionContractImplementor, Object object) {
 
 		Class<?> clazz = object.getClass();
 
