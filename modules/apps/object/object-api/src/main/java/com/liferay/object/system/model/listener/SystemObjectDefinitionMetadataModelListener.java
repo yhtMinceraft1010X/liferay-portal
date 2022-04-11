@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -191,7 +190,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 					originalBaseModel.toString());
 			}
 		).put(
-			"originalDTO" + dtoConverterTypes,
+			"originalDTO" + dtoConverterType,
 			() -> {
 				if (originalBaseModel == null) {
 					return null;
@@ -218,7 +217,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		return (Long)function.apply(baseModel);
 	}
 
-	private String _toDTO(T baseModel, long userId) {
+	private String _toDTO(T baseModel, long userId) throws PortalException {
 		DTOConverter<T, ?> dtoConverter = _getDTOConverter();
 
 		if (dtoConverter == null) {
