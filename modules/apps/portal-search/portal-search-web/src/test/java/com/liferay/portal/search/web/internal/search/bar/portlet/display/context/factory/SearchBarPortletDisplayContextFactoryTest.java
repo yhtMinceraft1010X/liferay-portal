@@ -294,12 +294,11 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		portletPreferences.setValue(
-			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE,
-			"everything");
-
-		portletPreferences.setValue(
 			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION,
 			destination);
+		portletPreferences.setValue(
+			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE,
+			"everything");
 
 		Mockito.when(
 			renderRequest.getPreferences()
