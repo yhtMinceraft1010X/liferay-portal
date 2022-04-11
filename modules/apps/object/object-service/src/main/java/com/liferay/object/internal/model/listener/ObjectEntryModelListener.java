@@ -190,10 +190,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			objectEntry.getObjectDefinitionId(), user.getLocale());
 
 		return JSONUtil.put(
-			"objectEntryDTO" +
-				StringUtil.upperCaseFirstLetter(objectDefinitionLabel),
-			_jsonFactory.createJSONObject(_getExternalModel(objectEntry, user))
-		).put(
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
 			"objectEntry",
@@ -202,6 +198,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			).put(
 				"values", objectEntry.getValues()
 			)
+		).put(
+			"objectEntryDTO" +
+				StringUtil.upperCaseFirstLetter(objectDefinitionLabel),
+			_jsonFactory.createJSONObject(_getExternalModel(objectEntry, user))
 		).put(
 			"originalObjectEntry",
 			() -> {
