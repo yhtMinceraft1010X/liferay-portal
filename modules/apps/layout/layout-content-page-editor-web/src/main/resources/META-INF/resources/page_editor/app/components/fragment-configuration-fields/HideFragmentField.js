@@ -75,7 +75,7 @@ export function HideFragmentField({
 				config.fragmentAdvancedOptionsEnabled && (
 					<p className="small text-secondary">
 						{Liferay.Language.get(
-							'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-advanced-tab'
+							'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-the-advanced-tab'
 						)}
 					</p>
 				)}
