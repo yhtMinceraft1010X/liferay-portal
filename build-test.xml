@@ -6317,7 +6317,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</retry>
 				</try>
 				<catch>
-					<echo>Failed to start the docker database container</echo>
+					<echo>Unable to start the Docker database container.</echo>
 
 					<fail>${start.docker.database.error}</fail>
 				</catch>
@@ -6753,7 +6753,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</retry>
 				</try>
 				<catch>
-					<echo>Failed to stop the docker database container</echo>
+					<echo>Unable to stop the Docker database container.</echo>
 
 					<fail>${stop.docker.database.error}</fail>
 				</catch>
