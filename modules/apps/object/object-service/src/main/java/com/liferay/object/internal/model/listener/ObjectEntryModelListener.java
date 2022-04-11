@@ -32,13 +32,11 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -132,15 +130,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
-	private String _getObjectDefinitionLabel(
-			long objectDefinitionId, Locale locale)
+	private String _getObjectDefinitionShortName(long objectDefinitionId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
 
-		return objectDefinition.getLabel(locale);
+		return objectDefinition.getShortName();
 	}
 
 	private JSONObject _getPayloadJSONObject(
@@ -148,10 +145,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry objectEntry, long userId)
 		throws PortalException {
 
+		String objectDefinitionShortName = _getObjectDefinitionShortName(
+			objectEntry.getObjectDefinitionId());
 		User user = _userLocalService.getUser(userId);
-
-		String objectDefinitionLabel = _getObjectDefinitionLabel(
-			objectEntry.getObjectDefinitionId(), user.getLocale());
 
 		return JSONUtil.put(
 			"objectActionTriggerKey", objectActionTriggerKey
@@ -163,8 +159,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				"values", objectEntry.getValues()
 			)
 		).put(
-			"objectEntryDTO" +
-				StringUtil.upperCaseFirstLetter(objectDefinitionLabel),
+			"objectEntryDTO" + objectDefinitionShortName,
 			_jsonFactory.createJSONObject(_toDTO(objectEntry, user))
 		).put(
 			"originalObjectEntry",
@@ -180,8 +175,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				);
 			}
 		).put(
-			"originalObjectEntryDTO" +
-				StringUtil.upperCaseFirstLetter(objectDefinitionLabel),
+			"originalObjectEntryDTO" + objectDefinitionShortName,
 			() -> {
 				if (originalObjectEntry == null) {
 					return null;
@@ -200,12 +194,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			(DTOConverter<ObjectEntry, ?>)_dtoConverterRegistry.getDTOConverter(
 				ObjectEntry.class.getName());
 
-		String objectDefinitionLabel = _getObjectDefinitionLabel(
-			objectEntry.getObjectDefinitionId(), user.getLocale());
+		String objectDefinitionShortName = _getObjectDefinitionShortName(
+			objectEntry.getObjectDefinitionId());
 
 		if (objectEntryDTOConverter == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No DTOConverter found for " + objectDefinitionLabel);
+				_log.warn(
+					"No DTOConverter found for " + objectDefinitionShortName);
 			}
 
 			return objectEntry.toString();
