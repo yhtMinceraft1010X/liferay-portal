@@ -233,7 +233,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 
 		if (user == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No User found with key: " + userId);
+				_log.warn("No user found with user ID " + userId);
 			}
 
 			return baseModel.toString();
