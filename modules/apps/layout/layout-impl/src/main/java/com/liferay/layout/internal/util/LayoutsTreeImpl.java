@@ -260,9 +260,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			return null;
 		}
 
-		if ((draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-			!layout.isPublished()) {
-
+		if (draftLayout.isDraft() || !layout.isPublished()) {
 			return draftLayout;
 		}
 
