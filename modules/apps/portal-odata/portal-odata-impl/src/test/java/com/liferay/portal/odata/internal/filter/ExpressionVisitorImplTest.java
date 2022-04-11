@@ -191,9 +191,10 @@ public class ExpressionVisitorImplTest {
 
 		BooleanClause<Filter> queryBooleanClause = booleanClauses.get(0);
 
-		ExistsFilter filter = (ExistsFilter)queryBooleanClause.getClause();
+		ExistsFilter existsFilter =
+			(ExistsFilter)queryBooleanClause.getClause();
 
-		Assert.assertEquals(entityField.getName(), filter.getField());
+		Assert.assertEquals(entityField.getName(), existsFilter.getField());
 	}
 
 	@Test
@@ -218,9 +219,10 @@ public class ExpressionVisitorImplTest {
 
 		BooleanClause<Filter> queryBooleanClause = booleanClauses.get(0);
 
-		ExistsFilter filter = (ExistsFilter)queryBooleanClause.getClause();
+		ExistsFilter existsFilter =
+			(ExistsFilter)queryBooleanClause.getClause();
 
-		Assert.assertEquals(entityField.getName(), filter.getField());
+		Assert.assertEquals(entityField.getName(), existsFilter.getField());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -789,10 +791,10 @@ public class ExpressionVisitorImplTest {
 					).collect(
 						Collectors.toList()
 					)),
-				new StringEntityField("title", locale -> "title"),
 				new DateEntityField("date", locale -> "date", locale -> "date"),
 				new DateTimeEntityField(
-					"dateTime", locale -> "dateTime", locale -> "dateTime")
+					"dateTime", locale -> "dateTime", locale -> "dateTime"),
+				new StringEntityField("title", locale -> "title")
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())
 			);
