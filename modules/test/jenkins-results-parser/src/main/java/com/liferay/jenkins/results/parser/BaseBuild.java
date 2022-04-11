@@ -122,7 +122,7 @@ public abstract class BaseBuild implements Build {
 		setArchiveName(archiveName);
 
 		if (!_status.equals("completed")) {
-			System.out.println("Could not archive due to status: " + _status);
+			System.out.println("Unable to archive due to status: " + _status);
 
 			return;
 		}
