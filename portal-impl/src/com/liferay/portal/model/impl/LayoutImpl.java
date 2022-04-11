@@ -1177,14 +1177,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return !isPrivateLayout();
 	}
 
-	/**
-	 * Returns <code>true</code> if the current layout is type content and has
-	 * been published.
-	 *
-	 *
-	 * @return <code>true</code> if the current layout is type content and has
-	 *         been published; <code>false</code> otherwise
-	 */
 	@Override
 	public boolean isPublished() {
 		if (!isTypeContent()) {
