@@ -204,21 +204,27 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			)
 		).put(
 			"originalObjectEntry",
-			_jsonFactory.createJSONObject(
-				originalObjectEntry.toString()
-			).put(
-				"values", originalObjectEntry.getValues()
-			)
+			() -> {
+				if (originalObjectEntry == null) {
+					return null;
+				}
+
+				return _jsonFactory.createJSONObject(
+					originalObjectEntry.toString()
+				).put(
+					"values", originalObjectEntry.getValues()
+				);
+			}
 		).put(
 			"originalObjectEntryDTO" +
 				StringUtil.upperCaseFirstLetter(objectDefinitionLabel),
 			() -> {
-				if (originalObjectEntry != null) {
-					return _jsonFactory.createJSONObject(
-						_getExternalModel(originalObjectEntry, user));
+				if (originalObjectEntry == null) {
+					return null;
 				}
 
-				return null;
+				return _jsonFactory.createJSONObject(
+					_getExternalModel(originalObjectEntry, user));
 			}
 		);
 	}
