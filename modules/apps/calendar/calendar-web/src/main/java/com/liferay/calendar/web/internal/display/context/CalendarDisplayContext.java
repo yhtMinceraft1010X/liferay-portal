@@ -738,6 +738,7 @@ public class CalendarDisplayContext {
 
 			try {
 				portletPreferences.setValue(name, value);
+
 				portletPreferences.store();
 			}
 			catch (Exception exception) {
