@@ -55,7 +55,7 @@ public class SearchableAssetClassNamesProviderImpl
 		}
 
 		for (String searchEngineHelperEntryClassName :
-				searchEngineHelperEntryClassNames) {
+				searchEngineHelper.getEntryClassNames()) {
 
 			if (searchEngineHelperEntryClassName.startsWith(
 					"com.liferay.object.model.ObjectDefinition#")) {
