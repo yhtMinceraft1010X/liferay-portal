@@ -165,7 +165,7 @@ public abstract class BaseBuild implements Build {
 
 				@Override
 				public Object call() {
-					_archiveMarkerFile();
+					_archiveBuildJSON();
 
 					return null;
 				}
@@ -187,7 +187,7 @@ public abstract class BaseBuild implements Build {
 
 				@Override
 				public Object call() {
-					_archiveBuildJSON();
+					_archiveMarkerFile();
 
 					return null;
 				}
