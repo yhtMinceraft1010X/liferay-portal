@@ -203,9 +203,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			for (TagInvocationData tagInvocationData :
 					portletData._es6TagInvocationDatas) {
 
-				List<String> modules = tagInvocationData.getModules();
-
 				List<String> variables = new ArrayList<>();
+
+				List<String> modules = tagInvocationData.getModules();
 
 				for (String module : modules) {
 					variables.add(

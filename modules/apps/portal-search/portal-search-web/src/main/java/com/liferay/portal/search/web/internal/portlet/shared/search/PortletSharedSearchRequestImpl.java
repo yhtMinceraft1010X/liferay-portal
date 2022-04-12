@@ -189,13 +189,13 @@ public class PortletSharedSearchRequestImpl
 	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long companyId) {
 
+		List<Portlet> portlets = new ArrayList<>();
+
 		List<com.liferay.portal.kernel.model.PortletPreferences>
 			portletPreferencesList =
 				portletPreferencesLocalService.getPortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
-
-		List<Portlet> portlets = new ArrayList<>();
 
 		for (com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferences : portletPreferencesList) {
@@ -270,11 +270,11 @@ public class PortletSharedSearchRequestImpl
 	private List<SearchSettingsContributor> _getSearchSettingsContributors(
 		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
-		List<Portlet> portlets = _getPortlets(
-			themeDisplay.getLayout(), themeDisplay.getCompanyId());
-
 		List<SearchSettingsContributor> searchSettingsContributors =
 			new ArrayList<>();
+
+		List<Portlet> portlets = _getPortlets(
+			themeDisplay.getLayout(), themeDisplay.getCompanyId());
 
 		for (Portlet portlet : portlets) {
 			SearchSettingsContributor searchSettingsContributor =
@@ -292,11 +292,11 @@ public class PortletSharedSearchRequestImpl
 	private PortletSharedSearchResponse _search(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = getThemeDisplay(renderRequest);
 
-		List<SearchSettingsContributor> searchSettingsContributors =
-			_getSearchSettingsContributors(themeDisplay, renderRequest);
-
 		SearchRequestImpl searchRequestImpl = _createSearchRequestImpl(
 			themeDisplay, renderRequest);
+
+		List<SearchSettingsContributor> searchSettingsContributors =
+			_getSearchSettingsContributors(themeDisplay, renderRequest);
 
 		for (SearchSettingsContributor searchSettingsContributor :
 				searchSettingsContributors) {

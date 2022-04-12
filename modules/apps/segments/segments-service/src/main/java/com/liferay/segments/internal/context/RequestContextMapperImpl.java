@@ -198,19 +198,21 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 	}
 
 	private String[] _getCookies(HttpServletRequest httpServletRequest) {
-		Cookie[] cookies = httpServletRequest.getCookies();
+		Cookie[] httpServletRequestCookies = httpServletRequest.getCookies();
 
-		if (cookies == null) {
+		if (httpServletRequestCookies == null) {
 			return new String[0];
 		}
 
-		String[] cookieArray = new String[cookies.length];
+		String[] cookies = new String[httpServletRequestCookies.length];
 
-		for (int i = 0; i < cookies.length; i++) {
-			cookieArray[i] = cookies[i].getName() + "=" + cookies[i].getValue();
+		for (int i = 0; i < httpServletRequestCookies.length; i++) {
+			cookies[i] =
+				httpServletRequestCookies[i].getName() + "=" +
+					httpServletRequestCookies[i].getValue();
 		}
 
-		return cookieArray;
+		return cookies;
 	}
 
 	private String[] _getRequestParameters(

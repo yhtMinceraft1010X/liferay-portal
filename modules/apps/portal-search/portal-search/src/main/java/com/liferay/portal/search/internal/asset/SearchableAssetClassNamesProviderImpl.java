@@ -34,13 +34,10 @@ public class SearchableAssetClassNamesProviderImpl
 
 	@Override
 	public String[] getClassNames(long companyId) {
+		List<String> classNames = new ArrayList<>();
+
 		List<AssetRendererFactory<?>> assetRendererFactories =
 			assetRendererFactoryRegistry.getAssetRendererFactories(companyId);
-
-		String[] searchEngineHelperEntryClassNames =
-			searchEngineHelper.getEntryClassNames();
-
-		List<String> classNames = new ArrayList<>();
 
 		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
@@ -49,7 +46,8 @@ public class SearchableAssetClassNamesProviderImpl
 				String className = assetRendererFactory.getClassName();
 
 				if (ArrayUtil.contains(
-						searchEngineHelperEntryClassNames, className, false)) {
+						searchEngineHelper.getEntryClassNames(), className,
+						false)) {
 
 					classNames.add(className);
 				}
