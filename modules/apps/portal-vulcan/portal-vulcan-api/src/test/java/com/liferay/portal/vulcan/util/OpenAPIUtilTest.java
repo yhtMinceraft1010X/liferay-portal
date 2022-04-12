@@ -53,6 +53,8 @@ public class OpenAPIUtilTest {
 	public void setUp() throws Exception {
 		_openAPIYAML = new OpenAPIYAML();
 
+		Components components = new Components();
+
 		Schema readOnlyPropertySchema = new Schema() {
 			{
 				setDescription("Read only property");
@@ -60,14 +62,12 @@ public class OpenAPIUtilTest {
 				setType("string");
 			}
 		};
-
 		Schema requiredPropertySchema = new Schema() {
 			{
 				setDescription("Required property");
 				setType("string");
 			}
 		};
-
 		Schema writeOnlyPropertySchema = new Schema() {
 			{
 				setDescription("Write only property");
@@ -90,8 +90,6 @@ public class OpenAPIUtilTest {
 					Collections.singletonList("requiredPropertySchema"));
 			}
 		};
-
-		Components components = new Components();
 
 		components.setSchemas(Collections.singletonMap("Test", schema));
 
