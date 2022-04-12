@@ -285,6 +285,6 @@ public class OpenAPIUtilTest {
 		Assert.assertEquals(required, readOnlyPropertySchema.isRequired());
 	}
 
-	private OpenAPIYAML _openAPIYAML = new OpenAPIYAML();
+	private final OpenAPIYAML _openAPIYAML = new OpenAPIYAML();
 
 }
