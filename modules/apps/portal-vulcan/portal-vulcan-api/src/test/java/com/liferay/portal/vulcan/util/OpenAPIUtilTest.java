@@ -53,47 +53,64 @@ public class OpenAPIUtilTest {
 	public void setUp() throws Exception {
 		_openAPIYAML = new OpenAPIYAML();
 
-		Components components = new Components();
-
-		Schema readOnlyPropertySchema = new Schema() {
-			{
-				setDescription("Read only property");
-				setReadOnly(true);
-				setType("string");
-			}
-		};
-		Schema requiredPropertySchema = new Schema() {
-			{
-				setDescription("Required property");
-				setType("string");
-			}
-		};
-		Schema writeOnlyPropertySchema = new Schema() {
-			{
-				setDescription("Write only property");
-				setType("integer");
-				setWriteOnly(true);
-			}
-		};
-
 		Schema schema = new Schema() {
 			{
 				setPropertySchemas(
-					HashMapBuilder.put(
-						"readOnlyPropertySchema", readOnlyPropertySchema
+					HashMapBuilder.<String, Schema>put(
+						"readOnlyPropertySchema",
+						new Schema() {
+							{
+								setDescription("Read only property");
+								setReadOnly(true);
+								setType("string");
+							}
+						}
 					).put(
-						"requiredPropertySchema", requiredPropertySchema
+						"requiredPropertySchema",
+						new Schema() {
+							{
+								setDescription("Required property");
+								setType("string");
+							}
+						}
 					).put(
-						"writeOnlyPropertySchema", writeOnlyPropertySchema
+						"writeOnlyPropertySchema",
+						new Schema() {
+							{
+								setDescription("Write only property");
+								setType("integer");
+								setWriteOnly(true);
+							}
+						}
 					).build());
 				setRequiredPropertySchemaNames(
 					Collections.singletonList("requiredPropertySchema"));
 			}
 		};
 
-		components.setSchemas(Collections.singletonMap("Test", schema));
+		_openAPIYAML.setComponents(
+			new Components() {
+				{
+					setSchemas(Collections.singletonMap("Test", schema));
+				}
+			});
 
-		_openAPIYAML.setComponents(components);
+		Response getResponse = new Response();
+
+		getResponse.setContent(
+			Collections.singletonMap(
+				"application/json",
+				new Content() {
+					{
+						setSchema(
+							new Schema() {
+								{
+									setReference(
+										"#/components/schema/PageTest");
+								}
+							});
+					}
+				}));
 
 		Parameter ignoredParameter = new Parameter() {
 			{
@@ -102,40 +119,32 @@ public class OpenAPIUtilTest {
 			}
 		};
 
-		Content ignoredContent = new Content();
-
-		ignoredContent.setSchema(new Schema());
-
 		Response ignoredResponse = new Response();
 
 		ignoredResponse.setContent(
-			Collections.singletonMap("application/json", ignoredContent));
-
-		Schema getSchema = new Schema();
-
-		getSchema.setReference("#/components/schema/PageTest");
-
-		Content getContent = new Content();
-
-		getContent.setSchema(getSchema);
-
-		Response getResponse = new Response();
-
-		getResponse.setContent(
-			Collections.singletonMap("application/json", getContent));
-
-		Schema postSchema = new Schema();
-
-		postSchema.setReference("#/components/schema/Test");
-
-		Content postContent = new Content();
-
-		postContent.setSchema(postSchema);
+			Collections.singletonMap(
+				"application/json",
+				new Content() {
+					{
+						setSchema(new Schema());
+					}
+				}));
 
 		Response postResponse = new Response();
 
 		postResponse.setContent(
-			Collections.singletonMap("application/json", postContent));
+			Collections.singletonMap(
+				"application/json",
+				new Content() {
+					{
+						setSchema(
+							new Schema() {
+								{
+									setReference("#/components/schema/Test");
+								}
+							});
+					}
+				}));
 
 		_openAPIYAML.setPathItems(
 			HashMapBuilder.<String, PathItem>put(
