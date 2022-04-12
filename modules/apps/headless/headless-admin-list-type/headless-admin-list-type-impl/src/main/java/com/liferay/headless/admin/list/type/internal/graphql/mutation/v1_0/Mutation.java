@@ -300,6 +300,7 @@ public class Mutation {
 		listTypeDefinitionResource.setContextUser(_user);
 		listTypeDefinitionResource.setGroupLocalService(_groupLocalService);
 		listTypeDefinitionResource.setRoleLocalService(_roleLocalService);
+
 		listTypeDefinitionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -317,6 +318,7 @@ public class Mutation {
 		listTypeEntryResource.setContextUser(_user);
 		listTypeEntryResource.setGroupLocalService(_groupLocalService);
 		listTypeEntryResource.setRoleLocalService(_roleLocalService);
+
 		listTypeEntryResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

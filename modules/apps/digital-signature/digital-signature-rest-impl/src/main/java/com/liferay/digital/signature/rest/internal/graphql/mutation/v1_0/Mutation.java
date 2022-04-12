@@ -132,6 +132,7 @@ public class Mutation {
 		dsEnvelopeResource.setContextUser(_user);
 		dsEnvelopeResource.setGroupLocalService(_groupLocalService);
 		dsEnvelopeResource.setRoleLocalService(_roleLocalService);
+
 		dsEnvelopeResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

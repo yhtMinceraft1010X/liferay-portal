@@ -840,6 +840,7 @@ public class Mutation {
 		objectActionResource.setContextUser(_user);
 		objectActionResource.setGroupLocalService(_groupLocalService);
 		objectActionResource.setRoleLocalService(_roleLocalService);
+
 		objectActionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -858,6 +859,7 @@ public class Mutation {
 		objectDefinitionResource.setContextUser(_user);
 		objectDefinitionResource.setGroupLocalService(_groupLocalService);
 		objectDefinitionResource.setRoleLocalService(_roleLocalService);
+
 		objectDefinitionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -874,6 +876,7 @@ public class Mutation {
 		objectFieldResource.setContextUser(_user);
 		objectFieldResource.setGroupLocalService(_groupLocalService);
 		objectFieldResource.setRoleLocalService(_roleLocalService);
+
 		objectFieldResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -891,6 +894,7 @@ public class Mutation {
 		objectLayoutResource.setContextUser(_user);
 		objectLayoutResource.setGroupLocalService(_groupLocalService);
 		objectLayoutResource.setRoleLocalService(_roleLocalService);
+
 		objectLayoutResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -909,6 +913,7 @@ public class Mutation {
 		objectRelationshipResource.setContextUser(_user);
 		objectRelationshipResource.setGroupLocalService(_groupLocalService);
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
+
 		objectRelationshipResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -927,6 +932,7 @@ public class Mutation {
 		objectValidationRuleResource.setContextUser(_user);
 		objectValidationRuleResource.setGroupLocalService(_groupLocalService);
 		objectValidationRuleResource.setRoleLocalService(_roleLocalService);
+
 		objectValidationRuleResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -942,6 +948,7 @@ public class Mutation {
 		objectViewResource.setContextUser(_user);
 		objectViewResource.setGroupLocalService(_groupLocalService);
 		objectViewResource.setRoleLocalService(_roleLocalService);
+
 		objectViewResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

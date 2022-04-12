@@ -469,6 +469,7 @@ public class Mutation {
 		channelResource.setContextUser(_user);
 		channelResource.setGroupLocalService(_groupLocalService);
 		channelResource.setRoleLocalService(_roleLocalService);
+
 		channelResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -491,6 +492,7 @@ public class Mutation {
 			_groupLocalService);
 		paymentMethodGroupRelOrderTypeResource.setRoleLocalService(
 			_roleLocalService);
+
 		paymentMethodGroupRelOrderTypeResource.
 			setVulcanBatchEngineImportTaskResource(
 				_vulcanBatchEngineImportTaskResource);
@@ -513,6 +515,7 @@ public class Mutation {
 			_groupLocalService);
 		paymentMethodGroupRelTermResource.setRoleLocalService(
 			_roleLocalService);
+
 		paymentMethodGroupRelTermResource.
 			setVulcanBatchEngineImportTaskResource(
 				_vulcanBatchEngineImportTaskResource);
@@ -536,6 +539,7 @@ public class Mutation {
 			_groupLocalService);
 		shippingFixedOptionOrderTypeResource.setRoleLocalService(
 			_roleLocalService);
+
 		shippingFixedOptionOrderTypeResource.
 			setVulcanBatchEngineImportTaskResource(
 				_vulcanBatchEngineImportTaskResource);
@@ -557,6 +561,7 @@ public class Mutation {
 		shippingFixedOptionTermResource.setGroupLocalService(
 			_groupLocalService);
 		shippingFixedOptionTermResource.setRoleLocalService(_roleLocalService);
+
 		shippingFixedOptionTermResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

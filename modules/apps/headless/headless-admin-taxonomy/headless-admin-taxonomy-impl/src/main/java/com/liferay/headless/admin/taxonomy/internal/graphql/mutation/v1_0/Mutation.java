@@ -737,6 +737,7 @@ public class Mutation {
 		keywordResource.setContextUser(_user);
 		keywordResource.setGroupLocalService(_groupLocalService);
 		keywordResource.setRoleLocalService(_roleLocalService);
+
 		keywordResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -755,6 +756,7 @@ public class Mutation {
 		taxonomyCategoryResource.setContextUser(_user);
 		taxonomyCategoryResource.setGroupLocalService(_groupLocalService);
 		taxonomyCategoryResource.setRoleLocalService(_roleLocalService);
+
 		taxonomyCategoryResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -773,6 +775,7 @@ public class Mutation {
 		taxonomyVocabularyResource.setContextUser(_user);
 		taxonomyVocabularyResource.setGroupLocalService(_groupLocalService);
 		taxonomyVocabularyResource.setRoleLocalService(_roleLocalService);
+
 		taxonomyVocabularyResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

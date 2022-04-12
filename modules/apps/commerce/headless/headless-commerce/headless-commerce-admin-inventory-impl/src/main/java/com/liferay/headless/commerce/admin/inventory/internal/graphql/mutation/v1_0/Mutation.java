@@ -283,6 +283,7 @@ public class Mutation {
 		warehouseResource.setContextUser(_user);
 		warehouseResource.setGroupLocalService(_groupLocalService);
 		warehouseResource.setRoleLocalService(_roleLocalService);
+
 		warehouseResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -300,6 +301,7 @@ public class Mutation {
 		warehouseItemResource.setContextUser(_user);
 		warehouseItemResource.setGroupLocalService(_groupLocalService);
 		warehouseItemResource.setRoleLocalService(_roleLocalService);
+
 		warehouseItemResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

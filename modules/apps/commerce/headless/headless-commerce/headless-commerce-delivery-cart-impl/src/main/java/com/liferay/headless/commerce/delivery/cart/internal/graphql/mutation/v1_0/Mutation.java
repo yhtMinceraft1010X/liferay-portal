@@ -370,6 +370,7 @@ public class Mutation {
 		cartResource.setContextUser(_user);
 		cartResource.setGroupLocalService(_groupLocalService);
 		cartResource.setRoleLocalService(_roleLocalService);
+
 		cartResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -386,6 +387,7 @@ public class Mutation {
 		cartCommentResource.setContextUser(_user);
 		cartCommentResource.setGroupLocalService(_groupLocalService);
 		cartCommentResource.setRoleLocalService(_roleLocalService);
+
 		cartCommentResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -401,6 +403,7 @@ public class Mutation {
 		cartItemResource.setContextUser(_user);
 		cartItemResource.setGroupLocalService(_groupLocalService);
 		cartItemResource.setRoleLocalService(_roleLocalService);
+
 		cartItemResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

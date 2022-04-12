@@ -714,6 +714,7 @@ public class Mutation {
 		dataDefinitionResource.setContextUser(_user);
 		dataDefinitionResource.setGroupLocalService(_groupLocalService);
 		dataDefinitionResource.setRoleLocalService(_roleLocalService);
+
 		dataDefinitionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -729,6 +730,7 @@ public class Mutation {
 		dataLayoutResource.setContextUser(_user);
 		dataLayoutResource.setGroupLocalService(_groupLocalService);
 		dataLayoutResource.setRoleLocalService(_roleLocalService);
+
 		dataLayoutResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -746,6 +748,7 @@ public class Mutation {
 		dataListViewResource.setContextUser(_user);
 		dataListViewResource.setGroupLocalService(_groupLocalService);
 		dataListViewResource.setRoleLocalService(_roleLocalService);
+
 		dataListViewResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -761,6 +764,7 @@ public class Mutation {
 		dataRecordResource.setContextUser(_user);
 		dataRecordResource.setGroupLocalService(_groupLocalService);
 		dataRecordResource.setRoleLocalService(_roleLocalService);
+
 		dataRecordResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -779,6 +783,7 @@ public class Mutation {
 		dataRecordCollectionResource.setContextUser(_user);
 		dataRecordCollectionResource.setGroupLocalService(_groupLocalService);
 		dataRecordCollectionResource.setRoleLocalService(_roleLocalService);
+
 		dataRecordCollectionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

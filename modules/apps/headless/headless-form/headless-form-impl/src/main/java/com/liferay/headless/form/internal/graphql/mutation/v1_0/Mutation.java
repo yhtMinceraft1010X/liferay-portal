@@ -233,6 +233,7 @@ public class Mutation {
 		formResource.setContextUser(_user);
 		formResource.setGroupLocalService(_groupLocalService);
 		formResource.setRoleLocalService(_roleLocalService);
+
 		formResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -250,6 +251,7 @@ public class Mutation {
 		formDocumentResource.setContextUser(_user);
 		formDocumentResource.setGroupLocalService(_groupLocalService);
 		formDocumentResource.setRoleLocalService(_roleLocalService);
+
 		formDocumentResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -265,6 +267,7 @@ public class Mutation {
 		formRecordResource.setContextUser(_user);
 		formRecordResource.setGroupLocalService(_groupLocalService);
 		formRecordResource.setRoleLocalService(_roleLocalService);
+
 		formRecordResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

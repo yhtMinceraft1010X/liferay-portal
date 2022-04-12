@@ -323,6 +323,7 @@ public class Mutation {
 		sxpBlueprintResource.setContextUser(_user);
 		sxpBlueprintResource.setGroupLocalService(_groupLocalService);
 		sxpBlueprintResource.setRoleLocalService(_roleLocalService);
+
 		sxpBlueprintResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -338,6 +339,7 @@ public class Mutation {
 		sxpElementResource.setContextUser(_user);
 		sxpElementResource.setGroupLocalService(_groupLocalService);
 		sxpElementResource.setRoleLocalService(_roleLocalService);
+
 		sxpElementResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -356,6 +358,7 @@ public class Mutation {
 		searchResponseResource.setContextUser(_user);
 		searchResponseResource.setGroupLocalService(_groupLocalService);
 		searchResponseResource.setRoleLocalService(_roleLocalService);
+
 		searchResponseResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}

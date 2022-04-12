@@ -189,6 +189,7 @@ public class Mutation {
 		experimentResource.setContextUser(_user);
 		experimentResource.setGroupLocalService(_groupLocalService);
 		experimentResource.setRoleLocalService(_roleLocalService);
+
 		experimentResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -206,6 +207,7 @@ public class Mutation {
 		experimentRunResource.setContextUser(_user);
 		experimentRunResource.setGroupLocalService(_groupLocalService);
 		experimentRunResource.setRoleLocalService(_roleLocalService);
+
 		experimentRunResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -221,6 +223,7 @@ public class Mutation {
 		statusResource.setContextUser(_user);
 		statusResource.setGroupLocalService(_groupLocalService);
 		statusResource.setRoleLocalService(_roleLocalService);
+
 		statusResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
