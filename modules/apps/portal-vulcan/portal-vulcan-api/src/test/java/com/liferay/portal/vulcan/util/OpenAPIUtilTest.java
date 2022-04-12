@@ -51,8 +51,6 @@ public class OpenAPIUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_openAPIYAML = new OpenAPIYAML();
-
 		Schema schema = new Schema() {
 			{
 				setPropertySchemas(
@@ -287,6 +285,6 @@ public class OpenAPIUtilTest {
 		Assert.assertEquals(required, readOnlyPropertySchema.isRequired());
 	}
 
-	private OpenAPIYAML _openAPIYAML;
+	private OpenAPIYAML _openAPIYAML = new OpenAPIYAML();
 
 }
