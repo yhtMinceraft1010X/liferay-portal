@@ -925,7 +925,7 @@ public class GraphQLServletExtender {
 
 		Object[] arguments = new Object[parameters.length];
 
-		MultivaluedMap<String, String> instanceParams =
+		MultivaluedMap<String, String> instanceArguments =
 			new MultivaluedHashMap<>();
 
 		for (int i = 0; i < parameters.length; i++) {
@@ -963,7 +963,7 @@ public class GraphQLServletExtender {
 							(String)argument, CompanyThreadLocal.getCompanyId(),
 							_depotEntryLocalService, _groupLocalService));
 
-					instanceParams.putSingle(
+					instanceArguments.putSingle(
 						"assetLibraryId", (String)argument);
 				}
 				catch (Exception exception) {
@@ -981,7 +981,7 @@ public class GraphQLServletExtender {
 							CompanyThreadLocal.getCompanyId(), (String)argument,
 							_groupLocalService));
 
-					instanceParams.putSingle("siteId", (String)argument);
+					instanceArguments.putSingle("siteId", (String)argument);
 				}
 				catch (Exception exception) {
 					throw new Exception(
@@ -1056,7 +1056,7 @@ public class GraphQLServletExtender {
 		if (contributorClass != null) {
 			instance = _getContributorInstance(
 				contributorClass, dataFetchingEnvironment, declaringClass,
-				instanceParams);
+				instanceArguments);
 		}
 		else {
 			GraphQLFieldDefinition graphQLFieldDefinition =
@@ -1070,14 +1070,14 @@ public class GraphQLServletExtender {
 
 				instance = _fillQueryInstance(
 					dataFetchingEnvironment, declaringClass.newInstance(),
-					instanceParams);
+					instanceArguments);
 			}
 			else {
 				Class<?> typeClass = field.getType();
 
 				Object queryInstance = _fillQueryInstance(
 					dataFetchingEnvironment, typeClass.newInstance(),
-					instanceParams);
+					instanceArguments);
 
 				Constructor<?>[] constructors =
 					declaringClass.getConstructors();
@@ -1240,7 +1240,7 @@ public class GraphQLServletExtender {
 
 	private Object _fillQueryInstance(
 			DataFetchingEnvironment dataFetchingEnvironment, Object instance,
-			MultivaluedMap<String, String> instanceParams)
+			MultivaluedMap<String, String> instanceArguments)
 		throws Exception {
 
 		Class<?> clazz = instance.getClass();
@@ -1335,7 +1335,7 @@ public class GraphQLServletExtender {
 					instance,
 					new UriInfoImpl(
 						_createMessage(httpServletRequest, httpServletResponse),
-						instanceParams));
+						instanceArguments));
 			}
 			else if (fieldClass.isAssignableFrom(User.class)) {
 				field.setAccessible(true);
@@ -1483,7 +1483,7 @@ public class GraphQLServletExtender {
 			Class<?> contributorClass,
 			DataFetchingEnvironment dataFetchingEnvironment,
 			Class<?> declaringClass,
-			MultivaluedMap<String, String> instanceParams)
+			MultivaluedMap<String, String> instanceArguments)
 		throws Exception {
 
 		Object source = dataFetchingEnvironment.getSource();
@@ -1501,7 +1501,7 @@ public class GraphQLServletExtender {
 			args = new Object[] {
 				_fillQueryInstance(
 					dataFetchingEnvironment, _getService(contributorClass),
-					instanceParams)
+					instanceArguments)
 			};
 		}
 
