@@ -45,9 +45,9 @@ public class OpenAPIUtil {
 	public static List<String> getCreateEntityScopes(
 		String entityName, OpenAPIYAML openAPIYAML) {
 
-		Map<String, PathItem> pathItemsMap = openAPIYAML.getPathItems();
-
 		List<String> scopes = new ArrayList<>();
+
+		Map<String, PathItem> pathItemsMap = openAPIYAML.getPathItems();
 
 		for (PathItem pathItem : pathItemsMap.values()) {
 			Post post = pathItem.getPost();
@@ -77,12 +77,12 @@ public class OpenAPIUtil {
 			return Collections.emptyMap();
 		}
 
+		Map<String, Field> fields = new HashMap<>();
+
 		List<String> requiredPropertySchemaNames =
 			schema.getRequiredPropertySchemaNames();
 
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
-
-		Map<String, Field> fields = new HashMap<>();
 
 		for (Map.Entry<String, Schema> schemaEntry :
 				propertySchemas.entrySet()) {
@@ -105,9 +105,9 @@ public class OpenAPIUtil {
 	public static List<String> getReadEntityScopes(
 		String entityName, OpenAPIYAML openAPIYAML) {
 
-		Map<String, PathItem> pathItemsMap = openAPIYAML.getPathItems();
-
 		List<String> scopes = new ArrayList<>();
+
+		Map<String, PathItem> pathItemsMap = openAPIYAML.getPathItems();
 
 		for (PathItem pathItem : pathItemsMap.values()) {
 			Get get = pathItem.getGet();
