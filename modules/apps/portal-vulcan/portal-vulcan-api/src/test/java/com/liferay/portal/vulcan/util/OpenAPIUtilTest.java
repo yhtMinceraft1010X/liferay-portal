@@ -248,14 +248,17 @@ public class OpenAPIUtilTest {
 		Assert.assertEquals(fields.toString(), 3, fields.size());
 
 		_assertField(
-			fields.get("readOnlyPropertySchema"), Field.AccessType.READ,
-			"Read only property", "readOnlyPropertySchema", "string", false);
+			Field.AccessType.READ, "Read only property",
+			"readOnlyPropertySchema", fields.get("readOnlyPropertySchema"),
+			false, "string");
 		_assertField(
-			fields.get("requiredPropertySchema"), Field.AccessType.READWRITE,
-			"Required property", "requiredPropertySchema", "string", true);
+			Field.AccessType.READWRITE, "Required property",
+			"requiredPropertySchema", fields.get("requiredPropertySchema"),
+			true, "string");
 		_assertField(
-			fields.get("writeOnlyPropertySchema"), Field.AccessType.WRITE,
-			"Write only property", "writeOnlyPropertySchema", "integer", false);
+			Field.AccessType.WRITE, "Write only property",
+			"writeOnlyPropertySchema", fields.get("writeOnlyPropertySchema"),
+			false, "integer");
 	}
 
 	@Test
@@ -273,8 +276,8 @@ public class OpenAPIUtilTest {
 	}
 
 	private void _assertField(
-		Field readOnlyPropertySchema, Field.AccessType accessType,
-		String description, String name, String type, boolean required) {
+		Field.AccessType accessType, String description, String name,
+		Field readOnlyPropertySchema, boolean required, String type) {
 
 		Assert.assertEquals(accessType, readOnlyPropertySchema.getAccessType());
 		Assert.assertEquals(
