@@ -138,7 +138,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 		if (commerceAddress == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("The commerce address is null");
+				_log.debug("Commerce address is null");
 			}
 
 			return StringPool.BLANK;
