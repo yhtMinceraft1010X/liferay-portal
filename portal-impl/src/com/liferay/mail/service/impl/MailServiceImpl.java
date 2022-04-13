@@ -165,14 +165,13 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 		PortletPreferences systemPreferences = PrefsPropsUtil.getPreferences();
 
-		boolean sessionMail = GetterUtil.getBoolean(
-			companyPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL,
-				systemPreferences.getValue(
+		if (!GetterUtil.getBoolean(
+				companyPreferences.getValue(
 					PropsKeys.MAIL_SESSION_MAIL,
-					String.valueOf(PropsValues.MAIL_SESSION_MAIL))));
+					systemPreferences.getValue(
+						PropsKeys.MAIL_SESSION_MAIL,
+						String.valueOf(PropsValues.MAIL_SESSION_MAIL))))) {
 
-		if (!sessionMail) {
 			_sessions.put(companyId, session);
 
 			return session;
