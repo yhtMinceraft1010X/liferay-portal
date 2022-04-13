@@ -194,29 +194,30 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID);
 		}
 
-		Nonce nonce = new Nonce();
-		State state = new State();
+		List<LangTag> langTags = null;
 
 		Locale locale = _portal.getLocale(httpServletRequest);
-		List<LangTag> uiLocales = null;
 
 		try {
 			if (locale != null) {
-				uiLocales = Arrays.asList(new LangTag(locale.getLanguage()));
+				langTags = Arrays.asList(new LangTag(locale.getLanguage()));
 			}
 		}
 		catch (LangTagException langTagException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to create the LangTag with the current locale: " +
+					"Unable to create a lang tag with locale " +
 						locale.getLanguage());
 			}
 		}
 
+		Nonce nonce = new Nonce();
+		State state = new State();
+
 		URI authenticationRequestURI = _getAuthenticationRequestURI(
-			_getLoginRedirectURI(httpServletRequest), nonce,
+			langTags, _getLoginRedirectURI(httpServletRequest), nonce,
 			openIdConnectProvider,
-			Scope.parse(openIdConnectProvider.getScopes()), state, uiLocales);
+			Scope.parse(openIdConnectProvider.getScopes()), state);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -244,10 +245,10 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	}
 
 	private URI _getAuthenticationRequestURI(
-			URI loginRedirectURI, Nonce nonce,
+			List<LangTag> langTags, URI loginRedirectURI, Nonce nonce,
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
 				openIdConnectProvider,
-			Scope scope, State state, List<LangTag> uiLocales)
+			Scope scope, State state)
 		throws OpenIdConnectServiceException.ProviderException {
 
 		OIDCProviderMetadata oidcProviderMetadata =
@@ -259,14 +260,14 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				new ClientID(openIdConnectProvider.getClientId()),
 				loginRedirectURI);
 
-		builder = builder.state(
-			state
+		builder = builder.endpointURI(
+			oidcProviderMetadata.getAuthorizationEndpointURI()
 		).nonce(
 			nonce
-		).endpointURI(
-			oidcProviderMetadata.getAuthorizationEndpointURI()
+		).state(
+			state
 		).uiLocales(
-			uiLocales
+			langTags
 		);
 
 		OpenIdConnectProviderImpl openIdConnectProviderImpl =
