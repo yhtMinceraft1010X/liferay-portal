@@ -494,10 +494,10 @@ public class SearchContainer<R> {
 			baseModelSearchResult.getLength());
 	}
 
-	public void setResultsAndTotal(List<R> rawResults) {
-		_setTotal(rawResults.size());
+	public void setResultsAndTotal(List<R> results) {
+		_setTotal(results.size());
 
-		_setResults(rawResults.subList(_start, _resultEnd));
+		_setResults(results.subList(_start, _resultEnd));
 	}
 
 	public <E extends Throwable> void setResultsAndTotal(
