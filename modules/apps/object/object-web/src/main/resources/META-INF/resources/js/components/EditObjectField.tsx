@@ -32,6 +32,7 @@ import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
 } from './ObjectFieldFormBase';
+import Sheet from './Sheet';
 
 import './EditObjectField.scss';
 
@@ -141,11 +142,7 @@ export default function EditObjectField({
 			className="lfr-objects__edit-object-field"
 			onSubmit={handleSubmit}
 		>
-			<div className="sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('basic-info')}
-				</h2>
-
+			<Sheet title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
 					disabled={readOnly}
 					error={errors.label}
@@ -195,7 +192,7 @@ export default function EditObjectField({
 							/>
 						)}
 				</ObjectFieldFormBase>
-			</div>
+			</Sheet>
 
 			{values.DBType !== 'Blob' && (
 				<SearchableContainer
@@ -245,11 +242,7 @@ function SearchableContainer({
 	}, [objectField.indexedLanguageId]);
 
 	return (
-		<div className="mt-4 sheet">
-			<h2 className="sheet-title">
-				{Liferay.Language.get('searchable')}
-			</h2>
-
+		<Sheet className="mt-4" title={Liferay.Language.get('searchable')}>
 			<ClayForm.Group>
 				<ClayToggle
 					disabled={disabled}
@@ -313,7 +306,7 @@ function SearchableContainer({
 					value={selectedLanguage}
 				/>
 			)}
-		</div>
+		</Sheet>
 	);
 }
 
