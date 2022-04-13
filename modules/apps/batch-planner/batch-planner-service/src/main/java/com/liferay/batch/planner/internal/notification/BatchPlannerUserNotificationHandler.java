@@ -109,39 +109,39 @@ public class BatchPlannerUserNotificationHandler
 			if (taskType.equals("export")) {
 				return new AbstractMap.SimpleImmutableEntry<>(
 					serviceContext.translate(
-						_MESSAGE_EXPORT_COMPLETED,
+						"x-were-exported-to-a-zip-file",
 						_getSimpleClassNamePlural(className)),
 					serviceContext.translate(
-						_TITLE_EXPORT_COMPLETED,
-						_getSimpleClassNamePlural(className)));
+						"x-exported", _getSimpleClassNamePlural(className)));
 			}
 
 			return new AbstractMap.SimpleImmutableEntry<>(
 				serviceContext.translate(
-					_MESSAGE_IMPORT_COMPLETED,
+					"x-from-x-were-imported-to-the-x-entity",
 					_getSimpleClassNamePlural(className), fileName,
 					StringUtil.toLowerCase(_getSimpleClassName(className))),
 				serviceContext.translate(
-					_TITLE_IMPORT_COMPLETED,
-					_getSimpleClassNamePlural(className)));
+					"x-imported", _getSimpleClassNamePlural(className)));
 		}
 		else if (status.equals(BatchEngineTaskExecuteStatus.FAILED.name())) {
 			if (taskType.equals("export")) {
 				return new AbstractMap.SimpleImmutableEntry<>(
 					serviceContext.translate(
-						_MESSAGE_EXPORT_FAILED, _getSimpleClassName(className)),
+						"x-entity-export-encountered-an-error-while-" +
+							"exporting-to-a-zip-file",
+						_getSimpleClassName(className)),
 					serviceContext.translate(
-						_TITLE_EXPORT_FAILED,
+						"x-export-stopped",
 						_getSimpleClassNamePlural(className)));
 			}
 
 			return new AbstractMap.SimpleImmutableEntry<>(
 				serviceContext.translate(
-					_MESSAGE_IMPORT_FAILED, fileName,
+					"x-encountered-an-error-while-importing-to-the-x-entity",
+					fileName,
 					StringUtil.toLowerCase(_getSimpleClassName(className))),
 				serviceContext.translate(
-					_TITLE_IMPORT_FAILED,
-					_getSimpleClassNamePlural(className)));
+					"x-import-stopped", _getSimpleClassNamePlural(className)));
 		}
 
 		throw new IllegalArgumentException(
@@ -158,26 +158,6 @@ public class BatchPlannerUserNotificationHandler
 	private String _getSimpleClassNamePlural(String className) {
 		return TextFormatter.formatPlural(_getSimpleClassName(className));
 	}
-
-	private static final String _MESSAGE_EXPORT_COMPLETED =
-		"x-were-exported-to-a-zip-file";
-
-	private static final String _MESSAGE_EXPORT_FAILED =
-		"x-entity-export-encountered-an-error-while-exporting-to-a-zip-file";
-
-	private static final String _MESSAGE_IMPORT_COMPLETED =
-		"x-from-x-were-imported-to-the-x-entity";
-
-	private static final String _MESSAGE_IMPORT_FAILED =
-		"x-encountered-an-error-while-importing-to-the-x-entity";
-
-	private static final String _TITLE_EXPORT_COMPLETED = "x-exported";
-
-	private static final String _TITLE_EXPORT_FAILED = "x-export-stopped";
-
-	private static final String _TITLE_IMPORT_COMPLETED = "x-imported";
-
-	private static final String _TITLE_IMPORT_FAILED = "x-import-stopped";
 
 	@Reference
 	private Portal _portal;
