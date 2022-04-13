@@ -67,10 +67,10 @@ public class BatchPlannerUserNotificationHandler
 		Tuple messageAndTitleTuple = _getMessageAndTitleTuple(
 			className, fileName, serviceContext, status, taskType);
 
-		return String.format(
-			"<h2 class=\"title\">%s</h2><div class=\"body\">%s</div>",
-			messageAndTitleTuple.getObject(1),
-			messageAndTitleTuple.getObject(0));
+		return StringBundler.concat(
+			"<h2 class=\"title\">", messageAndTitleTuple.getObject(1),
+			"</h2><div class=\"body\">", messageAndTitleTuple.getObject(0),
+			"</div>");
 	}
 
 	@Override
