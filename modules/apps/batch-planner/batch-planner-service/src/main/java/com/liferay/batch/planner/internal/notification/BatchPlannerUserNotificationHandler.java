@@ -160,10 +160,10 @@ public class BatchPlannerUserNotificationHandler
 	}
 
 	private static final String _MESSAGE_EXPORT_COMPLETED =
-		"x-were-exported-to-an-export-file";
+		"x-were-exported-to-a-zip-file";
 
 	private static final String _MESSAGE_EXPORT_FAILED =
-		"x-entity-export-encountered-an-error-while-creating-an-export-file";
+		"x-entity-export-encountered-an-error-while-exporting-to-a-zip-file";
 
 	private static final String _MESSAGE_IMPORT_COMPLETED =
 		"x-from-x-were-imported-to-the-x-entity";
