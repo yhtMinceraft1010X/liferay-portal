@@ -144,8 +144,6 @@ public class CommerceOrderCommerceDefinitionTermContributor
 			return StringPool.BLANK;
 		}
 
-		// Build the address string
-
 		StringBundler addressSB = new StringBundler(commerceAddress.getName());
 
 		addressSB.append("<br/>");
@@ -207,24 +205,20 @@ public class CommerceOrderCommerceDefinitionTermContributor
 			_log.debug("Processing order items term");
 		}
 
-		// Check if we have commerceOrder
-
 		if (commerceOrder == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Trying to get the item list for an order without an " +
-						"order object!");
+						"order object");
 			}
 
 			return StringPool.BLANK;
 		}
 
-		// Get the order items list
-
-		List<CommerceOrderItem> orderItemsList =
+		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		if (ListUtil.isEmpty(orderItemsList)) {
+		if (ListUtil.isEmpty(commerceOrderItems)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"This order has no linked order items to be included in " +
@@ -233,8 +227,6 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 			return StringPool.BLANK;
 		}
-
-		// Build the items html table (Header)
 
 		StringBundler orderItemsTableSB = new StringBundler(
 			"<table style=\"border: 1px solid black;\">");
@@ -249,9 +241,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 		orderItemsTableSB.append(LanguageUtil.get(locale, "quantity"));
 		orderItemsTableSB.append("</th></tr>");
 
-		// And add the order items
-
-		for (CommerceOrderItem commerceOrderItem : orderItemsList) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			orderItemsTableSB.append(
 				"<tr><td style=\"border: 1px solid black;\">");
 			orderItemsTableSB.append(commerceOrderItem.getName(locale));
