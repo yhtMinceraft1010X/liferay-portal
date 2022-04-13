@@ -124,13 +124,12 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		return LanguageUtil.get(
-			locale, _commerceOrderDefinitionTermsMap.get(term));
+		return LanguageUtil.get(locale, _languageKeys.get(term));
 	}
 
 	@Override
 	public List<String> getTerms() {
-		return new ArrayList<>(_commerceOrderDefinitionTermsMap.keySet());
+		return new ArrayList<>(_languageKeys.keySet());
 	}
 
 	private String _formatAddressTerm(
@@ -280,18 +279,17 @@ public class CommerceOrderCommerceDefinitionTermContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderCommerceDefinitionTermContributor.class);
 
-	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
-		HashMapBuilder.put(
-			_ORDER_BILLING_ADDRESS, "order-billing-address-definition-term"
-		).put(
-			_ORDER_CREATOR, "order-creator-definition-term"
-		).put(
-			_ORDER_ID, "order-id-definition-term"
-		).put(
-			_ORDER_ITEMS, "order-items-definition-term"
-		).put(
-			_ORDER_SHIPPING_ADDRESS, "order-shipping-address-definition-term"
-		).build();
+	private static final Map<String, String> _languageKeys = HashMapBuilder.put(
+		_ORDER_BILLING_ADDRESS, "order-billing-address-definition-term"
+	).put(
+		_ORDER_CREATOR, "order-creator-definition-term"
+	).put(
+		_ORDER_ID, "order-id-definition-term"
+	).put(
+		_ORDER_ITEMS, "order-items-definition-term"
+	).put(
+		_ORDER_SHIPPING_ADDRESS, "order-shipping-address-definition-term"
+	).build();
 
 	@Reference
 	private UserLocalService _userLocalService;

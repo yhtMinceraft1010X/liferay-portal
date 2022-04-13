@@ -108,13 +108,12 @@ public class CommerceSubscriptionCommerceDefinitionTermContributor
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		return LanguageUtil.get(
-			locale, _commerceOrderDefinitionTermsMap.get(term));
+		return LanguageUtil.get(locale, _languageKeys.get(term));
 	}
 
 	@Override
 	public List<String> getTerms() {
-		return new ArrayList<>(_commerceOrderDefinitionTermsMap.keySet());
+		return new ArrayList<>(_languageKeys.keySet());
 	}
 
 	private static final String _ORDER_CREATOR = "[%ORDER_CREATOR%]";
@@ -123,14 +122,13 @@ public class CommerceSubscriptionCommerceDefinitionTermContributor
 
 	private static final String _PRODUCT_NAME = "[%PRODUCT_NAME%]";
 
-	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
-		HashMapBuilder.put(
-			_ORDER_CREATOR, "order-creator-definition-term"
-		).put(
-			_ORDER_ID, "order-id-definition-term"
-		).put(
-			_PRODUCT_NAME, "product-name"
-		).build();
+	private static final Map<String, String> _languageKeys = HashMapBuilder.put(
+		_ORDER_CREATOR, "order-creator-definition-term"
+	).put(
+		_ORDER_ID, "order-id-definition-term"
+	).put(
+		_PRODUCT_NAME, "product-name"
+	).build();
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
