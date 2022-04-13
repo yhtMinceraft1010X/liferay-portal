@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-
-import java.util.AbstractMap;
-import java.util.Map;
+import com.liferay.portal.kernel.util.Tuple;
 
 import javax.portlet.PortletRequest;
 
@@ -66,13 +64,13 @@ public class BatchPlannerUserNotificationHandler
 		String status = jsonObject.getString("status");
 		String taskType = jsonObject.getString("taskType");
 
-		Map.Entry<String, String> messageAndTitleEntry =
-			_getMessageAndTitleEntry(
-				className, fileName, serviceContext, status, taskType);
+		Tuple messageAndTitleTuple = _getMessageAndTitleTuple(
+			className, fileName, serviceContext, status, taskType);
 
 		return String.format(
 			"<h2 class=\"title\">%s</h2><div class=\"body\">%s</div>",
-			messageAndTitleEntry.getValue(), messageAndTitleEntry.getKey());
+			messageAndTitleTuple.getObject(1),
+			messageAndTitleTuple.getObject(0));
 	}
 
 	@Override
@@ -101,13 +99,13 @@ public class BatchPlannerUserNotificationHandler
 		).buildString();
 	}
 
-	private Map.Entry<String, String> _getMessageAndTitleEntry(
+	private Tuple _getMessageAndTitleTuple(
 		String className, String fileName, ServiceContext serviceContext,
 		String status, String taskType) {
 
 		if (status.equals(BatchEngineTaskExecuteStatus.COMPLETED.name())) {
 			if (taskType.equals("export")) {
-				return new AbstractMap.SimpleImmutableEntry<>(
+				return new Tuple(
 					serviceContext.translate(
 						"x-were-exported-to-a-zip-file",
 						_getSimpleClassNamePlural(className)),
@@ -115,7 +113,7 @@ public class BatchPlannerUserNotificationHandler
 						"x-exported", _getSimpleClassNamePlural(className)));
 			}
 
-			return new AbstractMap.SimpleImmutableEntry<>(
+			return new Tuple(
 				serviceContext.translate(
 					"x-from-x-were-imported-to-the-x-entity",
 					_getSimpleClassNamePlural(className), fileName,
@@ -125,7 +123,7 @@ public class BatchPlannerUserNotificationHandler
 		}
 		else if (status.equals(BatchEngineTaskExecuteStatus.FAILED.name())) {
 			if (taskType.equals("export")) {
-				return new AbstractMap.SimpleImmutableEntry<>(
+				return new Tuple(
 					serviceContext.translate(
 						"x-entity-export-encountered-an-error-while-" +
 							"exporting-to-a-zip-file",
@@ -135,7 +133,7 @@ public class BatchPlannerUserNotificationHandler
 						_getSimpleClassNamePlural(className)));
 			}
 
-			return new AbstractMap.SimpleImmutableEntry<>(
+			return new Tuple(
 				serviceContext.translate(
 					"x-encountered-an-error-while-importing-to-the-x-entity",
 					fileName,
