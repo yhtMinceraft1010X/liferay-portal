@@ -69,6 +69,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 			throw new JspException(exception);
 		}
 		finally {
+			_calculateStartAndEnd = false;
 			_results = null;
 			_resultsVar = SearchContainer.DEFAULT_RESULTS_VAR;
 		}
