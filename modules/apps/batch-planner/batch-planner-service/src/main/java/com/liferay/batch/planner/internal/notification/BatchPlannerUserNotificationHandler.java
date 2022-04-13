@@ -146,7 +146,7 @@ public class BatchPlannerUserNotificationHandler
 
 		throw new IllegalArgumentException(
 			StringBundler.concat(
-				"No batch planner user notification defined for status ",
+				"No batch planner user notification found for status ",
 				status, " and task type ", taskType));
 	}
 
