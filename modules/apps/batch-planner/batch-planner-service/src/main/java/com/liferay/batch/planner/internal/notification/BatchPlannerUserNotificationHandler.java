@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 
 import javax.portlet.PortletRequest;
 
@@ -64,13 +63,12 @@ public class BatchPlannerUserNotificationHandler
 		String status = jsonObject.getString("status");
 		String taskType = jsonObject.getString("taskType");
 
-		Tuple messageAndTitleTuple = _getMessageAndTitleTuple(
+		String[] messageAndTitle = _getMessageAndTitle(
 			className, fileName, serviceContext, status, taskType);
 
 		return StringBundler.concat(
-			"<h2 class=\"title\">", messageAndTitleTuple.getObject(1),
-			"</h2><div class=\"body\">", messageAndTitleTuple.getObject(0),
-			"</div>");
+			"<h2 class=\"title\">", messageAndTitle[1],
+			"</h2><div class=\"body\">", messageAndTitle[0], "</div>");
 	}
 
 	@Override
@@ -99,47 +97,51 @@ public class BatchPlannerUserNotificationHandler
 		).buildString();
 	}
 
-	private Tuple _getMessageAndTitleTuple(
+	private String[] _getMessageAndTitle(
 		String className, String fileName, ServiceContext serviceContext,
 		String status, String taskType) {
 
 		if (status.equals(BatchEngineTaskExecuteStatus.COMPLETED.name())) {
 			if (taskType.equals("export")) {
-				return new Tuple(
+				return new String[] {
 					serviceContext.translate(
 						"x-were-exported-to-a-zip-file",
 						_getSimpleClassNamePlural(className)),
 					serviceContext.translate(
-						"x-exported", _getSimpleClassNamePlural(className)));
+						"x-exported", _getSimpleClassNamePlural(className))
+				};
 			}
 
-			return new Tuple(
+			return new String[] {
 				serviceContext.translate(
 					"x-from-x-were-imported-to-the-x-entity",
 					_getSimpleClassNamePlural(className), fileName,
 					StringUtil.toLowerCase(_getSimpleClassName(className))),
 				serviceContext.translate(
-					"x-imported", _getSimpleClassNamePlural(className)));
+					"x-imported", _getSimpleClassNamePlural(className))
+			};
 		}
 		else if (status.equals(BatchEngineTaskExecuteStatus.FAILED.name())) {
 			if (taskType.equals("export")) {
-				return new Tuple(
+				return new String[] {
 					serviceContext.translate(
 						"x-entity-export-encountered-an-error-while-" +
 							"exporting-to-a-zip-file",
 						_getSimpleClassName(className)),
 					serviceContext.translate(
 						"x-export-stopped",
-						_getSimpleClassNamePlural(className)));
+						_getSimpleClassNamePlural(className))
+				};
 			}
 
-			return new Tuple(
+			return new String[] {
 				serviceContext.translate(
 					"x-encountered-an-error-while-importing-to-the-x-entity",
 					fileName,
 					StringUtil.toLowerCase(_getSimpleClassName(className))),
 				serviceContext.translate(
-					"x-import-stopped", _getSimpleClassNamePlural(className)));
+					"x-import-stopped", _getSimpleClassNamePlural(className))
+			};
 		}
 
 		throw new IllegalArgumentException(
