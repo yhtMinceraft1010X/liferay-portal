@@ -34,11 +34,11 @@ public class ConfigurationPropertiesFactory {
 
 		String fileName = file.getName();
 
-		if (fileName.endsWith("config")) {
-			configurationProperties = new TypedProperties();
-		}
-		else if (fileName.endsWith("cfg")) {
+		if (fileName.endsWith("cfg")) {
 			configurationProperties = new CFGProperties();
+		}
+		else if (fileName.endsWith("config")) {
+			configurationProperties = new TypedProperties();
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -60,11 +60,11 @@ public class ConfigurationPropertiesFactory {
 
 		ConfigurationProperties configurationProperties = null;
 
-		if (fileName.endsWith("config")) {
-			configurationProperties = new TypedProperties();
-		}
-		else if (fileName.endsWith("cfg")) {
+		if (fileName.endsWith("cfg")) {
 			configurationProperties = new CFGProperties();
+		}
+		else if (fileName.endsWith("config")) {
+			configurationProperties = new TypedProperties();
 		}
 		else {
 			throw new IllegalArgumentException(
