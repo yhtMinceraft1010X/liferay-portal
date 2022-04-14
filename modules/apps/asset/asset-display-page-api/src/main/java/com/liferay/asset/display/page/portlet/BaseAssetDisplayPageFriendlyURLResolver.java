@@ -503,10 +503,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					url.substring(pos), actualParams, requestContext);
 			}
 
-			queryString =
-				StringPool.AMPERSAND +
-					HttpComponentsUtil.parameterMapToString(
-						actualParams, false);
+			String actualParamsString = HttpComponentsUtil.parameterMapToString(
+				actualParams, false);
+
+			queryString = StringPool.AMPERSAND + actualParamsString;
 
 			break;
 		}
