@@ -125,12 +125,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 				indexInformation);
 			fieldMappingsDisplayContextBuilder.setNamespace(
 				renderResponse.getNamespace());
-
-			String selectedIndexName = ParamUtil.getString(
-				renderRequest, "selectedIndexName");
-
 			fieldMappingsDisplayContextBuilder.setSelectedIndexName(
-				selectedIndexName);
+				ParamUtil.getString(renderRequest, "selectedIndexName"));
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.FIELD_MAPPINGS_DISPLAY_CONTEXT,
