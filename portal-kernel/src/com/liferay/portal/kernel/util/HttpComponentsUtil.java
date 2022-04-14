@@ -41,7 +41,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Tina Tian
  */
-public class HttpHelperUtil {
+public class HttpComponentsUtil {
 
 	public static String addParameter(String url, String name, boolean value) {
 		return addParameter(url, name, String.valueOf(value));
@@ -1012,10 +1012,11 @@ public class HttpHelperUtil {
 
 	private static final String _TEMP_TILDE = "_LIFERAY_TEMP_TILDE_";
 
-	private static final Log _log = LogFactoryUtil.getLog(HttpHelperUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpComponentsUtil.class);
 
 	private static final ThreadLocal<Map<String, URI>> _uris =
 		new CentralizedThreadLocal<>(
-			HttpHelperUtil.class + "._uris", HashMap::new);
+			HttpComponentsUtil.class + "._uris", HashMap::new);
 
 }
