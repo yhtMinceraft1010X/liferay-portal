@@ -55,7 +55,7 @@ public class ConfigurationPropertiesFactory {
 	}
 
 	public static ConfigurationProperties create(
-			String fileName, String configurationContent, String encoding)
+			String fileName, String content, String encoding)
 		throws IOException {
 
 		ConfigurationProperties configurationProperties = null;
@@ -71,7 +71,7 @@ public class ConfigurationPropertiesFactory {
 				"Unknown configuration type: " + fileName);
 		}
 
-		try (Reader reader = new StringReader(configurationContent)) {
+		try (Reader reader = new StringReader(content)) {
 			configurationProperties.load(reader);
 		}
 
