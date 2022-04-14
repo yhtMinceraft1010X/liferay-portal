@@ -32,12 +32,12 @@ public class ConfigurationPropertiesFactory {
 
 		ConfigurationProperties configurationProperties = null;
 
-		String name = file.getName();
+		String fileName = file.getName();
 
-		if (name.endsWith("config")) {
+		if (fileName.endsWith("config")) {
 			configurationProperties = new TypedProperties();
 		}
-		else if (name.endsWith("cfg")) {
+		else if (fileName.endsWith("cfg")) {
 			configurationProperties = new CFGProperties();
 		}
 		else {
@@ -55,20 +55,20 @@ public class ConfigurationPropertiesFactory {
 	}
 
 	public static ConfigurationProperties create(
-			String name, String configurationContent, String encoding)
+			String fileName, String configurationContent, String encoding)
 		throws IOException {
 
 		ConfigurationProperties configurationProperties = null;
 
-		if (name.endsWith("config")) {
+		if (fileName.endsWith("config")) {
 			configurationProperties = new TypedProperties();
 		}
-		else if (name.endsWith("cfg")) {
+		else if (fileName.endsWith("cfg")) {
 			configurationProperties = new CFGProperties();
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Unknown configuration type: " + name);
+				"Unknown configuration type: " + fileName);
 		}
 
 		try (Reader reader = new StringReader(configurationContent)) {
