@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.properties;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.file.install.properties.InterpolationUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.AfterClass;
