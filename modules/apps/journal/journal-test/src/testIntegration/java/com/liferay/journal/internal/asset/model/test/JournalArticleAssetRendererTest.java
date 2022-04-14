@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -126,9 +126,9 @@ public class JournalArticleAssetRendererTest {
 			index + urlSeparator.length());
 
 		Assert.assertEquals(
-			article.getUrlTitle(), HttpHelperUtil.getPath(friendlyURL));
+			article.getUrlTitle(), HttpComponentsUtil.getPath(friendlyURL));
 
-		String version = HttpHelperUtil.getParameter(
+		String version = HttpComponentsUtil.getParameter(
 			urlViewInContext, "version");
 
 		Assert.assertNotNull(version);
@@ -151,11 +151,11 @@ public class JournalArticleAssetRendererTest {
 		friendlyURL = urlViewInContext.substring(index + urlSeparator.length());
 
 		Assert.assertEquals(
-			article.getUrlTitle(), HttpHelperUtil.getPath(friendlyURL));
+			article.getUrlTitle(), HttpComponentsUtil.getPath(friendlyURL));
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			HttpHelperUtil.getParameter(urlViewInContext, "version"));
+			HttpComponentsUtil.getParameter(urlViewInContext, "version"));
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest(

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -730,7 +730,7 @@ public class HttpImpl implements Http {
 		URI uri = null;
 
 		try {
-			uri = HttpHelperUtil.getURI(location);
+			uri = HttpComponentsUtil.getURI(location);
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			throw new IOException(
@@ -752,7 +752,7 @@ public class HttpImpl implements Http {
 
 				location = Http.HTTP_WITH_SLASH + location;
 
-				uri = HttpHelperUtil.getURI(location);
+				uri = HttpComponentsUtil.getURI(location);
 			}
 
 			HttpHost targetHttpHost = new HttpHost(

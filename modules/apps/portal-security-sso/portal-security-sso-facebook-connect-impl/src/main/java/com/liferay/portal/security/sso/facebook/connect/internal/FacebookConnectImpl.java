@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
@@ -65,12 +65,12 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		String url = facebookConnectConfiguration.oauthTokenURL();
 
-		url = HttpHelperUtil.addParameter(
+		url = HttpComponentsUtil.addParameter(
 			url, "client_id", facebookConnectConfiguration.appId());
-		url = HttpHelperUtil.addParameter(
+		url = HttpComponentsUtil.addParameter(
 			url, "client_secret", facebookConnectConfiguration.appSecret());
-		url = HttpHelperUtil.addParameter(url, "code", code);
-		url = HttpHelperUtil.addParameter(
+		url = HttpComponentsUtil.addParameter(url, "code", code);
+		url = HttpComponentsUtil.addParameter(
 			url, "redirect_uri",
 			facebookConnectConfiguration.oauthRedirectURL());
 
@@ -94,7 +94,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 				String appSecret = facebookConnectConfiguration.appSecret();
 
 				if (!appSecret.isEmpty()) {
-					url = HttpHelperUtil.setParameter(
+					url = HttpComponentsUtil.setParameter(
 						url, "client_secret",
 						StringBundler.concat(
 							appSecret.charAt(0), "...redacted...",
@@ -154,11 +154,11 @@ public class FacebookConnectImpl implements FacebookConnect {
 		try {
 			String graphURL = getGraphURL(companyId);
 
-			String url = HttpHelperUtil.addParameter(
+			String url = HttpComponentsUtil.addParameter(
 				graphURL.concat(path), "access_token", accessToken);
 
 			if (Validator.isNotNull(fields)) {
-				url = HttpHelperUtil.addParameter(url, "fields", fields);
+				url = HttpComponentsUtil.addParameter(url, "fields", fields);
 			}
 
 			Http.Options options = new Http.Options();

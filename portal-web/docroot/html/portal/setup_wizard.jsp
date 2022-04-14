@@ -173,7 +173,7 @@
 									<c:if test="<%= Validator.isNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
 										<a
 											href="<%=
-												HttpHelperUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false)
+												HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false)
 											%>"
 											id="customDatabaseOptionsLink"
 										>
@@ -185,7 +185,7 @@
 								<div class="hide" id="customDatabaseOptions">
 									<div class="connection-messages" id="connectionMessages"></div>
 
-									<a class="d-inline-block database-options mb-3" href="<%= HttpHelperUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
+									<a class="d-inline-block database-options mb-3" href="<%= HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
 										&laquo; <liferay-ui:message key='<%= defaultDatabase ? "use-default-database" : "use-configured-database" %>' />
 									</a>
 

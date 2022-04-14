@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -121,7 +121,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
-				redirect = HttpHelperUtil.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, "segmentsEntryId",
 					segmentsEntry.getSegmentsEntryId());
 			}

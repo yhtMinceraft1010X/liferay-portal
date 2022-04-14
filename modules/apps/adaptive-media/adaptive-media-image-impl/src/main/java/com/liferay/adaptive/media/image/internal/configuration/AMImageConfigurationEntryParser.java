@@ -18,7 +18,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -139,11 +139,11 @@ public class AMImageConfigurationEntryParser {
 
 		String name = fields[0];
 
-		name = HttpHelperUtil.decodeURL(name);
+		name = HttpComponentsUtil.decodeURL(name);
 
 		String description = fields[1];
 
-		description = HttpHelperUtil.decodeURL(description);
+		description = HttpComponentsUtil.decodeURL(description);
 
 		String uuid = fields[2];
 

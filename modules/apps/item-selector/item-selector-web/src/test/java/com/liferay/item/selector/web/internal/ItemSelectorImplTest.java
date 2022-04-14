@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -298,7 +298,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		for (Map.Entry<String, String[]> entry :
 				itemSelectorParameters.entrySet()) {
 
-			itemSelectorURL = HttpHelperUtil.addParameter(
+			itemSelectorURL = HttpComponentsUtil.addParameter(
 				itemSelectorURL, namespace + entry.getKey(),
 				entry.getValue()[0]);
 		}

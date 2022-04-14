@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -357,12 +357,12 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 	private void _assertDoesNotHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNull(HttpHelperUtil.getParameter(url, name, false)));
+			Validator.isNull(HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNotNull(HttpHelperUtil.getParameter(url, name, false)));
+			Validator.isNotNull(HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertTermDisplayContextsDoNotHaveFromAndToParameters(

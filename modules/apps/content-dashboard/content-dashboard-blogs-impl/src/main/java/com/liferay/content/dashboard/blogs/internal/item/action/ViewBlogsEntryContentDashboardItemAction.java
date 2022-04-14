@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -106,11 +106,11 @@ public class ViewBlogsEntryContentDashboardItemAction
 						_httpServletRequest, "backURL");
 
 					if (Validator.isNotNull(backURL)) {
-						return HttpHelperUtil.setParameter(
+						return HttpComponentsUtil.setParameter(
 							url, "p_l_back_url", backURL);
 					}
 
-					return HttpHelperUtil.setParameter(
+					return HttpComponentsUtil.setParameter(
 						url, "p_l_back_url", themeDisplay.getURLCurrent());
 				}
 			).orElse(

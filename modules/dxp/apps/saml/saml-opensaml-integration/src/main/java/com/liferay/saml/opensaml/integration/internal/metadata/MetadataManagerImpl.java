@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -302,7 +302,7 @@ public class MetadataManagerImpl
 			requestURI = requestURI.substring(contextPath.length());
 		}
 
-		return HttpHelperUtil.removePathParameters(requestURI);
+		return HttpComponentsUtil.removePathParameters(requestURI);
 	}
 
 	@Override

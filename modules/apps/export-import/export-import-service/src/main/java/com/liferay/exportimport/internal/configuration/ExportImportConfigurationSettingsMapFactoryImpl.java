@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -282,7 +282,7 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 			portletRequest, "remoteAddress",
 			groupTypeSettingsUnicodeProperties.getProperty("remoteAddress"));
 
-		remoteAddress = HttpHelperUtil.removeProtocol(remoteAddress);
+		remoteAddress = HttpComponentsUtil.removeProtocol(remoteAddress);
 
 		int remotePort = ParamUtil.getInteger(
 			portletRequest, "remotePort",

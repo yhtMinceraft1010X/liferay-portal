@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -159,7 +159,7 @@ public class SegmentsExperimentUserNotificationHandler
 			String layoutURL = _portal.getLayoutURL(
 				layout, themeDisplay, false);
 
-			return HttpHelperUtil.addParameter(
+			return HttpComponentsUtil.addParameter(
 				layoutURL, "segmentsExperimentKey", segmentsExperimentKey);
 		}
 		catch (Exception exception) {

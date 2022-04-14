@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -111,14 +111,14 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 			}
 
 			String keywords = GetterUtil.getString(
-				HttpHelperUtil.getParameter(url, "keywords", false));
+				HttpComponentsUtil.getParameter(url, "keywords", false));
 			int startPage = GetterUtil.getInteger(
-				HttpHelperUtil.getParameter(url, "p", false), 1);
+				HttpComponentsUtil.getParameter(url, "p", false), 1);
 			int itemsPerPage = GetterUtil.getInteger(
-				HttpHelperUtil.getParameter(url, "c", false),
+				HttpComponentsUtil.getParameter(url, "c", false),
 				SearchContainer.DEFAULT_DELTA);
 			String format = GetterUtil.getString(
-				HttpHelperUtil.getParameter(url, "format", false));
+				HttpComponentsUtil.getParameter(url, "format", false));
 
 			return search(
 				httpServletRequest, userId, keywords, startPage, itemsPerPage,

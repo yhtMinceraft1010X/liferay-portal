@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -117,11 +117,11 @@ public class LayoutReferencesExportImportContentProcessor
 			Group group, String url, StringBundler urlSB)
 		throws PortalException {
 
-		if (!HttpHelperUtil.hasProtocol(url)) {
+		if (!HttpComponentsUtil.hasProtocol(url)) {
 			return url;
 		}
 
-		boolean secure = HttpHelperUtil.isSecure(url);
+		boolean secure = HttpComponentsUtil.isSecure(url);
 
 		int serverPort = _portal.getPortalServerPort(secure);
 
@@ -1172,7 +1172,7 @@ public class LayoutReferencesExportImportContentProcessor
 		throws PortalException {
 
 		try {
-			URI uri = HttpHelperUtil.getURI(url);
+			URI uri = HttpComponentsUtil.getURI(url);
 
 			if ((uri != null) &&
 				InetAddressUtil.isLocalInetAddress(

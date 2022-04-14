@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,7 +98,7 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		List<String> keepAliveURLs = _getSPsKeepAliveURLs(httpServletRequest);
 
 		for (String keepAliveURL : keepAliveURLs) {
-			keepAliveURL = HttpHelperUtil.addParameter(
+			keepAliveURL = HttpComponentsUtil.addParameter(
 				keepAliveURL, "r", randomString);
 
 			printWriter.write("document.write('<img alt=\"\" src=\"");

@@ -17,7 +17,7 @@ package com.liferay.redirect.web.internal.util;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 
 import java.util.TreeMap;
 
@@ -43,7 +43,7 @@ public class RedirectUtil {
 
 			groupBaseURL.append(group.getPathFriendlyURL(false, themeDisplay));
 			groupBaseURL.append(
-				HttpHelperUtil.decodeURL(group.getFriendlyURL()));
+				HttpComponentsUtil.decodeURL(group.getFriendlyURL()));
 		}
 
 		return groupBaseURL.toString();

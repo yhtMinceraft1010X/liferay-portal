@@ -119,7 +119,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -2104,7 +2104,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
-		contentURL = HttpHelperUtil.addParameter(
+		contentURL = HttpComponentsUtil.addParameter(
 			contentURL, serviceContext.getAttribute("namespace") + "messageId",
 			message.getMessageId());
 

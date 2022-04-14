@@ -62,7 +62,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -505,7 +505,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 			queryString =
 				StringPool.AMPERSAND +
-					HttpHelperUtil.parameterMapToString(actualParams, false);
+					HttpComponentsUtil.parameterMapToString(actualParams, false);
 
 			break;
 		}
@@ -542,7 +542,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 						"p_p_state",
 						new String[] {WindowState.MAXIMIZED.toString()});
 
-					String result = HttpHelperUtil.parameterMapToString(
+					String result = HttpComponentsUtil.parameterMapToString(
 						actualParams, false);
 
 					queryString = StringPool.AMPERSAND + result;

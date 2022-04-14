@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -190,8 +190,8 @@ public class JournalRSSHelper {
 		FileEntry fileEntry = null;
 
 		Map<String, String[]> parameters =
-			HttpHelperUtil.parameterMapFromString(
-				HttpHelperUtil.getQueryString(url));
+			HttpComponentsUtil.parameterMapFromString(
+				HttpComponentsUtil.getQueryString(url));
 
 		if (url.startsWith("/documents/")) {
 			String[] pathArray = StringUtil.split(url, CharPool.SLASH);
@@ -206,7 +206,7 @@ public class JournalRSSHelper {
 			}
 			else if (pathArray.length == 5) {
 				folderId = GetterUtil.getLong(pathArray[3]);
-				title = HttpHelperUtil.decodeURL(pathArray[4]);
+				title = HttpComponentsUtil.decodeURL(pathArray[4]);
 			}
 			else if (pathArray.length > 5) {
 				uuid = pathArray[5];
@@ -312,8 +312,8 @@ public class JournalRSSHelper {
 		Image image = null;
 
 		Map<String, String[]> parameters =
-			HttpHelperUtil.parameterMapFromString(
-				HttpHelperUtil.getQueryString(url));
+			HttpComponentsUtil.parameterMapFromString(
+				HttpComponentsUtil.getQueryString(url));
 
 		if (parameters.containsKey("image_id") ||
 			parameters.containsKey("img_id") ||

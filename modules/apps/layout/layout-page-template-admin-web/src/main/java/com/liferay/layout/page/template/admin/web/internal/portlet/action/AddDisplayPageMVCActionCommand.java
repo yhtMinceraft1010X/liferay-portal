@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -103,7 +103,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		layoutFullURL = HttpHelperUtil.setParameter(
+		layoutFullURL = HttpComponentsUtil.setParameter(
 			layoutFullURL, "p_l_back_url",
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
@@ -114,7 +114,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 				"display-page-templates"
 			).buildString());
 
-		return HttpHelperUtil.setParameter(
+		return HttpComponentsUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 

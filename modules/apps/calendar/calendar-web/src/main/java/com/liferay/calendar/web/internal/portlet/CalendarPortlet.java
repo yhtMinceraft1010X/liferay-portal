@@ -105,7 +105,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -568,7 +568,7 @@ public class CalendarPortlet extends MVCPortlet {
 				actionRequest, calendarBooking, redirect);
 		}
 		else {
-			redirect = HttpHelperUtil.setParameter(
+			redirect = HttpComponentsUtil.setParameter(
 				redirect, actionResponse.getNamespace() + "calendarBookingId",
 				calendarBooking.getCalendarBookingId());
 		}
@@ -874,18 +874,18 @@ public class CalendarPortlet extends MVCPortlet {
 
 		String namespace = actionResponse.getNamespace();
 
-		editCalendarURL = HttpHelperUtil.setParameter(
+		editCalendarURL = HttpComponentsUtil.setParameter(
 			editCalendarURL, "p_p_id", themeDisplay.getPpid());
-		editCalendarURL = HttpHelperUtil.setParameter(
+		editCalendarURL = HttpComponentsUtil.setParameter(
 			editCalendarURL, namespace + "mvcPath",
 			templatePath + "edit_calendar.jsp");
-		editCalendarURL = HttpHelperUtil.setParameter(
+		editCalendarURL = HttpComponentsUtil.setParameter(
 			editCalendarURL, namespace + "redirect",
 			getRedirect(actionRequest, actionResponse));
-		editCalendarURL = HttpHelperUtil.setParameter(
+		editCalendarURL = HttpComponentsUtil.setParameter(
 			editCalendarURL, namespace + "backURL",
 			ParamUtil.getString(actionRequest, "backURL"));
-		editCalendarURL = HttpHelperUtil.setParameter(
+		editCalendarURL = HttpComponentsUtil.setParameter(
 			editCalendarURL, namespace + "calendarId",
 			calendar.getCalendarId());
 

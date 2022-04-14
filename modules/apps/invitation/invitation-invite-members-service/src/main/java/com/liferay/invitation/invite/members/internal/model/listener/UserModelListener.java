@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,14 +55,14 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			String refererURL = headers.get(WebKeys.REFERER);
 
-			String portletId = HttpHelperUtil.getParameter(
+			String portletId = HttpComponentsUtil.getParameter(
 				refererURL, "p_p_id", false);
 
-			String redirectURL = HttpHelperUtil.getParameter(
+			String redirectURL = HttpComponentsUtil.getParameter(
 				refererURL,
 				_portal.getPortletNamespace(portletId) + "redirectURL", false);
 
-			String key = HttpHelperUtil.getParameter(
+			String key = HttpComponentsUtil.getParameter(
 				redirectURL, _portal.getPortletNamespace(portletId) + "key",
 				false);
 

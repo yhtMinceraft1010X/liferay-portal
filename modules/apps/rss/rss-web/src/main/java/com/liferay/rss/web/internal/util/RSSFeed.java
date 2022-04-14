@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -66,11 +66,11 @@ public class RSSFeed {
 		String syndFeedLink = syndFeed.getLink();
 
 		if (Validator.isNull(syndFeedLink) ||
-			!HttpHelperUtil.hasDomain(syndFeedLink)) {
+			!HttpComponentsUtil.hasDomain(syndFeedLink)) {
 
 			baseURL = StringBundler.concat(
-				HttpHelperUtil.getProtocol(_url), Http.PROTOCOL_DELIMITER,
-				HttpHelperUtil.getDomain(_url));
+				HttpComponentsUtil.getProtocol(_url), Http.PROTOCOL_DELIMITER,
+				HttpComponentsUtil.getDomain(_url));
 
 			if (Validator.isNotNull(syndFeedLink)) {
 				syndFeedLink = baseURL.concat(syndFeedLink);
@@ -81,9 +81,9 @@ public class RSSFeed {
 		}
 		else {
 			baseURL = StringBundler.concat(
-				HttpHelperUtil.getProtocol(syndFeedLink),
+				HttpComponentsUtil.getProtocol(syndFeedLink),
 				Http.PROTOCOL_DELIMITER,
-				HttpHelperUtil.getDomain(syndFeedLink));
+				HttpComponentsUtil.getDomain(syndFeedLink));
 		}
 
 		SyndImage syndImage = syndFeed.getImage();
@@ -91,13 +91,13 @@ public class RSSFeed {
 		if (syndImage != null) {
 			syndFeedImageLink = syndImage.getLink();
 
-			if (!HttpHelperUtil.hasDomain(syndFeedImageLink)) {
+			if (!HttpComponentsUtil.hasDomain(syndFeedImageLink)) {
 				syndFeedImageLink = baseURL + syndFeedImageLink;
 			}
 
 			syndFeedImageURL = syndImage.getUrl();
 
-			if (!HttpHelperUtil.hasDomain(syndFeedImageURL)) {
+			if (!HttpComponentsUtil.hasDomain(syndFeedImageURL)) {
 				syndFeedImageURL = baseURL + syndFeedImageURL;
 			}
 		}

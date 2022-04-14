@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -39,7 +39,7 @@ public class HttpHelperImpl implements HttpHelper {
 	public String[] getFriendlyURLParameters(String urlString) {
 		try {
 			String[] subpath = StringUtil.split(
-				HttpHelperUtil.getPath(urlString),
+				HttpComponentsUtil.getPath(urlString),
 				Portal.FRIENDLY_URL_SEPARATOR);
 
 			return StringUtil.split(
@@ -60,8 +60,8 @@ public class HttpHelperImpl implements HttpHelper {
 
 		try {
 			Map<String, String[]> parameterMap =
-				HttpHelperUtil.parameterMapFromString(
-					HttpHelperUtil.getQueryString(urlString));
+				HttpComponentsUtil.parameterMapFromString(
+					HttpComponentsUtil.getQueryString(urlString));
 
 			String[] parameterValues = parameterMap.get(parameterName);
 
@@ -91,8 +91,8 @@ public class HttpHelperImpl implements HttpHelper {
 
 		try {
 			Map<String, String[]> parameterMap =
-				HttpHelperUtil.parameterMapFromString(
-					HttpHelperUtil.getQueryString(urlString));
+				HttpComponentsUtil.parameterMapFromString(
+					HttpComponentsUtil.getQueryString(urlString));
 
 			return parameterMap.get(
 				StringBundler.concat(

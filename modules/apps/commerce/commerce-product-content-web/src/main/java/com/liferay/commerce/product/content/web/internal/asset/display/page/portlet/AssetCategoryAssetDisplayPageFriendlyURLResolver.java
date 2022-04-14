@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -304,7 +304,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		httpServletRequest.setAttribute(WebKeys.ASSET_CATEGORY, assetCategory);
 
-		String queryString = HttpHelperUtil.parameterMapToString(
+		String queryString = HttpComponentsUtil.parameterMapToString(
 			actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {

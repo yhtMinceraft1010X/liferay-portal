@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
@@ -182,7 +182,7 @@ public class CustomFilterDisplayContextBuilder {
 	}
 
 	private String _getURLCurrentPath() {
-		return HttpHelperUtil.getPath(_themeDisplay.getURLCurrent());
+		return HttpComponentsUtil.getPath(_themeDisplay.getURLCurrent());
 	}
 
 	private Optional<String> _customHeadingOptional = Optional.empty();

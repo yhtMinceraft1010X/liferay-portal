@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -117,7 +117,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 			String portalURL = _portal.getPortalURL(httpServletRequest);
 
-			themeDisplay.setPortalDomain(HttpHelperUtil.getDomain(portalURL));
+			themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
 			themeDisplay.setPortalURL(portalURL);
 
 			themeDisplay.setScopeGroupId(groupId);
@@ -331,7 +331,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			}
 		}
 
-		String queryString = HttpHelperUtil.parameterMapToString(
+		String queryString = HttpComponentsUtil.parameterMapToString(
 			actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {

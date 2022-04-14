@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
@@ -177,7 +177,7 @@ public class DLReferencesExportImportContentProcessor
 					"title",
 					new String[] {
 						StringUtils.substringBefore(
-							HttpHelperUtil.decodeURL(pathArray[4]),
+							HttpComponentsUtil.decodeURL(pathArray[4]),
 							StringPool.POUND)
 					});
 			}
@@ -190,7 +190,7 @@ public class DLReferencesExportImportContentProcessor
 						"title",
 						new String[] {
 							StringUtils.substringBefore(
-								HttpHelperUtil.decodeURL(pathArray[4]),
+								HttpComponentsUtil.decodeURL(pathArray[4]),
 								StringPool.POUND)
 						});
 				}
@@ -206,7 +206,7 @@ public class DLReferencesExportImportContentProcessor
 			dlReference = dlReference.substring(
 				dlReference.indexOf(CharPool.QUESTION) + 1);
 
-			map = HttpHelperUtil.parameterMapFromString(dlReference);
+			map = HttpComponentsUtil.parameterMapFromString(dlReference);
 
 			String[] imageIds = null;
 

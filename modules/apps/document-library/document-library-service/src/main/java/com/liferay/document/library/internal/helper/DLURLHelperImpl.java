@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,7 +87,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			return url;
 		}
 
-		return HttpHelperUtil.addParameter(
+		return HttpComponentsUtil.addParameter(
 			getPreviewURL(
 				fileEntry, fileVersion, themeDisplay, queryString,
 				appendVersion, absoluteURL),

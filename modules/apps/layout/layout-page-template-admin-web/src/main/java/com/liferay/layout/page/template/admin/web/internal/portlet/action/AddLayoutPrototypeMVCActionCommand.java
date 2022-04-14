@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -141,7 +141,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			String backURL = ParamUtil.getString(actionRequest, "backURL");
 
 			if (Validator.isNotNull(backURL)) {
-				redirectURL = HttpHelperUtil.setParameter(
+				redirectURL = HttpComponentsUtil.setParameter(
 					redirectURL, "p_l_back_url", backURL);
 			}
 

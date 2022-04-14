@@ -29,7 +29,7 @@ SearchContainer<WikiPage> wikiPagesSearchContainer = wikiPageItemSelectorViewDis
 </style>
 
 <%
-String searchURL = HttpHelperUtil.removeParameter(
+String searchURL = HttpComponentsUtil.removeParameter(
 	PortletURLBuilder.create(
 		PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
 	).setParameter(

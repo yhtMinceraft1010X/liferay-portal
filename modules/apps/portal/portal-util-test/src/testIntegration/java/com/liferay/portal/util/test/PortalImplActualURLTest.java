@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -136,13 +136,13 @@ public class PortalImplActualURLTest {
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
-		String queryString = HttpHelperUtil.getQueryString(
+		String queryString = HttpComponentsUtil.getQueryString(
 			_portal.getActualURL(
 				_group.getGroupId(), true, Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() + "/node", new HashMap<>(),
 				_getRequestContext()));
 
-		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
+		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
 			queryString);
 
 		Assert.assertNull(parameterMap.get("p_l_id"));

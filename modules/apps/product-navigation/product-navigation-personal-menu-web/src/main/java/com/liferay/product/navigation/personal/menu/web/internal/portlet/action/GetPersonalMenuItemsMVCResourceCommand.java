@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,16 +95,16 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		User realUser = themeDisplay.getRealUser();
 		User user = themeDisplay.getUser();
 
-		String realUserURL = HttpHelperUtil.removeParameter(
+		String realUserURL = HttpComponentsUtil.removeParameter(
 			ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId");
 
-		String userProfileURL = HttpHelperUtil.getPath(
+		String userProfileURL = HttpComponentsUtil.getPath(
 			user.getDisplayURL(themeDisplay, false));
 
 		if (realUserURL.startsWith(userProfileURL)) {
 			realUserURL = StringUtil.replace(
 				realUserURL, userProfileURL,
-				HttpHelperUtil.getPath(
+				HttpComponentsUtil.getPath(
 					realUser.getDisplayURL(themeDisplay, false)));
 
 			PersonalApplicationURLUtil.
@@ -112,13 +112,13 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					realUser, realUser.getGroup(), false);
 		}
 
-		String userDashboardURL = HttpHelperUtil.getPath(
+		String userDashboardURL = HttpComponentsUtil.getPath(
 			user.getDisplayURL(themeDisplay, true));
 
 		if (realUserURL.startsWith(userDashboardURL)) {
 			realUserURL = StringUtil.replace(
 				realUserURL, userDashboardURL,
-				HttpHelperUtil.getPath(
+				HttpComponentsUtil.getPath(
 					realUser.getDisplayURL(themeDisplay, true)));
 
 			PersonalApplicationURLUtil.
@@ -174,7 +174,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			jsonArray.put(
 				JSONUtil.put(
 					"href",
-					HttpHelperUtil.setParameter(
+					HttpComponentsUtil.setParameter(
 						ParamUtil.getString(portletRequest, "currentURL"),
 						"doAsUserLanguageId", doAsUserLanguageId)
 				).put(

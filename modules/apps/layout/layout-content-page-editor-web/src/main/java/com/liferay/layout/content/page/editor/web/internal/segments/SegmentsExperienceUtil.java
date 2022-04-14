@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -335,10 +335,10 @@ public class SegmentsExperienceUtil {
 		ThemeDisplay themeDisplay, String layoutFullURL,
 		long segmentsExperienceId) {
 
-		HttpHelperUtil.addParameter(
+		HttpComponentsUtil.addParameter(
 			layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 
-		return HttpHelperUtil.addParameter(
+		return HttpComponentsUtil.addParameter(
 			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
 	}
 

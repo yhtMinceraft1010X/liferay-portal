@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -95,11 +95,11 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 				PortletURL portletURL = resourceResponse.createActionURL();
 
-				String queryString = HttpHelperUtil.getQueryString(
+				String queryString = HttpComponentsUtil.getQueryString(
 					portletURL.toString());
 
 				String portalAuthenticationToken = MapUtil.getString(
-					HttpHelperUtil.getParameterMap(queryString), "p_auth");
+					HttpComponentsUtil.getParameterMap(queryString), "p_auth");
 
 				printWriter.write(portalAuthenticationToken);
 			}

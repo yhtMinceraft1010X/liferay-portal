@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
@@ -328,27 +328,27 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
 		String from = format.format(calendar.getTime());
 
-		String rangeURL = HttpHelperUtil.removeParameter(
+		String rangeURL = HttpComponentsUtil.removeParameter(
 			_currentURL, "modified");
 
-		rangeURL = HttpHelperUtil.removeParameter(
+		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _paginationStartParameterName);
 
-		rangeURL = HttpHelperUtil.setParameter(rangeURL, "modifiedFrom", from);
+		rangeURL = HttpComponentsUtil.setParameter(rangeURL, "modifiedFrom", from);
 
-		return HttpHelperUtil.setParameter(rangeURL, "modifiedTo", to);
+		return HttpComponentsUtil.setParameter(rangeURL, "modifiedTo", to);
 	}
 
 	private String _getLabeledRangeURL(String label) {
-		String rangeURL = HttpHelperUtil.removeParameter(
+		String rangeURL = HttpComponentsUtil.removeParameter(
 			_currentURL, "modifiedFrom");
 
-		rangeURL = HttpHelperUtil.removeParameter(rangeURL, "modifiedTo");
+		rangeURL = HttpComponentsUtil.removeParameter(rangeURL, "modifiedTo");
 
-		rangeURL = HttpHelperUtil.removeParameter(
+		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _paginationStartParameterName);
 
-		return HttpHelperUtil.setParameter(rangeURL, "modified", label);
+		return HttpComponentsUtil.setParameter(rangeURL, "modified", label);
 	}
 
 	private JSONArray _getRangesJSONArray() {

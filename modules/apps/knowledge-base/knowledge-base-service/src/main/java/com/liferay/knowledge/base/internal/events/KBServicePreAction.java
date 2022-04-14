@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -106,7 +106,7 @@ public class KBServicePreAction extends Action {
 			return;
 		}
 
-		redirect = HttpHelperUtil.setParameter(
+		redirect = HttpComponentsUtil.setParameter(
 			redirect, "p_p_auth", actual_p_p_auth);
 
 		httpServletResponse.sendRedirect(redirect);

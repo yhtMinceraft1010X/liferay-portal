@@ -51,7 +51,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
 				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
 				name="<%= name %>"
-				xml="<%= HttpHelperUtil.decodeURL(value) %>"
+				xml="<%= HttpComponentsUtil.decodeURL(value) %>"
 			/>
 		</c:when>
 		<c:otherwise>

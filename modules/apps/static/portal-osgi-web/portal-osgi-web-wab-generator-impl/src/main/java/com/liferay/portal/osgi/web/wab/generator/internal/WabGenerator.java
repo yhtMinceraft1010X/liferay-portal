@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.ArtifactURLUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.osgi.web.wab.generator.internal.handler.WabURLStreamHandlerService;
@@ -116,7 +116,7 @@ public class WabGenerator
 				}
 
 				if (requiredForStartupContextPaths.remove(
-						HttpHelperUtil.getParameter(
+						HttpComponentsUtil.getParameter(
 							location, "Web-ContextPath", false))) {
 
 					if (_log.isDebugEnabled()) {
@@ -228,7 +228,7 @@ public class WabGenerator
 					URL url = ArtifactURLUtil.transform(uri.toURL());
 
 					contextPaths.add(
-						HttpHelperUtil.getParameter(
+						HttpComponentsUtil.getParameter(
 							url.toString(), "Web-ContextPath", false));
 				}
 			}

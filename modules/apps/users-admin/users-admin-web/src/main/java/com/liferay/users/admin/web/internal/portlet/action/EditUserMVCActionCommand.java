@@ -64,7 +64,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -245,7 +245,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 						redirect, themeDisplay.getI18nPath(), i18nPath);
 				}
 
-				redirect = HttpHelperUtil.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
 					user.getUserId());
 			}
@@ -256,9 +256,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				(userLocalService.fetchUserById(scopeGroup.getClassPK()) ==
 					null)) {
 
-				redirect = HttpHelperUtil.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, "doAsGroupId", 0);
-				redirect = HttpHelperUtil.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, "refererPlid", 0);
 			}
 

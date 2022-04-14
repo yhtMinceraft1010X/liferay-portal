@@ -184,7 +184,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -7013,11 +7013,11 @@ public class JournalArticleLocalServiceImpl
 			PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 
-		articleURL = HttpHelperUtil.addParameter(
+		articleURL = HttpComponentsUtil.addParameter(
 			articleURL, namespace + "groupId", groupId);
-		articleURL = HttpHelperUtil.addParameter(
+		articleURL = HttpComponentsUtil.addParameter(
 			articleURL, namespace + "folderId", folderId);
-		articleURL = HttpHelperUtil.addParameter(
+		articleURL = HttpComponentsUtil.addParameter(
 			articleURL, namespace + "articleId", articleId);
 
 		return articleURL;
@@ -7308,7 +7308,7 @@ public class JournalArticleLocalServiceImpl
 			String articleURL = _portal.getControlPanelFullURL(
 				article.getGroupId(), portletId, null);
 
-			articleURL = HttpHelperUtil.addParameter(
+			articleURL = HttpComponentsUtil.addParameter(
 				articleURL, _portal.getPortletNamespace(portletId) + "mvcPath",
 				"/edit_article.jsp");
 

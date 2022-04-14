@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
@@ -646,7 +646,7 @@ public class PortalImplUnitTest {
 		Assert.assertFalse(_portalImpl.isValidResourceId(sb.toString()));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				HttpHelperUtil.class.getName(), Level.OFF)) {
+				HttpComponentsUtil.class.getName(), Level.OFF)) {
 
 			Assert.assertFalse(_portalImpl.isValidResourceId("%view.jsp"));
 		}

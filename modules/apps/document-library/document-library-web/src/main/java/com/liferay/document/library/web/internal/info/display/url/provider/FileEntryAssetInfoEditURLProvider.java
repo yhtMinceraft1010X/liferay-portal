@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,7 +85,7 @@ public class FileEntryAssetInfoEditURLProvider
 					"p_l_mode", Constants.VIEW);
 
 				try {
-					redirect = HttpHelperUtil.setParameter(
+					redirect = HttpComponentsUtil.setParameter(
 						_portal.getLayoutRelativeURL(layout, themeDisplay),
 						"p_l_mode", mode);
 				}

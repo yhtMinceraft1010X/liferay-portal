@@ -100,7 +100,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -332,17 +332,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
 							String portletResource =
-								HttpHelperUtil.getParameter(
+								HttpComponentsUtil.getParameter(
 									redirect, "portletResource", false);
 
 							String namespace = _portal.getPortletNamespace(
 								portletResource);
 
 							if (Validator.isNotNull(portletResource)) {
-								redirect = HttpHelperUtil.addParameter(
+								redirect = HttpComponentsUtil.addParameter(
 									redirect, namespace + "className",
 									DLFileEntry.class.getName());
-								redirect = HttpHelperUtil.addParameter(
+								redirect = HttpComponentsUtil.addParameter(
 									redirect, namespace + "classPK",
 									fileEntry.getFileEntryId());
 							}

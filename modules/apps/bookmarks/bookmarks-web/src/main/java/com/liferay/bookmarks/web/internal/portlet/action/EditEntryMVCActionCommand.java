@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,16 +115,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (Validator.isNotNull(redirect)) {
 				if (cmd.equals(Constants.ADD) && (entry != null)) {
-					String portletId = HttpHelperUtil.getParameter(
+					String portletId = HttpComponentsUtil.getParameter(
 						redirect, "portletResource", false);
 
 					String namespace = _portal.getPortletNamespace(portletId);
 
 					if (Validator.isNotNull(portletId)) {
-						redirect = HttpHelperUtil.addParameter(
+						redirect = HttpComponentsUtil.addParameter(
 							redirect, namespace + "className",
 							BookmarksEntry.class.getName());
-						redirect = HttpHelperUtil.addParameter(
+						redirect = HttpComponentsUtil.addParameter(
 							redirect, namespace + "classPK",
 							entry.getEntryId());
 					}

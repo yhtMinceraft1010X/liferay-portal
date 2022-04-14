@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -247,7 +247,7 @@ public class PortalCORSServletFilter
 			uri = uri.substring(_contextPath.length());
 		}
 
-		return HttpHelperUtil.normalizePath(uri);
+		return HttpComponentsUtil.normalizePath(uri);
 	}
 
 	private URLPatternMapper<CORSSupport> _getURLPatternMapper(long companyId) {

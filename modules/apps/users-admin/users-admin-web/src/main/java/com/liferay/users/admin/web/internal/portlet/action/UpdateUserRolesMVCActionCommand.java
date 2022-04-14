@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -205,14 +205,14 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 			if (Validator.isNotNull(redirect)) {
 				Map<String, String[]> parameterMap =
-					HttpHelperUtil.getParameterMap(redirect);
+					HttpComponentsUtil.getParameterMap(redirect);
 
 				backURL = parameterMap.get(portletNamespace + "backURL")[0];
 			}
 
 			if (Validator.isNotNull(backURL)) {
 				Map<String, String[]> parameterMap =
-					HttpHelperUtil.getParameterMap(backURL);
+					HttpComponentsUtil.getParameterMap(backURL);
 
 				organizationId = GetterUtil.getLong(
 					parameterMap.get(portletNamespace + "organizationId")[0]);

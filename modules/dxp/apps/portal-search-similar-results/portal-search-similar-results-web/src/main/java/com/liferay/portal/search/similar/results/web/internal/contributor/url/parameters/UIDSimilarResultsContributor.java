@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
@@ -44,7 +44,7 @@ public class UIDSimilarResultsContributor implements SimilarResultsContributor {
 			UID,
 			Objects.requireNonNull(
 				_httpHelper.getPortletIdParameter(
-					HttpHelperUtil.decodePath(routeHelper.getURLString()),
+					HttpComponentsUtil.decodePath(routeHelper.getURLString()),
 					UID)));
 	}
 

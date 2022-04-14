@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -69,7 +69,7 @@ public class WabDirURLStreamHandlerService
 
 			File warDir = new File(uri);
 
-			String bundleSymbolicName = HttpHelperUtil.getParameter(
+			String bundleSymbolicName = HttpComponentsUtil.getParameter(
 				url.toExternalForm(), "Bundle-SymbolicName");
 
 			if (bundleSymbolicName.equals(StringPool.BLANK)) {
@@ -84,7 +84,7 @@ public class WabDirURLStreamHandlerService
 				bundleSymbolicName = _getNameFromProperties(warDir);
 			}
 
-			String contextName = HttpHelperUtil.getParameter(
+			String contextName = HttpComponentsUtil.getParameter(
 				url.toExternalForm(), "Web-ContextPath");
 
 			if (contextName.equals(StringPool.BLANK)) {

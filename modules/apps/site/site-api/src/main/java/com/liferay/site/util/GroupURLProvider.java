@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -123,13 +123,13 @@ public class GroupURLProvider {
 					SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL)));
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpHelperUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return HttpComponentsUtil.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpHelperUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return HttpComponentsUtil.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		if (includeStagingGroup && group.hasStagingGroup()) {

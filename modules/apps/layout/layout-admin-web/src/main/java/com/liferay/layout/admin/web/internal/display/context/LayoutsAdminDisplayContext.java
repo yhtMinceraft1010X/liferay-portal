@@ -78,7 +78,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -534,7 +534,7 @@ public class LayoutsAdminDisplayContext {
 			friendlyURLBase.append(
 				group.getPathFriendlyURL(isPrivateLayout(), themeDisplay));
 			friendlyURLBase.append(
-				HttpHelperUtil.decodeURL(group.getFriendlyURL()));
+				HttpComponentsUtil.decodeURL(group.getFriendlyURL()));
 		}
 
 		return friendlyURLBase.toString();
@@ -1239,7 +1239,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		try {
-			layoutFullURL = HttpHelperUtil.setParameter(
+			layoutFullURL = HttpComponentsUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _getBackURL());
 		}
 		catch (Exception exception) {
@@ -1862,11 +1862,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		String layoutFullURL = HttpHelperUtil.setParameter(
+		String layoutFullURL = HttpComponentsUtil.setParameter(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
 			"p_l_back_url", _getBackURL());
 
-		return HttpHelperUtil.setParameter(
+		return HttpComponentsUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 

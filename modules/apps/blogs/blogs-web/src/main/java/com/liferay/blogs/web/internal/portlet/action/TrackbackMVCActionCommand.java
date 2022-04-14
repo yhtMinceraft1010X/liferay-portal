@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -216,7 +216,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 				"Trackback requires a valid permanent URL");
 		}
 
-		String trackbackIP = HttpHelperUtil.getIpAddress(url);
+		String trackbackIP = HttpComponentsUtil.getIpAddress(url);
 
 		if (!remoteIP.equals(trackbackIP)) {
 			throw new TrackbackValidationException(

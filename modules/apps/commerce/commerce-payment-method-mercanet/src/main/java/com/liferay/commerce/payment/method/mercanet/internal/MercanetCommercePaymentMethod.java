@@ -33,7 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -177,7 +177,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 
 		URL returnURL = new URL(mercanetCommercePaymentRequest.getReturnUrl());
 
-		Map<String, String[]> parameters = HttpHelperUtil.getParameterMap(
+		Map<String, String[]> parameters = HttpComponentsUtil.getParameterMap(
 			returnURL.getQuery());
 
 		URL baseURL = new URL(

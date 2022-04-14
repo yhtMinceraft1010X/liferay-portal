@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -476,10 +476,10 @@ public class EditStyleBookEntryDisplayContext {
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			StyleBookPortletKeys.STYLE_BOOK);
 
-		url = HttpHelperUtil.addParameter(
+		url = HttpComponentsUtil.addParameter(
 			url, portletNamespace + "groupId", groupId);
 
-		return HttpHelperUtil.addParameter(
+		return HttpComponentsUtil.addParameter(
 			url, portletNamespace + "fragmentCollectionKey",
 			fragmentCollectionKey);
 	}
@@ -498,15 +498,15 @@ public class EditStyleBookEntryDisplayContext {
 
 	private String _getPreviewURL(Layout layout) {
 		try {
-			String layoutURL = HttpHelperUtil.addParameter(
+			String layoutURL = HttpComponentsUtil.addParameter(
 				PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
 				Constants.PREVIEW);
 
-			layoutURL = HttpHelperUtil.addParameter(
+			layoutURL = HttpComponentsUtil.addParameter(
 				layoutURL, "p_p_auth",
 				AuthTokenUtil.getToken(_httpServletRequest));
 
-			return HttpHelperUtil.addParameter(
+			return HttpComponentsUtil.addParameter(
 				layoutURL, "styleBookEntryPreview", true);
 		}
 		catch (PortalException portalException) {
@@ -540,11 +540,11 @@ public class EditStyleBookEntryDisplayContext {
 				getPagePreviewURL.setResourceID(
 					"/layout_content_page_editor/get_page_preview");
 
-				String url = HttpHelperUtil.addParameter(
+				String url = HttpComponentsUtil.addParameter(
 					getPagePreviewURL.toString(), "p_l_mode",
 					Constants.PREVIEW);
 
-				return HttpHelperUtil.addParameter(
+				return HttpComponentsUtil.addParameter(
 					url, "styleBookEntryPreview", true);
 			}
 

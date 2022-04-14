@@ -130,7 +130,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						inputAddon="<%= StringUtil.shorten(friendlyURLBase, 40) %>"
 						name="urlTitleMapAsXML"
 						xml="<%=
-							HttpHelperUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML())
+							HttpComponentsUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML())
 						%>"
 					/>
 				</div>

@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -236,7 +236,7 @@ public class CTDocumentServlet extends HttpServlet {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			List<String> pathInfos = StringUtil.split(
-				HttpHelperUtil.fixPath(
+				HttpComponentsUtil.fixPath(
 					httpServletRequest.getPathInfo(), true, true),
 				CharPool.SLASH);
 
@@ -251,12 +251,12 @@ public class CTDocumentServlet extends HttpServlet {
 			_modelResourcePermission.check(
 				permissionChecker, ctCollection, ActionKeys.VIEW);
 
-			String key = HttpHelperUtil.decodeURL(pathInfos.get(2));
+			String key = HttpComponentsUtil.decodeURL(pathInfos.get(2));
 
 			String fileTitle = ParamUtil.getString(
 				httpServletRequest, "title", key);
 
-			String type = HttpHelperUtil.decodeURL(pathInfos.get(1));
+			String type = HttpComponentsUtil.decodeURL(pathInfos.get(1));
 			long fileSize = ParamUtil.getLong(httpServletRequest, "size");
 
 			ServletResponseUtil.sendFile(
