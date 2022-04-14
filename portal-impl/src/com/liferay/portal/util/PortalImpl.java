@@ -8101,6 +8101,11 @@ public class PortalImpl implements Portal {
 
 		int pos = canonicalURL.indexOf(virtualHostname);
 
+		if (pos < 0) {
+			pos = canonicalURL.indexOf(portalDomain);
+			virtualHostname = portalDomain;
+		}
+
 		if (pos > 0) {
 			pos = canonicalURL.indexOf(
 				CharPool.SLASH, pos + virtualHostname.length());
