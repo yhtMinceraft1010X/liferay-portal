@@ -209,7 +209,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		long parentFolderId = folderIds.get(folderIds.size() - 1);
 
 		Folder folder = DLAppServiceUtil.getFolder(
-			groupId, parentFolderId, HttpComponentsUtil.decodePath(pathArray[0]));
+			groupId, parentFolderId,
+			HttpComponentsUtil.decodePath(pathArray[0]));
 
 		folderIds.add(folder.getFolderId());
 

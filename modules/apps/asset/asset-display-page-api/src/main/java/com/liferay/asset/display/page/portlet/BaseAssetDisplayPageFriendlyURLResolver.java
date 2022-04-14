@@ -505,7 +505,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 			queryString =
 				StringPool.AMPERSAND +
-					HttpComponentsUtil.parameterMapToString(actualParams, false);
+					HttpComponentsUtil.parameterMapToString(
+						actualParams, false);
 
 			break;
 		}

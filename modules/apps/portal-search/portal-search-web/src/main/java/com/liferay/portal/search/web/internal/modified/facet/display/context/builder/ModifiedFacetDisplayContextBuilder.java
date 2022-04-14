@@ -334,7 +334,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _paginationStartParameterName);
 
-		rangeURL = HttpComponentsUtil.setParameter(rangeURL, "modifiedFrom", from);
+		rangeURL = HttpComponentsUtil.setParameter(
+			rangeURL, "modifiedFrom", from);
 
 		return HttpComponentsUtil.setParameter(rangeURL, "modifiedTo", to);
 	}

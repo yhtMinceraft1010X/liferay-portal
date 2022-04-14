@@ -123,13 +123,15 @@ public class GroupURLProvider {
 					SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL)));
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpComponentsUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return HttpComponentsUtil.removeParameter(
+				groupDisplayURL, "p_p_id");
 		}
 
 		groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpComponentsUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return HttpComponentsUtil.removeParameter(
+				groupDisplayURL, "p_p_id");
 		}
 
 		if (includeStagingGroup && group.hasStagingGroup()) {

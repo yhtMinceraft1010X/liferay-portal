@@ -226,7 +226,8 @@ public class ActionRequestPortletContainerTest
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE));
 
-		url = HttpComponentsUtil.setParameter(url, "p_auth", response.getBody());
+		url = HttpComponentsUtil.setParameter(
+			url, "p_auth", response.getBody());
 
 		response = PortletContainerTestUtil.request(
 			url, Collections.singletonMap("Cookie", response.getCookies()));
@@ -346,8 +347,9 @@ public class ActionRequestPortletContainerTest
 
 			PortletURL portletURL = resourceResponse.createActionURL();
 
-			Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-				HttpComponentsUtil.getQueryString(portletURL.toString()));
+			Map<String, String[]> parameterMap =
+				HttpComponentsUtil.getParameterMap(
+					HttpComponentsUtil.getQueryString(portletURL.toString()));
 
 			String portalAuthenticationToken = MapUtil.getString(
 				parameterMap, "p_auth");

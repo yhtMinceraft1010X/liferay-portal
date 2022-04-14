@@ -124,7 +124,8 @@ public class CommerceMediaServlet extends HttpServlet {
 	private FileEntry _getFileEntry(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		String path = HttpComponentsUtil.fixPath(httpServletRequest.getPathInfo());
+		String path = HttpComponentsUtil.fixPath(
+			httpServletRequest.getPathInfo());
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
@@ -243,7 +244,8 @@ public class CommerceMediaServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String contentDisposition)
 		throws IOException {
 
-		String path = HttpComponentsUtil.fixPath(httpServletRequest.getPathInfo());
+		String path = HttpComponentsUtil.fixPath(
+			httpServletRequest.getPathInfo());
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 

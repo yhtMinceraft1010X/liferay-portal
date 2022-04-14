@@ -44,14 +44,16 @@ public class ThemeDisplayModel {
 		_pathMain = themeDisplay.getPathMain();
 		_pathThemeImages = themeDisplay.getPathThemeImages();
 		_plid = themeDisplay.getPlid();
-		_portalURL = HttpComponentsUtil.removeProtocol(themeDisplay.getPortalURL());
+		_portalURL = HttpComponentsUtil.removeProtocol(
+			themeDisplay.getPortalURL());
 		_realUserId = themeDisplay.getRealUserId();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 		_secure = themeDisplay.isSecure();
 		_serverName = themeDisplay.getServerName();
 		_serverPort = themeDisplay.getServerPort();
 		_timeZone = themeDisplay.getTimeZone();
-		_urlPortal = HttpComponentsUtil.removeProtocol(themeDisplay.getURLPortal());
+		_urlPortal = HttpComponentsUtil.removeProtocol(
+			themeDisplay.getURLPortal());
 		_userId = themeDisplay.getUserId();
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

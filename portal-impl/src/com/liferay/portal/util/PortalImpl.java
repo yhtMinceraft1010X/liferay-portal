@@ -4337,7 +4337,8 @@ public class PortalImpl implements Portal {
 
 			queryString =
 				StringPool.AMPERSAND +
-					HttpComponentsUtil.parameterMapToString(actualParams, false);
+					HttpComponentsUtil.parameterMapToString(
+						actualParams, false);
 
 			break;
 		}

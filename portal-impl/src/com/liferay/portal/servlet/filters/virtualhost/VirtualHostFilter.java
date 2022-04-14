@@ -273,7 +273,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 			String parameters = StringPool.BLANK;
 
 			if (!parameterMap.isEmpty()) {
-				parameters = HttpComponentsUtil.parameterMapToString(parameterMap);
+				parameters = HttpComponentsUtil.parameterMapToString(
+					parameterMap);
 			}
 
 			LastPath lastPath = new LastPath(

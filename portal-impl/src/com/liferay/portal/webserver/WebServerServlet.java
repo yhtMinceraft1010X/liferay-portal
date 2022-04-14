@@ -1208,7 +1208,8 @@ public class WebServerServlet extends HttpServlet {
 
 		for (Group group : groups) {
 			if (_isDirectoryIndexingEnabled(group)) {
-				String name = HttpComponentsUtil.fixPath(group.getFriendlyURL());
+				String name = HttpComponentsUtil.fixPath(
+					group.getFriendlyURL());
 
 				WebServerEntry webServerEntry = new WebServerEntry(
 					path, name + StringPool.SLASH, null, null,
@@ -1528,7 +1529,8 @@ public class WebServerServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String path = HttpComponentsUtil.fixPath(httpServletRequest.getPathInfo());
+		String path = HttpComponentsUtil.fixPath(
+			httpServletRequest.getPathInfo());
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 

@@ -89,7 +89,8 @@ public class AuthenticatedSessionManagerImpl
 		httpServletRequest = PortalUtil.getOriginalServletRequest(
 			httpServletRequest);
 
-		String queryString = HttpComponentsUtil.getQueryString(httpServletRequest);
+		String queryString = HttpComponentsUtil.getQueryString(
+			httpServletRequest);
 
 		if (Validator.isNotNull(queryString) &&
 			queryString.contains("password=")) {

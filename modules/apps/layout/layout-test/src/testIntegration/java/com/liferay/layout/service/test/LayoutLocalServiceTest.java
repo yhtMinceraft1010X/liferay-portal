@@ -258,7 +258,8 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpComponentsUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpComponentsUtil.decodeURL(
+			StringPool.SLASH + name);
 
 		friendlyURL = HttpComponentsUtil.decodeURL(friendlyURL);
 
@@ -279,7 +280,8 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpComponentsUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpComponentsUtil.decodeURL(
+			StringPool.SLASH + name);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,

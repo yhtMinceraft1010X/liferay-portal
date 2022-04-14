@@ -664,7 +664,8 @@ public class JournalUtil {
 		tokens.put("portal_ctx", themeDisplayModel.getPathContext());
 		tokens.put(
 			"portal_url",
-			HttpComponentsUtil.removeProtocol(themeDisplayModel.getURLPortal()));
+			HttpComponentsUtil.removeProtocol(
+				themeDisplayModel.getURLPortal()));
 		tokens.put(
 			"protocol",
 			HttpComponentsUtil.getProtocol(themeDisplayModel.getURLPortal()));

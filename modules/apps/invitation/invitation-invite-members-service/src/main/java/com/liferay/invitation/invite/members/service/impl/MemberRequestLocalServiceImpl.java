@@ -282,7 +282,8 @@ public class MemberRequestLocalServiceImpl
 	protected static String addParameterWithPortletNamespace(
 		String url, String name, String value) {
 
-		String portletId = HttpComponentsUtil.getParameter(url, "p_p_id", false);
+		String portletId = HttpComponentsUtil.getParameter(
+			url, "p_p_id", false);
 
 		if (Validator.isNotNull(portletId)) {
 			name = PortalUtil.getPortletNamespace(portletId) + name;
@@ -336,7 +337,8 @@ public class MemberRequestLocalServiceImpl
 		redirectURL = addParameterWithPortletNamespace(
 			redirectURL, "key", memberRequest.getKey());
 
-		return HttpComponentsUtil.addParameter(loginURL, "redirect", redirectURL);
+		return HttpComponentsUtil.addParameter(
+			loginURL, "redirect", redirectURL);
 	}
 
 	protected String getRedirectURL(ServiceContext serviceContext) {

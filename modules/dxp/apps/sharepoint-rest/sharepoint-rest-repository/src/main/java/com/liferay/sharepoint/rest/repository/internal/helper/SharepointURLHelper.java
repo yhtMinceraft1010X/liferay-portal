@@ -38,7 +38,8 @@ public class SharepointURLHelper {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativePath(decodedUrl='%s')/Files" +
 				"/Add(overwrite=false,url='%s')",
-			_siteAbsoluteURL, HttpComponentsUtil.encodePath(extRepositoryFolderKey),
+			_siteAbsoluteURL,
+			HttpComponentsUtil.encodePath(extRepositoryFolderKey),
 			HttpComponentsUtil.encodePath(name));
 	}
 
@@ -128,7 +129,8 @@ public class SharepointURLHelper {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativePath(decodedUrl='%s')" +
 				"/Files?$select=%s&$expand=%s",
-			_siteAbsoluteURL, HttpComponentsUtil.encodePath(extRepositoryFolderKey),
+			_siteAbsoluteURL,
+			HttpComponentsUtil.encodePath(extRepositoryFolderKey),
 			_FIELDS_SELECTED_FILE, _FIELDS_EXPANDED_FILE);
 	}
 
@@ -158,7 +160,8 @@ public class SharepointURLHelper {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativePath(decodedUrl='%s')" +
 				"/Folders?$select=%s&$expand=%s",
-			_siteAbsoluteURL, HttpComponentsUtil.encodePath(extRepositoryFolderKey),
+			_siteAbsoluteURL,
+			HttpComponentsUtil.encodePath(extRepositoryFolderKey),
 			_FIELDS_SELECTED_FOLDER, _FIELDS_EXPANDED_FOLDER);
 	}
 
@@ -218,7 +221,8 @@ public class SharepointURLHelper {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativePath(decodedUrl='%s')" +
 				"?$select=%s&$expand=%s",
-			_siteAbsoluteURL, HttpComponentsUtil.encodePath(extRepositoryObjectKey),
+			_siteAbsoluteURL,
+			HttpComponentsUtil.encodePath(extRepositoryObjectKey),
 			_FIELDS_SELECTED_FOLDER, _FIELDS_EXPANDED_FOLDER);
 	}
 

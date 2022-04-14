@@ -93,8 +93,10 @@ public class OpenSearchUtil {
 		searchURL = HttpComponentsUtil.addParameter(
 			searchURL, "keywords", URLCodec.encodeURL(keywords));
 		searchURL = HttpComponentsUtil.addParameter(searchURL, "p", page);
-		searchURL = HttpComponentsUtil.addParameter(searchURL, "c", itemsPerPage);
-		searchURL = HttpComponentsUtil.addParameter(searchURL, "format", "atom");
+		searchURL = HttpComponentsUtil.addParameter(
+			searchURL, "c", itemsPerPage);
+		searchURL = HttpComponentsUtil.addParameter(
+			searchURL, "format", "atom");
 
 		link.addAttribute("href", searchURL);
 

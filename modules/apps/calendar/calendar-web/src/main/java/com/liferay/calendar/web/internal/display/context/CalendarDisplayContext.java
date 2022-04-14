@@ -223,7 +223,8 @@ public class CalendarDisplayContext {
 
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
-		String ppid = HttpComponentsUtil.getParameter(redirect, "p_p_id", false);
+		String ppid = HttpComponentsUtil.getParameter(
+			redirect, "p_p_id", false);
 
 		if (ppid.equals(CalendarPortletKeys.CALENDAR)) {
 			return defaultURL;

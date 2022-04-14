@@ -101,7 +101,8 @@ public class SearchInputTag extends IncludeTag {
 		String searchActionURL = String.valueOf(_actionURL);
 
 		List<String> parameters = StringUtil.split(
-			HttpComponentsUtil.getQueryString(searchActionURL), CharPool.AMPERSAND);
+			HttpComponentsUtil.getQueryString(searchActionURL),
+			CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() == 0) {

@@ -138,7 +138,8 @@ public class RenderRequestPortletContainerTest
 					portletURL.toString());
 
 				String portletAuthenticationToken = MapUtil.getString(
-					HttpComponentsUtil.getParameterMap(queryString), "p_p_auth");
+					HttpComponentsUtil.getParameterMap(queryString),
+					"p_p_auth");
 
 				printWriter.write(portletAuthenticationToken);
 			}
@@ -174,7 +175,8 @@ public class RenderRequestPortletContainerTest
 			WindowState.MAXIMIZED
 		).buildString();
 
-		url = HttpComponentsUtil.setParameter(url, "p_p_auth", response.getBody());
+		url = HttpComponentsUtil.setParameter(
+			url, "p_p_auth", response.getBody());
 
 		response = PortletContainerTestUtil.request(
 			url, Collections.singletonMap("Cookie", response.getCookies()));

@@ -174,7 +174,8 @@ public class I18nServletTest extends I18nServlet {
 		I18nData i18nData = getI18nData(mockHttpServletRequest);
 
 		Assert.assertEquals(
-			HttpComponentsUtil.encodePath(specialCharacters), i18nData.getPath());
+			HttpComponentsUtil.encodePath(specialCharacters),
+			i18nData.getPath());
 	}
 
 	@Test

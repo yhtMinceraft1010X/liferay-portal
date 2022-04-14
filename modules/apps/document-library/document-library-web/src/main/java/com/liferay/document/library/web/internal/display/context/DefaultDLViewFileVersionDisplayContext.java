@@ -196,7 +196,8 @@ public class DefaultDLViewFileVersionDisplayContext
 			FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() &&
 			!Validator.isBlank(friendlyURL)) {
 
-			return HttpComponentsUtil.addParameter(friendlyURL, "download", true);
+			return HttpComponentsUtil.addParameter(
+				friendlyURL, "download", true);
 		}
 
 		ThemeDisplay themeDisplay =

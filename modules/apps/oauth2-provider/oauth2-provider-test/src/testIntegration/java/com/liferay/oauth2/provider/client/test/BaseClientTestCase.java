@@ -368,8 +368,8 @@ public abstract class BaseClientTestCase {
 				return response;
 			}
 
-			Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-				uri.getQuery());
+			Map<String, String[]> parameterMap =
+				HttpComponentsUtil.getParameterMap(uri.getQuery());
 
 			if (parameterMap.containsKey("error") || skipAuthorization) {
 				return response;

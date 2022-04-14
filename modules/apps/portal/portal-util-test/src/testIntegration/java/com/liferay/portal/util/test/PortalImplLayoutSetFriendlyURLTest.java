@@ -91,7 +91,8 @@ public class PortalImplLayoutSetFriendlyURLTest
 
 		Assert.assertEquals(
 			"impersonated",
-			HttpComponentsUtil.getParameter(layoutSetFriendlyURL, "doAsUserId"));
+			HttpComponentsUtil.getParameter(
+				layoutSetFriendlyURL, "doAsUserId"));
 	}
 
 	@Inject

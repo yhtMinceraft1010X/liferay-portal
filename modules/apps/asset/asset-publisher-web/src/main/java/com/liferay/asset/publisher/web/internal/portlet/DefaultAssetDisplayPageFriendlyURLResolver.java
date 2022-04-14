@@ -117,7 +117,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 			String portalURL = _portal.getPortalURL(httpServletRequest);
 
-			themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
+			themeDisplay.setPortalDomain(
+				HttpComponentsUtil.getDomain(portalURL));
 			themeDisplay.setPortalURL(portalURL);
 
 			themeDisplay.setScopeGroupId(groupId);

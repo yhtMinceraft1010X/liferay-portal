@@ -357,12 +357,14 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 	private void _assertDoesNotHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNull(HttpComponentsUtil.getParameter(url, name, false)));
+			Validator.isNull(
+				HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNotNull(HttpComponentsUtil.getParameter(url, name, false)));
+			Validator.isNotNull(
+				HttpComponentsUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertTermDisplayContextsDoNotHaveFromAndToParameters(

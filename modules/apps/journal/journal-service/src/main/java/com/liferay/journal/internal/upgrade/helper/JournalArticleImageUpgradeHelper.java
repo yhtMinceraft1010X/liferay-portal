@@ -202,7 +202,8 @@ public class JournalArticleImageUpgradeHelper {
 
 		long groupId = GetterUtil.getLong(splitURL[2]);
 		long folderId = GetterUtil.getLong(splitURL[3]);
-		String title = HttpComponentsUtil.decodeURL(HtmlUtil.escape(splitURL[4]));
+		String title = HttpComponentsUtil.decodeURL(
+			HtmlUtil.escape(splitURL[4]));
 
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
