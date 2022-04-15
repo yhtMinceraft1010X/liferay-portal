@@ -58,7 +58,7 @@ public class UpgradePortletPreferences
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"UpdateProcess ", portletId, " from portletPreferences ",
+					"Portlet ", portletId, " with portlet preferences ",
 					MapUtil.toString(portletPreferences.getMap())));
 		}
 
