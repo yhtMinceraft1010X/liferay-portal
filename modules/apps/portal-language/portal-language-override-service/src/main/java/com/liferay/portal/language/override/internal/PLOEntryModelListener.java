@@ -63,7 +63,7 @@ public class PLOEntryModelListener
 	}
 
 	private static void _onNotify(
-		String osgiServiceIdentifier, MethodType methodType,
+		MethodType methodType, String osgiServiceIdentifier,
 		PLOEntry ploEntry) {
 
 		PLOEntryModelListener ploEntryModelListener =
@@ -115,8 +115,8 @@ public class PLOEntryModelListener
 		PLOEntryModelListener.class.getName());
 
 	private static final MethodKey _onNotifyMethodKey = new MethodKey(
-		PLOEntryModelListener.class, "_onNotify", String.class,
-		MethodType.class, PLOEntry.class);
+		PLOEntryModelListener.class, "_onNotify", MethodType.class,
+		String.class, PLOEntry.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
