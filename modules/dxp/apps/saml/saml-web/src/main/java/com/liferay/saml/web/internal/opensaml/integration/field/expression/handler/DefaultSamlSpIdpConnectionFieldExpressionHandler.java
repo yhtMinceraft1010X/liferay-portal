@@ -79,11 +79,13 @@ public class DefaultSamlSpIdpConnectionFieldExpressionHandler
 			(samlSpIdpConnection, metadataDelivery) -> {
 				if (metadataDelivery.equals("metadataXml")) {
 					samlSpIdpConnection.setMetadataUrl(null);
+
 					samlSpIdpConnectionBind.handleFileItemArray(
 						"metadataXml", this::_setMetadataXml);
 				}
 				else {
 					samlSpIdpConnection.setMetadataXml(null);
+
 					samlSpIdpConnectionBind.mapString(
 						"metadataUrl", SamlSpIdpConnection::setMetadataUrl);
 				}
