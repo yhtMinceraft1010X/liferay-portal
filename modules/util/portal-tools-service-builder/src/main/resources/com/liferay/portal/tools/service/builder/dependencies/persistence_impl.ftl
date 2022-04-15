@@ -31,6 +31,15 @@
 	/>
 </#if>
 
+<#assign
+	finderFieldSQLSuffix = "_SQL"
+	useCache = "useFinderCache"
+/>
+
+<#if entity.isChangeTrackingEnabled()>
+	<#assign useCache = "useFinderCache && productionMode" />
+</#if>
+
 <#if entity.hasUuid() && osgiModule && serviceBuilder.isVersionGTE_7_4_0()>
 	<#assign
 		portalUUID = "_portalUUID"
@@ -39,15 +48,6 @@
 	<#assign
 		portalUUID = "PortalUUIDUtil"
 	/>
-</#if>
-
-<#assign
-	finderFieldSQLSuffix = "_SQL"
-	useCache = "useFinderCache"
-/>
-
-<#if entity.isChangeTrackingEnabled()>
-	<#assign useCache = "useFinderCache && productionMode" />
 </#if>
 
 package ${packagePath}.service.persistence.impl;
