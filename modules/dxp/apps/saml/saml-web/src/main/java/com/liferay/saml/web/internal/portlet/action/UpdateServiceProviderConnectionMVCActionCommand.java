@@ -72,8 +72,8 @@ public class UpdateServiceProviderConnectionMVCActionCommand
 		boolean encryptionForced = ParamUtil.getBoolean(
 			uploadPortletRequest, "encryptionForced");
 
-		String metadataUrl;
-		InputStream metadataXmlInputStream;
+		String metadataUrl = null;
+		InputStream metadataXmlInputStream = null;
 
 		if (Objects.equals(
 				ParamUtil.getString(uploadPortletRequest, "metadataDelivery"),

@@ -24,15 +24,14 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION);
 UserFieldExpressionResolverRegistry userFieldExpressionResolverRegistry = (UserFieldExpressionResolverRegistry)request.getAttribute(UserFieldExpressionResolverRegistry.class.getName());
 
-boolean metadataXmlUploaded;
-String userIdentifierExpression;
+boolean metadataXmlUploaded = false;
+String userIdentifierExpression = null;
 
 if (samlSpIdpConnection != null) {
 	metadataXmlUploaded = Validator.isNull(samlSpIdpConnection.getMetadataUrl()) && Validator.isNotNull(samlSpIdpConnection.getMetadataXml());
 	userIdentifierExpression = samlSpIdpConnection.getUserIdentifierExpression();
 }
 else {
-	metadataXmlUploaded = false;
 	userIdentifierExpression = userFieldExpressionResolverRegistry.getDefaultUserFieldExpressionResolverKey();
 }
 %>
