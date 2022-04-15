@@ -88,8 +88,6 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setForceAuthn(forceAuthn);
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
 		samlSpIdpConnection.setMetadataUpdatedDate(new Date());
-		samlSpIdpConnection.setUnknownUsersAreStrangers(
-			unknownUsersAreStrangers);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -119,6 +117,8 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setNameIdFormat(nameIdFormat);
 		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
+		samlSpIdpConnection.setUnknownUsersAreStrangers(
+			unknownUsersAreStrangers);
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 		samlSpIdpConnection.setUserIdentifierExpression(
 			userIdentifierExpression);
