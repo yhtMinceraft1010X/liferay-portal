@@ -170,7 +170,7 @@ public class DefaultSamlSpIdpConnectionFieldExpressionHandler
 
 		if (ArrayUtil.isEmpty(fileItems)) {
 
-			// Dereference metadataUrl
+			// Dereference metadata XML
 
 			samlSpIdpConnection.setMetadataXml(null);
 
