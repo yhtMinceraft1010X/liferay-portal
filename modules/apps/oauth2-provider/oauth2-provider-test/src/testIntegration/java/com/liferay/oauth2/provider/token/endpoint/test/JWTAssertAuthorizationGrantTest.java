@@ -210,13 +210,11 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 				_TEST_CLIENT_SECRET, Arrays.asList(GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
-
 			createOAuth2ApplicationWithClientSecretJWT(
 				user.getCompanyId(), user, _TEST_CLIENT_ID_2,
 				_TEST_CLIENT_SECRET, Arrays.asList(GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
-
 			createOAuth2ApplicationWithPrivateKeyJWT(
 				user.getCompanyId(), user, _TEST_CLIENT_ID_3,
 				Arrays.asList(GrantType.JWT_BEARER), JWTAssertionUtil.JWKS,
