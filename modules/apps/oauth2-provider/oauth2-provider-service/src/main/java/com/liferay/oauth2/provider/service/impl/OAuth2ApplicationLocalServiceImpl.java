@@ -780,7 +780,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 		else {
 			throw new PortalException(
-				"Unrecognized Client Authentication Method");
+				"Unrecognized client authentication method");
 		}
 
 		if (!Validator.isBlank(clientId)) {
