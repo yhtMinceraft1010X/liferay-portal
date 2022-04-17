@@ -736,7 +736,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		if (clientAuthenticationMethod.equals(
 				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE)) {
 
-			// public client
+			// Public client
 
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsPublicClients()) {
@@ -749,7 +749,7 @@ public class OAuth2ApplicationLocalServiceImpl
 					OAuthConstants.TOKEN_ENDPOINT_AUTH_POST) ||
 				 clientAuthenticationMethod.equals("client_secret_jwt")) {
 
-			// confidential client using client secret
+			// Confidential client with secret
 
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsConfidentialClients()) {
@@ -765,7 +765,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 		else if (clientAuthenticationMethod.equals("private_key_jwt")) {
 
-			// confidential client using private/public key
+			// Confidential client with private/public keys
 
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsConfidentialClients()) {
