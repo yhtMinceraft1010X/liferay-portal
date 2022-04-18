@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -273,10 +274,10 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
 			try {
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
 				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
 					objectEntriesPage = _objectEntryManager.getObjectEntries(
 						serviceContext.getCompanyId(), _objectDefinition, null,
@@ -300,7 +301,7 @@ public class ObjectEntryItemSelectorView
 			return searchContainer;
 		}
 
-		private DefaultDTOConverterContext _getDTOConverterContext() {
+		private DTOConverterContext _getDTOConverterContext() {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
