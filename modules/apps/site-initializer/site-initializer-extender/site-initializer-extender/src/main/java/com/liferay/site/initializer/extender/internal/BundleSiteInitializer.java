@@ -74,6 +74,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -210,6 +211,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
@@ -264,6 +266,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
+		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
@@ -1693,6 +1696,40 @@ public class BundleSiteInitializer implements SiteInitializer {
 			objectDefinitionIdsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
+
+			if (Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY) &&
+				(existingObjectDefinition != null)) {
+
+				continue;
+			}
+
+			String objectActionsJSON = SiteInitializerUtil.read(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".object-actions.json"),
+				_servletContext);
+
+			if (objectActionsJSON == null) {
+				continue;
+			}
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				objectActionsJSON);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				_objectActionLocalService.addObjectAction(
+					serviceContext.getUserId(), objectDefinition.getId(),
+					jsonObject.getBoolean("active"),
+					jsonObject.getString("name"),
+					jsonObject.getString("objectActionExecutorKey"),
+					jsonObject.getString("objectActionTriggerKey"),
+					UnicodePropertiesBuilder.put(
+						"parameters", jsonObject.getString("parameters")
+					).build());
+			}
 		}
 
 		return objectDefinitionIdsStringUtilReplaceValues;
@@ -3247,6 +3284,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeDefinitionResourceFactory;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
