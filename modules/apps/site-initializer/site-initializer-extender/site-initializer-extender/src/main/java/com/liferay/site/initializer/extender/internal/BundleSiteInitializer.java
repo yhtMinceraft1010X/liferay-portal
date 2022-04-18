@@ -124,7 +124,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -423,13 +422,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.fetchUser()
 				).build();
 
-			Map<String, ObjectDefinition> createdObjectDefinitions =
-				new HashMap<>();
-
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
-						createdObjectDefinitions,
 						listTypeDefinitionIdsStringUtilReplaceValues,
 						objectDefinitionResource, serviceContext));
 
@@ -445,8 +440,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addObjectEntries(
-					createdObjectDefinitions, serviceContext,
-					siteNavigationMenuItemSettingsBuilder));
+					serviceContext, siteNavigationMenuItemSettingsBuilder));
 			_invoke(
 				() -> _addPermissions(
 					objectDefinitionIdsStringUtilReplaceValues,
@@ -1620,7 +1614,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addObjectDefinitions(
-			Map<String, ObjectDefinition> createdObjectDefinitions,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ObjectDefinitionResource objectDefinitionResource,
 			ServiceContext serviceContext)
@@ -1687,9 +1680,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				objectDefinitionResource.postObjectDefinitionPublish(
 					objectDefinition.getId());
-
-				createdObjectDefinitions.put(
-					objectDefinition.getName(), objectDefinition);
 			}
 			else {
 				objectDefinition =
@@ -1740,15 +1730,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addObjectEntries(
-			Map<String, ObjectDefinition> createdObjectDefinitions,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
-
-		if (MapUtil.isEmpty(createdObjectDefinitions)) {
-			return;
-		}
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-entries");
@@ -1780,8 +1765,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-			ObjectDefinition objectDefinition = createdObjectDefinitions.get(
-				jsonObject.getString("objectDefinitionName"));
+			com.liferay.object.model.ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("objectDefinitionName"));
 
 			if (objectDefinition == null) {
 				continue;
@@ -1808,7 +1795,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.addObjectEntry(
 						serviceContext.getUserId(), groupId,
-						objectDefinition.getId(),
+						objectDefinition.getObjectDefinitionId(),
 						ObjectMapperUtil.readValue(
 							Serializable.class,
 							String.valueOf(objectEntryJSONObject)),
