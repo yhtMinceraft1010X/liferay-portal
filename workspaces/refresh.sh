@@ -50,6 +50,9 @@ function refresh_sample_lxc_sm_workspace {
 
 	~/jpm/bin/blade init --liferay-version dxp-7.4-u20
 
+	touch modules/.gitkeep
+	touch themes/.gitkeep
+
 	cd ..
 
 	#
@@ -65,7 +68,7 @@ function refresh_sample_lxc_workspace {
 }
 
 function main {
-	refresh_sample_lxc_workspace
+	#refresh_sample_lxc_workspace
 
 	refresh_sample_lxc_sm_workspace
 }
