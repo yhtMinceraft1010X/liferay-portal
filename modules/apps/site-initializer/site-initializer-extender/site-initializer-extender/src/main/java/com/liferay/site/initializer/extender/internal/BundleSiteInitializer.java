@@ -2529,8 +2529,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addTaxonomyCategories(
-			long groupId, String parentResourcePath,
-			String parentTaxonomyCategoryId, ServiceContext serviceContext,
+			String parentResourcePath, String parentTaxonomyCategoryId,
+			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder,
 			long taxonomyVocabularyId)
@@ -2582,7 +2582,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				});
 
 			_addTaxonomyCategories(
-				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
+				StringUtil.replaceLast(resourcePath, ".json", "/"),
 				taxonomyCategory.getId(), serviceContext,
 				siteNavigationMenuItemSettingsBuilder, taxonomyVocabularyId);
 		}
@@ -2689,8 +2689,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_addTaxonomyCategories(
-				groupId, StringUtil.replaceLast(resourcePath, ".json", "/"),
-				null, serviceContext, siteNavigationMenuItemSettingsBuilder,
+				StringUtil.replaceLast(resourcePath, ".json", "/"), null,
+				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				taxonomyVocabulary.getId());
 		}
 	}
