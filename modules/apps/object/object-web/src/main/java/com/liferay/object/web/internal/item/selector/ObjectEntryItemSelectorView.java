@@ -284,8 +284,9 @@ public class ObjectEntryItemSelectorView
 
 				List<ObjectEntry> objectEntries = TransformUtil.transform(
 					objectEntriesPage.getItems(),
-					item -> _toObjectEntry(
-						item, _objectDefinition.getObjectDefinitionId()));
+					objectEntry -> _toObjectEntry(
+						_objectDefinition.getObjectDefinitionId(),
+						objectEntry));
 
 				searchContainer.setResultsAndTotal(
 					() -> objectEntries, objectEntries.size());
@@ -326,8 +327,8 @@ public class ObjectEntryItemSelectorView
 		}
 
 		private ObjectEntry _toObjectEntry(
-			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
-			long objectDefinitionId) {
+			long objectDefinitionId,
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
 
 			ObjectEntry serviceBuilderObjectEntry =
 				_objectEntryLocalService.createObjectEntry(objectEntry.getId());
