@@ -96,8 +96,17 @@ function create_react_app {
 	rm -f App* index* logo.svg reportWebVitals.js setupTests.js
 
 	mkdir -p routes/hello-bar/components routes/hello-bar/pages
+
+	touch routes/hello-bar/components/.gitkeep
+
 	mkdir -p routes/hello-foo/components routes/hello-foo/pages
+
+	touch routes/hello-foo/components/.gitkeep
+
 	mkdir -p routes/hello-world/components routes/hello-world/pages
+
+	touch routes/hello-world/components/.gitkeep
+
 	mkdir -p common/services/liferay common/styles
 
 	write_gitignore
