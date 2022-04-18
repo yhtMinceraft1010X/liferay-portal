@@ -1650,6 +1650,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith(".object-actions.json")) {
+				continue;
+			}
+
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
