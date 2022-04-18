@@ -426,21 +426,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_invoke(
 					() -> _addObjectDefinitions(
 						listTypeDefinitionIdsStringUtilReplaceValues,
-						objectDefinitionResource, serviceContext));
+						objectDefinitionResource, serviceContext,
+						siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
 				() -> _addCPDefinitions(
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addObjectRelationships(
-					objectDefinitionIdsStringUtilReplaceValues,
-					serviceContext));
-
-			_invoke(
-				() -> _addObjectEntries(
-					serviceContext, siteNavigationMenuItemSettingsBuilder));
 			_invoke(
 				() -> _addPermissions(
 					objectDefinitionIdsStringUtilReplaceValues,
@@ -1616,7 +1609,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ObjectDefinitionResource objectDefinitionResource,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
@@ -1725,6 +1720,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 					).build());
 			}
 		}
+
+		_invoke(
+			() -> _addObjectRelationships(
+				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
+
+		_invoke(
+			() -> _addObjectEntries(
+				serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 		return objectDefinitionIdsStringUtilReplaceValues;
 	}
