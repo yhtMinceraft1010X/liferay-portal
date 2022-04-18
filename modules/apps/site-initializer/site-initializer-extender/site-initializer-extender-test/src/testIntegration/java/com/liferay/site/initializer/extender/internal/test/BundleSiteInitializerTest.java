@@ -830,15 +830,14 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertObjectActions(
-		ObjectDefinition objectDefinition, int objectActionsCount) {
+		int objectActionsCount, ObjectDefinition objectDefinition) {
 
-		List<ObjectAction> objectActionList =
+		List<ObjectAction> objectActions =
 			_objectActionLocalService.getObjectActions(
 				objectDefinition.getObjectDefinitionId());
 
 		Assert.assertEquals(
-			objectActionList.toString(), objectActionsCount,
-			objectActionList.size());
+			objectActions.toString(), objectActionsCount, objectActions.size());
 	}
 
 	private void _assertObjectDefinitions(
@@ -853,7 +852,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(objectDefinition1, 1);
+		_assertObjectActions(1, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
@@ -865,7 +864,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(objectDefinition2, 2);
+		_assertObjectActions(2, objectDefinition2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
 
 		ObjectDefinition objectDefinition3 =
@@ -879,7 +878,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(objectDefinition3, 0);
+		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
 	}
 
