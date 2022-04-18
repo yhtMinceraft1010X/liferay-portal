@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -245,6 +243,8 @@ public class ObjectEntryItemSelectorView
 
 			_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
+			_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 		}
 
 		@Override
@@ -273,12 +273,9 @@ public class ObjectEntryItemSelectorView
 					"no-entries-were-found");
 
 			try {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
 				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
 					objectEntriesPage = _objectEntryManager.getObjectEntries(
-						serviceContext.getCompanyId(), _objectDefinition, null,
+						_themeDisplay.getCompanyId(), _objectDefinition, null,
 						null, _getDTOConverterContext(), _getFilterString(),
 						null, null, null);
 
@@ -301,13 +298,9 @@ public class ObjectEntryItemSelectorView
 		}
 
 		private DTOConverterContext _getDTOConverterContext() {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			return new DefaultDTOConverterContext(
 				false, null, null, _httpServletRequest, null,
-				_httpServletRequest.getLocale(), null, themeDisplay.getUser());
+				_httpServletRequest.getLocale(), null, _themeDisplay.getUser());
 		}
 
 		private String _getFilterString() throws PortalException {
@@ -343,6 +336,7 @@ public class ObjectEntryItemSelectorView
 		private final ObjectEntryManager _objectEntryManager;
 		private final PortletRequest _portletRequest;
 		private final PortletURL _portletURL;
+		private final ThemeDisplay _themeDisplay;
 
 	}
 
