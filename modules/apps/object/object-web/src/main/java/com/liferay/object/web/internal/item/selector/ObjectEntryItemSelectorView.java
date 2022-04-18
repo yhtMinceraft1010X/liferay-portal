@@ -300,7 +300,7 @@ public class ObjectEntryItemSelectorView
 		private DTOConverterContext _getDTOConverterContext() {
 			return new DefaultDTOConverterContext(
 				false, null, null, _httpServletRequest, null,
-				_httpServletRequest.getLocale(), null, _themeDisplay.getUser());
+				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
 		}
 
 		private String _getFilterString() throws PortalException {
