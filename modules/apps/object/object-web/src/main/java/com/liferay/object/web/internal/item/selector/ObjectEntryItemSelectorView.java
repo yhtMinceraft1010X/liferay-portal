@@ -63,8 +63,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.core.UriInfo;
-
 /**
  * @author Guilherme Camacho
  */
@@ -308,8 +306,7 @@ public class ObjectEntryItemSelectorView
 
 			return new DefaultDTOConverterContext(
 				false, null, null, _httpServletRequest, null,
-				_httpServletRequest.getLocale(), _contextUriInfo,
-				themeDisplay.getUser());
+				_httpServletRequest.getLocale(), null, themeDisplay.getUser());
 		}
 
 		private String _getFilterString() throws PortalException {
@@ -340,7 +337,6 @@ public class ObjectEntryItemSelectorView
 			return serviceBuilderObjectEntry;
 		}
 
-		private UriInfo _contextUriInfo;
 		private final HttpServletRequest _httpServletRequest;
 		private final ObjectDefinition _objectDefinition;
 		private final ObjectEntryManager _objectEntryManager;
