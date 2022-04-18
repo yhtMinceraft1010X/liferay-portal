@@ -59,7 +59,7 @@ function refresh_sample_lxc_sm_workspace {
 	# TODO Liferay Workspace needs to ignore the lxc directory
 	#
 
-	#cp -R sample-lxc-workspace/lxc sample-lxc-sm-workspace
+	cp -R sample-lxc-workspace/lxc sample-lxc-sm-workspace
 }
 
 function refresh_sample_lxc_workspace {
