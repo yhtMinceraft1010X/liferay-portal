@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.configuration.settings.definition;
+package com.liferay.frontend.icons.web.internal.settings.definition;
 
 import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
