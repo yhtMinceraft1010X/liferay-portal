@@ -219,15 +219,13 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRule.getScript());
 
 				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-					throw new ObjectValidationRuleScriptException.
-						InvalidScript();
+					throw new ObjectValidationRuleScriptException(
+						"Script is invalid");
 				}
 
 				if (GetterUtil.getBoolean(results.get("invalidFields"))) {
-					throw new ObjectValidationRuleEngineException.
-						RequiredBusinessRule(
-							objectValidationRule.getErrorLabel(
-								LocaleUtil.getMostRelevantLocale()));
+					throw new ObjectValidationRuleEngineException(
+						"Script has invalid fields");
 				}
 			}
 			else {
@@ -235,10 +233,8 @@ public class ObjectValidationRuleLocalServiceImpl
 						hashMapWrapper.build(),
 						objectValidationRule.getScript())) {
 
-					throw new ObjectValidationRuleEngineException.
-						RequiredBusinessRule(
-							objectValidationRule.getErrorLabel(
-								LocaleUtil.getMostRelevantLocale()));
+					throw new ObjectValidationRuleEngineException(
+						"Unable to evaluate script");
 				}
 			}
 		}
@@ -246,7 +242,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	private void _validateEngine(String engine) throws PortalException {
 		if (Validator.isNull(engine)) {
-			throw new ObjectValidationRuleEngineException.MustNotBeNull();
+			throw new ObjectValidationRuleEngineException("Engine is null");
 		}
 
 		ObjectValidationRuleEngine objectValidationRuleEngine =
@@ -254,7 +250,8 @@ public class ObjectValidationRuleLocalServiceImpl
 				getObjectValidationRuleEngine(engine);
 
 		if (objectValidationRuleEngine == null) {
-			throw new ObjectValidationRuleEngineException.NoSuchEngine(engine);
+			throw new ObjectValidationRuleEngineException(
+				"Engine \"" + engine + "\" does not exist");
 		}
 	}
 
@@ -271,7 +268,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	private void _validateScript(String script) throws PortalException {
 		if (Validator.isNull(script)) {
-			throw new ObjectValidationRuleScriptException.MustNotBeNull();
+			throw new ObjectValidationRuleScriptException("Script is null");
 		}
 	}
 

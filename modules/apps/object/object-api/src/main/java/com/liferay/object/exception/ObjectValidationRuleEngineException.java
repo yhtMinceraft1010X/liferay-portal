@@ -21,35 +21,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleEngineException extends PortalException {
 
+	public ObjectValidationRuleEngineException() {
+	}
+
 	public ObjectValidationRuleEngineException(String msg) {
 		super(msg);
 	}
 
-	public static class MustNotBeNull
-		extends ObjectValidationRuleEngineException {
+	public ObjectValidationRuleEngineException(
+		String msg, Throwable throwable) {
 
-		public MustNotBeNull() {
-			super("Engine must not be null");
-		}
-
+		super(msg, throwable);
 	}
 
-	public static class NoSuchEngine
-		extends ObjectValidationRuleEngineException {
-
-		public NoSuchEngine(String engine) {
-			super("No such engine \"" + engine + "\"");
-		}
-
-	}
-
-	public static class RequiredBusinessRule
-		extends ObjectValidationRuleEngineException {
-
-		public RequiredBusinessRule(String errorLabel) {
-			super(errorLabel);
-		}
-
+	public ObjectValidationRuleEngineException(Throwable throwable) {
+		super(throwable);
 	}
 
 }
