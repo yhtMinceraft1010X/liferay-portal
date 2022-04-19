@@ -16,7 +16,6 @@ package com.liferay.frontend.icons.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -70,9 +69,8 @@ public class SaveSiteFrontendIconPacksMVCActionCommand
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(
-				StringBundler.concat(
-					"Unable to save icon packs", selectedIconPacks, " to site.",
-					configurationException));
+				"Unable to save group frontend icon packs configuration",
+				configurationException);
 		}
 	}
 

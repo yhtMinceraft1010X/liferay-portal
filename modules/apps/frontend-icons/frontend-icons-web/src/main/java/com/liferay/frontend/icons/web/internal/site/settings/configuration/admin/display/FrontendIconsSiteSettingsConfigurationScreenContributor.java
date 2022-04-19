@@ -107,8 +107,8 @@ public class FrontendIconsSiteSettingsConfigurationScreenContributor
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(
-				"Unable to get icon pack configuration for site: " +
-					configurationException.toString());
+				"Unable to get group frontend icon packs configuration",
+				configurationException);
 
 			return null;
 		}
