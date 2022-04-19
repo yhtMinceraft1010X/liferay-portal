@@ -25,7 +25,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 public class AssetCategoryInfoItemFields {
 
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"description"
@@ -34,7 +34,7 @@ public class AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<TextInfoFieldType> displayPageURLInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"displayPageURL"
@@ -43,7 +43,7 @@ public class AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "display-page-url")
 		).build();
 	public static final InfoField<TextInfoFieldType> nameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"name"
@@ -52,7 +52,7 @@ public class AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "name")
 		).build();
 	public static final InfoField<TextInfoFieldType> vocabularyInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"vocabulary"
@@ -61,7 +61,7 @@ public class AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "vocabulary")
 		).build();
 
-	private static class BuilderStaticHolder {
+	private static class BuilderHolder {
 
 		private static final InfoField.NamespacedBuilder _builder =
 			InfoField.builder(AssetCategory.class.getSimpleName());

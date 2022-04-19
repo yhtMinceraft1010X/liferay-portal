@@ -28,7 +28,7 @@ import com.liferay.journal.model.JournalArticle;
 public class JournalArticleInfoItemFields {
 
 	public static final InfoField<TextInfoFieldType> authorNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"authorName"
@@ -38,7 +38,7 @@ public class JournalArticleInfoItemFields {
 		).build();
 	public static final InfoField<ImageInfoFieldType>
 		authorProfileImageInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				ImageInfoFieldType.INSTANCE
 			).name(
 				"authorProfileImage"
@@ -47,7 +47,7 @@ public class JournalArticleInfoItemFields {
 					JournalArticleInfoItemFields.class, "author-profile-image")
 			).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"createDate"
@@ -56,7 +56,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "create-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"description"
@@ -69,7 +69,7 @@ public class JournalArticleInfoItemFields {
 			true
 		).build();
 	public static final InfoField<DateInfoFieldType> displayDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"displayDate"
@@ -78,7 +78,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "display-date")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
 		).name(
 			"displayPageURL"
@@ -87,7 +87,7 @@ public class JournalArticleInfoItemFields {
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"expirationDate"
@@ -96,7 +96,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "expiration-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> lastEditorNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"lastEditorName"
@@ -106,7 +106,7 @@ public class JournalArticleInfoItemFields {
 		).build();
 	public static final InfoField<ImageInfoFieldType>
 		lastEditorProfileImageInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				ImageInfoFieldType.INSTANCE
 			).name(
 				"lastEditorProfileImage"
@@ -116,7 +116,7 @@ public class JournalArticleInfoItemFields {
 					"last-editor-profile-image")
 			).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"modifiedDate"
@@ -125,7 +125,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"publishDate"
@@ -134,7 +134,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "publish-date")
 		).build();
 	public static final InfoField<ImageInfoFieldType> smallImageInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
 		).name(
 			"smallImage"
@@ -143,7 +143,7 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "small-image")
 		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"title"
@@ -154,7 +154,7 @@ public class JournalArticleInfoItemFields {
 			true
 		).build();
 
-	private static class BuilderStaticHolder {
+	private static class BuilderHolder {
 
 		private static final InfoField.NamespacedBuilder _builder =
 			InfoField.builder(JournalArticle.class.getSimpleName());

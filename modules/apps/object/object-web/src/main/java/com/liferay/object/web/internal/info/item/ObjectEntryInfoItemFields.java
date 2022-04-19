@@ -28,7 +28,7 @@ import com.liferay.object.model.ObjectEntry;
 public class ObjectEntryInfoItemFields {
 
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"createDate"
@@ -37,7 +37,7 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "create-date")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
 		).name(
 			"displayPageURL"
@@ -46,7 +46,7 @@ public class ObjectEntryInfoItemFields {
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"modifiedDate"
@@ -55,7 +55,7 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"publishDate"
@@ -64,7 +64,7 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "publish-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> userNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"userName"
@@ -73,7 +73,7 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "user-name")
 		).build();
 	public static final InfoField userProfileImageInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
 		).name(
 			"userProfileImage"
@@ -82,7 +82,7 @@ public class ObjectEntryInfoItemFields {
 				ObjectEntryInfoItemFields.class, "user-profile-image")
 		).build();
 
-	private static class BuilderStaticHolder {
+	private static class BuilderHolder {
 
 		private static final InfoField.NamespacedBuilder _builder =
 			InfoField.builder(ObjectEntry.class.getSimpleName());

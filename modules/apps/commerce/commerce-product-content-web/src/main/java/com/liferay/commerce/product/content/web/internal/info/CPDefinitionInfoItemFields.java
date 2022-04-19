@@ -30,7 +30,7 @@ public class CPDefinitionInfoItemFields {
 
 	public static final InfoField<BooleanInfoFieldType>
 		accountGroupFilterEnabledInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"accountGroupFilterEnabled"
@@ -40,7 +40,7 @@ public class CPDefinitionInfoItemFields {
 					"account-group-filter-enabled")
 			).build();
 	public static final InfoField<BooleanInfoFieldType> approvedInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"approved"
@@ -50,7 +50,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<TextInfoFieldType>
 		availabilityStatusInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
 				"availabilityStatus"
@@ -60,7 +60,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<BooleanInfoFieldType>
 		availableIndividuallyInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"availableIndividually"
@@ -69,7 +69,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "available-individually")
 			).build();
 	public static final InfoField<TextInfoFieldType> categoriesInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"categories"
@@ -79,7 +79,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		channelFilterEnabledInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"channelFilterEnabled"
@@ -88,7 +88,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "channel-filter-enabled")
 			).build();
 	public static final InfoField<NumberInfoFieldType> companyIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"companyId"
@@ -97,7 +97,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "company-id")
 		).build();
 	public static final InfoField<NumberInfoFieldType> cpDefinitionIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"cpDefinitionId"
@@ -106,7 +106,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "cpDefinitionId")
 		).build();
 	public static final InfoField<NumberInfoFieldType> cProductIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"cProductId"
@@ -115,7 +115,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "cProductId")
 		).build();
 	public static final InfoField<NumberInfoFieldType>
-		cpTaxCategoryIdInfoField = BuilderStaticHolder._builder.infoFieldType(
+		cpTaxCategoryIdInfoField = BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"cpTaxCategoryId"
@@ -124,7 +124,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "cpTaxCategoryId")
 		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"createDate"
@@ -133,7 +133,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "create-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> ddmStructureKeyInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"ddmStructureKey"
@@ -142,7 +142,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "ddm-structure-key")
 		).build();
 	public static final InfoField<TextInfoFieldType>
-		defaultLanguageIdInfoField = BuilderStaticHolder._builder.infoFieldType(
+		defaultLanguageIdInfoField = BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"defaultLanguageId"
@@ -152,7 +152,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<NumberInfoFieldType>
 		deliveryMaxSubscriptionCyclesInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				NumberInfoFieldType.INSTANCE
 			).name(
 				"deliveryMaxSubscriptionCycles"
@@ -163,7 +163,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<BooleanInfoFieldType>
 		deliverySubscriptionEnabledInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"deliverySubscriptionEnabled"
@@ -174,7 +174,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<NumberInfoFieldType>
 		deliverySubscriptionLengthInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				NumberInfoFieldType.INSTANCE
 			).name(
 				"deliverySubscriptionLength"
@@ -185,7 +185,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<TextInfoFieldType>
 		deliverySubscriptionTypeInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
 				"deliverySubscriptionType"
@@ -196,7 +196,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<TextInfoFieldType>
 		deliverySubscriptionTypeSettingsInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
 				"deliverySubscriptionTypeSettings"
@@ -206,7 +206,7 @@ public class CPDefinitionInfoItemFields {
 					"delivery-subscription-type-settings")
 			).build();
 	public static final InfoField<BooleanInfoFieldType> deniedInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"denied"
@@ -215,7 +215,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "denied")
 		).build();
 	public static final InfoField<NumberInfoFieldType> depthInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"depth"
@@ -224,7 +224,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "depth")
 		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"description"
@@ -233,7 +233,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<DateInfoFieldType> displayDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"displayDate"
@@ -242,7 +242,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "display-date")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
 		).name(
 			"displayPageURL"
@@ -251,7 +251,7 @@ public class CPDefinitionInfoItemFields {
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> draftInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"draft"
@@ -260,7 +260,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "draft")
 		).build();
 	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"expirationDate"
@@ -269,7 +269,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "expiration-date")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> expiredInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"expired"
@@ -278,7 +278,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "expired")
 		).build();
 	public static final InfoField<TextInfoFieldType> finalPriceInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"finalPrice"
@@ -287,7 +287,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "final-price")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> freeShippingInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"freeShipping"
@@ -296,7 +296,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "free-shipping")
 		).build();
 	public static final InfoField<NumberInfoFieldType> groupIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"groupId"
@@ -305,7 +305,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "group-id")
 		).build();
 	public static final InfoField<NumberInfoFieldType> heightInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"height"
@@ -315,7 +315,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		ignoreSKUCombinationsInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"ignoreSKUCombinations"
@@ -324,7 +324,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "ignore-sku-combinations")
 			).build();
 	public static final InfoField<BooleanInfoFieldType> inactiveInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"inactive"
@@ -333,7 +333,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "inactive")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> incompleteInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"incomplete"
@@ -342,7 +342,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "incomplete")
 		).build();
 	public static final InfoField<NumberInfoFieldType> inventoryInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"inventory"
@@ -351,7 +351,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "inventory")
 		).build();
 	public static final InfoField<DateInfoFieldType> lastPublishDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"lastPublishDate"
@@ -361,7 +361,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<NumberInfoFieldType>
 		maxSubscriptionCyclesInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				NumberInfoFieldType.INSTANCE
 			).name(
 				"maxSubscriptionCycles"
@@ -370,7 +370,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "max-subscription-cycles")
 			).build();
 	public static final InfoField<TextInfoFieldType> metaDescriptionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"metaDescription"
@@ -379,7 +379,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "meta-description")
 		).build();
 	public static final InfoField<TextInfoFieldType> metaKeywordsInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"metaKeywords"
@@ -388,7 +388,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "meta-keywords")
 		).build();
 	public static final InfoField<TextInfoFieldType> metaTitleInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"metaTitle"
@@ -397,7 +397,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "meta-title")
 		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"modifiedDate"
@@ -406,7 +406,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> nameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"name"
@@ -415,7 +415,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "name")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> pendingInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"pending"
@@ -424,7 +424,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "pending")
 		).build();
 	public static final InfoField<TextInfoFieldType> productTypeNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"productTypeName"
@@ -433,7 +433,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "product-type")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> publishedInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"published"
@@ -442,7 +442,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "published")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> scheduledInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"scheduled"
@@ -451,7 +451,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "scheduled")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> shippableInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"shippable"
@@ -461,7 +461,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<NumberInfoFieldType>
 		shippingExtraPriceInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				NumberInfoFieldType.INSTANCE
 			).name(
 				"shippingExtraPrice"
@@ -471,7 +471,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<BooleanInfoFieldType>
 		shipSeparatelyPriceInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"shipSeperately"
@@ -480,7 +480,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "ship-separately")
 			).build();
 	public static final InfoField<TextInfoFieldType> shortDescriptionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"shortDescription"
@@ -489,7 +489,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "short-description")
 		).build();
 	public static final InfoField<TextInfoFieldType> skuInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"sku"
@@ -497,7 +497,7 @@ public class CPDefinitionInfoItemFields {
 			InfoLocalizedValue.localize(CPDefinitionInfoItemFields.class, "sku")
 		).build();
 	public static final InfoField<TextInfoFieldType> stagedModelTypeInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"stagedModelType"
@@ -506,7 +506,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "staged-model-type")
 		).build();
 	public static final InfoField<TextInfoFieldType> statusByUserIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"statusByUserId"
@@ -515,7 +515,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "status-by-userId")
 		).build();
 	public static final InfoField<TextInfoFieldType> statusByUserNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"statusByUserName"
@@ -524,7 +524,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "status-by-userName")
 		).build();
 	public static final InfoField<TextInfoFieldType> statusByUserUuidInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"statusByUserUuid"
@@ -533,7 +533,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "status-by-userUuid")
 		).build();
 	public static final InfoField<DateInfoFieldType> statusDateInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
 			"statusDate"
@@ -542,7 +542,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "status-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> statusInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"status"
@@ -552,7 +552,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		subscriptionEnabledInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"subscriptionEnabled"
@@ -562,7 +562,7 @@ public class CPDefinitionInfoItemFields {
 			).build();
 	public static final InfoField<NumberInfoFieldType>
 		subscriptionLengthInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				NumberInfoFieldType.INSTANCE
 			).name(
 				"subscriptionLength"
@@ -571,7 +571,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "subscription-length")
 			).build();
 	public static final InfoField<TextInfoFieldType> subscriptionTypeInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"subscriptionType"
@@ -581,7 +581,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<TextInfoFieldType>
 		subscriptionTypeSettingsInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
 				"subscriptionTypeSettings"
@@ -591,7 +591,7 @@ public class CPDefinitionInfoItemFields {
 					"subscription-type-settings")
 			).build();
 	public static final InfoField<BooleanInfoFieldType> taxExemptInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
 			"taxExempt"
@@ -601,7 +601,7 @@ public class CPDefinitionInfoItemFields {
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		telcoOrElectronicsInfoField =
-			BuilderStaticHolder._builder.infoFieldType(
+			BuilderHolder._builder.infoFieldType(
 				BooleanInfoFieldType.INSTANCE
 			).name(
 				"telcoOrElectronics"
@@ -610,7 +610,7 @@ public class CPDefinitionInfoItemFields {
 					CPDefinitionInfoItemFields.class, "telco-or-electronics")
 			).build();
 	public static final InfoField<NumberInfoFieldType> userIdInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"userId"
@@ -619,7 +619,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "userId")
 		).build();
 	public static final InfoField<TextInfoFieldType> userNameInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"userName"
@@ -628,7 +628,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "author-name")
 		).build();
 	public static final InfoField<TextInfoFieldType> userUuidInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"userUuid"
@@ -637,7 +637,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "userUuid")
 		).build();
 	public static final InfoField<TextInfoFieldType> uuidInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"uuid"
@@ -646,7 +646,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "uuid")
 		).build();
 	public static final InfoField<NumberInfoFieldType> versionInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"version"
@@ -655,7 +655,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "version")
 		).build();
 	public static final InfoField<NumberInfoFieldType> weightInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"weight"
@@ -664,7 +664,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "weight")
 		).build();
 	public static final InfoField<NumberInfoFieldType> widthInfoField =
-		BuilderStaticHolder._builder.infoFieldType(
+		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
 		).name(
 			"width"
@@ -673,7 +673,7 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "width")
 		).build();
 
-	private static class BuilderStaticHolder {
+	private static class BuilderHolder {
 
 		private static final InfoField.NamespacedBuilder _builder =
 			InfoField.builder(CPDefinition.class.getSimpleName());
