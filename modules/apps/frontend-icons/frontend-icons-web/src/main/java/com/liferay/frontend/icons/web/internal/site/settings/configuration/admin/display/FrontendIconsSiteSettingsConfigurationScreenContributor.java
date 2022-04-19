@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.frontend.icons.web.internal.site.settings.configuration.admin.display;
 
 import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
 import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsSiteSettingsConfigurationDisplayContext;
