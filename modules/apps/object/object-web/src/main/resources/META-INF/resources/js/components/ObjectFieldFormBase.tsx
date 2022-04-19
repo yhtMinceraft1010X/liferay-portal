@@ -82,7 +82,6 @@ async function fetchPickList() {
 
 export default function ObjectFieldFormBase({
 	allowMaxLength,
-	allowUploadDocAndMedia,
 	children,
 	disabled,
 	errors,
@@ -199,7 +198,6 @@ export default function ObjectFieldFormBase({
 
 			{values.businessType === 'Attachment' && (
 				<AttachmentSourceProperty
-					allowUploadDocAndMedia={allowUploadDocAndMedia}
 					disabled={disabled}
 					error={errors.fileSource}
 					objectFieldSettings={
@@ -379,7 +377,6 @@ export function useObjectFieldForm({
 }
 
 function AttachmentSourceProperty({
-	allowUploadDocAndMedia,
 	disabled,
 	error,
 	objectFieldSettings,
@@ -419,24 +416,23 @@ function AttachmentSourceProperty({
 	};
 
 	useEffect(() => {
-		if (allowUploadDocAndMedia) {
-			let updatedSettings: ObjectFieldSetting[];
-			if (settings.fileSource === 'userComputer') {
-				updatedSettings = setDocsAndMediaProps(false);
-			}
-			else {
-				updatedSettings = objectFieldSettings.filter((setting) => {
-					return (
-						setting.name !== 'showFilesInDocumentsAndMedia' &&
-						setting.name !== 'storageDLFolderPath'
-					);
-				});
-			}
+		let updatedSettings: ObjectFieldSetting[];
 
-			setValues({
-				objectFieldSettings: updatedSettings,
+		if (settings.fileSource === 'userComputer') {
+			updatedSettings = setDocsAndMediaProps(false);
+		}
+		else {
+			updatedSettings = objectFieldSettings.filter((setting) => {
+				return (
+					setting.name !== 'showFilesInDocumentsAndMedia' &&
+					setting.name !== 'storageDLFolderPath'
+				);
 			});
 		}
+
+		setValues({
+			objectFieldSettings: updatedSettings,
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [settings.fileSource]);
 
@@ -457,7 +453,7 @@ function AttachmentSourceProperty({
 				value={attachmentSource?.label}
 			/>
 
-			{allowUploadDocAndMedia && settings.fileSource === 'userComputer' && (
+			{settings.fileSource === 'userComputer' && (
 				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
 					<ClayToggle
 						disabled={disabled}
@@ -495,7 +491,6 @@ function AttachmentSourceProperty({
 }
 
 interface IAttachmentSourcePropertyProps {
-	allowUploadDocAndMedia?: boolean;
 	disabled?: boolean;
 	error?: string;
 	objectFieldSettings: ObjectFieldSetting[];
@@ -517,7 +512,6 @@ interface IPickList {
 
 interface IProps {
 	allowMaxLength?: boolean;
-	allowUploadDocAndMedia?: boolean;
 	children?: ReactNode;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
