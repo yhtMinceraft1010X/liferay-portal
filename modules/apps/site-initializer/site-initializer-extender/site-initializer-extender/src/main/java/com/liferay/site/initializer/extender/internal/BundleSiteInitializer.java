@@ -1818,9 +1818,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (objectEntryJSONObject.has("externalReferenceCode")) {
 					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
-							StringUtil.removeFirst(
-								objectDefinition.getName(), "C_"),
-							"#",
+							objectDefinition.getShortName(), "#",
 							objectEntryJSONObject.getString(
 								"externalReferenceCode")),
 						String.valueOf(objectEntry.getObjectEntryId()));
