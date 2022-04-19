@@ -92,10 +92,10 @@ public class FrontendIconsSiteSettingsConfigurationScreenContributor
 			FrontendIconsSiteSettingsConfigurationDisplayContext.class.
 				getName(),
 			new FrontendIconsSiteSettingsConfigurationDisplayContext(
-				frontendIconPacksConfiguration.selectedIconPacks(),
 				_frontendIconsResourcePackRepository, httpServletRequest,
 				(RenderResponse)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE)));
+					JavaConstants.JAVAX_PORTLET_RESPONSE),
+				frontendIconPacksConfiguration.selectedIconPacks()));
 	}
 
 	private FrontendIconPacksConfiguration _getFrontendIconPacksConfiguration(

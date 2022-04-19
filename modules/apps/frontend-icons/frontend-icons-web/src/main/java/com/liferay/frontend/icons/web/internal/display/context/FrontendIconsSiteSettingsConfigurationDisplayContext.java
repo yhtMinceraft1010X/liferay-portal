@@ -40,14 +40,14 @@ import javax.servlet.http.HttpServletRequest;
 public class FrontendIconsSiteSettingsConfigurationDisplayContext {
 
 	public FrontendIconsSiteSettingsConfigurationDisplayContext(
-		String[] selectedIconPacks,
 		FrontendIconsResourcePackRepository frontendIconsResourcePackRepository,
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
+		String[] selectedIconPacks) {
 
-		_selectedIconPacks = selectedIconPacks;
 		_frontendIconsResourcePackRepository =
 			frontendIconsResourcePackRepository;
 		_renderResponse = renderResponse;
+		_selectedIconPacks = selectedIconPacks;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
