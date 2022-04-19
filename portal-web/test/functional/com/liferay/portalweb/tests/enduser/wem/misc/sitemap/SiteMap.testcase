@@ -32,7 +32,7 @@ definition {
 	@priority = "4"
 	test DisplayPrivateParentAndChildPage {
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 
 		task ("Add a parent private page") {
 			JSONLayout.addPrivateLayout(
