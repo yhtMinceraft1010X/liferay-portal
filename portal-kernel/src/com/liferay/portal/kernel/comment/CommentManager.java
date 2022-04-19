@@ -104,15 +104,6 @@ public interface CommentManager {
 	 */
 	public int getChildCommentsCount(long parentCommentId, int status);
 
-	/**
-	 * Returns a comment matching with the external reference code and the
-	 * group ID
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the comment's external reference code
-	 * @return the comment
-	 * @throws PortalException if the comment could not be found
-	 */
 	public Comment getComment(long groupId, String externalReferenceCode)
 		throws PortalException;
 
