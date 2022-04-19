@@ -38,7 +38,7 @@ definition {
 	@priority = "3"
 	test CannotViewPrivateContentAndPageAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config:com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "promptEnabled=&quot;true&quot;:disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;:disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a private page") {
@@ -138,7 +138,7 @@ definition {
 	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 		property testray.component.names = "Message Boards,Training";
 
 		task ("Add a new user") {
@@ -249,7 +249,7 @@ definition {
 	test CannotViewPrivatePageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 		property portal.acceptance = "true";
 		property testray.component.names = "Permissions,Roles,Training";
 
@@ -434,7 +434,7 @@ definition {
 	test ViewPrivateContentAndPageAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a new user") {

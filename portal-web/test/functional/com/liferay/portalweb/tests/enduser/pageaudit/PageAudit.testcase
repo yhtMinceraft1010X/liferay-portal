@@ -1032,7 +1032,7 @@ definition {
 	@priority = "3"
 	test CheckNotVisibleReloadbButtonInPrivatePage {
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 
 		task ("Create a Private Page") {
 			JSONLayout.addPrivateLayout(

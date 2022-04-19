@@ -29,7 +29,7 @@ public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 	@Override
 	public boolean isPrivateLayoutsEnabled() {
 		if (ReleaseFeatureFlagManagerUtil.isEnabled(
-				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_PAGES)) {
+				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_LAYOUTS)) {
 
 			return false;
 		}
@@ -40,7 +40,7 @@ public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 	@Override
 	public boolean isPrivateLayoutsEnabled(long groupId) {
 		if (ReleaseFeatureFlagManagerUtil.isEnabled(
-				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_PAGES)) {
+				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_LAYOUTS)) {
 
 			return false;
 		}

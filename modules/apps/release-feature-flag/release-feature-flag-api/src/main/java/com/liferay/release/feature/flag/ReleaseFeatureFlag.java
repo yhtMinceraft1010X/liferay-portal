@@ -19,6 +19,6 @@ package com.liferay.release.feature.flag;
  */
 public enum ReleaseFeatureFlag {
 
-	DEACTIVATE_PRIVATE_PAGES
+	DEACTIVATE_PRIVATE_LAYOUTS
 
 }

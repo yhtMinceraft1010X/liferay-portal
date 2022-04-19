@@ -1286,7 +1286,7 @@ definition {
 	@priority = "3"
 	test ViewNoNavigationMenuAfterAddingPages {
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(

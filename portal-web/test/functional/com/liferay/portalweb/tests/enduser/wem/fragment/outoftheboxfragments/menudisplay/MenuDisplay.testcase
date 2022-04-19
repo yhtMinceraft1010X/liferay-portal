@@ -399,7 +399,7 @@ definition {
 	@uitest
 	test SelectNavigationMenuFromExistingOnes {
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 		property portal.acceptance = "true";
 
 		task ("Add a public widget page") {

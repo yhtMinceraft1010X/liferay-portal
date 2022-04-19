@@ -64,7 +64,7 @@ definition {
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
 		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_LAYOUTS&quot;]";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Guest",
