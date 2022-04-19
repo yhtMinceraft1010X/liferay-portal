@@ -18,12 +18,10 @@ export default function ModalWithProvider({
 	allowMaxLength,
 	apiURL,
 	objectFieldTypes,
-	objectName,
 }: IProps): JSX.Element;
 interface IProps {
 	allowMaxLength: boolean;
 	apiURL: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 }
 export {};

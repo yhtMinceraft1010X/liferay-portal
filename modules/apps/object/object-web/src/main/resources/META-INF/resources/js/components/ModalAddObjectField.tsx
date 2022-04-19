@@ -35,7 +35,6 @@ function ModalAddObjectField({
 	allowMaxLength,
 	apiURL,
 	objectFieldTypes,
-	objectName,
 	observer,
 	onClose,
 }: IModal) {
@@ -118,7 +117,6 @@ function ModalAddObjectField({
 						handleChange={handleChange}
 						objectField={values}
 						objectFieldTypes={objectFieldTypes}
-						objectName={objectName}
 						setValues={setValues}
 					/>
 				</ClayModal.Body>
@@ -148,7 +146,6 @@ export default function ModalWithProvider({
 	allowMaxLength,
 	apiURL,
 	objectFieldTypes,
-	objectName,
 }: IProps) {
 	const [isVisible, setVisibility] = useState<boolean>(false);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
@@ -166,7 +163,6 @@ export default function ModalWithProvider({
 					allowMaxLength={allowMaxLength}
 					apiURL={apiURL}
 					objectFieldTypes={objectFieldTypes}
-					objectName={objectName}
 					observer={observer}
 					onClose={onClose}
 				/>
@@ -185,5 +181,4 @@ interface IProps {
 	allowMaxLength: boolean;
 	apiURL: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 }

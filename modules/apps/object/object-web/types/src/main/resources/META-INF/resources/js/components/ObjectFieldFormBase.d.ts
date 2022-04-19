@@ -14,7 +14,6 @@
 
 import React, {ChangeEventHandler, ReactNode} from 'react';
 import {FormError} from '../hooks/useForm';
-import './ObjectFieldFormBase.scss';
 export default function ObjectFieldFormBase({
 	allowMaxLength,
 	children,
@@ -23,13 +22,9 @@ export default function ObjectFieldFormBase({
 	handleChange,
 	objectField: values,
 	objectFieldTypes,
-	objectName,
 	setValues,
 }: IProps): JSX.Element;
 export declare function useObjectFieldForm({
-	forbiddenChars,
-	forbiddenLastChars,
-	forbiddenNames,
 	initialValues,
 	onSubmit,
 }: IUseObjectFieldForm): {
@@ -40,8 +35,6 @@ export declare function useObjectFieldForm({
 			maximumFileSize: any;
 			maxLength: any;
 			showCounter: any;
-			showFilesInDocumentsAndMedia: any;
-			storageDLFolderPath: any;
 		}
 	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -50,9 +43,6 @@ export declare function useObjectFieldForm({
 	values: Partial<ObjectField>;
 };
 interface IUseObjectFieldForm {
-	forbiddenChars?: string[];
-	forbiddenLastChars?: string[];
-	forbiddenNames?: string[];
 	initialValues: Partial<ObjectField>;
 	onSubmit: (field: ObjectField) => void;
 }
@@ -64,7 +54,6 @@ interface IProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare type ObjectFieldErrors = FormError<
