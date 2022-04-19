@@ -131,7 +131,7 @@ public class SiteInitializerExtender
 				_organizationResourceFactory, _portal, _portletSettingsImporter,
 				_remoteAppEntryLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_sapEntryLocalService, _settingsFactory,
+				_sapEntryLocalService, null, _settingsFactory,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -140,7 +140,7 @@ public class SiteInitializerExtender
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
 				_userAccountResourceFactory, _userLocalService,
 				_workflowDefinitionLinkLocalService,
-				_workflowDefinitionResourceFactory, null);
+				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
 
@@ -210,8 +210,14 @@ public class SiteInitializerExtender
 					_portal, _portletSettingsImporter,
 					_remoteAppEntryLocalService, _resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService,
-					_sapEntryLocalService, _settingsFactory,
-					_siteNavigationMenuItemLocalService,
+					_sapEntryLocalService,
+					ProxyUtil.newDelegateProxyInstance(
+						ServletContext.class.getClassLoader(),
+						ServletContext.class,
+						new LXCServletContextDelegate(
+							siteInitializerFolder, symbolicName),
+						null),
+					_settingsFactory, _siteNavigationMenuItemLocalService,
 					_siteNavigationMenuItemTypeRegistry,
 					_siteNavigationMenuLocalService,
 					_structuredContentFolderResourceFactory,
@@ -220,13 +226,7 @@ public class SiteInitializerExtender
 					_taxonomyVocabularyResourceFactory, _themeLocalService,
 					_userAccountResourceFactory, _userLocalService,
 					_workflowDefinitionLinkLocalService,
-					_workflowDefinitionResourceFactory,
-					ProxyUtil.newDelegateProxyInstance(
-						ServletContext.class.getClassLoader(),
-						ServletContext.class,
-						new LXCServletContextDelegate(
-							siteInitializerFolder, symbolicName),
-						null));
+					_workflowDefinitionResourceFactory);
 
 			siteInitializerExtension.start();
 		}

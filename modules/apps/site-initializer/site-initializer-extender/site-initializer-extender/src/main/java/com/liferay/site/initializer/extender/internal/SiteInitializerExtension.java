@@ -117,7 +117,7 @@ public class SiteInitializerExtension {
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
 		SAPEntryLocalService sapEntryLocalService,
-		SettingsFactory settingsFactory,
+		ServletContext servletContext, SettingsFactory settingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -130,8 +130,7 @@ public class SiteInitializerExtension {
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory,
-		ServletContext servletContext) {
+		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_dependencyManager = new DependencyManager(bundle.getBundleContext());
 
