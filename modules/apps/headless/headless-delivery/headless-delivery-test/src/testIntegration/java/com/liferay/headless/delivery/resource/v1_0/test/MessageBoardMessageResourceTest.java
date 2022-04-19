@@ -62,7 +62,7 @@ public class MessageBoardMessageResourceTest
 
 		super.testGetMessageBoardMessageMessageBoardMessagesPage();
 
-		// Test of flatten parameter with a tree of MessageBoardMessage
+		// Message board messages in a tree hiearchy
 
 		Long parentMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId();
@@ -75,10 +75,12 @@ public class MessageBoardMessageResourceTest
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 				messageBoardMessage1.getId(), randomMessageBoardMessage());
 
+		Boolean flatten = false;
+
 		Page<MessageBoardMessage> page =
 			messageBoardMessageResource.
 				getMessageBoardMessageMessageBoardMessagesPage(
-					parentMessageBoardMessageId, false, null, null, null,
+					parentMessageBoardMessageId, flatten, null, null, null,
 					Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -88,10 +90,12 @@ public class MessageBoardMessageResourceTest
 			(List<MessageBoardMessage>)page.getItems());
 		assertValid(page);
 
+		flatten = true;
+
 		page =
 			messageBoardMessageResource.
 				getMessageBoardMessageMessageBoardMessagesPage(
-					parentMessageBoardMessageId, true, null, null, null,
+					parentMessageBoardMessageId, flatten, null, null, null,
 					Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
