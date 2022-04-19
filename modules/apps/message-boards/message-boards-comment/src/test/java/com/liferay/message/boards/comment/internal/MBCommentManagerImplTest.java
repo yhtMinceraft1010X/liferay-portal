@@ -97,12 +97,6 @@ public class MBCommentManagerImplTest extends Mockito {
 		throws Exception {
 
 		when(
-			_mbMessage.getParentMessageId()
-		).thenReturn(
-			_ROOT_MESSAGE_ID
-		);
-
-		when(
 			_mbMessage.getMessageId()
 		).thenReturn(
 			_MBMESSAGE_ID
@@ -118,6 +112,12 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbMessage.getThreadId()
 		).thenReturn(
 			_THREAD_ID
+		);
+
+		when(
+			_mbMessage.getParentMessageId()
+		).thenReturn(
+			_ROOT_MESSAGE_ID
 		);
 
 		Assert.assertEquals(
