@@ -278,7 +278,7 @@ public class HttpImpl implements Http {
 			options.getCookies(), options.getAuth(), options.getBody(),
 			options.getFileParts(), options.getInputStreamParts(),
 			options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.disableNormalizedUri(),
+			options.isFollowRedirects(), options.isNormalizeURI(),
 			options.getTimeout());
 	}
 
@@ -312,7 +312,7 @@ public class HttpImpl implements Http {
 			options.getCookies(), options.getAuth(), options.getBody(),
 			options.getFileParts(), options.getInputStreamParts(),
 			options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.disableNormalizedUri(),
+			options.isFollowRedirects(), options.isNormalizeURI(),
 			options.getTimeout());
 	}
 
@@ -695,13 +695,13 @@ public class HttpImpl implements Http {
 			List<Http.FilePart> fileParts,
 			List<Http.InputStreamPart> inputStreamParts,
 			Map<String, String> parts, Http.Response response,
-			boolean followRedirects, boolean normalizedUri, int timeout)
+			boolean followRedirects, boolean normalizeURI, int timeout)
 		throws IOException {
 
 		try (InputStream inputStream = URLtoInputStream(
 				location, method, headers, cookies, auth, body, fileParts,
 				inputStreamParts, parts, response, followRedirects,
-				normalizedUri, timeout)) {
+				normalizeURI, timeout)) {
 
 			if (inputStream == null) {
 				return null;
@@ -727,7 +727,7 @@ public class HttpImpl implements Http {
 			List<Http.FilePart> fileParts,
 			List<Http.InputStreamPart> inputStreamParts,
 			Map<String, String> parts, Http.Response response,
-			boolean followRedirects, boolean normalizedUri, int timeout)
+			boolean followRedirects, boolean normalizeURI, int timeout)
 		throws IOException {
 
 		URI uri = null;
@@ -876,9 +876,7 @@ public class HttpImpl implements Http {
 						auth.getUsername(), auth.getPassword()));
 			}
 
-			if (normalizedUri) {
-				requestConfigBuilder.setNormalizeUri(false);
-			}
+			requestConfigBuilder.setNormalizeUri(normalizeURI);
 
 			addProxyCredentials(uri, httpClientContext);
 
@@ -908,7 +906,7 @@ public class HttpImpl implements Http {
 						return URLtoInputStream(
 							locationHeaderValue, Http.Method.GET, headers,
 							cookies, auth, body, fileParts, inputStreamParts,
-							parts, response, followRedirects, normalizedUri,
+							parts, response, followRedirects, normalizeURI,
 							timeout);
 					}
 
