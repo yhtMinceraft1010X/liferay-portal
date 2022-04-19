@@ -154,7 +154,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
-	protected static final String LAYOUT_STRUCTURE = "LAYOUT_STRUCTURE";
+	protected static final String LAYOUT_STRUCTURE =
+		RenderLayoutStructureTag.class.getName() "#LAYOUT_STRUCTURE";
 
 	private String _getLayoutMode() {
 		HttpServletRequest httpServletRequest = getRequest();
