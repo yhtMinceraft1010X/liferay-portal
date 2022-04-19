@@ -49,25 +49,23 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "approved")
 		).build();
 	public static final InfoField<TextInfoFieldType>
-		availabilityStatusInfoField =
-			BuilderHolder._builder.infoFieldType(
-				TextInfoFieldType.INSTANCE
-			).name(
-				"availabilityStatus"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "availability-status")
-			).build();
+		availabilityStatusInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"availabilityStatus"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "availability-status")
+		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		availableIndividuallyInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"availableIndividually"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "available-individually")
-			).build();
+		availableIndividuallyInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"availableIndividually"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "available-individually")
+		).build();
 	public static final InfoField<TextInfoFieldType> categoriesInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -78,15 +76,14 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "all-categories")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		channelFilterEnabledInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"channelFilterEnabled"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "channel-filter-enabled")
-			).build();
+		channelFilterEnabledInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"channelFilterEnabled"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "channel-filter-enabled")
+		).build();
 	public static final InfoField<NumberInfoFieldType> companyIdInfoField =
 		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
@@ -314,15 +311,14 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "height")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		ignoreSKUCombinationsInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"ignoreSKUCombinations"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "ignore-sku-combinations")
-			).build();
+		ignoreSKUCombinationsInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"ignoreSKUCombinations"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "ignore-sku-combinations")
+		).build();
 	public static final InfoField<BooleanInfoFieldType> inactiveInfoField =
 		BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
@@ -360,15 +356,14 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "last-publish-date")
 		).build();
 	public static final InfoField<NumberInfoFieldType>
-		maxSubscriptionCyclesInfoField =
-			BuilderHolder._builder.infoFieldType(
-				NumberInfoFieldType.INSTANCE
-			).name(
-				"maxSubscriptionCycles"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "max-subscription-cycles")
-			).build();
+		maxSubscriptionCyclesInfoField = BuilderHolder._builder.infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"maxSubscriptionCycles"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "max-subscription-cycles")
+		).build();
 	public static final InfoField<TextInfoFieldType> metaDescriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -460,25 +455,23 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "shippable")
 		).build();
 	public static final InfoField<NumberInfoFieldType>
-		shippingExtraPriceInfoField =
-			BuilderHolder._builder.infoFieldType(
-				NumberInfoFieldType.INSTANCE
-			).name(
-				"shippingExtraPrice"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "shipping-extra-price")
-			).build();
+		shippingExtraPriceInfoField = BuilderHolder._builder.infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"shippingExtraPrice"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "shipping-extra-price")
+		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		shipSeparatelyPriceInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"shipSeperately"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "ship-separately")
-			).build();
+		shipSeparatelyPriceInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"shipSeperately"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "ship-separately")
+		).build();
 	public static final InfoField<TextInfoFieldType> shortDescriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -551,25 +544,23 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "status")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		subscriptionEnabledInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"subscriptionEnabled"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "subscription-enabled")
-			).build();
+		subscriptionEnabledInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"subscriptionEnabled"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "subscription-enabled")
+		).build();
 	public static final InfoField<NumberInfoFieldType>
-		subscriptionLengthInfoField =
-			BuilderHolder._builder.infoFieldType(
-				NumberInfoFieldType.INSTANCE
-			).name(
-				"subscriptionLength"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "subscription-length")
-			).build();
+		subscriptionLengthInfoField = BuilderHolder._builder.infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"subscriptionLength"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "subscription-length")
+		).build();
 	public static final InfoField<TextInfoFieldType> subscriptionTypeInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -600,15 +591,14 @@ public class CPDefinitionInfoItemFields {
 				CPDefinitionInfoItemFields.class, "tax-exempt")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
-		telcoOrElectronicsInfoField =
-			BuilderHolder._builder.infoFieldType(
-				BooleanInfoFieldType.INSTANCE
-			).name(
-				"telcoOrElectronics"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					CPDefinitionInfoItemFields.class, "telco-or-electronics")
-			).build();
+		telcoOrElectronicsInfoField = BuilderHolder._builder.infoFieldType(
+			BooleanInfoFieldType.INSTANCE
+		).name(
+			"telcoOrElectronics"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "telco-or-electronics")
+		).build();
 	public static final InfoField<NumberInfoFieldType> userIdInfoField =
 		BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE

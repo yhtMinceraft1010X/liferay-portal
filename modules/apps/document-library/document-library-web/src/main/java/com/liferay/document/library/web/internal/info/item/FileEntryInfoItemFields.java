@@ -38,15 +38,14 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "author-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
-		authorProfileImageInfoField =
-			BuilderHolder._builder.infoFieldType(
-				ImageInfoFieldType.INSTANCE
-			).name(
-				"authorProfileImage"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					FileEntryInfoItemFields.class, "author-profile-image")
-			).build();
+		authorProfileImageInfoField = BuilderHolder._builder.infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"authorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				FileEntryInfoItemFields.class, "author-profile-image")
+		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE

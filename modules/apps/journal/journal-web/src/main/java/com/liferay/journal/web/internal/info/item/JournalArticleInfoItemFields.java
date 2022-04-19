@@ -37,15 +37,14 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "author-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
-		authorProfileImageInfoField =
-			BuilderHolder._builder.infoFieldType(
-				ImageInfoFieldType.INSTANCE
-			).name(
-				"authorProfileImage"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					JournalArticleInfoItemFields.class, "author-profile-image")
-			).build();
+		authorProfileImageInfoField = BuilderHolder._builder.infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"authorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "author-profile-image")
+		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
@@ -105,16 +104,14 @@ public class JournalArticleInfoItemFields {
 				JournalArticleInfoItemFields.class, "last-editor-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
-		lastEditorProfileImageInfoField =
-			BuilderHolder._builder.infoFieldType(
-				ImageInfoFieldType.INSTANCE
-			).name(
-				"lastEditorProfileImage"
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(
-					JournalArticleInfoItemFields.class,
-					"last-editor-profile-image")
-			).build();
+		lastEditorProfileImageInfoField = BuilderHolder._builder.infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"lastEditorProfileImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "last-editor-profile-image")
+		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
