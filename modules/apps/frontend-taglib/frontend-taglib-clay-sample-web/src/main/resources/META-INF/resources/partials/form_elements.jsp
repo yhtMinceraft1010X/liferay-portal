@@ -63,7 +63,7 @@
 </table>
 
 <blockquote>
-	<p>Demonstration of the checkbox with the state of indeterminate in the TreeView component.</p>
+	<p>Demonstrate a checkbox with an indeterminate state in the TreeView component.</p>
 </blockquote>
 
 <div>
