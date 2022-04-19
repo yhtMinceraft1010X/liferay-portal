@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.lxc;
+package com.liferay.site.initializer.extender.internal.file.backed;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.site.initializer.extender.internal.file.backed.util.PathUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,12 +33,12 @@ import java.util.Set;
 /**
  * @author Shuyang Zhou
  */
-public class LXCServletContextDelegate {
+public class FileBackedServletContextDelegate {
 
-	public LXCServletContextDelegate(
-		File siteInitializerFolder, String servletContextName) {
+	public FileBackedServletContextDelegate(
+		File file, String servletContextName) {
 
-		_siteInitializerFolder = siteInitializerFolder;
+		_file = file;
 		_servletContextName = servletContextName;
 	}
 
@@ -46,11 +47,10 @@ public class LXCServletContextDelegate {
 	}
 
 	public URL getResource(String path) throws MalformedURLException {
-		File resourceFile = new File(
-			_siteInitializerFolder, PathUtil.removePrefix(path));
+		File file = new File(_file, PathUtil.removePrefix(path));
 
-		if (resourceFile.exists()) {
-			URI uri = resourceFile.toURI();
+		if (file.exists()) {
+			URI uri = file.toURI();
 
 			return uri.toURL();
 		}
@@ -59,12 +59,11 @@ public class LXCServletContextDelegate {
 	}
 
 	public InputStream getResourceAsStream(String path) {
-		File resourceFile = new File(
-			_siteInitializerFolder, PathUtil.removePrefix(path));
+		File file = new File(_file, PathUtil.removePrefix(path));
 
-		if (resourceFile.exists()) {
+		if (file.exists()) {
 			try {
-				return new FileInputStream(resourceFile);
+				return new FileInputStream(file);
 			}
 			catch (FileNotFoundException fileNotFoundException) {
 				throw new IllegalStateException(fileNotFoundException);
@@ -75,20 +74,19 @@ public class LXCServletContextDelegate {
 	}
 
 	public Set<String> getResourcePaths(String path) {
-		File searchDir = new File(
-			_siteInitializerFolder, PathUtil.removePrefix(path));
+		File searchDirectoryFile = new File(_file, PathUtil.removePrefix(path));
 
-		if (!searchDir.exists()) {
+		if (!searchDirectoryFile.exists()) {
 			return Collections.emptySet();
 		}
+
+		Set<String> resourcePaths = new HashSet<>();
 
 		if (!path.endsWith("/")) {
 			path = path.concat("/");
 		}
 
-		Set<String> resourcePaths = new HashSet<>();
-
-		for (File file : searchDir.listFiles()) {
+		for (File file : searchDirectoryFile.listFiles()) {
 			String resourcePath = path.concat(file.getName());
 
 			if (file.isDirectory()) {
@@ -105,7 +103,7 @@ public class LXCServletContextDelegate {
 		return _servletContextName;
 	}
 
+	private final File _file;
 	private final String _servletContextName;
-	private final File _siteInitializerFolder;
 
 }

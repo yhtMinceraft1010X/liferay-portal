@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.lxc;
+package com.liferay.site.initializer.extender.internal.file.backed.util;
 
 /**
  * @author Shuyang Zhou

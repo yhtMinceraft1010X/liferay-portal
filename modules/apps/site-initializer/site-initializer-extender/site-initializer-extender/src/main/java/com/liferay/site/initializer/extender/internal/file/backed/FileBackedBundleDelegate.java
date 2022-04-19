@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.lxc;
+package com.liferay.site.initializer.extender.internal.file.backed;
 
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.site.initializer.extender.internal.file.backed.util.PathUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,18 +46,17 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Shuyang Zhou
  */
-public class LXCBundleDelegate {
+public class FileBackedBundleDelegate {
 
-	public LXCBundleDelegate(
-			BundleContext bundleContext, String symbolicName,
-			File siteInitializerFolder)
+	public FileBackedBundleDelegate(
+			BundleContext bundleContext, File file, String symbolicName)
 		throws MalformedURLException {
 
 		_bundleContext = bundleContext;
+		_file = file;
 		_symbolicName = symbolicName;
-		_siteInitializerFolder = siteInitializerFolder;
 
-		URI uri = siteInitializerFolder.toURI();
+		URI uri = file.toURI();
 
 		_classLoader = new URLClassLoader(new URL[] {uri.toURL()}, null) {
 
@@ -75,13 +75,13 @@ public class LXCBundleDelegate {
 		};
 	}
 
-	public <T extends Object> T adapt(Class<T> type) {
-		if (type != BundleWiring.class) {
-			throw new IllegalArgumentException("Unsupported type " + type);
+	public <T extends Object> T adapt(Class<T> clazz) {
+		if (clazz != BundleWiring.class) {
+			throw new IllegalArgumentException("Unsupported clazz " + clazz);
 		}
 
 		return ProxyUtil.newDelegateProxyInstance(
-			type.getClassLoader(), type,
+			clazz.getClassLoader(), clazz,
 			new Object() {
 
 				public ClassLoader getClassLoader() {
@@ -96,11 +96,12 @@ public class LXCBundleDelegate {
 			String path, String filePattern, boolean recurse)
 		throws IOException {
 
-		Path rootPath = _siteInitializerFolder.toPath();
+		Path rootPathObject = _file.toPath();
 
-		Path searchPath = rootPath.resolve(PathUtil.removePrefix(path));
+		Path searchPathObject = rootPathObject.resolve(
+			PathUtil.removePrefix(path));
 
-		if (Files.notExists(searchPath)) {
+		if (Files.notExists(searchPathObject)) {
 			return Collections.emptyEnumeration();
 		}
 
@@ -108,7 +109,7 @@ public class LXCBundleDelegate {
 
 		if (recurse) {
 			Files.walkFileTree(
-				searchPath,
+				searchPathObject,
 				new SimpleFileVisitor<Path>() {
 
 					@Override
@@ -125,7 +126,7 @@ public class LXCBundleDelegate {
 				});
 		}
 		else {
-			_collect(urls, rootPath, filePattern);
+			_collect(urls, rootPathObject, filePattern);
 		}
 
 		return Collections.enumeration(urls);
@@ -141,7 +142,7 @@ public class LXCBundleDelegate {
 
 	public Dictionary<String, String> getHeaders(String locale) {
 		return MapUtil.singletonDictionary(
-			"Liferay-Site-Initializer-Name", _siteInitializerFolder.getName());
+			"Liferay-Site-Initializer-Name", _file.getName());
 	}
 
 	public String getSymbolicName() {
@@ -164,7 +165,7 @@ public class LXCBundleDelegate {
 
 	private final BundleContext _bundleContext;
 	private final ClassLoader _classLoader;
-	private final File _siteInitializerFolder;
+	private final File _file;
 	private final String _symbolicName;
 
 }
