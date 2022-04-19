@@ -3567,13 +3567,13 @@ public class DataFactory {
 
 		dlFileEntryModel.setUuid(SequentialUUID.generate());
 
+		// External reference code
+
+		dlFileEntryModel.setExternalReferenceCode(String.valueOf(fileEntryId));
+
 		// PK fields
 
 		dlFileEntryModel.setFileEntryId(fileEntryId);
-
-		// External Reference Code
-
-		dlFileEntryModel.setExternalReferenceCode(String.valueOf(fileEntryId));
 
 		// Group instance
 
@@ -6545,13 +6545,13 @@ public class DataFactory {
 
 		mBMessageModel.setUuid(SequentialUUID.generate());
 
+		// External reference code
+
+		mBMessageModel.setExternalReferenceCode(String.valueOf(messageId));
+
 		// PK fields
 
 		mBMessageModel.setMessageId(messageId);
-
-		// External Reference Code
-
-		mBMessageModel.setExternalReferenceCode(String.valueOf(messageId));
 
 		// Group instance
 
