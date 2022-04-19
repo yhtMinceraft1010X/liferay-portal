@@ -1,7 +1,5 @@
-@import 'atlas-variables';
-
 .lfr-objects__edit-object-field {
-	background-color: $light;
+	background-color: #f1f2f5;
 	padding: 1.5rem;
 
 	&-container {
@@ -10,6 +8,6 @@
 	}
 
 	&-tooltip-icon {
-		color: $secondary-l1;
+		color: #a7a9bc;
 	}
 }
