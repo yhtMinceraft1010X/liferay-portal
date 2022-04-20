@@ -77,6 +77,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 			PropsUtil.get("feature.flag.LPS-132571"));
 
 		PropsUtil.set("feature.flag.LPS-132571", "true");
+
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -93,6 +94,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicIncludeTest {
 		PropsUtil.set(
 			"feature.flag.LPS-132571",
 			String.valueOf(_originalFeatureFlagLps132571));
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
