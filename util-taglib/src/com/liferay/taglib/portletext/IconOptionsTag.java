@@ -121,13 +121,6 @@ public class IconOptionsTag extends IconTag {
 
 		iconMenuTag.setCssClass("portlet-options");
 		iconMenuTag.setDirection(_direction);
-		iconMenuTag.setExtended(false);
-		iconMenuTag.setIcon("ellipsis-v");
-		iconMenuTag.setMarkupView("lexicon");
-		iconMenuTag.setMessage("options");
-		iconMenuTag.setShowArrow(false);
-		iconMenuTag.setShowWhenSingleIcon(true);
-		iconMenuTag.setTriggerCssClass("component-action");
 
 		for (PortletConfigurationIcon portletConfigurationIcon :
 				getPortletConfigurationIcons()) {
@@ -141,6 +134,14 @@ public class IconOptionsTag extends IconTag {
 				break;
 			}
 		}
+
+		iconMenuTag.setExtended(false);
+		iconMenuTag.setIcon("ellipsis-v");
+		iconMenuTag.setMarkupView("lexicon");
+		iconMenuTag.setMessage("options");
+		iconMenuTag.setShowArrow(false);
+		iconMenuTag.setShowWhenSingleIcon(true);
+		iconMenuTag.setTriggerCssClass("component-action");
 
 		iconMenuTag.doBodyTag(
 			pageContext, this::_processPortletConfigurationIcons);
