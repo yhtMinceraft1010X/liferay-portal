@@ -35,14 +35,15 @@ import java.util.Set;
 public class FileBackedServletContextDelegate {
 
 	public FileBackedServletContextDelegate(
-		File file, String servletContextName) {
+		File file, String fileKey, String servletContextName) {
 
 		_file = file;
+		_fileKey = fileKey;
 		_servletContextName = servletContextName;
 	}
 
 	public String getContextPath() {
-		return "/o/file-backed-site-initializer";
+		return "/o/file-backed-site-initializer/" + _fileKey;
 	}
 
 	public URL getResource(String path) throws MalformedURLException {
@@ -103,6 +104,7 @@ public class FileBackedServletContextDelegate {
 	}
 
 	private final File _file;
+	private final String _fileKey;
 	private final String _servletContextName;
 
 }

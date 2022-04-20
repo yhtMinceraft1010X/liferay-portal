@@ -14,7 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal.file.backed.servlet;
 
-import com.liferay.portal.util.PropsValues;
+import com.liferay.site.initializer.extender.internal.SiteInitializerExtender;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,9 +50,29 @@ public class FileBackedThumbnailServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		File file = new File(
-			PropsValues.LIFERAY_HOME,
-			"site-initializers/chocolate/thumbnail.png");
+		String pathInfo = httpServletRequest.getPathInfo();
+
+		if ((pathInfo == null) || (pathInfo.length() <= 1)) {
+			return;
+		}
+
+		pathInfo = pathInfo.substring(1);
+
+		int index = pathInfo.indexOf("/");
+
+		if (index == -1) {
+			return;
+		}
+
+		String fileKey = pathInfo.substring(0, index);
+
+		File file = _siteInitializerExtender.getFile(fileKey);
+
+		if (file == null) {
+			return;
+		}
+
+		file = new File(file, "thumbnail.png");
 
 		httpServletResponse.setContentLength((int)file.length());
 
@@ -69,5 +90,8 @@ public class FileBackedThumbnailServlet extends HttpServlet {
 			}
 		}
 	}
+
+	@Reference
+	private SiteInitializerExtender _siteInitializerExtender;
 
 }
