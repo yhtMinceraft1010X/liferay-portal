@@ -1809,6 +1809,7 @@ definition {
 		task ("Add IdP configurations to SP") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
+				idpAttributeMappingText = "screenName,emailAddress,firstName,lastName,uuid",
 				idpEntityId = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
@@ -2786,6 +2787,7 @@ definition {
 		task ("Add IdP configurations to SP") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
+				idpAttributeMappingText = "screenName,emailAddress,firstName,lastName,uuid",
 				idpEntityId = "samlidp",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
@@ -4796,6 +4798,7 @@ definition {
 		task ("Add IdP configurations to SP and enable SP roles") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+				idpAttributeMappingText = "uuid,emailAddress,firstName,lastName,screenName",
 				idpEntityId = "${identityProviderEntityId}",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
@@ -4921,6 +4924,7 @@ definition {
 		task ("Add IdP configurations to SPs") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "screenName,UUID,emailAddress,firstName,lastName",
+				idpAttributeMappingText = "screenName,uuid,emailAddress,firstName,lastName",
 				idpEntityId = "${identityProviderEntityId}",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
@@ -4932,6 +4936,7 @@ definition {
 
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "screenName,UUID,emailAddress,firstName,lastName",
+				idpAttributeMappingText = "screenName,uuid,emailAddress,firstName,lastName",
 				idpEntityId = "${identityProviderEntityId}",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
