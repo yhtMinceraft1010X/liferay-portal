@@ -59,9 +59,9 @@ public class ConfigurationImplTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@NewEnv.Environment(
 		variables = {
+			"LIFERAY_INCLUDE_MINUS_AND_MINUS_OVERRIDE=a.properties,b.properties",
 			"LIFERAY_LIFERAY_PERIOD_HOME=/liferay",
 			"LIFERAY_SETUP_PERIOD_WIZARD_PERIOD_ENABLED=false",
-			"LIFERAY_INCLUDE_MINUS_AND_MINUS_OVERRIDE=a.properties,b.properties",
 			"LIFERAY_INDEX_PERIOD_ON_PERIOD_STARTUP=false",
 			"LIFERAY_SETUP_PERIOD_DATABASE_PERIOD_DRIVER_UPPERCASEC_LASS" +
 				"_UPPERCASEN_AME_OPENBRACKET_DB2_CLOSEBRACKET_=" +
@@ -105,6 +105,8 @@ public class ConfigurationImplTest {
 			configurationImpl.get(
 				"layout.static.portlets.start.column-1",
 				new Filter("user", "/home")));
+
+		// LPS-151913
 
 		Assert.assertArrayEquals(
 			new String[0], configurationImpl.getArray("include-and-override"));

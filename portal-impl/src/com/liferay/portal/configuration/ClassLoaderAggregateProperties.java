@@ -358,17 +358,14 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			}
 
 			if (sourceFileName.equals("portal.properties")) {
-				String envIncludeAndOverrideString = System.getenv(
+				String value = System.getenv(
 					"LIFERAY_INCLUDE_MINUS_AND_MINUS_OVERRIDE");
 
-				if (envIncludeAndOverrideString != null) {
-					List<String> includeAndOverrideList =
-						(List<String>)propertiesConfiguration.getProperty(
-							"include-and-override");
-
+				if (value != null) {
 					Collections.addAll(
-						includeAndOverrideList,
-						StringUtil.split(envIncludeAndOverrideString));
+						(List<String>)propertiesConfiguration.getProperty(
+							"include-and-override"),
+						StringUtil.split(value));
 				}
 			}
 
