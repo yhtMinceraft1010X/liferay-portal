@@ -210,7 +210,6 @@ public class IconOptionsTag extends IconTag {
 				iconTag.setLinkCssClass(
 					"dropdown-item " +
 						portletConfigurationIcon.getLinkCssClass());
-
 				iconTag.setLocalizeMessage(false);
 				iconTag.setMessage(
 					portletConfigurationIcon.getMessage(portletRequest));
