@@ -14,6 +14,9 @@
 
 package com.liferay.site.initializer.extender.internal.file.backed;
 
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.site.initializer.extender.internal.file.backed.util.PathUtil;
@@ -22,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -49,11 +51,13 @@ import org.osgi.framework.wiring.BundleWiring;
 public class FileBackedBundleDelegate {
 
 	public FileBackedBundleDelegate(
-			BundleContext bundleContext, File file, String symbolicName)
-		throws MalformedURLException {
+			BundleContext bundleContext, File file, JSONFactory jsonFactory,
+			String symbolicName)
+		throws Exception {
 
 		_bundleContext = bundleContext;
 		_file = file;
+		_jsonFactory = jsonFactory;
 		_symbolicName = symbolicName;
 
 		URI uri = file.toURI();
@@ -73,6 +77,19 @@ public class FileBackedBundleDelegate {
 			}
 
 		};
+
+		File jsonFile = new File(file, "site-initializer.json");
+
+		if (jsonFile.exists()) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				FileUtil.read(jsonFile));
+
+			_siteInitializerName = jsonObject.getString(
+				"name", _file.getName());
+		}
+		else {
+			_siteInitializerName = _file.getName();
+		}
 	}
 
 	public <T extends Object> T adapt(Class<T> clazz) {
@@ -142,7 +159,7 @@ public class FileBackedBundleDelegate {
 
 	public Dictionary<String, String> getHeaders(String locale) {
 		return MapUtil.singletonDictionary(
-			"Liferay-Site-Initializer-Name", _file.getName());
+			"Liferay-Site-Initializer-Name", _siteInitializerName);
 	}
 
 	public String getSymbolicName() {
@@ -166,6 +183,8 @@ public class FileBackedBundleDelegate {
 	private final BundleContext _bundleContext;
 	private final ClassLoader _classLoader;
 	private final File _file;
+	private final JSONFactory _jsonFactory;
+	private final String _siteInitializerName;
 	private final String _symbolicName;
 
 }

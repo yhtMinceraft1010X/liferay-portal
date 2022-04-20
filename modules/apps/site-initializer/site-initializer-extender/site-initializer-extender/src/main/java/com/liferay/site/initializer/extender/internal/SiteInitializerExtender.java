@@ -72,8 +72,6 @@ import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.io.File;
 
-import java.net.MalformedURLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,9 +161,7 @@ public class SiteInitializerExtender
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws MalformedURLException {
-
+	protected void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
 		_bundleTracker = new BundleTracker<>(
@@ -194,7 +190,7 @@ public class SiteInitializerExtender
 		_bundleTracker.close();
 	}
 
-	private void _addFile(File file) throws MalformedURLException {
+	private void _addFile(File file) throws Exception {
 		if (!file.isDirectory()) {
 			return;
 		}
@@ -210,7 +206,7 @@ public class SiteInitializerExtender
 				ProxyUtil.newDelegateProxyInstance(
 					Bundle.class.getClassLoader(), Bundle.class,
 					new FileBackedBundleDelegate(
-						_bundleContext, file, symbolicName),
+						_bundleContext, file, _jsonFactory, symbolicName),
 					null),
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dlURLHelper,
