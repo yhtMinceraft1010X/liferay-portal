@@ -901,7 +901,9 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	protected Long testGetCommentCommentsPage_getParentCommentId()
 		throws Exception {
 
-		return _addBlogPostingComment().getId();
+		Comment comment = _addBlogPostingComment();
+
+		return comment.getId();
 	}
 
 	@Override
@@ -1121,8 +1123,10 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 	@Override
 	protected Comment testPutComment_addComment() throws Exception {
+		Comment comment = _addBlogPostingComment();
+
 		return commentResource.postCommentComment(
-			_addBlogPostingComment().getId(), randomComment());
+			comment.getId(), randomComment());
 	}
 
 	@Override
