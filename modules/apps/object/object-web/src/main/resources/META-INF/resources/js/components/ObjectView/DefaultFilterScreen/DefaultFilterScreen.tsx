@@ -31,7 +31,7 @@ export function DefaultFilterScreen() {
 				description: Liferay.Language.get(
 					'start-creating-a-filter-to-dipslay-a-specifc-data'
 				),
-				title: Liferay.Language.get('no-filters-created-yet'),
+				title: Liferay.Language.get('no-filter-was-created-yet'),
 			}}
 			objectColumns={objectViewFilterColumns ?? []}
 			onVisibleEditModal={setVisibleModal}
