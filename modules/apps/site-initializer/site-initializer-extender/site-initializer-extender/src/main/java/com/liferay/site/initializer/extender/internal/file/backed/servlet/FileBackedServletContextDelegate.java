@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.file.backed;
+package com.liferay.site.initializer.extender.internal.file.backed.servlet;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.site.initializer.extender.internal.file.backed.util.PathUtil;
 
 import java.io.File;
@@ -43,7 +42,7 @@ public class FileBackedServletContextDelegate {
 	}
 
 	public String getContextPath() {
-		return StringPool.BLANK;
+		return "/o/file-backed-site-initializer";
 	}
 
 	public URL getResource(String path) throws MalformedURLException {

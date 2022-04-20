@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.file.backed;
+package com.liferay.site.initializer.extender.internal.file.backed.osgi;
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
