@@ -672,7 +672,7 @@ public class CommentResourceImpl
 			sb.append(comment.getExternalReferenceCode());
 			sb.append(", site ID ");
 			sb.append(parentComment.getGroupId());
-			sb.append(" and parent comment with external reference code ");
+			sb.append(", and parent comment with external reference code ");
 			sb.append(parentComment.getExternalReferenceCode());
 
 			throw new NotFoundException(sb.toString());
