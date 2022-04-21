@@ -36,8 +36,6 @@ components:
                 documentsRepository:
                     $ref: "#/components/schemas/Folder"
                 externalField:
-                    description:
-                        A external field whose schema is defined in other rest-openapi.yaml file.
                     items:
                         $ref: "src/test/resources/com/liferay/portal/tools/rest/builder/external-dependencies/rest-openapi.yaml#ExternalReferenceElement1"
                     type: array
@@ -65,9 +63,6 @@ components:
                 property-with-hyphens:
                     type: string
         UnreferencedSchemaComponent:
-            description:
-                Test Schema Component to test the creation of schemas with elements from a external reference without
-                being referenced in any endpoint
             properties:
                 description:
                     type: string
