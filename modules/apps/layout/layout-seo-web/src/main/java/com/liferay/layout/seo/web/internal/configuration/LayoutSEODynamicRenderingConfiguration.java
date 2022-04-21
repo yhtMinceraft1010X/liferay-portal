@@ -38,54 +38,31 @@ public interface LayoutSEODynamicRenderingConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "http://service.prerender.io",
+		deflt = "",
 		name = "layout-seo-dynamic-rendering-configuration-service-url",
 		required = false
 	)
-	public String serviceUrl();
+	public String serviceURL();
 
 	@Meta.AD(
-		deflt = "",
-		name = "layout-seo-dynamic-rendering-configuration-service-token",
-		required = false
-	)
-	public String serviceToken();
-
-	@Meta.AD(
-		deflt = "", name = "layout-seo-dynamic-rendering-configuration-path",
-		required = false
-	)
-	public String[] pathList();
-
-	@Meta.AD(
-		deflt = "20", name = "default-max-connections-per-route",
-		required = false
-	)
-	public int defaultMaxConnectionsPerRoute();
-
-	@Meta.AD(deflt = "20", name = "max-total-connections", required = false)
-	public int maxTotalConnections();
-
-	@Meta.AD(
-		deflt = "60000", name = "connection-manager-timeout", required = false
-	)
-	public int connectionManagerTimeout();
-
-	@Meta.AD(deflt = "60000", name = "so-timeout", required = false)
-	public int soTimeout();
-
-	@Meta.AD(
-		deflt = "googlebot,bingbot,yandex,baiduspider,facebookexternalhit,twitterbot,rogerbot,linkedinbot,embedly,quora link preview,showyoubot,outbrain,pinterest/0.,pinterestbot,slackbot,vkShare,W3C_Validator,whatsapp,redditbot,applebot,flipboard,tumblr,bitlybot,skypeuripreview,nuzzel,discordbot,google page speed,qwantify,bitrix link preview,xing-contenttabreceiver,chrome-lighthouse,telegrambot,screaming frog",
+		deflt = "W3C_Validator,applebot,baiduspider,bingbot,bitlybot,bitrix link preview,chrome-lighthouse,discordbot,embedly,facebookexternalhit,flipboard,google page speed,googlebot,linkedinbot,nuzzel,outbrain,pinterest/0.,pinterestbot,quora link preview,qwantify,redditbot,rogerbot,screaming frog,showyoubot,skypeuripreview,slackbot,telegrambot,tumblr,twitterbot,vkShare,whatsapp,xing-contenttabreceiver,yandex",
 		name = "layout-seo-dynamic-rendering-configuration-crawler-user-agents",
 		required = false
 	)
 	public String[] crawlerUserAgents();
 
 	@Meta.AD(
-		deflt = ".js,.css,.xml,.less,.png,.jpg,.jpeg,.gif,.pdf,.doc,.txt,.ico,.rss,.zip,.mp3,.rar,.exe,.wmv,.doc,.avi,.ppt,.mpg,.mpeg,.tif,.wav,.mov,.psd,.ai,.xls,.mp4,.m4a,.swf,.dat,.dmg,.iso,.flv,.m4v,.torrent,.ttf,.woff,.svg,.eot",
-		name = "layout-seo-dynamic-rendering-configuration-extension-ignore-list",
+		deflt = "",
+		name = "layout-seo-dynamic-rendering-configuration-included-path",
 		required = false
 	)
-	public String[] extensionIgnoreList();
+	public String[] includedPaths();
+
+	@Meta.AD(
+		deflt = ".ai,.avi,.css,.dat,.dmg,.doc,.doc,.eot,.exe,.flv,.gif,.ico,.iso,.jpeg,.jpg,.js,.less,.m4a,.m4v,.mov,.mp3,.mp4,.mpeg,.mpg,.pdf,.png,.ppt,.psd,.rar,.rss,.svg,.swf,.tif,.torrent,.ttf,.txt,.wav,.wmv,.woff,.xls,.xml,.zip",
+		name = "layout-seo-dynamic-rendering-configuration-ignored-extensions",
+		required = false
+	)
+	public String[] ignoredExtensions();
 
 }

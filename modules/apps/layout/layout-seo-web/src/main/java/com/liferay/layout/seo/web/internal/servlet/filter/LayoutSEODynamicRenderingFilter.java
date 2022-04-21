@@ -15,6 +15,7 @@
 package com.liferay.layout.seo.web.internal.servlet.filter;
 
 import com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,16 +25,16 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -52,7 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
-		"servlet-filter-name=SEO Dynamic Rendering Filter", "url-pattern=/*"
+		"servlet-filter-name=Layout SEO Dynamic Rendering Filter",
+		"url-pattern=/*"
 	},
 	service = Filter.class
 )
@@ -65,11 +67,11 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 
 		try {
 			if (!_layoutSEODynamicRenderingConfiguration.enabled() ||
-				!_validateUserAgent(
+				!_isCrawlerUserAgent(
+					_layoutSEODynamicRenderingConfiguration.crawlerUserAgents(),
 					StringUtil.toLowerCase(
-						httpServletRequest.getHeader(HttpHeaders.USER_AGENT)),
-					_layoutSEODynamicRenderingConfiguration.
-						crawlerUserAgents())) {
+						httpServletRequest.getHeader(
+							HttpHeaders.USER_AGENT)))) {
 
 				return false;
 			}
@@ -79,18 +81,18 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 
 			String requestURI = serviceContext.getCurrentURL();
 
-			for (String extension :
+			for (String ignoredExtension :
 					_layoutSEODynamicRenderingConfiguration.
-						extensionIgnoreList()) {
+						ignoredExtensions()) {
 
-				if (requestURI.endsWith(extension)) {
+				if (requestURI.endsWith(ignoredExtension)) {
 					return false;
 				}
 			}
 
-			if (!_validatePath(
+			if (!_isIncludedPath(
 					requestURI,
-					_layoutSEODynamicRenderingConfiguration.pathList())) {
+					_layoutSEODynamicRenderingConfiguration.includedPaths())) {
 
 				return false;
 			}
@@ -98,7 +100,7 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 			Map<String, String[]> parameterMap =
 				httpServletRequest.getParameterMap();
 
-			if (parameterMap.containsKey(_ESCAPED_FRAGMENT_KEY)) {
+			if (parameterMap.containsKey("_escaped_fragment_")) {
 				return true;
 			}
 		}
@@ -121,125 +123,95 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 		return _log;
 	}
 
+	@Override
 	protected void processFilter(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws IOException {
 
-		String serviceURL =
-			_layoutSEODynamicRenderingConfiguration.serviceUrl();
+		Http.Options options = new Http.Options();
+
+		Map<String, String> headers = _getHeaders(httpServletRequest);
+
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			options.addHeader(entry.getKey(), entry.getValue());
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		String requestURL =
-			serviceContext.getPortalURL() + serviceContext.getCurrentURL();
-
-		Http.Options options = new Http.Options();
+		options.setLocation(
+			StringBundler.concat(
+				_layoutSEODynamicRenderingConfiguration.serviceURL(),
+				StringPool.SLASH, serviceContext.getPortalURL(),
+				serviceContext.getCurrentURL()));
 
 		options.setNormalizeURI(false);
 
-		Map<String, String> headers = _getRequestHeaders(httpServletRequest);
-
-		for (Map.Entry<String, String> headerEntry : headers.entrySet()) {
-			options.addHeader(headerEntry.getKey(), headerEntry.getValue());
-		}
-
-		String serviceToken =
-			_layoutSEODynamicRenderingConfiguration.serviceToken();
-
-		if (!serviceToken.isEmpty()) {
-			options.addHeader("X-Prerender-Token", serviceToken);
-		}
-
-		options.setLocation(serviceURL + StringPool.SLASH + requestURL);
-
-		String content = _http.URLtoString(options);
-
-		_getHtml(content, httpServletResponse);
+		_write(_http.URLtoString(options), httpServletResponse);
 	}
 
-	private List<String> _getHopByHopHeaders() {
-		String[] hopByHopHeaderList = {
-			"connection", "keep-alive", "proxy-authenticate",
-			"proxy-authorization", "te", "trailers", "transfer-encoding",
-			"upgrade"
-		};
-
-		return Arrays.asList(hopByHopHeaderList);
-	}
-
-	private void _getHtml(
-		String html, HttpServletResponse httpServletResponse) {
-
-		httpServletResponse.setContentType("text/html; charset=UTF-8");
-
-		try (PrintWriter printWriter = httpServletResponse.getWriter()) {
-			printWriter.write(html);
-
-			printWriter.flush();
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
-	}
-
-	private Map<String, String> _getRequestHeaders(
+	private Map<String, String> _getHeaders(
 		HttpServletRequest httpServletRequest) {
 
-		HashMap<String, String> headers = new HashMap<>();
+		Map<String, String> headers = new HashMap<>();
 
 		Enumeration<String> enumeration = httpServletRequest.getHeaderNames();
 
 		while (enumeration.hasMoreElements()) {
 			String headerName = enumeration.nextElement();
 
-			String value = httpServletRequest.getHeader(headerName);
-
-			if (!_getHopByHopHeaders().contains(headerName) &&
+			if (!_hopByHopHeaderNames.contains(headerName) &&
 				!headerName.equals("content-length")) {
 
-				headers.put(headerName, value);
+				headers.put(
+					headerName, httpServletRequest.getHeader(headerName));
 			}
 		}
 
 		return headers;
 	}
 
-	private boolean _validatePath(String renderURI, String[] pathList) {
-		boolean validPath = false;
+	private boolean _isCrawlerUserAgent(
+		String[] crawlerUserAgents, String userAgent) {
 
-		for (String path : pathList) {
-			if (renderURI.contains(StringUtil.toLowerCase(path))) {
-				validPath = true;
-
-				break;
+		for (String crawlerUserAgent : crawlerUserAgents) {
+			if (userAgent.contains(StringUtil.toLowerCase(crawlerUserAgent))) {
+				return true;
 			}
 		}
 
-		return validPath;
+		return false;
 	}
 
-	private boolean _validateUserAgent(
-		String requestUserAgent, String[] userAgents) {
-
-		boolean validUserAgent = false;
-
-		for (String userAgent : userAgents) {
-			if (requestUserAgent.contains(StringUtil.toLowerCase(userAgent))) {
-				validUserAgent = true;
-
-				break;
+	private boolean _isIncludedPath(String requestURI, String[] includedPaths) {
+		for (String includedPath : includedPaths) {
+			if (requestURI.contains(StringUtil.toLowerCase(includedPath))) {
+				return true;
 			}
 		}
 
-		return validUserAgent;
+		return false;
 	}
 
-	private static final String _ESCAPED_FRAGMENT_KEY = "_escaped_fragment_";
+	private void _write(String html, HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		httpServletResponse.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.write(html);
+
+		printWriter.flush();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSEODynamicRenderingFilter.class);
+
+	private final Set<String> _hopByHopHeaderNames = SetUtil.fromArray(
+		"connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
+		"te", "trailers", "transfer-encoding", "upgrade");
 
 	@Reference
 	private Http _http;

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -106,11 +107,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
-			List<String> prerenderPathList = Arrays.asList(
-				_layoutSEODynamicRenderingConfiguration.pathList());
-
 			if (_layoutSEODynamicRenderingConfiguration.enabled() &&
-				prerenderPathList.contains(layout.getFriendlyURL())) {
+				ArrayUtil.contains(
+					_layoutSEODynamicRenderingConfiguration.includedPaths(),
+					layout.getFriendlyURL())) {
 
 				return;
 			}
@@ -322,16 +322,15 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_layoutSEODynamicRenderingConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutSEODynamicRenderingConfiguration.class, properties);
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
 			_layoutSEOSiteLocalService, _layoutSEOTemplateProcessor, _portal,
 			_storageEngine);
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
-
-		_layoutSEODynamicRenderingConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LayoutSEODynamicRenderingConfiguration.class, properties);
 	}
 
 	private String _addLinkTag(LayoutSEOLink layoutSEOLink) {
