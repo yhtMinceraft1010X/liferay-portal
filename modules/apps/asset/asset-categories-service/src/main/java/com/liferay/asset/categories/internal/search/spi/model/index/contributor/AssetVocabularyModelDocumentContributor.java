@@ -59,6 +59,8 @@ public class AssetVocabularyModelDocumentContributor
 			document, Field.TITLE, siteDefaultLocale,
 			assetVocabulary.getTitleMap());
 
+		document.addNumber(
+			Field.VISIBILITY_TYPE, assetVocabulary.getVisibilityType());
 		document.addLocalizedKeyword(
 			"localized_title",
 			LocalizationUtil.populateLocalizationMap(
@@ -66,9 +68,6 @@ public class AssetVocabularyModelDocumentContributor
 				assetVocabulary.getDefaultLanguageId(),
 				assetVocabulary.getGroupId()),
 			true, true);
-
-		document.addNumber(
-			Field.VISIBILITY_TYPE, assetVocabulary.getVisibilityType());
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {
