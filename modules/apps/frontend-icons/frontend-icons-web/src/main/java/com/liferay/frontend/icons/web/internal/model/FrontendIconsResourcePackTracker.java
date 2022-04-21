@@ -113,7 +113,7 @@ public class FrontendIconsResourcePackTracker {
 			}
 
 			FrontendIconsResourcePack frontendIconsResourcePack =
-				_createIconResourcePack(bundle, iconsPath, name);
+				_createFrontendIconsResourcePack(bundle, iconsPath, name);
 
 			if (frontendIconsResourcePack == null) {
 				return null;
@@ -189,7 +189,7 @@ public class FrontendIconsResourcePackTracker {
 				frontendIconsResourcePackRepository;
 		}
 
-		private FrontendIconsResourcePack _createIconResourcePack(
+		private FrontendIconsResourcePack _createFrontendIconsResourcePack(
 			Bundle bundle, String iconsPath, String name) {
 
 			Enumeration<URL> entriesEnumeration = bundle.findEntries(
