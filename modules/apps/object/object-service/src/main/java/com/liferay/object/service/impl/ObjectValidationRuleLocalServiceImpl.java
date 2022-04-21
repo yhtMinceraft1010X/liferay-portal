@@ -220,8 +220,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 					throw new ObjectValidationRuleScriptException(
-						"There was an unexpected error in fields validation. " +
-							"Please contact support.");
+						"Script is invalid");
 				}
 
 				if (GetterUtil.getBoolean(results.get("invalidFields"))) {
