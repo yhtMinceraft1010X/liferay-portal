@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal;
+package com.liferay.frontend.icons.web.internal.model;
 
-import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.petra.string.StringBundler;
