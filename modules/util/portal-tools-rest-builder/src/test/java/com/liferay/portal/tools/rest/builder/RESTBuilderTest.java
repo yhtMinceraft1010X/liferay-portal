@@ -61,7 +61,7 @@ public class RESTBuilderTest {
 		_assertResourceFilesExist(filesPath, "Folder");
 		_assertResourceFilesExist(filesPath, "Test");
 
-		_assertDtoFileExist(filesPath, "UnreferencedSchemaComponent");
+		_assertDTOFile(filesPath, "UnreferencedSchemaComponent");
 
 		_assertPropertiesWithHyphens(
 			filesPath, "Test", "property-with-hyphens");
@@ -82,7 +82,7 @@ public class RESTBuilderTest {
 		Assert.assertFalse(sampleImplDir.exists());
 	}
 
-	private void _assertDtoFileExist(String filesPath, String resourceName) {
+	private void _assertDTOFile(String filesPath, String resourceName) {
 		File dtoFolderFile = new File(
 			_getResourcePath(
 				filesPath,
@@ -191,7 +191,7 @@ public class RESTBuilderTest {
 
 		Assert.assertTrue(resourceFolderFile.exists());
 
-		_assertDtoFileExist(filesPath, resourceName);
+		_assertDTOFile(filesPath, resourceName);
 	}
 
 	private String _getDependenciesPath() {
