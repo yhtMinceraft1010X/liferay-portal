@@ -436,18 +436,18 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			(CommerceContext)actionRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
 		long billingAddressId = ParamUtil.getLong(
 			actionRequest, "billingAddressId");
 		long shippingAddressId = ParamUtil.getLong(
 			actionRequest, "shippingAddressId");
 		String purchaseOrderNumber = ParamUtil.getString(
 			actionRequest, "purchaseOrderNumber");
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
 
 		_commerceOrderService.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(), commerceOrderId,
