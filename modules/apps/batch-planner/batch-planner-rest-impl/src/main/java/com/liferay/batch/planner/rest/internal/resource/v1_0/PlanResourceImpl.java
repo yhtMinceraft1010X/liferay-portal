@@ -86,7 +86,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
 			internalClassName, _getOpenAPIYAML(internalClassName));
 
-		return _getTemplateContent(dtoEntityFields);
+		return _getResponse(dtoEntityFields);
 	}
 
 	@Override
@@ -173,10 +173,10 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
 	}
 
-	private Response _getTemplateContent(Map<String, Field> dtoEntityFields) {
-		Set<Map.Entry<String, Field>> entrySet = dtoEntityFields.entrySet();
+	private Response _getResponse(Map<String, Field> dtoEntityFields) {
+		Set<Map.Entry<String, Field>> set = dtoEntityFields.entrySet();
 
-		Iterator<Map.Entry<String, Field>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<String, Field>> iterator = set.iterator();
 
 		StringBundler headerSB = new StringBundler(dtoEntityFields.size() * 2);
 		StringBundler lineSB = new StringBundler(dtoEntityFields.size() * 2);
