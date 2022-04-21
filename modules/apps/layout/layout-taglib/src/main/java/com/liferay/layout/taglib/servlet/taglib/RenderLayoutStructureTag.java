@@ -50,6 +50,8 @@ import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -162,6 +164,28 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		return ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
+	}
+
+	private boolean _includeCommonStyles(FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject stylesFragmentEntryEntryProcessorJSONObject =
+			jsonObject.getJSONObject(_KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (stylesFragmentEntryEntryProcessorJSONObject == null) {
+			return false;
+		}
+
+		if (stylesFragmentEntryEntryProcessorJSONObject.getBoolean(
+				"hasCommonStyles")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _renderCollectionStyledLayoutStructureItem(
@@ -751,10 +775,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				if (renderLayoutStructureDisplayContext.
 						isCommonStylesFFEnabled()) {
 
-					jspWriter.write(
-						LayoutStructureItemCSSUtil.
-							getLayoutStructureItemUniqueCssClass(
-								fragmentStyledLayoutStructureItem));
+					if (!_includeCommonStyles(fragmentEntryLink)) {
+						jspWriter.write(
+							LayoutStructureItemCSSUtil.
+								getLayoutStructureItemUniqueCssClass(
+									fragmentStyledLayoutStructureItem));
+					}
+
 					jspWriter.write(StringPool.SPACE);
 					jspWriter.write(
 						LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
@@ -1052,6 +1079,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		return (LayoutTypePortlet)layout.getLayoutType();
 	}
+
+	private static final String _KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR =
+		"com.liferay.fragment.entry.processor.styles." +
+			"StylesFragmentEntryProcessor";
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";
 
