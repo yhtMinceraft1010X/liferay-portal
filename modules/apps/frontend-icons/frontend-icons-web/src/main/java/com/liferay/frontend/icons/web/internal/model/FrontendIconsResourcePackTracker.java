@@ -142,39 +142,43 @@ public class FrontendIconsResourcePackTracker {
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
-			if (headers != null) {
-				String name = headers.get("Liferay-Icons-Pack-Name");
+			if (headers == null) {
+				return;
+			}
 
-				if (!Validator.isBlank(name)) {
-					try {
-						_companyLocalService.forEachCompanyId(
-							companyId -> {
-								try {
-									_frontendIconsResourcePackRepository.
-										deleteFrontendIconsResourcePack(
-											companyId, name);
-								}
-								catch (UndeployedExternalRepositoryException
-											undeployedExternalRepositoryException) {
+			String name = headers.get("Liferay-Icons-Pack-Name");
 
-									if (_log.isDebugEnabled()) {
-										_log.debug(
-											undeployedExternalRepositoryException);
-									}
-								}
-							});
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
+			if (Validator.isBlank(name)) {
+				return;
+			}
+
+			try {
+				_companyLocalService.forEachCompanyId(
+					companyId -> {
+						try {
+							_frontendIconsResourcePackRepository.
+								deleteFrontendIconsResourcePack(
+									companyId, name);
 						}
-					}
+						catch (UndeployedExternalRepositoryException
+									undeployedExternalRepositoryException) {
 
-					serviceRegistration.unregister();
-
-					_bundleContext.ungetService(serviceReference);
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									undeployedExternalRepositoryException);
+							}
+						}
+					});
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
 				}
 			}
+
+			serviceRegistration.unregister();
+
+			_bundleContext.ungetService(serviceReference);
 		}
 
 		private FrontendIconsResourcePackServiceTrackerCustomizer(
