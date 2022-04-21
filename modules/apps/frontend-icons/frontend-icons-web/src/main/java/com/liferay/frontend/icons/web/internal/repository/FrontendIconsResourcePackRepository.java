@@ -154,11 +154,11 @@ public class FrontendIconsResourcePackRepository {
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
 				company.getGroupId(), folder.getFolderId(), title);
 
-			String settings = dlFileEntry.getExtraSettings();
+			String extraSettings = dlFileEntry.getExtraSettings();
 
 			FrontendIconsResourcePack frontendIconsResourcePack =
 				new FrontendIconsResourcePack(
-					settings.contains("editable=true"), title);
+					extraSettings.contains("editable=true"), title);
 
 			List<FrontendIconsResource> frontendIconsResources =
 				SVGUtil.getFrontendIconsResources(
