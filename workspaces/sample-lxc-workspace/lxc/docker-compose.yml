@@ -29,7 +29,7 @@ services:
             - LXC_EXTENSION_ABLE_REMOTE_APP_URL=http://localhost:9001
             - LXC_EXTENSION_BAKER_WEBHOOK_SECRET=pgyP2sdYFaUreq4
             - LXC_EXTENSION_BAKER_WEBHOOK_URL=http://localhost:9002
-        image: liferay/dxp:7.4.13-u20
+        image: liferay/dxp:7.4.13.nightly-d3.0.13-20220421124253
         ports:
             - 8080:8080
         volumes:
