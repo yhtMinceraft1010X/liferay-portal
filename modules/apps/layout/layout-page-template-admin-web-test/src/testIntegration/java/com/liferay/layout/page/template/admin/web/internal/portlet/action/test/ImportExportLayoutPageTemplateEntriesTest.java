@@ -459,7 +459,6 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				return String.valueOf(journalArticle.getResourcePrimKey());
 			}
 		).build();
-
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL",
 			() -> {
