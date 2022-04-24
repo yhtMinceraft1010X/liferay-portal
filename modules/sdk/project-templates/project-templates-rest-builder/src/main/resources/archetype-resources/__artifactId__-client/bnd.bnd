@@ -4,4 +4,4 @@ Bundle-SymbolicName: ${package}.client
 Bundle-Version: ${version}
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}
--provider-policy: ${versionPolicy}#end
+-provider-policy: ${versionPolicy#end}

@@ -7,4 +7,4 @@ Export-Package:\
 	${package}.resource.v1_0
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}
--provider-policy: ${versionPolicy}#end
+-provider-policy: ${versionPolicy#end}

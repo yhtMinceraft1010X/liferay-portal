@@ -6,4 +6,4 @@ Bundle-Version: ${version}
 -consumer-policy: ${versionPolicy}
 -metatype: *
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
--provider-policy: ${versionPolicy}#end
+-provider-policy: ${versionPolicy#end}

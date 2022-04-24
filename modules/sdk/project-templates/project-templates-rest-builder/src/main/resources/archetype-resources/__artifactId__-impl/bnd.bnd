@@ -5,4 +5,4 @@ Bundle-Version: ${version}
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}
 -includeresource: META-INF/liferay/rest/rest-config.yaml=rest-config.yaml,META-INF/liferay/rest/rest-openapi.yaml=rest-openapi.yaml
--provider-policy: ${versionPolicy}#end
+-provider-policy: ${versionPolicy#end}

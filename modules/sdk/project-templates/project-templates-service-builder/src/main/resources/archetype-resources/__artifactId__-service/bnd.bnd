@@ -18,4 +18,4 @@ Liferay-Service: true
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || (${dependencyInjector} == "spring"))
 -plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin
 #end
--provider-policy: ${versionPolicy}#end
+-provider-policy: ${versionPolicy#end}
