@@ -1182,7 +1182,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return trashEntry;
 			}
 
-			com.liferay.portal.kernel.trash.TrashHandler trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+			com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				getTrashHandler();
+			<#else>
+				com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+			</#if>
 
 			if (Validator.isNotNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				ContainerModel containerModel = null;
