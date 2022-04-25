@@ -131,8 +131,8 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					_portal.getResourceBundle(LocaleUtil.getDefault()),
-					"data-lfr-styles-attribute-can-be-used-only-once-on-the-" +
-						"same-fragment"));
+					"the-data-lfr-styles-attribute-can-be-used-only-once-on-" +
+						"the-same-fragment"));
 		}
 	}
 
