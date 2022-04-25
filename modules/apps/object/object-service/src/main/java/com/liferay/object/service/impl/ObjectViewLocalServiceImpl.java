@@ -350,8 +350,8 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 					objectViewColumn.getObjectFieldName())) {
 
 				throw new ObjectViewColumnFieldNameException(
-					"Already exist an object view column with field name: " +
-						objectViewColumn.getObjectFieldName());
+					"There is already an object view column with the object " +
+						"field name: " + objectViewColumn.getObjectFieldName());
 			}
 
 			objectViewColumnFieldNames.add(
