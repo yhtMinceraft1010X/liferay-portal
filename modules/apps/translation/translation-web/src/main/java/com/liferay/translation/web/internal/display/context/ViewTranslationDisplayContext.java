@@ -125,15 +125,15 @@ public class ViewTranslationDisplayContext {
 	}
 
 	public List<String> getStringValues(InfoField infoField, Locale locale) {
+		List<String> stringValues = new ArrayList<>();
+
 		InfoItemFieldValues infoItemFieldValues =
 			_translationSnapshot.getInfoItemFieldValues();
 
-		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoItemFieldValues.getInfoFieldValues(infoField.getUniqueId());
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues(
+					infoField.getUniqueId())) {
 
-		List<String> stringValues = new ArrayList<>();
-
-		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			stringValues.add(
 				GetterUtil.getString(infoFieldValue.getValue(locale)));
 		}
