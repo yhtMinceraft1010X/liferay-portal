@@ -84,10 +84,10 @@ public class FragmentEntryProcessorStylesTest {
 
 		_group = GroupTestUtil.addGroup();
 
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
 
 	@After
