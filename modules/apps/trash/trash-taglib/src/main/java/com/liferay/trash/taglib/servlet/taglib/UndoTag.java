@@ -130,6 +130,8 @@ public class UndoTag extends IncludeTag {
 
 				TrashEntry trashEntry = trashedModel.getTrashEntry();
 
+				restoreTrashEntryIds.add(trashEntry.getEntryId());
+
 				BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
 
 				TrashHandler trashHandler =
@@ -139,7 +141,6 @@ public class UndoTag extends IncludeTag {
 				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 					trashedModel.getTrashEntryClassPK());
 
-				restoreTrashEntryIds.add(trashEntry.getEntryId());
 				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
 			}
 			catch (Exception exception) {
