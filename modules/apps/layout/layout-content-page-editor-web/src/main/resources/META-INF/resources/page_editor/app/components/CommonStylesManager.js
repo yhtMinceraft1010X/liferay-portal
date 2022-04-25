@@ -196,7 +196,7 @@ function calculateStyles({
 
 			if (
 				item.type !== LAYOUT_DATA_ITEM_TYPES.fragment ||
-				!hasInnerCommonStyles(fragmentEntryLink?.editableValues)
+				!hasInnerCommonStyles(fragmentEntryLink)
 			) {
 				itemsWithTopper.add(item.itemId);
 			}
