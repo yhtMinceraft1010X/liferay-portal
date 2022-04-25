@@ -85,8 +85,8 @@ public class GetSiteNavigationMenuPreviewMVCResourceCommand
 
 		NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
 
-		navigationMenuTag.setSiteNavigationMenuId(siteNavigationMenuId);
 		navigationMenuTag.setDdmTemplateKey(ddmTemplateKey);
+		navigationMenuTag.setSiteNavigationMenuId(siteNavigationMenuId);
 		navigationMenuTag.setRootItemLevel(0);
 
 		navigationMenuTag.doTag(httpServletRequest, pipingServletResponse);
