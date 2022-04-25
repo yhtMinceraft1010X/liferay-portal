@@ -115,7 +115,7 @@ public class ObjectViewLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(
-					_createObjectViewColumnWithNoExistedObjectFieldName()),
+					_createObjectViewColumnWithNonexistentObjectFieldName()),
 				Collections.emptyList());
 		}
 		catch (ObjectViewColumnFieldNameException
@@ -233,7 +233,7 @@ public class ObjectViewLocalServiceTest {
 				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
 				objectView.getNameMap(),
 				Collections.singletonList(
-					_createObjectViewColumnWithNoExistedObjectFieldName()),
+					_createObjectViewColumnWithNonexistentObjectFieldName()),
 				Collections.emptyList());
 		}
 		catch (ObjectViewColumnFieldNameException
@@ -400,7 +400,7 @@ public class ObjectViewLocalServiceTest {
 	}
 
 	private ObjectViewColumn
-			_createObjectViewColumnWithNoExistedObjectFieldName()
+			_createObjectViewColumnWithNonexistentObjectFieldName()
 		throws Exception {
 
 		ObjectViewColumn objectViewColumn = _createObjectViewColumn(
