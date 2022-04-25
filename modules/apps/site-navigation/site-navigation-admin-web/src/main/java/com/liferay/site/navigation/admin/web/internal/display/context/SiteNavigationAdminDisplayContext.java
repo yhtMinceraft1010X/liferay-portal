@@ -534,7 +534,7 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	private String _getPreviewSiteNavigationMenuURL() {
-		LiferayPortletURL resourceURL =
+		LiferayPortletURL liferayPortletURL =
 			(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
 				_liferayPortletResponse
 			).setParameter(
@@ -544,9 +544,9 @@ public class SiteNavigationAdminDisplayContext {
 				"/site_navigation_admin/get_site_navigation_menu_preview"
 			).buildResourceURL();
 
-		resourceURL.setCopyCurrentRenderParameters(false);
+		liferayPortletURL.setCopyCurrentRenderParameters(false);
 
-		return resourceURL.toString();
+		return liferayPortletURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
