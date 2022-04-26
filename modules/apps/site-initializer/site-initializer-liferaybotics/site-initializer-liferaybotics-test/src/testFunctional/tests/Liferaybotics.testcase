@@ -186,7 +186,7 @@ definition {
 			AssertElementPresent(locator1 = "Liferaybotics#PRODUCT_PUBLISHER");
 		}
 
-		// TO-DO:Update when Warranty Page is working
+		// TO-DO:Update when Warranty Page is working - LPS-152264
 
 		task ("Assert Warrany product is on Dashboard Page") {
 			AssertTextPresent(value1 = "Warranty");
