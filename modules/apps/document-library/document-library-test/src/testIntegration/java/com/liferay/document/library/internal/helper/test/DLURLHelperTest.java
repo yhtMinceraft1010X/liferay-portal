@@ -63,8 +63,8 @@ public class DLURLHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
 		_group = GroupTestUtil.addGroup();
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test
