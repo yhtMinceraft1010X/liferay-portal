@@ -32,6 +32,11 @@
 	<td>//a[@class="link" and contains (text(),'${key_title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_PUBLISHER</td>
+	<td>//div[contains(@class,'product-publisher')]</td>
+	<td></td>
+</tr>
 <!--NEWS PAGE-->
 <tr>
 	<td>NEWS_TITLE</td>
