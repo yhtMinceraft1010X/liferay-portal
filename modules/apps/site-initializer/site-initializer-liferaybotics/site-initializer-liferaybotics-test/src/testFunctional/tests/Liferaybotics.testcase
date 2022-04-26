@@ -163,6 +163,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150999. Verify Product Publisher contained a Warranty product"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheProductPublisherContainsWarrantyProduct {
 		task ("Go to Liferaybotics Site") {
