@@ -17,7 +17,7 @@ package com.liferay.client.extension.constants;
 /**
  * @author Iván Zaera Avellón
  */
-public class RemoteAppConstants {
+public class ClientExtensionConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.client.extension";
 

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 /**
  * @author Javier de Arcos
  */
-public class RemoteAppAdminPortletResourcePermissionLogic
+public class ClientExtensionAdminPortletResourcePermissionLogic
 	implements PortletResourcePermissionLogic {
 
 	@Override

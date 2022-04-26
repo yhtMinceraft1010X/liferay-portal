@@ -24,19 +24,19 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link RemoteAppEntry}.
+ * This class is a wrapper for {@link ClientExtensionEntry}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see RemoteAppEntry
+ * @see ClientExtensionEntry
  * @generated
  */
-public class RemoteAppEntryWrapper
-	extends BaseModelWrapper<RemoteAppEntry>
-	implements ModelWrapper<RemoteAppEntry>, RemoteAppEntry {
+public class ClientExtensionEntryWrapper
+	extends BaseModelWrapper<ClientExtensionEntry>
+	implements ModelWrapper<ClientExtensionEntry>, ClientExtensionEntry {
 
-	public RemoteAppEntryWrapper(RemoteAppEntry remoteAppEntry) {
-		super(remoteAppEntry);
+	public ClientExtensionEntryWrapper(ClientExtensionEntry clientExtensionEntry) {
+		super(clientExtensionEntry);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class RemoteAppEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
-		attributes.put("remoteAppEntryId", getRemoteAppEntryId());
+		attributes.put("clientExtensionEntryId", getClientExtensionEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -95,10 +95,10 @@ public class RemoteAppEntryWrapper
 			setExternalReferenceCode(externalReferenceCode);
 		}
 
-		Long remoteAppEntryId = (Long)attributes.get("remoteAppEntryId");
+		Long clientExtensionEntryId = (Long)attributes.get("clientExtensionEntryId");
 
-		if (remoteAppEntryId != null) {
-			setRemoteAppEntryId(remoteAppEntryId);
+		if (clientExtensionEntryId != null) {
+			setClientExtensionEntryId(clientExtensionEntryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -240,7 +240,7 @@ public class RemoteAppEntryWrapper
 	}
 
 	@Override
-	public RemoteAppEntry cloneWithOriginalValues() {
+	public ClientExtensionEntry cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
 	}
 
@@ -526,8 +526,8 @@ public class RemoteAppEntryWrapper
 	 * @return the remote app entry ID of this remote app entry
 	 */
 	@Override
-	public long getRemoteAppEntryId() {
-		return model.getRemoteAppEntryId();
+	public long getClientExtensionEntryId() {
+		return model.getClientExtensionEntryId();
 	}
 
 	/**
@@ -1008,11 +1008,11 @@ public class RemoteAppEntryWrapper
 	/**
 	 * Sets the remote app entry ID of this remote app entry.
 	 *
-	 * @param remoteAppEntryId the remote app entry ID of this remote app entry
+	 * @param clientExtensionEntryId the remote app entry ID of this remote app entry
 	 */
 	@Override
-	public void setRemoteAppEntryId(long remoteAppEntryId) {
-		model.setRemoteAppEntryId(remoteAppEntryId);
+	public void setClientExtensionEntryId(long clientExtensionEntryId) {
+		model.setClientExtensionEntryId(clientExtensionEntryId);
 	}
 
 	/**
@@ -1131,8 +1131,8 @@ public class RemoteAppEntryWrapper
 	}
 
 	@Override
-	protected RemoteAppEntryWrapper wrap(RemoteAppEntry remoteAppEntry) {
-		return new RemoteAppEntryWrapper(remoteAppEntry);
+	protected ClientExtensionEntryWrapper wrap(ClientExtensionEntry clientExtensionEntry) {
+		return new ClientExtensionEntryWrapper(clientExtensionEntry);
 	}
 
 }

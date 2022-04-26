@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.service.http;
 
-import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
+import com.liferay.client.extension.service.ClientExtensionEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 
 /**
  * Provides the HTTP utility for the
- * <code>RemoteAppEntryServiceUtil</code> service
+ * <code>ClientExtensionEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
@@ -48,10 +48,10 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RemoteAppEntryServiceHttp {
+public class ClientExtensionEntryServiceHttp {
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			addCustomElementRemoteAppEntry(
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			addCustomElementClientExtensionEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
@@ -64,9 +64,9 @@ public class RemoteAppEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class,
-				"addCustomElementRemoteAppEntry",
-				_addCustomElementRemoteAppEntryParameterTypes0);
+				ClientExtensionEntryServiceUtil.class,
+				"addCustomElementClientExtensionEntry",
+				_addCustomElementClientExtensionEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, customElementCSSURLs,
@@ -92,7 +92,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -103,8 +103,8 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			addIFrameRemoteAppEntry(
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			addIFrameClientExtensionEntry(
 				HttpPrincipal httpPrincipal, String description,
 				String friendlyURLMapping, String iFrameURL,
 				boolean instanceable,
@@ -115,8 +115,8 @@ public class RemoteAppEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class, "addIFrameRemoteAppEntry",
-				_addIFrameRemoteAppEntryParameterTypes1);
+				ClientExtensionEntryServiceUtil.class, "addIFrameClientExtensionEntry",
+				_addIFrameClientExtensionEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, description, friendlyURLMapping, iFrameURL,
@@ -140,7 +140,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -151,18 +151,18 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			deleteRemoteAppEntry(
-				HttpPrincipal httpPrincipal, long remoteAppEntryId)
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			deleteClientExtensionEntry(
+				HttpPrincipal httpPrincipal, long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class, "deleteRemoteAppEntry",
-				_deleteRemoteAppEntryParameterTypes2);
+				ClientExtensionEntryServiceUtil.class, "deleteClientExtensionEntry",
+				_deleteClientExtensionEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteAppEntryId);
+				methodKey, clientExtensionEntryId);
 
 			Object returnObj = null;
 
@@ -181,7 +181,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -192,18 +192,18 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			getRemoteAppEntry(
-				HttpPrincipal httpPrincipal, long remoteAppEntryId)
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			getClientExtensionEntry(
+				HttpPrincipal httpPrincipal, long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class, "getRemoteAppEntry",
-				_getRemoteAppEntryParameterTypes3);
+				ClientExtensionEntryServiceUtil.class, "getClientExtensionEntry",
+				_getClientExtensionEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteAppEntryId);
+				methodKey, clientExtensionEntryId);
 
 			Object returnObj = null;
 
@@ -222,7 +222,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -233,9 +233,9 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			updateCustomElementRemoteAppEntry(
-				HttpPrincipal httpPrincipal, long remoteAppEntryId,
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			updateCustomElementClientExtensionEntry(
+				HttpPrincipal httpPrincipal, long clientExtensionEntryId,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
 				boolean customElementUseESM, String description,
@@ -247,12 +247,12 @@ public class RemoteAppEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class,
-				"updateCustomElementRemoteAppEntry",
-				_updateCustomElementRemoteAppEntryParameterTypes4);
+				ClientExtensionEntryServiceUtil.class,
+				"updateCustomElementClientExtensionEntry",
+				_updateCustomElementClientExtensionEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteAppEntryId, customElementCSSURLs,
+				methodKey, clientExtensionEntryId, customElementCSSURLs,
 				customElementHTMLElementName, customElementURLs,
 				customElementUseESM, description, friendlyURLMapping, nameMap,
 				portletCategoryName, properties, sourceCodeURL);
@@ -274,7 +274,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -285,9 +285,9 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			updateIFrameRemoteAppEntry(
-				HttpPrincipal httpPrincipal, long remoteAppEntryId,
+	public static com.liferay.client.extension.model.ClientExtensionEntry
+			updateIFrameClientExtensionEntry(
+				HttpPrincipal httpPrincipal, long clientExtensionEntryId,
 				String description, String friendlyURLMapping, String iFrameURL,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
@@ -296,11 +296,11 @@ public class RemoteAppEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RemoteAppEntryServiceUtil.class, "updateIFrameRemoteAppEntry",
-				_updateIFrameRemoteAppEntryParameterTypes5);
+				ClientExtensionEntryServiceUtil.class, "updateIFrameClientExtensionEntry",
+				_updateIFrameClientExtensionEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteAppEntryId, description, friendlyURLMapping,
+				methodKey, clientExtensionEntryId, description, friendlyURLMapping,
 				iFrameURL, nameMap, portletCategoryName, properties,
 				sourceCodeURL);
 
@@ -321,7 +321,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -333,30 +333,30 @@ public class RemoteAppEntryServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		RemoteAppEntryServiceHttp.class);
+		ClientExtensionEntryServiceHttp.class);
 
 	private static final Class<?>[]
-		_addCustomElementRemoteAppEntryParameterTypes0 = new Class[] {
+		_addCustomElementClientExtensionEntryParameterTypes0 = new Class[] {
 			String.class, String.class, String.class, String.class,
 			boolean.class, String.class, String.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _addIFrameRemoteAppEntryParameterTypes1 =
+	private static final Class<?>[] _addIFrameClientExtensionEntryParameterTypes1 =
 		new Class[] {
 			String.class, String.class, String.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _deleteRemoteAppEntryParameterTypes2 =
+	private static final Class<?>[] _deleteClientExtensionEntryParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getRemoteAppEntryParameterTypes3 =
+	private static final Class<?>[] _getClientExtensionEntryParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_updateCustomElementRemoteAppEntryParameterTypes4 = new Class[] {
+		_updateCustomElementClientExtensionEntryParameterTypes4 = new Class[] {
 			long.class, String.class, String.class, String.class, boolean.class,
 			String.class, String.class, java.util.Map.class, String.class,
 			String.class, String.class
 		};
-	private static final Class<?>[] _updateIFrameRemoteAppEntryParameterTypes5 =
+	private static final Class<?>[] _updateIFrameClientExtensionEntryParameterTypes5 =
 		new Class[] {
 			long.class, String.class, String.class, String.class,
 			java.util.Map.class, String.class, String.class, String.class

@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoteAppEntryCustomElementHTMLElementNameException
+public class ClientExtensionEntryCustomElementHTMLElementNameException
 	extends PortalException {
 
-	public RemoteAppEntryCustomElementHTMLElementNameException() {
+	public ClientExtensionEntryCustomElementHTMLElementNameException() {
 	}
 
-	public RemoteAppEntryCustomElementHTMLElementNameException(String msg) {
+	public ClientExtensionEntryCustomElementHTMLElementNameException(String msg) {
 		super(msg);
 	}
 
-	public RemoteAppEntryCustomElementHTMLElementNameException(
+	public ClientExtensionEntryCustomElementHTMLElementNameException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public RemoteAppEntryCustomElementHTMLElementNameException(
+	public ClientExtensionEntryCustomElementHTMLElementNameException(
 		Throwable throwable) {
 
 		super(throwable);

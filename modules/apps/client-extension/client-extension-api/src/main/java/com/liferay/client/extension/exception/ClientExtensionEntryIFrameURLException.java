@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoteAppEntryIFrameURLException extends PortalException {
+public class ClientExtensionEntryIFrameURLException extends PortalException {
 
-	public RemoteAppEntryIFrameURLException() {
+	public ClientExtensionEntryIFrameURLException() {
 	}
 
-	public RemoteAppEntryIFrameURLException(String msg) {
+	public ClientExtensionEntryIFrameURLException(String msg) {
 		super(msg);
 	}
 
-	public RemoteAppEntryIFrameURLException(String msg, Throwable throwable) {
+	public ClientExtensionEntryIFrameURLException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public RemoteAppEntryIFrameURLException(Throwable throwable) {
+	public ClientExtensionEntryIFrameURLException(Throwable throwable) {
 		super(throwable);
 	}
 

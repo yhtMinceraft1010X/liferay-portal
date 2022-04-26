@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.model.impl;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,13 +28,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing RemoteAppEntry in entity cache.
+ * The cache model class for representing ClientExtensionEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RemoteAppEntryCacheModel
-	implements CacheModel<RemoteAppEntry>, Externalizable, MVCCModel {
+public class ClientExtensionEntryCacheModel
+	implements CacheModel<ClientExtensionEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -42,15 +42,15 @@ public class RemoteAppEntryCacheModel
 			return true;
 		}
 
-		if (!(object instanceof RemoteAppEntryCacheModel)) {
+		if (!(object instanceof ClientExtensionEntryCacheModel)) {
 			return false;
 		}
 
-		RemoteAppEntryCacheModel remoteAppEntryCacheModel =
-			(RemoteAppEntryCacheModel)object;
+		ClientExtensionEntryCacheModel clientExtensionEntryCacheModel =
+			(ClientExtensionEntryCacheModel)object;
 
-		if ((remoteAppEntryId == remoteAppEntryCacheModel.remoteAppEntryId) &&
-			(mvccVersion == remoteAppEntryCacheModel.mvccVersion)) {
+		if ((clientExtensionEntryId == clientExtensionEntryCacheModel.clientExtensionEntryId) &&
+			(mvccVersion == clientExtensionEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -60,7 +60,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, remoteAppEntryId);
+		int hashCode = HashUtil.hash(0, clientExtensionEntryId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -85,8 +85,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
-		sb.append(", remoteAppEntryId=");
-		sb.append(remoteAppEntryId);
+		sb.append(", clientExtensionEntryId=");
+		sb.append(clientExtensionEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -137,152 +137,152 @@ public class RemoteAppEntryCacheModel
 	}
 
 	@Override
-	public RemoteAppEntry toEntityModel() {
-		RemoteAppEntryImpl remoteAppEntryImpl = new RemoteAppEntryImpl();
+	public ClientExtensionEntry toEntityModel() {
+		ClientExtensionEntryImpl clientExtensionEntryImpl = new ClientExtensionEntryImpl();
 
-		remoteAppEntryImpl.setMvccVersion(mvccVersion);
+		clientExtensionEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			remoteAppEntryImpl.setUuid("");
+			clientExtensionEntryImpl.setUuid("");
 		}
 		else {
-			remoteAppEntryImpl.setUuid(uuid);
+			clientExtensionEntryImpl.setUuid(uuid);
 		}
 
 		if (externalReferenceCode == null) {
-			remoteAppEntryImpl.setExternalReferenceCode("");
+			clientExtensionEntryImpl.setExternalReferenceCode("");
 		}
 		else {
-			remoteAppEntryImpl.setExternalReferenceCode(externalReferenceCode);
+			clientExtensionEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
-		remoteAppEntryImpl.setRemoteAppEntryId(remoteAppEntryId);
-		remoteAppEntryImpl.setCompanyId(companyId);
-		remoteAppEntryImpl.setUserId(userId);
+		clientExtensionEntryImpl.setClientExtensionEntryId(clientExtensionEntryId);
+		clientExtensionEntryImpl.setCompanyId(companyId);
+		clientExtensionEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			remoteAppEntryImpl.setUserName("");
+			clientExtensionEntryImpl.setUserName("");
 		}
 		else {
-			remoteAppEntryImpl.setUserName(userName);
+			clientExtensionEntryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			remoteAppEntryImpl.setCreateDate(null);
+			clientExtensionEntryImpl.setCreateDate(null);
 		}
 		else {
-			remoteAppEntryImpl.setCreateDate(new Date(createDate));
+			clientExtensionEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			remoteAppEntryImpl.setModifiedDate(null);
+			clientExtensionEntryImpl.setModifiedDate(null);
 		}
 		else {
-			remoteAppEntryImpl.setModifiedDate(new Date(modifiedDate));
+			clientExtensionEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		if (customElementCSSURLs == null) {
-			remoteAppEntryImpl.setCustomElementCSSURLs("");
+			clientExtensionEntryImpl.setCustomElementCSSURLs("");
 		}
 		else {
-			remoteAppEntryImpl.setCustomElementCSSURLs(customElementCSSURLs);
+			clientExtensionEntryImpl.setCustomElementCSSURLs(customElementCSSURLs);
 		}
 
 		if (customElementHTMLElementName == null) {
-			remoteAppEntryImpl.setCustomElementHTMLElementName("");
+			clientExtensionEntryImpl.setCustomElementHTMLElementName("");
 		}
 		else {
-			remoteAppEntryImpl.setCustomElementHTMLElementName(
+			clientExtensionEntryImpl.setCustomElementHTMLElementName(
 				customElementHTMLElementName);
 		}
 
 		if (customElementURLs == null) {
-			remoteAppEntryImpl.setCustomElementURLs("");
+			clientExtensionEntryImpl.setCustomElementURLs("");
 		}
 		else {
-			remoteAppEntryImpl.setCustomElementURLs(customElementURLs);
+			clientExtensionEntryImpl.setCustomElementURLs(customElementURLs);
 		}
 
-		remoteAppEntryImpl.setCustomElementUseESM(customElementUseESM);
+		clientExtensionEntryImpl.setCustomElementUseESM(customElementUseESM);
 
 		if (description == null) {
-			remoteAppEntryImpl.setDescription("");
+			clientExtensionEntryImpl.setDescription("");
 		}
 		else {
-			remoteAppEntryImpl.setDescription(description);
+			clientExtensionEntryImpl.setDescription(description);
 		}
 
 		if (friendlyURLMapping == null) {
-			remoteAppEntryImpl.setFriendlyURLMapping("");
+			clientExtensionEntryImpl.setFriendlyURLMapping("");
 		}
 		else {
-			remoteAppEntryImpl.setFriendlyURLMapping(friendlyURLMapping);
+			clientExtensionEntryImpl.setFriendlyURLMapping(friendlyURLMapping);
 		}
 
 		if (iFrameURL == null) {
-			remoteAppEntryImpl.setIFrameURL("");
+			clientExtensionEntryImpl.setIFrameURL("");
 		}
 		else {
-			remoteAppEntryImpl.setIFrameURL(iFrameURL);
+			clientExtensionEntryImpl.setIFrameURL(iFrameURL);
 		}
 
-		remoteAppEntryImpl.setInstanceable(instanceable);
+		clientExtensionEntryImpl.setInstanceable(instanceable);
 
 		if (name == null) {
-			remoteAppEntryImpl.setName("");
+			clientExtensionEntryImpl.setName("");
 		}
 		else {
-			remoteAppEntryImpl.setName(name);
+			clientExtensionEntryImpl.setName(name);
 		}
 
 		if (portletCategoryName == null) {
-			remoteAppEntryImpl.setPortletCategoryName("");
+			clientExtensionEntryImpl.setPortletCategoryName("");
 		}
 		else {
-			remoteAppEntryImpl.setPortletCategoryName(portletCategoryName);
+			clientExtensionEntryImpl.setPortletCategoryName(portletCategoryName);
 		}
 
 		if (properties == null) {
-			remoteAppEntryImpl.setProperties("");
+			clientExtensionEntryImpl.setProperties("");
 		}
 		else {
-			remoteAppEntryImpl.setProperties(properties);
+			clientExtensionEntryImpl.setProperties(properties);
 		}
 
 		if (sourceCodeURL == null) {
-			remoteAppEntryImpl.setSourceCodeURL("");
+			clientExtensionEntryImpl.setSourceCodeURL("");
 		}
 		else {
-			remoteAppEntryImpl.setSourceCodeURL(sourceCodeURL);
+			clientExtensionEntryImpl.setSourceCodeURL(sourceCodeURL);
 		}
 
 		if (type == null) {
-			remoteAppEntryImpl.setType("");
+			clientExtensionEntryImpl.setType("");
 		}
 		else {
-			remoteAppEntryImpl.setType(type);
+			clientExtensionEntryImpl.setType(type);
 		}
 
-		remoteAppEntryImpl.setStatus(status);
-		remoteAppEntryImpl.setStatusByUserId(statusByUserId);
+		clientExtensionEntryImpl.setStatus(status);
+		clientExtensionEntryImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			remoteAppEntryImpl.setStatusByUserName("");
+			clientExtensionEntryImpl.setStatusByUserName("");
 		}
 		else {
-			remoteAppEntryImpl.setStatusByUserName(statusByUserName);
+			clientExtensionEntryImpl.setStatusByUserName(statusByUserName);
 		}
 
 		if (statusDate == Long.MIN_VALUE) {
-			remoteAppEntryImpl.setStatusDate(null);
+			clientExtensionEntryImpl.setStatusDate(null);
 		}
 		else {
-			remoteAppEntryImpl.setStatusDate(new Date(statusDate));
+			clientExtensionEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
-		remoteAppEntryImpl.resetOriginalValues();
+		clientExtensionEntryImpl.resetOriginalValues();
 
-		return remoteAppEntryImpl;
+		return clientExtensionEntryImpl;
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class RemoteAppEntryCacheModel
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
-		remoteAppEntryId = objectInput.readLong();
+		clientExtensionEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -342,7 +342,7 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeUTF(externalReferenceCode);
 		}
 
-		objectOutput.writeLong(remoteAppEntryId);
+		objectOutput.writeLong(clientExtensionEntryId);
 
 		objectOutput.writeLong(companyId);
 
@@ -456,7 +456,7 @@ public class RemoteAppEntryCacheModel
 	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
-	public long remoteAppEntryId;
+	public long clientExtensionEntryId;
 	public long companyId;
 	public long userId;
 	public String userName;

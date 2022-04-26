@@ -15,11 +15,11 @@
 package com.liferay.client.extension.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
+import com.liferay.client.extension.exception.NoSuchClientExtensionEntryException;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
+import com.liferay.client.extension.service.persistence.ClientExtensionEntryPersistence;
+import com.liferay.client.extension.service.persistence.ClientExtensionEntryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -60,7 +60,7 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class RemoteAppEntryPersistenceTest {
+public class ClientExtensionEntryPersistenceTest {
 
 	@ClassRule
 	@Rule
@@ -72,7 +72,7 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Before
 	public void setUp() {
-		_persistence = RemoteAppEntryUtil.getPersistence();
+		_persistence = ClientExtensionEntryUtil.getPersistence();
 
 		Class<?> clazz = _persistence.getClass();
 
@@ -81,7 +81,7 @@ public class RemoteAppEntryPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<RemoteAppEntry> iterator = _remoteAppEntries.iterator();
+		Iterator<ClientExtensionEntry> iterator = _clientExtensionEntries.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,168 +94,168 @@ public class RemoteAppEntryPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RemoteAppEntry remoteAppEntry = _persistence.create(pk);
+		ClientExtensionEntry clientExtensionEntry = _persistence.create(pk);
 
-		Assert.assertNotNull(remoteAppEntry);
+		Assert.assertNotNull(clientExtensionEntry);
 
-		Assert.assertEquals(remoteAppEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(clientExtensionEntry.getPrimaryKey(), pk);
 	}
 
 	@Test
 	public void testRemove() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
-		_persistence.remove(newRemoteAppEntry);
+		_persistence.remove(newClientExtensionEntry);
 
-		RemoteAppEntry existingRemoteAppEntry = _persistence.fetchByPrimaryKey(
-			newRemoteAppEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry = _persistence.fetchByPrimaryKey(
+			newClientExtensionEntry.getPrimaryKey());
 
-		Assert.assertNull(existingRemoteAppEntry);
+		Assert.assertNull(existingClientExtensionEntry);
 	}
 
 	@Test
 	public void testUpdateNew() throws Exception {
-		addRemoteAppEntry();
+		addClientExtensionEntry();
 	}
 
 	@Test
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RemoteAppEntry newRemoteAppEntry = _persistence.create(pk);
+		ClientExtensionEntry newClientExtensionEntry = _persistence.create(pk);
 
-		newRemoteAppEntry.setMvccVersion(RandomTestUtil.nextLong());
+		newClientExtensionEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		newRemoteAppEntry.setUuid(RandomTestUtil.randomString());
+		newClientExtensionEntry.setUuid(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setExternalReferenceCode(
+		newClientExtensionEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setCompanyId(RandomTestUtil.nextLong());
+		newClientExtensionEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		newRemoteAppEntry.setUserId(RandomTestUtil.nextLong());
+		newClientExtensionEntry.setUserId(RandomTestUtil.nextLong());
 
-		newRemoteAppEntry.setUserName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setUserName(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setCreateDate(RandomTestUtil.nextDate());
+		newClientExtensionEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		newRemoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
+		newClientExtensionEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newRemoteAppEntry.setCustomElementCSSURLs(
+		newClientExtensionEntry.setCustomElementCSSURLs(
 			RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setCustomElementHTMLElementName(
+		newClientExtensionEntry.setCustomElementHTMLElementName(
 			RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+		newClientExtensionEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setCustomElementUseESM(
+		newClientExtensionEntry.setCustomElementUseESM(
 			RandomTestUtil.randomBoolean());
 
-		newRemoteAppEntry.setDescription(RandomTestUtil.randomString());
+		newClientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
+		newClientExtensionEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
+		newClientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setInstanceable(RandomTestUtil.randomBoolean());
+		newClientExtensionEntry.setInstanceable(RandomTestUtil.randomBoolean());
 
-		newRemoteAppEntry.setName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setName(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setPortletCategoryName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setPortletCategoryName(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setProperties(RandomTestUtil.randomString());
+		newClientExtensionEntry.setProperties(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setSourceCodeURL(RandomTestUtil.randomString());
+		newClientExtensionEntry.setSourceCodeURL(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setType(RandomTestUtil.randomString());
+		newClientExtensionEntry.setType(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setStatus(RandomTestUtil.nextInt());
+		newClientExtensionEntry.setStatus(RandomTestUtil.nextInt());
 
-		newRemoteAppEntry.setStatusByUserId(RandomTestUtil.nextLong());
+		newClientExtensionEntry.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newRemoteAppEntry.setStatusByUserName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setStatusByUserName(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setStatusDate(RandomTestUtil.nextDate());
+		newClientExtensionEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_remoteAppEntries.add(_persistence.update(newRemoteAppEntry));
+		_clientExtensionEntries.add(_persistence.update(newClientExtensionEntry));
 
-		RemoteAppEntry existingRemoteAppEntry = _persistence.findByPrimaryKey(
-			newRemoteAppEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry = _persistence.findByPrimaryKey(
+			newClientExtensionEntry.getPrimaryKey());
 
 		Assert.assertEquals(
-			existingRemoteAppEntry.getMvccVersion(),
-			newRemoteAppEntry.getMvccVersion());
+			existingClientExtensionEntry.getMvccVersion(),
+			newClientExtensionEntry.getMvccVersion());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getUuid(), newRemoteAppEntry.getUuid());
+			existingClientExtensionEntry.getUuid(), newClientExtensionEntry.getUuid());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getExternalReferenceCode(),
-			newRemoteAppEntry.getExternalReferenceCode());
+			existingClientExtensionEntry.getExternalReferenceCode(),
+			newClientExtensionEntry.getExternalReferenceCode());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getRemoteAppEntryId(),
-			newRemoteAppEntry.getRemoteAppEntryId());
+			existingClientExtensionEntry.getClientExtensionEntryId(),
+			newClientExtensionEntry.getClientExtensionEntryId());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getCompanyId(),
-			newRemoteAppEntry.getCompanyId());
+			existingClientExtensionEntry.getCompanyId(),
+			newClientExtensionEntry.getCompanyId());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getUserId(), newRemoteAppEntry.getUserId());
+			existingClientExtensionEntry.getUserId(), newClientExtensionEntry.getUserId());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getUserName(),
-			newRemoteAppEntry.getUserName());
+			existingClientExtensionEntry.getUserName(),
+			newClientExtensionEntry.getUserName());
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingRemoteAppEntry.getCreateDate()),
-			Time.getShortTimestamp(newRemoteAppEntry.getCreateDate()));
+			Time.getShortTimestamp(existingClientExtensionEntry.getCreateDate()),
+			Time.getShortTimestamp(newClientExtensionEntry.getCreateDate()));
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingRemoteAppEntry.getModifiedDate()),
-			Time.getShortTimestamp(newRemoteAppEntry.getModifiedDate()));
+			Time.getShortTimestamp(existingClientExtensionEntry.getModifiedDate()),
+			Time.getShortTimestamp(newClientExtensionEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingRemoteAppEntry.getCustomElementCSSURLs(),
-			newRemoteAppEntry.getCustomElementCSSURLs());
+			existingClientExtensionEntry.getCustomElementCSSURLs(),
+			newClientExtensionEntry.getCustomElementCSSURLs());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getCustomElementHTMLElementName(),
-			newRemoteAppEntry.getCustomElementHTMLElementName());
+			existingClientExtensionEntry.getCustomElementHTMLElementName(),
+			newClientExtensionEntry.getCustomElementHTMLElementName());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getCustomElementURLs(),
-			newRemoteAppEntry.getCustomElementURLs());
+			existingClientExtensionEntry.getCustomElementURLs(),
+			newClientExtensionEntry.getCustomElementURLs());
 		Assert.assertEquals(
-			existingRemoteAppEntry.isCustomElementUseESM(),
-			newRemoteAppEntry.isCustomElementUseESM());
+			existingClientExtensionEntry.isCustomElementUseESM(),
+			newClientExtensionEntry.isCustomElementUseESM());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getDescription(),
-			newRemoteAppEntry.getDescription());
+			existingClientExtensionEntry.getDescription(),
+			newClientExtensionEntry.getDescription());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getFriendlyURLMapping(),
-			newRemoteAppEntry.getFriendlyURLMapping());
+			existingClientExtensionEntry.getFriendlyURLMapping(),
+			newClientExtensionEntry.getFriendlyURLMapping());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getIFrameURL(),
-			newRemoteAppEntry.getIFrameURL());
+			existingClientExtensionEntry.getIFrameURL(),
+			newClientExtensionEntry.getIFrameURL());
 		Assert.assertEquals(
-			existingRemoteAppEntry.isInstanceable(),
-			newRemoteAppEntry.isInstanceable());
+			existingClientExtensionEntry.isInstanceable(),
+			newClientExtensionEntry.isInstanceable());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getName(), newRemoteAppEntry.getName());
+			existingClientExtensionEntry.getName(), newClientExtensionEntry.getName());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getPortletCategoryName(),
-			newRemoteAppEntry.getPortletCategoryName());
+			existingClientExtensionEntry.getPortletCategoryName(),
+			newClientExtensionEntry.getPortletCategoryName());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getProperties(),
-			newRemoteAppEntry.getProperties());
+			existingClientExtensionEntry.getProperties(),
+			newClientExtensionEntry.getProperties());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getSourceCodeURL(),
-			newRemoteAppEntry.getSourceCodeURL());
+			existingClientExtensionEntry.getSourceCodeURL(),
+			newClientExtensionEntry.getSourceCodeURL());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getType(), newRemoteAppEntry.getType());
+			existingClientExtensionEntry.getType(), newClientExtensionEntry.getType());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getStatus(), newRemoteAppEntry.getStatus());
+			existingClientExtensionEntry.getStatus(), newClientExtensionEntry.getStatus());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getStatusByUserId(),
-			newRemoteAppEntry.getStatusByUserId());
+			existingClientExtensionEntry.getStatusByUserId(),
+			newClientExtensionEntry.getStatusByUserId());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getStatusByUserName(),
-			newRemoteAppEntry.getStatusByUserName());
+			existingClientExtensionEntry.getStatusByUserName(),
+			newClientExtensionEntry.getStatusByUserName());
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingRemoteAppEntry.getStatusDate()),
-			Time.getShortTimestamp(newRemoteAppEntry.getStatusDate()));
+			Time.getShortTimestamp(existingClientExtensionEntry.getStatusDate()),
+			Time.getShortTimestamp(newClientExtensionEntry.getStatusDate()));
 	}
 
 	@Test
@@ -287,15 +287,15 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
-		RemoteAppEntry existingRemoteAppEntry = _persistence.findByPrimaryKey(
-			newRemoteAppEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry = _persistence.findByPrimaryKey(
+			newClientExtensionEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingRemoteAppEntry, newRemoteAppEntry);
+		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
-	@Test(expected = NoSuchRemoteAppEntryException.class)
+	@Test(expected = NoSuchClientExtensionEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -308,10 +308,10 @@ public class RemoteAppEntryPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
-	protected OrderByComparator<RemoteAppEntry> getOrderByComparator() {
+	protected OrderByComparator<ClientExtensionEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "remoteAppEntryId", true,
+			"ClientExtensionEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "clientExtensionEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "customElementHTMLElementName", true,
 			"customElementUseESM", true, "friendlyURLMapping", true,
@@ -323,46 +323,46 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
-		RemoteAppEntry existingRemoteAppEntry = _persistence.fetchByPrimaryKey(
-			newRemoteAppEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry = _persistence.fetchByPrimaryKey(
+			newClientExtensionEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingRemoteAppEntry, newRemoteAppEntry);
+		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RemoteAppEntry missingRemoteAppEntry = _persistence.fetchByPrimaryKey(
+		ClientExtensionEntry missingClientExtensionEntry = _persistence.fetchByPrimaryKey(
 			pk);
 
-		Assert.assertNull(missingRemoteAppEntry);
+		Assert.assertNull(missingClientExtensionEntry);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
 
-		RemoteAppEntry newRemoteAppEntry1 = addRemoteAppEntry();
-		RemoteAppEntry newRemoteAppEntry2 = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry1 = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry2 = addClientExtensionEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newRemoteAppEntry1.getPrimaryKey());
-		primaryKeys.add(newRemoteAppEntry2.getPrimaryKey());
+		primaryKeys.add(newClientExtensionEntry1.getPrimaryKey());
+		primaryKeys.add(newClientExtensionEntry2.getPrimaryKey());
 
-		Map<Serializable, RemoteAppEntry> remoteAppEntries =
+		Map<Serializable, ClientExtensionEntry> clientExtensionEntries =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(2, remoteAppEntries.size());
+		Assert.assertEquals(2, clientExtensionEntries.size());
 		Assert.assertEquals(
-			newRemoteAppEntry1,
-			remoteAppEntries.get(newRemoteAppEntry1.getPrimaryKey()));
+			newClientExtensionEntry1,
+			clientExtensionEntries.get(newClientExtensionEntry1.getPrimaryKey()));
 		Assert.assertEquals(
-			newRemoteAppEntry2,
-			remoteAppEntries.get(newRemoteAppEntry2.getPrimaryKey()));
+			newClientExtensionEntry2,
+			clientExtensionEntries.get(newClientExtensionEntry2.getPrimaryKey()));
 	}
 
 	@Test
@@ -378,59 +378,59 @@ public class RemoteAppEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, RemoteAppEntry> remoteAppEntries =
+		Map<Serializable, ClientExtensionEntry> clientExtensionEntries =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(remoteAppEntries.isEmpty());
+		Assert.assertTrue(clientExtensionEntries.isEmpty());
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
 
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		long pk = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newRemoteAppEntry.getPrimaryKey());
+		primaryKeys.add(newClientExtensionEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, RemoteAppEntry> remoteAppEntries =
+		Map<Serializable, ClientExtensionEntry> clientExtensionEntries =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, remoteAppEntries.size());
+		Assert.assertEquals(1, clientExtensionEntries.size());
 		Assert.assertEquals(
-			newRemoteAppEntry,
-			remoteAppEntries.get(newRemoteAppEntry.getPrimaryKey()));
+			newClientExtensionEntry,
+			clientExtensionEntries.get(newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, RemoteAppEntry> remoteAppEntries =
+		Map<Serializable, ClientExtensionEntry> clientExtensionEntries =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(remoteAppEntries.isEmpty());
+		Assert.assertTrue(clientExtensionEntries.isEmpty());
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newRemoteAppEntry.getPrimaryKey());
+		primaryKeys.add(newClientExtensionEntry.getPrimaryKey());
 
-		Map<Serializable, RemoteAppEntry> remoteAppEntries =
+		Map<Serializable, ClientExtensionEntry> clientExtensionEntries =
 			_persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, remoteAppEntries.size());
+		Assert.assertEquals(1, clientExtensionEntries.size());
 		Assert.assertEquals(
-			newRemoteAppEntry,
-			remoteAppEntries.get(newRemoteAppEntry.getPrimaryKey()));
+			newClientExtensionEntry,
+			clientExtensionEntries.get(newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -438,14 +438,14 @@ public class RemoteAppEntryPersistenceTest {
 		final IntegerWrapper count = new IntegerWrapper();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			RemoteAppEntryLocalServiceUtil.getActionableDynamicQuery();
+			ClientExtensionEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<RemoteAppEntry>() {
+			new ActionableDynamicQuery.PerformActionMethod<ClientExtensionEntry>() {
 
 				@Override
-				public void performAction(RemoteAppEntry remoteAppEntry) {
-					Assert.assertNotNull(remoteAppEntry);
+				public void performAction(ClientExtensionEntry clientExtensionEntry) {
+					Assert.assertNotNull(clientExtensionEntry);
 
 					count.increment();
 				}
@@ -459,35 +459,35 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
+			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"remoteAppEntryId", newRemoteAppEntry.getRemoteAppEntryId()));
+				"clientExtensionEntryId", newClientExtensionEntry.getClientExtensionEntryId()));
 
-		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
+		List<ClientExtensionEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		RemoteAppEntry existingRemoteAppEntry = result.get(0);
+		ClientExtensionEntry existingClientExtensionEntry = result.get(0);
 
-		Assert.assertEquals(existingRemoteAppEntry, newRemoteAppEntry);
+		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
+			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"remoteAppEntryId", RandomTestUtil.nextLong()));
+				"clientExtensionEntryId", RandomTestUtil.nextLong()));
 
-		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
+		List<ClientExtensionEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
@@ -495,40 +495,40 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionExisting() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
+			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("remoteAppEntryId"));
+			ProjectionFactoryUtil.property("clientExtensionEntryId"));
 
-		Object newRemoteAppEntryId = newRemoteAppEntry.getRemoteAppEntryId();
+		Object newClientExtensionEntryId = newClientExtensionEntry.getClientExtensionEntryId();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"remoteAppEntryId", new Object[] {newRemoteAppEntryId}));
+				"clientExtensionEntryId", new Object[] {newClientExtensionEntryId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingRemoteAppEntryId = result.get(0);
+		Object existingClientExtensionEntryId = result.get(0);
 
-		Assert.assertEquals(existingRemoteAppEntryId, newRemoteAppEntryId);
+		Assert.assertEquals(existingClientExtensionEntryId, newClientExtensionEntryId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
+			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("remoteAppEntryId"));
+			ProjectionFactoryUtil.property("clientExtensionEntryId"));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"remoteAppEntryId", new Object[] {RandomTestUtil.nextLong()}));
+				"clientExtensionEntryId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -537,12 +537,12 @@ public class RemoteAppEntryPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		_persistence.clearCache();
 
 		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newRemoteAppEntry.getPrimaryKey()));
+			_persistence.findByPrimaryKey(newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -562,7 +562,7 @@ public class RemoteAppEntryPersistenceTest {
 	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
 		throws Exception {
 
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
+		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
 
 		if (clearSession) {
 			Session session = _persistence.openSession();
@@ -573,95 +573,95 @@ public class RemoteAppEntryPersistenceTest {
 		}
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
+			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"remoteAppEntryId", newRemoteAppEntry.getRemoteAppEntryId()));
+				"clientExtensionEntryId", newClientExtensionEntry.getClientExtensionEntryId()));
 
-		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
+		List<ClientExtensionEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
 
 		_assertOriginalValues(result.get(0));
 	}
 
-	private void _assertOriginalValues(RemoteAppEntry remoteAppEntry) {
+	private void _assertOriginalValues(ClientExtensionEntry clientExtensionEntry) {
 		Assert.assertEquals(
-			Long.valueOf(remoteAppEntry.getCompanyId()),
+			Long.valueOf(clientExtensionEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				remoteAppEntry, "getColumnOriginalValue",
+				clientExtensionEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			remoteAppEntry.getExternalReferenceCode(),
+			clientExtensionEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				remoteAppEntry, "getColumnOriginalValue",
+				clientExtensionEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
-	protected RemoteAppEntry addRemoteAppEntry() throws Exception {
+	protected ClientExtensionEntry addClientExtensionEntry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RemoteAppEntry remoteAppEntry = _persistence.create(pk);
+		ClientExtensionEntry clientExtensionEntry = _persistence.create(pk);
 
-		remoteAppEntry.setMvccVersion(RandomTestUtil.nextLong());
+		clientExtensionEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		remoteAppEntry.setUuid(RandomTestUtil.randomString());
+		clientExtensionEntry.setUuid(RandomTestUtil.randomString());
 
-		remoteAppEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+		clientExtensionEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
-		remoteAppEntry.setCompanyId(RandomTestUtil.nextLong());
+		clientExtensionEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		remoteAppEntry.setUserId(RandomTestUtil.nextLong());
+		clientExtensionEntry.setUserId(RandomTestUtil.nextLong());
 
-		remoteAppEntry.setUserName(RandomTestUtil.randomString());
+		clientExtensionEntry.setUserName(RandomTestUtil.randomString());
 
-		remoteAppEntry.setCreateDate(RandomTestUtil.nextDate());
+		clientExtensionEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		remoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
+		clientExtensionEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		remoteAppEntry.setCustomElementCSSURLs(RandomTestUtil.randomString());
+		clientExtensionEntry.setCustomElementCSSURLs(RandomTestUtil.randomString());
 
-		remoteAppEntry.setCustomElementHTMLElementName(
+		clientExtensionEntry.setCustomElementHTMLElementName(
 			RandomTestUtil.randomString());
 
-		remoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+		clientExtensionEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
-		remoteAppEntry.setCustomElementUseESM(RandomTestUtil.randomBoolean());
+		clientExtensionEntry.setCustomElementUseESM(RandomTestUtil.randomBoolean());
 
-		remoteAppEntry.setDescription(RandomTestUtil.randomString());
+		clientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		remoteAppEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
+		clientExtensionEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
 
-		remoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
+		clientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
 
-		remoteAppEntry.setInstanceable(RandomTestUtil.randomBoolean());
+		clientExtensionEntry.setInstanceable(RandomTestUtil.randomBoolean());
 
-		remoteAppEntry.setName(RandomTestUtil.randomString());
+		clientExtensionEntry.setName(RandomTestUtil.randomString());
 
-		remoteAppEntry.setPortletCategoryName(RandomTestUtil.randomString());
+		clientExtensionEntry.setPortletCategoryName(RandomTestUtil.randomString());
 
-		remoteAppEntry.setProperties(RandomTestUtil.randomString());
+		clientExtensionEntry.setProperties(RandomTestUtil.randomString());
 
-		remoteAppEntry.setSourceCodeURL(RandomTestUtil.randomString());
+		clientExtensionEntry.setSourceCodeURL(RandomTestUtil.randomString());
 
-		remoteAppEntry.setType(RandomTestUtil.randomString());
+		clientExtensionEntry.setType(RandomTestUtil.randomString());
 
-		remoteAppEntry.setStatus(RandomTestUtil.nextInt());
+		clientExtensionEntry.setStatus(RandomTestUtil.nextInt());
 
-		remoteAppEntry.setStatusByUserId(RandomTestUtil.nextLong());
+		clientExtensionEntry.setStatusByUserId(RandomTestUtil.nextLong());
 
-		remoteAppEntry.setStatusByUserName(RandomTestUtil.randomString());
+		clientExtensionEntry.setStatusByUserName(RandomTestUtil.randomString());
 
-		remoteAppEntry.setStatusDate(RandomTestUtil.nextDate());
+		clientExtensionEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_remoteAppEntries.add(_persistence.update(remoteAppEntry));
+		_clientExtensionEntries.add(_persistence.update(clientExtensionEntry));
 
-		return remoteAppEntry;
+		return clientExtensionEntry;
 	}
 
-	private List<RemoteAppEntry> _remoteAppEntries =
-		new ArrayList<RemoteAppEntry>();
-	private RemoteAppEntryPersistence _persistence;
+	private List<ClientExtensionEntry> _clientExtensionEntries =
+		new ArrayList<ClientExtensionEntry>();
+	private ClientExtensionEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
 
 }

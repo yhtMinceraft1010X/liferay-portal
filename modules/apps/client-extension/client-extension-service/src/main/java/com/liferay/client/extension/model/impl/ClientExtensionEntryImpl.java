@@ -17,5 +17,5 @@ package com.liferay.client.extension.model.impl;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoteAppEntryImpl extends RemoteAppEntryBaseImpl {
+public class ClientExtensionEntryImpl extends ClientExtensionEntryBaseImpl {
 }

@@ -19,22 +19,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoteAppEntryFriendlyURLMappingException extends PortalException {
+public class ClientExtensionEntryFriendlyURLMappingException extends PortalException {
 
-	public RemoteAppEntryFriendlyURLMappingException() {
+	public ClientExtensionEntryFriendlyURLMappingException() {
 	}
 
-	public RemoteAppEntryFriendlyURLMappingException(String msg) {
+	public ClientExtensionEntryFriendlyURLMappingException(String msg) {
 		super(msg);
 	}
 
-	public RemoteAppEntryFriendlyURLMappingException(
+	public ClientExtensionEntryFriendlyURLMappingException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public RemoteAppEntryFriendlyURLMappingException(Throwable throwable) {
+	public ClientExtensionEntryFriendlyURLMappingException(Throwable throwable) {
 		super(throwable);
 	}
 

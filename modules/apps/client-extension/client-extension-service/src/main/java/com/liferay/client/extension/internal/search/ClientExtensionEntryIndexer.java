@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.internal.search;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,9 +45,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(immediate = true, service = Indexer.class)
-public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
+public class ClientExtensionEntryIndexer extends BaseIndexer<ClientExtensionEntry> {
 
-	public static final String CLASS_NAME = RemoteAppEntry.class.getName();
+	public static final String CLASS_NAME = ClientExtensionEntry.class.getName();
 
 	@Override
 	public String getClassName() {
@@ -65,32 +65,32 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 	}
 
 	@Override
-	protected void doDelete(RemoteAppEntry remoteAppEntry) throws Exception {
+	protected void doDelete(ClientExtensionEntry clientExtensionEntry) throws Exception {
 		deleteDocument(
-			remoteAppEntry.getCompanyId(),
-			remoteAppEntry.getRemoteAppEntryId());
+			clientExtensionEntry.getCompanyId(),
+			clientExtensionEntry.getClientExtensionEntryId());
 	}
 
 	@Override
-	protected Document doGetDocument(RemoteAppEntry remoteAppEntry)
+	protected Document doGetDocument(ClientExtensionEntry clientExtensionEntry)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing remote app entry " + remoteAppEntry);
+			_log.debug("Indexing remote app entry " + clientExtensionEntry);
 		}
 
-		Document document = getBaseModelDocument(CLASS_NAME, remoteAppEntry);
+		Document document = getBaseModelDocument(CLASS_NAME, clientExtensionEntry);
 
 		Localization localization = _getLocalization();
 
 		String[] nameAvailableLanguageIds =
-			localization.getAvailableLanguageIds(remoteAppEntry.getName());
+			localization.getAvailableLanguageIds(clientExtensionEntry.getName());
 
 		String nameDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			remoteAppEntry.getName());
+			clientExtensionEntry.getName());
 
 		for (String nameAvailableLanguageId : nameAvailableLanguageIds) {
-			String name = remoteAppEntry.getName(nameAvailableLanguageId);
+			String name = clientExtensionEntry.getName(nameAvailableLanguageId);
 
 			if (nameDefaultLanguageId.equals(nameAvailableLanguageId)) {
 				document.addText(Field.NAME, name);
@@ -103,7 +103,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + remoteAppEntry + " indexed successfully");
+			_log.debug("Document " + clientExtensionEntry + " indexed successfully");
 		}
 
 		return document;
@@ -122,22 +122,22 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 	}
 
 	@Override
-	protected void doReindex(RemoteAppEntry remoteAppEntry) throws Exception {
+	protected void doReindex(ClientExtensionEntry clientExtensionEntry) throws Exception {
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), remoteAppEntry.getCompanyId(),
-			getDocument(remoteAppEntry), isCommitImmediately());
+			getSearchEngineId(), clientExtensionEntry.getCompanyId(),
+			getDocument(clientExtensionEntry), isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		doReindex(_remoteAppEntryLocalService.getRemoteAppEntry(classPK));
+		doReindex(_clientExtensionEntryLocalService.getClientExtensionEntry(classPK));
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		_reindexRemoteAppEntries(companyId);
+		_reindexClientExtensionEntries(companyId);
 	}
 
 	private Localization _getLocalization() {
@@ -151,22 +151,22 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		return LocalizationUtil.getLocalization();
 	}
 
-	private void _reindexRemoteAppEntries(long companyId) throws Exception {
+	private void _reindexClientExtensionEntries(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_remoteAppEntryLocalService.getIndexableActionableDynamicQuery();
+			_clientExtensionEntryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(RemoteAppEntry remoteAppEntry) -> {
+			(ClientExtensionEntry clientExtensionEntry) -> {
 				try {
 					indexableActionableDynamicQuery.addDocuments(
-						getDocument(remoteAppEntry));
+						getDocument(clientExtensionEntry));
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index remote app entry " +
-								remoteAppEntry.getRemoteAppEntryId(),
+								clientExtensionEntry.getClientExtensionEntryId(),
 							portalException);
 					}
 				}
@@ -177,7 +177,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteAppEntryIndexer.class);
+		ClientExtensionEntryIndexer.class);
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
@@ -185,6 +185,6 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 	private Localization _localization;
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
 }

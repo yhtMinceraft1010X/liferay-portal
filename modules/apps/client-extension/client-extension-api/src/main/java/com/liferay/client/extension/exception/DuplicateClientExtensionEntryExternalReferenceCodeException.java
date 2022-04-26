@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateRemoteAppEntryExternalReferenceCodeException
+public class DuplicateClientExtensionEntryExternalReferenceCodeException
 	extends PortalException {
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException() {
+	public DuplicateClientExtensionEntryExternalReferenceCodeException() {
 	}
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException(String msg) {
+	public DuplicateClientExtensionEntryExternalReferenceCodeException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateRemoteAppEntryExternalReferenceCodeException(
+	public DuplicateClientExtensionEntryExternalReferenceCodeException(
 		Throwable throwable) {
 
 		super(throwable);
