@@ -17,31 +17,31 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditRemoteAppEntryDisplayContext editRemoteAppEntryDisplayContext = (EditRemoteAppEntryDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
+EditRemoteAppEntryDisplayContext editClientExtensionEntryDisplayContext = (EditRemoteAppEntryDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(editRemoteAppEntryDisplayContext.getRedirect());
+portletDisplay.setURLBack(editClientExtensionEntryDisplayContext.getRedirect());
 
-renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
+renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 %>
 
-<portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
+<portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editClientExtensionEntryURL" />
 
 <liferay-frontend:edit-form
-	action="<%= editRemoteAppEntryURL %>"
+	action="<%= editClientExtensionEntryURL %>"
 	method="post"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getCmd() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRedirect() %>" />
-	<aui:input name="remoteAppEntryId" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntryId() %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getCmd() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getRedirect() %>" />
+	<aui:input name="clientExtensionEntryId" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getClientExtensionEntryId() %>" />
 
-	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
-	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
-	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
-	<liferay-ui:error exception="<%= RemoteAppEntryFriendlyURLMappingException.class %>" message="please-enter-a-valid-friendly-url-mapping" />
-	<liferay-ui:error exception="<%= RemoteAppEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryFriendlyURLMappingException.class %>" message="please-enter-a-valid-friendly-url-mapping" />
+	<liferay-ui:error exception="<%= ClientExtensionEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
 
-	<aui:model-context bean="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntry() %>" model="<%= RemoteAppEntry.class %>" />
+	<aui:model-context bean="<%= editClientExtensionEntryDisplayContext.getClientExtensionEntry() %>" model="<%= ClientExtensionEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -49,12 +49,12 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				<liferay-ui:input-localized
 					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 					name="name"
-					xml="<%= editRemoteAppEntryDisplayContext.getName() %>"
+					xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
 				/>
 			</aui:field-wrapper>
 
 			<liferay-editor:editor
-				contents="<%= editRemoteAppEntryDisplayContext.getDescription() %>"
+				contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
 				editorName="contentEditor"
 				name="description"
 				placeholder="description"
@@ -63,18 +63,18 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 			<aui:input label="source-code-url" name="sourceCodeURL" type="text" />
 
 			<clay:select
-				disabled="<%= editRemoteAppEntryDisplayContext.isTypeDisabled() %>"
+				disabled="<%= editClientExtensionEntryDisplayContext.isTypeDisabled() %>"
 				label="type"
 				name="type"
 				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), ClientExtensionConstants.TYPE_CUSTOM_ELEMENT, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), ClientExtensionConstants.TYPE_IFRAME, editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_IFRAME)))
 				%>'
-				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
+				propsTransformer="admin/js/clientExtensionEntryTypeSelectPropsTransformer"
 			/>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) %>"
+				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_IFRAME) %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
 				<aui:input label="url" name="iFrameURL">
@@ -83,20 +83,20 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) %>"
+				cssClass='<%= editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editClientExtensionEntryDisplayContext.isEditingClientExtensionEntryType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT) %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
 				<aui:input label="html-element-name" name="customElementHTMLElementName">
 					<aui:validator name="customElementName" />
 				</aui:input>
 
-				<aui:input label="use-esm" name="customElementUseESM" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isCustomElementUseESM() %>" />
+				<aui:input label="use-esm" name="customElementUseESM" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isCustomElementUseESM() %>" />
 
 				<div id="<portlet:namespace />_type_customElementURLs">
 
 					<%
-					for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
+					for (String customElementURL : editClientExtensionEntryDisplayContext.getCustomElementURLs()) {
 					%>
 
 						<div class="lfr-form-row">
@@ -114,7 +114,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				<div id="<portlet:namespace />_type_customElementCSSURLs">
 
 					<%
-					for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
+					for (String customElementCSSURL : editClientExtensionEntryDisplayContext.getCustomElementCSSURLs()) {
 					%>
 
 						<div class="lfr-form-row">
@@ -130,13 +130,13 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				</div>
 			</liferay-frontend:fieldset>
 
-			<aui:input disabled="<%= editRemoteAppEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isInstanceable() %>" />
+			<aui:input disabled="<%= editClientExtensionEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editClientExtensionEntryDisplayContext.isInstanceable() %>" />
 
 			<clay:select
 				label="portlet-category-name"
 				name="portletCategoryName"
 				options="<%=
-					editRemoteAppEntryDisplayContext.getPortletCategoryNameSelectOptions()
+					editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions()
 				%>"
 			/>
 
@@ -150,13 +150,13 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 	<liferay-frontend:edit-form-footer>
 		<clay:button
-			label='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, RemoteAppEntry.class.getName()) ? "submit-for-publication" : "publish" %>'
+			label='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, ClientExtensionEntry.class.getName()) ? "submit-for-publication" : "publish" %>'
 			type="submit"
 		/>
 
 		<clay:link
 			displayType="secondary"
-			href="<%= editRemoteAppEntryDisplayContext.getRedirect() %>"
+			href="<%= editClientExtensionEntryDisplayContext.getRedirect() %>"
 			label="cancel"
 			type="button"
 		/>

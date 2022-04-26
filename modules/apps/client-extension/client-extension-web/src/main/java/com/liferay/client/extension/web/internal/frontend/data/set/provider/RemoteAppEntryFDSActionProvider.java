@@ -60,15 +60,15 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 		RemoteAppFDSEntry remoteAppFDSEntry = (RemoteAppFDSEntry)model;
 
 		return DropdownItemListBuilder.add(
-			dropdownItem -> _buildEditRemoteAppEntryAction(
+			dropdownItem -> _buildEditClientExtensionEntryAction(
 				dropdownItem, httpServletRequest, remoteAppFDSEntry)
 		).add(
-			dropdownItem -> _buildDeleteRemoteAppEntryAction(
+			dropdownItem -> _buildDeleteClientExtensionEntryAction(
 				dropdownItem, httpServletRequest, remoteAppFDSEntry)
 		).build();
 	}
 
-	private void _buildDeleteRemoteAppEntryAction(
+	private void _buildDeleteClientExtensionEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppFDSEntry remoteAppFDSEntry) {
 
@@ -78,32 +78,32 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 			).setActionName(
 				"/remote_app_admin/delete_remote_app_entry"
 			).setParameter(
-				"remoteAppEntryId", remoteAppFDSEntry.getRemoteAppEntryId()
+				"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
 			).buildString());
 
 		dropdownItem.setIcon("times-circle");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "delete"));
 	}
 
-	private void _buildEditRemoteAppEntryAction(
+	private void _buildEditClientExtensionEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppFDSEntry remoteAppFDSEntry) {
 
-		PortletURL editRemoteAppEntryURL = PortletURLBuilder.create(
+		PortletURL editClientExtensionEntryURL = PortletURLBuilder.create(
 			_getRenderURL(httpServletRequest)
 		).setMVCRenderCommandName(
 			"/remote_app_admin/edit_remote_app_entry"
 		).setParameter(
-			"remoteAppEntryId", remoteAppFDSEntry.getRemoteAppEntryId()
+			"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
 		).buildPortletURL();
 
 		String currentURL = ParamUtil.getString(
 			httpServletRequest, "currentURL",
 			_portal.getCurrentURL(httpServletRequest));
 
-		editRemoteAppEntryURL.setParameter("redirect", currentURL);
+		editClientExtensionEntryURL.setParameter("redirect", currentURL);
 
-		dropdownItem.setHref(editRemoteAppEntryURL);
+		dropdownItem.setHref(editClientExtensionEntryURL);
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
 	}
 

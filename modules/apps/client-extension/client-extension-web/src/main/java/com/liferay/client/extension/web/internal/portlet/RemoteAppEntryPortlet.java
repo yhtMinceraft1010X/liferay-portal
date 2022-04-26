@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.web.internal.portlet;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.constants.ClientExtensionConstants;
+import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -53,10 +53,10 @@ import javax.portlet.RenderResponse;
 public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	public RemoteAppEntryPortlet(
-		NPMResolver npmResolver, RemoteAppEntry remoteAppEntry) {
+		NPMResolver npmResolver, ClientExtensionEntry clientExtensionEntry) {
 
 		_npmResolver = npmResolver;
-		_remoteAppEntry = remoteAppEntry;
+		_clientExtensionEntry = clientExtensionEntry;
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		String type = _remoteAppEntry.getType();
+		String type = _clientExtensionEntry.getType();
 
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (type.equals(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
 			_renderCustomElement(renderRequest, renderResponse);
 		}
-		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+		else if (type.equals(ClientExtensionConstants.TYPE_IFRAME)) {
 			_renderIFrame(renderRequest, renderResponse);
 		}
 		else {
@@ -95,7 +95,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		Properties properties = new Properties();
 
-		_loadProperties(properties, _remoteAppEntry.getProperties());
+		_loadProperties(properties, _clientExtensionEntry.getProperties());
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
@@ -120,7 +120,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print(StringPool.LESS_THAN);
-		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+		printWriter.print(_clientExtensionEntry.getCustomElementHTMLElementName());
 
 		Properties properties = _getProperties(renderRequest);
 
@@ -157,7 +157,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		}
 
 		printWriter.print("></");
-		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+		printWriter.print(_clientExtensionEntry.getCustomElementHTMLElementName());
 		printWriter.print(StringPool.GREATER_THAN);
 
 		printWriter.flush();
@@ -193,7 +193,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		printWriter.print("<iframe src=\"");
 
-		String iFrameURL = _remoteAppEntry.getIFrameURL();
+		String iFrameURL = _clientExtensionEntry.getIFrameURL();
 
 		Properties properties = _getProperties(renderRequest);
 
@@ -213,6 +213,6 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		RemoteAppEntryPortlet.class);
 
 	private final NPMResolver _npmResolver;
-	private final RemoteAppEntry _remoteAppEntry;
+	private final ClientExtensionEntry _clientExtensionEntry;
 
 }

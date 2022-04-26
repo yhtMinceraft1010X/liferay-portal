@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.provider;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames;
 import com.liferay.client.extension.web.internal.frontend.data.set.model.RemoteAppFDSEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -56,17 +56,17 @@ public class RemoteAppEntryFDSDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<RemoteAppEntry> remoteAppEntries =
-			_remoteAppEntryLocalService.search(
+		List<ClientExtensionEntry> remoteAppEntries =
+			_clientExtensionEntryLocalService.search(
 				themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), sort);
 
-		Stream<RemoteAppEntry> stream = remoteAppEntries.stream();
+		Stream<ClientExtensionEntry> stream = remoteAppEntries.stream();
 
 		return stream.map(
-			remoteAppEntry -> new RemoteAppFDSEntry(
-				remoteAppEntry, themeDisplay.getLocale())
+			clientExtensionEntry -> new RemoteAppFDSEntry(
+				clientExtensionEntry, themeDisplay.getLocale())
 		).collect(
 			Collectors.toList()
 		);
@@ -81,11 +81,11 @@ public class RemoteAppEntryFDSDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _remoteAppEntryLocalService.searchCount(
+		return _clientExtensionEntryLocalService.searchCount(
 			themeDisplay.getCompanyId(), fdsKeywords.getKeywords());
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
 }

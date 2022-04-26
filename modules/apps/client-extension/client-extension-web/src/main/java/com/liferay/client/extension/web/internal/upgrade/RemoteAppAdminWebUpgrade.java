@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.upgrade;
 
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -37,13 +37,13 @@ public class RemoteAppAdminWebUpgrade implements UpgradeStepRegistrator {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return TransformUtil.transformToArray(
-					_remoteAppEntryLocalService.getRemoteAppEntries(
+					_clientExtensionEntryLocalService.getClientExtensionEntries(
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					remoteAppEntry -> new String[] {
-						"remote_app_" + remoteAppEntry.getRemoteAppEntryId(),
+					clientExtensionEntry -> new String[] {
+						"remote_app_" + clientExtensionEntry.getClientExtensionEntryId(),
 						"com_liferay_remote_app_web_internal_portlet_" +
 							"RemoteAppEntryPortlet_" +
-								remoteAppEntry.getRemoteAppEntryId()
+								clientExtensionEntry.getClientExtensionEntryId()
 					},
 					String[].class);
 			}
@@ -54,6 +54,6 @@ public class RemoteAppAdminWebUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
 }
