@@ -1,5 +1,5 @@
 {
-	"name": "@liferay/remote-app-web",
+	"name": "@liferay/client-extension-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
