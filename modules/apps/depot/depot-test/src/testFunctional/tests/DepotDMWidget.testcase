@@ -226,9 +226,7 @@ definition {
 
 		DMPortlet.viewDefaultPG();
 
-		DepotNavigator.openToDMFolder(
-			depotName = "Test Depot Name",
-			folderName = "Depot Folder Name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.viewDefault();
 	}
