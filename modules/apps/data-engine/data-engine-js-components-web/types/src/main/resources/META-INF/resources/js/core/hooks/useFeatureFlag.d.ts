@@ -12,6 +12,6 @@
  * details.
  */
 
-export declare function useFlag(): {
+export declare function useFeatureFlag(): {
 	[key: string]: boolean;
 };

@@ -15,7 +15,7 @@
 import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useFlag} from 'data-engine-js-components-web';
+import {useFeatureFlag} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
@@ -385,7 +385,7 @@ function AttachmentSourceProperty({
 	onSettingsChange,
 	setValues,
 }: IAttachmentSourcePropertyProps) {
-	const flags = useFlag();
+	const flags = useFeatureFlag();
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const attachmentSource = attachmentSources.find(

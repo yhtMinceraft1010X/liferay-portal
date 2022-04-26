@@ -23,7 +23,7 @@ declare module 'data-engine-js-components-web' {
 		warningMessage?: string;
 	}): JSX.Element;
 
-	function useFlag(): {
+	function useFeatureFlag(): {
 		[key in Flags]: boolean;
 	};
 }

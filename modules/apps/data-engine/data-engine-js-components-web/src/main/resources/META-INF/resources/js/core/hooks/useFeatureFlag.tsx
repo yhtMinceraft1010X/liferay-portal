@@ -14,7 +14,7 @@
 
 import {useState} from 'react';
 
-export function useFlag() {
+export function useFeatureFlag() {
 	const [flags] = useState(
 		(Liferay as any).FeatureFlags as {[key: string]: boolean}
 	);

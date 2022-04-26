@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useFlag} from 'data-engine-js-components-web';
+import {useFeatureFlag} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
@@ -411,7 +411,7 @@ function AttachmentProperties({
 	objectFieldSettings,
 	onSettingsChange,
 }: IAttachmentPropertiesProps) {
-	const flags = useFlag();
+	const flags = useFeatureFlag();
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	return (
