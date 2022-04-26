@@ -271,7 +271,18 @@ public class DLReferencesExportImportContentProcessor
 					uuid, groupId);
 			}
 			else {
-				if (map.containsKey("folderId")) {
+				if (map.containsKey("friendlyURL")) {
+					String friendlyURL = MapUtil.getString(map, "friendlyURL");
+
+					Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+						MapUtil.getString(map, "groupName"), friendlyURL);
+
+					fileEntry = fileEntryOptional.orElseThrow(
+						() -> new NoSuchFileEntryException(
+							"No file entry found for friendly URL " +
+								friendlyURL));
+				}
+				else if (map.containsKey("folderId")) {
 					long folderId = MapUtil.getLong(map, "folderId");
 					String name = MapUtil.getString(map, "name");
 					String title = MapUtil.getString(map, "title");
@@ -313,17 +324,6 @@ public class DLReferencesExportImportContentProcessor
 						fileEntry = _dlAppLocalService.getFileEntry(
 							dlFileEntry.getFileEntryId());
 					}
-				}
-				else if (map.containsKey("friendlyURL")) {
-					String friendlyURL = MapUtil.getString(map, "friendlyURL");
-
-					Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
-						MapUtil.getString(map, "groupName"), friendlyURL);
-
-					fileEntry = fileEntryOptional.orElseThrow(
-						() -> new NoSuchFileEntryException(
-							"No file entry found for friendly URL " +
-								friendlyURL));
 				}
 			}
 		}
