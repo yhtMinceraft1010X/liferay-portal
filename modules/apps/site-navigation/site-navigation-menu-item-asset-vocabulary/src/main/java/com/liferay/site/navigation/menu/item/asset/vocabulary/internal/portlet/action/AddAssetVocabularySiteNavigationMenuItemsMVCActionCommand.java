@@ -67,11 +67,11 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 			actionRequest, "siteNavigationMenuId");
 
 		if (siteNavigationMenuId > 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				ParamUtil.getString(actionRequest, "items"));
