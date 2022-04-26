@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.service.persistence.impl.constants;
+package com.liferay.client.extension.service.persistence.impl.constants;
 
 import com.liferay.petra.string.StringBundler;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class RemoteAppPersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.remote.app.service";
+		"com.liferay.client.extension.service";
 
 	public static final String ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER =
 		"(origin.bundle.symbolic.name=" + BUNDLE_SYMBOLIC_NAME + ")";

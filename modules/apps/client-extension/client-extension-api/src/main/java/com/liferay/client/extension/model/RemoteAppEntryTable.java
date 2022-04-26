@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.model;
+package com.liferay.client.extension.model;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;

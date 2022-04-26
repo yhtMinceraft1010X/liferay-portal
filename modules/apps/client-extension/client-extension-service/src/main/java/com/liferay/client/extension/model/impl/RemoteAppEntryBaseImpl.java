@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.remote.app.model.impl;
+package com.liferay.client.extension.model.impl;
 
-import com.liferay.remote.app.model.RemoteAppEntry;
-import com.liferay.remote.app.service.RemoteAppEntryLocalServiceUtil;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the RemoteAppEntry service. Represents a row in the &quot;RemoteAppEntry&quot; database table, with each column mapped to a property of this class.

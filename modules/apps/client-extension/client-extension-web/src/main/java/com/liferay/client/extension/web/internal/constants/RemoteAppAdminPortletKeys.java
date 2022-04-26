@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.web.internal.constants;
+package com.liferay.client.extension.web.internal.constants;
 
 /**
  * @author Iván Zaera

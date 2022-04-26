@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.remote.app.service.persistence;
+package com.liferay.client.extension.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.remote.app.exception.NoSuchRemoteAppEntryException;
-import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import org.osgi.annotation.versioning.ProviderType;
 
