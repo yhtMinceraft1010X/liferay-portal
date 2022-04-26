@@ -903,16 +903,18 @@ public class LayoutPageTemplatesImporterImpl
 			Map<String, PageTemplateEntry> pageTemplatesEntries =
 				pageTemplateCollectionEntry.getPageTemplatesEntries();
 
-			if (MapUtil.isNotEmpty(pageTemplatesEntries)) {
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_getLayoutPageTemplateCollection(
-						groupId, layoutPageTemplateCollectionId,
-						pageTemplateCollectionEntry, overwrite);
-
-				_processPageTemplateEntries(
-					groupId, layoutPageTemplateCollection, pageTemplatesEntries,
-					overwrite, zipFile);
+			if (MapUtil.isEmpty(pageTemplatesEntries)) {
+				continue;
 			}
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_getLayoutPageTemplateCollection(
+					groupId, layoutPageTemplateCollectionId,
+					pageTemplateCollectionEntry, overwrite);
+
+			_processPageTemplateEntries(
+				groupId, layoutPageTemplateCollection, pageTemplatesEntries,
+				overwrite, zipFile);
 		}
 	}
 
