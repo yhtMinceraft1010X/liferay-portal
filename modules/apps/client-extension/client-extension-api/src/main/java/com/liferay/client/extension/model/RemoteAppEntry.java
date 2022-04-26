@@ -27,7 +27,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RemoteAppEntryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.client.extension.model.impl.RemoteAppEntryImpl")
+@ImplementationClassName(
+	"com.liferay.client.extension.model.impl.RemoteAppEntryImpl"
+)
 @ProviderType
 public interface RemoteAppEntry extends PersistedModel, RemoteAppEntryModel {
 

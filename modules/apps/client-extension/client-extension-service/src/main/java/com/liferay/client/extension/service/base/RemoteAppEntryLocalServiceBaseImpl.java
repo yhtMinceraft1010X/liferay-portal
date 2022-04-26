@@ -14,6 +14,10 @@
 
 package com.liferay.client.extension.service.base;
 
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -52,10 +56,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
-import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
 
 import java.io.Serializable;
 
