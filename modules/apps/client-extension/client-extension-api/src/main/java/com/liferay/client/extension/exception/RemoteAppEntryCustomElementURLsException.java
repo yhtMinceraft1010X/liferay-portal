@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.exception;
+package com.liferay.client.extension.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
