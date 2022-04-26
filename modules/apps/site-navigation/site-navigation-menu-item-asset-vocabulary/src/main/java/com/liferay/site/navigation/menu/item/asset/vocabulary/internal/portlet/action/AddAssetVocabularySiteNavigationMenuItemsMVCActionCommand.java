@@ -84,33 +84,26 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 					continue;
 				}
 
-				try {
-					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-						themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
-						SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
-						UnicodePropertiesBuilder.create(
-							true
-						).put(
-							"classPK",
-							assetVocabularyJSONObject.getString("vocabularyId")
-						).put(
-							"groupId",
-							assetVocabularyJSONObject.getString("groupId")
-						).put(
-							"title",
-							assetVocabularyJSONObject.getString("title")
-						).put(
-							"type", "asset-vocabulary"
-						).put(
-							"uuid", assetVocabularyJSONObject.getString("uuid")
-						).buildString(),
-						serviceContext);
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
+				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
+					SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						"classPK",
+						assetVocabularyJSONObject.getString("vocabularyId")
+					).put(
+						"groupId",
+						assetVocabularyJSONObject.getString("groupId")
+					).put(
+						"title",
+						assetVocabularyJSONObject.getString("title")
+					).put(
+						"type", "asset-vocabulary"
+					).put(
+						"uuid", assetVocabularyJSONObject.getString("uuid")
+					).buildString(),
+					serviceContext);
 			}
 		}
 		else {
