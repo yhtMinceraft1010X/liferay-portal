@@ -46,7 +46,7 @@ const PARAGRAPHS = [
 	'text-paragraph-xxs',
 ];
 
-const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog';
+const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog.';
 
 const SMALL_CAPS = ['text-small-caps'];
 
@@ -166,7 +166,7 @@ const TypographyGuide = () => {
 
 			<TokenGroup group="texts" title={Liferay.Language.get('other')}>
 				<TokenItem border={true} label="mark, .mark" size="large">
-					The <mark>quick brown fox</mark> jumps over the lazy dog
+					The <mark>quick brown fox</mark> jumps over the lazy dog.
 				</TokenItem>
 			</TokenGroup>
 		</>
