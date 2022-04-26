@@ -29,42 +29,42 @@ public class CookiesConstants {
 
 	public static final int CONSENT_TYPE_PERSONALIZATION = 4;
 
-	public static final String KEY_COMMERCE_CONTINUE_AS_GUEST =
+	public static final int MAX_AGE = (int)(Time.YEAR / 1000);
+
+	public static final String NAME_COMMERCE_CONTINUE_AS_GUEST =
 		"COMMERCE_CONTINUE_AS_GUEST";
 
-	public static final String KEY_COMPANY_ID = "COMPANY_ID";
+	public static final String NAME_COMPANY_ID = "COMPANY_ID";
 
-	public static final String KEY_CONSENT_TYPE_FUNCTIONAL =
+	public static final String NAME_CONSENT_TYPE_FUNCTIONAL =
 		"CONSENT_TYPE_FUNCTIONAL";
 
-	public static final String KEY_CONSENT_TYPE_NECESSARY =
+	public static final String NAME_CONSENT_TYPE_NECESSARY =
 		"CONSENT_TYPE_NECESSARY";
 
-	public static final String KEY_CONSENT_TYPE_PERFORMANCE =
+	public static final String NAME_CONSENT_TYPE_PERFORMANCE =
 		"CONSENT_TYPE_PERFORMANCE";
 
-	public static final String KEY_CONSENT_TYPE_PERSONALIZATION =
+	public static final String NAME_CONSENT_TYPE_PERSONALIZATION =
 		"CONSENT_TYPE_PERSONALIZATION";
 
-	public static final String KEY_COOKIE_SUPPORT = "COOKIE_SUPPORT";
+	public static final String NAME_COOKIE_SUPPORT = "COOKIE_SUPPORT";
 
-	public static final String KEY_GUEST_LANGUAGE_ID = "GUEST_LANGUAGE_ID";
+	public static final String NAME_GUEST_LANGUAGE_ID = "GUEST_LANGUAGE_ID";
 
-	public static final String KEY_ID = "ID";
+	public static final String NAME_ID = "ID";
 
-	public static final String KEY_JSESSIONID = "JSESSIONID";
+	public static final String NAME_JSESSIONID = "JSESSIONID";
 
-	public static final String KEY_LOGIN = "LOGIN";
+	public static final String NAME_LOGIN = "LOGIN";
 
-	public static final String KEY_PASSWORD = "PASSWORD";
+	public static final String NAME_PASSWORD = "PASSWORD";
 
-	public static final String KEY_REMEMBER_ME = "REMEMBER_ME";
+	public static final String NAME_REMEMBER_ME = "REMEMBER_ME";
 
-	public static final String KEY_REMOTE_PREFERENCE_PREFIX =
+	public static final String NAME_REMOTE_PREFERENCE_PREFIX =
 		"REMOTE_PREFERENCE_";
 
-	public static final String KEY_USER_UUID = "USER_UUID";
-
-	public static final int MAX_AGE = (int)(Time.YEAR / 1000);
+	public static final String NAME_USER_UUID = "USER_UUID";
 
 }

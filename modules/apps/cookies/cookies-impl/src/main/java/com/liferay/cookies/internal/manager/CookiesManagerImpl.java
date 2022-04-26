@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.cookies.manager.internal;
+package com.liferay.cookies.internal.manager;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -44,157 +44,164 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tamas Molnar
+ * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = CookiesManager.class)
 public class CookiesManagerImpl implements CookiesManager {
 
 	@Override
-	public void addCookie(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Cookie cookie, boolean secure,
-		int type) {
+	public boolean addCookie(
+		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return addCookie(
+			consentType, cookie, httpServletRequest, httpServletResponse,
+			_portal.isSecure(httpServletRequest));
+	}
+
+	@Override
+	public boolean addCookie(
+		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean secure) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
-			return;
+			return false;
 		}
 
 		if ((cookie.getMaxAge() != 0) &&
-			!hasConsentType(httpServletRequest, type)) {
+			!hasConsentType(consentType, httpServletRequest)) {
 
-			return;
+			return false;
 		}
 
 		// LEP-5175
 
-		String name = cookie.getName();
+		cookie.setSecure(secure);
 
-		String originalValue = cookie.getValue();
+		String originalCookieValue = cookie.getValue();
 
-		String encodedValue = originalValue;
+		String encodedCookieValue = originalCookieValue;
 
-		if (isEncodedCookie(name)) {
-			encodedValue = UnicodeFormatter.bytesToHex(
-				originalValue.getBytes());
+		if (isEncodedCookie(cookie.getName())) {
+			encodedCookieValue = UnicodeFormatter.bytesToHex(
+				originalCookieValue.getBytes());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Add encoded cookie " + name);
-				_log.debug("Original value " + originalValue);
-				_log.debug("Hex encoded value " + encodedValue);
+				_log.debug("Add encoded cookie " + cookie.getName());
+				_log.debug("Original value " + originalCookieValue);
+				_log.debug("Hex encoded value " + encodedCookieValue);
 			}
 		}
 
-		cookie.setSecure(secure);
-		cookie.setValue(encodedValue);
+		cookie.setValue(encodedCookieValue);
+
 		cookie.setVersion(0);
 
 		httpServletResponse.addCookie(cookie);
 
 		if (httpServletRequest != null) {
-			Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
+			Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
 
-			cookieMap.put(StringUtil.toUpperCase(name), cookie);
+			cookiesMap.put(StringUtil.toUpperCase(cookie.getName()), cookie);
 		}
+
+		return true;
 	}
 
 	@Override
-	public void addCookie(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Cookie cookie, int type) {
-
-		addCookie(
-			httpServletRequest, httpServletResponse, cookie,
-			_portal.isSecure(httpServletRequest), type);
-	}
-
-	@Override
-	public void addSupportCookie(
+	public boolean addSupportCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
 		Cookie cookieSupportCookie = new Cookie(
-			CookiesConstants.KEY_COOKIE_SUPPORT, "true");
+			CookiesConstants.NAME_COOKIE_SUPPORT, "true");
 
-		cookieSupportCookie.setPath(StringPool.SLASH);
 		cookieSupportCookie.setMaxAge(CookiesConstants.MAX_AGE);
+		cookieSupportCookie.setPath(StringPool.SLASH);
 
-		addCookie(
-			null, httpServletResponse, cookieSupportCookie,
-			httpServletRequest.isSecure(),
-			CookiesConstants.CONSENT_TYPE_NECESSARY);
+		return addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie, null,
+			httpServletResponse, httpServletRequest.isSecure());
 	}
 
 	@Override
-	public void deleteCookies(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String domain,
-		String... cookieNames) {
+	public boolean deleteCookies(
+		String domain, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String... cookieNames) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
-			return;
+			return false;
 		}
 
-		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
+		Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
 
 		for (String cookieName : cookieNames) {
-			Cookie cookie = cookieMap.remove(
+			Cookie cookie = cookiesMap.remove(
 				StringUtil.toUpperCase(cookieName));
 
-			if (cookie != null) {
-				if (domain != null) {
-					cookie.setDomain(domain);
-				}
-
-				cookie.setMaxAge(0);
-				cookie.setPath(StringPool.SLASH);
-				cookie.setValue(StringPool.BLANK);
-
-				httpServletResponse.addCookie(cookie);
+			if (cookie == null) {
+				continue;
 			}
+
+			if (domain != null) {
+				cookie.setDomain(domain);
+			}
+
+			cookie.setMaxAge(0);
+			cookie.setPath(StringPool.SLASH);
+			cookie.setValue(StringPool.BLANK);
+
+			httpServletResponse.addCookie(cookie);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	@Override
-	public String getCookie(
-		HttpServletRequest httpServletRequest, String name) {
+	public String getCookieValue(
+		String cookieName, HttpServletRequest httpServletRequest) {
 
-		return getCookie(httpServletRequest, name, true);
+		return getCookieValue(cookieName, httpServletRequest, true);
 	}
 
 	@Override
-	public String getCookie(
-		HttpServletRequest httpServletRequest, String name,
+	public String getCookieValue(
+		String cookieName, HttpServletRequest httpServletRequest,
 		boolean toUpperCase) {
 
 		if (!_SESSION_ENABLE_PERSISTENT_COOKIES) {
 			return null;
 		}
 
-		String value = _get(httpServletRequest, name, toUpperCase);
+		String cookieValue = _getCookieValue(
+			cookieName, httpServletRequest, toUpperCase);
 
-		if ((value == null) || !isEncodedCookie(name)) {
-			return value;
+		if ((cookieValue == null) || !isEncodedCookie(cookieName)) {
+			return cookieValue;
 		}
 
 		try {
-			String encodedValue = value;
+			String encodedCookieValue = cookieValue;
 
-			String originalValue = new String(
-				UnicodeFormatter.hexToBytes(encodedValue));
+			String originalCookieValue = new String(
+				UnicodeFormatter.hexToBytes(encodedCookieValue));
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Get encoded cookie " + name);
-				_log.debug("Hex encoded value " + encodedValue);
-				_log.debug("Original value " + originalValue);
+				_log.debug("Get encoded cookie " + cookieName);
+				_log.debug("Hex encoded value " + encodedCookieValue);
+				_log.debug("Original value " + originalCookieValue);
 			}
 
-			return originalValue;
+			return originalCookieValue;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
 
-			return value;
+			return cookieValue;
 		}
 	}
 
@@ -257,27 +264,27 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	@Override
 	public boolean hasConsentType(
-		HttpServletRequest httpServletRequest, int type) {
+		int consentType, HttpServletRequest httpServletRequest) {
 
-		if (type == CookiesConstants.CONSENT_TYPE_NECESSARY) {
+		if (consentType == CookiesConstants.CONSENT_TYPE_NECESSARY) {
 			return true;
 		}
 
 		String consentCookieName = StringPool.BLANK;
 
-		if (type == CookiesConstants.CONSENT_TYPE_FUNCTIONAL) {
-			consentCookieName = CookiesConstants.KEY_CONSENT_TYPE_FUNCTIONAL;
+		if (consentType == CookiesConstants.CONSENT_TYPE_FUNCTIONAL) {
+			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL;
 		}
-		else if (type == CookiesConstants.CONSENT_TYPE_PERFORMANCE) {
-			consentCookieName = CookiesConstants.KEY_CONSENT_TYPE_PERFORMANCE;
+		else if (consentType == CookiesConstants.CONSENT_TYPE_PERFORMANCE) {
+			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE;
 		}
-		else if (type == CookiesConstants.CONSENT_TYPE_PERSONALIZATION) {
+		else if (consentType == CookiesConstants.CONSENT_TYPE_PERSONALIZATION) {
 			consentCookieName =
-				CookiesConstants.KEY_CONSENT_TYPE_PERSONALIZATION;
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
 		}
 
-		String consentCookieValue = getCookie(
-			httpServletRequest, consentCookieName);
+		String consentCookieValue = getCookieValue(
+			consentCookieName, httpServletRequest);
 
 		if (Validator.isNull(consentCookieValue)) {
 			return true;
@@ -288,10 +295,10 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	@Override
 	public boolean hasSessionId(HttpServletRequest httpServletRequest) {
-		String jsessionid = getCookie(
-			httpServletRequest, CookiesConstants.KEY_JSESSIONID, false);
+		String cookieValue = getCookieValue(
+			CookiesConstants.NAME_JSESSIONID, httpServletRequest, false);
 
-		if (jsessionid != null) {
+		if (cookieValue != null) {
 			return true;
 		}
 
@@ -299,11 +306,11 @@ public class CookiesManagerImpl implements CookiesManager {
 	}
 
 	@Override
-	public boolean isEncodedCookie(String name) {
-		if (name.equals(CookiesConstants.KEY_ID) ||
-			name.equals(CookiesConstants.KEY_LOGIN) ||
-			name.equals(CookiesConstants.KEY_PASSWORD) ||
-			name.equals(CookiesConstants.KEY_USER_UUID)) {
+	public boolean isEncodedCookie(String cookieName) {
+		if (cookieName.equals(CookiesConstants.NAME_ID) ||
+			cookieName.equals(CookiesConstants.NAME_LOGIN) ||
+			cookieName.equals(CookiesConstants.NAME_PASSWORD) ||
+			cookieName.equals(CookiesConstants.NAME_USER_UUID)) {
 
 			return true;
 		}
@@ -313,70 +320,71 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	@Override
 	public void validateSupportCookie(HttpServletRequest httpServletRequest)
-		throws CookieNotSupportedException {
+		throws UnsupportedCookieException {
 
 		if (_SESSION_ENABLE_PERSISTENT_COOKIES &&
 			_SESSION_TEST_COOKIE_SUPPORT) {
 
-			String cookieSupport = getCookie(
-				httpServletRequest, CookiesConstants.KEY_COOKIE_SUPPORT, false);
+			String cookieValue = getCookieValue(
+				CookiesConstants.NAME_COOKIE_SUPPORT, httpServletRequest,
+				false);
 
-			if (Validator.isNull(cookieSupport)) {
-				throw new CookieNotSupportedException();
+			if (Validator.isNull(cookieValue)) {
+				throw new UnsupportedCookieException();
 			}
 		}
 	}
 
-	private String _get(
-		HttpServletRequest httpServletRequest, String name,
-		boolean toUpperCase) {
-
-		Map<String, Cookie> cookieMap = _getCookieMap(httpServletRequest);
-
-		if (toUpperCase) {
-			name = StringUtil.toUpperCase(name);
-		}
-
-		Cookie cookie = cookieMap.get(name);
-
-		if (cookie == null) {
-			return null;
-		}
-
-		return cookie.getValue();
-	}
-
-	private Map<String, Cookie> _getCookieMap(
+	private Map<String, Cookie> _getCookiesMap(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, Cookie> cookieMap =
+		Map<String, Cookie> cookiesMap =
 			(Map<String, Cookie>)httpServletRequest.getAttribute(
 				CookieKeys.class.getName());
 
-		if (cookieMap != null) {
-			return cookieMap;
+		if (cookiesMap != null) {
+			return cookiesMap;
 		}
 
 		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (cookies == null) {
-			cookieMap = new HashMap<>();
+			cookiesMap = new HashMap<>();
 		}
 		else {
-			cookieMap = new HashMap<>(cookies.length * 4 / 3);
+			cookiesMap = new HashMap<>(cookies.length * 4 / 3);
 
 			for (Cookie cookie : cookies) {
 				String cookieName = GetterUtil.getString(cookie.getName());
 
 				cookieName = StringUtil.toUpperCase(cookieName);
 
-				cookieMap.put(cookieName, cookie);
+				cookiesMap.put(cookieName, cookie);
 			}
 		}
 
-		httpServletRequest.setAttribute(CookieKeys.class.getName(), cookieMap);
+		httpServletRequest.setAttribute(CookieKeys.class.getName(), cookiesMap);
 
-		return cookieMap;
+		return cookiesMap;
+	}
+
+	private String _getCookieValue(
+		String cookieName, HttpServletRequest httpServletRequest,
+		boolean toUpperCase) {
+
+		Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
+
+		if (toUpperCase) {
+			cookieName = StringUtil.toUpperCase(cookieName);
+		}
+
+		Cookie cookie = cookiesMap.get(cookieName);
+
+		if (cookie == null) {
+			return null;
+		}
+
+		return cookie.getValue();
 	}
 
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(

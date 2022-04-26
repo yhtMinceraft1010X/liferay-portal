@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cookies;
 
-import com.liferay.portal.kernel.exception.CookieNotSupportedException;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,32 +22,32 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Tamas Molnar
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
 public interface CookiesManager {
 
-	public void addCookie(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Cookie cookie, boolean secure,
-		int type);
+	public boolean addCookie(
+		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
-	public void addCookie(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Cookie cookie, int type);
+	public boolean addCookie(
+		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean secure);
 
-	public void addSupportCookie(
+	public boolean addSupportCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse);
 
-	public void deleteCookies(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String domain,
-		String... cookieNames);
+	public boolean deleteCookies(
+		String domain, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String... cookieNames);
 
-	public String getCookie(HttpServletRequest httpServletRequest, String name);
+	public String getCookieValue(
+		String cookieName, HttpServletRequest httpServletRequest);
 
-	public String getCookie(
-		HttpServletRequest httpServletRequest, String name,
+	public String getCookieValue(
+		String cookieName, HttpServletRequest httpServletRequest,
 		boolean toUpperCase);
 
 	public String getDomain(HttpServletRequest httpServletRequest);
@@ -57,13 +55,13 @@ public interface CookiesManager {
 	public String getDomain(String host);
 
 	public boolean hasConsentType(
-		HttpServletRequest httpServletRequest, int type);
+		int consentType, HttpServletRequest httpServletRequest);
 
 	public boolean hasSessionId(HttpServletRequest httpServletRequest);
 
-	public boolean isEncodedCookie(String name);
+	public boolean isEncodedCookie(String cookieName);
 
 	public void validateSupportCookie(HttpServletRequest httpServletRequest)
-		throws CookieNotSupportedException;
+		throws UnsupportedCookieException;
 
 }
