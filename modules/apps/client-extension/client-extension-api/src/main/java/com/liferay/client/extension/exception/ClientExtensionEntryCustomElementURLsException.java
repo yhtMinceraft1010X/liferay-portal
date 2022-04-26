@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClientExtensionEntryCustomElementURLsException extends PortalException {
+public class ClientExtensionEntryCustomElementURLsException
+	extends PortalException {
 
 	public ClientExtensionEntryCustomElementURLsException() {
 	}

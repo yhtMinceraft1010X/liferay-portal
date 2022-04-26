@@ -38,6 +38,19 @@ public class ClientExtensionEntryModelResourcePermission
 
 	@Override
 	public void check(
+			PermissionChecker permissionChecker,
+			ClientExtensionEntry clientExtensionEntry, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, clientExtensionEntry, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ClientExtensionEntry.class.getName(),
+				clientExtensionEntry.getClientExtensionEntryId(), actionId);
+		}
+	}
+
+	@Override
+	public void check(
 			PermissionChecker permissionChecker, long clientExtensionEntryId,
 			String actionId)
 		throws PortalException {
@@ -50,16 +63,13 @@ public class ClientExtensionEntryModelResourcePermission
 	}
 
 	@Override
-	public void check(
-			PermissionChecker permissionChecker, ClientExtensionEntry clientExtensionEntry,
-			String actionId)
-		throws PortalException {
+	public boolean contains(
+		PermissionChecker permissionChecker,
+		ClientExtensionEntry clientExtensionEntry, String actionId) {
 
-		if (!contains(permissionChecker, clientExtensionEntry, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, ClientExtensionEntry.class.getName(),
-				clientExtensionEntry.getClientExtensionEntryId(), actionId);
-		}
+		return permissionChecker.hasPermission(
+			null, ClientExtensionEntry.class.getName(),
+			clientExtensionEntry.getClientExtensionEntryId(), actionId);
 	}
 
 	@Override
@@ -68,17 +78,8 @@ public class ClientExtensionEntryModelResourcePermission
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			null, ClientExtensionEntry.class.getName(), clientExtensionEntryId, actionId);
-	}
-
-	@Override
-	public boolean contains(
-		PermissionChecker permissionChecker, ClientExtensionEntry clientExtensionEntry,
-		String actionId) {
-
-		return permissionChecker.hasPermission(
-			null, ClientExtensionEntry.class.getName(),
-			clientExtensionEntry.getClientExtensionEntryId(), actionId);
+			null, ClientExtensionEntry.class.getName(), clientExtensionEntryId,
+			actionId);
 	}
 
 	@Override

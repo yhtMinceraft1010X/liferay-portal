@@ -25,7 +25,9 @@ public class DuplicateClientExtensionEntryExternalReferenceCodeException
 	public DuplicateClientExtensionEntryExternalReferenceCodeException() {
 	}
 
-	public DuplicateClientExtensionEntryExternalReferenceCodeException(String msg) {
+	public DuplicateClientExtensionEntryExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 

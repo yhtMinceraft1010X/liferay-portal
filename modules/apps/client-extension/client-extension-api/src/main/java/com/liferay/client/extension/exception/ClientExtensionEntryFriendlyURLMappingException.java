@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClientExtensionEntryFriendlyURLMappingException extends PortalException {
+public class ClientExtensionEntryFriendlyURLMappingException
+	extends PortalException {
 
 	public ClientExtensionEntryFriendlyURLMappingException() {
 	}
@@ -34,7 +35,9 @@ public class ClientExtensionEntryFriendlyURLMappingException extends PortalExcep
 		super(msg, throwable);
 	}
 
-	public ClientExtensionEntryFriendlyURLMappingException(Throwable throwable) {
+	public ClientExtensionEntryFriendlyURLMappingException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 
