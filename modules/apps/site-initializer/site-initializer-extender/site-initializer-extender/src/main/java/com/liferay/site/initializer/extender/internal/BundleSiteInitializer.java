@@ -24,7 +24,6 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.client.extension.service.RemoteAppEntryLocalService;
-import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -215,7 +214,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
-		PortletSettingsImporter portletSettingsImporter,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -271,7 +269,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectEntryLocalService = objectEntryLocalService;
 		_organizationResourceFactory = organizationResourceFactory;
 		_portal = portal;
-		_portletSettingsImporter = portletSettingsImporter;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -2003,22 +2000,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addPortletSettings(ServiceContext serviceContext)
 		throws Exception {
 
-		String resourcePath = "/site-initializer/portlet-settings.json";
+		if ((_commerceSiteInitializer == null) ||
+			!GetterUtil.getBoolean(
+				PropsUtil.get("enterprise.product.commerce.enabled"))) {
 
-		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
-
-		if (json == null) {
 			return;
 		}
 
-		Group group = _groupLocalService.getCompanyGroup(
-			serviceContext.getCompanyId());
-
-		_portletSettingsImporter.importPortletSettings(
-			JSONFactoryUtil.createJSONArray(json), _classLoader,
-			"/site-initializer/portlet-settings/",
-			serviceContext.getScopeGroupId(), group.getGroupId(),
-			serviceContext.getUserId());
+		_commerceSiteInitializer.addPortletSettings(
+			_classLoader, serviceContext, _servletContext);
 	}
 
 	private Map<String, String> _addRemoteAppEntries(
@@ -3326,7 +3316,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final Portal _portal;
-	private final PortletSettingsImporter _portletSettingsImporter;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService
