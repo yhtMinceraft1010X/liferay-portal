@@ -315,7 +315,7 @@ export function useObjectFieldForm({
 			else if (settings.maximumFileSize > uploadRequestSizeLimit) {
 				errors.maximumFileSize = Liferay.Util.sub(
 					Liferay.Language.get(
-						'file-size-is-larger-than-maximum-upload-request-size-x-mb'
+						'file-size-is-larger-than-the-allowed-overall-maximum-upload-request-size-x-mb'
 					),
 					uploadRequestSizeLimit
 				);
