@@ -610,13 +610,13 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupOwnerWithStagingEnabled() throws Exception {
 		DepotTestUtil.withRegularUser(
 			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
 				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
 
 				DepotEntry stagingDepotEntry =
 					DepotStagingTestUtil.enableLocalStaging(depotEntry);
-
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
 
 				Assert.assertTrue(
 					permissionChecker.isGroupOwner(
