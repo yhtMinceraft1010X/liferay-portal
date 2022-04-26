@@ -101,6 +101,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150999. Verify all the links present in the Dashboard Page related with News redirect to their respective pages"
+	@ignore = "true"
 	@priority = "4"
 	test VerifyTheLinksRedirectsToItsPage {
 		task ("Go to Liferaybotics Site") {
