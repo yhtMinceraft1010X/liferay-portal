@@ -438,6 +438,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
 
+			// TODO Review order/dependency
+
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addClientExtensionEntries(
