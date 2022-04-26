@@ -92,7 +92,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -115,7 +116,8 @@ public class ClientExtensionEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClientExtensionEntryServiceUtil.class, "addIFrameClientExtensionEntry",
+				ClientExtensionEntryServiceUtil.class,
+				"addIFrameClientExtensionEntry",
 				_addIFrameClientExtensionEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
@@ -140,7 +142,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -158,7 +161,8 @@ public class ClientExtensionEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClientExtensionEntryServiceUtil.class, "deleteClientExtensionEntry",
+				ClientExtensionEntryServiceUtil.class,
+				"deleteClientExtensionEntry",
 				_deleteClientExtensionEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
@@ -181,7 +185,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -199,7 +204,8 @@ public class ClientExtensionEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClientExtensionEntryServiceUtil.class, "getClientExtensionEntry",
+				ClientExtensionEntryServiceUtil.class,
+				"getClientExtensionEntry",
 				_getClientExtensionEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
@@ -222,7 +228,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -274,7 +281,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -296,13 +304,14 @@ public class ClientExtensionEntryServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ClientExtensionEntryServiceUtil.class, "updateIFrameClientExtensionEntry",
+				ClientExtensionEntryServiceUtil.class,
+				"updateIFrameClientExtensionEntry",
 				_updateIFrameClientExtensionEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, clientExtensionEntryId, description, friendlyURLMapping,
-				iFrameURL, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+				methodKey, clientExtensionEntryId, description,
+				friendlyURLMapping, iFrameURL, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
 
 			Object returnObj = null;
 
@@ -321,7 +330,8 @@ public class ClientExtensionEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.ClientExtensionEntry)returnObj;
+			return (com.liferay.client.extension.model.ClientExtensionEntry)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -341,8 +351,8 @@ public class ClientExtensionEntryServiceHttp {
 			boolean.class, String.class, String.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _addIFrameClientExtensionEntryParameterTypes1 =
-		new Class[] {
+	private static final Class<?>[]
+		_addIFrameClientExtensionEntryParameterTypes1 = new Class[] {
 			String.class, String.class, String.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class
 		};
@@ -356,8 +366,8 @@ public class ClientExtensionEntryServiceHttp {
 			String.class, String.class, java.util.Map.class, String.class,
 			String.class, String.class
 		};
-	private static final Class<?>[] _updateIFrameClientExtensionEntryParameterTypes5 =
-		new Class[] {
+	private static final Class<?>[]
+		_updateIFrameClientExtensionEntryParameterTypes5 = new Class[] {
 			long.class, String.class, String.class, String.class,
 			java.util.Map.class, String.class, String.class, String.class
 		};

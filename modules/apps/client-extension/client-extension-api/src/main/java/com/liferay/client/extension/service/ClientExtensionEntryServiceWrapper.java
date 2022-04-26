@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class ClientExtensionEntryServiceWrapper
-	implements ClientExtensionEntryService, ServiceWrapper<ClientExtensionEntryService> {
+	implements ClientExtensionEntryService,
+			   ServiceWrapper<ClientExtensionEntryService> {
 
 	public ClientExtensionEntryServiceWrapper() {
 		this(null);
@@ -48,11 +49,13 @@ public class ClientExtensionEntryServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.addCustomElementClientExtensionEntry(
-			externalReferenceCode, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs,
-			customElementUseESM, description, friendlyURLMapping, instanceable,
-			nameMap, portletCategoryName, properties, sourceCodeURL);
+		return _clientExtensionEntryService.
+			addCustomElementClientExtensionEntry(
+				externalReferenceCode, customElementCSSURLs,
+				customElementHTMLElementName, customElementURLs,
+				customElementUseESM, description, friendlyURLMapping,
+				instanceable, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 	}
 
 	@Override
@@ -75,7 +78,17 @@ public class ClientExtensionEntryServiceWrapper
 			deleteClientExtensionEntry(long clientExtensionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.deleteClientExtensionEntry(clientExtensionEntryId);
+		return _clientExtensionEntryService.deleteClientExtensionEntry(
+			clientExtensionEntryId);
+	}
+
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			getClientExtensionEntry(long clientExtensionEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryService.getClientExtensionEntry(
+			clientExtensionEntryId);
 	}
 
 	/**
@@ -86,14 +99,6 @@ public class ClientExtensionEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _clientExtensionEntryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	@Override
@@ -108,11 +113,12 @@ public class ClientExtensionEntryServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.updateCustomElementClientExtensionEntry(
-			clientExtensionEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs,
-			customElementUseESM, description, friendlyURLMapping, nameMap,
-			portletCategoryName, properties, sourceCodeURL);
+		return _clientExtensionEntryService.
+			updateCustomElementClientExtensionEntry(
+				clientExtensionEntryId, customElementCSSURLs,
+				customElementHTMLElementName, customElementURLs,
+				customElementUseESM, description, friendlyURLMapping, nameMap,
+				portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -136,7 +142,9 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public void setWrappedService(ClientExtensionEntryService clientExtensionEntryService) {
+	public void setWrappedService(
+		ClientExtensionEntryService clientExtensionEntryService) {
+
 		_clientExtensionEntryService = clientExtensionEntryService;
 	}
 

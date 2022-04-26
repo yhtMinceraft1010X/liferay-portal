@@ -35,10 +35,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		ClientExtensionEntryModelArgumentsResolver.class, ArgumentsResolver.class
+		ClientExtensionEntryModelArgumentsResolver.class,
+		ArgumentsResolver.class
 	}
 )
-public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsResolver {
+public class ClientExtensionEntryModelArgumentsResolver
+	implements ArgumentsResolver {
 
 	@Override
 	public Object[] getArguments(
@@ -61,7 +63,8 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 		long columnBitmask = clientExtensionEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(clientExtensionEntryModelImpl, columnNames, original);
+			return _getValue(
+				clientExtensionEntryModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +83,8 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(clientExtensionEntryModelImpl, columnNames, original);
+			return _getValue(
+				clientExtensionEntryModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -97,8 +101,8 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 	}
 
 	private static Object[] _getValue(
-		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl, String[] columnNames,
-		boolean original) {
+		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl,
+		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
 
@@ -106,8 +110,9 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 			String columnName = columnNames[i];
 
 			if (original) {
-				arguments[i] = clientExtensionEntryModelImpl.getColumnOriginalValue(
-					columnName);
+				arguments[i] =
+					clientExtensionEntryModelImpl.getColumnOriginalValue(
+						columnName);
 			}
 			else {
 				arguments[i] = clientExtensionEntryModelImpl.getColumnValue(

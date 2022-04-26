@@ -33,9 +33,11 @@ import java.util.Map;
  */
 public class ClientExtensionEntryWrapper
 	extends BaseModelWrapper<ClientExtensionEntry>
-	implements ModelWrapper<ClientExtensionEntry>, ClientExtensionEntry {
+	implements ClientExtensionEntry, ModelWrapper<ClientExtensionEntry> {
 
-	public ClientExtensionEntryWrapper(ClientExtensionEntry clientExtensionEntry) {
+	public ClientExtensionEntryWrapper(
+		ClientExtensionEntry clientExtensionEntry) {
+
 		super(clientExtensionEntry);
 	}
 
@@ -95,7 +97,8 @@ public class ClientExtensionEntryWrapper
 			setExternalReferenceCode(externalReferenceCode);
 		}
 
-		Long clientExtensionEntryId = (Long)attributes.get("clientExtensionEntryId");
+		Long clientExtensionEntryId = (Long)attributes.get(
+			"clientExtensionEntryId");
 
 		if (clientExtensionEntryId != null) {
 			setClientExtensionEntryId(clientExtensionEntryId);
@@ -250,9 +253,19 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this remote app entry.
+	 * Returns the client extension entry ID of this client extension entry.
 	 *
-	 * @return the company ID of this remote app entry
+	 * @return the client extension entry ID of this client extension entry
+	 */
+	@Override
+	public long getClientExtensionEntryId() {
+		return model.getClientExtensionEntryId();
+	}
+
+	/**
+	 * Returns the company ID of this client extension entry.
+	 *
+	 * @return the company ID of this client extension entry
 	 */
 	@Override
 	public long getCompanyId() {
@@ -260,9 +273,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the container model ID of this remote app entry.
+	 * Returns the container model ID of this client extension entry.
 	 *
-	 * @return the container model ID of this remote app entry
+	 * @return the container model ID of this client extension entry
 	 */
 	@Override
 	public long getContainerModelId() {
@@ -270,9 +283,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the container name of this remote app entry.
+	 * Returns the container name of this client extension entry.
 	 *
-	 * @return the container name of this remote app entry
+	 * @return the container name of this client extension entry
 	 */
 	@Override
 	public String getContainerModelName() {
@@ -280,9 +293,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the create date of this remote app entry.
+	 * Returns the create date of this client extension entry.
 	 *
-	 * @return the create date of this remote app entry
+	 * @return the create date of this client extension entry
 	 */
 	@Override
 	public Date getCreateDate() {
@@ -290,9 +303,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the custom element cssur ls of this remote app entry.
+	 * Returns the custom element cssur ls of this client extension entry.
 	 *
-	 * @return the custom element cssur ls of this remote app entry
+	 * @return the custom element cssur ls of this client extension entry
 	 */
 	@Override
 	public String getCustomElementCSSURLs() {
@@ -300,9 +313,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the custom element html element name of this remote app entry.
+	 * Returns the custom element html element name of this client extension entry.
 	 *
-	 * @return the custom element html element name of this remote app entry
+	 * @return the custom element html element name of this client extension entry
 	 */
 	@Override
 	public String getCustomElementHTMLElementName() {
@@ -310,9 +323,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the custom element ur ls of this remote app entry.
+	 * Returns the custom element ur ls of this client extension entry.
 	 *
-	 * @return the custom element ur ls of this remote app entry
+	 * @return the custom element ur ls of this client extension entry
 	 */
 	@Override
 	public String getCustomElementURLs() {
@@ -320,9 +333,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the custom element use esm of this remote app entry.
+	 * Returns the custom element use esm of this client extension entry.
 	 *
-	 * @return the custom element use esm of this remote app entry
+	 * @return the custom element use esm of this client extension entry
 	 */
 	@Override
 	public boolean getCustomElementUseESM() {
@@ -335,9 +348,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the description of this remote app entry.
+	 * Returns the description of this client extension entry.
 	 *
-	 * @return the description of this remote app entry
+	 * @return the description of this client extension entry
 	 */
 	@Override
 	public String getDescription() {
@@ -345,9 +358,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the external reference code of this remote app entry.
+	 * Returns the external reference code of this client extension entry.
 	 *
-	 * @return the external reference code of this remote app entry
+	 * @return the external reference code of this client extension entry
 	 */
 	@Override
 	public String getExternalReferenceCode() {
@@ -355,9 +368,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the friendly url mapping of this remote app entry.
+	 * Returns the friendly url mapping of this client extension entry.
 	 *
-	 * @return the friendly url mapping of this remote app entry
+	 * @return the friendly url mapping of this client extension entry
 	 */
 	@Override
 	public String getFriendlyURLMapping() {
@@ -365,9 +378,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the i frame url of this remote app entry.
+	 * Returns the i frame url of this client extension entry.
 	 *
-	 * @return the i frame url of this remote app entry
+	 * @return the i frame url of this client extension entry
 	 */
 	@Override
 	public String getIFrameURL() {
@@ -375,9 +388,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the instanceable of this remote app entry.
+	 * Returns the instanceable of this client extension entry.
 	 *
-	 * @return the instanceable of this remote app entry
+	 * @return the instanceable of this client extension entry
 	 */
 	@Override
 	public boolean getInstanceable() {
@@ -385,9 +398,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the modified date of this remote app entry.
+	 * Returns the modified date of this client extension entry.
 	 *
-	 * @return the modified date of this remote app entry
+	 * @return the modified date of this client extension entry
 	 */
 	@Override
 	public Date getModifiedDate() {
@@ -395,9 +408,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this remote app entry.
+	 * Returns the mvcc version of this client extension entry.
 	 *
-	 * @return the mvcc version of this remote app entry
+	 * @return the mvcc version of this client extension entry
 	 */
 	@Override
 	public long getMvccVersion() {
@@ -405,9 +418,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the name of this remote app entry.
+	 * Returns the name of this client extension entry.
 	 *
-	 * @return the name of this remote app entry
+	 * @return the name of this client extension entry
 	 */
 	@Override
 	public String getName() {
@@ -415,10 +428,10 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this client extension entry in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized name of this remote app entry
+	 * @return the localized name of this client extension entry
 	 */
 	@Override
 	public String getName(java.util.Locale locale) {
@@ -426,11 +439,11 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this client extension entry in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this client extension entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
@@ -438,10 +451,10 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the localized name of this remote app entry in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this client extension entry in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized name of this remote app entry
+	 * @return the localized name of this client extension entry
 	 */
 	@Override
 	public String getName(String languageId) {
@@ -449,11 +462,11 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the localized name of this remote app entry in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this client extension entry in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this remote app entry
+	 * @return the localized name of this client extension entry
 	 */
 	@Override
 	public String getName(String languageId, boolean useDefault) {
@@ -471,9 +484,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns a map of the locales and localized names of this remote app entry.
+	 * Returns a map of the locales and localized names of this client extension entry.
 	 *
-	 * @return the locales and localized names of this remote app entry
+	 * @return the locales and localized names of this client extension entry
 	 */
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
@@ -481,9 +494,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the parent container model ID of this remote app entry.
+	 * Returns the parent container model ID of this client extension entry.
 	 *
-	 * @return the parent container model ID of this remote app entry
+	 * @return the parent container model ID of this client extension entry
 	 */
 	@Override
 	public long getParentContainerModelId() {
@@ -491,9 +504,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the portlet category name of this remote app entry.
+	 * Returns the portlet category name of this client extension entry.
 	 *
-	 * @return the portlet category name of this remote app entry
+	 * @return the portlet category name of this client extension entry
 	 */
 	@Override
 	public String getPortletCategoryName() {
@@ -501,9 +514,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the primary key of this remote app entry.
+	 * Returns the primary key of this client extension entry.
 	 *
-	 * @return the primary key of this remote app entry
+	 * @return the primary key of this client extension entry
 	 */
 	@Override
 	public long getPrimaryKey() {
@@ -511,9 +524,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the properties of this remote app entry.
+	 * Returns the properties of this client extension entry.
 	 *
-	 * @return the properties of this remote app entry
+	 * @return the properties of this client extension entry
 	 */
 	@Override
 	public String getProperties() {
@@ -521,19 +534,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the remote app entry ID of this remote app entry.
+	 * Returns the source code url of this client extension entry.
 	 *
-	 * @return the remote app entry ID of this remote app entry
-	 */
-	@Override
-	public long getClientExtensionEntryId() {
-		return model.getClientExtensionEntryId();
-	}
-
-	/**
-	 * Returns the source code url of this remote app entry.
-	 *
-	 * @return the source code url of this remote app entry
+	 * @return the source code url of this client extension entry
 	 */
 	@Override
 	public String getSourceCodeURL() {
@@ -541,9 +544,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the status of this remote app entry.
+	 * Returns the status of this client extension entry.
 	 *
-	 * @return the status of this remote app entry
+	 * @return the status of this client extension entry
 	 */
 	@Override
 	public int getStatus() {
@@ -551,9 +554,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user ID of this remote app entry.
+	 * Returns the status by user ID of this client extension entry.
 	 *
-	 * @return the status by user ID of this remote app entry
+	 * @return the status by user ID of this client extension entry
 	 */
 	@Override
 	public long getStatusByUserId() {
@@ -561,9 +564,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user name of this remote app entry.
+	 * Returns the status by user name of this client extension entry.
 	 *
-	 * @return the status by user name of this remote app entry
+	 * @return the status by user name of this client extension entry
 	 */
 	@Override
 	public String getStatusByUserName() {
@@ -571,9 +574,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user uuid of this remote app entry.
+	 * Returns the status by user uuid of this client extension entry.
 	 *
-	 * @return the status by user uuid of this remote app entry
+	 * @return the status by user uuid of this client extension entry
 	 */
 	@Override
 	public String getStatusByUserUuid() {
@@ -581,9 +584,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the status date of this remote app entry.
+	 * Returns the status date of this client extension entry.
 	 *
-	 * @return the status date of this remote app entry
+	 * @return the status date of this client extension entry
 	 */
 	@Override
 	public Date getStatusDate() {
@@ -591,9 +594,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the type of this remote app entry.
+	 * Returns the type of this client extension entry.
 	 *
-	 * @return the type of this remote app entry
+	 * @return the type of this client extension entry
 	 */
 	@Override
 	public String getType() {
@@ -601,9 +604,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the user ID of this remote app entry.
+	 * Returns the user ID of this client extension entry.
 	 *
-	 * @return the user ID of this remote app entry
+	 * @return the user ID of this client extension entry
 	 */
 	@Override
 	public long getUserId() {
@@ -611,9 +614,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the user name of this remote app entry.
+	 * Returns the user name of this client extension entry.
 	 *
-	 * @return the user name of this remote app entry
+	 * @return the user name of this client extension entry
 	 */
 	@Override
 	public String getUserName() {
@@ -621,9 +624,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the user uuid of this remote app entry.
+	 * Returns the user uuid of this client extension entry.
 	 *
-	 * @return the user uuid of this remote app entry
+	 * @return the user uuid of this client extension entry
 	 */
 	@Override
 	public String getUserUuid() {
@@ -631,9 +634,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns the uuid of this remote app entry.
+	 * Returns the uuid of this client extension entry.
 	 *
-	 * @return the uuid of this remote app entry
+	 * @return the uuid of this client extension entry
 	 */
 	@Override
 	public String getUuid() {
@@ -641,9 +644,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is approved.
+	 * Returns <code>true</code> if this client extension entry is approved.
 	 *
-	 * @return <code>true</code> if this remote app entry is approved; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is approved; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isApproved() {
@@ -651,9 +654,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is custom element use esm.
+	 * Returns <code>true</code> if this client extension entry is custom element use esm.
 	 *
-	 * @return <code>true</code> if this remote app entry is custom element use esm; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is custom element use esm; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isCustomElementUseESM() {
@@ -661,9 +664,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is denied.
+	 * Returns <code>true</code> if this client extension entry is denied.
 	 *
-	 * @return <code>true</code> if this remote app entry is denied; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is denied; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isDenied() {
@@ -671,9 +674,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is a draft.
+	 * Returns <code>true</code> if this client extension entry is a draft.
 	 *
-	 * @return <code>true</code> if this remote app entry is a draft; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is a draft; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isDraft() {
@@ -681,9 +684,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is expired.
+	 * Returns <code>true</code> if this client extension entry is expired.
 	 *
-	 * @return <code>true</code> if this remote app entry is expired; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is expired; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isExpired() {
@@ -691,9 +694,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is inactive.
+	 * Returns <code>true</code> if this client extension entry is inactive.
 	 *
-	 * @return <code>true</code> if this remote app entry is inactive; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is inactive; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isInactive() {
@@ -701,9 +704,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is incomplete.
+	 * Returns <code>true</code> if this client extension entry is incomplete.
 	 *
-	 * @return <code>true</code> if this remote app entry is incomplete; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is incomplete; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isIncomplete() {
@@ -711,9 +714,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is instanceable.
+	 * Returns <code>true</code> if this client extension entry is instanceable.
 	 *
-	 * @return <code>true</code> if this remote app entry is instanceable; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is instanceable; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isInstanceable() {
@@ -721,9 +724,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is pending.
+	 * Returns <code>true</code> if this client extension entry is pending.
 	 *
-	 * @return <code>true</code> if this remote app entry is pending; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is pending; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isPending() {
@@ -731,9 +734,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this remote app entry is scheduled.
+	 * Returns <code>true</code> if this client extension entry is scheduled.
 	 *
-	 * @return <code>true</code> if this remote app entry is scheduled; <code>false</code> otherwise
+	 * @return <code>true</code> if this client extension entry is scheduled; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isScheduled() {
@@ -761,9 +764,19 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the company ID of this remote app entry.
+	 * Sets the client extension entry ID of this client extension entry.
 	 *
-	 * @param companyId the company ID of this remote app entry
+	 * @param clientExtensionEntryId the client extension entry ID of this client extension entry
+	 */
+	@Override
+	public void setClientExtensionEntryId(long clientExtensionEntryId) {
+		model.setClientExtensionEntryId(clientExtensionEntryId);
+	}
+
+	/**
+	 * Sets the company ID of this client extension entry.
+	 *
+	 * @param companyId the company ID of this client extension entry
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -771,9 +784,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the container model ID of this remote app entry.
+	 * Sets the container model ID of this client extension entry.
 	 *
-	 * @param containerModelId the container model ID of this remote app entry
+	 * @param containerModelId the container model ID of this client extension entry
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId) {
@@ -781,9 +794,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the create date of this remote app entry.
+	 * Sets the create date of this client extension entry.
 	 *
-	 * @param createDate the create date of this remote app entry
+	 * @param createDate the create date of this client extension entry
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -791,9 +804,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the custom element cssur ls of this remote app entry.
+	 * Sets the custom element cssur ls of this client extension entry.
 	 *
-	 * @param customElementCSSURLs the custom element cssur ls of this remote app entry
+	 * @param customElementCSSURLs the custom element cssur ls of this client extension entry
 	 */
 	@Override
 	public void setCustomElementCSSURLs(String customElementCSSURLs) {
@@ -801,9 +814,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the custom element html element name of this remote app entry.
+	 * Sets the custom element html element name of this client extension entry.
 	 *
-	 * @param customElementHTMLElementName the custom element html element name of this remote app entry
+	 * @param customElementHTMLElementName the custom element html element name of this client extension entry
 	 */
 	@Override
 	public void setCustomElementHTMLElementName(
@@ -813,9 +826,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the custom element ur ls of this remote app entry.
+	 * Sets the custom element ur ls of this client extension entry.
 	 *
-	 * @param customElementURLs the custom element ur ls of this remote app entry
+	 * @param customElementURLs the custom element ur ls of this client extension entry
 	 */
 	@Override
 	public void setCustomElementURLs(String customElementURLs) {
@@ -823,9 +836,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets whether this remote app entry is custom element use esm.
+	 * Sets whether this client extension entry is custom element use esm.
 	 *
-	 * @param customElementUseESM the custom element use esm of this remote app entry
+	 * @param customElementUseESM the custom element use esm of this client extension entry
 	 */
 	@Override
 	public void setCustomElementUseESM(boolean customElementUseESM) {
@@ -833,9 +846,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the description of this remote app entry.
+	 * Sets the description of this client extension entry.
 	 *
-	 * @param description the description of this remote app entry
+	 * @param description the description of this client extension entry
 	 */
 	@Override
 	public void setDescription(String description) {
@@ -843,9 +856,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the external reference code of this remote app entry.
+	 * Sets the external reference code of this client extension entry.
 	 *
-	 * @param externalReferenceCode the external reference code of this remote app entry
+	 * @param externalReferenceCode the external reference code of this client extension entry
 	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
@@ -853,9 +866,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the friendly url mapping of this remote app entry.
+	 * Sets the friendly url mapping of this client extension entry.
 	 *
-	 * @param friendlyURLMapping the friendly url mapping of this remote app entry
+	 * @param friendlyURLMapping the friendly url mapping of this client extension entry
 	 */
 	@Override
 	public void setFriendlyURLMapping(String friendlyURLMapping) {
@@ -863,9 +876,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the i frame url of this remote app entry.
+	 * Sets the i frame url of this client extension entry.
 	 *
-	 * @param iFrameURL the i frame url of this remote app entry
+	 * @param iFrameURL the i frame url of this client extension entry
 	 */
 	@Override
 	public void setIFrameURL(String iFrameURL) {
@@ -873,9 +886,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets whether this remote app entry is instanceable.
+	 * Sets whether this client extension entry is instanceable.
 	 *
-	 * @param instanceable the instanceable of this remote app entry
+	 * @param instanceable the instanceable of this client extension entry
 	 */
 	@Override
 	public void setInstanceable(boolean instanceable) {
@@ -883,9 +896,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the modified date of this remote app entry.
+	 * Sets the modified date of this client extension entry.
 	 *
-	 * @param modifiedDate the modified date of this remote app entry
+	 * @param modifiedDate the modified date of this client extension entry
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -893,9 +906,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the mvcc version of this remote app entry.
+	 * Sets the mvcc version of this client extension entry.
 	 *
-	 * @param mvccVersion the mvcc version of this remote app entry
+	 * @param mvccVersion the mvcc version of this client extension entry
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
@@ -903,9 +916,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the name of this remote app entry.
+	 * Sets the name of this client extension entry.
 	 *
-	 * @param name the name of this remote app entry
+	 * @param name the name of this client extension entry
 	 */
 	@Override
 	public void setName(String name) {
@@ -913,9 +926,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the localized name of this remote app entry in the language.
+	 * Sets the localized name of this client extension entry in the language.
 	 *
-	 * @param name the localized name of this remote app entry
+	 * @param name the localized name of this client extension entry
 	 * @param locale the locale of the language
 	 */
 	@Override
@@ -924,9 +937,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the localized name of this remote app entry in the language, and sets the default locale.
+	 * Sets the localized name of this client extension entry in the language, and sets the default locale.
 	 *
-	 * @param name the localized name of this remote app entry
+	 * @param name the localized name of this client extension entry
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -943,9 +956,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names.
+	 * Sets the localized names of this client extension entry from the map of locales and localized names.
 	 *
-	 * @param nameMap the locales and localized names of this remote app entry
+	 * @param nameMap the locales and localized names of this client extension entry
 	 */
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
@@ -953,9 +966,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the localized names of this remote app entry from the map of locales and localized names, and sets the default locale.
+	 * Sets the localized names of this client extension entry from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param nameMap the locales and localized names of this remote app entry
+	 * @param nameMap the locales and localized names of this client extension entry
 	 * @param defaultLocale the default locale
 	 */
 	@Override
@@ -966,9 +979,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the parent container model ID of this remote app entry.
+	 * Sets the parent container model ID of this client extension entry.
 	 *
-	 * @param parentContainerModelId the parent container model ID of this remote app entry
+	 * @param parentContainerModelId the parent container model ID of this client extension entry
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
@@ -976,9 +989,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the portlet category name of this remote app entry.
+	 * Sets the portlet category name of this client extension entry.
 	 *
-	 * @param portletCategoryName the portlet category name of this remote app entry
+	 * @param portletCategoryName the portlet category name of this client extension entry
 	 */
 	@Override
 	public void setPortletCategoryName(String portletCategoryName) {
@@ -986,9 +999,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the primary key of this remote app entry.
+	 * Sets the primary key of this client extension entry.
 	 *
-	 * @param primaryKey the primary key of this remote app entry
+	 * @param primaryKey the primary key of this client extension entry
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -996,9 +1009,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the properties of this remote app entry.
+	 * Sets the properties of this client extension entry.
 	 *
-	 * @param properties the properties of this remote app entry
+	 * @param properties the properties of this client extension entry
 	 */
 	@Override
 	public void setProperties(String properties) {
@@ -1006,19 +1019,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the remote app entry ID of this remote app entry.
+	 * Sets the source code url of this client extension entry.
 	 *
-	 * @param clientExtensionEntryId the remote app entry ID of this remote app entry
-	 */
-	@Override
-	public void setClientExtensionEntryId(long clientExtensionEntryId) {
-		model.setClientExtensionEntryId(clientExtensionEntryId);
-	}
-
-	/**
-	 * Sets the source code url of this remote app entry.
-	 *
-	 * @param sourceCodeURL the source code url of this remote app entry
+	 * @param sourceCodeURL the source code url of this client extension entry
 	 */
 	@Override
 	public void setSourceCodeURL(String sourceCodeURL) {
@@ -1026,9 +1029,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the status of this remote app entry.
+	 * Sets the status of this client extension entry.
 	 *
-	 * @param status the status of this remote app entry
+	 * @param status the status of this client extension entry
 	 */
 	@Override
 	public void setStatus(int status) {
@@ -1036,9 +1039,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user ID of this remote app entry.
+	 * Sets the status by user ID of this client extension entry.
 	 *
-	 * @param statusByUserId the status by user ID of this remote app entry
+	 * @param statusByUserId the status by user ID of this client extension entry
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
@@ -1046,9 +1049,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user name of this remote app entry.
+	 * Sets the status by user name of this client extension entry.
 	 *
-	 * @param statusByUserName the status by user name of this remote app entry
+	 * @param statusByUserName the status by user name of this client extension entry
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
@@ -1056,9 +1059,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user uuid of this remote app entry.
+	 * Sets the status by user uuid of this client extension entry.
 	 *
-	 * @param statusByUserUuid the status by user uuid of this remote app entry
+	 * @param statusByUserUuid the status by user uuid of this client extension entry
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
@@ -1066,9 +1069,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the status date of this remote app entry.
+	 * Sets the status date of this client extension entry.
 	 *
-	 * @param statusDate the status date of this remote app entry
+	 * @param statusDate the status date of this client extension entry
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
@@ -1076,9 +1079,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the type of this remote app entry.
+	 * Sets the type of this client extension entry.
 	 *
-	 * @param type the type of this remote app entry
+	 * @param type the type of this client extension entry
 	 */
 	@Override
 	public void setType(String type) {
@@ -1086,9 +1089,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the user ID of this remote app entry.
+	 * Sets the user ID of this client extension entry.
 	 *
-	 * @param userId the user ID of this remote app entry
+	 * @param userId the user ID of this client extension entry
 	 */
 	@Override
 	public void setUserId(long userId) {
@@ -1096,9 +1099,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the user name of this remote app entry.
+	 * Sets the user name of this client extension entry.
 	 *
-	 * @param userName the user name of this remote app entry
+	 * @param userName the user name of this client extension entry
 	 */
 	@Override
 	public void setUserName(String userName) {
@@ -1106,9 +1109,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the user uuid of this remote app entry.
+	 * Sets the user uuid of this client extension entry.
 	 *
-	 * @param userUuid the user uuid of this remote app entry
+	 * @param userUuid the user uuid of this client extension entry
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
@@ -1116,9 +1119,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	/**
-	 * Sets the uuid of this remote app entry.
+	 * Sets the uuid of this client extension entry.
 	 *
-	 * @param uuid the uuid of this remote app entry
+	 * @param uuid the uuid of this client extension entry
 	 */
 	@Override
 	public void setUuid(String uuid) {
@@ -1131,7 +1134,9 @@ public class ClientExtensionEntryWrapper
 	}
 
 	@Override
-	protected ClientExtensionEntryWrapper wrap(ClientExtensionEntry clientExtensionEntry) {
+	protected ClientExtensionEntryWrapper wrap(
+		ClientExtensionEntry clientExtensionEntry) {
+
 		return new ClientExtensionEntryWrapper(clientExtensionEntry);
 	}
 

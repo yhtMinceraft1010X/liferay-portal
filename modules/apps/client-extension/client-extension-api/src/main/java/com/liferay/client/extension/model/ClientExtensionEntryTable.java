@@ -29,32 +29,39 @@ import java.util.Date;
  * @see ClientExtensionEntry
  * @generated
  */
-public class ClientExtensionEntryTable extends BaseTable<ClientExtensionEntryTable> {
+public class ClientExtensionEntryTable
+	extends BaseTable<ClientExtensionEntryTable> {
 
 	public static final ClientExtensionEntryTable INSTANCE =
 		new ClientExtensionEntryTable();
 
-	public final Column<ClientExtensionEntryTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<ClientExtensionEntryTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ClientExtensionEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> externalReferenceCode =
-		createColumn(
+	public final Column<ClientExtensionEntryTable, String>
+		externalReferenceCode = createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Long> clientExtensionEntryId =
+	public final Column<ClientExtensionEntryTable, Long>
+		clientExtensionEntryId = createColumn(
+			"clientExtensionEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_PRIMARY);
+	public final Column<ClientExtensionEntryTable, Long> companyId =
 		createColumn(
-			"clientExtensionEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<ClientExtensionEntryTable, Long> companyId = createColumn(
-		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> userName = createColumn(
-		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> createDate = createColumn(
-		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> modifiedDate = createColumn(
-		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, String> userName =
+		createColumn(
+			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Date> createDate =
+		createColumn(
+			"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Date> modifiedDate =
+		createColumn(
+			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Clob> customElementCSSURLs =
 		createColumn(
 			"customElementCSSURLs", Clob.class, Types.CLOB,
@@ -66,18 +73,20 @@ public class ClientExtensionEntryTable extends BaseTable<ClientExtensionEntryTab
 	public final Column<ClientExtensionEntryTable, Clob> customElementURLs =
 		createColumn(
 			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Boolean> customElementUseESM =
-		createColumn(
+	public final Column<ClientExtensionEntryTable, Boolean>
+		customElementUseESM = createColumn(
 			"customElementUseESM", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> description = createColumn(
-		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Clob> description =
+		createColumn(
+			"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> friendlyURLMapping =
 		createColumn(
 			"friendlyURLMapping", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> iFrameURL = createColumn(
-		"iFrameURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, String> iFrameURL =
+		createColumn(
+			"iFrameURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Boolean> instanceable =
 		createColumn(
 			"instanceable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
@@ -87,15 +96,16 @@ public class ClientExtensionEntryTable extends BaseTable<ClientExtensionEntryTab
 		createColumn(
 			"portletCategoryName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> properties = createColumn(
-		"properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Clob> properties =
+		createColumn("properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> sourceCodeURL =
 		createColumn(
 			"sourceCodeURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Integer> status = createColumn(
-		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Integer> status =
+		createColumn(
+			"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryTable, Long> statusByUserId =
 		createColumn(
 			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -103,8 +113,9 @@ public class ClientExtensionEntryTable extends BaseTable<ClientExtensionEntryTab
 		createColumn(
 			"statusByUserName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> statusDate = createColumn(
-		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryTable, Date> statusDate =
+		createColumn(
+			"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private ClientExtensionEntryTable() {
 		super("ClientExtensionEntry", ClientExtensionEntryTable::new);

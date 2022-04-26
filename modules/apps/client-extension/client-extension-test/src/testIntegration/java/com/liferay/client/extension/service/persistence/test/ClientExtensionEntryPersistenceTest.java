@@ -81,7 +81,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<ClientExtensionEntry> iterator = _clientExtensionEntries.iterator();
+		Iterator<ClientExtensionEntry> iterator =
+			_clientExtensionEntries.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -103,12 +104,14 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		_persistence.remove(newClientExtensionEntry);
 
-		ClientExtensionEntry existingClientExtensionEntry = _persistence.fetchByPrimaryKey(
-			newClientExtensionEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry =
+			_persistence.fetchByPrimaryKey(
+				newClientExtensionEntry.getPrimaryKey());
 
 		Assert.assertNull(existingClientExtensionEntry);
 	}
@@ -147,14 +150,16 @@ public class ClientExtensionEntryPersistenceTest {
 		newClientExtensionEntry.setCustomElementHTMLElementName(
 			RandomTestUtil.randomString());
 
-		newClientExtensionEntry.setCustomElementURLs(RandomTestUtil.randomString());
+		newClientExtensionEntry.setCustomElementURLs(
+			RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setCustomElementUseESM(
 			RandomTestUtil.randomBoolean());
 
 		newClientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		newClientExtensionEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
+		newClientExtensionEntry.setFriendlyURLMapping(
+			RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
 
@@ -162,7 +167,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		newClientExtensionEntry.setName(RandomTestUtil.randomString());
 
-		newClientExtensionEntry.setPortletCategoryName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setPortletCategoryName(
+			RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setProperties(RandomTestUtil.randomString());
 
@@ -174,20 +180,24 @@ public class ClientExtensionEntryPersistenceTest {
 
 		newClientExtensionEntry.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newClientExtensionEntry.setStatusByUserName(RandomTestUtil.randomString());
+		newClientExtensionEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
 
 		newClientExtensionEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_clientExtensionEntries.add(_persistence.update(newClientExtensionEntry));
+		_clientExtensionEntries.add(
+			_persistence.update(newClientExtensionEntry));
 
-		ClientExtensionEntry existingClientExtensionEntry = _persistence.findByPrimaryKey(
-			newClientExtensionEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry =
+			_persistence.findByPrimaryKey(
+				newClientExtensionEntry.getPrimaryKey());
 
 		Assert.assertEquals(
 			existingClientExtensionEntry.getMvccVersion(),
 			newClientExtensionEntry.getMvccVersion());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getUuid(), newClientExtensionEntry.getUuid());
+			existingClientExtensionEntry.getUuid(),
+			newClientExtensionEntry.getUuid());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getExternalReferenceCode(),
 			newClientExtensionEntry.getExternalReferenceCode());
@@ -198,15 +208,18 @@ public class ClientExtensionEntryPersistenceTest {
 			existingClientExtensionEntry.getCompanyId(),
 			newClientExtensionEntry.getCompanyId());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getUserId(), newClientExtensionEntry.getUserId());
+			existingClientExtensionEntry.getUserId(),
+			newClientExtensionEntry.getUserId());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getUserName(),
 			newClientExtensionEntry.getUserName());
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingClientExtensionEntry.getCreateDate()),
+			Time.getShortTimestamp(
+				existingClientExtensionEntry.getCreateDate()),
 			Time.getShortTimestamp(newClientExtensionEntry.getCreateDate()));
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingClientExtensionEntry.getModifiedDate()),
+			Time.getShortTimestamp(
+				existingClientExtensionEntry.getModifiedDate()),
 			Time.getShortTimestamp(newClientExtensionEntry.getModifiedDate()));
 		Assert.assertEquals(
 			existingClientExtensionEntry.getCustomElementCSSURLs(),
@@ -233,7 +246,8 @@ public class ClientExtensionEntryPersistenceTest {
 			existingClientExtensionEntry.isInstanceable(),
 			newClientExtensionEntry.isInstanceable());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getName(), newClientExtensionEntry.getName());
+			existingClientExtensionEntry.getName(),
+			newClientExtensionEntry.getName());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getPortletCategoryName(),
 			newClientExtensionEntry.getPortletCategoryName());
@@ -244,9 +258,11 @@ public class ClientExtensionEntryPersistenceTest {
 			existingClientExtensionEntry.getSourceCodeURL(),
 			newClientExtensionEntry.getSourceCodeURL());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getType(), newClientExtensionEntry.getType());
+			existingClientExtensionEntry.getType(),
+			newClientExtensionEntry.getType());
 		Assert.assertEquals(
-			existingClientExtensionEntry.getStatus(), newClientExtensionEntry.getStatus());
+			existingClientExtensionEntry.getStatus(),
+			newClientExtensionEntry.getStatus());
 		Assert.assertEquals(
 			existingClientExtensionEntry.getStatusByUserId(),
 			newClientExtensionEntry.getStatusByUserId());
@@ -254,7 +270,8 @@ public class ClientExtensionEntryPersistenceTest {
 			existingClientExtensionEntry.getStatusByUserName(),
 			newClientExtensionEntry.getStatusByUserName());
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingClientExtensionEntry.getStatusDate()),
+			Time.getShortTimestamp(
+				existingClientExtensionEntry.getStatusDate()),
 			Time.getShortTimestamp(newClientExtensionEntry.getStatusDate()));
 	}
 
@@ -287,12 +304,15 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
-		ClientExtensionEntry existingClientExtensionEntry = _persistence.findByPrimaryKey(
-			newClientExtensionEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry =
+			_persistence.findByPrimaryKey(
+				newClientExtensionEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
+		Assert.assertEquals(
+			existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
 	@Test(expected = NoSuchClientExtensionEntryException.class)
@@ -323,20 +343,23 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
-		ClientExtensionEntry existingClientExtensionEntry = _persistence.fetchByPrimaryKey(
-			newClientExtensionEntry.getPrimaryKey());
+		ClientExtensionEntry existingClientExtensionEntry =
+			_persistence.fetchByPrimaryKey(
+				newClientExtensionEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
+		Assert.assertEquals(
+			existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ClientExtensionEntry missingClientExtensionEntry = _persistence.fetchByPrimaryKey(
-			pk);
+		ClientExtensionEntry missingClientExtensionEntry =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingClientExtensionEntry);
 	}
@@ -345,8 +368,10 @@ public class ClientExtensionEntryPersistenceTest {
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
 
-		ClientExtensionEntry newClientExtensionEntry1 = addClientExtensionEntry();
-		ClientExtensionEntry newClientExtensionEntry2 = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry1 =
+			addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry2 =
+			addClientExtensionEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -359,10 +384,12 @@ public class ClientExtensionEntryPersistenceTest {
 		Assert.assertEquals(2, clientExtensionEntries.size());
 		Assert.assertEquals(
 			newClientExtensionEntry1,
-			clientExtensionEntries.get(newClientExtensionEntry1.getPrimaryKey()));
+			clientExtensionEntries.get(
+				newClientExtensionEntry1.getPrimaryKey()));
 		Assert.assertEquals(
 			newClientExtensionEntry2,
-			clientExtensionEntries.get(newClientExtensionEntry2.getPrimaryKey()));
+			clientExtensionEntries.get(
+				newClientExtensionEntry2.getPrimaryKey()));
 	}
 
 	@Test
@@ -388,7 +415,8 @@ public class ClientExtensionEntryPersistenceTest {
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
 
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -403,7 +431,8 @@ public class ClientExtensionEntryPersistenceTest {
 		Assert.assertEquals(1, clientExtensionEntries.size());
 		Assert.assertEquals(
 			newClientExtensionEntry,
-			clientExtensionEntries.get(newClientExtensionEntry.getPrimaryKey()));
+			clientExtensionEntries.get(
+				newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -418,7 +447,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -430,7 +460,8 @@ public class ClientExtensionEntryPersistenceTest {
 		Assert.assertEquals(1, clientExtensionEntries.size());
 		Assert.assertEquals(
 			newClientExtensionEntry,
-			clientExtensionEntries.get(newClientExtensionEntry.getPrimaryKey()));
+			clientExtensionEntries.get(
+				newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -441,10 +472,13 @@ public class ClientExtensionEntryPersistenceTest {
 			ClientExtensionEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<ClientExtensionEntry>() {
+			new ActionableDynamicQuery.PerformActionMethod
+				<ClientExtensionEntry>() {
 
 				@Override
-				public void performAction(ClientExtensionEntry clientExtensionEntry) {
+				public void performAction(
+					ClientExtensionEntry clientExtensionEntry) {
+
 					Assert.assertNotNull(clientExtensionEntry);
 
 					count.increment();
@@ -459,14 +493,16 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			ClientExtensionEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"clientExtensionEntryId", newClientExtensionEntry.getClientExtensionEntryId()));
+				"clientExtensionEntryId",
+				newClientExtensionEntry.getClientExtensionEntryId()));
 
 		List<ClientExtensionEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -475,7 +511,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		ClientExtensionEntry existingClientExtensionEntry = result.get(0);
 
-		Assert.assertEquals(existingClientExtensionEntry, newClientExtensionEntry);
+		Assert.assertEquals(
+			existingClientExtensionEntry, newClientExtensionEntry);
 	}
 
 	@Test
@@ -495,7 +532,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionExisting() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			ClientExtensionEntry.class, _dynamicQueryClassLoader);
@@ -503,11 +541,13 @@ public class ClientExtensionEntryPersistenceTest {
 		dynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("clientExtensionEntryId"));
 
-		Object newClientExtensionEntryId = newClientExtensionEntry.getClientExtensionEntryId();
+		Object newClientExtensionEntryId =
+			newClientExtensionEntry.getClientExtensionEntryId();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"clientExtensionEntryId", new Object[] {newClientExtensionEntryId}));
+				"clientExtensionEntryId",
+				new Object[] {newClientExtensionEntryId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -515,7 +555,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		Object existingClientExtensionEntryId = result.get(0);
 
-		Assert.assertEquals(existingClientExtensionEntryId, newClientExtensionEntryId);
+		Assert.assertEquals(
+			existingClientExtensionEntryId, newClientExtensionEntryId);
 	}
 
 	@Test
@@ -528,7 +569,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"clientExtensionEntryId", new Object[] {RandomTestUtil.nextLong()}));
+				"clientExtensionEntryId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -537,12 +579,14 @@ public class ClientExtensionEntryPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		_persistence.clearCache();
 
 		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newClientExtensionEntry.getPrimaryKey()));
+			_persistence.findByPrimaryKey(
+				newClientExtensionEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -562,7 +606,8 @@ public class ClientExtensionEntryPersistenceTest {
 	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
 		throws Exception {
 
-		ClientExtensionEntry newClientExtensionEntry = addClientExtensionEntry();
+		ClientExtensionEntry newClientExtensionEntry =
+			addClientExtensionEntry();
 
 		if (clearSession) {
 			Session session = _persistence.openSession();
@@ -577,7 +622,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"clientExtensionEntryId", newClientExtensionEntry.getClientExtensionEntryId()));
+				"clientExtensionEntryId",
+				newClientExtensionEntry.getClientExtensionEntryId()));
 
 		List<ClientExtensionEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -585,7 +631,9 @@ public class ClientExtensionEntryPersistenceTest {
 		_assertOriginalValues(result.get(0));
 	}
 
-	private void _assertOriginalValues(ClientExtensionEntry clientExtensionEntry) {
+	private void _assertOriginalValues(
+		ClientExtensionEntry clientExtensionEntry) {
+
 		Assert.assertEquals(
 			Long.valueOf(clientExtensionEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
@@ -607,7 +655,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		clientExtensionEntry.setUuid(RandomTestUtil.randomString());
 
-		clientExtensionEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+		clientExtensionEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		clientExtensionEntry.setCompanyId(RandomTestUtil.nextLong());
 
@@ -619,18 +668,22 @@ public class ClientExtensionEntryPersistenceTest {
 
 		clientExtensionEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		clientExtensionEntry.setCustomElementCSSURLs(RandomTestUtil.randomString());
+		clientExtensionEntry.setCustomElementCSSURLs(
+			RandomTestUtil.randomString());
 
 		clientExtensionEntry.setCustomElementHTMLElementName(
 			RandomTestUtil.randomString());
 
-		clientExtensionEntry.setCustomElementURLs(RandomTestUtil.randomString());
+		clientExtensionEntry.setCustomElementURLs(
+			RandomTestUtil.randomString());
 
-		clientExtensionEntry.setCustomElementUseESM(RandomTestUtil.randomBoolean());
+		clientExtensionEntry.setCustomElementUseESM(
+			RandomTestUtil.randomBoolean());
 
 		clientExtensionEntry.setDescription(RandomTestUtil.randomString());
 
-		clientExtensionEntry.setFriendlyURLMapping(RandomTestUtil.randomString());
+		clientExtensionEntry.setFriendlyURLMapping(
+			RandomTestUtil.randomString());
 
 		clientExtensionEntry.setIFrameURL(RandomTestUtil.randomString());
 
@@ -638,7 +691,8 @@ public class ClientExtensionEntryPersistenceTest {
 
 		clientExtensionEntry.setName(RandomTestUtil.randomString());
 
-		clientExtensionEntry.setPortletCategoryName(RandomTestUtil.randomString());
+		clientExtensionEntry.setPortletCategoryName(
+			RandomTestUtil.randomString());
 
 		clientExtensionEntry.setProperties(RandomTestUtil.randomString());
 

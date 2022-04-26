@@ -49,7 +49,8 @@ public class ClientExtensionEntryCacheModel
 		ClientExtensionEntryCacheModel clientExtensionEntryCacheModel =
 			(ClientExtensionEntryCacheModel)object;
 
-		if ((clientExtensionEntryId == clientExtensionEntryCacheModel.clientExtensionEntryId) &&
+		if ((clientExtensionEntryId ==
+				clientExtensionEntryCacheModel.clientExtensionEntryId) &&
 			(mvccVersion == clientExtensionEntryCacheModel.mvccVersion)) {
 
 			return true;
@@ -138,7 +139,8 @@ public class ClientExtensionEntryCacheModel
 
 	@Override
 	public ClientExtensionEntry toEntityModel() {
-		ClientExtensionEntryImpl clientExtensionEntryImpl = new ClientExtensionEntryImpl();
+		ClientExtensionEntryImpl clientExtensionEntryImpl =
+			new ClientExtensionEntryImpl();
 
 		clientExtensionEntryImpl.setMvccVersion(mvccVersion);
 
@@ -153,10 +155,12 @@ public class ClientExtensionEntryCacheModel
 			clientExtensionEntryImpl.setExternalReferenceCode("");
 		}
 		else {
-			clientExtensionEntryImpl.setExternalReferenceCode(externalReferenceCode);
+			clientExtensionEntryImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
-		clientExtensionEntryImpl.setClientExtensionEntryId(clientExtensionEntryId);
+		clientExtensionEntryImpl.setClientExtensionEntryId(
+			clientExtensionEntryId);
 		clientExtensionEntryImpl.setCompanyId(companyId);
 		clientExtensionEntryImpl.setUserId(userId);
 
@@ -185,7 +189,8 @@ public class ClientExtensionEntryCacheModel
 			clientExtensionEntryImpl.setCustomElementCSSURLs("");
 		}
 		else {
-			clientExtensionEntryImpl.setCustomElementCSSURLs(customElementCSSURLs);
+			clientExtensionEntryImpl.setCustomElementCSSURLs(
+				customElementCSSURLs);
 		}
 
 		if (customElementHTMLElementName == null) {
@@ -239,7 +244,8 @@ public class ClientExtensionEntryCacheModel
 			clientExtensionEntryImpl.setPortletCategoryName("");
 		}
 		else {
-			clientExtensionEntryImpl.setPortletCategoryName(portletCategoryName);
+			clientExtensionEntryImpl.setPortletCategoryName(
+				portletCategoryName);
 		}
 
 		if (properties == null) {
