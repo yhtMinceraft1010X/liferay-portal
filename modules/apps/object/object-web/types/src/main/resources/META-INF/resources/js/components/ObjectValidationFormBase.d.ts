@@ -17,7 +17,6 @@ import {FormError} from '../hooks/useForm';
 export default function ObjectValidationFormBase({
 	children,
 	disabled,
-	handleChange,
 	objectValidationTypes,
 	setValues,
 	values,
