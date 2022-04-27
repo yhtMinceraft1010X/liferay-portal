@@ -50,9 +50,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class RemoteAppEntryPortlet extends MVCPortlet {
+public class ClientExtensionEntryPortlet extends MVCPortlet {
 
-	public RemoteAppEntryPortlet(
+	public ClientExtensionEntryPortlet(
 		NPMResolver npmResolver, ClientExtensionEntry clientExtensionEntry) {
 
 		_npmResolver = npmResolver;
@@ -188,7 +188,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
 		outputData.setDataSB(
-			RemoteAppEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
+			ClientExtensionEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
 			new StringBundler(stringBuffer.toString()));
 
 		PrintWriter printWriter = renderResponse.getWriter();
@@ -212,7 +212,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteAppEntryPortlet.class);
+		ClientExtensionEntryPortlet.class);
 
 	private final ClientExtensionEntry _clientExtensionEntry;
 	private final NPMResolver _npmResolver;

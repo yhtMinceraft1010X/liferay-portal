@@ -16,9 +16,9 @@ package com.liferay.client.extension.web.internal.portlet.action;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryService;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
-import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
+import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
+import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,12 +36,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/remote_app_admin/edit_remote_app_entry"
+		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
+		"mvc.command.name=/client_extension_admin/edit_client_extension_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
+public class EditClientExtensionEntryMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -50,11 +51,12 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			renderRequest.setAttribute(
-				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
-				new EditRemoteAppEntryDisplayContext(
+				ClientExtensionAdminWebKeys.
+					EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
+				new EditClientExtensionEntryDisplayContext(
 					renderRequest, _getClientExtensionEntry(renderRequest)));
 
-			return "/admin/edit_remote_app_entry.jsp";
+			return "/admin/edit_client_extension_entry.jsp";
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

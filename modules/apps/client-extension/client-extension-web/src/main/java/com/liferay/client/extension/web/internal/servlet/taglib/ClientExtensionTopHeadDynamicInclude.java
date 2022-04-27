@@ -40,9 +40,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	immediate = true,
-	service = {DynamicInclude.class, RemoteAppTopHeadDynamicInclude.class}
+	service = {ClientExtensionTopHeadDynamicInclude.class, DynamicInclude.class}
 )
-public class RemoteAppTopHeadDynamicInclude extends BaseDynamicInclude {
+public class ClientExtensionTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(

@@ -24,9 +24,9 @@ import java.util.Locale;
 /**
  * @author Bruno Basto
  */
-public class RemoteAppFDSEntry {
+public class ClientExtensionFDSEntry {
 
-	public RemoteAppFDSEntry(
+	public ClientExtensionFDSEntry(
 		ClientExtensionEntry clientExtensionEntry, Locale locale) {
 
 		_clientExtensionEntry = clientExtensionEntry;

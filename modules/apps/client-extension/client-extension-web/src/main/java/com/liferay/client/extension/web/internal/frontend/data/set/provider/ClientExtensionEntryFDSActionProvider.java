@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.provider;
 
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames;
-import com.liferay.client.extension.web.internal.frontend.data.set.model.RemoteAppFDSEntry;
+import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames;
+import com.liferay.client.extension.web.internal.frontend.data.set.model.ClientExtensionFDSEntry;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -47,39 +47,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "fds.data.provider.key=" + RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES,
+	property = "fds.data.provider.key=" + ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES,
 	service = FDSActionProvider.class
 )
-public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
+public class ClientExtensionEntryFDSActionProvider
+	implements FDSActionProvider {
 
 	@Override
 	public List<DropdownItem> getDropdownItems(
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		RemoteAppFDSEntry remoteAppFDSEntry = (RemoteAppFDSEntry)model;
+		ClientExtensionFDSEntry clientExtensionFDSEntry =
+			(ClientExtensionFDSEntry)model;
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> _buildEditClientExtensionEntryAction(
-				dropdownItem, httpServletRequest, remoteAppFDSEntry)
+				dropdownItem, httpServletRequest, clientExtensionFDSEntry)
 		).add(
 			dropdownItem -> _buildDeleteClientExtensionEntryAction(
-				dropdownItem, httpServletRequest, remoteAppFDSEntry)
+				dropdownItem, httpServletRequest, clientExtensionFDSEntry)
 		).build();
 	}
 
 	private void _buildDeleteClientExtensionEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
-		RemoteAppFDSEntry remoteAppFDSEntry) {
+		ClientExtensionFDSEntry clientExtensionFDSEntry) {
 
 		dropdownItem.setHref(
 			PortletURLBuilder.create(
 				_getActionURL(httpServletRequest)
 			).setActionName(
-				"/remote_app_admin/delete_remote_app_entry"
+				"/client_extension_admin/delete_client_extension_entry"
 			).setParameter(
 				"clientExtensionEntryId",
-				remoteAppFDSEntry.getClientExtensionEntryId()
+				clientExtensionFDSEntry.getClientExtensionEntryId()
 			).buildString());
 
 		dropdownItem.setIcon("times-circle");
@@ -88,15 +90,15 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 
 	private void _buildEditClientExtensionEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
-		RemoteAppFDSEntry remoteAppFDSEntry) {
+		ClientExtensionFDSEntry clientExtensionFDSEntry) {
 
 		PortletURL editClientExtensionEntryURL = PortletURLBuilder.create(
 			_getRenderURL(httpServletRequest)
 		).setMVCRenderCommandName(
-			"/remote_app_admin/edit_remote_app_entry"
+			"/client_extension_admin/edit_client_extension_entry"
 		).setParameter(
 			"clientExtensionEntryId",
-			remoteAppFDSEntry.getClientExtensionEntryId()
+			clientExtensionFDSEntry.getClientExtensionEntryId()
 		).buildPortletURL();
 
 		String currentURL = ParamUtil.getString(

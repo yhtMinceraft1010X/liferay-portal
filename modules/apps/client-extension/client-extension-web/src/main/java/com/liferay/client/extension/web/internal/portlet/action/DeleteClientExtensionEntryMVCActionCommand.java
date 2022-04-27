@@ -15,7 +15,7 @@
 package com.liferay.client.extension.web.internal.portlet.action;
 
 import com.liferay.client.extension.service.ClientExtensionEntryService;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,12 +33,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/remote_app_admin/delete_remote_app_entry"
+		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
+		"mvc.command.name=/client_extension_admin/delete_client_extension_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteClientExtensionEntryMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
