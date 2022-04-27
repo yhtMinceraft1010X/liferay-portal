@@ -47,12 +47,12 @@ public class FragmentConstants {
 			return TYPE_COMPONENT;
 		}
 
-		if (Objects.equals(TYPE_REACT_LABEL, label)) {
-			return TYPE_REACT;
-		}
-
 		if (Objects.equals(TYPE_INPUT_LABEL, label)) {
 			return TYPE_INPUT;
+		}
+
+		if (Objects.equals(TYPE_REACT_LABEL, label)) {
+			return TYPE_REACT;
 		}
 
 		return TYPE_SECTION;
@@ -63,12 +63,12 @@ public class FragmentConstants {
 			return TYPE_COMPONENT_LABEL;
 		}
 
-		if (type == TYPE_REACT) {
-			return TYPE_REACT_LABEL;
-		}
-
 		if (type == TYPE_INPUT) {
 			return TYPE_INPUT_LABEL;
+		}
+
+		if (type == TYPE_REACT) {
+			return TYPE_REACT_LABEL;
 		}
 
 		return TYPE_SECTION_LABEL;
