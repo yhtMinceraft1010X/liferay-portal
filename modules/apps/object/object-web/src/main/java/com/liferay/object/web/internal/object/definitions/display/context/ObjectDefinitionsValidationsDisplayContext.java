@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -133,8 +134,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 			).build()
 		).put(
 			"objectValidationRuleElements",
-			_createObjectValidationRuleElements(
-				objectValidationRule.getEngine())
+			_getObjectValidationRuleElements(objectValidationRule.getEngine())
 		).put(
 			"objectValidationRuleEngines", getObjectValidationRuleEngines()
 		).put(
@@ -261,12 +261,13 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).build();
 	}
 
-	private List<Map<String, Object>> _createObjectValidationRuleElements(
+	private List<Map<String, Object>> _getObjectValidationRuleElements(
 		String engine) {
 
 		List<Map<String, Object>> elements = new ArrayList<>();
 
-		elements.add(
+		Collections.addAll(
+			elements,
 			_createObjectValidationRuleElement(
 				ListUtil.toList(
 					ObjectFieldLocalServiceUtil.getObjectFields(
@@ -281,12 +282,12 @@ public class ObjectDefinitionsValidationsDisplayContext
 				"fields"));
 
 		if (engine.equals("ddm")) {
-			elements.add(
+			Collections.addAll(
+				elements,
 				_createObjectValidationRuleElement(
 					DDMExpressionOperator.getValues(
 						objectRequestHelper.getLocale()),
-					"operators"));
-			elements.add(
+					"operators"),
 				_createObjectValidationRuleElement(
 					DDMExpressionFunction.getValues(
 						objectRequestHelper.getLocale()),
