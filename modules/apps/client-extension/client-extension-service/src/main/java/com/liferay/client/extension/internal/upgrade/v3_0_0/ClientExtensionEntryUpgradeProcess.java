@@ -27,8 +27,6 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_updateResourcePermissions();
 
-		// TODO Update portlet IDs
-
 		// TODO Copy RemoteAppEntry
 
 		runSQL("drop table RemoteAppEntry");
