@@ -271,11 +271,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 				ListUtil.toList(
 					ObjectFieldLocalServiceUtil.getObjectFields(
 						getObjectDefinitionId()),
-					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
+					field -> HashMapBuilder.put(
+						"content", field.getName()
 					).put(
-						"label",
-						objectField.getLabel(objectRequestHelper.getLocale())
+						"label", field.getLabel(objectRequestHelper.getLocale())
 					).put(
 						"tooltip", StringPool.BLANK
 					).build()),
