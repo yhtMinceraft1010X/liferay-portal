@@ -1522,6 +1522,10 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 		var key_index = "${index}";
 
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+		}
+
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
@@ -1533,6 +1537,10 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "${fragmentName}",
 				index = "${index}");
+		}
+
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame(value1 = "relative=top");
 		}
 
 		AssertVisible(
@@ -1594,7 +1602,7 @@ definition {
 				Button.clickApply();
 			}
 		}
-		else {
+		else if (!(isSet(deviceType)) || ("${deviceType}" == "Desktop")) {
 			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
 					key_fieldLabel = "Collection",
