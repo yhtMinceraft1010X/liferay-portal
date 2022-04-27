@@ -262,10 +262,12 @@ public class CookiesManagerImpl implements CookiesManager {
 		return domain;
 	}
 
+	@Override
 	public String[] getOptionalCookieNames() {
 		return _OPTIONAL_COOKIE_NAMES;
 	}
 
+	@Override
 	public String[] getRequiredCookieNames() {
 		return _REQUIRED_COOKIE_NAMES;
 	}
