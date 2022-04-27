@@ -35,7 +35,9 @@ import javax.portlet.WindowState;
 public class RemoteAppEntryFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper {
 
-	public RemoteAppEntryFriendlyURLMapper(ClientExtensionEntry clientExtensionEntry) {
+	public RemoteAppEntryFriendlyURLMapper(
+		ClientExtensionEntry clientExtensionEntry) {
+
 		_mapping = clientExtensionEntry.getFriendlyURLMapping();
 
 		Router router = new RouterImpl();

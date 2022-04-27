@@ -48,7 +48,8 @@ public class DeleteRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		long clientExtensionEntryId = ParamUtil.getLong(
 			actionRequest, "clientExtensionEntryId");
 
-		_clientExtensionEntryService.deleteClientExtensionEntry(clientExtensionEntryId);
+		_clientExtensionEntryService.deleteClientExtensionEntry(
+			clientExtensionEntryId);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
