@@ -107,7 +107,6 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	protected void activate(Map<String, Object> properties) {
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
-
 		_lastModified = String.valueOf(System.currentTimeMillis());
 	}
 
