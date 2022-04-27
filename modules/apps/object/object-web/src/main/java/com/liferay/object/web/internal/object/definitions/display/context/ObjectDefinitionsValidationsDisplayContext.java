@@ -108,7 +108,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		);
 	}
 
-	public Map<String, Object> getProps(
+	public HashMap<String, Object> getProps(
 			ObjectValidationRule objectValidationRule)
 		throws PortalException {
 
@@ -171,21 +171,21 @@ public class ObjectDefinitionsValidationsDisplayContext
 		SUM("sum(parameter)", "sum");
 
 		public static List<HashMap<String, String>> getValues(Locale locale) {
-			List<HashMap<String, String>> values = new ArrayList<>();
+			List<HashMap<String, String>> ddmExpressionFunctions =
+				new ArrayList<>();
 
-			for (DDMExpressionFunction ddmExpressionFunction : values()) {
-				values.add(
+			for (DDMExpressionFunction functionItem : values()) {
+				ddmExpressionFunctions.add(
 					HashMapBuilder.put(
-						"content", ddmExpressionFunction._content
+						"content", functionItem._content
 					).put(
-						"label",
-						LanguageUtil.get(locale, ddmExpressionFunction._key)
+						"label", LanguageUtil.get(locale, functionItem._key)
 					).put(
 						"tooltip", StringPool.BLANK
 					).build());
 			}
 
-			return values;
+			return ddmExpressionFunctions;
 		}
 
 		private DDMExpressionFunction(String content, String key) {
@@ -206,21 +206,21 @@ public class ObjectDefinitionsValidationsDisplayContext
 		TIMES("field_name * field_name2", "times");
 
 		public static List<HashMap<String, String>> getValues(Locale locale) {
-			List<HashMap<String, String>> values = new ArrayList<>();
+			List<HashMap<String, String>> ddmExpressionOperators =
+				new ArrayList<>();
 
-			for (DDMExpressionOperator ddmExpressionOperator : values()) {
-				values.add(
+			for (DDMExpressionOperator operatorItem : values()) {
+				ddmExpressionOperators.add(
 					HashMapBuilder.put(
-						"content", ddmExpressionOperator._content
+						"content", operatorItem._content
 					).put(
-						"label",
-						LanguageUtil.get(locale, ddmExpressionOperator._key)
+						"label", LanguageUtil.get(locale, operatorItem._key)
 					).put(
 						"tooltip", StringPool.BLANK
 					).build());
 			}
 
-			return values;
+			return ddmExpressionOperators;
 		}
 
 		private DDMExpressionOperator(String content, String key) {
@@ -251,7 +251,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		};
 	}
 
-	private Map<String, Object> _createObjectValidationRuleElement(
+	private HashMap<String, Object> _createObjectValidationRuleElement(
 		List<HashMap<String, String>> items, String key) {
 
 		return HashMapBuilder.<String, Object>put(
@@ -261,10 +261,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).build();
 	}
 
-	private List<Map<String, Object>> _getObjectValidationRuleElements(
+	private List<HashMap<String, Object>> _getObjectValidationRuleElements(
 		String engine) {
 
-		List<Map<String, Object>> elements = new ArrayList<>();
+		List<HashMap<String, Object>> elements = new ArrayList<>();
 
 		Collections.addAll(
 			elements,
