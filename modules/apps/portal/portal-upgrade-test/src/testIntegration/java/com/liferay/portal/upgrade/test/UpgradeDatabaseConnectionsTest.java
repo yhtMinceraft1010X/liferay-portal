@@ -59,7 +59,7 @@ public class UpgradeDatabaseConnectionsTest {
 				"database.partition.thread.pool.enabled", "true"
 			).build());
 
-		UpgradeProcess upgradeProcess = new VerifiableDummyUpgradeProcess();
+		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
 
 		upgradeProcess.upgrade();
 	}
@@ -75,12 +75,12 @@ public class UpgradeDatabaseConnectionsTest {
 				"database.partition.thread.pool.enabled", "true"
 			).build());
 
-		UpgradeProcess upgradeProcess = new VerifiableDummyUpgradeProcess();
+		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
 
 		upgradeProcess.upgrade();
 	}
 
-	private class VerifiableDummyUpgradeProcess extends DummyUpgradeProcess {
+	private class AssertConnectionUpgradeProcess extends DummyUpgradeProcess {
 
 		@Override
 		protected void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
