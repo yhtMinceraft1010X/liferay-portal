@@ -89,7 +89,7 @@ definition {
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeployRaylifeAP {
 		property osgi.app.includes = "gogo-shell";
-		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeploy";
+		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeployRaylifeAP";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
@@ -134,7 +134,7 @@ definition {
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeployRaylifeD2C {
 		property osgi.app.includes = "gogo-shell";
-		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeploy";
+		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeployRaylifeD2C";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
