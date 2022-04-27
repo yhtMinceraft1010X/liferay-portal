@@ -18,9 +18,6 @@
 
 <%
 CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest, renderResponse);
-
-String[] optionalCookieNames = cookiesBannerConfigurationDisplayContext.getOptionalCookieNames();
-String[] requiredCookieNames = cookiesBannerConfigurationDisplayContext.getRequiredCookieNames();
 %>
 
 <clay:container-fluid
@@ -42,7 +39,7 @@ String[] requiredCookieNames = cookiesBannerConfigurationDisplayContext.getRequi
 		>
 
 			<%
-			for (String requiredCookieName : requiredCookieNames) {
+			for (String requiredCookieName : cookiesBannerConfigurationDisplayContext.getRequiredCookieNames()) {
 			%>
 
 				<clay:content-row
@@ -69,7 +66,7 @@ String[] requiredCookieNames = cookiesBannerConfigurationDisplayContext.getRequi
 			<%
 			}
 
-			for (String optionalCookieName : optionalCookieNames) {
+			for (String optionalCookieName : cookiesBannerConfigurationDisplayContext.getOptionalCookieNames()) {
 			%>
 
 				<clay:content-row
@@ -151,9 +148,9 @@ String[] requiredCookieNames = cookiesBannerConfigurationDisplayContext.getRequi
 	componentId="CookiesBannerConfiguration"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"optionalCookieNames", optionalCookieNames
+			"optionalCookieNames", cookiesBannerConfigurationDisplayContext.getOptionalCookieNames()
 		).put(
-			"requiredCookieNames", requiredCookieNames
+			"requiredCookieNames", cookiesBannerConfigurationDisplayContext.getRequiredCookieNames()
 		).put(
 			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
 		).build()
