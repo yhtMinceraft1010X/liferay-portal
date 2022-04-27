@@ -85,28 +85,6 @@ public class ObjectDefinitionsValidationsDisplayContext
 				"delete", "delete", "async"));
 	}
 
-	public List<Map<String, String>> getObjectValidationRuleEngines() {
-		return Stream.of(
-			_objectValidationRuleEngineServicesTracker.
-				getObjectValidationRuleEngines()
-		).flatMap(
-			List::stream
-		).map(
-			objectValidationRuleEngine -> HashMapBuilder.put(
-				"label",
-				LanguageUtil.get(
-					objectRequestHelper.getLocale(),
-					objectValidationRuleEngine.getName())
-			).put(
-				"name", objectValidationRuleEngine.getName()
-			).build()
-		).sorted(
-			Comparator.comparing(item -> item.get("label"))
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	public Map<String, Object> getProps(
 			ObjectValidationRule objectValidationRule)
 		throws PortalException {
@@ -136,7 +114,26 @@ public class ObjectDefinitionsValidationsDisplayContext
 			_createObjectValidationRuleElements(
 				objectValidationRule.getEngine())
 		).put(
-			"objectValidationRuleEngines", getObjectValidationRuleEngines()
+			"objectValidationRuleEngines",
+			Stream.of(
+				_objectValidationRuleEngineServicesTracker.
+					getObjectValidationRuleEngines()
+			).flatMap(
+				List::stream
+			).map(
+				objectValidationRuleEngine -> HashMapBuilder.put(
+					"label",
+					LanguageUtil.get(
+						objectRequestHelper.getLocale(),
+						objectValidationRuleEngine.getName())
+				).put(
+					"name", objectValidationRuleEngine.getName()
+				).build()
+			).sorted(
+				Comparator.comparing(item -> item.get("label"))
+			).collect(
+				Collectors.toList()
+			)
 		).put(
 			"readOnly", !hasUpdateObjectDefinitionPermission()
 		).build();
