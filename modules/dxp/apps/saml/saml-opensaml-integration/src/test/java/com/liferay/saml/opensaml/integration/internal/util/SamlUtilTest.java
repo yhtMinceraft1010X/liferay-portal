@@ -99,7 +99,7 @@ public class SamlUtilTest extends BaseSamlTestCase {
 
 		Assert.assertArrayEquals(
 			"Attribute which is explicitly mapped should not be implicitly " +
-				"mapped also",
+				"mapped",
 			new String[] {"attribute2Value"}, serializables.toArray());
 
 		Assert.assertEquals(

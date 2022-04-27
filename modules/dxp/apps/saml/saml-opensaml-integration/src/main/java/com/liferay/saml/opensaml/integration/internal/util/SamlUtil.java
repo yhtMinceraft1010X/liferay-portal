@@ -103,6 +103,8 @@ public class SamlUtil {
 		Map<String, List<Serializable>> attributesMap = new HashMap<>();
 
 		for (Attribute attribute : attributes) {
+			boolean implicitMapping = false;
+
 			String key = attributeMappingsProperties.getProperty(
 				attribute.getName());
 
@@ -112,8 +114,6 @@ public class SamlUtil {
 				key = attributeMappingsProperties.getProperty(
 					attribute.getFriendlyName());
 			}
-
-			boolean implicitMapping = false;
 
 			if (Validator.isNull(key)) {
 				if (attributeMappingsProperties.containsKey(
