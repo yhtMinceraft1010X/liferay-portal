@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.upgrade.v1_0_1;
+package com.liferay.client.extension.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Iván Zaera
  */
-public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class ClientExtensionServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		if (hasColumn("RemoteAppEntry", "url")) {
-			alterColumnType("RemoteAppEntry", "url", "VARCHAR(1024) null");
-		}
+	public void register(Registry registry) {
 	}
 
 }

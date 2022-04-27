@@ -33,8 +33,31 @@ import java.sql.Statement;
 public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	protected void doUpgrade() {
-		_insertResourcePermissions();
+	protected void doUpgrade() throws Exception {
+		if (hasTable("RemoteAppEntry") && !_hasResourcePermissions()) {
+			_insertResourcePermissions();
+		}
+	}
+
+	private boolean _hasResourcePermissions() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) from ResourcePermission where name = ?")) {
+
+			preparedStatement.setString(
+				1, "com.liferay.remote.app.model.RemoteAppEntry");
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int count = resultSet.getInt(1);
+
+					if (count > 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
 	}
 
 	private void _insertResourcePermissions() {

@@ -14,56 +14,63 @@
 
 package com.liferay.client.extension.internal.upgrade;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.sql.Connection;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class RemoteAppServiceUpgrade implements UpgradeStepRegistrator {
+@Component(
+	enabled = true, immediate = true, service = UpgradeStepRegistrator.class
+)
+public class ClientExtensionInitialUpgradeStepRegistrator
+	implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		if (true) {
+
+		// TODO Remove suppression in source-formatter-suppressions.xml
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			if (!dbInspector.hasTable("RemoteAppEntry")) {
+				return;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
 			return;
 		}
 
-		registry.register(
-			"1.0.0", "1.0.1",
+		registry.registerInitialUpgradeSteps(
 			new com.liferay.client.extension.internal.upgrade.v1_0_1.
-				RemoteAppEntryUpgradeProcess());
-
-		registry.register(
-			"1.0.1", "2.0.0",
+				RemoteAppEntryUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_0_0.
-				RemoteAppEntryUpgradeProcess());
-
-		registry.register(
-			"2.0.0", "2.1.0",
+				RemoteAppEntryUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_1_0.
-				ResourcePermissionsUpgradeProcess());
-
-		registry.register(
-			"2.1.0", "2.2.0",
+				ResourcePermissionsUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_2_0.
-				RemoteAppEntryUpgradeProcess());
-
-		registry.register(
-			"2.2.0", "2.3.0",
+				RemoteAppEntryUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_3_0.
-				RemoteAppEntryUpgradeProcess());
-
-		registry.register(
-			"2.3.0", "2.4.0",
+				RemoteAppEntryUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_4_0.
-				RemoteAppEntryUpgradeProcess());
-
-		registry.register(
-			"2.4.0", "2.5.0",
+				RemoteAppEntryUpgradeProcess(),
 			new com.liferay.client.extension.internal.upgrade.v2_5_0.
-				RemoteAppEntryUpgradeProcess());
+				RemoteAppEntryUpgradeProcess(),
+			new com.liferay.client.extension.internal.upgrade.v3_0_0.
+				ClientExtensionEntryUpgradeProcess());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClientExtensionInitialUpgradeStepRegistrator.class);
 
 }
