@@ -74,8 +74,6 @@
 	title="Warning"
 />
 
-<%-- Sample React Module --%>
-
 <div>
 	<react:component
 		module="js/ClaySampleToastAlert"
