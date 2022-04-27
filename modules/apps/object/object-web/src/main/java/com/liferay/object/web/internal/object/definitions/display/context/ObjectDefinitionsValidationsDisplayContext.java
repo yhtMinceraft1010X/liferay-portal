@@ -170,7 +170,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 			"range"),
 		SUM("sum(parameter)", "sum");
 
-		public static List<HashMap<String, String>> getItems(Locale locale) {
+		public static List<HashMap<String, String>> getValues(Locale locale) {
 			List<HashMap<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
@@ -205,7 +205,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		PLUS("field_name + field_name2", "plus"),
 		TIMES("field_name * field_name2", "times");
 
-		public static List<HashMap<String, String>> getItems(Locale locale) {
+		public static List<HashMap<String, String>> getValues(Locale locale) {
 			List<HashMap<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionOperator ddmExpressionOperator : values()) {
@@ -283,12 +283,12 @@ public class ObjectDefinitionsValidationsDisplayContext
 		if (engine.equals("ddm")) {
 			elements.add(
 				_createObjectValidationRuleElement(
-					DDMExpressionOperator.getItems(
+					DDMExpressionOperator.getValues(
 						objectRequestHelper.getLocale()),
 					"operators"));
 			elements.add(
 				_createObjectValidationRuleElement(
-					DDMExpressionFunction.getItems(
+					DDMExpressionFunction.getValues(
 						objectRequestHelper.getLocale()),
 					"functions"));
 		}
