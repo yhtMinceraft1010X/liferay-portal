@@ -139,73 +139,6 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).build();
 	}
 
-	@Override
-	protected String getAPIURI() {
-		return "/object-validation-rules";
-	}
-
-	@Override
-	protected UnsafeConsumer<DropdownItem, Exception>
-		getCreationMenuDropdownItemUnsafeConsumer() {
-
-		return dropdownItem -> {
-			dropdownItem.setHref("addObjectValidation");
-			dropdownItem.setLabel(
-				LanguageUtil.get(
-					objectRequestHelper.getRequest(), "add-object-validation"));
-			dropdownItem.setTarget("event");
-		};
-	}
-
-	private Map<String, Object> _createObjectValidationRuleElement(
-		List<HashMap<String, String>> items, String key) {
-
-		return HashMapBuilder.<String, Object>put(
-			"items", items
-		).put(
-			"label", LanguageUtil.get(objectRequestHelper.getLocale(), key)
-		).build();
-	}
-
-	private List<Map<String, Object>> _createObjectValidationRuleElements(
-		String engine) {
-
-		List<Map<String, Object>> elements = new ArrayList<>();
-
-		elements.add(
-			_createObjectValidationRuleElement(
-				ListUtil.toList(
-					ObjectFieldLocalServiceUtil.getObjectFields(
-						getObjectDefinitionId()),
-					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
-					).put(
-						"label",
-						objectField.getLabel(objectRequestHelper.getLocale())
-					).put(
-						"tooltip", StringPool.BLANK
-					).build()),
-				"fields"));
-
-		if (engine.equals("ddm")) {
-			elements.add(
-				_createObjectValidationRuleElement(
-					DDMExpressionOperator.getItems(
-						objectRequestHelper.getLocale()),
-					"operators"));
-			elements.add(
-				_createObjectValidationRuleElement(
-					DDMExpressionFunction.getItems(
-						objectRequestHelper.getLocale()),
-					"functions"));
-		}
-
-		return elements;
-	}
-
-	private final ObjectValidationRuleEngineServicesTracker
-		_objectValidationRuleEngineServicesTracker;
-
 	private enum DDMExpressionFunction {
 
 		CONCAT("concat(parameters)", "concat"),
@@ -296,5 +229,72 @@ public class ObjectDefinitionsValidationsDisplayContext
 		private String _key;
 
 	}
+
+	@Override
+	protected String getAPIURI() {
+		return "/object-validation-rules";
+	}
+
+	@Override
+	protected UnsafeConsumer<DropdownItem, Exception>
+		getCreationMenuDropdownItemUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref("addObjectValidation");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(), "add-object-validation"));
+			dropdownItem.setTarget("event");
+		};
+	}
+
+	private Map<String, Object> _createObjectValidationRuleElement(
+		List<HashMap<String, String>> items, String key) {
+
+		return HashMapBuilder.<String, Object>put(
+			"items", items
+		).put(
+			"label", LanguageUtil.get(objectRequestHelper.getLocale(), key)
+		).build();
+	}
+
+	private List<Map<String, Object>> _createObjectValidationRuleElements(
+		String engine) {
+
+		List<Map<String, Object>> elements = new ArrayList<>();
+
+		elements.add(
+			_createObjectValidationRuleElement(
+				ListUtil.toList(
+					ObjectFieldLocalServiceUtil.getObjectFields(
+						getObjectDefinitionId()),
+					objectField -> HashMapBuilder.put(
+						"content", objectField.getName()
+					).put(
+						"label",
+						objectField.getLabel(objectRequestHelper.getLocale())
+					).put(
+						"tooltip", StringPool.BLANK
+					).build()),
+				"fields"));
+
+		if (engine.equals("ddm")) {
+			elements.add(
+				_createObjectValidationRuleElement(
+					DDMExpressionOperator.getItems(
+						objectRequestHelper.getLocale()),
+					"operators"));
+			elements.add(
+				_createObjectValidationRuleElement(
+					DDMExpressionFunction.getItems(
+						objectRequestHelper.getLocale()),
+					"functions"));
+		}
+
+		return elements;
+	}
+
+	private final ObjectValidationRuleEngineServicesTracker
+		_objectValidationRuleEngineServicesTracker;
 
 }
