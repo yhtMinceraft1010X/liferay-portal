@@ -139,7 +139,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).build();
 	}
 
-	private enum DDMExpressionFunction {
+	public enum DDMExpressionFunction {
 
 		CONCAT("concat(parameters)", "concat"),
 		CONTAINS("contains(field_name, parameter)", "contains"),
@@ -195,7 +195,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 	}
 
-	private enum DDMExpressionOperator {
+	public enum DDMExpressionOperator {
 
 		AND("AND", "and"), DIVIDED_BY("field_name / field_name2", "divided-by"),
 		MINUS("field_name - field_name2", "minus"), OR("OR", "or"),
