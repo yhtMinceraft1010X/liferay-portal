@@ -92,16 +92,14 @@ public class UpgradeDatabaseConnectionsTest {
 					PropsUtil.get("database.partition.thread.pool.enabled"),
 					true)) {
 
-				Assert.assertNotSame(
-					_captureRealConnection(), _captureRealConnection());
+				Assert.assertNotSame(_getConnection(), _getConnection());
 			}
 			else {
-				Assert.assertSame(
-					_captureRealConnection(), _captureRealConnection());
+				Assert.assertSame(_getConnection(), _getConnection());
 			}
 		}
 
-		private Connection _captureRealConnection() throws Exception {
+		private Connection _getConnection() throws Exception {
 			FutureTask<Connection> futureTask = new FutureTask<>(
 				() -> {
 					DatabaseMetaData databaseMetaData =
