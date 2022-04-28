@@ -80,6 +80,14 @@ public class CookiesManagerUtil {
 		return _cookiesManager.getDomain(host);
 	}
 
+	public static String[] getOptionalCookieNames() {
+		return _cookiesManager.getOptionalCookieNames();
+	}
+
+	public static String[] getRequiredCookieNames() {
+		return _cookiesManager.getRequiredCookieNames();
+	}
+
 	public static boolean hasConsentType(
 		int consentType, HttpServletRequest httpServletRequest) {
 
