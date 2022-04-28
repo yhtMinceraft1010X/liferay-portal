@@ -60,11 +60,9 @@ public class CookiesManagerImplTest {
 			cookieName = CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
 		}
 
-		Cookie cookiesConsent = new Cookie(
-			cookieName, String.valueOf(accepted));
-
 		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookiesConsent,
+			CookiesConstants.CONSENT_TYPE_NECESSARY,
+			new Cookie(cookieName, String.valueOf(accepted)),
 			_mockHttpServletRequest, _mockHttpServletResponse);
 	}
 
