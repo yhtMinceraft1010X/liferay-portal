@@ -186,18 +186,18 @@ public class BatchPlannerPlanServiceTest {
 				export = true;
 			}
 
-			_submitPlan(
+			_submitBatchPlannerPlan(
 				export, _INTERNAL_CLASS_NAME_CHANNEL,
 				RandomTestUtil.randomString());
 		}
 
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name1");
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name2");
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name3");
-		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name4");
-		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name5");
+		_submitBatchPlannerPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name1");
+		_submitBatchPlannerPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name2");
+		_submitBatchPlannerPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name3");
+		_submitBatchPlannerPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name4");
+		_submitBatchPlannerPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name5");
 
-		BatchPlannerPlan batchPlannerPlan = _submitPlan(
+		BatchPlannerPlan batchPlannerPlan = _submitBatchPlannerPlan(
 			false, _INTERNAL_CLASS_NAME_CHANNEL, "name6");
 
 		_testSearchExportBatchPlannerPlans(batchPlannerPlan.getCompanyId());
@@ -231,7 +231,7 @@ public class BatchPlannerPlanServiceTest {
 		}
 	}
 
-	private BatchPlannerPlan _submitPlan(
+	private BatchPlannerPlan _submitBatchPlannerPlan(
 			boolean export, String internalClassName, String name)
 		throws Exception {
 
