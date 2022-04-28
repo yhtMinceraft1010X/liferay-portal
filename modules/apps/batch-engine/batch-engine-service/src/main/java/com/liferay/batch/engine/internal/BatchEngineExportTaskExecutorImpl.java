@@ -100,7 +100,8 @@ public class BatchEngineExportTaskExecutorImpl
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to update batch engine export task ",
+					"Unable to update batch engine export task " +
+						currentBatchEngineExportTask,
 					portalException);
 			}
 		}
