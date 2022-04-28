@@ -37,13 +37,13 @@ public class CookiesManagerImplTest {
 
 	@Test
 	public void testCookiesConsent() throws Exception {
-		testCookiesConsentType(CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
-		testCookiesConsentType(CookiesConstants.CONSENT_TYPE_NECESSARY);
-		testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERFORMANCE);
-		testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
+		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_NECESSARY);
+		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERFORMANCE);
+		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
 	}
 
-	protected void setCookiesConsent(int consentType, boolean accepted) {
+	private void _setCookiesConsent(int consentType, boolean accepted) {
 		if (consentType == CookiesConstants.CONSENT_TYPE_NECESSARY) {
 			return;
 		}
@@ -69,8 +69,8 @@ public class CookiesManagerImplTest {
 			_mockHttpServletRequest, _mockHttpServletResponse);
 	}
 
-	protected void testCookiesConsentType(int consentType) {
-		setCookiesConsent(consentType, false);
+	private void _testCookiesConsentType(int consentType) {
+		_setCookiesConsent(consentType, false);
 
 		Cookie cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -90,7 +90,7 @@ public class CookiesManagerImplTest {
 					cookie.getName(), _mockHttpServletRequest));
 		}
 
-		setCookiesConsent(consentType, true);
+		_setCookiesConsent(consentType, true);
 
 		CookiesManagerUtil.addCookie(
 			consentType, cookie, _mockHttpServletRequest,
