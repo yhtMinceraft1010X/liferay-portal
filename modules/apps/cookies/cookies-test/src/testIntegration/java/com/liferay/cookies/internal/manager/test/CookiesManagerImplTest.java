@@ -48,21 +48,20 @@ public class CookiesManagerImplTest {
 			return;
 		}
 
-		String consentCookieName = StringPool.BLANK;
+		String cookieName = StringPool.BLANK;
 
 		if (consentType == CookiesConstants.CONSENT_TYPE_FUNCTIONAL) {
-			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL;
+			cookieName = CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL;
 		}
 		else if (consentType == CookiesConstants.CONSENT_TYPE_PERFORMANCE) {
-			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE;
+			cookieName = CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE;
 		}
 		else if (consentType == CookiesConstants.CONSENT_TYPE_PERSONALIZATION) {
-			consentCookieName =
-				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
+			cookieName = CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
 		}
 
 		Cookie cookiesConsent = new Cookie(
-			consentCookieName, String.valueOf(accepted));
+			cookieName, String.valueOf(accepted));
 
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookiesConsent,
