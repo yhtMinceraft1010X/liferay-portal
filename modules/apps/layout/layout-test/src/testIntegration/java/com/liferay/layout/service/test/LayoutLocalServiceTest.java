@@ -21,6 +21,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -43,7 +44,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -92,14 +92,14 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL1 = "/friendly-url-1";
 
-		Layout layout1 = LayoutTestUtil.addLayout(
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
 
 		String friendlyURL2 = "/friendly-url-2";
 
-		Layout layout2 = LayoutTestUtil.addLayout(
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL2));
@@ -126,7 +126,7 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL1 = "/friendly-url-1";
 
-		Layout layout1 = LayoutTestUtil.addLayout(
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "friendly url 1"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
@@ -165,17 +165,9 @@ public class LayoutLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+		LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout publishedLayout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+		Layout publishedLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = publishedLayout.fetchDraftLayout();
 
@@ -237,7 +229,7 @@ public class LayoutLocalServiceTest {
 	public void testKeepsAHistoryOfOldFriendlyURLs() throws Exception {
 		String friendlyURL = "/friendly-url";
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -266,11 +258,12 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpComponentsUtil.decodeURL(
+			StringPool.SLASH + name);
 
-		friendlyURL = HttpUtil.decodeURL(friendlyURL);
+		friendlyURL = HttpComponentsUtil.decodeURL(friendlyURL);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -287,9 +280,10 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpComponentsUtil.decodeURL(
+			StringPool.SLASH + name);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.singletonMap(LocaleUtil.getDefault(), null));
@@ -306,14 +300,14 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL = "/friendly-url";
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
 
 		_layoutLocalService.deleteLayout(layout);
 
-		layout = LayoutTestUtil.addLayout(
+		layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -334,12 +328,12 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL = "/friendly-url";
 
-		Layout privateLayout = LayoutTestUtil.addLayout(
+		Layout privateLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
 
-		Layout publicLayout = LayoutTestUtil.addLayout(
+		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -366,14 +360,7 @@ public class LayoutLocalServiceTest {
 	public void testUpdateDraftLayoutAfterOriginalLayoutUpdatesWithNewFriendlyURL()
 		throws Exception {
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
-			HashMapBuilder.put(
-				LocaleUtil.US, "name"
-			).build(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
-			new HashMap<>(), 0, new ServiceContext());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -400,21 +387,59 @@ public class LayoutLocalServiceTest {
 			draftLayout.getStyleBookEntryId(), new ServiceContext());
 	}
 
-	private void _testDeleteLayouts(boolean system) throws Exception {
+	@Test
+	public void testUpdateLayoutWithEmptyDefaultFriendlyURLAndAnotherLocaleAdded()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, system, null, serviceContext);
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, system, null, serviceContext);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group, "home");
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "/casa"
+			).put(
+				LocaleUtil.US, ""
+			).build(),
+			false, null, layout.getMasterLayoutPlid(),
+			layout.getStyleBookEntryId(), serviceContext);
+
+		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
+	}
+
+	@Test(expected = MasterLayoutException.class)
+	public void testUpdateMasterLayoutWithInvalidPlid1() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layoutLocalService.updateMasterLayoutPlid(
+			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getPlid());
+	}
+
+	@Test(expected = MasterLayoutException.class)
+	public void testUpdateMasterLayoutWithInvalidPlid2() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), layout.getFriendlyURLMap(),
+			layout.getIconImage(), null, layout.getPlid(),
+			layout.getStyleBookEntryId(), new ServiceContext());
+	}
+
+	private void _testDeleteLayouts(boolean system) throws Exception {
+		LayoutTestUtil.addTypeContentLayout(_group, false, system);
+		LayoutTestUtil.addTypeContentLayout(_group, true, system);
 
 		_layoutLocalService.deleteLayouts(
 			_group.getGroupId(), true, new ServiceContext());

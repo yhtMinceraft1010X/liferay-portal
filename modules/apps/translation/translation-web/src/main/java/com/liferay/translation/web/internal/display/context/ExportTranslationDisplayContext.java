@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,10 +37,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
@@ -112,36 +113,12 @@ public class ExportTranslationDisplayContext {
 			return null;
 		}
 
-		Map<String, String> defaultExperience = HashMapBuilder.put(
-			"label",
-			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				_themeDisplay.getLocale())
-		).put(
-			"segment",
-			_getSegmentsEntryName(
-				SegmentsEntryConstants.ID_DEFAULT, _themeDisplay.getLocale())
-		).put(
-			"value",
-			String.valueOf((Object)SegmentsExperienceConstants.ID_DEFAULT)
-		).build();
-
 		List<Map<String, String>> experiences = new ArrayList<>();
 
 		List<SegmentsExperience> segmentsExperiences =
 			_getSegmentsExperiences();
 
-		boolean addedDefault = false;
-
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			if ((segmentsExperience.getPriority() <
-					SegmentsExperienceConstants.PRIORITY_DEFAULT) &&
-				!addedDefault) {
-
-				experiences.add(defaultExperience);
-
-				addedDefault = true;
-			}
-
 			experiences.add(
 				HashMapBuilder.put(
 					"label",
@@ -155,10 +132,6 @@ public class ExportTranslationDisplayContext {
 					"value",
 					String.valueOf(segmentsExperience.getSegmentsExperienceId())
 				).build());
-		}
-
-		if (!addedDefault) {
-			experiences.add(defaultExperience);
 		}
 
 		return experiences;
@@ -199,6 +172,17 @@ public class ExportTranslationDisplayContext {
 			"experiences", getExperiences()
 		).put(
 			"exportTranslationURL", _getExportTranslationURLString()
+		).put(
+			"multipleExperiences", _isMultipleExperiences()
+		).put(
+			"multiplePagesSelected",
+			() -> {
+				if (_classPKs.length > 1) {
+					return true;
+				}
+
+				return false;
+			}
 		).put(
 			"pathModule", PortalUtil.getPathModule()
 		).put(
@@ -264,6 +248,18 @@ public class ExportTranslationDisplayContext {
 		return infoItemLanguagesProvider.getDefaultLanguageId(_models.get(0));
 	}
 
+	private long _getDraftLayoutPlid(long classPK) {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(classPK);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			return draftLayout.getPlid();
+		}
+
+		return classPK;
+	}
+
 	private JSONObject _getExportFileFormatJSONObject(
 		TranslationInfoItemFieldValuesExporter
 			translationInfoItemFieldValuesExporter) {
@@ -292,7 +288,14 @@ public class ExportTranslationDisplayContext {
 		);
 
 		for (long classPK : _classPKs) {
-			uriBuilderWrapper.addParameter("classPK", String.valueOf(classPK));
+			if (_className.equals(Layout.class.getName())) {
+				uriBuilderWrapper.addParameter(
+					"classPK", String.valueOf(_getDraftLayoutPlid(classPK)));
+			}
+			else {
+				uriBuilderWrapper.addParameter(
+					"classPK", String.valueOf(classPK));
+			}
 		}
 
 		uriBuilderWrapper.addParameter("groupId", String.valueOf(_groupId));
@@ -353,6 +356,24 @@ public class ExportTranslationDisplayContext {
 		else {
 			list1.retainAll(list2);
 		}
+	}
+
+	private boolean _isMultipleExperiences() {
+		if (!_className.equals(Layout.class.getName())) {
+			return false;
+		}
+
+		for (long classPK : _classPKs) {
+			int segmentsExperiencesCount =
+				SegmentsExperienceLocalServiceUtil.getSegmentsExperiencesCount(
+					_groupId, _classNameId, classPK);
+
+			if (segmentsExperiencesCount >= 1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final String _className;

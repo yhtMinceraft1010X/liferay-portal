@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.io.IOException;
@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator"
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )
@@ -133,7 +134,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
-			SitesUtil.updateLayoutSetPrototypesLinks(
+			_sites.updateLayoutSetPrototypesLinks(
 				userGroup.getGroup(), publicLayoutSetPrototypeId,
 				privateLayoutSetPrototypeId,
 				publicLayoutSetPrototypeLinkEnabled,
@@ -215,6 +216,9 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 	protected void setUserService(UserService userService) {
 		_userService = userService;
 	}
+
+	@Reference
+	private Sites _sites;
 
 	private UserGroupService _userGroupService;
 	private UserService _userService;

@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Assert both filters are applied") {
-			ContentDashboard.viewAppliedFilters(filterLabelList = "Category:Audience 1,Category:Stage 1");
+			ContentDashboard.viewAppliedFilters(filterLabelList = "Category: Audience 1,Category: Stage 1");
 		}
 
 		task ("Assert if only one asset is displayed") {
@@ -130,12 +130,12 @@ definition {
 			AssertTextPresent(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-				value1 = "Category:Audience 1");
+				value1 = "Category: Audience 1");
 
 			AssertTextPresent(
 				categoryName = "Stage 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-				value1 = "Category:Stage 1");
+				value1 = "Category: Stage 1");
 		}
 
 		task ("Clear filters") {
@@ -200,12 +200,12 @@ definition {
 			AssertTextPresent(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-				value1 = "Category:Audience 1");
+				value1 = "Category: Audience 1");
 
 			AssertTextPresent(
 				categoryName = "Stage 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-				value1 = "Category:Stage 1");
+				value1 = "Category: Stage 1");
 		}
 
 		task ("Let only one filter active and assert elements") {
@@ -214,7 +214,7 @@ definition {
 			AssertTextPresent(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-				value1 = "Category:Audience 1");
+				value1 = "Category: Audience 1");
 
 			AssertElementNotPresent(
 				categoryName = "Stage 1",
@@ -478,7 +478,7 @@ definition {
 		task ("Assert that filter is still aplied") {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Author:Test Test");
+				value1 = "Author: Test Test");
 		}
 	}
 
@@ -703,6 +703,71 @@ definition {
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 2");
+		}
+	}
+
+	@description = "LPS-119966 Given a blog with at least one category in one of the vocabularies featured in the graph
+	When the user views the content dashboard
+	Then the document is counted as an asset in the graph"
+	@priority = "4"
+	test BlogWithOneCategory {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
+
+		task ("Add a vocabulary for Test Site Name") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary 1");
+		}
+
+		task ("Add a vocabulary for Test Site Name") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary 2");
+		}
+
+		task ("Create a category for Vocabulary 1") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category1",
+				vocabularyName = "Vocabulary 1");
+		}
+
+		task ("Create a category for Vocabulary 2") {
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category2",
+				vocabularyName = "Vocabulary 2");
+		}
+
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Navigate Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Configure the audit graph with the previous created categories") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 1");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 2");
+		}
+
+		task ("Assert the blog is counted as an asset") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "Blogs Entry Title",
+				xAxisCategoryName = "Category1");
 		}
 	}
 

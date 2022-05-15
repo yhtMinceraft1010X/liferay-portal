@@ -57,18 +57,20 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.Collections;
@@ -113,6 +115,9 @@ public class EditStyleBookEntryDisplayContext {
 
 	public Map<String, Object> getStyleBookEditorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"featureFlagLps142363",
+			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142363"))
+		).put(
 			"fragmentCollectionPreviewURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse
@@ -135,15 +140,6 @@ public class EditStyleBookEntryDisplayContext {
 				Group group = _themeDisplay.getScopeGroup();
 
 				return group.isPrivateLayoutsEnabled();
-			}
-		).put(
-			"layoutsTreeURL",
-			() -> {
-				ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-				resourceURL.setResourceID("/style_book/layouts_tree");
-
-				return resourceURL.toString();
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
@@ -192,9 +188,6 @@ public class EditStyleBookEntryDisplayContext {
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
 			"themeName", _getThemeName()
-		).put(
-			"tokenReuseEnabled",
-			FFStyleBookConfigurationUtil.tokenReuseEnabled()
 		).build();
 	}
 
@@ -335,8 +328,8 @@ public class EditStyleBookEntryDisplayContext {
 				layoutSet.getThemeId());
 
 		if (frontendTokenDefinition != null) {
-			return JSONFactoryUtil.createJSONObject(
-				frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
+			return frontendTokenDefinition.getJSONObject(
+				_themeDisplay.getLocale());
 		}
 
 		return JSONFactoryUtil.createJSONObject();
@@ -475,9 +468,10 @@ public class EditStyleBookEntryDisplayContext {
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			StyleBookPortletKeys.STYLE_BOOK);
 
-		url = HttpUtil.addParameter(url, portletNamespace + "groupId", groupId);
+		url = HttpComponentsUtil.addParameter(
+			url, portletNamespace + "groupId", groupId);
 
-		return HttpUtil.addParameter(
+		return HttpComponentsUtil.addParameter(
 			url, portletNamespace + "fragmentCollectionKey",
 			fragmentCollectionKey);
 	}
@@ -496,19 +490,19 @@ public class EditStyleBookEntryDisplayContext {
 
 	private String _getPreviewURL(Layout layout) {
 		try {
-			String layoutURL = HttpUtil.addParameter(
+			String layoutURL = HttpComponentsUtil.addParameter(
 				PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
 				Constants.PREVIEW);
 
-			layoutURL = HttpUtil.addParameter(
+			layoutURL = HttpComponentsUtil.addParameter(
 				layoutURL, "p_p_auth",
 				AuthTokenUtil.getToken(_httpServletRequest));
 
-			return HttpUtil.addParameter(
+			return HttpComponentsUtil.addParameter(
 				layoutURL, "styleBookEntryPreview", true);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException);
 		}
 
 		return null;
@@ -524,29 +518,32 @@ public class EditStyleBookEntryDisplayContext {
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				String url = ResourceURLBuilder.createResourceURL(
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						ContentPageEditorPortletKeys.
-							CONTENT_PAGE_EDITOR_PORTLET,
-						layout, PortletRequest.RESOURCE_PHASE)
-				).setResourceID(
-					"/layout_content_page_editor/get_page_preview"
-				).buildString();
+				ResourceURL getPagePreviewURL = PortletURLFactoryUtil.create(
+					_httpServletRequest,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					layout, PortletRequest.RESOURCE_PHASE);
 
-				url = HttpUtil.addParameter(
-					url, "doAsUserId", _themeDisplay.getDefaultUserId());
+				getPagePreviewURL.setParameter(
+					"segmentsExperienceId",
+					String.valueOf(
+						SegmentsExperienceLocalServiceUtil.
+							fetchDefaultSegmentsExperienceId(
+								layoutPageTemplateEntry.getPlid())));
+				getPagePreviewURL.setResourceID(
+					"/layout_content_page_editor/get_page_preview");
 
-				url = HttpUtil.addParameter(url, "p_l_mode", Constants.PREVIEW);
+				String url = HttpComponentsUtil.addParameter(
+					getPagePreviewURL.toString(), "p_l_mode",
+					Constants.PREVIEW);
 
-				return HttpUtil.addParameter(
+				return HttpComponentsUtil.addParameter(
 					url, "styleBookEntryPreview", true);
 			}
 
 			return _getPreviewURL(layout);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException);
 		}
 
 		return null;

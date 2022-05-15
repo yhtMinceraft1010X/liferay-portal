@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -654,7 +656,8 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testIsConvertibleTrue() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
@@ -665,7 +668,7 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testIsConvertibleTrueWidgetPageCustomizable() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutConstants.CUSTOMIZABLE_LAYOUT, Boolean.TRUE.toString()
@@ -682,7 +685,7 @@ public class LayoutConverterTest {
 	public void testIsConvertibleTrueWidgetPageWithNestedApplicationsWidget()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.NESTED_COLUMN_IDS,
@@ -754,12 +757,12 @@ public class LayoutConverterTest {
 			newLayoutStructure.addLayoutStructureItem(newLayoutStructureItem);
 		}
 
-		String mainItemId = itemIds.computeIfAbsent(
-			layoutStructure.getMainItemId(),
-			itemId -> _getReadableItemId(
-				layoutStructure, layoutStructure.getMainLayoutStructureItem()));
-
-		newLayoutStructure.setMainItemId(mainItemId);
+		newLayoutStructure.setMainItemId(
+			itemIds.computeIfAbsent(
+				layoutStructure.getMainItemId(),
+				itemId -> _getReadableItemId(
+					layoutStructure,
+					layoutStructure.getMainLayoutStructureItem())));
 
 		return newLayoutStructure;
 	}
@@ -865,7 +868,7 @@ public class LayoutConverterTest {
 		List<Map<String, List<String>>> encodedPortletIdsMaps =
 			new ArrayList<>();
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
@@ -873,6 +876,10 @@ public class LayoutConverterTest {
 				"lfr-theme:regular:wrap-widget-page-content",
 				Boolean.FALSE.toString()
 			).buildString());
+
+		_segmentsExperienceLocalService.addDefaultSegmentsExperience(
+			PrincipalThreadLocal.getUserId(), layout.getPlid(),
+			ServiceContextThreadLocal.getServiceContext());
 
 		for (Map<String, String[]> portletIdsMap : portletIdsMaps) {
 			Set<Map.Entry<String, String[]>> entries = portletIdsMap.entrySet();
@@ -999,7 +1006,7 @@ public class LayoutConverterTest {
 	private void _testConvertNoPortlets(String layoutTemplateId)
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
@@ -1188,6 +1195,9 @@ public class LayoutConverterTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();

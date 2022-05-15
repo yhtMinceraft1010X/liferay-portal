@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -63,6 +65,8 @@ definition {
 	@priority = "5"
 	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
 		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Segment membership list taking too long to load
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -131,7 +135,7 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Membership");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 		}
 	}
 

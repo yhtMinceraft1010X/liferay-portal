@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
+import com.liferay.headless.delivery.dto.v1_0.HtmlProperties;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
@@ -24,6 +25,8 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValu
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
+import com.liferay.layout.page.template.util.HtmlTagConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
@@ -65,6 +68,8 @@ public class ContainerLayoutStructureItemMapper
 							containerStyledLayoutStructureItem.
 								getLinkJSONObject(),
 							saveMappingConfiguration);
+						indexed =
+							containerStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(containerStyledLayoutStructureItem);
 
 						setFragmentStyle(
@@ -78,16 +83,13 @@ public class ContainerLayoutStructureItemMapper
 										"styles"),
 									saveMappingConfiguration);
 							});
-
 						setFragmentViewports(
-							() -> {
-								JSONObject itemConfigJSONObject =
-									containerStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return getFragmentViewPorts(
-									itemConfigJSONObject);
-							});
+							() -> getFragmentViewPorts(
+								containerStyledLayoutStructureItem.
+									getItemConfigJSONObject()));
+						setHtmlProperties(
+							() -> _toHtmlProperties(
+								containerStyledLayoutStructureItem));
 					}
 				};
 				type = Type.SECTION;
@@ -146,6 +148,24 @@ public class ContainerLayoutStructureItemMapper
 							StringUtil.upperCaseFirstLetter(
 								target.substring(1)));
 					});
+			}
+		};
+	}
+
+	private HtmlProperties _toHtmlProperties(
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
+
+		String value = containerStyledLayoutStructureItem.getHtmlTag();
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return new HtmlProperties() {
+			{
+				setHtmlTag(
+					() -> HtmlTag.create(
+						HtmlTagConverter.convertToExternalValue(value)));
 			}
 		};
 	}
@@ -216,6 +236,18 @@ public class ContainerLayoutStructureItemMapper
 						return ContentDisplay.create(
 							ContentDisplayConverter.convertToExternalValue(
 								contentDisplay));
+					});
+				setFlexWrap(
+					() -> {
+						String flexWrap =
+							containerStyledLayoutStructureItem.getFlexWrap();
+
+						if (Validator.isNull(flexWrap)) {
+							return null;
+						}
+
+						return FlexWrap.create(
+							FlexWrapConverter.convertToExternalValue(flexWrap));
 					});
 				setJustify(
 					() -> {

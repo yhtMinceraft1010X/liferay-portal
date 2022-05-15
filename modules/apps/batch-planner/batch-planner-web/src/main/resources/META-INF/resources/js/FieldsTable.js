@@ -34,10 +34,15 @@ function FieldsTable({portletNamespace}) {
 			if (event.schema) {
 				const newFields = getFieldsFromSchema(event.schema);
 
-				setFields(newFields);
+				const formattedFields = [
+					...newFields.required,
+					...newFields.optional,
+				];
+
+				setFields(formattedFields);
 
 				if (!useTemplateMappingRef.current) {
-					setSelectedFields(newFields);
+					setSelectedFields(formattedFields);
 				}
 			}
 			else {
@@ -55,7 +60,6 @@ function FieldsTable({portletNamespace}) {
 
 				setSelectedFields(
 					Object.keys(template.mappings).map((fields) => ({
-						label: fields,
 						name: fields,
 					}))
 				);
@@ -102,7 +106,7 @@ function FieldsTable({portletNamespace}) {
 			</ClayAlert>
 
 			<div className="card-body p-0">
-				<ClayTable borderless hover={false} responsive={false}>
+				<ClayTable hover={false} responsive={true}>
 					<ClayTable.Head>
 						<ClayTable.Row>
 							<ClayTable.Cell headingCell>
@@ -146,11 +150,11 @@ function FieldsTable({portletNamespace}) {
 							);
 
 							return (
-								<ClayTable.Row key={field.label}>
+								<ClayTable.Row key={field.name}>
 									<ClayTable.Cell>
 										<ClayCheckbox
 											checked={included}
-											id={`${portletNamespace}fieldName_${field.label}`}
+											id={`${portletNamespace}fieldName_${field.name}`}
 											name={`${portletNamespace}fieldName`}
 											onChange={() => {
 												Liferay.fire(
@@ -179,9 +183,9 @@ function FieldsTable({portletNamespace}) {
 
 									<ClayTable.Cell>
 										<label
-											htmlFor={`${portletNamespace}fieldName_${field.label}`}
+											htmlFor={`${portletNamespace}fieldName_${field.name}`}
 										>
-											{field.label}
+											{field.name}
 										</label>
 									</ClayTable.Cell>
 								</ClayTable.Row>

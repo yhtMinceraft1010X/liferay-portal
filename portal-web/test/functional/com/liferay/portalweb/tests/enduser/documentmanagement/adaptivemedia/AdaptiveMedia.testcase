@@ -1,8 +1,8 @@
 @component-name = "portal-lima"
 definition {
 
-	property portal.acceptance = "true";
 	property custom.properties = "default.layout.template.id=1_column";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Adaptive Media";
@@ -337,6 +337,44 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionEdit");
 	}
 
+	@description = "This is a test for LPS-78626. It ensures that a reloaded image can be viewed after changing the screen resolution."
+	@priority = "5"
+	test CanRenderImageAfterChangingScreenResolution {
+		var fileEntryId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${fileEntryId}",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		SetWindowSize(value1 = "200,720");
+
+		AssertVisible(
+			key_coverImageName = "Document_1",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.adaptive.media.exception.AMRuntimeException");
+	}
+
 	@priority = "5"
 	@refactordone
 	test DisabledResolutionsWillNotAdaptNewImages {
@@ -473,6 +511,15 @@ definition {
 			portlet = "Adaptive Media");
 
 		AdaptiveMedia.viewNoImageResolution(imageName = "This should not appear on new virtual instance");
+	}
+
+	@description = "This test covers LPS-136280. It validates that an image can be adapted in a web content after it is updated."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImageVariantsAreGeneratedAfterEditingWebContentWithImage {
+
+		// TODO LPS-149586
+
 	}
 
 }

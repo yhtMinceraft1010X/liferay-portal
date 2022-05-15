@@ -96,6 +96,27 @@ public class FreeMarkerTool {
 		);
 	}
 
+	public boolean generateBatch(
+		ConfigYAML configYAML, String javaDataType,
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		if (!configYAML.isGenerateBatch() || (javaDataType == null) ||
+			javaDataType.isEmpty()) {
+
+			return false;
+		}
+
+		if (ResourceOpenAPIParser.hasResourceBatchJavaMethodSignatures(
+				javaMethodSignatures) ||
+			ResourceOpenAPIParser.hasResourceGetPageJavaMethodSignature(
+				javaDataType, javaMethodSignatures)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public Map<String, Schema> getAllSchemas(
 		Map<String, Schema> allExternalSchemas, OpenAPIYAML openAPIYAML,
 		Map<String, Schema> schemas) {
@@ -749,6 +770,10 @@ public class FreeMarkerTool {
 
 	public String getSchemaVarName(String schemaName) {
 		return OpenAPIParserUtil.getSchemaVarName(schemaName);
+	}
+
+	public String getVersion(OpenAPIYAML openAPIYAML) {
+		return OpenAPIParserUtil.getVersion(openAPIYAML);
 	}
 
 	public boolean hasHTTPMethod(

@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -22,6 +21,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.ObjectEntryFieldValueUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -29,11 +29,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -59,15 +56,12 @@ public class ObjectEntryModelDocumentContributor
 		String className,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectFieldLocalService objectFieldLocalService,
-		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
+		ObjectFieldLocalService objectFieldLocalService) {
 
 		_className = className;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
-		_persistedModelLocalServiceRegistry =
-			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
@@ -115,6 +109,11 @@ public class ObjectEntryModelDocumentContributor
 			_log.debug("Object entry " + objectEntry);
 		}
 
+		document.add(
+			new Field(
+				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+				document.get(Field.ENTRY_CLASS_PK)));
+
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
 
@@ -155,8 +154,6 @@ public class ObjectEntryModelDocumentContributor
 
 		document.add(
 			new Field("objectEntryTitle", objectEntry.getTitleValue()));
-
-		document.remove(Field.USER_NAME);
 	}
 
 	private void _contribute(
@@ -181,14 +178,19 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
+		String objectFieldName = objectField.getName();
+
 		if (StringUtil.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+			StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-			value = _getFileName(GetterUtil.getLong(value));
+			value = ObjectEntryFieldValueUtil.getValueString(
+				objectField, values);
 		}
 
-		String objectFieldName = objectField.getName();
 		String valueString = String.valueOf(value);
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -275,27 +277,6 @@ public class ObjectEntryModelDocumentContributor
 		return format.format(value);
 	}
 
-	private String _getFileName(long dlFileEntryId) {
-		try {
-			PersistedModelLocalService persistedModelLocalService =
-				_persistedModelLocalServiceRegistry.
-					getPersistedModelLocalService(DLFileEntry.class.getName());
-
-			DLFileEntry dlFileEntry =
-				(DLFileEntry)persistedModelLocalService.getPersistedModel(
-					dlFileEntryId);
-
-			return dlFileEntry.getFileName();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
 	private String _getSortableValue(String value) {
 		if (value.length() > 256) {
 			return value.substring(0, 256);
@@ -319,7 +300,5 @@ public class ObjectEntryModelDocumentContributor
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 }

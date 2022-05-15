@@ -24,7 +24,6 @@ import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -38,6 +37,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -58,21 +58,25 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 		while (iterator.hasNext()) {
 			String fileName = iterator.next();
 
-			if (fileName.endsWith(".jar") || fileName.endsWith(".lar") ||
-				fileName.endsWith(".war") || fileName.endsWith(".zip")) {
+			if (!fileName.endsWith(".jar") && !fileName.endsWith(".lar") &&
+				!fileName.endsWith(".war") && !fileName.endsWith(".zip")) {
 
-				if (fileName.matches(
-						".*/(modules/.*|portal-web)/test/.*/" +
-							"dependencies/.+")) {
-
-					processMessage(
-						fileName,
-						"Do not add archive files for tests, they must be " +
-							"expanded");
-				}
-
-				iterator.remove();
+				continue;
 			}
+
+			if ((fileName.contains("/modules/") ||
+				 fileName.contains("/portal-web/")) &&
+				(fileName.contains("/test/") || fileName.contains("/tests/")) &&
+				fileName.contains("/dependencies/") &&
+				!fileName.contains("/testIntegration/")) {
+
+				processMessage(
+					fileName,
+					"Do not add archive files for tests, they must be " +
+						"expanded");
+			}
+
+			iterator.remove();
 		}
 
 		return fileNames;
@@ -104,9 +108,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 		System.setOut(printStream);
 
-		PoshiElement poshiElement =
-			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
-				FileUtil.getURL(file));
+		PoshiElement poshiElement = (PoshiElement)PoshiNodeFactory.newPoshiNode(
+			content, FileUtil.getURL(file));
 
 		System.out.flush();
 
@@ -143,59 +146,60 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		File populationDir = getPortalDir();
+		List<File> poshiDirs = new ArrayList<>();
 
-		if (populationDir == null) {
-			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-			populationDir = SourceFormatterUtil.getFile(
-				sourceFormatterArgs.getBaseDirName(), ".git",
-				sourceFormatterArgs.getMaxDirLevel());
-
-			if (populationDir == null) {
-				return;
-			}
+		if (isPortalSource()) {
+			poshiDirs.add(getPortalDir());
+		}
+		else {
+			poshiDirs.addAll(PoshiContext.getPoshiDirs());
 		}
 
-		Files.walkFileTree(
-			populationDir.toPath(),
-			new SimpleFileVisitor<Path>() {
+		for (File poshiDir : poshiDirs) {
+			Files.walkFileTree(
+				poshiDir.toPath(),
+				new SimpleFileVisitor<Path>() {
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path dirPath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
 
-					if (ArrayUtil.contains(
-							_SKIP_DIR_NAMES,
-							String.valueOf(dirPath.getFileName()))) {
+						if (ArrayUtil.contains(
+								_SKIP_DIR_NAMES,
+								String.valueOf(dirPath.getFileName()))) {
 
-						return FileVisitResult.SKIP_SUBTREE;
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
 					}
 
-					return FileVisitResult.CONTINUE;
-				}
+					@Override
+					public FileVisitResult visitFile(
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
 
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
+						String absolutePath = SourceUtil.getAbsolutePath(
+							filePath);
 
-					String absolutePath = SourceUtil.getAbsolutePath(filePath);
+						if (absolutePath.endsWith(".function")) {
+							PoshiContext.setFunctionFileNames(
+								absolutePath.replaceFirst(
+									".+/(.+)\\.function", "$1"));
+						}
+						else if (absolutePath.endsWith(".macro")) {
+							PoshiContext.setMacroFileNames(
+								absolutePath.replaceFirst(
+									".+/(.+)\\.macro", "$1"));
+						}
 
-					if (absolutePath.endsWith(".function")) {
-						PoshiContext.setFunctionFileNames(
-							absolutePath.replaceFirst(
-								".+/(.+)\\.function", "$1"));
+						return FileVisitResult.CONTINUE;
 					}
-					else if (absolutePath.endsWith(".macro")) {
-						PoshiContext.setMacroFileNames(
-							absolutePath.replaceFirst(".+/(.+)\\.macro", "$1"));
-					}
 
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+				});
+		}
 
 		_populated = true;
 	}

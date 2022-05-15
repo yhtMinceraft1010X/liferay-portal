@@ -30,6 +30,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectRelationshipLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -163,6 +166,9 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship = objectRelationshipPersistence.remove(
 			objectRelationship);
 
+		_objectLayoutTabPersistence.removeByObjectRelationshipId(
+			objectRelationship.getObjectRelationshipId());
+
 		if (Objects.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
@@ -184,6 +190,12 @@ public class ObjectRelationshipLocalServiceImpl
 
 			objectRelationshipPersistence.remove(
 				reverseObjectRelationship.getObjectRelationshipId());
+
+			Indexer<ObjectRelationship> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					ObjectRelationship.class);
+
+			indexer.delete(reverseObjectRelationship);
 		}
 
 		return objectRelationship;
@@ -306,8 +318,8 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private ObjectField _addObjectField(
-			User user, String name, long objectDefinitionId1,
-			long objectDefinitionId2, String type)
+			User user, Map<Locale, String> labelMap, String name,
+			long objectDefinitionId1, long objectDefinitionId2, String type)
 		throws PortalException {
 
 		ObjectField objectField = _objectFieldPersistence.create(
@@ -344,8 +356,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setIndexed(true);
 		objectField.setIndexedAsKeyword(false);
 		objectField.setIndexedLanguageId(null);
-		objectField.setLabelMap(
-			objectDefinition1.getLabelMap(), LocaleUtil.getSiteDefault());
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(dbColumnName);
 		objectField.setRelationshipType(type);
 		objectField.setRequired(false);
@@ -400,7 +411,8 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId1, objectDefinitionId2, type);
+				user, objectRelationship.getLabelMap(), name,
+				objectDefinitionId1, objectDefinitionId2, type);
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
@@ -494,10 +506,25 @@ public class ObjectRelationshipLocalServiceImpl
 			throw new ObjectRelationshipTypeException("Invalid type " + type);
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
+		if (Objects.equals(
+				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+			(objectDefinitionId1 == objectDefinitionId2)) {
 
-		if (objectDefinition.isSystem() &&
+			throw new ObjectRelationshipTypeException(
+				"Many to many self relationships are not allowed");
+		}
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
+
+		if (objectDefinition1.isSystem() && objectDefinition2.isSystem()) {
+			throw new ObjectRelationshipTypeException(
+				"Relationships are not allowed between system objects");
+		}
+
+		if (objectDefinition1.isSystem() &&
 			!Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
@@ -538,6 +565,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

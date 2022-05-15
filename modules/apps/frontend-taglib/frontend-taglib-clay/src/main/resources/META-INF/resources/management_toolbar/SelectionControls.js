@@ -13,7 +13,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
@@ -145,7 +145,7 @@ const SelectionControls = ({
 
 	return (
 		<>
-			<ClayManagementToolbar.Item>
+			<ManagementToolbar.Item>
 				<ClayCheckbox
 					checked={checkboxStatus !== 'unchecked'}
 					disabled={disabled}
@@ -176,11 +176,11 @@ const SelectionControls = ({
 						);
 					}}
 				/>
-			</ClayManagementToolbar.Item>
+			</ManagementToolbar.Item>
 
 			{active && (
 				<>
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<span className="navbar-text">
 							{selectedItems === itemsTotal
 								? Liferay.Language.get('all-selected')
@@ -190,15 +190,16 @@ const SelectionControls = ({
 										itemsTotal
 								  )} ${Liferay.Language.get('selected')}`}
 						</span>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
 					{supportsBulkActions && (
 						<>
-							<ClayManagementToolbar.Item className="nav-item-shrink">
+							<ManagementToolbar.Item className="nav-item-shrink">
 								<LinkOrButton
 									aria-label={
-										showDesignImprovements &&
-										Liferay.Language.get('clear')
+										showDesignImprovements
+											? Liferay.Language.get('clear')
+											: undefined
 									}
 									className="nav-link"
 									displayType="unstyled"
@@ -216,11 +217,14 @@ const SelectionControls = ({
 										onClearButtonClick(event);
 									}}
 									symbol={
-										showDesignImprovements && 'times-circle'
+										showDesignImprovements
+											? 'times-circle'
+											: undefined
 									}
 									title={
-										showDesignImprovements &&
-										Liferay.Language.get('clear')
+										showDesignImprovements
+											? Liferay.Language.get('clear')
+											: undefined
 									}
 								>
 									<span className="text-truncate-inline">
@@ -229,10 +233,10 @@ const SelectionControls = ({
 										</span>
 									</span>
 								</LinkOrButton>
-							</ClayManagementToolbar.Item>
+							</ManagementToolbar.Item>
 
 							{selectAllButtonVisible && (
-								<ClayManagementToolbar.Item className="nav-item-shrink">
+								<ManagementToolbar.Item className="nav-item-shrink">
 									<LinkOrButton
 										className="nav-link"
 										displayType="unstyled"
@@ -258,7 +262,7 @@ const SelectionControls = ({
 											</span>
 										</span>
 									</LinkOrButton>
-								</ClayManagementToolbar.Item>
+								</ManagementToolbar.Item>
 							)}
 						</>
 					)}

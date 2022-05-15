@@ -102,11 +102,11 @@ const StyleBookEditor = ({
 };
 
 export default function ({
+	featureFlagLps142363,
 	fragmentCollectionPreviewURL = '',
 	frontendTokenDefinition = [],
 	frontendTokensValues = {},
 	isPrivateLayoutsEnabled,
-	layoutsTreeURL,
 	namespace,
 	previewOptions,
 	publishURL,
@@ -116,10 +116,10 @@ export default function ({
 	themeName,
 } = {}) {
 	initializeConfig({
+		featureFlagLps142363,
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinition,
 		isPrivateLayoutsEnabled,
-		layoutsTreeURL,
 		namespace,
 		previewOptions,
 		publishURL,

@@ -572,25 +572,27 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		return _attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, ${entity.name}> _getProxyProviderFunction() {
-		Class<?> proxyClass = ProxyUtil.getProxyClass(${entity.name}.class.getClassLoader(), ${entity.name}.class, ModelWrapper.class);
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		private static Function<InvocationHandler, ${entity.name}> _getProxyProviderFunction() {
+			Class<?> proxyClass = ProxyUtil.getProxyClass(${entity.name}.class.getClassLoader(), ${entity.name}.class, ModelWrapper.class);
 
-		try {
-			Constructor<${entity.name}> constructor = (Constructor<${entity.name}>)proxyClass.getConstructor(InvocationHandler.class);
+			try {
+				Constructor<${entity.name}> constructor = (Constructor<${entity.name}>)proxyClass.getConstructor(InvocationHandler.class);
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException reflectiveOperationException) {
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+				return invocationHandler -> {
+					try {
+						return constructor.newInstance(invocationHandler);
+					}
+					catch (ReflectiveOperationException reflectiveOperationException) {
+						throw new InternalError(reflectiveOperationException);
+					}
+				};
+			}
+			catch (NoSuchMethodException noSuchMethodException) {
+				throw new InternalError(noSuchMethodException);
+			}
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
-	}
+	</#if>
 
 	private static final Map<String, Function<${entity.name}, Object>> _attributeGetterFunctions;
 	private static final Map<String, BiConsumer<${entity.name}, Object>> _attributeSetterBiConsumers;
@@ -1180,7 +1182,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				return trashEntry;
 			}
 
-			com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				getTrashHandler();
+			<#else>
+				com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+			</#if>
 
 			if (Validator.isNotNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				ContainerModel containerModel = null;
@@ -1217,14 +1225,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			return getPrimaryKey();
 		}
 
-		/**
-		* @deprecated As of Judson (7.1.x), with no direct replacement
-		*/
-		@Deprecated
-		@Override
-		public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-			return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
-		}
+		<#if serviceBuilder.isVersionLTE_7_3_0()>
+			/**
+			* @deprecated As of Judson (7.1.x), with no direct replacement
+			*/
+			@Deprecated
+			@Override
+			public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+				return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+			}
+		</#if>
 
 		@Override
 		public boolean isInTrash() {
@@ -1238,7 +1248,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public boolean isInTrashContainer() {
-			com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				getTrashHandler();
+			<#else>
+				com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+			</#if>
 
 			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				return false;
@@ -1909,9 +1925,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#if>
 
 	private static class EscapedModelProxyProviderFunctionHolder {
-
-		private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
-
+		<#if serviceBuilder.isVersionLTE_7_1_0()>
+			private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
+		<#else>
+			private static final Function<InvocationHandler, ${entity.name}>
+			_escapedModelProxyProviderFunction = ProxyUtil
+			.getProxyProviderFunction(${entity.name}.class, ModelWrapper.class);
+		</#if>
 	}
 
 	<#if serviceBuilder.isVersionLTE_7_2_0() && dependencyInjectorDS>

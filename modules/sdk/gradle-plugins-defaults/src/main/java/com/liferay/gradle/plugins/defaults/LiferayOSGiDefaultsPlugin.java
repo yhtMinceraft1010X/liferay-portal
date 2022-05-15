@@ -1093,11 +1093,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					StringBuilder sb = new StringBuilder();
 
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-					sb.append(FileUtil.getJavaClassesDir(sourceSet));
-
+					sb.append(
+						FileUtil.getJavaClassesDir(
+							GradleUtil.getSourceSet(
+								project, SourceSet.MAIN_SOURCE_SET_NAME)));
 					sb.append("/META-INF/maven/");
 					sb.append(groupId);
 					sb.append('/');
@@ -1117,13 +1116,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 								String compileOnlyConfigurationName =
 									JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME;
 
-								Configuration configuration =
-									GradleUtil.getConfiguration(
-										project, compileOnlyConfigurationName);
-
 								conf2ScopeMappingContainer.addMapping(
 									MavenPlugin.PROVIDED_COMPILE_PRIORITY,
-									configuration,
+									GradleUtil.getConfiguration(
+										project, compileOnlyConfigurationName),
 									Conf2ScopeMappingContainer.PROVIDED);
 
 								mavenPom.setArtifactId(artifactId);
@@ -2025,14 +2021,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
 		bundleDefaultInstructions.put(
-			Constants.CONSUMER_POLICY,
-			"${replacestring;${range;[==,==]};.*,(.*)];$1}");
-		bundleDefaultInstructions.put(
 			Constants.DONOTCOPY,
 			"(" + LiferayOSGiExtension.DONOTCOPY_DEFAULT + "|.touch)");
-		bundleDefaultInstructions.put(
-			Constants.PROVIDER_POLICY,
-			"${replacestring;${range;[==,==]};.*,(.*)];$1}");
 		bundleDefaultInstructions.put(Constants.SOURCES, "false");
 
 		if (publishing) {
@@ -2964,15 +2954,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Map<Configuration, Conf2ScopeMapping> mappings =
 			conf2ScopeMappingContainer.getMappings();
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
-
-		mappings.remove(configuration);
-
-		configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
-
-		mappings.remove(configuration);
+		mappings.remove(
+			GradleUtil.getConfiguration(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME));
+		mappings.remove(
+			GradleUtil.getConfiguration(
+				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME));
 	}
 
 	private void _configurePmd(Project project) {
@@ -3164,10 +3151,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					String versionOverrideRelativePath = project.relativePath(
 						versionOverrideFile);
 
-					String gitResult = GitUtil.getGitResult(
-						project, "ls-files", versionOverrideRelativePath);
+					if (Validator.isNotNull(
+							GitUtil.getGitResult(
+								project, "ls-files",
+								versionOverrideRelativePath))) {
 
-					if (Validator.isNotNull(gitResult)) {
 						addVersionOverrideFile = true;
 					}
 

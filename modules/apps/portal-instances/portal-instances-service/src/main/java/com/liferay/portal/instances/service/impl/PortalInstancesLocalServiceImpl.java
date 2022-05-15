@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
@@ -56,7 +55,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
+import com.liferay.portal.kernel.util.ColorSchemeFactory;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -317,18 +316,16 @@ public class PortalInstancesLocalServiceImpl
 			company.getCompanyId(),
 			PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 
-		Theme theme = _themeLocalService.getTheme(
-			company.getCompanyId(), themeId);
-
 		themeDisplay.setLookAndFeel(
-			theme, ColorSchemeFactoryUtil.getDefaultRegularColorScheme());
+			_themeLocalService.getTheme(company.getCompanyId(), themeId),
+			_colorSchemeFactory.getDefaultRegularColorScheme());
 
 		themeDisplay.setPermissionChecker(permissionChecker);
 		themeDisplay.setPlid(controlPanelPlid);
 		themeDisplay.setRealUser(user);
 		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setScopeGroupId(controlPanelLayout.getGroupId());
+		themeDisplay.setSiteGroupId(controlPanelLayout.getGroupId());
 		themeDisplay.setUser(user);
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
@@ -377,6 +374,9 @@ public class PortalInstancesLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancesLocalServiceImpl.class);
+
+	@Reference
+	private ColorSchemeFactory _colorSchemeFactory;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

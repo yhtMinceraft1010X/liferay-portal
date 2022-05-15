@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -99,7 +100,10 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 							accountEntryId, themeDisplay.getUserId(),
 							screenName, emailAddress,
 							LocaleUtil.fromLanguageId(languageId), firstName,
-							middleName, lastName, prefixId, suffixId, jobTitle);
+							middleName, lastName, prefixId, suffixId, jobTitle,
+							ServiceContextFactory.getInstance(
+								AccountEntryUserRel.class.getName(),
+								actionRequest));
 			}
 			else {
 				accountEntryUserRel =
@@ -107,7 +111,10 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						accountEntryId, themeDisplay.getUserId(), screenName,
 						emailAddress, LocaleUtil.fromLanguageId(languageId),
 						firstName, middleName, lastName, prefixId, suffixId,
-						jobTitle);
+						jobTitle,
+						ServiceContextFactory.getInstance(
+							AccountEntryUserRel.class.getName(),
+							actionRequest));
 			}
 
 			String portletId = _portal.getPortletId(actionRequest);
@@ -134,7 +141,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
-				redirect = _http.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
 					accountEntryUserRel.getAccountUserId());
 
@@ -162,9 +169,6 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

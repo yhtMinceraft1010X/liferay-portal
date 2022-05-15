@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -39,7 +41,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyDateModified {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Team not sure of which steps should be done to assert Date modified
 		// AC Refactor ticket: LRAC-9277
@@ -98,7 +99,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyHierarchyPath {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Team not sure of which values or what steps are expected in this test
 		// AC Refactor ticket: LRAC-9279
@@ -215,7 +215,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyName {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Team not sure of which steps should be done to assert property Name, please check steps and update if necessary
 		// AC Refactor ticket: LRAC-9278
@@ -359,7 +358,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: the data takes some time to appear in the segment
 		// AC Refactor ticket: LRAC-9324
@@ -452,7 +450,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyParentOrganization {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: the data takes some time to appear in the segment
 		// AC Refactor ticket: LRAC-9323
@@ -549,7 +546,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyType {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary
 		// AC Refactor ticket: LRAC-9280

@@ -41,6 +41,7 @@ definition {
 	test AddFormInGlobal {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property testray.component.names = "Training";
 
@@ -70,7 +71,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -165,7 +166,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -890,13 +891,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -998,6 +999,7 @@ definition {
 	@description = "Verify that Data Provider can retreive data for guest users"
 	@priority = "5"
 	test DataProviderCanRetrieveDataForGuestUser {
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#DataProviderCanRetrieveDataForGuestUser";
 
@@ -1190,8 +1192,9 @@ definition {
 	@description = "This is a use case for LPS-50757."
 	@priority = "4"
 	test EditAllFormFieldsTypesUsedBySystemSettings {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldsTypesUsedBySystemSettings";
 
 		Navigator.openURL();
@@ -1369,6 +1372,8 @@ definition {
 			configurationCategory = "Infrastructure",
 			configurationName = "JavaScript Loader",
 			configurationScope = "System Scope");
+
+		Refresh();
 
 		for (var fieldName : list "applyVersioning,exposeGlobal") {
 			FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
@@ -1748,13 +1753,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -1909,13 +1914,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 

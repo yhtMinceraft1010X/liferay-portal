@@ -15,7 +15,9 @@
 package com.liferay.commerce.shop.by.diagram.service;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -51,13 +55,15 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CSDiagramEntryLocalServiceUtil
  * @generated
  */
+@CTAware
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface CSDiagramEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<CSDiagramEntry>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -100,7 +106,8 @@ public interface CSDiagramEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCSDiagramEntries(long cpDefinitionId);
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	 * Deletes the cs diagram entry from the database. Also notifies the appropriate model listeners.
@@ -111,10 +118,12 @@ public interface CSDiagramEntryLocalService
 	 *
 	 * @param csDiagramEntry the cs diagram entry
 	 * @return the cs diagram entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry);
+	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the cs diagram entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -306,5 +315,20 @@ public interface CSDiagramEntryLocalService
 			boolean diagram, int quantity, String sequence, String sku,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<CSDiagramEntry> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<CSDiagramEntry> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<CSDiagramEntry>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

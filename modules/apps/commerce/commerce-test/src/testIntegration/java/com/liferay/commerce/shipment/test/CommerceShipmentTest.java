@@ -296,15 +296,12 @@ public class CommerceShipmentTest {
 		Assert.assertEquals(
 			commerceOrder.getCommerceAccount(),
 			commerceShipment.getCommerceAccount());
-
 		Assert.assertEquals(
 			commerceOrder.getGroupId(), commerceShipment.getGroupId());
-
-		int commerceShipmentItemsCount =
+		Assert.assertEquals(
+			orderedQuantity,
 			_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
-				commerceShipment.getCommerceShipmentId());
-
-		Assert.assertEquals(orderedQuantity, commerceShipmentItemsCount);
+				commerceShipment.getCommerceShipmentId()));
 
 		List<CommerceShipmentItem> commerceShipmentItems =
 			_commerceShipmentItemLocalService.getCommerceShipmentItems(
@@ -317,7 +314,6 @@ public class CommerceShipmentTest {
 		Assert.assertEquals(
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceShipmentItem.getCommerceOrderItemId());
-
 		Assert.assertEquals(
 			commerceShipment, commerceShipmentItem.getCommerceShipment());
 	}
@@ -526,7 +522,7 @@ public class CommerceShipmentTest {
 				null, commerceShipment1.getCommerceShipmentId(),
 				commerceOrderItem1.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem1.getQuantity(),
+				commerceOrderItem1.getQuantity(), true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
 
@@ -535,7 +531,7 @@ public class CommerceShipmentTest {
 				null, commerceShipment2.getCommerceShipmentId(),
 				commerceOrderItem2.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem2.getQuantity(),
+				commerceOrderItem2.getQuantity(), true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
 
@@ -733,7 +729,7 @@ public class CommerceShipmentTest {
 			null, commerceShipment.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			orderedQuantity,
+			orderedQuantity, true,
 			ServiceContextTestUtil.getServiceContext(
 				commerceOrder.getGroupId()));
 	}
@@ -918,7 +914,8 @@ public class CommerceShipmentTest {
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItem.getCommerceShipmentItemId(),
-			newOrderedQuantity);
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			newOrderedQuantity, true);
 	}
 
 	@Test(expected = NoSuchShipmentItemException.class)
@@ -968,7 +965,8 @@ public class CommerceShipmentTest {
 			orderedQuantity, commerceContext);
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
-			0, orderedQuantity);
+			0, commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			orderedQuantity, true);
 	}
 
 	@Rule

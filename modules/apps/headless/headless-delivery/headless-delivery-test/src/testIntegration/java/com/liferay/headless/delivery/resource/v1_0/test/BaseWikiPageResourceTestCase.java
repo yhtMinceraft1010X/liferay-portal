@@ -56,7 +56,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -65,9 +65,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,8 +77,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -266,7 +266,8 @@ public abstract class BaseWikiPageResourceTestCase {
 	public void testGraphQLGetSiteWikiPageByExternalReferenceCode()
 		throws Exception {
 
-		WikiPage wikiPage = testGraphQLWikiPage_addWikiPage();
+		WikiPage wikiPage =
+			testGraphQLGetSiteWikiPageByExternalReferenceCode_addWikiPage();
 
 		Assert.assertTrue(
 			equals(
@@ -320,6 +321,13 @@ public abstract class BaseWikiPageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WikiPage
+			testGraphQLGetSiteWikiPageByExternalReferenceCode_addWikiPage()
+		throws Exception {
+
+		return testGraphQLWikiPage_addWikiPage();
 	}
 
 	@Test
@@ -459,6 +467,38 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetWikiNodeWikiPagesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null, null,
+				getFilterString(entityField, "eq", wikiPage1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(wikiPage1),
+				(List<WikiPage>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetWikiNodeWikiPagesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -534,9 +574,19 @@ public abstract class BaseWikiPageResourceTestCase {
 		testGetWikiNodeWikiPagesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, wikiPage1, wikiPage2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					wikiPage1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithSortDouble() throws Exception {
+		testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, wikiPage1, wikiPage2) -> {
+				BeanTestUtil.setProperty(wikiPage1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(wikiPage2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -545,8 +595,8 @@ public abstract class BaseWikiPageResourceTestCase {
 		testGetWikiNodeWikiPagesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, wikiPage1, wikiPage2) -> {
-				BeanUtils.setProperty(wikiPage1, entityField.getName(), 0);
-				BeanUtils.setProperty(wikiPage2, entityField.getName(), 1);
+				BeanTestUtil.setProperty(wikiPage1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(wikiPage2, entityField.getName(), 1);
 			});
 	}
 
@@ -559,27 +609,27 @@ public abstract class BaseWikiPageResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -587,12 +637,12 @@ public abstract class BaseWikiPageResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						wikiPage2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -794,7 +844,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWikiPage() throws Exception {
-		WikiPage wikiPage = testGraphQLWikiPage_addWikiPage();
+		WikiPage wikiPage = testGraphQLDeleteWikiPage_addWikiPage();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -807,7 +857,6 @@ public abstract class BaseWikiPageResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiPage"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -821,6 +870,12 @@ public abstract class BaseWikiPageResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected WikiPage testGraphQLDeleteWikiPage_addWikiPage()
+		throws Exception {
+
+		return testGraphQLWikiPage_addWikiPage();
 	}
 
 	@Test
@@ -841,7 +896,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWikiPage() throws Exception {
-		WikiPage wikiPage = testGraphQLWikiPage_addWikiPage();
+		WikiPage wikiPage = testGraphQLGetWikiPage_addWikiPage();
 
 		Assert.assertTrue(
 			equals(
@@ -878,6 +933,10 @@ public abstract class BaseWikiPageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WikiPage testGraphQLGetWikiPage_addWikiPage() throws Exception {
+		return testGraphQLWikiPage_addWikiPage();
 	}
 
 	@Test
@@ -1826,13 +1885,15 @@ public abstract class BaseWikiPageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfAttachments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(wikiPage.getNumberOfAttachments()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfWikiPages")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(wikiPage.getNumberOfWikiPages()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentWikiPageId")) {
@@ -1958,6 +2019,115 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected Company testCompany;
 	protected Group testGroup;
 
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
+
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -2032,18 +2202,6 @@ public abstract class BaseWikiPageResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseWikiPageResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

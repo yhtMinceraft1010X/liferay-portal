@@ -95,11 +95,14 @@ definition {
 		SAMLPortlet.addIdentityProviderConnection(
 			idpAttributeMapping = "${idpAttributeMapping}",
 			idpAttributeMappingText = "${idpAttributeMappingText}",
+			idpCustomFieldAttributeMapping = "${idpCustomFieldAttributeMapping}",
+			idpCustomFieldAttributeMappingText = "${idpCustomFieldAttributeMappingText}",
 			idpEntityId = "${idpEntityId}",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
 			idpNameId = "${idpEntityId}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
+			uploadMetadataXML = "${uploadMetadataXML}",
 			userMatchingAttributeIndex = "${userMatchingAttributeIndex}",
 			userResolution = "${userResolution}");
 
@@ -139,7 +142,8 @@ definition {
 			spEntityId = "${spEntityId}",
 			spKeepAliveURL = "${spKeepAliveURL}",
 			spMetadataURL = "${spURL}/c/portal/saml/metadata",
-			spNameId = "${spEntityId}");
+			spNameId = "${spEntityId}",
+			uploadMetadataXML = "${uploadMetadataXML}");
 
 		// Logout from Identity Provider host
 
@@ -228,8 +232,6 @@ definition {
 					specificURL = "${idpURL}",
 					userEmailAddress = "test@liferay.com");
 			}
-
-			Navigator.openSpecificURL(url = "${idpURL}");
 		}
 
 		SAML.goToSAMLAdmin(baseURL = "${idpURL}");
@@ -240,6 +242,7 @@ definition {
 
 		SAMLRole.configureCertificateAndPrivateKey(
 			certificateUsage = "SIGNING",
+			keystoreEnabled = "${keystoreEnabled}",
 			samlKeyPassword = "${samlEntityId}");
 
 		if (isSet(idpSessionIdleTimeout) || isSet(idpSessionMaximumAge)) {
@@ -261,22 +264,24 @@ definition {
 
 	@description = "Configures Liferay SAML as the SP."
 	macro configureLiferaySAMLAsSP {
-		if (isSet(userEmailAddress)) {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${spURL}",
-				userEmailAddress = "${userEmailAddress}");
-		}
-		else {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${spURL}",
-				userEmailAddress = "test@liferay.com");
-		}
+		Navigator.openSpecificURL(url = "${spURL}");
 
 		takeScreenshot();
 
-		Navigator.openSpecificURL(url = "${spURL}");
+		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			if (isSet(userEmailAddress)) {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "${userEmailAddress}");
+			}
+			else {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
 
 		takeScreenshot();
 
@@ -300,7 +305,10 @@ definition {
 		}
 
 		SAML.connectSPAndIdP(
-			idpAttributes = "${idpAttributes}",
+			idpAttributeMapping = "${idpAttributeMapping}",
+			idpAttributeMappingText = "${idpAttributeMappingText}",
+			idpCustomFieldAttributeMapping = "${idpCustomFieldAttributeMapping}",
+			idpCustomFieldAttributeMappingText = "${idpCustomFieldAttributeMappingText}",
 			idpEntityId = "samlidp",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpURL = "http://localhost:8080",
@@ -310,6 +318,7 @@ definition {
 			spEntityId = "${samlEntityId}",
 			spKeepAliveURL = "${spKeepAliveURL}",
 			spURL = "${spURL}",
+			sPUserEmailAddress = "${userEmailAddress}",
 			userMatchingAttributeIndex = "${userMatchingAttributeIndex}",
 			userResolution = "${userResolution}");
 	}
@@ -322,10 +331,18 @@ definition {
 		Navigator.openSpecificURL(url = "${spURL}");
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${spURL}",
-				userEmailAddress = "test@liferay.com");
+			if (isSet(sPUserEmailAddress)) {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "${sPUserEmailAddress}");
+			}
+			else {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "test@liferay.com");
+			}
 		}
 
 		SAML.goToSAMLAdmin(baseURL = "${spURL}");
@@ -333,7 +350,11 @@ definition {
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.addIdentityProviderConnection(
+			customFieldUserMatching = "${customFieldUserMatching}",
 			idpAttributeMapping = "${idpAttributeMapping}",
+			idpAttributeMappingText = "${idpAttributeMappingText}",
+			idpCustomFieldAttributeMapping = "${idpCustomFieldAttributeMapping}",
+			idpCustomFieldAttributeMappingText = "${idpCustomFieldAttributeMappingText}",
 			idpEntityId = "${idpEntityId}",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
@@ -713,6 +734,7 @@ definition {
 			idpSessionIdleTimeout = "${idpSessionIdleTimeout}",
 			idpSessionMaximumAge = "${idpSessionMaximumAge}",
 			idpURL = "${idpURL}",
+			keystoreEnabled = "${keystoreEnabled}",
 			samlEntityId = "${samlEntityId}",
 			userEmailAddress = "${userEmailAddress}");
 
@@ -725,20 +747,22 @@ definition {
 
 	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"
 	macro setupSP {
-		if (isSet(userEmailAddress)) {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${spURL}",
-				userEmailAddress = "${userEmailAddress}");
-		}
-		else {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${spURL}",
-				userEmailAddress = "test@liferay.com");
-		}
-
 		Navigator.openSpecificURL(url = "${spURL}");
+
+		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			if (isSet(userEmailAddress)) {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "${userEmailAddress}");
+			}
+			else {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${spURL}",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
 
 		SAML.goToSAMLAdmin(baseURL = "${spURL}");
 
@@ -756,6 +780,7 @@ definition {
 		else {
 			SAMLRole.configureCertificateAndPrivateKey(
 				certificateUsage = "SIGNING",
+				keystoreEnabled = "${keystoreEnabled}",
 				samlKeyPassword = "${samlEntityId}");
 		}
 

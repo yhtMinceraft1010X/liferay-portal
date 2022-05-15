@@ -136,6 +136,7 @@ definition {
 		Pause(locator1 = "1000");
 
 		Workflow.viewCompletedTask(
+			completedTask = "${completedTask}",
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",
 			multipleTasks = "${multipleTasks}",
 			taskPosition = "${taskPosition}",
@@ -562,9 +563,7 @@ definition {
 
 		Button.click(button = "Duplicate");
 
-		Type(
-			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
-			value1 = "${workflowCopyName}");
+		PortletEntry.inputTitle(title = "${workflowCopyName}");
 	}
 
 	macro duplicateSingleApproverWorkflow {
@@ -581,9 +580,7 @@ definition {
 
 		Button.click(button = "Duplicate");
 
-		Type(
-			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
-			value1 = "${workflowName}");
+		PortletEntry.inputTitle(title = "${workflowName}");
 
 		ScrollWebElementIntoView(
 			key_text = "Update",
@@ -681,6 +678,10 @@ definition {
 		Workflow.gotoPreviewView();
 	}
 
+	macro openNotifications {
+		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=42619&p_p_auth=1njFlr6I");
+	}
+
 	macro openWorkflowAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_SiteAdministrationWorkflowPortlet");
 	}
@@ -718,11 +719,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Workflow.viewDefinitionPublicationStatus(status = "Not Published");
-
 		PortletEntry.publish();
-
-		Workflow.viewDefinitionPublicationStatus(status = "Published");
 	}
 
 	macro publishInvalidWorkflowDefinition {
@@ -871,6 +868,15 @@ definition {
 		Click(locator1 = "WorkflowConfiguration#PROCESS_BUILDER_SEARCH_BAR_BUTTON");
 
 		Pause(locator1 = "1000");
+	}
+
+	macro setWorkflowToMiniumChannel {
+		Select(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${workflowDefinition}");
+
+		Button.clickSave();
 	}
 
 	macro tearDownPortalWorkflow {
@@ -1244,6 +1250,17 @@ definition {
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
+
+		if ("${completedTask}" == "viewDetails") {
+			AssertClick(
+				key_workflowAssetTitle = "${workflowAssetTitle}",
+				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
+				value1 = "${workflowAssetTitle}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
+				value1 = "${workflowAssetTitle}");
+		}
 	}
 
 	macro viewCompletedTasksTaskNotPresentCP {

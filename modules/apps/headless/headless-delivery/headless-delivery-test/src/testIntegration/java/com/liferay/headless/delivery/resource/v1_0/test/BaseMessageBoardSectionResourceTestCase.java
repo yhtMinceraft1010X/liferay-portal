@@ -57,7 +57,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -66,9 +66,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -76,8 +78,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -237,7 +237,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	@Test
 	public void testGraphQLDeleteMessageBoardSection() throws Exception {
 		MessageBoardSection messageBoardSection =
-			testGraphQLMessageBoardSection_addMessageBoardSection();
+			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -252,7 +252,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteMessageBoardSection"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -268,6 +267,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected MessageBoardSection
+			testGraphQLDeleteMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test
@@ -294,7 +300,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	@Test
 	public void testGraphQLGetMessageBoardSection() throws Exception {
 		MessageBoardSection messageBoardSection =
-			testGraphQLMessageBoardSection_addMessageBoardSection();
+			testGraphQLGetMessageBoardSection_addMessageBoardSection();
 
 		Assert.assertTrue(
 			equals(
@@ -337,6 +343,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				"Object/code"));
 	}
 
+	protected MessageBoardSection
+			testGraphQLGetMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection();
+	}
+
 	@Test
 	public void testPatchMessageBoardSection() throws Exception {
 		MessageBoardSection postMessageBoardSection =
@@ -354,8 +367,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection expectedPatchMessageBoardSection =
 			postMessageBoardSection.clone();
 
-		_beanUtilsBean.copyProperties(
-			expectedPatchMessageBoardSection, randomPatchMessageBoardSection);
+		BeanTestUtil.copyProperties(
+			randomPatchMessageBoardSection, expectedPatchMessageBoardSection);
 
 		MessageBoardSection getMessageBoardSection =
 			messageBoardSectionResource.getMessageBoardSection(
@@ -624,6 +637,44 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetMessageBoardSectionMessageBoardSectionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentMessageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
+
+		MessageBoardSection messageBoardSection1 =
+			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection2 =
+			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardSection> page =
+				messageBoardSectionResource.
+					getMessageBoardSectionMessageBoardSectionsPage(
+						parentMessageBoardSectionId, null, null,
+						getFilterString(
+							entityField, "eq", messageBoardSection1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardSection1),
+				(List<MessageBoardSection>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardSectionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -726,9 +777,23 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		testGetMessageBoardSectionMessageBoardSectionsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, messageBoardSection1, messageBoardSection2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardSectionMessageBoardSectionsPageWithSortDouble()
+		throws Exception {
+
+		testGetMessageBoardSectionMessageBoardSectionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardSection1, messageBoardSection2) -> {
+				BeanTestUtil.setProperty(
+					messageBoardSection1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					messageBoardSection2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -739,9 +804,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		testGetMessageBoardSectionMessageBoardSectionsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, messageBoardSection1, messageBoardSection2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection1, entityField.getName(), 0);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection2, entityField.getName(), 1);
 			});
 	}
@@ -757,27 +822,27 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -785,12 +850,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -994,6 +1059,41 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardSectionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
+
+		MessageBoardSection messageBoardSection1 =
+			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection2 =
+			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardSection> page =
+				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
+					siteId, null, null, null,
+					getFilterString(entityField, "eq", messageBoardSection1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardSection1),
+				(List<MessageBoardSection>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteMessageBoardSectionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1086,9 +1186,23 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		testGetSiteMessageBoardSectionsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, messageBoardSection1, messageBoardSection2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteMessageBoardSectionsPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteMessageBoardSectionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardSection1, messageBoardSection2) -> {
+				BeanTestUtil.setProperty(
+					messageBoardSection1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					messageBoardSection2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1099,9 +1213,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		testGetSiteMessageBoardSectionsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, messageBoardSection1, messageBoardSection2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection1, entityField.getName(), 0);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					messageBoardSection2, entityField.getName(), 1);
 			});
 	}
@@ -1117,27 +1231,27 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -1145,12 +1259,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						messageBoardSection2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -1258,9 +1372,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			0, messageBoardSectionsJSONObject.get("totalCount"));
 
 		MessageBoardSection messageBoardSection1 =
-			testGraphQLMessageBoardSection_addMessageBoardSection();
+			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection();
 		MessageBoardSection messageBoardSection2 =
-			testGraphQLMessageBoardSection_addMessageBoardSection();
+			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection();
 
 		messageBoardSectionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1274,6 +1388,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(
 				MessageBoardSectionSerDes.toDTOs(
 					messageBoardSectionsJSONObject.getString("items"))));
+	}
+
+	protected MessageBoardSection
+			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection()
+		throws Exception {
+
+		return testGraphQLMessageBoardSection_addMessageBoardSection();
 	}
 
 	@Test
@@ -2141,13 +2262,19 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardSections")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardSections()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardThreads")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardThreads()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentMessageBoardSectionId")) {
@@ -2260,6 +2387,115 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	protected Company testCompany;
 	protected Group testGroup;
 
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
+
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -2334,18 +2570,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseMessageBoardSectionResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

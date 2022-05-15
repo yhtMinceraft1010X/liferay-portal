@@ -1,0 +1,337 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddMultipleSKUToTheCart {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8146 AddMultipleSKUToTheCart pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertDefaultTypeDiagramStoreFront {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8068 AssertDefaultTypeDiagramStoreFront pending implementation
+
+	}
+
+	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."
+	@priority = "4"
+	test AssertDiagramFileIsRendered {
+		property portal.acceptance = "false";
+
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 2 pins linked to an SKU within the image") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93020");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When I navigate to a Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("And search for the previously created Diagram product") {
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+		}
+
+		task ("When I click on it") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then I am presented with the correct related product details page") {
+			AssertElementPresent(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+			AssertElementPresent(
+				key_pinNumber = "2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertDiagramThumbnailIntoSearchResults {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8129 AssertDiagramThumbnailIntoSearchResults pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertIfTheQuantityFromThePopupAreCorrect {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8209 AssertIfTheQuantityFromThePopupAreCorrect pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertSVGTypeDiagramStoreFront {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8078 AssertSVGTypeDiagramStoreFront pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyAllPinTypeAndMappedProductInformation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8147 VerifyAllPinTypeAndMappedProductInformation pending implementation
+
+	}
+
+	@description = "COMMERCE-8265. Breadcrumb widget works with Product Details widget."
+	@priority = "4"
+	test VerifyBreadcrumbWidget {
+		property portal.acceptance = "false";
+
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 1 pin linked to an SKU within the image") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When I go on Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("And open the Diagram that was created before") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then I can see the DXP Breadcrumb widget") {
+			AssertVisible(locator1 = "BreadcrumbPortlet#BREADCRUMB");
+		}
+
+		task ("And if I click on "Catalog"") {
+			Click(
+				key_breadcrumbName = "Catalog",
+				locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY");
+		}
+
+		task ("Then I will be redirected to the Minium Catalog page") {
+			AssertLocation.assertPartialLocation(value1 = "/minium/catalog");
+		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyIfDiagramWithProductPublisherWidgets {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8358 VerifyIfDiagramWithProductPublisherWidgets pending implementation
+
+	}
+
+	@description = "COMMERCE-8565. Add Product Name and Description to the default Diagram product renderer."
+	@priority = "4"
+	test VerifyNameAndDescriptionDefaultRender {
+		property portal.acceptance = "false";
+
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and "Short Description" field written inside") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+		}
+
+		task ("When I go into the product details of the diagram on Minium") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then I should see the name and description of the diagram that was previously created") {
+			AssertElementPresent(
+				key_productName = "Diagram Test",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_NAME");
+
+			AssertElementPresent(
+				key_productDescription = "Diagram Test Short Description",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_DESCRIPTION");
+		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyTheVisibilityRules {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8153 VerifyTheVisibilityRules pending implementation
+
+	}
+
+	@description = "COMMERCE-8566. Tooltip pin information can be seen on the product with diagrams, if click the product name, it can redirect to the product details page."
+	@priority = "4"
+	test VerifyTooltipPinInformation {
+		property portal.acceptance = "false";
+
+		task ("Given a Diagram with the "Type" set to "Default", an image (Commerce_Black.jpg) uploaded as "Diagram File" and 1 mapper product (MIN93015)") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+		}
+
+		task ("When I go to the Product Details page of the product on Minium") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("And click on the pin") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+		}
+
+		task ("Then the tooltip should display the SKU (MIN93015) and the name of the product (ABS Sensor)") {
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				sku = "MIN93015");
+		}
+
+		task ("And when I click on the product name inside the tooltip") {
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+		}
+
+		task ("Then I should be redirected to the ABS Sensor product details page") {
+			FrontStore.assertProductDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productSKU = "MIN93015");
+		}
+	}
+
+}

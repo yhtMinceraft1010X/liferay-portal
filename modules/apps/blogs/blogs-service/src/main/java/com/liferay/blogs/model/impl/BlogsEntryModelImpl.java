@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -305,34 +304,6 @@ public class BlogsEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, BlogsEntry>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			BlogsEntry.class.getClassLoader(), BlogsEntry.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<BlogsEntry> constructor =
-				(Constructor<BlogsEntry>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<BlogsEntry, Object>>
@@ -1187,7 +1158,8 @@ public class BlogsEntryModelImpl
 		}
 
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if (Validator.isNotNull(
 				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
@@ -1231,16 +1203,6 @@ public class BlogsEntryModelImpl
 		return getPrimaryKey();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
-	}
-
 	@Override
 	public boolean isInTrash() {
 		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
@@ -1254,7 +1216,8 @@ public class BlogsEntryModelImpl
 	@Override
 	public boolean isInTrashContainer() {
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if ((trashHandler == null) ||
 			Validator.isNull(
@@ -1904,7 +1867,9 @@ public class BlogsEntryModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, BlogsEntry>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					BlogsEntry.class, ModelWrapper.class);
 
 	}
 

@@ -12,15 +12,20 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
+import {useFeatureFlag} from 'data-engine-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import SidePanelContent from '../SidePanelContent';
-import BasicInfoScreen from './BasicInfoScreen';
-import ViewBuilderScreen from './ViewBuilderScreen';
+import {invalidateRequired} from '../../hooks/useForm';
+import {defaultLanguageId} from '../../utils/locale';
+import SidePanelContent, {closeSidePanel, openToast} from '../SidePanelContent';
+import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
+import {DefaultFilterScreen} from './DefaultFilterScreen/DefaultFilterScreen';
+import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
+import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
 import ViewContext, {TYPES, ViewContextProvider} from './context';
-import {TObjectField, TObjectView} from './types';
+import {TObjectField, TObjectView, TWorkflowStatus} from './types';
 
 const TABS = [
 	{
@@ -30,6 +35,10 @@ const TABS = [
 	{
 		Component: ViewBuilderScreen,
 		label: Liferay.Language.get('view-builder'),
+	},
+	{
+		Component: DefaultSortScreen,
+		label: Liferay.Language.get('default-sort'),
 	},
 ];
 
@@ -46,18 +55,21 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const onCloseSidePanel = () => {
-		const parentWindow = Liferay.Util.getOpener();
+	const flags = useFeatureFlag();
 
-		parentWindow.Liferay.fire('close-side-panel');
-	};
+	if (TABS.length < 4 && flags['LPS-144957']) {
+		TABS.push({
+			Component: DefaultFilterScreen,
+			label: Liferay.Language.get('default-filters'),
+		});
+	}
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectViewResponse = await Liferay.Util.fetch(
+			const objectViewResponse = await fetch(
 				`/o/object-admin/v1.0/object-views/${objectViewId}`,
 				{
-					header: HEADERS,
+					headers: HEADERS,
 					method: 'GET',
 				}
 			);
@@ -67,9 +79,10 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				name,
 				objectDefinitionId,
 				objectViewColumns,
-			} = await objectViewResponse.json();
+				objectViewSortColumns,
+			} = (await objectViewResponse.json()) as any;
 
-			const objectFieldsResponse = await Liferay.Util.fetch(
+			const objectFieldsResponse = await fetch(
 				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields`,
 				{
 					headers: HEADERS,
@@ -82,6 +95,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				name,
 				objectDefinitionId,
 				objectViewColumns,
+				objectViewSortColumns,
 			};
 
 			dispatch({
@@ -93,7 +107,9 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			const {
 				items: objectFields,
-			}: {items: TObjectField[]} = await objectFieldsResponse.json();
+			}: {
+				items: TObjectField[];
+			} = (await objectFieldsResponse.json()) as any;
 
 			dispatch({
 				payload: {
@@ -109,30 +125,56 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		makeFetch();
 	}, [objectViewId, dispatch]);
 
-	const removeLabelFromObjectView = (objectView: TObjectView) => {
-		const {objectViewColumns} = objectView;
+	const removeUnnecessaryPropertiesFromObjectView = (
+		objectView: TObjectView
+	) => {
+		const {objectViewColumns, objectViewSortColumns} = objectView;
 
 		const newObjectViewColumns = objectViewColumns.map((viewColumn) => {
 			return {
+				label: viewColumn.label,
 				objectFieldName: viewColumn.objectFieldName,
 				priority: viewColumn.priority,
 			};
 		});
 
+		const newObjectViewSortColumns = objectViewSortColumns.map(
+			(sortColumn) => {
+				return {
+					objectFieldName: sortColumn.objectFieldName,
+					priority: sortColumn.priority,
+					sortOrder: sortColumn.sortOrder,
+				};
+			}
+		);
+
 		const newObjectView = {
 			...objectView,
 			objectViewColumns: newObjectViewColumns,
+			objectViewSortColumns: newObjectViewSortColumns,
 		};
 
 		return newObjectView;
 	};
 
 	const handleSaveObjectView = async () => {
-		const newObjectView = removeLabelFromObjectView(objectView);
+		const newObjectView = removeUnnecessaryPropertiesFromObjectView(
+			objectView
+		);
+
 		const {objectViewColumns} = newObjectView;
 
+		if (invalidateRequired(objectView.name[defaultLanguageId])) {
+			openToast({
+				message: Liferay.Language.get('a-name-is-required'),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
-			const response = await Liferay.Util.fetch(
+			const response = await fetch(
 				`/o/object-admin/v1.0/object-views/${objectViewId}`,
 				{
 					body: JSON.stringify(newObjectView),
@@ -145,31 +187,27 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				window.location.reload();
 			}
 			else if (response.ok) {
-				Liferay.Util.openToast({
+				closeSidePanel();
+
+				openToast({
 					message: Liferay.Language.get(
 						'modifications-saved-successfully'
 					),
-					type: 'success',
 				});
-
-				setTimeout(() => {
-					const parentWindow = Liferay.Util.getOpener();
-					parentWindow.Liferay.fire('close-side-panel');
-				}, 1500);
 			}
 			else {
 				const {
 					title = Liferay.Language.get('an-error-occurred'),
-				} = await response.json();
+				} = (await response.json()) as any;
 
-				Liferay.Util.openToast({
+				openToast({
 					message: title,
 					type: 'danger',
 				});
 			}
 		}
 		else {
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'default-view-must-have-at-least-one-column'
 				),
@@ -179,7 +217,11 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	};
 
 	return (
-		<>
+		<SidePanelContent
+			onSave={handleSaveObjectView}
+			readOnly={isViewOnly || loading}
+			title={Liferay.Language.get('custom-view')}
+		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item
@@ -192,51 +234,35 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				))}
 			</ClayTabs>
 
-			<SidePanelContent className="side-panel-content--custom-view">
-				<SidePanelContent.Body>
-					<ClayTabs.Content activeIndex={activeIndex} fade>
-						{TABS.map(({Component}, index) => (
-							<ClayTabs.TabPane key={index}>
-								{!loading && <Component />}
-							</ClayTabs.TabPane>
-						))}
-					</ClayTabs.Content>
-				</SidePanelContent.Body>
-
-				{!loading && (
-					<SidePanelContent.Footer>
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onCloseSidePanel}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								disabled={isViewOnly}
-								onClick={() => handleSaveObjectView()}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayButton.Group>
-					</SidePanelContent.Footer>
-				)}
-			</SidePanelContent>
-		</>
+			<ClayTabs.Content activeIndex={activeIndex} fade>
+				{TABS.map(({Component}, index) => (
+					<ClayTabs.TabPane key={index}>
+						{!loading && <Component />}
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
+		</SidePanelContent>
 	);
 };
-interface ICustonViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 }
 
-const CustomViewWrapper: React.FC<ICustonViewWrapperProps> = ({
+const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
 	isViewOnly,
 	objectViewId,
+	workflowStatusJSONArray,
 }) => {
 	return (
-		<ViewContextProvider value={{isViewOnly, objectViewId}}>
+		<ViewContextProvider
+			value={{
+				isViewOnly,
+				objectViewId,
+				workflowStatusJSONArray,
+			}}
+		>
 			<CustomView />
 		</ViewContextProvider>
 	);

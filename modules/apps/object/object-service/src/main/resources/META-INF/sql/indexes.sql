@@ -1,15 +1,17 @@
 create index IX_684FC85D on ObjectAction (objectDefinitionId, active_, objectActionTriggerKey[$COLUMN_LENGTH:75$]);
 create index IX_BA9B4A2F on ObjectAction (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_384C6F1F on ObjectDefinition (companyId, active_, status);
 create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, status);
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
-create unique index IX_FDFF4146 on ObjectEntry (groupId, companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_FDFF4146 on ObjectEntry (groupId, companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_7403EBB8 on ObjectEntry (groupId, objectDefinitionId, status);
 create index IX_A388E5A0 on ObjectEntry (objectDefinitionId, status);
+create index IX_897D0EF4 on ObjectEntry (userId, objectDefinitionId);
 create index IX_49B9450D on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_5AF9AACF on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -35,6 +37,7 @@ create index IX_FA14DE56 on ObjectLayoutRow (objectLayoutBoxId);
 create index IX_644C876B on ObjectLayoutRow (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_F01F1EEA on ObjectLayoutTab (objectLayoutId);
+create index IX_4CC508B8 on ObjectLayoutTab (objectRelationshipId);
 create index IX_94D361A6 on ObjectLayoutTab (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_A71785B6 on ObjectRelationship (objectDefinitionId1, name[$COLUMN_LENGTH:75$]);
@@ -52,6 +55,9 @@ create index IX_C771CDE on ObjectView (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_B7B14E3 on ObjectViewColumn (objectViewId, objectFieldName[$COLUMN_LENGTH:75$]);
 create index IX_F3077A54 on ObjectViewColumn (uuid_[$COLUMN_LENGTH:75$], companyId);
+
+create index IX_B8CD6D4B on ObjectViewFilterColumn (objectViewId, objectFieldName[$COLUMN_LENGTH:75$]);
+create index IX_3C598EC on ObjectViewFilterColumn (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_55C88365 on ObjectViewSortColumn (objectViewId, objectFieldName[$COLUMN_LENGTH:75$]);
 create index IX_29BEA092 on ObjectViewSortColumn (uuid_[$COLUMN_LENGTH:75$], companyId);

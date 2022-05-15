@@ -57,6 +57,7 @@ html#{$cadmin-selector} {
 			}
 
 			.list-group-keywords-list,
+			.list-group-countries-list,
 			.list-group-pages-list {
 				li {
 					border-width: 0;
@@ -159,6 +160,22 @@ html#{$cadmin-selector} {
 
 				tbody > tr {
 					height: 30px;
+				}
+			}
+
+			.traffic-source-detail-drawer {
+				background: white;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 99;
+			}
+			&-main {
+				visibility: visible;
+				&--hide {
+					visibility: hidden;
 				}
 			}
 		}

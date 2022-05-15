@@ -16,7 +16,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import WidgetService from '../services/WidgetService';
-import {useSelector} from './StoreContext';
+import {useSelector, useSelectorRef} from './StoreContext';
 
 const WidgetsContext = React.createContext([]);
 
@@ -24,30 +24,104 @@ export function useWidgets() {
 	return useContext(WidgetsContext);
 }
 
-export function WidgetsContextProvider({children}) {
-	const fragmentEntryLinksIds = useSelector((state) =>
-		Object.values(state.fragmentEntryLinks)
-			.filter(({portletId, removed}) => portletId && !removed)
-			.map(({fragmentEntryLinkId}) => fragmentEntryLinkId)
-			.join(',')
-	);
+function normalizePortlets(portlets, fragmentEntryLinks) {
+	return portlets.map((portlet) => {
+		const normalizedPortlet = {
+			...portlet,
+			used: Object.values(fragmentEntryLinks).some(
+				({portletId}) => portlet.portletId === portletId
+			),
+		};
 
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+		if (portlet.portletItems?.length) {
+			normalizedPortlet.portletItems = normalizePortlets(
+				portlet.portletItems,
+				fragmentEntryLinks
+			);
+		}
+
+		return normalizedPortlet;
+	});
+}
+
+function normalizeCategories(categories, fragmentEntryLinks) {
+	return categories.map((category) => {
+		const normalizedCategory = {
+			...category,
+			portlets: normalizePortlets(category.portlets, fragmentEntryLinks),
+		};
+
+		if (category.categories?.length) {
+			normalizedCategory.categories = normalizeCategories(
+				category.categories,
+				fragmentEntryLinks
+			);
+		}
+
+		return normalizedCategory;
+	});
+}
+
+export function WidgetsContextProvider({children}) {
 	const [widgets, setWidgets] = useState([]);
 
+	const fragmentEntryLinksIds = useSelector((state) => {
+		const nextSegmentsExperienceId = selectSegmentsExperienceId(state);
+
+		return Object.values(state.fragmentEntryLinks)
+			.filter(
+				({portletId, removed, ...fragmentEntryLink}) =>
+					portletId &&
+					!removed &&
+					fragmentEntryLink.segmentsExperienceId ===
+						nextSegmentsExperienceId
+			)
+			.map(({fragmentEntryLinkId}) => fragmentEntryLinkId)
+			.join(',');
+	});
+
+	const fragmentEntryLinksRef = useSelectorRef((state) => {
+		const nextSegmentsExperienceId = selectSegmentsExperienceId(state);
+
+		return Object.values(state.fragmentEntryLinks).filter(
+			({portletId, removed, ...fragmentEntryLink}) =>
+				portletId &&
+				!removed &&
+				fragmentEntryLink.segmentsExperienceId ===
+					nextSegmentsExperienceId
+		);
+	});
+
 	useEffect(() => {
-		WidgetService.getWidgets(segmentsExperienceId).then(setWidgets);
-	}, [fragmentEntryLinksIds, segmentsExperienceId]);
+		WidgetService.getWidgets().then((categories) =>
+			setWidgets(
+				normalizeCategories(categories, fragmentEntryLinksRef.current)
+			)
+		);
+	}, [fragmentEntryLinksRef]);
+
+	useEffect(() => {
+		setWidgets((currentWidgets) =>
+			normalizeCategories(currentWidgets, fragmentEntryLinksRef.current)
+		);
+	}, [fragmentEntryLinksIds, fragmentEntryLinksRef]);
 
 	useEffect(() => {
 		const handler = Liferay.on('addPortletConfigurationTemplate', () => {
-			WidgetService.getWidgets(segmentsExperienceId).then(setWidgets);
+			WidgetService.getWidgets().then((categories) =>
+				setWidgets(
+					normalizeCategories(
+						categories,
+						fragmentEntryLinksRef.current
+					)
+				)
+			);
 		});
 
 		return () => {
 			handler.detach();
 		};
-	}, [segmentsExperienceId]);
+	}, [fragmentEntryLinksRef]);
 
 	return (
 		<WidgetsContext.Provider value={widgets}>

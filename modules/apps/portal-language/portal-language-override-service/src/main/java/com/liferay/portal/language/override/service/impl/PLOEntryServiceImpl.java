@@ -22,6 +22,7 @@ import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,6 +40,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
+
+	@Override
+	public PLOEntry addOrUpdatePLOEntry(
+			String key, String languageId, String value)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		_portalPermission.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		return ploEntryLocalService.addOrUpdatePLOEntry(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			key, languageId, value);
+	}
 
 	@Override
 	public void deletePLOEntries(String key) throws PortalException {
@@ -62,6 +78,22 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 		return ploEntryLocalService.deletePLOEntry(
 			permissionChecker.getCompanyId(), key, languageId);
+	}
+
+	@Override
+	public List<PLOEntry> getPLOEntries(long companyId) throws PortalException {
+		_portalPermission.check(
+			getPermissionChecker(), PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		return ploEntryLocalService.getPLOEntries(companyId);
+	}
+
+	@Override
+	public int getPLOEntriesCount(long companyId) throws PortalException {
+		_portalPermission.check(
+			getPermissionChecker(), PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		return ploEntryLocalService.getPLOEntriesCount(companyId);
 	}
 
 	@Override

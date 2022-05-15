@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -585,11 +587,34 @@ public abstract class BaseChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer =
-			channel -> postChannel(channel);
+		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer = null;
 
-		for (Channel channel : channels) {
-			channelUnsafeConsumer.accept(channel);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			channelUnsafeConsumer = channel -> postChannel(channel);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			channelUnsafeConsumer =
+				channel -> putChannelByExternalReferenceCode(
+					channel.getExternalReferenceCode(), channel);
+		}
+
+		if (channelUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Channel");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(channels, channelUnsafeConsumer);
+		}
+		else {
+			for (Channel channel : channels) {
+				channelUnsafeConsumer.accept(channel);
+			}
 		}
 	}
 
@@ -617,6 +642,10 @@ public abstract class BaseChannelResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -656,16 +685,51 @@ public abstract class BaseChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Channel channel : channels) {
-			putChannel(
+		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			channelUnsafeConsumer = channel -> patchChannel(
 				channel.getId() != null ? channel.getId() :
 					Long.parseLong((String)parameters.get("channelId")),
 				channel);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			channelUnsafeConsumer = channel -> putChannel(
+				channel.getId() != null ? channel.getId() :
+					Long.parseLong((String)parameters.get("channelId")),
+				channel);
+		}
+
+		if (channelUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Channel");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(channels, channelUnsafeConsumer);
+		}
+		else {
+			for (Channel channel : channels) {
+				channelUnsafeConsumer.accept(channel);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Channel>, UnsafeConsumer<Channel, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -726,6 +790,14 @@ public abstract class BaseChannelResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -819,6 +891,9 @@ public abstract class BaseChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Channel>, UnsafeConsumer<Channel, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

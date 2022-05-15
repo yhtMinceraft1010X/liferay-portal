@@ -12,48 +12,54 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
 import './Card.scss';
 
-const Card: React.FC<React.HTMLAttributes<HTMLElement>> & {
-	Body: React.FC<ICardBodyProps>;
-	Header: React.FC<ICardHeaderProps>;
-} = ({children, className, ...otherProps}) => {
+export default function Card({
+	children,
+	className,
+	title,
+	tooltip,
+	...otherProps
+}: IProps) {
 	return (
 		<div
 			{...otherProps}
-			className={classNames(className, 'object-admin-card')}
+			className={classNames(className, 'lfr-objects__card')}
 		>
-			{children}
+			<div className="lfr-objects__card-header">
+				<h3 className="lfr-objects__card-title">{title}</h3>
+
+				{tooltip && (
+					<span
+						className="ml-2"
+						data-tooltip-align="top"
+						title={tooltip.content}
+					>
+						<ClayIcon
+							className="lfr-objects__card-header-tooltip-icon"
+							symbol={tooltip.symbol}
+						/>
+					</span>
+				)}
+			</div>
+
+			<div className={classNames(className, 'lfr-objects__card-body')}>
+				{children}
+			</div>
 		</div>
 	);
-};
-
-interface ICardBodyProps extends React.HTMLAttributes<HTMLElement> {}
-
-const CardBody: React.FC<ICardBodyProps> = ({children, className}) => {
-	return (
-		<div className={classNames(className, 'object-admin-card__body')}>
-			{children}
-		</div>
-	);
-};
-
-interface ICardHeaderProps extends React.HTMLAttributes<HTMLElement> {
-	title: string;
 }
 
-const CardHeader: React.FC<ICardHeaderProps> = ({title}) => {
-	return (
-		<div className="object-admin-card__header">
-			<h3 className="object-admin-card__title">{title}</h3>
-		</div>
-	);
-};
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
+	title: string;
+	tooltip?: ITooltip | null;
+}
 
-Card.Body = CardBody;
-Card.Header = CardHeader;
-
-export default Card;
+interface ITooltip {
+	content: string;
+	symbol: string;
+}

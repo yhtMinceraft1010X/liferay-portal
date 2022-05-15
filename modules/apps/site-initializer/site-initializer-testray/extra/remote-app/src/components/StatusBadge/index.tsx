@@ -22,6 +22,7 @@ const statusBarClassNames: any = {
 	passed: 'label-inverse-success',
 	self: 'label-inverse-info',
 	test_fix: 'label-tonal-success',
+	untested: 'label-inverse-secondary',
 };
 
 export type StatusBadgeProps = {
@@ -31,8 +32,7 @@ export type StatusBadgeProps = {
 const StatusBadge: React.FC<StatusBadgeProps> = ({children, type}) => (
 	<span
 		className={classNames(
-			'label',
-			'text-uppercase',
+			'label text-uppercase text-nowrap',
 			statusBarClassNames[type] || type
 		)}
 	>

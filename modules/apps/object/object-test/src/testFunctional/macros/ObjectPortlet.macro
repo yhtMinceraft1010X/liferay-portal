@@ -24,6 +24,13 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro assertColumnLabelEntries {
+		AssertElementPresent(
+			key_sortFieldName = "${columnLabelName}",
+			locator1 = "ObjectPortlet#SORT_FIELD",
+			value1 = "${columnLabelName}");
+	}
+
 	macro assertDeleteEntryButtonNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",
@@ -40,6 +47,12 @@ definition {
 
 	macro assertEntryColumnNotPresent {
 		AssertElementNotPresent(
+			key_column = "${column}",
+			locator1 = "ObjectPortlet#ENTRY_COLUMN");
+	}
+
+	macro assertEntryColumnPresent {
+		AssertElementPresent(
 			key_column = "${column}",
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
@@ -195,8 +208,8 @@ definition {
 
 	macro assertRelationshipEntrySearchResultsPresent {
 		AssertElementPresent(
-			key_entry = "${entry}",
-			locator1 = "ObjectPortlet#SEARCH_RESULT_RELATIONSHIP_ENTRY");
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
+			value1 = "${entry}");
 	}
 
 	macro assertUserCanNotUpdateEntryWithoutPermission {
@@ -241,6 +254,25 @@ definition {
 		Click(
 			key_picklistOption = "${entryOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+	}
+
+	macro chooseEntryOnRelationshipFieldSpecific {
+		Click(
+			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC");
+
+		KeyPress(
+			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC",
+			value1 = "\BACK_SPACE");
+
+		Click(
+			key_picklistOption = "${entryOption}",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
 	}
 
 	macro deleteEntry {

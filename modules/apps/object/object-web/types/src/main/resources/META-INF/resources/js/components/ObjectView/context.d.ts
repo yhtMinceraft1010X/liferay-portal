@@ -13,21 +13,45 @@
  */
 
 import React from 'react';
-import {TAction, TState} from './types';
+import {TAction, TState, TWorkflowStatus} from './types';
 interface IViewContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 declare const ViewContext: React.Context<IViewContextProps>;
+export declare const METADATAS: {
+	businessType: string;
+	checked: boolean;
+	filtered: boolean;
+	id: number;
+	indexed: boolean;
+	indexedAsKeyword: boolean;
+	indexedLanguageId: string;
+	label: {
+		[x: string]: string;
+	};
+	listTypeDefinitionId: boolean;
+	name: string;
+	required: boolean;
+	type: string;
+}[];
 export declare enum TYPES {
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_VIEW = 'ADD_OBJECT_VIEW',
 	ADD_OBJECT_CUSTOM_VIEW_FIELD = 'ADD_OBJECT_CUSTOM_VIEW_FIELD',
 	ADD_OBJECT_VIEW_COLUMN = 'ADD_OBJECT_VIEW_COLUMN',
+	ADD_OBJECT_VIEW_SORT_COLUMN = 'ADD_OBJECT_VIEW_SORT_COLUMN',
+	ADD_OBJECT_VIEW_FILTER_COLUMN = 'ADD_OBJECT_VIEW_FILTER_COLUMN',
 	CHANGE_OBJECT_VIEW_NAME = 'CHANGE_OBJECT_VIEW_NAME',
 	CHANGE_OBJECT_VIEW_COLUMN_ORDER = 'CHANGE_OBJECT_VIEW_COLUMN_ORDER',
+	CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER = 'CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER',
 	DELETE_OBJECT_VIEW_COLUMN = 'DELETE_OBJECT_VIEW_COLUMN',
+	DELETE_OBJECT_VIEW_SORT_COLUMN = 'DELETE_OBJECT_VIEW_SORT_COLUMN',
+	DELETE_OBJECT_VIEW_FILTER_COLUMN = 'DELETE_OBJECT_VIEW_FILTER_COLUMN',
 	DELETE_OBJECT_CUSTOM_VIEW_FIELD = 'DELETE_OBJECT_CUSTOM_VIEW_FIELD',
+	EDIT_OBJECT_VIEW_COLUMN_LABEL = 'EDIT_OBJECT_VIEW_COLUMN_LABEL',
+	EDIT_OBJECT_VIEW_FILTER_COLUMN = 'EDIT_OBJECT_VIEW_FILTER_COLUMN',
+	EDIT_OBJECT_VIEW_SORT_COLUMN_SORT_ORDER = 'EDIT_OBJECT_VIEW_SORT_COLUMN_SORT_ORDER',
 	SET_OBJECT_VIEW_AS_DEFAULT = 'SET_OBJECT_VIEW_AS_DEFAULT',
 }
 declare const initialState: TState;
@@ -35,6 +59,7 @@ interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
 		isViewOnly: boolean;
 		objectViewId: string;
+		workflowStatusJSONArray: TWorkflowStatus[];
 	};
 }
 export declare function ViewContextProvider({

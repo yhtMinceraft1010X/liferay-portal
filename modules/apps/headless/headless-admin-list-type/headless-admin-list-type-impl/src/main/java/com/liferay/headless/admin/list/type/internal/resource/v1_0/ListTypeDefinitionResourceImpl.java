@@ -16,7 +16,6 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
-import com.liferay.headless.admin.list.type.internal.configuration.activator.FFListTypeDefinitionPermissionsActionConfigurationActivator;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypeDefinitionEntityModel;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -39,6 +38,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Locale;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -138,9 +139,19 @@ public class ListTypeDefinitionResourceImpl
 					listTypeDefinition.getName_i18n())));
 	}
 
+	private Locale _getLocale() {
+		if (contextUser != null) {
+			return contextUser.getLocale();
+		}
+
+		return contextAcceptLanguage.getPreferredLocale();
+	}
+
 	private ListTypeDefinition _toListTypeDefinition(
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition) {
+
+		Locale locale = _getLocale();
 
 		return new ListTypeDefinition() {
 			{
@@ -174,20 +185,12 @@ public class ListTypeDefinitionResourceImpl
 							getListTypeDefinitionId())
 				).put(
 					"permissions",
-					() -> {
-						if (!_ffListTypeDefinitionPermissionsActionConfigurationActivator.
-								enabled()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.PERMISSIONS, "patchListTypeDefinition",
-							com.liferay.list.type.model.ListTypeDefinition.
-								class.getName(),
-							serviceBuilderListTypeDefinition.
-								getListTypeDefinitionId());
-					}
+					addAction(
+						ActionKeys.PERMISSIONS, "patchListTypeDefinition",
+						com.liferay.list.type.model.ListTypeDefinition.class.
+							getName(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId())
 				).put(
 					"update",
 					addAction(
@@ -207,11 +210,9 @@ public class ListTypeDefinitionResourceImpl
 							getListTypeDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
-						null, contextAcceptLanguage.getPreferredLocale(),
-						listTypeEntry),
+						null, locale, listTypeEntry),
 					ListTypeEntry.class);
-				name = serviceBuilderListTypeDefinition.getName(
-					contextAcceptLanguage.getPreferredLocale());
+				name = serviceBuilderListTypeDefinition.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeDefinition.getNameMap());
 			}
@@ -220,10 +221,6 @@ public class ListTypeDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ListTypeDefinitionEntityModel();
-
-	@Reference
-	private FFListTypeDefinitionPermissionsActionConfigurationActivator
-		_ffListTypeDefinitionPermissionsActionConfigurationActivator;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

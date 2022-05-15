@@ -177,6 +177,22 @@ definition {
 			threadSubject = "MB Thrèad Mèssagè Subjèct");
 	}
 
+	@description = "This ensures that a thread with 255 characters in the title can be added."
+	@priority = "4"
+	test CanAddTitleWith255Characters {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+	}
+
 	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
 	@priority = "3"
 	test CanAddUrgentThread {
@@ -237,6 +253,7 @@ definition {
 		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
 	}
 
+	@description = "This ensures that the thread can be deleted, also covers LPS-82675."
 	@priority = "5"
 	@refactordone
 	test CanDeleteThread {
@@ -247,6 +264,12 @@ definition {
 
 		JSONMBMessage.moveThreadToTrash(
 			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewThreadInRecycleBin(
+			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
@@ -536,9 +559,18 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishThreadWithTag {
+
+		// TODO LPS-149484 CanPublishThreadWithTag pending implementation
+
+	}
+
 	@priority = "5"
 	@refactordone
-	test CanRestoreThread {
+	test CanRestoreThreadWithAttachment {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",
@@ -548,6 +580,13 @@ definition {
 			categoryName = "MB Category Name",
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addAttachmentToMessage(
+			categoryName = "MB Category Name",
+			fileName = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
 			threadSubject = "MB Thread Message Subject");
 
 		JSONMBMessage.addMessageReply(
@@ -578,6 +617,7 @@ definition {
 			threadCount = "1");
 
 		MessageboardsThread.viewCP(
+			mbAttachmentFile = "Document_1.jpg",
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
@@ -684,6 +724,66 @@ definition {
 		MessageboardsThread.viewNoXSSPG(
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
+	}
+
+	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
+	@priority = "4"
+	test ThreadsAreSortedFromNewestToOldestByDefault {
+		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "${threadSubjectName} Body",
+				threadSubject = "${threadSubjectName} Subject");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewPG(
+			position = "1",
+			threadSubject = "MB Thread Message 3 Subject");
+
+		MessageboardsThread.viewPG(
+			position = "2",
+			threadSubject = "MB Thread Message 2 Subject");
+
+		MessageboardsThread.viewPG(
+			position = "3",
+			threadSubject = "MB Thread Message 1 Subject");
+	}
+
+	@description = "This ensures that a thread title is over 255 characters will be trimmed to 255."
+	@priority = "4"
+	test TitleShouldBeTrimmedTo255CharactersWhenOver {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+
+		JSONMBMessage.updateMessage(
+			groupName = "Guest",
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X",
+			threadSubjectEdit = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||XX");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
 	}
 
 }

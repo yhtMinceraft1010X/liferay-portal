@@ -19,6 +19,8 @@ import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {REQUIRED_FIELD_DATA} from '../../config/constants/formModalData';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import {useWidgets} from '../../contexts/WidgetsContext';
@@ -27,12 +29,16 @@ import duplicateItem from '../../thunks/duplicateItem';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
-import updateItemStyle from '../../utils/updateItemStyle';
+import hideFragment from '../../utils/hideFragment';
+import openWarningModal from '../../utils/openWarningModal';
+import useHasInputChild from '../../utils/useHasInputChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
+import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
 export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
+	const hasInputChild = useHasInputChild();
 	const selectItem = useSelectItem();
 	const widgets = useWidgets();
 
@@ -48,20 +54,37 @@ export default function TopperItemActions({item}) {
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
-		items.push({
-			action: () => {
-				updateItemStyle({
-					dispatch,
-					itemId: item.itemId,
-					segmentsExperienceId,
-					selectedViewportSize,
-					styleName: 'display',
-					styleValue: 'none',
-				});
-			},
-			icon: 'hidden',
-			label: Liferay.Language.get('hide-fragment'),
-		});
+		if (
+			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+			!hasDropZoneChild(item, layoutData)
+		) {
+			items.push({
+				action: () => {
+					if (hasInputChild()) {
+						openWarningModal({
+							action: () =>
+								hideFragment({
+									dispatch,
+									itemId: item.itemId,
+									segmentsExperienceId,
+									selectedViewportSize,
+								}),
+							...REQUIRED_FIELD_DATA,
+						});
+					}
+					else {
+						hideFragment({
+							dispatch,
+							itemId: item.itemId,
+							segmentsExperienceId,
+							selectedViewportSize,
+						});
+					}
+				},
+				icon: 'hidden',
+				label: Liferay.Language.get('hide-fragment'),
+			});
+		}
 
 		if (canBeSaved(item, layoutData)) {
 			items.push({
@@ -87,7 +110,7 @@ export default function TopperItemActions({item}) {
 							selectItem,
 						})
 					),
-				icon: 'paste',
+				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
 
@@ -105,7 +128,7 @@ export default function TopperItemActions({item}) {
 							selectItem,
 						})
 					),
-				icon: 'times-circle',
+				icon: 'trash',
 				label: Liferay.Language.get('delete'),
 			});
 		}
@@ -114,6 +137,7 @@ export default function TopperItemActions({item}) {
 	}, [
 		dispatch,
 		fragmentEntryLinks,
+		hasInputChild,
 		item,
 		layoutData,
 		segmentsExperienceId,

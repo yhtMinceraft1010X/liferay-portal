@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,28 +45,28 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Roberto Díaz
  */
-public class WikiAttachmentImageCreoleEditorConfigContributorTest
-	extends PowerMockito {
+public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
+	@BeforeClass
+	public static void setUpClass() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
+	}
+
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
@@ -78,7 +79,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(0);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -97,7 +98,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -110,18 +111,17 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews"
-		).put(
-			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews"
-		).put(
-			"removePlugins", "plugin1,ae_addimages"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserImageBrowseLinkUrl",
+				"itemSelectorPortletURLWithUrlSelectionViews"
+			).put(
+				"filebrowserImageBrowseUrl",
+				"itemSelectorPortletURLWithUrlSelectionViews"
+			).put(
+				"removePlugins", "plugin1,ae_addimages"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -131,7 +131,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(1);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
@@ -149,10 +149,10 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 			}
 		);
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
-			RequestBackedPortletURLFactory.class);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			Mockito.mock(RequestBackedPortletURLFactory.class);
 
-		when(
+		Mockito.when(
 			requestBackedPortletURLFactory.createActionURL(WikiPortletKeys.WIKI)
 		).thenReturn(
 			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
@@ -187,18 +187,17 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 				jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
 				requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
-		).put(
-			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
-		).put(
-			"removePlugins", "plugin1"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserImageBrowseLinkUrl",
+				"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+			).put(
+				"filebrowserImageBrowseUrl",
+				"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+			).put(
+				"removePlugins", "plugin1"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -212,7 +211,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -226,12 +225,12 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -245,7 +244,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -259,17 +258,15 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
-	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
-		throws Exception {
-
+	protected JSONObject getJSONObjectWithDefaultItemSelectorURL() {
 		return JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL"
 		).put(

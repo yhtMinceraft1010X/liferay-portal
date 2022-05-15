@@ -63,6 +63,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+
 		JSONLayout.addPrivateLayout(
 			groupName = "Guest",
 			layoutName = "Research Projects");
@@ -126,6 +128,27 @@ definition {
 			wikiNodeName = "Main");
 
 		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Draft Pages");
+	}
+
+	@description = "This is a test for LPS-67548. It ensures that the history can be viewed in wiki details."
+	@priority = "3"
+	test CanViewHistoryInDetails {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addComment(entryComment = "Wiki Page Comment");
+
+		WikiPage.viewSummary(
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "FrontPage",
+			wikiVersionSummary = "New");
+
+		AssertConsoleTextNotPresent(value1 = "java.sql.SQLException");
 	}
 
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."

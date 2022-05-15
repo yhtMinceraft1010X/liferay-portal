@@ -14,30 +14,32 @@
 
 import {gql} from '@apollo/client';
 
+import {TestrayProductVersion} from './testrayProductVersion';
 import {TestrayProject} from './testrayProject';
 import {TestrayRoutine} from './testrayRoutine';
 
 export type TestrayBuild = {
+	creator: {
+		name: string;
+	};
 	dateCreated: string;
 	description: string;
 	dueStatus: number;
 	gitHash: string;
+	id: number;
 	name: string;
+	productVersion?: TestrayProductVersion;
+	project?: TestrayProject;
 	promoted: boolean;
-	testrayProject?: TestrayProject;
-	testrayRoutine?: TestrayRoutine;
+	routine?: TestrayRoutine;
 };
 
-export const getTestrayBuilds = gql`
-	query getTestrayBuilds(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		testrayBuilds(filter: $filter, page: $page, pageSize: $pageSize)
+export const getBuilds = gql`
+	query getBuilds($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+		builds(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
-				type: "C_TestrayBuild"
-				path: "testraybuilds?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayProductVersion"
+				type: "C_Build"
+				path: "builds?page={args.page}&pageSize={args.pageSize}&nestedFields=productVersion&filter={args.filter}&nestedFieldsDepth=2"
 			) {
 			items {
 				dateCreated
@@ -46,8 +48,8 @@ export const getTestrayBuilds = gql`
 				gitHash
 				name
 				promoted
-				testrayBuildId: id
-				testrayProductVersion: r_buildProductVersion_c_testrayProductVersion {
+				id
+				productVersion: r_productVersionToBuilds_c_productVersion {
 					name
 				}
 			}
@@ -59,43 +61,26 @@ export const getTestrayBuilds = gql`
 	}
 `;
 
-export const getTestrayBuildsR = gql`
-	query getTestrayBuilds(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		c {
-			testrayBuilds(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					dateCreated
-					description
-					dueStatus
-					gitHash
-					name
-					promoted
-					testrayBuildId
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
-			}
-		}
-	}
-`;
-
-export const getTestrayBuild = gql`
-	query getTestrayBuild($testrayBuildId: Long!) {
-		c {
-			testrayBuild(testrayBuildId: $testrayBuildId) {
-				dateCreated
-				description
-				dueStatus
-				gitHash
+export const getBuild = gql`
+	query getBuild($buildId: Long!) {
+		build(buildId: $buildId)
+			@rest(
+				type: "C_Build"
+				path: "builds/{args.buildId}?nestedFields=productVersion"
+			) {
+			creator {
 				name
-				promoted
 			}
+			dateCreated
+			description
+			dueStatus
+			gitHash
+			id
+			name
+			productVersion: r_productVersionToBuilds_c_productVersion {
+				name
+			}
+			promoted
 		}
 	}
 `;

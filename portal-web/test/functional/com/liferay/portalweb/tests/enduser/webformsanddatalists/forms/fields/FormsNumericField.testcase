@@ -108,7 +108,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1,1");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that a Numeric Field can be created"
@@ -698,6 +698,68 @@ definition {
 
 	}
 
+	@description = "Verify that Validation options are reset after changing the Field Type from a Numeric Field to Text Field"
+	@priority = "4"
+	test ConfirmationWithDecimal {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "requireConfirmation");
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		ScrollBy(value1 = "0, 2000");
+
+		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
+
+		FormFields.editFieldPredefined(key_fieldReference = "1,2");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The information does not match.");
+
+		FormFields.editConfirmationFieldText(
+			fieldName = "Numeric",
+			fieldValue = "1,2");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The information does not match.");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1,2");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Numeric",
+			fieldValue = "1.2");
+	}
+
 	@description = "Verify that a Numeric Field does not accept decimals by default"
 	@priority = "5"
 	test DoesNotAcceptDecimalsByDefault {
@@ -1233,7 +1295,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1000");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "LRQA-70003 - Verify if the decimal input mask is working in the rules"
@@ -1378,7 +1440,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "2222222222222");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that input mask on integers working on rules"

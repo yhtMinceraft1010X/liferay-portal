@@ -1,28 +1,18 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {
-		Navigator.openURL();
-
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
-		}
-
-		User.firstLoginPG();
-
-		CommerceConfiguration.commerceAdminTearDown();
-
-		CommerceConfiguration.commerceInitializersTearDown();
+		CommerceConfiguration.commerceTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
@@ -80,11 +70,7 @@ definition {
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -191,11 +177,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -271,11 +253,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -417,11 +395,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -487,11 +461,7 @@ definition {
 				productQuantity = "1");
 		}
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -604,11 +574,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -696,11 +662,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -806,11 +768,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -953,11 +911,7 @@ definition {
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1202,13 +1156,6 @@ definition {
 
 		// TODO Review
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -1312,55 +1259,60 @@ definition {
 			key_titleName = "Billing Address",
 			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		var billingAddressStreet = "Test Address";
+		var billingAddressCity = "Test City, Test Zip Code";
 
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Billing Address, Test Street");
+			value1 = "${billingAddressStreet}");
 
 		Button.click(button = "Submit");
 
 		Refresh();
 
-		AssertElementPresent(
-			key_errorMessage = "Billing Address",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var address : list "${billingAddressStreet},${billingAddressCity}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Billing Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 
 		Click(
 			key_buttonName = "Edit",
 			key_titleName = "Shipping Address",
 			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		var shippingAddressStreet = "Test1 Street";
 
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Shipping Address, Test1 Street");
+			value1 = "${shippingAddressStreet}");
 
 		Button.click(button = "Submit");
 
 		Refresh();
 
-		AssertElementPresent(
-			key_errorMessage = "Shipping Address",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var address : list "${shippingAddressStreet},${billingAddressCity}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Shipping Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
 	@priority = "3"
 	test UpdateShipmentItems {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
 
 		// TODO Review
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1444,7 +1396,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check.checkToggleSwitch(
 			key_productSku = "MIN55861",
@@ -1467,49 +1419,47 @@ definition {
 
 		Refresh();
 
+		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
+			quantityInShipment = "1",
+			shipmentItemSku = "MIN55861",
+			warehouseName = "Italy");
+
 		CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		Type(
+		for (var valueList : list "Italy,United States - Southwest,United States - Northeast") {
+			WaitForElementPresent(
+				key_warehouseName = "${valueList}",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE");
+		}
+
+		RunScript(locator1 = "document.querySelectorAll('div.quantity-selector input')[0].value=0");
+
+		Button.clickSave();
+
+		AssertTextEquals(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = "0");
 
+		RunScript(locator1 = "document.querySelectorAll('div.quantity-selector input')[1].value=1");
+
 		Button.clickSave();
 
-		Type(
+		AssertTextEquals(
 			key_warehouseName = "United States - Southwest",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = "1");
 
-		Button.clickSave();
-
 		Click(locator1 = "Icon#CLOSE");
 
-		Refresh();
+		SelectFrameTop();
 
-		ClickNoError(
-			key_value = "Italy",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		CommerceEntry.clickNoError(menuItem = "Delete");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Button.clickSubmitButton();
-
-		Refresh();
-
-		for (var column : list "3;United States - Southwest,5;1") {
-			var key_columnNumber = StringUtil.extractFirst("${column}", ";");
-			var currentValue = StringUtil.extractLast("${column}", ";");
-
-			AssertTextEquals(
-				key_entryName = "MIN55861",
-				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-				value1 = "${currentValue}");
-		}
+		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
+			quantityInShipment = "1",
+			shipmentItemSku = "MIN55861",
+			warehouseName = "United States - Southwest");
 	}
 
 	@description = "This is a test for COMMERCE-6243. Update address"
@@ -1564,11 +1514,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1693,11 +1639,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1797,11 +1739,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Type(
 			key_fieldName = "Name",

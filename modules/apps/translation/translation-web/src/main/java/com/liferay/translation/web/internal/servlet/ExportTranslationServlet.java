@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
@@ -83,7 +81,8 @@ public class ExportTranslationServlet extends HttpServlet {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					httpServletRequest, _infoItemServiceTracker);
+					httpServletRequest, _infoItemServiceTracker,
+					_segmentsExperienceLocalService);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceIds);
@@ -95,7 +94,7 @@ public class ExportTranslationServlet extends HttpServlet {
 			String[] targetLanguageIds = ParamUtil.getStringValues(
 				httpServletRequest, "targetLanguageIds");
 
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			Set<Long> classPKs = SetUtil.fromArray(
 				_getClassPKs(
@@ -103,21 +102,10 @@ public class ExportTranslationServlet extends HttpServlet {
 					translationRequestHelper));
 
 			for (long classPK : classPKs) {
-				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
-					className.equals(SegmentsExperience.class.getName())) {
-
-					_addZipEntry(
-						zipWriter, translationRequestHelper.getModelClassName(),
-						translationRequestHelper.getModelClassPK(),
-						exportMimeType, sourceLanguageId, targetLanguageIds,
-						_portal.getLocale(httpServletRequest));
-				}
-				else {
-					_addZipEntry(
-						zipWriter, className, classPK, exportMimeType,
-						sourceLanguageId, targetLanguageIds,
-						_portal.getLocale(httpServletRequest));
-				}
+				_addZipEntry(
+					zipWriter, className, classPK, exportMimeType,
+					sourceLanguageId, targetLanguageIds,
+					_portal.getLocale(httpServletRequest));
 			}
 
 			try (InputStream inputStream = new FileInputStream(
@@ -131,7 +119,8 @@ public class ExportTranslationServlet extends HttpServlet {
 						LanguageUtil.get(
 							_portal.getLocale(httpServletRequest),
 							"model.resource." + className),
-						_isMultipleModels(classPKs, segmentsExperienceIds),
+						_isMultipleModels(
+							translationRequestHelper.getModelClassPKs()),
 						sourceLanguageId,
 						_portal.getLocale(httpServletRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
@@ -267,20 +256,17 @@ public class ExportTranslationServlet extends HttpServlet {
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
 
-		String prefixName = _getPrefixName(
-			classPK, classNameTitle, infoItemTitleOptional, multipleModels,
-			locale);
-
 		return StringBundler.concat(
 			StringUtil.removeSubstrings(
-				prefixName, PropsValues.DL_CHAR_BLACKLIST),
+				_getPrefixName(
+					classPK, classNameTitle, infoItemTitleOptional,
+					multipleModels, locale),
+				PropsValues.DL_CHAR_BLACKLIST),
 			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 
-	private boolean _isMultipleModels(
-		Set<Long> classPKs, long[] segmentsExperienceIds) {
-
-		if ((segmentsExperienceIds.length < 1) && (classPKs.size() > 1)) {
+	private boolean _isMultipleModels(long[] classPKs) {
+		if (classPKs.length > 1) {
 			return true;
 		}
 
@@ -302,5 +288,8 @@ public class ExportTranslationServlet extends HttpServlet {
 	@Reference
 	private TranslationInfoItemFieldValuesExporterTracker
 		_translationInfoItemFieldValuesExporterTracker;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

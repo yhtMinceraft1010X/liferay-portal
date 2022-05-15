@@ -18,8 +18,6 @@
 
 <%
 CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayContext = (CPSpecificationOptionFacetsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFacetPortletInstanceConfiguration = cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionFacetPortletInstanceConfiguration();
 %>
 
 <c:choose>
@@ -67,7 +65,7 @@ CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFace
 							"panelTitle", panelTitle
 						).build()
 					%>'
-					displayStyle="<%= cpSpecificationOptionFacetPortletInstanceConfiguration.displayStyle() %>"
+					displayStyle='<%= portletPreferences.getValue("displayStyle", "") %>'
 					displayStyleGroupId="<%= cpSpecificationOptionFacetsDisplayContext.getDisplayStyleGroupId() %>"
 					entries="<%= cpSpecificationOptionsSearchFacetDisplayContext.getTermDisplayContexts() %>"
 				>
@@ -86,7 +84,7 @@ CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFace
 							title="<%= panelTitle %>"
 						>
 							<aui:fieldset>
-								<ul class="list-unstyled">
+								<ul class="list-unstyled" data-qa-id="<%= panelTitle %>">
 
 									<%
 									int i = 0;
@@ -97,7 +95,7 @@ CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFace
 
 										<li class="facet-value">
 											<div class="custom-checkbox custom-control">
-												<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+												<label for="<portlet:namespace />term_<%= i %>">
 													<input
 														<%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 														class="custom-control-input facet-term"
@@ -138,5 +136,3 @@ CPSpecificationOptionFacetPortletInstanceConfiguration cpSpecificationOptionFace
 
 	</c:otherwise>
 </c:choose>
-
-<aui:script use="liferay-search-facet-util"></aui:script>

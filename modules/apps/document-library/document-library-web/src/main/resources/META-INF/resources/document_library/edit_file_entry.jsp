@@ -209,7 +209,7 @@ renderResponse.setTitle(headerTitle);
 			<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
 
 			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(FileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= FileExtensionException.class %>">
@@ -551,6 +551,21 @@ renderResponse.setTitle(headerTitle);
 							className="<%= DLFileEntry.class.getName() %>"
 							classPK="<%= assetClassPK %>"
 						/>
+
+						<c:if test="<%= (fileEntry != null) && dlAdminDisplayContext.isAutoTaggingEnabled() %>">
+							<clay:checkbox
+								checked="<%= dlAdminDisplayContext.isUpdateAutoTags() %>"
+								id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+								label='<%= LanguageUtil.get(request, "update-auto-tags") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+							/>
+
+							<div class="ml-4">
+								<small class="text-secondary">
+									<liferay-ui:message key="update-auto-tags-help" />
+								</small>
+							</div>
+						</c:if>
 					</aui:fieldset>
 				</c:if>
 
@@ -571,20 +586,16 @@ renderResponse.setTitle(headerTitle);
 
 				<c:if test="<%= FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
-
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(DLPortletKeys.DOCUMENT_LIBRARY);
-						%>
-
 						<liferay-friendly-url:input
 							className="<%= FileEntry.class.getName() %>"
 							classPK="<%= fileEntryId %>"
-							disabled="<%= true %>"
-							inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+							inputAddon="<%= dlEditFileEntryDisplayContext.getFriendlyURLBase() %>"
 							localizable="<%= false %>"
 							name="urlTitle"
-							showHistory="<%= false %>"
+							showHistory="<%= true %>"
 						/>
+
+						<p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
 					</aui:fieldset>
 				</c:if>
 
@@ -731,6 +742,11 @@ renderResponse.setTitle(headerTitle);
 
 	function <portlet:namespace />updateFileNameAndTitle() {
 		var titleElement = document.getElementById('<portlet:namespace />title');
+
+		var urlTitleElement = document.getElementById(
+			'<portlet:namespace />urlTitle'
+		);
+
 		var fileNameElement = document.getElementById(
 			'<portlet:namespace />fileName'
 		);
@@ -745,6 +761,10 @@ renderResponse.setTitle(headerTitle);
 
 			if (fileNameElement && !fileNameElement.value) {
 				fileNameElement.value = fileFileName;
+			}
+
+			if (urlTitleElement && !urlTitleElement.value) {
+				urlTitleElement.value = fileFileName.replace(/\.[^.]*$/, '');
 			}
 		}
 

@@ -119,6 +119,7 @@ public class PageFragmentInstanceDefinitionMapper {
 				fragmentStyle = pageFragmentInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageFragmentInstanceDefinitionFragmentViewports;
+				indexed = fragmentStyledLayoutStructureItem.isIndexed();
 				widgetInstances = _getWidgetInstances(fragmentEntryLink);
 			}
 		};
@@ -254,12 +255,11 @@ public class PageFragmentInstanceDefinitionMapper {
 				"EditableFragmentEntryProcessor");
 
 		if (jsonObject != null) {
-			Map<String, String> editableTypes =
-				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					fragmentEntryLink.getHtml());
-
 			fragmentFields.addAll(
-				_getTextFragmentFields(editableTypes, jsonObject, saveMapping));
+				_getTextFragmentFields(
+					EditableFragmentEntryProcessorUtil.getEditableTypes(
+						fragmentEntryLink.getHtml()),
+					jsonObject, saveMapping));
 		}
 
 		return fragmentFields.toArray(new FragmentField[0]);
@@ -577,6 +577,9 @@ public class PageFragmentInstanceDefinitionMapper {
 		Map<String, String> localizedValues =
 			LocalizedValueUtil.toLocalizedValues(jsonObject);
 
+		Map<String, String> localizedURLs = _toLocalizedURLs(
+			localizedJSONObjects, localizedValues);
+
 		return new FragmentFieldImage() {
 			{
 				fragmentImage = new FragmentImage() {
@@ -588,7 +591,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						setFragmentImageClassPKReference(
 							() -> {
-								if (MapUtil.isEmpty(localizedJSONObjects)) {
+								if (MapUtil.isEmpty(localizedJSONObjects) ||
+									MapUtil.isNotEmpty(localizedURLs)) {
+
 									return null;
 								}
 
@@ -598,10 +603,6 @@ public class PageFragmentInstanceDefinitionMapper {
 							});
 						setUrl(
 							() -> {
-								if (MapUtil.isNotEmpty(localizedJSONObjects)) {
-									return null;
-								}
-
 								if (FragmentMappedValueUtil.
 										isSaveFragmentMappedValue(
 											jsonObject, saveMapping)) {
@@ -615,7 +616,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 								return new FragmentInlineValue() {
 									{
-										value_i18n = localizedValues;
+										value_i18n = localizedURLs;
 									}
 								};
 							});
@@ -672,13 +673,33 @@ public class PageFragmentInstanceDefinitionMapper {
 				classPKReferences = _toClassPKReferences(localizedJSONObjects);
 				fragmentImageConfiguration = new FragmentImageConfiguration() {
 					{
-						landscapeMobile =
-							imageConfigurationJSONObject.getString(
-								"landscapeMobile", "auto");
-						portraitMobile = imageConfigurationJSONObject.getString(
-							"portraitMobile", "auto");
-						tablet = imageConfigurationJSONObject.getString(
-							"tablet", "auto");
+						setLandscapeMobile(
+							() -> {
+								if (imageConfigurationJSONObject == null) {
+									return null;
+								}
+
+								return imageConfigurationJSONObject.getString(
+									"landscapeMobile", "auto");
+							});
+						setPortraitMobile(
+							() -> {
+								if (imageConfigurationJSONObject == null) {
+									return null;
+								}
+
+								return imageConfigurationJSONObject.getString(
+									"portraitMobile", "auto");
+							});
+						setTablet(
+							() -> {
+								if (imageConfigurationJSONObject == null) {
+									return null;
+								}
+
+								return imageConfigurationJSONObject.getString(
+									"tablet", "auto");
+							});
 					}
 				};
 			}
@@ -728,7 +749,32 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						return new FragmentInlineValue() {
 							{
-								value = configJSONObject.getString("href");
+								setValue(
+									() -> {
+										JSONObject hrefJSONObject =
+											configJSONObject.getJSONObject(
+												"href");
+
+										if (hrefJSONObject != null) {
+											return null;
+										}
+
+										return configJSONObject.getString(
+											"href");
+									});
+								setValue_i18n(
+									() -> {
+										JSONObject hrefJSONObject =
+											configJSONObject.getJSONObject(
+												"href");
+
+										if (hrefJSONObject != null) {
+											return JSONUtil.toStringMap(
+												hrefJSONObject);
+										}
+
+										return null;
+									});
 							}
 						};
 					});
@@ -795,7 +841,34 @@ public class PageFragmentInstanceDefinitionMapper {
 			fragmentLinkValues.put(languageId, fragmentLinkValue);
 		}
 
+		if (fragmentLinkValues.isEmpty()) {
+			return null;
+		}
+
 		return fragmentLinkValues;
+	}
+
+	private Map<String, String> _toLocalizedURLs(
+		Map<String, JSONObject> localizedJSONObjects,
+		Map<String, String> localizedValues) {
+
+		HashMap<String, String> localizedURLs = new HashMap<String, String>() {
+			{
+				for (Map.Entry<String, JSONObject> entry :
+						localizedJSONObjects.entrySet()) {
+
+					JSONObject localizedJSONObject = entry.getValue();
+
+					put(entry.getKey(), localizedJSONObject.getString("url"));
+				}
+			}
+		};
+
+		if (!localizedURLs.isEmpty()) {
+			return localizedURLs;
+		}
+
+		return localizedValues;
 	}
 
 	private Map<String, JSONObject> _toLocalizedValueJSONObjects(

@@ -130,7 +130,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Form Page",
 			sitePageType = "Widget Page");
 
@@ -240,13 +240,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -361,13 +361,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -403,7 +403,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Form Page 1",
 			sitePageType = "Widget Page");
 
@@ -504,7 +504,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -642,13 +642,13 @@ definition {
 			subject = "Form Subject",
 			toAddress = "formreviewer@liferay.com");
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -901,13 +901,13 @@ definition {
 			successPageDescription = "Edited: Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Edited: Thank You");
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 

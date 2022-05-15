@@ -1,5 +1,22 @@
 definition {
 
+	macro changeLanguage {
+		var key_languageOption = "${languageOption}";
+		var key_language = "${language}";
+
+		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
+		}
+
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		ACUtils.clickAnyButton(button = "${key_language}");
+
+		ACUtils.clickAnyButton(button = "${key_languageOption}");
+
+		TestUtils.hardRefresh();
+	}
+
 	macro configureWorkspaceSettings {
 		if (isSet(workspaceName)) {
 			Type(
@@ -71,6 +88,10 @@ definition {
 		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
 		Button.clickSubmitButton();
+
+		WaitForElementPresent(
+			key_textValue = "Welcome to Analytics Cloud",
+			locator1 = "ACUtils#GENERIC_TEXT");
 	}
 
 	macro openWorkspace {

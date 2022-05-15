@@ -466,9 +466,7 @@ definition {
 		}
 
 		task ("Delete the navigation menu") {
-			LexiconEntry.delete(
-				menuItem = "Delete",
-				rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.deleteCP(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Publish to live") {
@@ -1402,7 +1400,7 @@ definition {
 		task ("Select Public Pages Hierarchy and Bar minimally styled") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+			NavigationMenusWidget.selectNavigation(menuType = "Pages Hierarchy");
 
 			Pause(locator1 = "1000");
 

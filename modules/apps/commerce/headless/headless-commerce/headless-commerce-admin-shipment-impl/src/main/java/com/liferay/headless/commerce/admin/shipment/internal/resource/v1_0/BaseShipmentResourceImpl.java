@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -703,11 +705,35 @@ public abstract class BaseShipmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer =
-			shipment -> postShipment(shipment);
+		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer = null;
 
-		for (Shipment shipment : shipments) {
-			shipmentUnsafeConsumer.accept(shipment);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			shipmentUnsafeConsumer = shipment -> postShipment(shipment);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			shipmentUnsafeConsumer =
+				shipment -> putShipmentByExternalReferenceCode(
+					shipment.getExternalReferenceCode(), shipment);
+		}
+
+		if (shipmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Shipment");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipments, shipmentUnsafeConsumer);
+		}
+		else {
+			for (Shipment shipment : shipments) {
+				shipmentUnsafeConsumer.accept(shipment);
+			}
 		}
 	}
 
@@ -735,6 +761,10 @@ public abstract class BaseShipmentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -773,10 +803,47 @@ public abstract class BaseShipmentResourceImpl
 			java.util.Collection<Shipment> shipments,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			shipmentUnsafeConsumer = shipment -> patchShipment(
+				shipment.getId() != null ? shipment.getId() :
+					Long.parseLong((String)parameters.get("shipmentId")),
+				shipment);
+		}
+
+		if (shipmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Shipment");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipments, shipmentUnsafeConsumer);
+		}
+		else {
+			for (Shipment shipment : shipments) {
+				shipmentUnsafeConsumer.accept(shipment);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Shipment>,
+			 UnsafeConsumer<Shipment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -837,6 +904,14 @@ public abstract class BaseShipmentResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -930,6 +1005,9 @@ public abstract class BaseShipmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Shipment>, UnsafeConsumer<Shipment, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

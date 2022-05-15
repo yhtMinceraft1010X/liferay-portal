@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -338,10 +340,30 @@ public abstract class BaseOptionCategoryResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<OptionCategory, Exception> optionCategoryUnsafeConsumer =
-			optionCategory -> postOptionCategory(optionCategory);
+			null;
 
-		for (OptionCategory optionCategory : optionCategories) {
-			optionCategoryUnsafeConsumer.accept(optionCategory);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			optionCategoryUnsafeConsumer = optionCategory -> postOptionCategory(
+				optionCategory);
+		}
+
+		if (optionCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for OptionCategory");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionCategories, optionCategoryUnsafeConsumer);
+		}
+		else {
+			for (OptionCategory optionCategory : optionCategories) {
+				optionCategoryUnsafeConsumer.accept(optionCategory);
+			}
 		}
 	}
 
@@ -369,6 +391,10 @@ public abstract class BaseOptionCategoryResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -407,10 +433,50 @@ public abstract class BaseOptionCategoryResourceImpl
 			java.util.Collection<OptionCategory> optionCategories,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<OptionCategory, Exception> optionCategoryUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			optionCategoryUnsafeConsumer =
+				optionCategory -> patchOptionCategory(
+					optionCategory.getId() != null ? optionCategory.getId() :
+						Long.parseLong(
+							(String)parameters.get("optionCategoryId")),
+					optionCategory);
+		}
+
+		if (optionCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for OptionCategory");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionCategories, optionCategoryUnsafeConsumer);
+		}
+		else {
+			for (OptionCategory optionCategory : optionCategories) {
+				optionCategoryUnsafeConsumer.accept(optionCategory);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<OptionCategory>,
+			 UnsafeConsumer<OptionCategory, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -471,6 +537,14 @@ public abstract class BaseOptionCategoryResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -561,6 +635,10 @@ public abstract class BaseOptionCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<OptionCategory>,
+		 UnsafeConsumer<OptionCategory, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

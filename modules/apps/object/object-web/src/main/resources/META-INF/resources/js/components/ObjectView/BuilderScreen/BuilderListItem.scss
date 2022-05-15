@@ -1,0 +1,45 @@
+.lfr-object {
+	&__object-custom-view-builder-item {
+		&--dragging {
+			background: transparent;
+			background-color: #f7f8f9;
+			border-radius: 0;
+			box-shadow: 0 0 0 0.125rem #80acff;
+			cursor: grabbing;
+			margin-bottom: 5px;
+			margin-top: 5px;
+			opacity: 0.5;
+			padding-top: 20px;
+		}
+	}
+
+	&__object-builder-list-item-dropdown {
+		width: 192px !important;
+	}
+
+	&__object-custom-view-builder-item-icon {
+		margin-right: 10px;
+	}
+
+	&__object-builder-list-item-first-column--not-draggable {
+		margin-left: 10px;
+	}
+
+	&__object-builder-list-item-second-column {
+		left: 336px;
+		position: absolute;
+		top: 23px;
+
+		&--not-draggable {
+			left: 415px !important;
+			position: absolute;
+			top: 23px;
+		}
+	}
+
+	&__object-builder-list-item-third-column--not-draggable {
+		left: 785px !important;
+		position: absolute;
+		top: 23px;
+	}
+}

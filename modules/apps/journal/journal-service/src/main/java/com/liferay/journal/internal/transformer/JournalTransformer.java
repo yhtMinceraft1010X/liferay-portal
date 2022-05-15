@@ -178,10 +178,10 @@ public class JournalTransformer {
 
 		String templateId = tokens.get("ddm_template_id");
 
-		templateId = _getTemplateId(
-			templateId, companyId, companyGroupId, articleGroupId);
-
-		Template template = _getTemplate(templateId, script);
+		Template template = _getTemplate(
+			_getTemplateId(
+				templateId, companyId, companyGroupId, articleGroupId),
+			script);
 
 		PortletRequest originalPortletRequest = null;
 		PortletResponse originalPortletResponse = null;
@@ -461,7 +461,7 @@ public class JournalTransformer {
 							optionValue, optionValue));
 				}
 
-				return nextJSONArray.toJSONString();
+				return nextJSONArray.toString();
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

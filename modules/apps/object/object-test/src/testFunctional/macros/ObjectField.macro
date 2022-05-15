@@ -1,0 +1,161 @@
+definition {
+
+	macro addAnyFolder {
+		IFrame.selectModalFrame();
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Folder");
+
+		Type(
+			locator1 = "ObjectPortlet#INPUT_NAME",
+			value1 = "${folderName}");
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "ObjectField#DOCUMENT_NAME",
+			value1 = "${folderName}");
+	}
+
+	macro assertDocumentsAndMediaHomeFolder {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_viewHomeFolder = "${viewHomeFolder}",
+			locator1 = "ObjectField#VIEW_HOME_FOLDER");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "${infoText}");
+	}
+
+	macro assertLabel {
+		AssertTextEquals(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "${content}");
+	}
+
+	macro assertMandatory {
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro assertName {
+		AssertTextEquals(
+			locator1 = "ObjectField#NAME_FIELD",
+			value1 = "${fieldName}");
+	}
+
+	macro assertNameDisabled {
+		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
+	}
+
+	macro assertOptionAndDescription {
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		AssertElementPresent(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "${option}",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "${description}");
+	}
+
+	macro assertOptionAndDescriptionOnRequestFiles {
+		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+
+		AssertElementPresent(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "${option}",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "${description}");
+	}
+
+	macro assertSearchableLanguage {
+		AssertSelectedLabel(
+			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
+			value1 = "${selected}");
+	}
+
+	macro assertType {
+		AssertElementPresent(
+			locator1 = "ObjectField#TYPE_FIELD",
+			value1 = "${fieldType}");
+	}
+
+	macro assertTypeDisabled {
+		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
+	}
+
+	macro assertValueOnLimitCharacters {
+		AssertElementPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro assertValueOnLimitCharactersNotPresent {
+		AssertElementNotPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro checkLimitCharacters {
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+	}
+
+	macro checkToggleMandatory {
+		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro closeModal {
+		Click(locator1 = "ObjectField#MODAL_CLOSE_BUTTON");
+	}
+
+	macro save {
+		Click(locator1 = "ObjectField#SAVE_BUTTON");
+
+		Refresh();
+	}
+
+	macro selectSearchableLanguage {
+		Select(
+			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
+			value1 = "${language}");
+	}
+
+	macro selectType {
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		Click(
+			key_fieldType = "${fieldType}",
+			locator1 = "ObjectField#TYPE_OPTION");
+	}
+
+	macro toggleMandatory {
+		Check.toggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro typeLabel {
+		Type(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "${content}");
+	}
+
+	macro typeName {
+		Type(
+			locator1 = "ObjectField#NAME_FIELD",
+			value1 = "${fieldName}");
+	}
+
+	macro typeValueOnLimitCharacters {
+		Type(
+			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",
+			value1 = "${newValue}");
+	}
+
+}

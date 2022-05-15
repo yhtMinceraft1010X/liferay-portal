@@ -213,7 +213,7 @@ definition {
 		task ("Add a content page in Test Site Name site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPages.addPublicPage(pageName = "Test Content Page Name");
 		}
 
 		task ("Add a Title fragment to the content page") {
@@ -436,7 +436,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -450,7 +450,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 
@@ -1556,19 +1556,21 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		if ("${webContentColor}" == "false") {
-			for (var fieldFieldLabel : list "Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
-				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldFieldLabel}",
-					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
-			}
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Boolean",
+			fieldFieldLabelEdit = "Boolean Edit",
+			fieldName = "Boolean");
+
+		if ("${webContentColor}" == "true") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Color",
+				fieldFieldLabelEdit = "Color Edit");
 		}
-		else {
-			for (var fieldFieldLabel : list "Boolean,Color,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
-				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldFieldLabel}",
-					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
-			}
+
+		for (var fieldFieldLabel : list "Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -1668,8 +1670,9 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
+			archive = "true",
 			dependencyfile = "true",
-			fileName = "WebContentTitle-en_US-de_DE.xlf",
+			fileName = "WebContentTitle-en_US.zip",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
@@ -2961,6 +2964,11 @@ definition {
 	macro viewAndAddImageResolution {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Preview",
+			maxHeight = "Auto",
+			maxWidth = "1000");
+
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
 
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/1");
@@ -4153,6 +4161,80 @@ definition {
 		AssertVisible(locator1 = "ControlMenu#ADD");
 	}
 
+	macro viewDefinedGridLayout {
+		task ("Navigate to page in edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the Grid Styles") {
+			PageEditor.gotoConfiguration(fragmentName = "Grid");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				position = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "2 Modules per Row");
+		}
+
+		task ("Change to the Desktop viewport") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = "3",
+				panel = "General");
+		}
+
+		task ("View the Grid Styles after updating") {
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+		}
+	}
+
 	macro viewDocument {
 		Navigator.gotoPage(pageName = "Document");
 
@@ -4308,9 +4390,7 @@ definition {
 
 		WaitForPageLoad();
 
-		DataEngine.viewField(
-			fieldFieldLabel = "Boolean",
-			fieldName = "Multiple Selection");
+		FormFields.viewBooleanField(fieldValue = "Boolean");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Number",
@@ -4969,10 +5049,7 @@ definition {
 	}
 
 	macro viewResultRankingsEntry {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -5249,8 +5326,6 @@ definition {
 		FormFields.viewCheckboxNotChecked(fieldName = "databaseContentKeywordSearchEnabled");
 
 		FormFields.viewCheckboxNotChecked(fieldName = "expireAllArticleVersionsEnabled");
-
-		FormFields.viewCheckboxNotChecked(fieldName = "articleViewPermissionsCheckEnabled");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -5835,8 +5910,8 @@ definition {
 		}
 
 		WebContent.viewWithStructureCP(
-			webContentMultipleSelection = "Boolean",
-			webContentMultipleSelectionFieldLabel = "Boolean",
+			webContentBoolean = "true",
+			webContentBooleanFieldLabel = "Boolean",
 			webContentTitle = "Boolean Web Content");
 
 		Navigator.gotoBack();

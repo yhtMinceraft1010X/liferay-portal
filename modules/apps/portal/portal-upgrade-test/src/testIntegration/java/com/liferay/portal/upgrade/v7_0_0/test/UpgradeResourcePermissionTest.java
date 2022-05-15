@@ -43,7 +43,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +50,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Sampsa Sohlman
  */
-@Ignore
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
@@ -138,11 +136,8 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	protected long addResourcePermission(String primKey, long actionIds) {
 		ResourcePermission resourcePermission = new ResourcePermissionImpl();
 
-		long resourcePermissionId = _counterLocalService.increment(
-			ResourcePermission.class.getName());
-
-		resourcePermission.setResourcePermissionId(resourcePermissionId);
-
+		resourcePermission.setResourcePermissionId(
+			_counterLocalService.increment(ResourcePermission.class.getName()));
 		resourcePermission.setCompanyId(_user.getCompanyId());
 		resourcePermission.setName(
 			UpgradeResourcePermissionTest.class.getName());

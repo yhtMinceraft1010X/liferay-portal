@@ -146,7 +146,12 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "${dmFolderName}");
 
-		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		if (isSet(noPermissions)) {
+			AssertElementNotPresent(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		}
+		else {
+			AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		}
 	}
 
 	macro gotoFolderPermissions {
@@ -336,6 +341,44 @@ definition {
 		}
 	}
 
+	macro openToConfigInInstanceSettings {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if ("${portlet}" == "Documents and Media Size Limits") {
+			var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+		}
+
+		if ("${portlet}" == "Cache Control") {
+			var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
+		}
+
+		if ("${portlet}" == "Google Drive") {
+			var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+	}
+
+	macro openToConfigInSiteSettings {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${portlet}" == "Documents and Media Size Limits") {
+			var portletKey = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_pid=${portletKey}");
+		}
+
+		if ("${portlet}" == "Documents and Media") {
+			var portletKey = "site-configuration-documents-and-media";
+
+			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${portletKey}");
+		}
+	}
+
 	macro openToConfigInSystemSettings {
 		var baseURL = "${baseURL}";
 
@@ -349,6 +392,10 @@ definition {
 
 		if ("${portlet}" == "Azure Translator") {
 			var portletId = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration";
+		}
+
+		if ("${portlet}" == "Documents and Media Size Limits") {
+			var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
 		}
 
 		if ("${portlet}" == "File Entries") {
@@ -377,6 +424,10 @@ definition {
 
 		if ("${portlet}" == "Service") {
 			var portletId = "com.liferay.document.library.configuration.DLConfiguration";
+		}
+
+		if ("${portlet}" == "Cache Control") {
+			var portletId = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration";
 		}
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");

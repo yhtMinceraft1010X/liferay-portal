@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -368,34 +367,6 @@ public class JournalArticleModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, JournalArticle>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			JournalArticle.class.getClassLoader(), JournalArticle.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<JournalArticle> constructor =
-				(Constructor<JournalArticle>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<JournalArticle, Object>>
@@ -1457,7 +1428,8 @@ public class JournalArticleModelImpl
 		}
 
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if (Validator.isNotNull(
 				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
@@ -1501,16 +1473,6 @@ public class JournalArticleModelImpl
 		return getPrimaryKey();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
-	}
-
 	@Override
 	public boolean isInTrash() {
 		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
@@ -1524,7 +1486,8 @@ public class JournalArticleModelImpl
 	@Override
 	public boolean isInTrashContainer() {
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if ((trashHandler == null) ||
 			Validator.isNull(
@@ -2215,7 +2178,9 @@ public class JournalArticleModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, JournalArticle>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					JournalArticle.class, ModelWrapper.class);
 
 	}
 

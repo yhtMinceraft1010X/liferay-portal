@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -164,7 +165,8 @@ public class CPDefinitionLocalServiceImpl
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -252,7 +254,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setVersion(1);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
-			cpDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+			cpDefinition.setStatus(status);
 		}
 		else {
 			cpDefinition.setStatus(WorkflowConstants.STATUS_EXPIRED);
@@ -287,8 +289,8 @@ public class CPDefinitionLocalServiceImpl
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire, false,
-				false, 1, StringPool.BLANK, null, 0, null,
-				cpInstanceServiceContext);
+				false, 1, StringPool.BLANK, null, 0, false, 1, null, null, 0,
+				null, false, null, 0, 0, 0, 0, cpInstanceServiceContext);
 		}
 
 		// Friendly URL
@@ -321,11 +323,18 @@ public class CPDefinitionLocalServiceImpl
 
 		// Workflow
 
+		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				CPDefinition.class.getName(), 0)) {
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
 		return startWorkflowInstance(
 			user.getUserId(), cpDefinition, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
 			String externalReferenceCode, long groupId, long userId,
@@ -348,7 +357,8 @@ public class CPDefinitionLocalServiceImpl
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.addCPDefinition(
@@ -363,7 +373,8 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, false, 1, null, null, 0, serviceContext);
+			maxSubscriptionCycles, false, 1, null, null, 0, status,
+			serviceContext);
 	}
 
 	@Override
@@ -391,7 +402,8 @@ public class CPDefinitionLocalServiceImpl
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -444,7 +456,7 @@ public class CPDefinitionLocalServiceImpl
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, serviceContext);
+			deliveryMaxSubscriptionCycles, status, serviceContext);
 	}
 
 	@Override
@@ -469,7 +481,8 @@ public class CPDefinitionLocalServiceImpl
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.addOrUpdateCPDefinition(
@@ -484,7 +497,8 @@ public class CPDefinitionLocalServiceImpl
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, false, 1, null, null, 0, serviceContext);
+			maxSubscriptionCycles, false, 1, null, null, 0, status,
+			serviceContext);
 	}
 
 	@Override
@@ -509,7 +523,10 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
 		throws PortalException {
 
-		// CPDefinition
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		CPDefinition originalCPDefinition =
 			cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
@@ -517,9 +534,15 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition newCPDefinition =
 			(CPDefinition)originalCPDefinition.clone();
 
+		newCPDefinition.setUuid(PortalUUIDUtil.generate());
+
 		long newCPDefinitionId = counterLocalService.increment();
 
 		newCPDefinition.setCPDefinitionId(newCPDefinitionId);
+
+		newCPDefinition.setGroupId(groupId);
+		newCPDefinition.setUserId(user.getUserId());
+		newCPDefinition.setUserName(user.getFullName());
 
 		if (originalCPDefinition.isPublished() &&
 			cpDefinitionLocalService.isVersionable(originalCPDefinition)) {
@@ -538,10 +561,10 @@ public class CPDefinitionLocalServiceImpl
 
 			CProduct newCProduct = (CProduct)originalCProduct.clone();
 
-			newCProduct.setCProductId(counterLocalService.increment());
-			newCProduct.setExternalReferenceCode(
-				String.valueOf(newCProduct.getCProductId()));
 			newCProduct.setUuid(PortalUUIDUtil.generate());
+			newCProduct.setCProductId(counterLocalService.increment());
+			newCProduct.setUserId(user.getUserId());
+			newCProduct.setUserName(user.getFullName());
 			newCProduct.setPublishedCPDefinitionId(newCPDefinitionId);
 
 			newCPDefinition.setCProductId(newCProduct.getCProductId());
@@ -549,12 +572,9 @@ public class CPDefinitionLocalServiceImpl
 			cProductPersistence.update(newCProduct);
 		}
 
-		newCPDefinition.setGroupId(groupId);
-		newCPDefinition.setUuid(PortalUUIDUtil.generate());
+		newCPDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		newCPDefinition = cpDefinitionPersistence.update(newCPDefinition);
-
-		// AssetEntry
 
 		long cpDefinitionClassNameId = classNameLocalService.getClassNameId(
 			CPDefinition.class);
@@ -571,8 +591,6 @@ public class CPDefinitionLocalServiceImpl
 
 			_assetEntryLocalService.addAssetEntry(newAssetEntry);
 		}
-
-		// CPDefinitionLocalization
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations =
 			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
@@ -602,8 +620,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionLocalization);
 		}
 
-		// CPAttachmentFileEntry
-
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryPersistence.findByC_C(
 				cpDefinitionClassNameId, cpDefinitionId);
@@ -614,19 +630,14 @@ public class CPDefinitionLocalServiceImpl
 			CPAttachmentFileEntry newCPAttachmentFileEntry =
 				(CPAttachmentFileEntry)cpAttachmentFileEntry.clone();
 
+			newCPAttachmentFileEntry.setUuid(PortalUUIDUtil.generate());
 			newCPAttachmentFileEntry.setCPAttachmentFileEntryId(
 				counterLocalService.increment());
-			newCPAttachmentFileEntry.setExternalReferenceCode(
-				String.valueOf(
-					newCPAttachmentFileEntry.getCPAttachmentFileEntryId()));
-			newCPAttachmentFileEntry.setUuid(PortalUUIDUtil.generate());
 
 			newCPAttachmentFileEntry.setClassPK(newCPDefinitionId);
 
 			cpAttachmentFileEntryPersistence.update(newCPAttachmentFileEntry);
 		}
-
-		// CPDefinitionLink
 
 		List<CPDefinitionLink> cpDefinitionLinks =
 			cpDefinitionLinkPersistence.findByCPDefinitionId(cpDefinitionId);
@@ -643,8 +654,6 @@ public class CPDefinitionLocalServiceImpl
 
 			cpDefinitionLinkPersistence.update(newCPDefinitionLink);
 		}
-
-		// CPDefinitionOptionRel
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			cpDefinitionOptionRelPersistence.findByCPDefinitionId(
@@ -672,8 +681,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionOptionRel);
 
 			newCPDefinitionOptionRels.add(newCPDefinitionOptionRel);
-
-			// CPDefinitionOptionValueRel
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionValueRelPersistence.
@@ -704,8 +711,6 @@ public class CPDefinitionLocalServiceImpl
 
 		reindexCPDefinitionOptionRels(newCPDefinition);
 
-		// CPDefinitionSpecificationOptionValue
-
 		List<CPDefinitionSpecificationOptionValue>
 			cpDefinitionSpecificationOptionValues =
 				cpDefinitionSpecificationOptionValuePersistence.
@@ -733,8 +738,6 @@ public class CPDefinitionLocalServiceImpl
 				newCPDefinitionSpecificationOptionValue);
 		}
 
-		// CPDisplayLayout
-
 		List<CPDisplayLayout> cpDisplayLayouts =
 			cpDisplayLayoutPersistence.findByC_C(
 				cpDefinitionClassNameId, cpDefinitionId);
@@ -752,18 +755,14 @@ public class CPDefinitionLocalServiceImpl
 			cpDisplayLayoutPersistence.update(newCPDisplayLayout);
 		}
 
-		// CPInstance
-
 		List<CPInstance> cpInstances =
 			cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 
 		for (CPInstance cpInstance : cpInstances) {
 			CPInstance newCPInstance = (CPInstance)cpInstance.clone();
 
-			newCPInstance.setCPInstanceId(counterLocalService.increment());
-			newCPInstance.setExternalReferenceCode(
-				String.valueOf(newCPInstance.getCPInstanceId()));
 			newCPInstance.setUuid(PortalUUIDUtil.generate());
+			newCPInstance.setCPInstanceId(counterLocalService.increment());
 			newCPInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
@@ -841,9 +840,6 @@ public class CPDefinitionLocalServiceImpl
 					updateCPInstanceOptionValueRel(newCPInstanceOptionValueRel);
 			}
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
 			_updateCommercePriceEntry(
 				newCPInstance, CommercePriceListConstants.TYPE_PRICE_LIST,
 				newCPInstance.getPrice(), serviceContext);
@@ -854,8 +850,6 @@ public class CPDefinitionLocalServiceImpl
 			cpInstancePersistence.update(newCPInstance);
 		}
 
-		// CPVersionContributors
-
 		List<CPVersionContributor> cpVersionContributors =
 			CPVersionContributorRegistryUtil.getCPVersionContributors();
 
@@ -864,8 +858,6 @@ public class CPDefinitionLocalServiceImpl
 
 			cpVersionContributor.onUpdate(cpDefinitionId, newCPDefinitionId);
 		}
-
-		// CProduct
 
 		if (cpDefinitionLocalService.isVersionable(originalCPDefinition)) {
 			cProductLocalService.updatePublishedCPDefinitionId(
@@ -1305,13 +1297,10 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				classNameId, cpDefinitionId,
-				CPAttachmentFileEntryConstants.TYPE_IMAGE,
+				classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinitionId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
@@ -2044,7 +2033,7 @@ public class CPDefinitionLocalServiceImpl
 				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
 				true, true);
 
-			//CProduct
+			// CProduct
 
 			cProductLocalService.updatePublishedCPDefinitionId(
 				cpDefinition.getCProductId(), cpDefinition.getCPDefinitionId());
@@ -2209,12 +2198,11 @@ public class CPDefinitionLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			if (cpDefinition.isApproved()) {
-				long classNameId = classNameLocalService.getClassNameId(
-					cpDefinition.getModelClassName());
-
 				cpAttachmentFileEntryLocalService.
 					checkCPAttachmentFileEntriesByDisplayDate(
-						classNameId, cpDefinition.getCPDefinitionId());
+						classNameLocalService.getClassNameId(
+							cpDefinition.getModelClassName()),
+						cpDefinition.getCPDefinitionId());
 
 				cpInstanceLocalService.checkCPInstancesByDisplayDate(
 					cpDefinition.getCPDefinitionId());
@@ -2397,12 +2385,12 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNotNull(ddmStructureKey)) {
-			long classNameId = classNameLocalService.getClassNameId(
-				CPDefinition.class.getName());
-
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					groupId, classNameId, ddmStructureKey, true);
+					groupId,
+					classNameLocalService.getClassNameId(
+						CPDefinition.class.getName()),
+					ddmStructureKey, true);
 
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();
@@ -2728,6 +2716,10 @@ public class CPDefinitionLocalServiceImpl
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

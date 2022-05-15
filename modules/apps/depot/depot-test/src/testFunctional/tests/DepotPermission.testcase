@@ -383,6 +383,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "User");
+
 		DepotNavigator.openToDMFolder(
 			depotName = "Test Depot Name",
 			folderName = "DM Folder Name");
@@ -467,6 +472,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
 			roleTitle = "Regular Role");
 
 		JSONRole.assignRoleToUser(
@@ -569,6 +579,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Remove MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
 			roleTitle = "Remove MG Role");
 
 		JSONRole.assignRoleToUser(
@@ -679,6 +694,11 @@ definition {
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Regular Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Regular Role");
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
@@ -783,6 +803,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Update MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
 			roleTitle = "Update MG Role");
 
 		JSONRole.assignRoleToUser(
@@ -902,6 +927,11 @@ definition {
 			guestPermissions = "false",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Guest");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
@@ -1159,13 +1189,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "1 Results for Depot");
+			value1 = "1 Result for &quot;Depot&quot;");
 
 		Search.searchCP(searchTerm = "No View Permissions");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
-			value1 = "0 Results for No View Permissions");
+			value1 = "0 Results for &quot;No View Permissions&quot;");
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."
@@ -1283,6 +1313,68 @@ definition {
 			permissionDefinitionValue = "View",
 			permissionNavigationValue = "Web Content",
 			siteNameScope = "All Sites and Asset Libraries");
+	}
+
+	@description = "This ensures that a site member without permissions cannot access a depot folder via DM widget on a connected site."
+	@priority = "4"
+	test SiteMemberCannotAccessFolderWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "Depot Folder Name",
+			groupName = "Test Depot Name");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.setRootFolder(
+			depotName = "Test Depot Name",
+			dmRootFolderName = "Depot Folder Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions");
 	}
 
 	@description = "This ensures that a document from depot cannot be accessed through Blogs on a connected site when a user doesn't have permissions."

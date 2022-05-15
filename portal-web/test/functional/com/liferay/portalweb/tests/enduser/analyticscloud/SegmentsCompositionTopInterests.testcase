@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -78,7 +80,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test InterestCanBeAggregatedFromMultiplePages {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the segment take time to appear.
 		// AC Refactor ticket: LRAC-9168
@@ -141,7 +142,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SearchDetailsOfSegmentsInterest {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the segment take time to appear.
 		// AC Refactor ticket: LRAC-9169
@@ -238,7 +238,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewListInterestsAppearsBarGraphsWithPercentage {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the segment take time to appear.
 		// AC Refactor ticket: LRAC-9167

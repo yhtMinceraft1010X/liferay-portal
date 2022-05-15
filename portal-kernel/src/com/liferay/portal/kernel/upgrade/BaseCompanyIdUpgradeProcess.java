@@ -15,11 +15,12 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-
-import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,35 +37,18 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		processConcurrently(
-			getTableUpdaters(),
-			tableUpdater -> {
-				String tableName = tableUpdater.getTableName();
+		DB db = DBManagerUtil.getDB();
 
-				try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-					if (!hasColumn(tableName, "companyId")) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Adding column companyId to table " +
-									tableName);
-						}
-
-						runSQL(
-							connection,
-							"alter table " + tableName + " add companyId LONG");
-					}
-					else {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Skipping the creation of companyId column " +
-									"for table " + tableName);
-						}
-					}
-
-					tableUpdater.update(connection);
-				}
-			},
-			null);
+		if (db.getDBType() == DBType.SQLSERVER) {
+			for (TableUpdater tableUpdater : getTableUpdaters()) {
+				_addCompanyIdColumn(tableUpdater);
+			}
+		}
+		else {
+			processConcurrently(
+				getTableUpdaters(),
+				tableUpdater -> _addCompanyIdColumn(tableUpdater), null);
+		}
 	}
 
 	protected abstract TableUpdater[] getTableUpdaters();
@@ -99,9 +83,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			_createCompanyIdColumn = createCompanyIdColumn;
 		}
 
-		public void update(Connection connection)
-			throws IOException, SQLException {
-
+		public void update(Connection connection) throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(
 					connection,
@@ -166,6 +148,33 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 
+	}
+
+	private void _addCompanyIdColumn(TableUpdater tableUpdater)
+		throws Exception {
+
+		String tableName = tableUpdater.getTableName();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			if (!hasColumn(tableName, "companyId")) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Adding column companyId to table " + tableName);
+				}
+
+				runSQL(
+					connection,
+					"alter table " + tableName + " add companyId LONG");
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping the creation of companyId column for table " +
+							tableName);
+				}
+			}
+
+			tableUpdater.update(connection);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

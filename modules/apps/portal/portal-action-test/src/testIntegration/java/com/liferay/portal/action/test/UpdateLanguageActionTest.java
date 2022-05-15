@@ -113,7 +113,7 @@ public class UpdateLanguageActionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(
+		_layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				_defaultLocale, "Page in Default Locale"
@@ -274,10 +274,10 @@ public class UpdateLanguageActionTest {
 
 		mockHttpServletRequest.setParameter("redirect", url);
 
-		String redirect = updateLanguageAction.getRedirect(
-			mockHttpServletRequest, themeDisplay, _targetLocale);
-
-		Assert.assertEquals(expectedRedirect, redirect);
+		Assert.assertEquals(
+			expectedRedirect,
+			updateLanguageAction.getRedirect(
+				mockHttpServletRequest, themeDisplay, _targetLocale));
 	}
 
 	private String _getFriendlyURLSeparatorPart(Locale locale)

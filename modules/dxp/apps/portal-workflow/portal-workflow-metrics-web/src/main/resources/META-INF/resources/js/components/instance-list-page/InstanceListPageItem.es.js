@@ -28,7 +28,8 @@ import {capitalize, getSLAStatusIconInfo} from '../../shared/util/util.es';
 import {AppContext} from '../AppContext.es';
 import {InstanceListContext} from './InstanceListPageProvider.es';
 import {ModalContext} from './modal/ModalProvider.es';
-function Item({totalCount, ...instance}) {
+
+function Item({isAdmin, totalCount, ...instance}) {
 	const {userId} = useContext(AppContext);
 	const {
 		selectedItems = [],
@@ -67,7 +68,11 @@ function Item({totalCount, ...instance}) {
 	const assigneeNames = assignees.map((user) => user.name).join(', ');
 	const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
-	const disableCheckbox = (!assignedToUser && !reviewer) || completed;
+	let disableCheckbox = completed;
+
+	if (!isAdmin) {
+		disableCheckbox = !assignedToUser && !reviewer;
+	}
 
 	const formattedAssignees = !completed
 		? assigneeNames
@@ -347,6 +352,7 @@ function DueDateSLAResults({slaResults, slaStatusIconInfo}) {
 					header={Liferay.Language.get('due-date')}
 					onMouseEnter={() => setPopover(true)}
 					onMouseLeave={() => setPopover(false)}
+					onShowChange={setPopover}
 					show={popover}
 					trigger={
 						<div

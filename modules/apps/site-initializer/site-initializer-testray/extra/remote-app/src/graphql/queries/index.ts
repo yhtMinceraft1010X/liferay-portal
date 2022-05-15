@@ -18,21 +18,50 @@ export type CType<ObjectKey extends string, Query = any> = {
 	};
 };
 
-export type CTypePagination<ObjectKey extends string, Query = any> = {
-	c: {
-		[key in ObjectKey]: {
-			items: Query[];
-			lastPage: number;
-			page: number;
-			pageSize: number;
-			totalCount: number;
-		};
+export type FacetAggregation = {
+	facets: {
+		facetCriteria: string;
+		facetValues: {
+			numberOfOccurrences: number;
+			term: string;
+		}[];
 	};
 };
 
+export type FacetAggregationQuery<ObjectKey extends string> = {
+	[key in ObjectKey]: FacetAggregation;
+};
+
+export type APIResponse<Query = any> = {
+	items: Query[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
+export type TypePagination<ObjectKey extends string, Query = any> = {
+	[key in ObjectKey]: APIResponse<Query>;
+};
+
+export type CTypePagination<ObjectKey extends string, Query = any> = {
+	c: TypePagination<ObjectKey, Query>;
+};
+
+export * from './liferayRole';
+export * from './liferayUserAccount';
+export * from './testrayAttachment';
 export * from './testrayBuild';
 export * from './testrayCase';
+export * from './testrayCaseResult';
+export * from './testrayCaseType';
+export * from './testrayComponent';
+export * from './testrayFactorCategory';
+export * from './testrayFactorOptions';
 export * from './testrayProject';
 export * from './testrayRequirement';
 export * from './testrayRoutine';
+export * from './testrayShared';
 export * from './testraySuite';
+export * from './testrayTask';
+export * from './testrayWarning';

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -55,7 +56,13 @@ public interface ${schemaName}Resource {
 		return FactoryHolder.factory.create();
 	}
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
+	<#assign
+		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
+		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures)
+	/>
+
+	<#list javaMethodSignatures as javaMethodSignature>
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)}) throws Exception;
 	</#list>
 
@@ -88,6 +95,10 @@ public interface ${schemaName}Resource {
 	public void setResourcePermissionLocalService(ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
+
+	<#if generateBatch>
+		public void setVulcanBatchEngineImportTaskResource(VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource);
+	</#if>
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(filterString, Collections.<String, List<String>>emptyMap());

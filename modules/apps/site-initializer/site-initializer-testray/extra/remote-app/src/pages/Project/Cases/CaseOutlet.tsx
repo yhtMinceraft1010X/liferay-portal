@@ -21,38 +21,27 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {getTestrayCase} from '../../../graphql/queries/testrayCase';
+import {TestrayCase, getCase} from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import {isIncludingFormPage} from '../../../util';
 
 const CaseOutlet = () => {
 	const {testrayProject}: any = useOutletContext();
-	const {projectId, testrayCaseId} = useParams();
+	const {caseId, projectId} = useParams();
 	const {pathname} = useLocation();
-	const basePath = `/project/${projectId}/cases/${testrayCaseId}`;
+	const basePath = `/project/${projectId}/cases/${caseId}`;
+	const isFormPage = isIncludingFormPage(pathname);
 
-	const {setHeading} = useHeader({
-		useTabs: [
-			{
-				active: pathname === basePath,
-				path: basePath,
-				title: i18n.translate('case-details'),
-			},
-			{
-				active: pathname === `${basePath}/requirements`,
-				path: `${basePath}/requirements`,
-				title: i18n.translate('requirements'),
-			},
-		],
-	});
+	const {setHeading, setTabs} = useHeader();
 
-	const {data} = useQuery(getTestrayCase, {
+	const {data} = useQuery<{case: TestrayCase}>(getCase, {
 		variables: {
-			testrayCaseId,
+			caseId,
 		},
 	});
 
-	const testrayCase = data?.c?.testrayCase;
+	const testrayCase = data?.case;
 
 	useEffect(() => {
 		if (testrayCase && testrayProject) {
@@ -60,7 +49,7 @@ const CaseOutlet = () => {
 				setHeading([
 					{
 						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.testrayProjectId}/cases`,
+						path: `/project/${testrayProject.id}/cases`,
 						title: testrayProject.name,
 					},
 					{
@@ -71,6 +60,23 @@ const CaseOutlet = () => {
 			}, 0);
 		}
 	}, [testrayProject, testrayCase, setHeading]);
+
+	useEffect(() => {
+		if (!isFormPage) {
+			setTabs([
+				{
+					active: pathname === basePath,
+					path: basePath,
+					title: i18n.translate('case-details'),
+				},
+				{
+					active: pathname === `${basePath}/requirements`,
+					path: `${basePath}/requirements`,
+					title: i18n.translate('requirements'),
+				},
+			]);
+		}
+	}, [basePath, isFormPage, pathname, setTabs]);
 
 	if (testrayCase) {
 		return <Outlet context={{testrayCase}} />;

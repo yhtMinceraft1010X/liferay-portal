@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Report Implementation
 Bundle-SymbolicName: com.liferay.commerce.report.impl
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.9
 DynamicImport-Package: *
 Import-Package:\
 	!antlr.*,\
@@ -26,6 +26,8 @@ Import-Package:\
 	!javax.imageio.*,\
 	\
 	!javax.print.*,\
+	\
+	!javax.rmi.*,\
 	\
 	!javax.swing.*,\
 	\

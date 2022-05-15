@@ -30,33 +30,35 @@ const BASE_PROPS = {
 	portletNamespace: 'test',
 };
 
-const SCHEMA = {
-	'currencyCode': {
+const SCHEMA = [
+	{
+		name: 'currencyCode',
 		type: 'string',
 	},
-	'id': {
-		format: 'int64',
+	{
+		name: 'id',
 		type: 'integer',
 	},
-	'name': {
+	{
+		name: 'name',
 		type: 'string',
 	},
-	'type': {
+	{
+		name: 'type',
 		type: 'string',
 	},
-	'x-class-name': {
-		default: 'com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel',
+	{
+		name: 'x-class-name',
 		readOnly: true,
 		type: 'string',
 	},
-};
+];
 
 const FILE_SCHEMA = ['currencyCode', 'type', 'name'];
-const firstItemDetails = {
-	currencyCode: 'USD',
-	name: 'car',
-	type: 'default',
-};
+const fileContent = [
+	['USD', 'bike', 'default'],
+	['EUR', 'truck', 'default'],
+];
 
 describe('ImportForm', () => {
 	afterEach(cleanup);
@@ -74,7 +76,7 @@ describe('ImportForm', () => {
 			});
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				firstItemDetails,
+				fileContent,
 				schema: FILE_SCHEMA,
 			});
 		});
@@ -91,7 +93,7 @@ describe('ImportForm', () => {
 			});
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				firstItemDetails,
+				fileContent,
 				schema: FILE_SCHEMA,
 			});
 		});

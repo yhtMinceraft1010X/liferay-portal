@@ -25,7 +25,9 @@ definition {
 	}
 
 	macro connectToGooglePageAudit {
-		ClickNoError(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		ClickNoError(
+			key_text = "Configure",
+			locator1 = "Button#ANY");
 	}
 
 	macro disableGooglePageSpeed {
@@ -214,7 +216,7 @@ definition {
 	}
 
 	macro openPanelBeforeConfiguration {
-		if ((IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#ERROR_WARNING_TITLE"))) {
+		if ((IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON"))) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}

@@ -163,8 +163,10 @@ public class CommerceAccountLocalServiceImpl
 		else {
 			CommerceAccount commerceAccount =
 				CommerceAccountImpl.fromAccountEntry(
-					_accountEntryLocalService.fetchAccountEntryByReferenceCode(
-						serviceContext.getCompanyId(), externalReferenceCode));
+					_accountEntryLocalService.
+						fetchAccountEntryByExternalReferenceCode(
+							serviceContext.getCompanyId(),
+							externalReferenceCode));
 
 			if (commerceAccount != null) {
 				return commerceAccountLocalService.updateCommerceAccount(
@@ -252,10 +254,12 @@ public class CommerceAccountLocalServiceImpl
 
 		// Resources
 
-		//	TODO Check permissions
+		// TODO Check permissions
 
 		resourceLocalService.deleteResource(
-			commerceAccount, ResourceConstants.SCOPE_INDIVIDUAL);
+			commerceAccount.getCompanyId(), CommerceAccount.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(commerceAccount.getCommerceAccountId()));
 
 		// Expando
 
@@ -279,10 +283,9 @@ public class CommerceAccountLocalServiceImpl
 
 	@Override
 	public void deleteLogo(long commerceAccountId) throws PortalException {
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			commerceAccountId);
-
-		_portal.updateImageId(accountEntry, false, null, "logoId", 0, 0, 0);
+		_portal.updateImageId(
+			_accountEntryLocalService.getAccountEntry(commerceAccountId), false,
+			null, "logoId", 0, 0, 0);
 	}
 
 	@Override
@@ -681,7 +684,7 @@ public class CommerceAccountLocalServiceImpl
 		}
 
 		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(
-			_accountEntryLocalService.fetchAccountEntryByReferenceCode(
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				companyId, externalReferenceCode));
 
 		if ((commerceAccount != null) &&

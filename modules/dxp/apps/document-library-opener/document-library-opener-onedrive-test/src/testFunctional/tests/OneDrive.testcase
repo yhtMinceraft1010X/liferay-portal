@@ -15,42 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "OneDrive",
-			configurationScope = "Virtual Instance Scope");
-
-		var oneDriveClientId = PropsUtil.get("onedrive.client.id");
-
-		Type(
-			key_text = "clientId",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientId}");
-
-		var oneDriveClientSecret = PropsUtil.get("onedrive.client.secret");
-
-		Type(
-			key_text = "clientSecret",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientSecret}");
-
-		var oneDriveTenant = PropsUtil.get("onedrive.tenant");
-
-		Type(
-			key_text = "tenant",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveTenant}");
-
-		ScrollWebElementIntoView(locator1 = "Button#CANCEL");
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			PortletEntry.update();
-		}
-		else if (IsElementPresent(locator1 = "Button#SAVE")) {
-			PortletEntry.save();
-		}
+		OneDrive.enableOneDrive();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -69,6 +34,8 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		OneDrive.goToOneDrive();
+
+		OneDrive.deleteDocument();
 	}
 
 	tearDown {
@@ -488,6 +455,36 @@ definition {
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Cancel Checkout Word Doc Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
+	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
+	@priority = "4"
+	test CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor {
+		property test.name.skip.portal.instance = "OneDrive#CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor";
+
+		for (var documentTitle : list "OneDrive Entry Title,OneDrive Entry Title Edited") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.saveAndCheckinEditedDocumentPG(dmDocumentTitle = "OneDrive Entry Title");
+
+		OneDrive.gotoEdit(dmDocumentTitle = "OneDrive Entry Title");
+
+		OneDrive.editTitle(dmDocumentTitle = "OneDrive Entry Title Edited");
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: org.hibernate.exception.ConstraintViolationException");
 	}
 
 	@description = "This test ensures that an Excel sheet can be deleted."

@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -64,6 +65,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1426,24 +1428,50 @@ public abstract class BaseDocumentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Document, Exception> documentUnsafeConsumer =
-			document -> postDocumentFolderDocument(
+		UnsafeConsumer<Document, Exception> documentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			documentUnsafeConsumer = document -> postDocumentFolderDocument(
 				Long.parseLong((String)parameters.get("documentFolderId")),
 				(MultipartBody)parameters.get("multipartBody"));
 
-		if (parameters.containsKey("assetLibraryId")) {
-			documentUnsafeConsumer = document -> postAssetLibraryDocument(
-				(Long)parameters.get("assetLibraryId"),
-				(MultipartBody)parameters.get("multipartBody"));
-		}
-		else if (parameters.containsKey("siteId")) {
-			documentUnsafeConsumer = document -> postSiteDocument(
-				(Long)parameters.get("siteId"),
-				(MultipartBody)parameters.get("multipartBody"));
+			if (parameters.containsKey("assetLibraryId")) {
+				documentUnsafeConsumer = document -> postAssetLibraryDocument(
+					(Long)parameters.get("assetLibraryId"),
+					(MultipartBody)parameters.get("multipartBody"));
+			}
+			else if (parameters.containsKey("siteId")) {
+				documentUnsafeConsumer = document -> postSiteDocument(
+					(Long)parameters.get("siteId"),
+					(MultipartBody)parameters.get("multipartBody"));
+			}
 		}
 
-		for (Document document : documents) {
-			documentUnsafeConsumer.accept(document);
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			documentUnsafeConsumer =
+				document -> putSiteDocumentByExternalReferenceCode(
+					document.getSiteId() != null ? document.getSiteId() :
+						(Long)parameters.get("siteId"),
+					document.getExternalReferenceCode(), null);
+		}
+
+		if (documentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Document");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documents, documentUnsafeConsumer);
+		}
+		else {
+			for (Document document : documents) {
+				documentUnsafeConsumer.accept(document);
+			}
 		}
 	}
 
@@ -1471,6 +1499,10 @@ public abstract class BaseDocumentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1527,11 +1559,39 @@ public abstract class BaseDocumentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Document document : documents) {
-			putDocument(
+		UnsafeConsumer<Document, Exception> documentUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			documentUnsafeConsumer = document -> patchDocument(
 				document.getId() != null ? document.getId() :
 					Long.parseLong((String)parameters.get("documentId")),
 				null);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			documentUnsafeConsumer = document -> putDocument(
+				document.getId() != null ? document.getId() :
+					Long.parseLong((String)parameters.get("documentId")),
+				null);
+		}
+
+		if (documentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Document");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documents, documentUnsafeConsumer);
+		}
+		else {
+			for (Document document : documents) {
+				documentUnsafeConsumer.accept(document);
+			}
 		}
 	}
 
@@ -1600,6 +1660,15 @@ public abstract class BaseDocumentResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Document>,
+			 UnsafeConsumer<Document, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1658,6 +1727,14 @@ public abstract class BaseDocumentResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1748,6 +1825,9 @@ public abstract class BaseDocumentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Document>, UnsafeConsumer<Document, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

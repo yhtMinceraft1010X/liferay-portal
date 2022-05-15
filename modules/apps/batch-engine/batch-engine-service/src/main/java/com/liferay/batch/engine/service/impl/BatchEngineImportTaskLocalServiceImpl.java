@@ -14,10 +14,10 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
+import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskErrorPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -48,11 +49,12 @@ public class BatchEngineImportTaskLocalServiceImpl
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineImportTask addBatchEngineImportTask(
-			long companyId, long userId, long batchSize, String callbackURL,
-			String className, byte[] content, String contentType,
-			String executeStatus, Map<String, String> fieldNameMappingMap,
-			int importStrategy, String operation,
-			Map<String, Serializable> parameters, String taskItemDelegateName)
+			String externalReferenceCode, long companyId, long userId,
+			long batchSize, String callbackURL, String className,
+			byte[] content, String contentType, String executeStatus,
+			Map<String, String> fieldNameMappingMap, int importStrategy,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
 		throws PortalException {
 
 		if ((parameters != null) && !parameters.isEmpty()) {
@@ -67,6 +69,7 @@ public class BatchEngineImportTaskLocalServiceImpl
 				counterLocalService.increment(
 					BatchEngineImportTask.class.getName()));
 
+		batchEngineImportTask.setExternalReferenceCode(externalReferenceCode);
 		batchEngineImportTask.setCompanyId(companyId);
 		batchEngineImportTask.setUserId(userId);
 		batchEngineImportTask.setBatchSize(batchSize);
@@ -91,20 +94,14 @@ public class BatchEngineImportTaskLocalServiceImpl
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public BatchEngineImportTask addBatchEngineImportTask(
-			long companyId, long userId, long batchSize, String callbackURL,
-			String className, byte[] content, String contentType,
-			String executeStatus, Map<String, String> fieldNameMappingMap,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName)
+	public BatchEngineImportTask deleteBatchEngineImportTask(
+			long batchEngineImportTaskId)
 		throws PortalException {
 
-		return addBatchEngineImportTask(
-			companyId, userId, batchSize, callbackURL, className, content,
-			contentType, executeStatus, fieldNameMappingMap,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-			operation, parameters, taskItemDelegateName);
+		_batchEngineImportTaskErrorPersistence.removeByBatchEngineImportTaskId(
+			batchEngineImportTaskId);
+
+		return batchEngineImportTaskPersistence.remove(batchEngineImportTaskId);
 	}
 
 	@Override
@@ -165,5 +162,9 @@ public class BatchEngineImportTaskLocalServiceImpl
 
 	private static final String _INVALID_ENCLOSING_CHARACTERS =
 		StringPool.APOSTROPHE + StringPool.QUOTE;
+
+	@Reference
+	private BatchEngineImportTaskErrorPersistence
+		_batchEngineImportTaskErrorPersistence;
 
 }

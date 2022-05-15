@@ -15,7 +15,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import SelectTypes from './SelectTypes';
@@ -26,6 +25,8 @@ function QuerySettings({
 	frameworkConfig,
 	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
+	onChangeIndexerClausesVisibility,
+	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
 }) {
@@ -82,10 +83,8 @@ function QuerySettings({
 					>
 						<ClayPanel.Body>
 							<ClayRadioGroup
-								onSelectedValueChange={
-									_handleSelectAllTypesChange
-								}
-								selectedValue={selectAllTypes}
+								onChange={_handleSelectAllTypesChange}
+								value={selectAllTypes}
 							>
 								<ClayRadio
 									label={Liferay.Language.get(
@@ -111,6 +110,9 @@ function QuerySettings({
 									</div>
 
 									<SelectTypes
+										onFetchSearchableTypes={
+											onFetchSearchableTypes
+										}
 										onFrameworkConfigChange={
 											onFrameworkConfigChange
 										}
@@ -135,17 +137,15 @@ function QuerySettings({
 									)}
 								</span>
 
-								<ClayTooltipProvider>
-									<ClaySticker
-										displayType="secondary"
-										size="md"
-										title={Liferay.Language.get(
-											'search-framework-indexer-clauses-help'
-										)}
-									>
-										<ClayIcon symbol="question-circle" />
-									</ClaySticker>
-								</ClayTooltipProvider>
+								<ClaySticker
+									displayType="secondary"
+									onClick={(event) => {
+										event.stopPropagation();
+										onChangeIndexerClausesVisibility();
+									}}
+								>
+									<ClayIcon symbol="question-circle" />
+								</ClaySticker>
 							</ClayPanel.Title>
 						}
 						displayType="unstyled"
@@ -190,18 +190,6 @@ function QuerySettings({
 										'search-framework-query-contributors'
 									)}
 								</span>
-
-								<ClayTooltipProvider>
-									<ClaySticker
-										displayType="secondary"
-										size="md"
-										title={Liferay.Language.get(
-											'search-framework-query-contributors-help'
-										)}
-									>
-										<ClayIcon symbol="question-circle" />
-									</ClaySticker>
-								</ClayTooltipProvider>
 							</ClayPanel.Title>
 						}
 						displayType="unstyled"
@@ -209,10 +197,8 @@ function QuerySettings({
 					>
 						<ClayPanel.Body>
 							<ClayRadioGroup
-								onSelectedValueChange={
-									_handleEnableAllContributorsChange
-								}
-								selectedValue={enableAllContributors}
+								onChange={_handleEnableAllContributorsChange}
+								value={enableAllContributors}
 							>
 								<ClayRadio
 									label={Liferay.Language.get('enable-all')}

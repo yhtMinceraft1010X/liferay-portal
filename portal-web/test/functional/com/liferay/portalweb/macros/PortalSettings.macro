@@ -15,6 +15,10 @@ definition {
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON",
 			value1 = "Add");
 
+		if (!(isSet(ldapServerName))) {
+			var ldapServerName = "ApacheDS Server";
+		}
+
 		Type(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME",
 			value1 = "${ldapServerName}");
@@ -128,6 +132,10 @@ definition {
 			Select(
 				locator1 = "Select#DEFAULT_LANGUAGE",
 				value1 = "${defaultPortalLanguage}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "This change will only affect the newly created localized content.");
 		}
 
 		if ("${failExpected}" == "true") {
@@ -466,6 +474,10 @@ definition {
 			configurationName = "Servers",
 			configurationScope = "Virtual Instance Scope");
 
+		if (!(isSet(ldapServerName))) {
+			var ldapServerName = "ApacheDS Server";
+		}
+
 		var key_ldapServerName = "${ldapServerName}";
 
 		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVERS_TABLE_EDIT");
@@ -628,6 +640,18 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 	}
 
+	macro openToConfigInInstanceSettings {
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if ("${portlet}" == "Language") {
+			var portletKey = "language";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=${portletKey}");
+	}
+
 	macro setCurrentInstanceLanguageCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -635,6 +659,21 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "${newLanguage}");
+	}
+
+	macro setImportIntervalTime {
+		Variables.assertDefined(parameterList = "${importIntervalTime}");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Import",
+			configurationScope = "Virtual Instance Scope");
+
+		Type(
+			locator1 = "PortalSettingsAuthentication#LDAP_IMPORT_INTERVAL",
+			value1 = "${importIntervalTime}");
+
+		PortletEntry.save();
 	}
 
 	macro tearDownAuthenticationCP {

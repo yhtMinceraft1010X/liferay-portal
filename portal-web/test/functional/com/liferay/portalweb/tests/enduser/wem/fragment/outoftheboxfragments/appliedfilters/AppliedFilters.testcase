@@ -91,7 +91,7 @@ definition {
 		task ("Add the first collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name",
 				tabName = "Collections");
@@ -100,8 +100,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -313,7 +313,7 @@ definition {
 		task ("Add the first collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name 1",
 				tabName = "Collections");
@@ -322,8 +322,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -460,7 +460,7 @@ definition {
 		task ("Add the second collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name 2",
 				tabName = "Collections");
@@ -469,8 +469,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -680,7 +680,7 @@ definition {
 		task ("Add a collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name",
 				tabName = "Collections");
@@ -689,8 +689,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Grid above the Container") {

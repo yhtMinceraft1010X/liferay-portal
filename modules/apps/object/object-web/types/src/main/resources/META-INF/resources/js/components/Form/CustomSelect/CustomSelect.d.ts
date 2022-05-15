@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 import './CustomSelect.scss';
-export default function CustomSelect<T extends IItem = IItem>({
+export default function CustomSelect<T extends CustomItem = CustomItem>({
 	className,
 	disabled,
 	error,
@@ -27,11 +27,12 @@ export default function CustomSelect<T extends IItem = IItem>({
 	required,
 	value,
 }: IProps<T>): JSX.Element;
-interface IItem {
-	description: string;
+export interface CustomItem {
+	description?: string;
 	label: string;
+	value?: string;
 }
-interface IProps<T extends IItem = IItem> {
+interface IProps<T extends CustomItem = CustomItem> {
 	className?: string;
 	disabled?: boolean;
 	error?: string;

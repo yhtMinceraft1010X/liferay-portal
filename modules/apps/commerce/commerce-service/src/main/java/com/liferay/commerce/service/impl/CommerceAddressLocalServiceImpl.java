@@ -139,9 +139,17 @@ public class CommerceAddressLocalServiceImpl
 				commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 				commerceAddress.getPhoneNumber(), false, false, serviceContext);
 
-		return CommerceAddressImpl.fromAddress(
-			_addressLocalService.getAddress(
-				copiedCommerceAddress.getCommerceAddressId()));
+		Address copiedAddress = _addressLocalService.getAddress(
+			copiedCommerceAddress.getCommerceAddressId());
+
+		if (Validator.isNotNull(commerceAddress.getExternalReferenceCode())) {
+			copiedAddress.setExternalReferenceCode(
+				commerceAddress.getExternalReferenceCode());
+
+			copiedAddress = _addressLocalService.updateAddress(copiedAddress);
+		}
+
+		return CommerceAddressImpl.fromAddress(copiedAddress);
 	}
 
 	@Override
@@ -617,12 +625,12 @@ public class CommerceAddressLocalServiceImpl
 
 			commerceOrderLocalService.updateCommerceOrder(
 				null, commerceOrder.getCommerceOrderId(), billingAddressId,
-				shippingAddressId, commerceOrder.getCommercePaymentMethodKey(),
-				commerceShippingMethodId, shippingOptionName,
-				commerceOrder.getPurchaseOrderNumber(),
-				commerceOrder.getSubtotal(), shippingPrice,
-				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-				null);
+				commerceShippingMethodId, shippingAddressId,
+				commerceOrder.getAdvanceStatus(),
+				commerceOrder.getCommercePaymentMethodKey(),
+				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
+				shippingOptionName, commerceOrder.getSubtotal(),
+				commerceOrder.getTotal(), null);
 		}
 	}
 

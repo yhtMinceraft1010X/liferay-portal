@@ -12,8 +12,24 @@
  * details.
  */
 
+import {getFactorOptions} from '../../graphql/queries';
+import ListView from '../ListView/ListView';
+
 const OptionsModal = () => {
-	return <div>Modal Option</div>;
+	return (
+		<ListView
+			query={getFactorOptions}
+			tableProps={{
+				columns: [
+					{
+						key: 'name',
+						value: 'Name',
+					},
+				],
+			}}
+			transformData={(data) => data?.c?.factorOptions}
+		/>
+	);
 };
 
 export default OptionsModal;

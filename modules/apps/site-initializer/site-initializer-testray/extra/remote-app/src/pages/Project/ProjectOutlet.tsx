@@ -13,16 +13,15 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {HeaderContext, HeaderTypes} from '../../context/HeaderContext';
-import {CTypePagination} from '../../graphql/queries';
+import EmptyState from '../../components/EmptyState';
+import {CType, CTypePagination} from '../../graphql/queries';
 import {
 	TestrayProject,
-	TestrayProjectQuery,
-	getTestrayProject,
-	getTestrayProjects,
+	getProject,
+	getProjects,
 } from '../../graphql/queries/testrayProject';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
@@ -30,26 +29,27 @@ import i18n from '../../i18n';
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
-	const {setHeading, setTabs} = useHeader();
+	const {setActions, setDropdown, setHeading, setTabs} = useHeader();
 
-	const [, dispatch] = useContext(HeaderContext);
-
-	const {data} = useQuery<TestrayProjectQuery>(getTestrayProject, {
-		variables: {testrayProjectId: projectId},
-	});
+	const {data, error} = useQuery<CType<'project', TestrayProject>>(
+		getProject,
+		{
+			variables: {projectId},
+		}
+	);
 
 	const {data: dataTestrayProjects} = useQuery<
-		CTypePagination<'testrayProjects', TestrayProject>
-	>(getTestrayProjects, {
+		CTypePagination<'projects', TestrayProject>
+	>(getProjects, {
 		variables: {
 			pageSize: 100,
 		},
 	});
 
-	const testrayProjects = dataTestrayProjects?.c?.testrayProjects?.items;
+	const testrayProjects = dataTestrayProjects?.c?.projects?.items;
 
 	const hasOtherParams = !!Object.values(otherParams).length;
-	const testrayProject = data?.c.testrayProject;
+	const testrayProject = data?.c.project;
 
 	const getPath = useCallback(
 		(path: string) => {
@@ -64,34 +64,69 @@ const ProjectOutlet = () => {
 	);
 
 	useEffect(() => {
-		if (testrayProjects) {
-			dispatch({
-				payload: [
+		setActions([
+			{
+				items: [
 					{
-						items: [
-							{
-								divider: true,
-								label: i18n.translate('project-directory'),
-								path: '/',
-							},
-							...testrayProjects.map((testrayProject) => ({
-								label: testrayProject.name,
-								path: `/project/${testrayProject.testrayProjectId}/routines`,
-							})),
-						],
+						label: i18n.translate('edit-project'),
+					},
+					{
+						label: i18n.translate('delete-project'),
 					},
 				],
-				type: HeaderTypes.SET_DROPDOWN,
-			});
+				title: i18n.translate('project'),
+			},
+			{
+				items: [
+					{
+						label: i18n.translate('manage-components'),
+					},
+					{
+						label: i18n.translate('manage-teams'),
+					},
+					{
+						label: i18n.translate('manage-product-version'),
+					},
+				],
+				title: i18n.translate('manage'),
+			},
+			{
+				items: [
+					{
+						label: i18n.translate('export-cases'),
+					},
+				],
+				title: i18n.translate('reports'),
+			},
+		]);
+	}, [setActions]);
+
+	useEffect(() => {
+		if (testrayProjects) {
+			setDropdown([
+				{
+					items: [
+						{
+							divider: true,
+							label: i18n.translate('project-directory'),
+							path: '/',
+						},
+						...testrayProjects.map((testrayProject) => ({
+							label: testrayProject.name,
+							path: `/project/${testrayProject.id}/routines`,
+						})),
+					],
+				},
+			]);
 		}
-	}, [dispatch, testrayProjects]);
+	}, [setDropdown, testrayProjects]);
 
 	useEffect(() => {
 		if (testrayProject) {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.testrayProjectId}/routines`,
+					path: `/project/${testrayProject.id}/routines`,
 					title: testrayProject.name,
 				},
 			]);
@@ -126,6 +161,16 @@ const ProjectOutlet = () => {
 			}, 0);
 		}
 	}, [getPath, setTabs, hasOtherParams]);
+
+	if (error) {
+		return (
+			<EmptyState
+				description={error.message}
+				title={i18n.translate('error')}
+				type="EMPTY_SEARCH"
+			/>
+		);
+	}
 
 	if (testrayProject) {
 		return <Outlet context={{testrayProject}} />;

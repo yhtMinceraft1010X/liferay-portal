@@ -92,18 +92,12 @@ public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 		spiDDMFormRule.setName(
 			LocalizedValueUtil.toLocalizedValue(
 				ruleJSONObject.getJSONObject("name")));
-
-		List<SPIDDMFormRuleAction> spiDDMFormRuleActions =
+		spiDDMFormRule.setSPIDDMFormRuleActions(
 			_deserializeSPIDDMFormRuleActions(
-				ruleJSONObject.getJSONArray("actions"));
-
-		spiDDMFormRule.setSPIDDMFormRuleActions(spiDDMFormRuleActions);
-
-		List<SPIDDMFormRuleCondition> spiDDMFormRuleConditions =
+				ruleJSONObject.getJSONArray("actions")));
+		spiDDMFormRule.setSPIDDMFormRuleConditions(
 			_deserializeSPIDDMFormRuleConditions(
-				ruleJSONObject.getJSONArray("conditions"));
-
-		spiDDMFormRule.setSPIDDMFormRuleConditions(spiDDMFormRuleConditions);
+				ruleJSONObject.getJSONArray("conditions")));
 
 		return spiDDMFormRule;
 	}
@@ -116,7 +110,7 @@ public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 			_jsonFactory.createJSONDeserializer();
 
 		return jsonDeserializer.deserialize(
-			actionJSONObject.toJSONString(), targetClass);
+			actionJSONObject.toString(), targetClass);
 	}
 
 	private List<SPIDDMFormRuleAction> _deserializeSPIDDMFormRuleActions(
@@ -149,7 +143,7 @@ public class DDMFormRuleDeserializerImpl implements DDMFormRuleDeserializer {
 
 		SPIDDMFormRuleCondition[] spiDDMFormRuleConditions =
 			jsonDeserializer.deserialize(
-				conditionsJSONArray.toJSONString(),
+				conditionsJSONArray.toString(),
 				SPIDDMFormRuleCondition[].class);
 
 		return ListUtil.fromArray(spiDDMFormRuleConditions);

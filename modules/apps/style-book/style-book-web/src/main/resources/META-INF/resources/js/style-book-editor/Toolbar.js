@@ -22,6 +22,9 @@ import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
 import {StyleBookContext} from './StyleBookContext';
+import Undo from './Undo';
+import UndoHistory from './UndoHistory';
+import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
@@ -52,6 +55,18 @@ export default function Toolbar() {
 					<li className="mr-2 nav-item">
 						<DraftStatus />
 					</li>
+
+					{config.featureFlagLps142363 ? (
+						<li className="nav-item">
+							<Undo />
+						</li>
+					) : null}
+
+					{config.featureFlagLps142363 ? (
+						<li className="nav-item">
+							<UndoHistory />
+						</li>
+					) : null}
 
 					<li className="mx-2 nav-item">
 						<HelpInformation />

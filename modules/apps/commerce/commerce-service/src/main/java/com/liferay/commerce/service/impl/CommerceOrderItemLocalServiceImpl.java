@@ -34,6 +34,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLoca
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderItemTable;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.price.CommerceProductPrice;
@@ -58,6 +59,7 @@ import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -322,6 +324,49 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public void deleteMissingCommerceOrderItems(
+			long commerceOrderId, Long[] commerceOrderItemIds,
+			String[] externalReferenceCodes)
+		throws PortalException {
+
+		List<Long> commerceOrderItemIdsList = dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				CommerceOrderItemTable.INSTANCE.commerceOrderItemId
+			).from(
+				CommerceOrderItemTable.INSTANCE
+			).where(
+				CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
+					commerceOrderId
+				).and(
+					CommerceOrderItemTable.INSTANCE.commerceOrderItemId.notIn(
+						DSLQueryFactoryUtil.selectDistinct(
+							CommerceOrderItemTable.INSTANCE.commerceOrderItemId
+						).from(
+							CommerceOrderItemTable.INSTANCE
+						).where(
+							CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
+								commerceOrderId
+							).and(
+								CommerceOrderItemTable.INSTANCE.
+									commerceOrderItemId.in(
+										commerceOrderItemIds
+									).or(
+										CommerceOrderItemTable.INSTANCE.
+											externalReferenceCode.in(
+												externalReferenceCodes)
+									)
+							)
+						))
+				)
+			));
+
+		for (long commerceOrderItemId : commerceOrderItemIdsList) {
+			commerceOrderItemLocalService.deleteCommerceOrderItem(
+				commerceOrderItemId);
+		}
+	}
+
+	@Override
 	public CommerceOrderItem fetchByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 
@@ -457,9 +502,10 @@ public class CommerceOrderItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem importCommerceOrderItem(
+			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
@@ -472,10 +518,26 @@ public class CommerceOrderItemLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
-			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
-			null, decimalQuantity.intValue(), shippedQuantity, null,
-			serviceContext);
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.fetchByPrimaryKey(commerceOrderItemId);
+
+		if ((commerceOrderItem == null) &&
+			!Validator.isBlank(externalReferenceCode)) {
+
+			commerceOrderItem = commerceOrderItemPersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+		}
+
+		if (commerceOrderItem == null) {
+			commerceOrderItem = _createCommerceOrderItem(
+				commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
+				null, quantity, shippedQuantity, null, serviceContext);
+		}
+		else {
+			commerceOrderItem = _updateCommerceOrderItem(
+				commerceOrderItem, externalReferenceCode, user, commerceOrder,
+				cpInstance, quantity, shippedQuantity, serviceContext);
+		}
 
 		if (!Validator.isBlank(cpMeasurementUnitKey)) {
 			CPMeasurementUnit cpMeasurementUnit =
@@ -602,6 +664,26 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem);
 	}
 
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		commerceOrderItem =
+			commerceOrderItemLocalService.updateCommerceOrderItem(
+				commerceOrderItemId, commerceOrderItem.getJson(), quantity,
+				serviceContext);
+
+		commerceOrderItem.setCPMeasurementUnitId(cpMeasurementUnitId);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItem);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
@@ -673,6 +755,57 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, String json, int quantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		validateParentCommerceOrderId(commerceOrderItem);
+
+		List<CommerceOrderItem> childCommerceOrderItems =
+			commerceOrderItemPersistence.findByParentCommerceOrderItemId(
+				commerceOrderItemId);
+
+		if (childCommerceOrderItems.isEmpty()) {
+			return _updateCommerceOrderItem(
+				commerceOrderItemId, quantity, json, serviceContext);
+		}
+
+		List<CommerceOptionValue> commerceOptionValues =
+			_commerceOptionValueHelper.toCommerceOptionValues(json);
+
+		for (CommerceOrderItem childCommerceOrderItem :
+				childCommerceOrderItems) {
+
+			CommerceOptionValue commerceOptionValue =
+				_commerceOptionValueHelper.toCommerceOptionValue(
+					childCommerceOrderItem.getJson());
+
+			CommerceOptionValue matchedCommerceOptionValue =
+				commerceOptionValue.getFirstMatch(commerceOptionValues);
+
+			if (matchedCommerceOptionValue == null) {
+				throw new NoSuchOrderItemException(
+					"Child commerce order item does not match any JSON item");
+			}
+
+			int currentQuantity = quantity * commerceOptionValue.getQuantity();
+
+			_updateCommerceOrderItem(
+				childCommerceOrderItem.getCommerceOrderItemId(),
+				currentQuantity, childCommerceOrderItem.getJson(),
+				serviceContext);
+		}
+
+		return _updateCommerceOrderItem(
+			commerceOrderItemId, quantity, json, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrderItem updateCommerceOrderItemDeliveryDate(
 			long commerceOrderItemId, Date requestedDeliveryDate)
 		throws PortalException {
@@ -695,9 +828,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);
 		commerceOrderItem.setPrintedNote(printedNote);
-		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -718,10 +851,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);
 		commerceOrderItem.setPrintedNote(printedNote);
 		commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
-		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -947,6 +1080,20 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
 			commerceOrderItem);
+	}
+
+	@Override
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -1653,6 +1800,68 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceOrderItem _updateCommerceOrderItem(
+			CommerceOrderItem commerceOrderItem, String externalReferenceCode,
+			User user, CommerceOrder commerceOrder, CPInstance cpInstance,
+			int quantity, int shippedQuantity, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpInstance.getCPDefinitionId());
+
+		validate(
+			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
+			quantity);
+
+		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
+		commerceOrderItem.setGroupId(commerceOrder.getGroupId());
+		commerceOrderItem.setCompanyId(user.getCompanyId());
+		commerceOrderItem.setUserId(user.getUserId());
+		commerceOrderItem.setUserName(user.getFullName());
+		commerceOrderItem.setCommerceOrderId(
+			commerceOrder.getCommerceOrderId());
+		commerceOrderItem.setCPInstanceId(cpInstance.getCPInstanceId());
+		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
+		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setShippedQuantity(shippedQuantity);
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			CommerceProductPrice commerceProductPrice =
+				_getCommerceProductPrice(
+					cpInstance.getCPDefinitionId(),
+					cpInstance.getCPInstanceId(), commerceOrderItem.getJson(),
+					quantity, null);
+
+			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
+
+			_setCommerceOrderItemDiscountValue(
+				commerceOrderItem, commerceProductPrice.getDiscountValue(),
+				false);
+
+			_setCommerceOrderItemDiscountValue(
+				commerceOrderItem,
+				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
+		}
+
+		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
+		commerceOrderItem.setManuallyAdjusted(false);
+		commerceOrderItem.setSku(cpInstance.getSku());
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
+
+		_setSubscriptionInfo(commerceOrderItem, cpInstance);
+
+		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
+		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
+		commerceOrderItem.setShippable(cpDefinition.isShippable());
+		commerceOrderItem.setShippingExtraPrice(
+			cpDefinition.getShippingExtraPrice());
+
+		_setDimensions(commerceOrderItem, cpInstance);
+
+		return commerceOrderItem;
+	}
+
+	private CommerceOrderItem _updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity, String json,
 			CommerceProductPrice commerceProductPrice,
 			CommerceContext commerceContext, ServiceContext serviceContext)
@@ -1708,6 +1917,36 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		return commerceOrderItem;
+	}
+
+	private CommerceOrderItem _updateCommerceOrderItem(
+			long commerceOrderItemId, int quantity, String json,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		validate(
+			serviceContext.getLocale(), commerceOrder,
+			commerceOrderItem.getCPDefinition(),
+			commerceOrderItem.fetchCPInstance(), quantity);
+
+		_updateBookedQuantity(
+			serviceContext.getUserId(), commerceOrderItem,
+			commerceOrderItem.getBookedQuantityId(), quantity,
+			commerceOrderItem.getQuantity());
+
+		updateWorkflow(commerceOrder, serviceContext);
+
+		commerceOrderItem.setJson(json);
+		commerceOrderItem.setQuantity(quantity);
+
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -509,11 +511,28 @@ public abstract class BaseCatalogResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Catalog, Exception> catalogUnsafeConsumer =
-			catalog -> postCatalog(catalog);
+		UnsafeConsumer<Catalog, Exception> catalogUnsafeConsumer = null;
 
-		for (Catalog catalog : catalogs) {
-			catalogUnsafeConsumer.accept(catalog);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			catalogUnsafeConsumer = catalog -> postCatalog(catalog);
+		}
+
+		if (catalogUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Catalog");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(catalogs, catalogUnsafeConsumer);
+		}
+		else {
+			for (Catalog catalog : catalogs) {
+				catalogUnsafeConsumer.accept(catalog);
+			}
 		}
 	}
 
@@ -541,6 +560,10 @@ public abstract class BaseCatalogResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -579,10 +602,45 @@ public abstract class BaseCatalogResourceImpl
 			java.util.Collection<Catalog> catalogs,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Catalog, Exception> catalogUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			catalogUnsafeConsumer = catalog -> patchCatalog(
+				catalog.getId() != null ? catalog.getId() :
+					Long.parseLong((String)parameters.get("catalogId")),
+				catalog);
+		}
+
+		if (catalogUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Catalog");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(catalogs, catalogUnsafeConsumer);
+		}
+		else {
+			for (Catalog catalog : catalogs) {
+				catalogUnsafeConsumer.accept(catalog);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Catalog>, UnsafeConsumer<Catalog, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -643,6 +701,14 @@ public abstract class BaseCatalogResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -733,6 +799,9 @@ public abstract class BaseCatalogResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Catalog>, UnsafeConsumer<Catalog, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

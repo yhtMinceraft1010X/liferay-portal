@@ -192,12 +192,25 @@ export function MenuItem({item}) {
 										)}
 									</ClayCard.Description>
 
-									<ClayLabel
-										className="mt-1"
-										displayType="secondary"
-									>
-										{type}
-									</ClayLabel>
+									<div className="d-flex">
+										<ClayLabel
+											className="mt-1"
+											displayType="secondary"
+										>
+											{type}
+										</ClayLabel>
+
+										{item.dynamic && (
+											<ClayLabel
+												className="mt-1"
+												displayType="info"
+											>
+												{Liferay.Language.get(
+													'dynamic'
+												)}
+											</ClayLabel>
+										)}
+									</div>
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol gutters>
@@ -281,8 +294,8 @@ function DeletionModal({
 				</p>
 
 				<ClayRadioGroup
-					onSelectedValueChange={(type) => setDeletionType(type)}
-					selectedValue={deletionType}
+					onChange={(type) => setDeletionType(type)}
+					value={deletionType}
 				>
 					<ClayRadio
 						label={Liferay.Language.get('only-delete-this-item')}

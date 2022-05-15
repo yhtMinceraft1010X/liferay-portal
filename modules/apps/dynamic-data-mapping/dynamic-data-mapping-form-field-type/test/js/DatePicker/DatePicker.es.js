@@ -24,15 +24,18 @@ describe('DatePicker', () => {
 	it('renders the help text', () => {
 		render(<DatePicker tip="Type something" />);
 
-		expect(document.querySelector('.form-text')).toHaveTextContent(
-			'Type something'
-		);
+		expect(
+			document.querySelector('.form-feedback-group')
+		).toHaveTextContent('Type something');
 	});
 
 	it('renders the label', () => {
 		render(<DatePicker label="Date picker" />);
 
-		expect(screen.getByText('Date picker')).toBeInTheDocument();
+		const allByText = screen.getAllByText('Date picker');
+		expect(allByText).toHaveLength(2);
+		expect(allByText[0]).toBeInTheDocument();
+		expect(allByText[1]).toBeInTheDocument();
 	});
 
 	it('renders the predefined value', () => {

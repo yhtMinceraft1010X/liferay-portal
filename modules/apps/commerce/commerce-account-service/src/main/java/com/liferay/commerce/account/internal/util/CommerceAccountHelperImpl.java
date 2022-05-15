@@ -162,6 +162,11 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					commerceAccount.getCommerceAccountId());
 			}
 		}
+		else {
+			setCurrentCommerceAccount(
+				httpServletRequest, commerceChannelGroupId,
+				commerceAccount.getCommerceAccountId());
+		}
 
 		return commerceAccount;
 	}
@@ -200,9 +205,12 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
 
+		long userId = _portal.getUserId(httpServletRequest);
+
 		_currentAccountEntryManager.setCurrentAccountEntry(
-			commerceAccountId, commerceChannel.getSiteGroupId(),
-			_portal.getUserId(httpServletRequest));
+			commerceAccountId, commerceChannel.getGroupId(), userId);
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			commerceAccountId, commerceChannel.getSiteGroupId(), userId);
 	}
 
 	private void _checkAccountType(

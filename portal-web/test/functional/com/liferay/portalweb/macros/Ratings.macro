@@ -152,7 +152,7 @@ definition {
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
 		else if (isSet(blogRating)) {
-			Click.javaScriptClick(
+			Click.clickNoMouseOver(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#THUMB");
 		}
@@ -279,6 +279,16 @@ definition {
 					locator1 = "Ratings#THUMB",
 					value1 = "${voteCount}");
 			}
+		}
+
+		if (isSet(toolTip)) {
+			MouseOver(
+				key_ratingResult = "${ratingResult}",
+				locator1 = "Ratings#THUMB");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "${ratingResult}");
 		}
 	}
 

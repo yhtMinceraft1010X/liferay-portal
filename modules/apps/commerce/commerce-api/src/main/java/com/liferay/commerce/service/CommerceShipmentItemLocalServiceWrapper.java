@@ -62,13 +62,14 @@ public class CommerceShipmentItemLocalServiceWrapper
 			addCommerceShipmentItem(
 				String externalReferenceCode, long commerceShipmentId,
 				long commerceOrderItemId, long commerceInventoryWarehouseId,
-				int quantity,
+				int quantity, boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemLocalService.addCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, serviceContext);
+			commerceInventoryWarehouseId, quantity, validateInventory,
+			serviceContext);
 	}
 
 	@Override
@@ -88,14 +89,15 @@ public class CommerceShipmentItemLocalServiceWrapper
 			addOrUpdateCommerceShipmentItem(
 				String externalReferenceCode, long commerceShipmentId,
 				long commerceOrderItemId, long commerceInventoryWarehouseId,
-				int quantity,
+				int quantity, boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemLocalService.
 			addOrUpdateCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-				commerceInventoryWarehouseId, quantity, serviceContext);
+				commerceInventoryWarehouseId, quantity, validateInventory,
+				serviceContext);
 	}
 
 	/**
@@ -556,33 +558,23 @@ public class CommerceShipmentItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			updateCommerceShipmentItem(
-				long commerceShipmentItemId, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShipmentItemLocalService.updateCommerceShipmentItem(
-			commerceShipmentItemId, quantity);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceShipmentItem
-			updateCommerceShipmentItem(
 				long commerceShipmentItemId, long commerceInventoryWarehouseId,
-				int quantity)
+				int quantity, boolean validateInventory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemLocalService.updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
+			validateInventory);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
-			updateCommerceShipmentItemExternalReferenceCode(
-				String externalReferenceCode, long commerceShipmentItemId)
+			updateExternalReferenceCode(
+				long commerceShipmentItemId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipmentItemLocalService.
-			updateCommerceShipmentItemExternalReferenceCode(
-				externalReferenceCode, commerceShipmentItemId);
+		return _commerceShipmentItemLocalService.updateExternalReferenceCode(
+			commerceShipmentItemId, externalReferenceCode);
 	}
 
 	@Override

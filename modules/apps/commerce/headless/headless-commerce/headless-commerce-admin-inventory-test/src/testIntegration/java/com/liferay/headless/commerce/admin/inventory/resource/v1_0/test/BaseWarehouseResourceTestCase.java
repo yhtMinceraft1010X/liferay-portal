@@ -52,7 +52,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -61,9 +61,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,8 +73,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -269,7 +269,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	public void testGraphQLGetWarehousByExternalReferenceCode()
 		throws Exception {
 
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse =
+			testGraphQLGetWarehousByExternalReferenceCode_addWarehouse();
 
 		Assert.assertTrue(
 			equals(
@@ -319,6 +320,13 @@ public abstract class BaseWarehouseResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Warehouse
+			testGraphQLGetWarehousByExternalReferenceCode_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
+	}
+
 	@Test
 	public void testPatchWarehousByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -365,7 +373,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWarehousId() throws Exception {
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse = testGraphQLGetWarehousId_addWarehouse();
 
 		Assert.assertTrue(
 			equals(
@@ -402,6 +410,12 @@ public abstract class BaseWarehouseResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Warehouse testGraphQLGetWarehousId_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
 	}
 
 	@Test
@@ -450,6 +464,33 @@ public abstract class BaseWarehouseResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Warehouse> page = warehouseResource.getWarehousesPage(
 				getFilterString(entityField, "between", warehouse1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(warehouse1),
+				(List<Warehouse>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetWarehousesPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Warehouse warehouse1 = testGetWarehousesPage_addWarehouse(
+			randomWarehouse());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Warehouse warehouse2 = testGetWarehousesPage_addWarehouse(
+			randomWarehouse());
+
+		for (EntityField entityField : entityFields) {
+			Page<Warehouse> page = warehouseResource.getWarehousesPage(
+				getFilterString(entityField, "eq", warehouse1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -531,9 +572,21 @@ public abstract class BaseWarehouseResourceTestCase {
 		testGetWarehousesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, warehouse1, warehouse2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					warehouse1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWarehousesPageWithSortDouble() throws Exception {
+		testGetWarehousesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, warehouse1, warehouse2) -> {
+				BeanTestUtil.setProperty(
+					warehouse1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					warehouse2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -542,8 +595,8 @@ public abstract class BaseWarehouseResourceTestCase {
 		testGetWarehousesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, warehouse1, warehouse2) -> {
-				BeanUtils.setProperty(warehouse1, entityField.getName(), 0);
-				BeanUtils.setProperty(warehouse2, entityField.getName(), 1);
+				BeanTestUtil.setProperty(warehouse1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(warehouse2, entityField.getName(), 1);
 			});
 	}
 
@@ -556,27 +609,27 @@ public abstract class BaseWarehouseResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -584,12 +637,12 @@ public abstract class BaseWarehouseResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						warehouse2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -664,8 +717,8 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		long totalCount = warehousesJSONObject.getLong("totalCount");
 
-		Warehouse warehouse1 = testGraphQLWarehouse_addWarehouse();
-		Warehouse warehouse2 = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse1 = testGraphQLGetWarehousesPage_addWarehouse();
+		Warehouse warehouse2 = testGraphQLGetWarehousesPage_addWarehouse();
 
 		warehousesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -684,6 +737,12 @@ public abstract class BaseWarehouseResourceTestCase {
 			Arrays.asList(
 				WarehouseSerDes.toDTOs(
 					warehousesJSONObject.getString("items"))));
+	}
+
+	protected Warehouse testGraphQLGetWarehousesPage_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
 	}
 
 	@Test
@@ -1326,13 +1385,15 @@ public abstract class BaseWarehouseResourceTestCase {
 		}
 
 		if (entityFieldName.equals("latitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouse.getLatitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("longitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouse.getLongitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("mvccVersion")) {
@@ -1483,6 +1544,115 @@ public abstract class BaseWarehouseResourceTestCase {
 	protected Company testCompany;
 	protected Group testGroup;
 
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
+
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -1557,18 +1727,6 @@ public abstract class BaseWarehouseResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseWarehouseResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

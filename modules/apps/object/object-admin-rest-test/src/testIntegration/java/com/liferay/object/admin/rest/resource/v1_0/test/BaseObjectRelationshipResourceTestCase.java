@@ -51,25 +51,26 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
-
-import org.apache.commons.beanutils.BeanUtilsBean;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -296,6 +297,43 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionObjectRelationshipsPage(
+						objectDefinitionId, null,
+						getFilterString(entityField, "eq", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -467,7 +505,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	@Test
 	public void testGraphQLDeleteObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
-			testGraphQLObjectRelationship_addObjectRelationship();
+			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -482,7 +520,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectRelationship"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -498,6 +535,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ObjectRelationship
+			testGraphQLDeleteObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		return testGraphQLObjectRelationship_addObjectRelationship();
 	}
 
 	@Test
@@ -524,7 +568,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	@Test
 	public void testGraphQLGetObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
-			testGraphQLObjectRelationship_addObjectRelationship();
+			testGraphQLGetObjectRelationship_addObjectRelationship();
 
 		Assert.assertTrue(
 			equals(
@@ -565,6 +609,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectRelationship
+			testGraphQLGetObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		return testGraphQLObjectRelationship_addObjectRelationship();
 	}
 
 	@Test
@@ -757,6 +808,14 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 					"objectDefinitionName2", additionalAssertFieldName)) {
 
 				if (objectRelationship.getObjectDefinitionName2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("reverse", additionalAssertFieldName)) {
+				if (objectRelationship.getReverse() == null) {
 					valid = false;
 				}
 
@@ -960,6 +1019,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("reverse", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectRelationship1.getReverse(),
+						objectRelationship2.getReverse())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectRelationship1.getType(),
@@ -1116,6 +1186,11 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("reverse")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1171,6 +1246,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectDefinitionId2 = RandomTestUtil.randomLong();
 				objectDefinitionName2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				reverse = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
@@ -1194,6 +1270,115 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
 
 	protected class GraphQLField {
 
@@ -1269,18 +1454,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseObjectRelationshipResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

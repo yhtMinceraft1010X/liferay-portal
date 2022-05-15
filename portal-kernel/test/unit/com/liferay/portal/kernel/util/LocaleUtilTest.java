@@ -14,36 +14,39 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 /**
  * @author Wesley Gong
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class LocaleUtilTest extends PowerMockito {
+public class LocaleUtilTest {
 
 	@Test
 	public void testFromLanguageId() {
-		mockStatic(LanguageUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.US)
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.US)
 		).thenReturn(
 			true
 		);
@@ -71,18 +74,22 @@ public class LocaleUtilTest extends PowerMockito {
 
 	@Test
 	public void testFromLanguageIdBCP47() {
-		mockStatic(LanguageUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.US)
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.US)
 		).thenReturn(
 			true
 		);
 
 		Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en-US"));
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
+		Mockito.when(
+			language.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
 		).thenReturn(
 			true
 		);
@@ -90,8 +97,8 @@ public class LocaleUtilTest extends PowerMockito {
 		Assert.assertEquals(
 			Locale.SIMPLIFIED_CHINESE, LocaleUtil.fromLanguageId("zh-Hans-CN"));
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
+		Mockito.when(
+			language.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
 		).thenReturn(
 			true
 		);
@@ -99,6 +106,77 @@ public class LocaleUtilTest extends PowerMockito {
 		Assert.assertEquals(
 			Locale.TRADITIONAL_CHINESE,
 			LocaleUtil.fromLanguageId("zh-Hant-TW"));
+	}
+
+	@Test
+	public void testGetLocaleDisplayName() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.get(Locale.US, "language.en")
+		).thenReturn(
+			"English"
+		);
+
+		Mockito.when(
+			language.get(Locale.US, "language.ca")
+		).thenReturn(
+			"Catalan"
+		);
+
+		Assert.assertEquals(
+			"English (United States)",
+			LocaleUtil.getLocaleDisplayName(Locale.US, Locale.US));
+
+		Locale catalanLocale = new Locale("ca", "ES");
+
+		Assert.assertEquals(
+			"Catalan (Spain)",
+			LocaleUtil.getLocaleDisplayName(catalanLocale, Locale.US));
+
+		Locale catalanValenciaLocale = new Locale("ca", "ES", "VALENCIA");
+
+		Assert.assertEquals(
+			"Catalan (Spain, VALENCIA)",
+			LocaleUtil.getLocaleDisplayName(catalanValenciaLocale, Locale.US));
+	}
+
+	@Test
+	public void testGetLongDisplayName() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isBetaLocale(Matchers.anyObject())
+		).thenReturn(
+			false
+		);
+
+		Set<String> duplicateLanguages = Collections.singleton("ca");
+
+		Assert.assertEquals(
+			"English",
+			LocaleUtil.getLongDisplayName(Locale.US, duplicateLanguages));
+
+		Locale catalanLocale = new Locale("ca", "ES");
+
+		Assert.assertEquals(
+			"catal\u00e0 (Espanya)",
+			LocaleUtil.getLongDisplayName(catalanLocale, duplicateLanguages));
+
+		Locale catalanValenciaLocale = new Locale("ca", "ES", "VALENCIA");
+
+		Assert.assertEquals(
+			"catal\u00e0 (Espanya, VALENCIA)",
+			LocaleUtil.getLongDisplayName(
+				catalanValenciaLocale, duplicateLanguages));
 	}
 
 }

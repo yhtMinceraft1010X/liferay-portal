@@ -28,6 +28,7 @@ import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryL
 import com.liferay.commerce.notification.test.util.CommerceNotificationTestUtil;
 import com.liferay.commerce.notification.util.CommerceNotificationHelper;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -89,7 +90,7 @@ public class CommerceNotificationTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
-		_commerceChannelLocalService.addCommerceChannel(
+		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			StringPool.BLANK, _group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
@@ -160,18 +161,17 @@ public class CommerceNotificationTest {
 				_serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	@Test
@@ -183,7 +183,7 @@ public class CommerceNotificationTest {
 				_serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
@@ -257,18 +257,17 @@ public class CommerceNotificationTest {
 				_serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	@Test
@@ -286,18 +285,17 @@ public class CommerceNotificationTest {
 				_serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceNotificationHelper.sendNotifications(
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	private void _setUpAccountAdministrator() throws Exception {
@@ -393,6 +391,9 @@ public class CommerceNotificationTest {
 
 	private Role _accountAdminRole;
 	private CommerceAccount _commerceAccount;
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;

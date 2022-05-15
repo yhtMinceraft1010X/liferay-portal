@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useStateSafe} from '@liferay/frontend-js-react-web';
+import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -52,6 +52,7 @@ const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 
 export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 	const [highlighted, setHighlighted] = useState(null);
+	const isMounted = useIsMounted();
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -81,19 +82,25 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 			});
 			dataProvider()
 				.then((trafficSources) => {
-					setTrafficSources(trafficSources);
+					if (isMounted()) {
+						setTrafficSources(trafficSources);
+					}
 				})
 				.catch(() => {
-					setTrafficSources([]);
-					dispatch({type: 'ADD_WARNING'});
+					if (isMounted()) {
+						setTrafficSources([]);
+						dispatch({type: 'ADD_WARNING'});
+					}
 				})
 				.finally(() => {
-					chartDispatch({
-						payload: {
-							loading: false,
-						},
-						type: 'SET_PIE_CHART_LOADING',
-					});
+					if (isMounted()) {
+						chartDispatch({
+							payload: {
+								loading: false,
+							},
+							type: 'SET_PIE_CHART_LOADING',
+						});
+					}
 				});
 		}
 	}, [
@@ -104,6 +111,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 		timeSpanKey,
 		timeSpanOffset,
 		validAnalyticsConnection,
+		isMounted,
 	]);
 
 	const fullPieChart = useMemo(
@@ -165,10 +173,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 						<tbody>
 							{trafficSources?.map((entry) => {
 								const hasDetails =
-									entry?.countryKeywords ||
-									(entry?.referringPages &&
-										entry?.referringDomains) ||
-									entry?.referringSocialMedia;
+									entry?.value > 0 && entry?.endpointURL;
 
 								return (
 									<tr key={entry.name}>
@@ -202,7 +207,6 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 										>
 											{validAnalyticsConnection &&
 											!publishedToday &&
-											entry.value > 0 &&
 											hasDetails ? (
 												<ClayButton
 													className="px-0 py-1 text-primary"
@@ -210,7 +214,8 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 													onClick={() =>
 														onTrafficSourceClick(
 															trafficSources,
-															entry.name
+															entry.name,
+															false
 														)
 													}
 													small

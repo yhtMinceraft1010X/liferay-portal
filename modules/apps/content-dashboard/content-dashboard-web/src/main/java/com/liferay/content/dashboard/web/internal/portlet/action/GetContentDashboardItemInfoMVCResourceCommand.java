@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,6 +56,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -131,21 +131,39 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"classPK", _getClassPK(contentDashboardItem)
 				).put(
+					"clipboard", _getClipboardJSONObject(contentDashboardItem)
+				).put(
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
-					"data", _getDataJSONObject(contentDashboardItem, locale)
+					"description", contentDashboardItem.getDescription(locale)
 				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
-					"specificFields",
-					contentDashboardItem.getSpecificInformationJSONObject(
-						locale)
+					"preview",
+					Optional.ofNullable(
+						contentDashboardItem.getPreview()
+					).map(
+						ContentDashboardItem.Preview::toJSONObject
+					).orElse(
+						null
+					)
 				).put(
-					"subType", _getSubtype(contentDashboardItem, locale)
+					"specificFields",
+					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
+				).put(
+					"subType",
+					Optional.ofNullable(
+						contentDashboardItem.getContentDashboardItemSubtype()
+					).map(
+						contentDashboardItemSubtype ->
+							contentDashboardItemSubtype.getLabel(locale)
+					).orElse(
+						StringPool.BLANK
+					)
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(
@@ -251,6 +269,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return infoItemReference.getClassPK();
 	}
 
+	private JSONObject _getClipboardJSONObject(
+		ContentDashboardItem contentDashboardItem) {
+
+		return Optional.ofNullable(
+			contentDashboardItem.getClipboard()
+		).map(
+			ContentDashboardItem.Clipboard::toJSONObject
+		).orElse(
+			null
+		);
+	}
+
 	private Collector<AssetCategory, ?, Map<Long, Map<String, Object>>>
 		_getCollector(Locale locale) {
 
@@ -279,40 +309,41 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			});
 	}
 
-	private JSONObject _getDataJSONObject(
+	private JSONObject _getSpecificFieldsJSONObject(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		Map<String, Object> data = contentDashboardItem.getData(locale);
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(locale);
 
-		Set<Map.Entry<String, Object>> entries = data.entrySet();
+		Set<Map.Entry<String, Object>> entries = specificInformation.entrySet();
 
 		Stream<Map.Entry<String, Object>> stream = entries.stream();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		stream.forEach(
+		stream.sorted(
+			Comparator.comparing(entry -> entry.getKey())
+		).forEach(
 			entry -> jsonObject.put(
 				entry.getKey(),
 				JSONUtil.put(
 					"title", _language.get(locale, entry.getKey())
 				).put(
+					"type", _getSpecificInformationType(entry.getValue())
+				).put(
 					"value", _toString(entry.getValue())
-				)));
+				))
+		);
 
 		return jsonObject;
 	}
 
-	private String _getSubtype(
-		ContentDashboardItem contentDashboardItem, Locale locale) {
+	private String _getSpecificInformationType(Object object) {
+		if (object instanceof Date) {
+			return "Date";
+		}
 
-		return Optional.ofNullable(
-			contentDashboardItem.getContentDashboardItemSubtype()
-		).map(
-			contentDashboardItemSubtype -> contentDashboardItemSubtype.getLabel(
-				locale)
-		).orElse(
-			StringPool.BLANK
-		);
+		return "String";
 	}
 
 	private JSONObject _getUserJSONObject(
@@ -435,9 +466,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

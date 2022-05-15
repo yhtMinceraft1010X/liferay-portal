@@ -14,30 +14,26 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayProjectFragment} from '../fragments';
+
 export type TestrayProject = {
-	description: string;
-	name: string;
-	testrayProjectId: number;
-};
-
-export type TestrayProjectQuery = {
-	c: {
-		testrayProject: TestrayProject;
+	creator: {
+		name: string;
 	};
+	dateCreated: string;
+	description: string;
+	id: number;
+	name: string;
 };
 
-export const getTestrayProjects = gql`
-	query getTestrayProjects(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+export const getProjects = gql`
+	${testrayProjectFragment}
+
+	query getProjects($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testrayProjects(filter: $filter, page: $page, pageSize: $pageSize) {
+			projects(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					description
-					name
-					testrayProjectId
+					...ProjectFragment
 				}
 				lastPage
 				page
@@ -48,13 +44,13 @@ export const getTestrayProjects = gql`
 	}
 `;
 
-export const getTestrayProject = gql`
-	query getTestrayProjects($testrayProjectId: Long!) {
+export const getProject = gql`
+	${testrayProjectFragment}
+
+	query getProjects($projectId: Long!) {
 		c {
-			testrayProject(testrayProjectId: $testrayProjectId) {
-				description
-				name
-				testrayProjectId
+			project(projectId: $projectId) {
+				...ProjectFragment
 			}
 		}
 	}

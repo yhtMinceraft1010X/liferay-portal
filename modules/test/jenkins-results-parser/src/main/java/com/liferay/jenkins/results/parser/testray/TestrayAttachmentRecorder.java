@@ -14,13 +14,14 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
-import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -132,10 +133,19 @@ public class TestrayAttachmentRecorder {
 
 		if (!(_build instanceof TopLevelBuild)) {
 			sb.append(_build.getJobVariant());
-			sb.append("/");
 
-			sb.append(
-				JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
+			if (_build instanceof AxisBuild) {
+				AxisBuild axisBuild = (AxisBuild)_build;
+
+				sb.append("/");
+				sb.append(axisBuild.getAxisNumber());
+			}
+			else if (_build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)_build;
+
+				sb.append("/");
+				sb.append(downstreamBuild.getAxisVariable());
+			}
 		}
 
 		return sb.toString();
@@ -272,15 +282,12 @@ public class TestrayAttachmentRecorder {
 	}
 
 	private void _recordJenkinsConsole() {
-		JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-			new JenkinsConsoleTextLoader(_build.getBuildURL());
-
 		File jenkinsConsoleFile = new File(
 			_getRecordedFilesBuildDir(), "jenkins-console.txt");
 
 		try {
 			JenkinsResultsParserUtil.write(
-				jenkinsConsoleFile, jenkinsConsoleTextLoader.getConsoleText());
+				jenkinsConsoleFile, _build.getConsoleText());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

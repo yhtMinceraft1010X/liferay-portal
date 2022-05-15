@@ -152,7 +152,8 @@ public class RecentGroupManager {
 		for (long groupId : groupIds) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if (!_groupPermission.contains(
+			if ((group == null) ||
+				!_groupPermission.contains(
 					permissionChecker, group.getGroupId(), ActionKeys.VIEW) ||
 				!_groupLocalService.isLiveGroupActive(group)) {
 
@@ -181,10 +182,9 @@ public class RecentGroupManager {
 			portletRequest.setAttribute(
 				SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL, Boolean.TRUE);
 
-			String groupURL = _groupURLProvider.getGroupURL(
-				group, portletRequest);
+			if (Validator.isNull(
+					_groupURLProvider.getGroupURL(group, portletRequest))) {
 
-			if (Validator.isNull(groupURL)) {
 				continue;
 			}
 

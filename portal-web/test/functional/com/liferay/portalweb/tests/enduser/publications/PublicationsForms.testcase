@@ -1,6 +1,7 @@
 @component-name = "portal-publications"
 definition {
 
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -56,6 +57,7 @@ definition {
 			outputParameterPath = "nameCurrentValue",
 			outputParameterType = "List",
 			password = "test",
+			timeout = "10000",
 			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 
@@ -85,7 +87,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		PortletEntry.publish();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

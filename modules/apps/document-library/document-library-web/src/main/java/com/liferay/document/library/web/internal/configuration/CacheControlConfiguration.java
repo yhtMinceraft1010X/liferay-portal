@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Adolfo Pérez
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
 	localization = "content/Language", name = "cache-control-configuration-name"
@@ -42,8 +45,8 @@ public interface CacheControlConfiguration {
 	public int maxAge();
 
 	@Meta.AD(
-		description = "not-cacheable-mime-types-description",
-		name = "not-cacheable-mime-types", required = false
+		description = "uncacheable-mime-types-description",
+		name = "uncacheable-mime-types", required = false
 	)
 	public String[] notCacheableMimeTypes();
 

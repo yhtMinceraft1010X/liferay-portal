@@ -13,9 +13,11 @@
  */
 
 import React from 'react';
-interface ICustonViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
+import {TWorkflowStatus} from './types';
+interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 }
-declare const CustomViewWrapper: React.FC<ICustonViewWrapperProps>;
+declare const CustomViewWrapper: React.FC<ICustomViewWrapperProps>;
 export default CustomViewWrapper;

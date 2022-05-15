@@ -39,8 +39,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeTable;
@@ -55,6 +56,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -4642,6 +4644,23 @@ public class WikiNodePersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode
+								};
+							}
+
+							_log.warn(
+								"WikiNodePersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					WikiNode wikiNode = list.get(0);
 
 					result = wikiNode;
@@ -4905,7 +4924,7 @@ public class WikiNodePersistenceImpl
 		wikiNode.setNew(true);
 		wikiNode.setPrimaryKey(nodeId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		wikiNode.setUuid(uuid);
 
@@ -5017,13 +5036,8 @@ public class WikiNodePersistenceImpl
 
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
-		if (Validator.isNull(wikiNode.getExternalReferenceCode())) {
-			wikiNode.setExternalReferenceCode(
-				String.valueOf(wikiNode.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(wikiNode.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			wikiNode.setUuid(uuid);
 		}
@@ -5607,6 +5621,9 @@ public class WikiNodePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private WikiNodeModelArgumentsResolver _wikiNodeModelArgumentsResolver;

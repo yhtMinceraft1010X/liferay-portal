@@ -15,14 +15,13 @@
 package com.liferay.segments.experiment.web.internal.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -78,7 +77,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
 
 	@Test
@@ -91,9 +90,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment =
@@ -154,14 +154,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			analyticsUnSyncedPrefsPropsWrapper);
 
 		try {
-			long classNameId = _classNameLocalService.getClassNameId(
-				Layout.class.getName());
-
 			long[] segmentsExperienceIds =
 				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), classNameId, _layout.getPlid(),
-					new long[] {12345L});
+					_group.getGroupId(),
+					_classNameLocalService.getClassNameId(
+						Layout.class.getName()),
+					_layout.getPlid(), new long[] {12345L});
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 1,
@@ -185,9 +184,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment =
@@ -256,14 +256,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			analyticsSyncedPrefsPropsWrapper);
 
 		try {
-			long classNameId = _classNameLocalService.getClassNameId(
-				Layout.class.getName());
-
 			long[] segmentsExperienceIds =
 				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), classNameId, _layout.getPlid(),
-					new long[0]);
+					_group.getGroupId(),
+					_classNameLocalService.getClassNameId(
+						Layout.class.getName()),
+					_layout.getPlid(), new long[0]);
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 0,
@@ -287,9 +286,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment =
@@ -359,9 +359,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.addSegmentsExperience(
+					TestPropsValues.getUserId(), _group.getGroupId(),
 					segmentsEntry.getSegmentsEntryId(), classNameId,
 					_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-					0, true, new UnicodeProperties(true),
+					true, new UnicodeProperties(true),
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 
@@ -416,9 +417,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.addSegmentsExperience(
+					TestPropsValues.getUserId(), _group.getGroupId(),
 					segmentsEntry.getSegmentsEntryId(), classNameId,
 					_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
-					0, true, new UnicodeProperties(true),
+					true, new UnicodeProperties(true),
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 
@@ -461,9 +463,10 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				_layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		SegmentsExperiment segmentsExperiment =
@@ -511,19 +514,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			ReflectionTestUtil.setFieldValue(
 				PrefsPropsUtil.class, "_prefsProps", prefsProps);
 		}
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

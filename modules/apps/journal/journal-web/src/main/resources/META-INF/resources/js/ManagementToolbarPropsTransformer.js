@@ -14,6 +14,8 @@
 
 import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 
+import openDeleteArticleModal from './modals/openDeleteArticleModal';
+
 export default function propsTransformer({
 	additionalProps: {
 		addArticleURL,
@@ -28,42 +30,23 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteEntries = () => {
-		const searchContainer = Liferay.SearchContainer.get(
-			`${portletNamespace}articles`
-		);
-
-		const selectedItems = searchContainer.select
-			.getAllSelectedElements()
-			.size();
-
-		let message = Liferay.Language.get(
-			'are-you-sure-you-want-to-delete-the-selected-entry'
-		);
-
-		if (trashEnabled && selectedItems > 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin'
-			);
-		}
-		else if (trashEnabled && selectedItems === 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-move-the-selected-entry-to-the-recycle-bin'
-			);
-		}
-		else if (!trashEnabled && selectedItems > 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-the-selected-entries'
-			);
-		}
-
-		if (confirm(message)) {
+		if (trashEnabled) {
 			Liferay.fire(`${portletNamespace}editEntry`, {
-				action: trashEnabled
-					? '/journal/move_articles_and_folders_to_trash'
-					: '/journal/delete_articles_and_folders',
+				action: '/journal/move_articles_and_folders_to_trash',
 			});
+
+			return;
 		}
+
+		openDeleteArticleModal({
+			onDelete: () => {
+				Liferay.fire(`${portletNamespace}editEntry`, {
+					action: '/journal/delete_articles_and_folders',
+				});
+			},
+		});
 	};
+
 	const expireEntries = () => {
 		Liferay.fire(`${portletNamespace}editEntry`, {
 			action: '/journal/expire_articles_and_folders',
@@ -137,7 +120,9 @@ export default function propsTransformer({
 					onSelect: (selectedItem) => {
 						navigate(
 							addParams(
-								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,
+								{
+									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
+								},
 								viewDDMStructureArticlesURL
 							)
 						);
@@ -163,7 +148,9 @@ export default function propsTransformer({
 
 						navigate(
 							addParams(
-								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,
+								{
+									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
+								},
 								addArticleURL
 							)
 						);

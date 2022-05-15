@@ -64,7 +64,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -76,7 +76,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.InvokerPortletUtil;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -245,7 +245,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 						redirect, themeDisplay.getI18nPath(), i18nPath);
 				}
 
-				redirect = http.setParameter(
+				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
 					user.getUserId());
 			}
@@ -256,8 +256,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				(userLocalService.fetchUserById(scopeGroup.getClassPK()) ==
 					null)) {
 
-				redirect = http.setParameter(redirect, "doAsGroupId", 0);
-				redirect = http.setParameter(redirect, "refererPlid", 0);
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "doAsGroupId", 0);
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "refererPlid", 0);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -469,9 +471,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	protected Http http;
-
-	@Reference
 	protected Portal portal;
 
 	protected UserLocalService userLocalService;
@@ -498,8 +497,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String comments = ParamUtil.getString(actionRequest, "comments");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
-		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
-			actionRequest);
+		long[] organizationIds = _usersAdmin.getOrganizationIds(actionRequest);
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -573,6 +571,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 	private UserService _userService;
 

@@ -14,12 +14,14 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -103,11 +106,42 @@ public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public void deleteOrganization(String organizationId) throws Exception {
-		long serviceBuilderOrganizationId = _getServiceBuilderOrganizationId(
-			organizationId);
+	public void deleteAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception {
 
-		_organizationService.deleteOrganization(serviceBuilderOrganizationId);
+		deleteAccountOrganization(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			organizationId);
+	}
+
+	@Override
+	public void deleteAccountOrganization(Long accountId, String organizationId)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountId, GetterUtil.getLong(organizationId));
+	}
+
+	@Override
+	public void deleteOrganization(String organizationId) throws Exception {
+		_organizationService.deleteOrganization(
+			_getServiceBuilderOrganizationId(organizationId));
+	}
+
+	@Override
+	public void deleteOrganizationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationService.getOrganizationByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		_organizationService.deleteOrganization(
+			organization.getOrganizationId());
 	}
 
 	@Override
@@ -130,6 +164,48 @@ public class OrganizationResourceImpl
 	}
 
 	@Override
+	public Page<Organization>
+			getAccountByExternalReferenceCodeOrganizationsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return getAccountOrganizationsPage(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<Organization> getAccountOrganizationsPage(
+			Long accountId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"accountEntryIds", String.valueOf(accountId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter,
+			com.liferay.portal.kernel.model.Organization.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toOrganization(
+				GetterUtil.getString(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
@@ -139,6 +215,22 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _toOrganization(organizationId);
+	}
+
+	@Override
+	public Organization getOrganizationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderOrganization =
+				_organizationService.getOrganizationByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		return _organizationResourceDTOConverter.toDTO(
+			_getDTOConverterContext(
+				String.valueOf(serviceBuilderOrganization.getOrganizationId())),
+			serviceBuilderOrganization);
 	}
 
 	@NestedField(parentClass = Organization.class, value = "childOrganizations")
@@ -201,6 +293,25 @@ public class OrganizationResourceImpl
 					0L)
 			).build(),
 			null, flatten, filter, search, pagination, sorts);
+	}
+
+	@Override
+	public void postAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception {
+
+		postAccountOrganization(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			organizationId);
+	}
+
+	@Override
+	public void postAccountOrganization(Long accountId, String organizationId)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountId, GetterUtil.getLong(organizationId));
 	}
 
 	@Override
@@ -315,6 +426,53 @@ public class OrganizationResourceImpl
 				_getOrgLabors(organization), _getPhones(organization),
 				_getWebsites(organization),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
+	public Organization putOrganizationByExternalReferenceCode(
+			String externalReferenceCode, Organization organization)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderOrganization =
+				_organizationLocalService.fetchOrganizationByReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		String type = OrganizationConstants.TYPE_ORGANIZATION;
+
+		if (serviceBuilderOrganization != null) {
+			type = serviceBuilderOrganization.getType();
+		}
+
+		long countryId = _getCountryId(organization);
+
+		long statusId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
+		boolean site = false;
+
+		if (serviceBuilderOrganization != null) {
+			statusId = serviceBuilderOrganization.getStatusId();
+
+			Group group = serviceBuilderOrganization.getGroup();
+
+			site = group.isSite();
+		}
+
+		serviceBuilderOrganization =
+			_organizationService.addOrUpdateOrganization(
+				externalReferenceCode,
+				_getDefaultParentOrganizationId(organization),
+				organization.getName(), type,
+				_getRegionId(organization, countryId), countryId, statusId,
+				organization.getComment(), false, null, site,
+				_getAddresses(organization), _getEmailAddresses(organization),
+				_getOrgLabors(organization), _getPhones(organization),
+				_getWebsites(organization),
+				ServiceContextFactory.getInstance(contextHttpServletRequest));
+
+		return _organizationResourceDTOConverter.toDTO(
+			_getDTOConverterContext(
+				String.valueOf(serviceBuilderOrganization.getOrganizationId())),
+			serviceBuilderOrganization);
 	}
 
 	@Override
@@ -724,7 +882,17 @@ public class OrganizationResourceImpl
 		new OrganizationEntityModel();
 
 	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;

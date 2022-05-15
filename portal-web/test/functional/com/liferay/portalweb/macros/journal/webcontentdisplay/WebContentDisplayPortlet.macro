@@ -1,6 +1,97 @@
 definition {
 
-	macro configureScopePG {
+	macro add {
+		WebContentDisplayPortletNavigator.gotoAdd(
+			portletNameScoped = "${portletNameScoped}",
+			structureName = "${structureName}");
+
+		WebContent.addCP(
+			embedImage = "${embedImage}",
+			imageFileName = "${imageFileName}",
+			siteName = "${siteName}",
+			source = "${source}",
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		if (isSet(structureName)) {
+			for (var fieldLabel : list "${fieldLabelList}") {
+				if ("${fieldLabel}" == "Text Box") {
+					WebContent.addWithStructureCP(
+						fieldType = "Multiple Lines",
+						webContentText = "${webContentTextMultipleLines}",
+						webContentTextFieldLabel = "Text Box");
+				}
+				else {
+					WebContent.addWithStructureCP(webContentText = "${webContentTextSingleLine}");
+				}
+			}
+		}
+		else {
+			var structureName = "Basic Web Content";
+		}
+
+		if (isSet(templateName)) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
+		}
+
+		PortletEntry.publish();
+	}
+
+	macro addDraft {
+		WebContentDisplayPortletNavigator.gotoAdd();
+
+		WebContent.addDraft(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+	}
+
+	macro addLocalized {
+		WebContentDisplayPortletNavigator.gotoAdd(
+			portletNameTranslation = "${portletNameTranslation}",
+			structureName = "${localizedBasicWebContent}");
+
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		Click(locator1 = "Button#PUBLISH_LOCALIZED");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro addTag {
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "${tagNameList}") {
+			AssetCategorization.addTag(tagName = "${tagName}");
+		}
+
+		PortletEntry.publish();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro addWithWorkflow {
+		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${selectStructureName}");
+
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		Button.click(button = "Submit for Publication");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "${webContentTitle} is not approved.");
+	}
+
+	macro configureScope {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");
@@ -16,7 +107,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureSetupPG {
+	macro configureSetup {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(userToolNameList)) {
@@ -42,6 +133,26 @@ definition {
 		}
 
 		PortletEntry.save();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro edit {
+		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
+
+		if (isSet(webContentTextSingleLine)) {
+			Type(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "${webContentTextSingleLine}");
+		}
+		else {
+			CKEditor.addContentInWebContent(
+				content = "${webContentContentEdit}",
+				fieldLabel = "content");
+		}
+
+		PortletEntry.publish();
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -288,7 +399,7 @@ definition {
 			value1 = "Undo");
 	}
 
-	macro viewAllSettingsEnabledPG {
+	macro viewAllSettingsEnabled {
 		Click(locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN");
 
 		Click(
@@ -339,7 +450,20 @@ definition {
 			locator1 = "Ratings#THUMB");
 	}
 
-	macro viewConfigureScopePG {
+	macro viewCannotEditWC {
+		if (IsElementPresent(key_webContentTitle = "${webContentTitle}", locator1 = "WCD#ARTICLE_ELLIPSIS_ICON")) {
+			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+			MenuItem.viewNotPresent(menuItem = "Edit Web Content");
+		}
+		else {
+			AssertElementNotPresent(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+		}
+	}
+
+	macro viewConfigureScope {
 		AssertElementPresent(
 			key_portletName = "Web Content Display (${scopeSelection})",
 			locator1 = "Portlet#TITLE");
@@ -452,6 +576,14 @@ definition {
 		}
 	}
 
+	macro viewMenuItem {
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+		for (var menuItem : list "${menuItemList}") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+	}
+
 	macro viewMessage {
 		if (isSet(recycleBinWebContentTitle)) {
 			AssertTextEquals.assertPartialText(
@@ -478,6 +610,44 @@ definition {
 
 			Alert.viewInfoMessageSpecific(infoMessage = "Select web content to make it visible");
 		}
+	}
+
+	macro viewRelatedAssets {
+		for (var relatedAssetTitle : list "${relatedAssetTitleList}") {
+			AssertTextEquals(
+				key_relatedAssetTitle = "${relatedAssetTitle}",
+				locator1 = "AssetRelatedAssets#ASSET_TITLE",
+				value1 = "${relatedAssetTitle}");
+		}
+	}
+
+	macro viewWorkflow {
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "${webContentTitle} is not approved.");
+
+		AssertClick(
+			locator1 = "Message#ERROR_3_LINK",
+			value1 = "${webContentTitle} is not approved.");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${webContentContent}");
+
+		SelectFrameTop();
 	}
 
 }

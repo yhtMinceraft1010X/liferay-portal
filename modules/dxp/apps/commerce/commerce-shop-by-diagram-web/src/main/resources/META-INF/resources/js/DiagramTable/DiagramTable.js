@@ -41,8 +41,8 @@ function formatCpInstances(cpInstances, quantities) {
 				return selectedCpInstances;
 			}
 
-			const options = formatProductOptions(
-				cpInstance.options,
+			const skuOptions = formatProductOptions(
+				cpInstance.skuOptions,
 				cpInstance.productOptions
 			);
 
@@ -50,11 +50,11 @@ function formatCpInstances(cpInstances, quantities) {
 				...selectedCpInstances,
 				{
 					inCart: false,
-					options,
 					quantity:
 						quantities[cpInstance.skuId] ||
 						cpInstance.initialQuantity,
 					skuId: cpInstance.skuId,
+					skuOptions,
 				},
 			];
 		},
@@ -211,7 +211,7 @@ function DiagramTable({
 									onDelete={handleMappedProductDelete}
 									product={product}
 									quantity={
-										newQuantities[product.skuId] ||
+										newQuantities[product.skuId] ??
 										product.initialQuantity
 									}
 									setMappedProducts={setMappedProducts}
@@ -272,7 +272,7 @@ function DiagramTable({
 						mappedProducts || [],
 						newQuantities
 					)}
-					disabled={!commerceAccount.id || !selectedProductsCounter}
+					disabled={!commerceAccount?.id || !selectedProductsCounter}
 					hideIcon={true}
 					onAdd={() => {
 						const message =

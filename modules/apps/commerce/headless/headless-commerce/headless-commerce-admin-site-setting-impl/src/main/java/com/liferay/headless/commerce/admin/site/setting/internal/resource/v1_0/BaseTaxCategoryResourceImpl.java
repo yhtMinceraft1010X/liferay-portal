@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.TaxCategoryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -52,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -367,6 +370,10 @@ public abstract class BaseTaxCategoryResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<TaxCategory> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
@@ -404,16 +411,46 @@ public abstract class BaseTaxCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxCategory taxCategory : taxCategories) {
-			putTaxCategory(
+		UnsafeConsumer<TaxCategory, Exception> taxCategoryUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxCategoryUnsafeConsumer = taxCategory -> putTaxCategory(
 				taxCategory.getId() != null ? taxCategory.getId() :
 					Long.parseLong((String)parameters.get("taxCategoryId")),
 				taxCategory);
+		}
+
+		if (taxCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for TaxCategory");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxCategories, taxCategoryUnsafeConsumer);
+		}
+		else {
+			for (TaxCategory taxCategory : taxCategories) {
+				taxCategoryUnsafeConsumer.accept(taxCategory);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<TaxCategory>,
+			 UnsafeConsumer<TaxCategory, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -474,6 +511,14 @@ public abstract class BaseTaxCategoryResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -564,6 +609,10 @@ public abstract class BaseTaxCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<TaxCategory>,
+		 UnsafeConsumer<TaxCategory, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

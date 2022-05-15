@@ -1,32 +1,37 @@
-$borderColor: #e7e7ed;
-$bgColor: #fff;
+@import 'atlas-variables';
 
-.object-admin-card {
-	background-color: $bgColor;
-	border: 1px solid $borderColor;
+.lfr-objects__card {
+	background-color: $white;
+	border: 1px solid $gray-300;
 	border-radius: 4px;
-	margin-bottom: 1.5rem;
+	margin: 1.5rem 1.5rem 0;
 
-	&:last-child {
-		margin-bottom: 0;
+	&-body {
+		padding: 1.5rem;
 	}
 
-	& &__body {
+	&-header {
+		align-items: baseline;
+		border-bottom: 1px solid $gray-300;
+		display: flex;
 		padding: 1.5rem;
 
-		&:last-child {
-			margin-bottom: 0;
+		&-tooltip-icon {
+			color: $secondary-l1;
+		}
+
+		&-tooltip-icon:hover {
+			color: $secondary-d1;
 		}
 	}
 
-	& &__header {
-		border-bottom: 1px solid $borderColor;
-		display: flex;
-		justify-content: space-between;
-		padding: 1.5em;
-	}
-
-	& &__title {
+	&-title {
 		margin: 0;
+	}
+}
+
+.lfr-objects__no-padding-card {
+	.lfr-objects__card-body {
+		padding: 0 !important;
 	}
 }

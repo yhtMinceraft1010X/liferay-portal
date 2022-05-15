@@ -153,6 +153,7 @@ public class FragmentDisplayContext {
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportCollections");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "export"));
@@ -161,6 +162,7 @@ public class FragmentDisplayContext {
 						() -> hasManageFragmentEntriesPermission,
 						dropdownItem -> {
 							dropdownItem.putData("action", "openImportView");
+							dropdownItem.setIcon("import");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "import"));
@@ -175,6 +177,7 @@ public class FragmentDisplayContext {
 						() -> hasManageFragmentEntriesPermission,
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteCollections");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));
@@ -214,11 +217,7 @@ public class FragmentDisplayContext {
 			new FragmentCompositionFragmentEntryNameComparator(true));
 
 		contributedEntriesSearchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				contributedEntries,
-				contributedEntriesSearchContainer.getStart(),
-				contributedEntriesSearchContainer.getEnd()),
-			contributedEntries.size());
+			contributedEntries);
 
 		contributedEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -525,8 +524,6 @@ public class FragmentDisplayContext {
 
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setParameter(
 			"fragmentCollectionId",
 			() -> {
@@ -711,8 +708,6 @@ public class FragmentDisplayContext {
 	private PortletURL _getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setKeywords(
 			() -> {
 				String keywords = _getKeywords();

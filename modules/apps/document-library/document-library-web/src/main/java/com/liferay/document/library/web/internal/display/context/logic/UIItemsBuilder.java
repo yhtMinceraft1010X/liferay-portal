@@ -33,6 +33,8 @@ import com.liferay.document.library.web.internal.display.context.helper.FileVers
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -539,6 +541,8 @@ public class UIItemsBuilder {
 			HashMapBuilder.<String, Object>put(
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
 			).put(
+				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
 				"senna-off", "true"
 			).build());
 
@@ -560,6 +564,8 @@ public class UIItemsBuilder {
 		urlToolbarItem.setData(
 			HashMapBuilder.<String, Object>put(
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
+			).put(
+				"analytics-file-entry-title", _fileEntry.getTitle()
 			).build());
 
 		_addURLUIItem(
@@ -626,7 +632,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = _getRenderURL(
+		PortletURL portletURL = _getControlPanelRenderURL(
 			"/document_library/edit_file_entry");
 
 		_addURLUIItem(
@@ -695,7 +701,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			LanguageUtil.get(_resourceBundle, "move-to-recycle-bin"),
+			LanguageUtil.get(_resourceBundle, "delete"),
 			_getSubmitFormJavaScript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}
@@ -913,6 +919,295 @@ public class UIItemsBuilder {
 			).buildString());
 	}
 
+	public DropdownItem createCancelCheckoutDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry",
+					Constants.CANCEL_CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "cancel-checkout[document]")
+		).build();
+	}
+
+	public DropdownItem createCheckinDropdownItem() throws PortalException {
+		PortletURL portletURL = PortletURLBuilder.create(
+			_getActionURL(
+				"/document_library/edit_file_entry", Constants.CHECKIN)
+		).setParameter(
+			"fileEntryId", _fileEntry.getFileEntryId()
+		).buildPortletURL();
+
+		if (!_versioningStrategy.isOverridable()) {
+			return DropdownItemBuilder.setHref(
+				portletURL.toString()
+			).setIcon(
+				"unlock"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "checkin")
+			).build();
+		}
+
+		return DropdownItemBuilder.putData(
+			"action", "checkin"
+		).putData(
+			"checkinURL", portletURL.toString()
+		).putData(
+			"onClick",
+			StringBundler.concat(
+				_getNamespace(), "showVersionDetailsDialog('",
+				HtmlUtil.escapeJS(portletURL.toString()), "');")
+		).setIcon(
+			"unlock"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "checkin")
+		).build();
+	}
+
+	public DropdownItem createCheckoutDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString()
+		).setIcon(
+			"lock"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "checkout[document]")
+		).build();
+	}
+
+	public DropdownItem createCollectDigitalSignatureDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			() -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
+				).setBackURL(
+					_getCurrentURL()
+				).setParameter(
+					"fileEntryId", _fileEntry.getFileEntryId()
+				).buildString();
+			}
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "collect-digital-signature")
+		).build();
+	}
+
+	public DropdownItem createDeleteDropdownItem() throws PortalException {
+		String cmd = null;
+
+		if (_isDeleteActionAvailable()) {
+			cmd = Constants.DELETE;
+		}
+		else if (_isMoveToTheRecycleBinActionAvailable()) {
+			cmd = Constants.MOVE_TO_TRASH;
+		}
+
+		String mvcActionCommandName = "/document_library/edit_file_entry";
+
+		PortletURL portletURL = _getDeleteActionURL(mvcActionCommandName, cmd);
+
+		if (_fileShortcut == null) {
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
+		else {
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+
+		return DropdownItemBuilder.putData(
+			"action", "delete"
+		).putData(
+			"deleteURL", portletURL.toString()
+		).setIcon(
+			"trash"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "delete")
+		).build();
+	}
+
+	public DropdownItem createDownloadDropdownItem() {
+		boolean appendVersion = true;
+
+		if (StringUtil.equalsIgnoreCase(
+				_fileEntry.getVersion(), _fileVersion.getVersion())) {
+
+			appendVersion = false;
+		}
+
+		return DropdownItemBuilder.setData(
+			HashMapBuilder.<String, Object>put(
+				"analytics-file-entry-id", _fileEntry.getFileEntryId()
+			).put(
+				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
+				"senna-off", "true"
+			).build()
+		).setHref(
+			_dlURLHelper.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+				appendVersion, true)
+		).setIcon(
+			"download"
+		).setLabel(
+			StringBundler.concat(
+				_themeDisplay.translate("download"), " (",
+				LanguageUtil.formatStorageSize(
+					_fileVersion.getSize(), _themeDisplay.getLocale()),
+				")")
+		).build();
+	}
+
+	public DropdownItem createEditDropdownItem() {
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_entry");
+		}
+		else {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_shortcut");
+		}
+
+		portletURL.setParameter("backURL", _getCurrentURL());
+
+		return DropdownItemBuilder.setHref(
+			portletURL.toString()
+		).setIcon(
+			"pencil"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "edit")
+		).build();
+	}
+
+	public DropdownItem createEditImageDropdownItem() {
+		return DropdownItemBuilder.putData(
+			"action", "editImage"
+		).putData(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+		).putData(
+			"imageURL",
+			_dlURLHelper.getPreviewURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK)
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "edit-image")
+		).build();
+	}
+
+	public DropdownItem createMoveDropdownItem() {
+		return DropdownItemBuilder.putData(
+			"action", "move"
+		).putData(
+			"parameterName",
+			(_fileShortcut != null) ? "rowIdsDLFileShortcut" : "rowIdsFileEntry"
+		).putData(
+			"parameterValue",
+			(_fileShortcut != null) ?
+				String.valueOf(_fileShortcut.getFileShortcutId()) :
+					String.valueOf(_fileEntry.getFileEntryId())
+		).setIcon(
+			"move-folder"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "move")
+		).build();
+	}
+
+	public DropdownItem createPermissionsDropdownItem() {
+		String url = null;
+
+		try {
+			if (_fileShortcut != null) {
+				url = PermissionsURLTag.doTag(
+					null, DLFileShortcutConstants.getClassName(),
+					HtmlUtil.unescape(_fileShortcut.getToTitle()), null,
+					String.valueOf(_fileShortcut.getFileShortcutId()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_httpServletRequest);
+			}
+			else {
+				url = PermissionsURLTag.doTag(
+					null, DLFileEntryConstants.getClassName(),
+					HtmlUtil.unescape(_fileEntry.getTitle()), null,
+					String.valueOf(_fileEntry.getFileEntryId()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_httpServletRequest);
+			}
+		}
+		catch (Exception exception) {
+			throw new SystemException(
+				"Unable to create permissions URL", exception);
+		}
+
+		return DropdownItemBuilder.putData(
+			"action", "permissions"
+		).putData(
+			"permissionsURL", url
+		).setIcon(
+			"password-policies"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "permissions")
+		).build();
+	}
+
+	public DropdownItem createPublishDropdownItem() {
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = PortletURLBuilder.create(
+				_getActionURL("/document_library/publish_file_entry")
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildPortletURL();
+		}
+		else {
+			portletURL = PortletURLBuilder.create(
+				_getActionURL("/document_library/publish_file_shortcut")
+			).setParameter(
+				"fileShortcutId", _fileShortcut.getFileShortcutId()
+			).buildPortletURL();
+		}
+
+		portletURL.setParameter("redirect", StringPool.BLANK);
+		portletURL.setParameter("backURL", _getCurrentURL());
+
+		return DropdownItemBuilder.putData(
+			"action", "publish"
+		).putData(
+			"publishURL", portletURL.toString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "publish-to-live")
+		).build();
+	}
+
+	public DropdownItem createViewOriginalFileDropdownItem() {
+		if (_fileShortcut == null) {
+			return null;
+		}
+
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/view_file_entry")
+			).setParameter(
+				"fileEntryId", _fileShortcut.getToFileEntryId()
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "view-original-file")
+		).build();
+	}
+
 	public MenuItem getCheckinMenuItem() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			_getActionURL(
@@ -961,6 +1256,156 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 
 		return javaScriptMenuItem;
+	}
+
+	public boolean isCancelCheckoutActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCancelCheckoutDocumentActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isCheckinActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isCheckoutActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isCollectDigitalSignatureActionAvailable()
+		throws PortalException {
+
+		DigitalSignatureConfiguration digitalSignatureConfiguration =
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
+
+		if (!digitalSignatureConfiguration.enabled() ||
+			!ArrayUtil.contains(
+				DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS,
+				_fileEntry.getExtension())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isDeleteActionAvailable() throws PortalException {
+		if (_isDeleteActionAvailable() ||
+			_isMoveToTheRecycleBinActionAvailable()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isDownloadActionAvailable() throws PortalException {
+		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
+	}
+
+	public boolean isEditActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isEditActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isEditImageActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable() ||
+			!ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				_fileVersion.getMimeType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isMoveActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isMoveActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isMoveActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isPermissionsActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isPermissionsButtonVisible()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isPermissionsButtonVisible())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isPublishActionAvailable() throws PortalException {
+		if (!_isFileVersionExportable(true)) {
+			return false;
+		}
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (!stagingGroupHelper.isStagingGroup(
+				_themeDisplay.getScopeGroupId()) ||
+			!stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+			return false;
+		}
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isViewOriginalFileActionAvailable() {
+		if (_fileShortcut != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private UIItemsBuilder(

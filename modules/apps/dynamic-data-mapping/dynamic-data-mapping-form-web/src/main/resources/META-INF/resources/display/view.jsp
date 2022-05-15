@@ -67,6 +67,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 		boolean expired = DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone);
 
+		boolean formAvailable = ddmFormDisplayContext.isFormAvailable();
+		boolean formShared = ddmFormDisplayContext.isFormShared();
 		boolean preview = ddmFormDisplayContext.isPreview();
 		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();
 
@@ -117,7 +119,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 					%>'
 				/>
 			</c:when>
-			<c:when test="<%= ddmFormDisplayContext.isFormAvailable() %>">
+			<c:when test="<%= formAvailable || preview %>">
 				<portlet:actionURL name="/dynamic_data_mapping_form/add_form_instance_record" var="addFormInstanceRecordActionURL" />
 
 				<div class="portlet-forms">
@@ -175,12 +177,25 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />
 						<liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="unable-to-retrieve-the-definition-of-the-selected-form" />
 						<liferay-ui:error exception="<%= NoSuchStructureLayoutException.class %>" message="unable-to-retrieve-the-layout-of-the-selected-form" />
-						<liferay-ui:error exception="<%= ObjectEntryValuesException.class %>" message="the-maximum-length-is-280-characters-for-text-fields" />
+						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsIntegerSize.class %>" message="object-entry-value-exceeds-integer-field-allowed-size" />
+						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsLongMaxSize.class %>" message="object-entry-value-exceeds-maximum-long-field-allowed-size" />
+						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsLongMinSize.class %>" message="object-entry-value-falls-below-minimum-long-field-allowed-size" />
+						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsLongSize.class %>" message="object-entry-value-exceeds-long-field-allowed-size" />
+
+						<liferay-ui:error exception="<%= ObjectEntryValuesException.ExceedsTextMaxLength.class %>">
+
+							<%
+							ObjectEntryValuesException.ExceedsTextMaxLength etml = (ObjectEntryValuesException.ExceedsTextMaxLength)errorException;
+							%>
+
+							<liferay-ui:message arguments="<%= new String[] {String.valueOf(etml.getMaxLength()), etml.getObjectFieldName()} %>" key="the-entry-value-exceeds-the-maximum-length-of-x-characters-for-object-field-x" translateArguments="<%= false %>" />
+						</liferay-ui:error>
+
 						<liferay-ui:error exception="<%= StorageException.class %>" message="there-was-an-error-when-accessing-the-data-storage" />
 
 						<liferay-ui:error-principal />
 
-						<c:if test="<%= ddmFormDisplayContext.isFormShared() || preview %>">
+						<c:if test="<%= formShared || preview %>">
 							<clay:container-fluid>
 								<div class="locale-actions">
 									<liferay-ui:language
@@ -285,7 +300,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 
-					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+					<c:if test="<%= formShared %>">
 						document.title =
 							'<%= HtmlUtil.escapeJS(formInstance.getName(displayLocale)) %>';
 					</c:if>

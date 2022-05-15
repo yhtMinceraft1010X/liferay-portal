@@ -84,7 +84,7 @@ public class DispatchLogDisplayContextTest {
 
 		Object dispatchLogDisplayContext = _getDispatchLogDisplayContext(
 			_getMockHttpServletRequest(
-				company, LayoutTestUtil.addLayout(group), user));
+				company, LayoutTestUtil.addTypePortletLayout(group), user));
 
 		Assert.assertNotNull(dispatchLogDisplayContext);
 
@@ -136,7 +136,7 @@ public class DispatchLogDisplayContextTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
-				company, LayoutTestUtil.addLayout(group), user);
+				company, LayoutTestUtil.addTypePortletLayout(group), user);
 
 		DispatchLog dispatchLog = _getDispatchLog(
 			DispatchTaskStatus.IN_PROGRESS, user);
@@ -216,7 +216,7 @@ public class DispatchLogDisplayContextTest {
 				user, RandomTestUtil.nextInt());
 
 		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTrigger.getUserId(),
+			null, dispatchTrigger.getUserId(),
 			dispatchTrigger.getDispatchTaskExecutorType(),
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
 			dispatchTrigger.getName(), dispatchTrigger.isSystem());

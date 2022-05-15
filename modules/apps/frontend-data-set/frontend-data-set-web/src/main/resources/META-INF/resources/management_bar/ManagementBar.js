@@ -13,68 +13,32 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import ActiveFiltersBar from './components/ActiveFiltersBar';
 import BulkActions from './components/BulkActions';
 import NavBar from './components/NavBar';
-import FiltersContext from './components/filters/FiltersContext';
 
 function ManagementBar({
 	bulkActions,
 	creationMenu,
-	filters: propFilters,
 	fluid,
-	onFiltersChange,
 	selectAllItems,
+	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
 	showSearch,
 	total,
 }) {
-	const [filters, setFilters] = useState(propFilters);
-
-	useEffect(() => {
-		onFiltersChange(filters);
-	}, [filters, onFiltersChange]);
-
-	const state = {
-		filters,
-		resetFiltersValue: () => {
-			setFilters((filters) => {
-				return filters.map((element) => ({
-					...element,
-					additionalData: undefined,
-					odataFilterString: undefined,
-					resumeCustomLabel: undefined,
-					value: undefined,
-				}));
-			});
-		},
-		updateFilterState: (id, value, formattedValue, odataFilterString) => {
-			setFilters((filters) => {
-				return filters.map((filter) => ({
-					...filter,
-					...(filter.id === id
-						? {
-								formattedValue,
-								odataFilterString,
-								value,
-						  }
-						: {}),
-				}));
-			});
-		},
-	};
-
 	return (
-		<FiltersContext.Provider value={state}>
+		<>
 			{selectionType === 'multiple' && (
 				<BulkActions
 					bulkActions={bulkActions}
 					fluid={fluid}
 					selectAllItems={selectAllItems}
+					selectedItems={selectedItems}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					total={total}
@@ -86,7 +50,7 @@ function ManagementBar({
 			)}
 
 			<ActiveFiltersBar disabled={!!selectedItemsValue.length} />
-		</FiltersContext.Provider>
+		</>
 	);
 }
 
@@ -104,9 +68,8 @@ ManagementBar.propTypes = {
 		primaryItems: PropTypes.array,
 		secondaryItems: PropTypes.array,
 	}),
-	filters: PropTypes.array,
 	fluid: PropTypes.bool,
-	onFiltersChange: PropTypes.func.isRequired,
+	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
 	selectedItemsValue: PropTypes.array,
 	selectionType: PropTypes.oneOf(['single', 'multiple']),

@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LABEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label'] | //div[@class='input-group-item']//input[@class='form-control']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_NAME</td>
-		<td>//input[contains(@id,'objectFieldName') and contains(@value,'${key_fieldName}')]</td>
+		<td>//input[@class='form-control' and @name='name' and @value='${key_fieldName}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -56,38 +56,18 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELD_TYPE</td>
-		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELD_NAME</td>
-		<td>//input[@name='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>TITLE_FIELD</td>
 		<td>//select[contains(@id,'_titleObjectFieldId')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>TOGGLE_MANDATORY</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_required']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>TOGGLE_ACTIVE</td>
-		<td>//input[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_active']</td>
+		<td>ACTIVE_TOGGLE</td>
+		<td>//input[@type='checkbox']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>TOGGLE_COLLAPSIBLE</td>
 		<td>//input[@aria-label = 'Collapsible']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>TOGGLE_INACTIVE</td>
-		<td>//input[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_active']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -98,16 +78,6 @@
 	<tr>
 		<td>DISABLED_OBJECT_NAME</td>
 		<td>//input[(@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_shortName') and (@disabled)]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>DISABLED_FIELD_TYPE</td>
-		<td>//select[(@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type') and (@class='form-control disabled')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>DISABLED_FIELD_NAME</td>
-		<td>//input[@class='field disabled form-control lfr-input-text']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -123,6 +93,11 @@
 	<tr>
 		<td>OBJECT_NAME</td>
 		<td>//div[(@class='table-list-title') and contains(.,'${key_labelName}')]</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>OBJECT_NAME_INDEX</td>
+		<td>xpath=(//div[(@class='table-list-title') and contains(.,'${key_labelName}')])[${key_index}]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -177,12 +152,17 @@
 	</tr>
 	<tr>
 		<td>FIELD_VALUE</td>
-		<td>//input[contains(@class,'${key_fieldType}') and @value='${fieldLabel}']</td>
+		<td>//input[@value='${fieldLabel}']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ASSERT_SELECTED_VALUE</td>
 		<td>//label[contains(.,'${key_fieldLabel}')]/../select/option[@selected and contains(.,'${key_value}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ASSERT_DELETION_TYPE_VALUE</td>
+		<td>//div[contains(@class, 'form-group')]//label[contains(.,'Deletion Type')]//..//input[contains(@value,'${key_value}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -213,6 +193,11 @@
 	<tr>
 		<td>ERROR_MESSAGE</td>
 		<td>//div[contains(@class,'${key_className}') and contains(.,'${key_errorMessage}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_COLLAPSE_ICON</td>
+		<td>//span[contains(@class,'actions collapse-icon-${key_closedOrOpen}')]</td>
 		<td></td>
 	</tr>
 </tbody>

@@ -254,6 +254,15 @@ public class TestrayBuild {
 			JSONObject batchResultJSONObject =
 				batchResultsJSONArray.getJSONObject(i);
 
+			if (!batchResultJSONObject.has("buildResults")) {
+				if (batchResultJSONObject.has("duration")) {
+					downstreamBuildDurations.add(
+						batchResultJSONObject.getLong("duration"));
+				}
+
+				continue;
+			}
+
 			JSONArray buildResultsJSONArray =
 				batchResultJSONObject.getJSONArray("buildResults");
 
@@ -452,9 +461,10 @@ public class TestrayBuild {
 
 		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
 
+		_result = _getResult(buildResultJSONObject);
+
 		_downstreamBuildDurations = _getDownstreamBuildDurations(
 			buildResultJSONObject);
-		_result = _getResult(buildResultJSONObject);
 		_topLevelActiveBuildDuration = _getTopLevelActiveBuildDuration(
 			buildResultJSONObject);
 		_topLevelBuildDuration = _getTopLevelBuildDuration(

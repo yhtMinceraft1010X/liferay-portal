@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -425,10 +427,30 @@ public abstract class BaseProductGroupResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
-			productGroup -> postProductGroup(productGroup);
+			null;
 
-		for (ProductGroup productGroup : productGroups) {
-			productGroupUnsafeConsumer.accept(productGroup);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			productGroupUnsafeConsumer = productGroup -> postProductGroup(
+				productGroup);
+		}
+
+		if (productGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ProductGroup");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productGroups, productGroupUnsafeConsumer);
+		}
+		else {
+			for (ProductGroup productGroup : productGroups) {
+				productGroupUnsafeConsumer.accept(productGroup);
+			}
 		}
 	}
 
@@ -456,6 +478,10 @@ public abstract class BaseProductGroupResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -494,10 +520,48 @@ public abstract class BaseProductGroupResourceImpl
 			java.util.Collection<ProductGroup> productGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			productGroupUnsafeConsumer = productGroup -> patchProductGroup(
+				productGroup.getId() != null ? productGroup.getId() :
+					Long.parseLong((String)parameters.get("productGroupId")),
+				productGroup);
+		}
+
+		if (productGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ProductGroup");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productGroups, productGroupUnsafeConsumer);
+		}
+		else {
+			for (ProductGroup productGroup : productGroups) {
+				productGroupUnsafeConsumer.accept(productGroup);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ProductGroup>,
+			 UnsafeConsumer<ProductGroup, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -558,6 +622,14 @@ public abstract class BaseProductGroupResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -648,6 +720,10 @@ public abstract class BaseProductGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ProductGroup>,
+		 UnsafeConsumer<ProductGroup, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

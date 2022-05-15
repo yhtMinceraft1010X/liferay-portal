@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -351,7 +353,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "title",
-				value = "Document_1.jpg");
+				value = "DM AC Title");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

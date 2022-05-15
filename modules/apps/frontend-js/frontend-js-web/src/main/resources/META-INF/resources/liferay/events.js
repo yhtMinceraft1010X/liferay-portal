@@ -104,6 +104,12 @@
 				}
 			}
 
+			function enableFormButtons(inputs) {
+				Util._submitLocked = null;
+
+				Util.toggleDisabled(inputs, false);
+			}
+
 			if (!hasErrors) {
 				var action = event.action || form.getAttribute('action');
 
@@ -113,13 +119,20 @@
 					'button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]'
 				);
 
-				Util.disableFormButtons(inputs, form);
+				const inputsArray = Array.from(inputs._nodes);
+
+				if (inputsArray.length) {
+					inputsArray.map((input) => {
+						input.disabled = true;
+						input.style.opacity = 0.5;
+					});
+				}
 
 				if (singleSubmit === false) {
 					Util._submitLocked = A.later(
 						1000,
 						Util,
-						Util.enableFormButtons,
+						enableFormButtons,
 						[inputs, form]
 					);
 				}

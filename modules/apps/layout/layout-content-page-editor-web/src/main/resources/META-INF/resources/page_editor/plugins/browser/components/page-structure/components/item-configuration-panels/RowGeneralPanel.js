@@ -34,7 +34,7 @@ import Collapse from '../../../../../../common/components/Collapse';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {CommonStyles} from './CommonStyles';
 
-const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
+const NUMBER_OF_COLUMNS_OPTIONS = [1, 2, 3, 4, 5, 6, 12];
 
 const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',
@@ -50,6 +50,7 @@ const MODULES_PER_ROW_OPTIONS = [
 	[1, 2, 4],
 	[1, 2, 5],
 	[1, 2, 3, 6],
+	[1, 2, 3, 6, 12],
 ];
 const MODULES_PER_ROW_OPTIONS_WITH_CUSTOM = MODULES_PER_ROW_OPTIONS.map(
 	(option) => [CUSTOM_ROW, ...option]
@@ -246,7 +247,9 @@ export function RowGeneralPanel({item}) {
 						handleChange={onCustomStylesValueSelect}
 						label={Liferay.Language.get('layout')}
 						options={modulesPerRowOptions[
-							rowConfig.numberOfColumns - 1
+							NUMBER_OF_COLUMNS_OPTIONS.indexOf(
+								rowConfig.numberOfColumns
+							)
 						].map((option) => ({
 							disabled: option === CUSTOM_ROW,
 							label:
@@ -335,7 +338,7 @@ Select.propTypes = {
 	label: PropTypes.string.isRequired,
 	options: PropTypes.arrayOf(
 		PropTypes.shape({
-			label: PropTypes.string,
+			label: PropTypes.number,
 			value: PropTypes.oneOfType([
 				PropTypes.string.isRequired,
 				PropTypes.number.isRequired,

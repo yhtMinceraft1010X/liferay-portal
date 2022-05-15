@@ -56,13 +56,14 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18448,6 +18449,23 @@ public class KBArticlePersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode, version
+								};
+							}
+
+							_log.warn(
+								"KBArticlePersistenceImpl.fetchByG_ERC_V(long, String, int, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					KBArticle kbArticle = list.get(0);
 
 					result = kbArticle;
@@ -34898,7 +34916,7 @@ public class KBArticlePersistenceImpl
 		kbArticle.setNew(true);
 		kbArticle.setPrimaryKey(kbArticleId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		kbArticle.setUuid(uuid);
 
@@ -35012,13 +35030,8 @@ public class KBArticlePersistenceImpl
 
 		KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
 
-		if (Validator.isNull(kbArticle.getExternalReferenceCode())) {
-			kbArticle.setExternalReferenceCode(
-				String.valueOf(kbArticle.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(kbArticle.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			kbArticle.setUuid(uuid);
 		}
@@ -36298,6 +36311,9 @@ public class KBArticlePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private KBArticleModelArgumentsResolver _kbArticleModelArgumentsResolver;

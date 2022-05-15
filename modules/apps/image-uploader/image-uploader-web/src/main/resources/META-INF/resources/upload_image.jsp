@@ -19,7 +19,7 @@
 <%
 int aspectRatio = ParamUtil.getInteger(request, "aspectRatio");
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
-long maxFileSize = ParamUtil.getLong(request, "maxFileSize");
+long maxFileSize = UploadImageUtil.getMaxFileSize(renderRequest);
 boolean preserveRatio = ParamUtil.getBoolean(request, "preserveRatio");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
@@ -36,7 +36,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 		<%
 		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
 
-		previewURL = HttpUtil.addParameter(previewURL, liferayPortletResponse.getNamespace() + "tempImageFileName", tempImageFileName);
+		previewURL = HttpComponentsUtil.addParameter(previewURL, liferayPortletResponse.getNamespace() + "tempImageFileName", tempImageFileName);
 		%>
 
 		<aui:script>
@@ -53,7 +53,6 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 	<c:otherwise>
 		<portlet:actionURL name="/image_uploader/upload_image" var="uploadImageURL">
 			<portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
-			<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
@@ -111,7 +110,7 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 										'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 									</aui:validator>
 
-									<aui:validator name="maxFileSize">
+									<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", LanguageUtil.formatStorageSize(maxFileSize, locale)) %>' name="maxFileSize">
 										'<%= String.valueOf(maxFileSize) %>'
 									</aui:validator>
 								</aui:input>
@@ -151,7 +150,6 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 				<portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
 				<portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />
-				<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 				<portlet:param name="preserveRatio" value="<%= String.valueOf(preserveRatio) %>" />
 			</portlet:actionURL>
 

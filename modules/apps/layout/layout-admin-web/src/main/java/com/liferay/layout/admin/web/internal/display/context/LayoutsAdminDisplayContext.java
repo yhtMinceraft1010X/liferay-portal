@@ -78,7 +78,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -329,18 +329,6 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getConvertLayoutURL(Layout layout) {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/layout_admin/convert_layout"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).setParameter(
-			"selPlid", layout.getPlid()
-		).buildString();
-	}
-
 	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -545,7 +533,8 @@ public class LayoutsAdminDisplayContext {
 
 			friendlyURLBase.append(
 				group.getPathFriendlyURL(isPrivateLayout(), themeDisplay));
-			friendlyURLBase.append(HttpUtil.decodeURL(group.getFriendlyURL()));
+			friendlyURLBase.append(
+				HttpComponentsUtil.decodeURL(group.getFriendlyURL()));
 		}
 
 		return friendlyURLBase.toString();
@@ -655,17 +644,19 @@ public class LayoutsAdminDisplayContext {
 
 		OrderByComparator<Layout> orderByComparator = null;
 
+		String keywords = getKeywords();
+
 		if (Objects.equals(_getOrderByCol(), "create-date")) {
 			orderByComparator = new LayoutCreateDateComparator(orderByAsc);
 		}
-		else if (Objects.equals(_getOrderByCol(), "relevance")) {
+		else if (Objects.equals(_getOrderByCol(), "relevance") &&
+				 Validator.isNotNull(keywords)) {
+
 			orderByComparator = new LayoutRelevanceComparator(orderByAsc);
 		}
 
 		layoutsSearchContainer.setOrderByComparator(orderByComparator);
 		layoutsSearchContainer.setOrderByType(_getOrderByType());
-
-		String keywords = getKeywords();
 
 		int[] statuses = null;
 
@@ -1248,7 +1239,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		try {
-			layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL = HttpComponentsUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _getBackURL());
 		}
 		catch (Exception exception) {
@@ -1301,17 +1292,19 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean hasLayouts() {
-		int privatePagesCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), true, 0);
-
-		int publicPagesCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), false, 0);
-
-		if ((privatePagesCount + publicPagesCount) > 0) {
-			return true;
+		if (_hasLayouts != null) {
+			return _hasLayouts;
 		}
 
-		return false;
+		boolean hasLayouts = false;
+
+		if ((_getLayoutsCount(true) > 0) || (_getLayoutsCount(false) > 0)) {
+			hasLayouts = true;
+		}
+
+		_hasLayouts = hasLayouts;
+
+		return _hasLayouts;
 	}
 
 	public boolean hasRequiredVocabularies() {
@@ -1417,12 +1410,7 @@ public class LayoutsAdminDisplayContext {
 
 		Boolean privateLayout = false;
 
-		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), false, 0);
-		int privateLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), true, 0);
-
-		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
+		if ((_getLayoutsCount(true) > 0) && (_getLayoutsCount(false) <= 0)) {
 			privateLayout = true;
 		}
 
@@ -1537,20 +1525,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		if (layout.isTypeContent()) {
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			boolean published = false;
-
-			if (draftLayout != null) {
-				published = GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty("published"));
-			}
-
-			return published;
-		}
-
-		return true;
+		return layout.isPublished();
 	}
 
 	public boolean isShowDeleteAction(Layout layout) throws PortalException {
@@ -1593,7 +1568,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		if (draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if (draftLayout.isDraft()) {
 			return true;
 		}
 
@@ -1678,12 +1653,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		boolean published = GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty("published"));
-
-		if ((draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-			!published) {
-
+		if (draftLayout.isDraft() || !layout.isPublished()) {
 			return true;
 		}
 
@@ -1701,10 +1671,6 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowUserPrivateLayouts() throws PortalException {
-		if (!isPrivateLayoutsEnabled()) {
-			return false;
-		}
-
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isUser()) {
@@ -1722,6 +1688,12 @@ public class LayoutsAdminDisplayContext {
 					return false;
 				}
 			}
+		}
+
+		if (!selGroup.isLayoutSetPrototype() &&
+			!selGroup.isPrivateLayoutsEnabled()) {
+
+			return false;
 		}
 
 		return true;
@@ -1751,20 +1723,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowViewLayoutAction(Layout layout) {
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (layout.isDenied() || layout.isPending()) {
-			return true;
-		}
-
-		boolean published = true;
-
-		if (draftLayout != null) {
-			published = GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"));
-		}
-
-		if (!layout.isTypeContent() || published) {
+		if (layout.isDenied() || layout.isPending() || layout.isPublished()) {
 			return true;
 		}
 
@@ -1902,11 +1861,12 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		String layoutFullURL = HttpUtil.setParameter(
+		String layoutFullURL = HttpComponentsUtil.setParameter(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
 			"p_l_back_url", _getBackURL());
 
-		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		return HttpComponentsUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	private long[] _getGroupIds() {
@@ -1921,6 +1881,28 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return new long[0];
+	}
+
+	private int _getLayoutsCount(boolean privateLayouts) {
+		try {
+			if (GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), getSelGroupId(),
+					ActionKeys.MANAGE_LAYOUTS)) {
+
+				return LayoutLocalServiceUtil.getLayoutsCount(
+					getSelGroup(), privateLayouts, 0);
+			}
+
+			return LayoutServiceUtil.getLayoutsCount(
+				getSelGroupId(), privateLayouts, 0);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return 0;
 	}
 
 	private String _getOrderByCol() {
@@ -2035,6 +2017,7 @@ public class LayoutsAdminDisplayContext {
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private Boolean _hasLayouts;
 	private String _keywords;
 	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final LayoutCopyHelper _layoutCopyHelper;

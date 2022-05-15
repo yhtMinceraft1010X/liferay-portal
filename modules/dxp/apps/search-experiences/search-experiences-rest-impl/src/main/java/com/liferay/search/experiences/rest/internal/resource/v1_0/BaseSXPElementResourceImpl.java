@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -407,11 +409,29 @@ public abstract class BaseSXPElementResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer =
-			sxpElement -> postSXPElement(sxpElement);
+		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer = null;
 
-		for (SXPElement sxpElement : sxpElements) {
-			sxpElementUnsafeConsumer.accept(sxpElement);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			sxpElementUnsafeConsumer = sxpElement -> postSXPElement(sxpElement);
+		}
+
+		if (sxpElementUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for SxpElement");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpElements, sxpElementUnsafeConsumer);
+		}
+		else {
+			for (SXPElement sxpElement : sxpElements) {
+				sxpElementUnsafeConsumer.accept(sxpElement);
+			}
 		}
 	}
 
@@ -439,6 +459,10 @@ public abstract class BaseSXPElementResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -477,10 +501,47 @@ public abstract class BaseSXPElementResourceImpl
 			java.util.Collection<SXPElement> sxpElements,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			sxpElementUnsafeConsumer = sxpElement -> patchSXPElement(
+				sxpElement.getId() != null ? sxpElement.getId() :
+					Long.parseLong((String)parameters.get("sxpElementId")),
+				sxpElement);
+		}
+
+		if (sxpElementUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for SxpElement");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpElements, sxpElementUnsafeConsumer);
+		}
+		else {
+			for (SXPElement sxpElement : sxpElements) {
+				sxpElementUnsafeConsumer.accept(sxpElement);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<SXPElement>,
+			 UnsafeConsumer<SXPElement, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -541,6 +602,14 @@ public abstract class BaseSXPElementResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -631,6 +700,10 @@ public abstract class BaseSXPElementResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<SXPElement>,
+		 UnsafeConsumer<SXPElement, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

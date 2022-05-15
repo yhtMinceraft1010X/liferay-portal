@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -70,7 +72,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanSearchListOfPagesForInterestTopic {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the static segment takes too long to appear.
 		// AC Refactor ticket: LRAC-9171
@@ -154,7 +155,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test PaginateSegmentProfileInInterestsTab {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the static segment takes too long to appear.
 		// AC Refactor ticket: LRAC-9172
@@ -234,7 +234,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewInterestTopicShowsPagesContributeToInterest {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Interests in the static segment takes too long to appear.
 		// AC Refactor ticket: LRAC-9170

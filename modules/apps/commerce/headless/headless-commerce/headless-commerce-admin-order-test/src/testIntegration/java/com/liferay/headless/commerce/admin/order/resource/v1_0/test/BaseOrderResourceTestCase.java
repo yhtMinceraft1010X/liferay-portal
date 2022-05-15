@@ -53,7 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -62,9 +62,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,8 +74,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -308,6 +308,31 @@ public abstract class BaseOrderResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrdersPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Order order1 = testGetOrdersPage_addOrder(randomOrder());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order order2 = testGetOrdersPage_addOrder(randomOrder());
+
+		for (EntityField entityField : entityFields) {
+			Page<Order> page = orderResource.getOrdersPage(
+				null, getFilterString(entityField, "eq", order1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(order1),
+				(List<Order>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrdersPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -374,9 +399,19 @@ public abstract class BaseOrderResourceTestCase {
 		testGetOrdersPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, order1, order2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					order1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrdersPageWithSortDouble() throws Exception {
+		testGetOrdersPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, order1, order2) -> {
+				BeanTestUtil.setProperty(order1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(order2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -385,8 +420,8 @@ public abstract class BaseOrderResourceTestCase {
 		testGetOrdersPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, order1, order2) -> {
-				BeanUtils.setProperty(order1, entityField.getName(), 0);
-				BeanUtils.setProperty(order2, entityField.getName(), 1);
+				BeanTestUtil.setProperty(order1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(order2, entityField.getName(), 1);
 			});
 	}
 
@@ -399,27 +434,27 @@ public abstract class BaseOrderResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -427,12 +462,12 @@ public abstract class BaseOrderResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						order2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -506,8 +541,8 @@ public abstract class BaseOrderResourceTestCase {
 
 		long totalCount = ordersJSONObject.getLong("totalCount");
 
-		Order order1 = testGraphQLOrder_addOrder();
-		Order order2 = testGraphQLOrder_addOrder();
+		Order order1 = testGraphQLGetOrdersPage_addOrder();
+		Order order2 = testGraphQLGetOrdersPage_addOrder();
 
 		ordersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -524,6 +559,10 @@ public abstract class BaseOrderResourceTestCase {
 			order2,
 			Arrays.asList(
 				OrderSerDes.toDTOs(ordersJSONObject.getString("items"))));
+	}
+
+	protected Order testGraphQLGetOrdersPage_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -589,7 +628,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLGetOrderByExternalReferenceCode_addOrder();
 
 		Assert.assertTrue(
 			equals(
@@ -639,6 +678,12 @@ public abstract class BaseOrderResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Order testGraphQLGetOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		return testGraphQLOrder_addOrder();
+	}
+
 	@Test
 	public void testPatchOrderByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -666,7 +711,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrder() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLDeleteOrder_addOrder();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -679,7 +724,6 @@ public abstract class BaseOrderResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrder"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -693,6 +737,10 @@ public abstract class BaseOrderResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -712,7 +760,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrder() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLGetOrder_addOrder();
 
 		Assert.assertTrue(
 			equals(
@@ -749,6 +797,10 @@ public abstract class BaseOrderResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Order testGraphQLGetOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -3545,8 +3597,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderStatus")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getOrderStatus()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("orderStatusInfo")) {
@@ -3577,8 +3630,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("paymentStatus")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getPaymentStatus()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("paymentStatusInfo")) {
@@ -3680,8 +3734,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("shippingAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getShippingAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shippingDiscountAmount")) {
@@ -3699,8 +3754,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("shippingDiscountAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getShippingDiscountAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shippingDiscountPercentageLevel1")) {
@@ -3797,8 +3853,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("shippingWithTaxAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getShippingWithTaxAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("subtotal")) {
@@ -3807,8 +3864,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("subtotalAmount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getSubtotalAmount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("subtotalDiscountAmount")) {
@@ -3911,8 +3969,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("subtotalWithTaxAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getSubtotalWithTaxAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("taxAmount")) {
@@ -3929,8 +3988,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("taxAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getTaxAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("total")) {
@@ -3939,8 +3999,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("totalAmount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getTotalAmount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("totalDiscountAmount")) {
@@ -3957,8 +4018,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("totalDiscountAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getTotalDiscountAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("totalDiscountPercentageLevel1")) {
@@ -4024,8 +4086,10 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("totalDiscountWithTaxAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(order.getTotalDiscountWithTaxAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("totalFormatted")) {
@@ -4050,8 +4114,9 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("totalWithTaxAmountValue")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(order.getTotalWithTaxAmountValue()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("transactionId")) {
@@ -4160,23 +4225,6 @@ public abstract class BaseOrderResourceTestCase {
 				shippingDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingDiscountAmountValue = RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel1 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel2 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel3 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel4 =
-					RandomTestUtil.randomDouble();
-				shippingDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				shippingDiscountWithTaxAmount = RandomTestUtil.randomDouble();
 				shippingDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingMethod = StringUtil.toLowerCase(
@@ -4187,26 +4235,8 @@ public abstract class BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				shippingWithTaxAmountValue = RandomTestUtil.randomDouble();
 				subtotalAmount = RandomTestUtil.randomDouble();
-				subtotalDiscountAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				subtotalDiscountPercentageLevel1 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel2 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel3 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel4 =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				subtotalDiscountWithTaxAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				subtotalFormatted = StringUtil.toLowerCase(
@@ -4221,18 +4251,6 @@ public abstract class BaseOrderResourceTestCase {
 				totalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				totalDiscountAmountValue = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel1 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel1WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel2 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel2WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel3 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel3WithTaxAmount =
-					RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel4 = RandomTestUtil.randomDouble();
-				totalDiscountPercentageLevel4WithTaxAmount =
-					RandomTestUtil.randomDouble();
 				totalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				totalDiscountWithTaxAmountValue = RandomTestUtil.randomDouble();
@@ -4261,6 +4279,115 @@ public abstract class BaseOrderResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
 
 	protected class GraphQLField {
 
@@ -4336,18 +4463,6 @@ public abstract class BaseOrderResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseOrderResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

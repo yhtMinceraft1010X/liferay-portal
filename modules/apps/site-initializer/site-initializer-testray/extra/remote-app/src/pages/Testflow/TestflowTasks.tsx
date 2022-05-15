@@ -13,8 +13,9 @@
  */
 
 import {useQuery} from '@apollo/client';
+import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 import {Avatar, AvatarGroup} from '../../components/Avatar';
 import Code from '../../components/Code';
@@ -27,16 +28,18 @@ import QATable from '../../components/Table/QATable';
 import {CTypePagination} from '../../graphql/queries';
 import {
 	TestraySubTask,
-	getTestraySubTasks,
+	getSubTasks,
 } from '../../graphql/queries/testraySubTask';
-import {
-	TestrayTask,
-	getTestrayTaskRest,
-} from '../../graphql/queries/testrayTask';
+import {TestrayTask, getTask} from '../../graphql/queries/testrayTask';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {SUBTASK_STATUS, TEST_STATUS_LABEL} from '../../util/constants';
+import {SUBTASK_STATUS} from '../../util/constants';
+import {getTimeFromNow} from '../../util/date';
 import {routines, tasks} from '../../util/mock';
+
+const ShortcutIcon = () => (
+	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
+);
 
 const TestFlowTasks: React.FC = () => {
 	const {assigned} = routines[0];
@@ -48,21 +51,17 @@ const TestFlowTasks: React.FC = () => {
 
 	const {testrayTaskId} = useParams();
 
-	const {data, loading} = useQuery<{testrayTask: TestrayTask}>(
-		getTestrayTaskRest,
-		{
-			variables: {testrayTaskId},
-		}
-	);
+	const {data, loading} = useQuery<{task: TestrayTask}>(getTask, {
+		variables: {taskId: testrayTaskId},
+	});
 
 	const {data: dataTestraySubTasks} = useQuery<
-		CTypePagination<'testraySubTasks', TestraySubTask>
-	>(getTestraySubTasks);
+		CTypePagination<'subtasks', TestraySubTask>
+	>(getSubTasks);
 
-	const testrayTask = data?.testrayTask;
+	const testrayTask = data?.task;
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const testraySubTasks =
-		dataTestraySubTasks?.c?.testraySubTasks?.items || [];
+	const testraySubTasks = dataTestraySubTasks?.c?.subtasks?.items || [];
 
 	const {setHeading, setTabs} = useHeader();
 
@@ -117,19 +116,25 @@ const TestFlowTasks: React.FC = () => {
 
 	return (
 		<>
-			<Container className="pb-6" title="Task Details">
+			<Container collapsable title="Task Details">
 				<div className="d-flex flex-wrap">
-					<div className="col-4 col-lg-4 col-md-12 pb-5">
+					<div className="col-4 col-lg-4 col-md-12 p-0">
 						<QATable
 							items={[
 								{
 									title: i18n.translate('status'),
 									value: (
-										<StatusBadge type="failed">
-											{
-												TEST_STATUS_LABEL[
+										<StatusBadge
+											type={
+												(SUBTASK_STATUS as any)[
 													testrayTask.dueStatus
-												]
+												]?.color
+											}
+										>
+											{
+												(SUBTASK_STATUS as any)[
+													testrayTask.dueStatus
+												]?.label
 											}
 										</StatusBadge>
 									),
@@ -145,52 +150,79 @@ const TestFlowTasks: React.FC = () => {
 								},
 								{
 									title: i18n.translate('created'),
-									value: '8 Hours ago',
+									value: getTimeFromNow(
+										testrayTask.dateCreated
+									),
 								},
 							]}
 						/>
 					</div>
 
-					<div className="col-8 col-lg-8 col-md-12">
+					<div className="col-8 col-lg-8 col-md-12 mb-3 p-0">
 						<QATable
 							items={[
 								{
 									title: i18n.translate('project-name'),
-									value:
-										testrayTask.testrayBuild?.testrayProject
-											?.name,
+									value: (
+										<Link
+											className="text-dark"
+											to={`/project/${testrayTask.build?.project?.id}/routines`}
+										>
+											{testrayTask.build?.project?.name}
+
+											<ShortcutIcon />
+										</Link>
+									),
 								},
 								{
 									title: i18n.translate('routine-name'),
-									value:
-										testrayTask.testrayBuild?.testrayRoutine
-											?.name,
+									value: (
+										<Link
+											className="text-dark"
+											to={`/project/${testrayTask.build?.project?.id}/routines/${testrayTask.build?.routine?.id}`}
+										>
+											{testrayTask.build?.routine?.name}
+
+											<ShortcutIcon />
+										</Link>
+									),
 								},
 								{
 									title: i18n.translate('build-name'),
-									value: testrayTask.testrayBuild?.name,
+									value: (
+										<Link
+											className="text-dark"
+											to={`/project/${testrayTask.build?.project?.id}/routines/${testrayTask.build?.routine?.id}/build/${testrayTask.build?.id}`}
+										>
+											{testrayTask.build?.name}
+
+											<ShortcutIcon />
+										</Link>
+									),
 								},
 							]}
 						/>
 
-						<ProgressBar
-							displayTotalCompleted={false}
-							items={tasks[1]}
-							legend
-						/>
+						<div className="pb-4">
+							<ProgressBar
+								displayTotalCompleted={false}
+								items={tasks[1]}
+								legend
+							/>
+						</div>
 					</div>
 				</div>
 			</Container>
 
-			<Container className="mt-3" title="Progress (Score)">
-				<div className="my-4">
+			<Container className="mt-3" collapsable title="Progress (Score)">
+				<div className="pb-5">
 					<ProgressBar items={progressScore} legend />
 				</div>
 			</Container>
 
 			<Container className="mt-3" title={i18n.translate('subtasks')}>
 				<ListView
-					query={getTestraySubTasks}
+					query={getSubTasks}
 					tableProps={{
 						columns: [
 							{
@@ -203,9 +235,12 @@ const TestFlowTasks: React.FC = () => {
 								key: 'dueStatus',
 								render: (status) => (
 									<StatusBadge
-										type={SUBTASK_STATUS[status]?.color}
+										type={
+											(SUBTASK_STATUS as any)[status]
+												?.color
+										}
 									>
-										{SUBTASK_STATUS[status]?.label}
+										{(SUBTASK_STATUS as any)[status]?.label}
 									</StatusBadge>
 								),
 
@@ -245,7 +280,7 @@ const TestFlowTasks: React.FC = () => {
 						],
 						navigateTo: () => '/testflow/subtasks',
 					}}
-					transformData={(data) => data?.c?.testraySubTasks}
+					transformData={(data) => data?.c?.subtasks}
 				/>
 			</Container>
 		</>

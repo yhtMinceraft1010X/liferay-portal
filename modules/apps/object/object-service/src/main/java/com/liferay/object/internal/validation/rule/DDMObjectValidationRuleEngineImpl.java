@@ -16,10 +16,13 @@ package com.liferay.object.internal.validation.rule;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
 
@@ -34,34 +37,43 @@ public class DDMObjectValidationRuleEngineImpl
 	implements ObjectValidationRuleEngine {
 
 	@Override
-	public boolean evaluate(Map<String, Object> inputObjects, String script) {
+	public Map<String, Object> execute(
+		Map<String, Object> inputObjects, String script) {
+
+		Map<String, Object> results = HashMapBuilder.<String, Object>put(
+			"invalidFields", false
+		).put(
+			"invalidScript", false
+		).build();
+
 		try {
-			return _evaluate(inputObjects, script);
+			DDMExpression<Boolean> ddmExpression =
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						script
+					).build());
+
+			ddmExpression.setVariables(inputObjects);
+
+			results.put("invalidFields", !ddmExpression.evaluate());
+		}
+		catch (DDMExpressionException ddmExpressionException) {
+			_log.error(ddmExpressionException);
+
+			results.put("invalidScript", true);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			return false;
+			results.put("invalidFields", true);
 		}
+
+		return results;
 	}
 
 	@Override
 	public String getName() {
-		return "ddm";
-	}
-
-	private boolean _evaluate(Map<String, Object> inputObjects, String script)
-		throws Exception {
-
-		DDMExpression<Boolean> ddmExpression =
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					script
-				).build());
-
-		ddmExpression.setVariables(inputObjects);
-
-		return ddmExpression.evaluate();
+		return ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -18,6 +18,8 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -35,44 +37,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return new Builder();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoField(
-		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
-		boolean localizable, String name) {
-
-		this(
-			builder(
-			).infoFieldType(
-				infoFieldType
-			).name(
-				name
-			).labelInfoLocalizedValue(
-				labelInfoLocalizedValue
-			).localizable(
-				localizable
-			)._builder);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoField(
-		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
-		String name) {
-
-		this(
-			builder(
-			).infoFieldType(
-				infoFieldType
-			).name(
-				name
-			).labelInfoLocalizedValue(
-				labelInfoLocalizedValue
-			)._builder);
+	public static NamespacedBuilder builder(String namespace) {
+		return new NamespacedBuilder(namespace);
 	}
 
 	@Override
@@ -126,6 +92,11 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 	}
 
 	@Override
+	public String getUniqueId() {
+		return _builder._uniqueId;
+	}
+
+	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _builder._infoFieldType);
 
@@ -142,21 +113,26 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return _builder._multivalued;
 	}
 
+	public boolean isRequired() {
+		return _builder._required;
+	}
+
 	@Override
 	public String toString() {
 		return StringBundler.concat(
 			"{name: ", _builder._name, ", type: ",
-			_builder._infoFieldType.getName(), "}");
+			_builder._infoFieldType.getName(), ", uniqueId: ",
+			_builder._uniqueId, "}");
 	}
 
 	public static class Builder {
 
-		public <T extends InfoFieldType> NameStep<T> infoFieldType(
+		public <T extends InfoFieldType> NamespaceStep<T> infoFieldType(
 			T infoFieldType) {
 
 			_infoFieldType = infoFieldType;
 
-			return new NameStep<>(this);
+			return new NamespaceStep<>(this);
 		}
 
 		private Builder() {
@@ -170,6 +146,9 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		private boolean _localizable;
 		private boolean _multivalued;
 		private String _name;
+		private String _namespace;
+		private boolean _required;
+		private String _uniqueId;
 
 	}
 
@@ -212,7 +191,57 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			return this;
 		}
 
+		public FinalStep<T> required(boolean required) {
+			_builder._required = required;
+
+			return this;
+		}
+
 		private FinalStep(Builder builder) {
+			_builder = builder;
+		}
+
+		private final Builder _builder;
+
+	}
+
+	public static class NamespacedBuilder {
+
+		public <T extends InfoFieldType> NameStep<T> infoFieldType(
+			T infoFieldType) {
+
+			Builder builder = new Builder();
+
+			return builder.infoFieldType(
+				infoFieldType
+			).namespace(
+				_namespace
+			);
+		}
+
+		private NamespacedBuilder(String namespace) {
+			_namespace = namespace;
+		}
+
+		private final String _namespace;
+
+	}
+
+	public static class NamespaceStep<T extends InfoFieldType> {
+
+		public NameStep<T> namespace(String namespace) {
+			_builder._namespace = namespace;
+
+			return new NameStep<>(_builder);
+		}
+
+		public NameStep<T> uniqueId(String uniqueId) {
+			_builder._uniqueId = uniqueId;
+
+			return new NameStep<>(_builder);
+		}
+
+		private NamespaceStep(Builder builder) {
 			_builder = builder;
 		}
 
@@ -224,6 +253,11 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 		public FinalStep<T> name(String name) {
 			_builder._name = name;
+
+			if (Validator.isNull(_builder._uniqueId)) {
+				_builder._uniqueId =
+					_builder._namespace + StringPool.UNDERLINE + name;
+			}
 
 			return new FinalStep<>(_builder);
 		}

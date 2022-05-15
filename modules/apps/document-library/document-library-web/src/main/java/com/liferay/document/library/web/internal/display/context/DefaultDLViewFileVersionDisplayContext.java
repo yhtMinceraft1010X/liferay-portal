@@ -39,6 +39,8 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -101,6 +103,65 @@ public class DefaultDLViewFileVersionDisplayContext
 			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine, dlTrashHelper,
 			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		if (!isActionsVisible()) {
+			return null;
+		}
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_uiItemsBuilder::isDownloadActionAvailable,
+						_uiItemsBuilder.createDownloadDropdownItem()
+					).add(
+						_uiItemsBuilder::isViewOriginalFileActionAvailable,
+						_uiItemsBuilder.createViewOriginalFileDropdownItem()
+					).add(
+						_uiItemsBuilder::isEditActionAvailable,
+						_uiItemsBuilder.createEditDropdownItem()
+					).add(
+						_uiItemsBuilder::isEditImageActionAvailable,
+						_uiItemsBuilder.createEditImageDropdownItem()
+					).add(
+						_uiItemsBuilder::isCheckoutActionAvailable,
+						_uiItemsBuilder.createCheckoutDropdownItem()
+					).add(
+						_uiItemsBuilder::isCancelCheckoutActionAvailable,
+						_uiItemsBuilder.createCancelCheckoutDropdownItem()
+					).add(
+						_uiItemsBuilder::isCheckinActionAvailable,
+						_uiItemsBuilder.createCheckinDropdownItem()
+					).add(
+						_uiItemsBuilder::
+							isCollectDigitalSignatureActionAvailable,
+						_uiItemsBuilder.
+							createCollectDigitalSignatureDropdownItem()
+					).add(
+						_uiItemsBuilder::isMoveActionAvailable,
+						_uiItemsBuilder.createMoveDropdownItem()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_uiItemsBuilder::isPermissionsActionAvailable,
+						_uiItemsBuilder.createPermissionsDropdownItem()
+					).add(
+						_uiItemsBuilder::isPublishActionAvailable,
+						_uiItemsBuilder.createPublishDropdownItem()
+					).add(
+						_uiItemsBuilder::isDeleteActionAvailable,
+						_uiItemsBuilder.createDeleteDropdownItem()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 	}
 
 	@Override

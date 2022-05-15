@@ -14,18 +14,15 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm from '@clayui/form';
-import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
-import './CustomSelect.scss';
-import ErrorFeedback from '../ErrorFeedback';
-import FeedbackMessage from '../FeedbackMessage';
-import RequiredMask from '../RequiredMask';
+import FieldBase from '../FieldBase';
 
-export default function CustomSelect<T extends IItem = IItem>({
+import './CustomSelect.scss';
+
+export default function CustomSelect<T extends CustomItem = CustomItem>({
 	className,
-	disabled = false,
+	disabled,
 	error,
 	feedbackMessage,
 	id,
@@ -39,21 +36,20 @@ export default function CustomSelect<T extends IItem = IItem>({
 	const inputRef = useRef(null);
 
 	return (
-		<ClayForm.Group
-			className={classNames('object__custom-select', className, {
-				'has-error': error,
-			})}
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
 		>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
 			<ClayAutocomplete>
 				<ClayAutocomplete.Input
-					className="object__custom-select-input"
-					onClick={() => setActive(!active)}
+					defaultValue={value}
+					disabled={disabled}
+					onClick={() => setActive((active) => !active)}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					ref={inputRef}
 					value={value}
@@ -76,29 +72,26 @@ export default function CustomSelect<T extends IItem = IItem>({
 							>
 								<div>{option.label}</div>
 
-								<span className="text-small">
-									{option.description}
-								</span>
+								{option.description && (
+									<span className="text-small">
+										{option.description}
+									</span>
+								)}
 							</ClayDropDown.Item>
 						))}
 					</ClayDropDown.ItemList>
 				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>
-
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
-			)}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 }
 
-interface IItem {
-	description: string;
+export interface CustomItem {
+	description?: string;
 	label: string;
+	value?: string;
 }
-interface IProps<T extends IItem = IItem> {
+interface IProps<T extends CustomItem = CustomItem> {
 	className?: string;
 	disabled?: boolean;
 	error?: string;

@@ -262,6 +262,12 @@ public class PortalInstances {
 	public static long initCompany(
 		ServletContext servletContext, String webId) {
 
+		return initCompany(servletContext, webId, false);
+	}
+
+	public static long initCompany(
+		ServletContext servletContext, String webId, boolean skipCheck) {
+
 		// Begin initializing company
 
 		if (_log.isDebugEnabled()) {
@@ -288,11 +294,13 @@ public class PortalInstances {
 		try {
 			CompanyThreadLocal.setCompanyId(companyId);
 
-			try {
-				CompanyLocalServiceUtil.checkCompany(webId);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
+			if (!skipCheck) {
+				try {
+					CompanyLocalServiceUtil.checkCompany(webId);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 			}
 
 			String principalName = null;
@@ -468,6 +476,8 @@ public class PortalInstances {
 			if (virtualHost == null) {
 				return 0;
 			}
+
+			CompanyThreadLocal.setCompanyId(virtualHost.getCompanyId());
 
 			if (virtualHost.getLayoutSetId() != 0) {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(

@@ -281,6 +281,7 @@ definition {
 
 	@priority = "5"
 	test AddOrganizationSitePrivatePage {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Training";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -358,15 +359,13 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Public Page");
+		PagesAdmin.addPage(pageName = "Public Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Public Page",
 			url = "${portalURL}/web/organization-name/public-page");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Public Page",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Public Page");
 	}
 
 	@priority = "5"
@@ -419,7 +418,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Organization Public Page");
+		PagesAdmin.addPage(pageName = "Organization Public Page");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
@@ -487,31 +486,6 @@ definition {
 			suborgType = "Organization");
 	}
 
-	@description = "Resolved bug automation for LPS-140712. This test asserts that a success message displays when a user is added to an organization"
-	@priority = "3"
-	test AddUserDisplaysSuccessMessage {
-		task ("Given an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization Name",
-				organizationSite = "true");
-
-			Organization.openOrganizationsAdmin();
-		}
-
-		task ("When a user is added to that organization through the UI") {
-			Organization.addUser(
-				organizationName = "Organization Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Then a success message shoud display") {
-			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
-		}
-	}
-
 	@priority = "5"
 	test AssignImportedUserGroupToSuborganizationSites {
 		property liferay.training.dependency.jars = "01-liferay-fundamentals/modules/02-manage-user-accounts/exercise-src/com.liferay.training.contentloader.jar";
@@ -523,7 +497,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Mock LDAP Page");
+		PagesAdmin.addPage(pageName = "Mock LDAP Page");
 
 		Navigator.gotoPage(pageName = "Mock LDAP Page");
 
@@ -837,6 +811,72 @@ definition {
 		AssetCategorization.viewCategory(categoryName = "Category Name 1");
 
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
+	}
+
+	@description = "Resolved bug automation for LPS-140712. This test asserts that a user can be added to an organization through the UI and displays a success message"
+	@priority = "3"
+	test CanAddOrganizationUser {
+		task ("Given an organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+		}
+
+		task ("When a user is added to that organization through the UI") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.addUser(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then a success message should display and the user should be listed under the organization") {
+			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
+
+			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+			LexiconEntry.viewEntryContent(
+				rowAny = "userfn userln",
+				rowEntry = "User");
+		}
+	}
+
+	@description = "This test automates LPS-141217 and asserts that a user can still be added to an organization after initially using an invalid email"
+	@priority = "3"
+	test CanAddOrganizationUserAfterFirstUsingInvalidEmail {
+		task ("Given the creation of a user under an organization is attempted using an invalid email") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			Organization.openOrganizationsAdmin();
+
+			Organization.addUser(
+				organizationName = "Organization Name",
+				userEmailAddress = "postmaster@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid email address.");
+		}
+
+		task ("When the email is changed to a valid email address and the user is saved") {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "postmaster1@liferay.com");
+
+			Button.clickSave();
+		}
+
+		task ("Then the user should be created and associated under the organization") {
+			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+			LexiconEntry.viewEntryContent(
+				rowAny = "userfn userln",
+				rowEntry = "User");
+		}
 	}
 
 	@description = "This test asserts that an organization cannot be deleted if there is a suborganization associated with it."
@@ -1170,7 +1210,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Public Page");
+		PagesAdmin.addPage(pageName = "Public Page");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
@@ -1938,7 +1978,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Sites Directory Page");
+		PagesAdmin.addPage(pageName = "Sites Directory Page");
 
 		Navigator.gotoPage(pageName = "Sites Directory Page");
 
@@ -1968,7 +2008,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page");
+		PagesAdmin.addPage(pageName = "Test Page");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

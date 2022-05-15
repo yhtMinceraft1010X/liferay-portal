@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -653,11 +655,30 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer =
-			objectEntry -> postObjectEntry(objectEntry);
+		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			objectEntryUnsafeConsumer.accept(objectEntry);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> postObjectEntry(
+				objectEntry);
+		}
+
+		if (objectEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ObjectEntry");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, objectEntryUnsafeConsumer);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryUnsafeConsumer.accept(objectEntry);
+			}
 		}
 	}
 
@@ -685,6 +706,10 @@ public abstract class BaseObjectEntryResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -724,16 +749,53 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			putObjectEntry(
+		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> patchObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
 					Long.parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> putObjectEntry(
+				objectEntry.getId() != null ? objectEntry.getId() :
+					Long.parseLong((String)parameters.get("objectEntryId")),
+				objectEntry);
+		}
+
+		if (objectEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectEntry");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, objectEntryUnsafeConsumer);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryUnsafeConsumer.accept(objectEntry);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectEntry>,
+			 UnsafeConsumer<ObjectEntry, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -794,6 +856,14 @@ public abstract class BaseObjectEntryResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -888,6 +958,10 @@ public abstract class BaseObjectEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectEntry>,
+		 UnsafeConsumer<ObjectEntry, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

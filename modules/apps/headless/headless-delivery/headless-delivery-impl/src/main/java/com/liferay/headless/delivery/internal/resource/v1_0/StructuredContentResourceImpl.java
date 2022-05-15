@@ -91,10 +91,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -252,8 +254,8 @@ public class StructuredContentResourceImpl
 			entityFields,
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
-				_expandoTableLocalService));
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -649,7 +651,7 @@ public class StructuredContentResourceImpl
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,
 					DDMFormValuesUtil.toDDMFormValues(
-						structuredContent.getContentFields(),
+						titleMap.keySet(), structuredContent.getContentFields(),
 						ddmStructure.getDDMForm(), _dlAppService, groupId,
 						_journalArticleService, _layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
@@ -838,7 +840,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private Fields _toFields(
-			ContentField[] contentFields, JournalArticle journalArticle)
+			Set<Locale> availableLocales, ContentField[] contentFields,
+			JournalArticle journalArticle)
 		throws Exception {
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
@@ -846,8 +849,8 @@ public class StructuredContentResourceImpl
 		ServiceContext serviceContext = new ServiceContext();
 
 		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			contentFields, ddmStructure.getDDMForm(), _dlAppService,
-			journalArticle.getGroupId(), _journalArticleService,
+			availableLocales, contentFields, ddmStructure.getDDMForm(),
+			_dlAppService, journalArticle.getGroupId(), _journalArticleService,
 			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
 			_getRootDDMFormFields(ddmStructure));
 
@@ -882,6 +885,9 @@ public class StructuredContentResourceImpl
 		}
 
 		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+			SetUtil.fromArray(
+				LocaleUtil.fromLanguageIds(
+					journalArticle.getAvailableLanguageIds())),
 			contentFields, ddmStructure.getDDMForm(), _dlAppService,
 			journalArticle.getGroupId(), _journalArticleService,
 			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
@@ -1085,7 +1091,8 @@ public class StructuredContentResourceImpl
 				_journalConverter.getContent(
 					ddmStructure,
 					_toFields(
-						structuredContent.getContentFields(), journalArticle),
+						titleMap.keySet(), structuredContent.getContentFields(),
+						journalArticle),
 					journalArticle.getGroupId()),
 				journalArticle.getDDMStructureKey(),
 				_getDDMTemplateKey(ddmStructure),
@@ -1155,6 +1162,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private EntityFieldsProvider _entityFieldsProvider;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

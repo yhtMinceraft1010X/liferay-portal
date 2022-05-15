@@ -18,8 +18,8 @@ import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAPortletKeys;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAWebKeys;
 import com.liferay.multi.factor.authentication.web.internal.policy.MFAPolicy;
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -97,23 +97,32 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		String password = ParamUtil.getString(actionRequest, "password");
 
 		if (!Validator.isBlank(login) && !Validator.isBlank(password)) {
-			HttpServletRequest httpServletRequest =
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(actionRequest));
+			try {
+				HttpServletRequest httpServletRequest =
+					_portal.getOriginalServletRequest(
+						_portal.getHttpServletRequest(actionRequest));
 
-			long userId =
-				AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-					httpServletRequest, login, password, null);
+				long userId =
+					AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
+						httpServletRequest, login, password, null);
 
-			if (_mfaPolicy.isSatisfied(companyId, httpServletRequest, userId)) {
-				_loginMVCActionCommand.processAction(
-					actionRequest, actionResponse);
+				if (_mfaPolicy.isSatisfied(
+						companyId, httpServletRequest, userId)) {
 
-				return;
+					_loginMVCActionCommand.processAction(
+						actionRequest, actionResponse);
+
+					return;
+				}
+
+				if (userId > 0) {
+					_redirectToVerify(actionRequest, actionResponse, userId);
+				}
 			}
+			catch (Exception exception) {
+				hideDefaultErrorMessage(actionRequest);
 
-			if (userId > 0) {
-				_redirectToVerify(actionRequest, actionResponse, userId);
+				throw exception;
 			}
 		}
 	}
@@ -138,7 +147,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		Key mfaWebKey = (Key)httpSession.getAttribute(MFAWebKeys.MFA_WEB_KEY);
 
 		Map<String, Object> stateMap = _jsonFactory.looseDeserialize(
-			Encryptor.decrypt(mfaWebKey, state), Map.class);
+			_encryptor.decrypt(mfaWebKey, state), Map.class);
 
 		Map<String, Object> requestParameters =
 			(Map<String, Object>)stateMap.get("requestParameters");
@@ -216,9 +225,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		Key key = Encryptor.generateKey();
+		Key key = _encryptor.generateKey();
 
-		String encryptedStateMapJSON = Encryptor.encrypt(
+		String encryptedStateMapJSON = _encryptor.encrypt(
 			key,
 			_jsonFactory.looseSerializeDeep(
 				HashMapBuilder.<String, Object>put(
@@ -293,6 +302,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 		};
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private JSONFactory _jsonFactory;

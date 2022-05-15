@@ -16,6 +16,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -448,12 +450,31 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			listTypeDefinitionUnsafeConsumer =
 				listTypeDefinition -> postListTypeDefinition(
 					listTypeDefinition);
+		}
 
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+		if (listTypeDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ListTypeDefinition");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
+				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+			}
 		}
 	}
 
@@ -481,6 +502,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -521,18 +546,60 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			putListTypeDefinition(
-				listTypeDefinition.getId() != null ?
-					listTypeDefinition.getId() :
-						Long.parseLong(
-							(String)parameters.get("listTypeDefinitionId")),
-				listTypeDefinition);
+		UnsafeConsumer<ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			listTypeDefinitionUnsafeConsumer =
+				listTypeDefinition -> patchListTypeDefinition(
+					listTypeDefinition.getId() != null ?
+						listTypeDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("listTypeDefinitionId")),
+					listTypeDefinition);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			listTypeDefinitionUnsafeConsumer =
+				listTypeDefinition -> putListTypeDefinition(
+					listTypeDefinition.getId() != null ?
+						listTypeDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("listTypeDefinitionId")),
+					listTypeDefinition);
+		}
+
+		if (listTypeDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ListTypeDefinition");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
+				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ListTypeDefinition>,
+			 UnsafeConsumer<ListTypeDefinition, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -593,6 +660,14 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -688,6 +763,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ListTypeDefinition>,
+		 UnsafeConsumer<ListTypeDefinition, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

@@ -14,6 +14,8 @@
 
 import {openModal, openSelectionModal} from 'frontend-js-web';
 
+import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
+
 export const ACTIONS = {
 	deleteCollections({
 		deleteFragmentCollectionURL,
@@ -35,22 +37,23 @@ export const ACTIONS = {
 					return;
 				}
 
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					const input = document.createElement('input');
+				openDeleteFragmentCollectionModal({
+					multiple: true,
+					onDelete: () => {
+						let input = form.elements[`${portletNamespace}rowIds`];
 
-					input.name = `${portletNamespace}rowIds`;
-					input.value = selectedItems.map((item) => item.value);
+						if (!input) {
+							input = document.createElement('input');
+							input.name = `${portletNamespace}rowIds`;
+						}
 
-					form.appendChild(input);
-				}
+						input.value = selectedItems.map((item) => item.value);
 
-				submitForm(form, deleteFragmentCollectionURL);
+						form.appendChild(input);
+
+						submitForm(form, deleteFragmentCollectionURL);
+					},
+				});
 			},
 			null,
 			portletNamespace
@@ -79,9 +82,13 @@ export const ACTIONS = {
 					return;
 				}
 
-				const input = document.createElement('input');
+				let input = form.elements[`${portletNamespace}rowIds`];
 
-				input.name = `${portletNamespace}rowIds`;
+				if (!input) {
+					input = document.createElement('input');
+					input.name = `${portletNamespace}rowIds`;
+				}
+
 				input.value = selectedItems.map((item) => item.value);
 				input.setAttribute('type', 'hidden');
 

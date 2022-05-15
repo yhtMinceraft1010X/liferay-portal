@@ -198,7 +198,7 @@ function AssetVocabulariesCategoriesSelector({
 							<span className="inline-item inline-item-after reference-mark">
 								<ClayIcon symbol="asterisk" />
 
-								<span className="hide-accessible">
+								<span className="hide-accessible sr-only">
 									{Liferay.Language.get('required')}
 								</span>
 							</span>
@@ -210,7 +210,6 @@ function AssetVocabulariesCategoriesSelector({
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
 							inputName={inputName}
-							inputValue={inputValue}
 							items={selectedItems}
 							onChange={setInputValue}
 							onItemsChange={handleItemsChange}
@@ -228,6 +227,7 @@ function AssetVocabulariesCategoriesSelector({
 									  )
 									: []
 							}
+							value={inputValue}
 						/>
 
 						{invalidItems && invalidItems.length > 0 && (

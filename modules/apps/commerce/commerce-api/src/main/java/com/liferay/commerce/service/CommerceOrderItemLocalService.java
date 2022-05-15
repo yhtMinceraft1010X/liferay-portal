@@ -163,6 +163,11 @@ public interface CommerceOrderItemLocalService
 	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
 		throws PortalException;
 
+	public void deleteMissingCommerceOrderItems(
+			long commerceOrderId, Long[] commerceOrderItemIds,
+			String[] externalReferenceCodes)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -395,9 +400,10 @@ public interface CommerceOrderItemLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem importCommerceOrderItem(
+			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem incrementShippedQuantity(
@@ -450,10 +456,21 @@ public interface CommerceOrderItemLocalService
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, String json, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, String json, int quantity,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -540,6 +557,10 @@ public interface CommerceOrderItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCustomFields(
 			long commerceOrderItemId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
 		throws PortalException;
 
 }

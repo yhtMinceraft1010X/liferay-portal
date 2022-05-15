@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -268,53 +270,69 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
 	@priority = "5"
 	test IndividualsUpdatesInRealTime {
-		property portal.acceptance = "true";
+		property analytics.cloud.upstream = "false";
+		property portal.acceptance = "false";
 
-		ACUtils.addSiteAndPage();
+		var usernameList = "user1,user2,user3";
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Add a new site and widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
-		ACUtils.launchAC();
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACSettings.goToUsage();
+		task ("Go to settings and get the individuals number") {
+			ACNavigation.goToSettings();
 
-		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+			ACSettings.goToUsage();
 
-		ACUtils.launchDXP();
+			var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Add 3 new users and sync the Contact Data") {
+			ACUtils.launchDXP();
 
-		ACDXPSettings.syncNewContactData();
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+				ACDXPSettings.syncNewContactData();
+			}
+		}
 
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		task ("View the page as different users") {
+			for (var name : list "${usernameList}") {
+				ACUtils.navigateToSitePageWithUser(
+					emailList = "${name}@liferay.com",
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
 
-		ACUtils.closeAllSessionsAndWait();
+			ACUtils.closeAllSessionsAndWait();
+		}
 
-		ACUtils.launchAC();
+		task ("Go to AC and check that the number of individuals has changed") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToUsage();
+			ACSettings.goToUsage();
 
-		var newIdividuals = ${currentIndividuals} + 1;
-
-		ACSettings.assertOverviewUsage(
-			current = "${newIdividuals}",
-			metricName = "Individuals");
+			ACSettings.assertOverviewUsage(
+				metricName = "Individuals",
+				notEquals = "${currentIndividuals}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
@@ -416,31 +434,35 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {
-		task ("Add a new site and page, connect ac to dxp") {
+		task ("Add a new site and page, then add a blog and connect ac to dxp") {
 			ACUtils.addSiteAndPage();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACUtils.createBlogsAndAddToPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Go to Usage, save the value of Page Views") {
+		task ("Go to Usage, save the value of Page Views at that moment and save the next value of page views") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUsage();
 
-			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+			var oldPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 
-			var pageViewsNumber = StringUtil.replace("${currentPageViews}", ",", "");
+			var pageViewsNumber = StringUtil.replace("${oldPageViews}", ",", "");
 			var sumPageViews = ${pageViewsNumber} + 1;
 		}
 
-		task ("Visit the site page and close sessions") {
+		task ("Visit the blog and close sessions") {
 			ACUtils.launchDXP();
 
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -455,6 +477,12 @@ definition {
 			ACSettings.goToUsage();
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+
+			while (("${currentPageViews}" == "${oldPageViews}") && (maxIterations = "15")) {
+				Refresh();
+
+				var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+			}
 
 			var newPageViewsNumber = StringUtil.replace("${currentPageViews}", ",", "");
 		}

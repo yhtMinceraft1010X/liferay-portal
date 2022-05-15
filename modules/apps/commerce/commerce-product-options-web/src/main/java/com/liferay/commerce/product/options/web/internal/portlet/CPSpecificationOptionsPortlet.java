@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view_cp_specification_options.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTIONS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = {CPSpecificationOptionsPortlet.class, Portlet.class}
 )
@@ -77,7 +78,7 @@ public class CPSpecificationOptionsPortlet extends MVCPortlet {
 		try (SafeCloseable safeCloseable =
 				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
 
-			ProxyModeThreadLocal.setForceSync(true);
+			ProxyModeThreadLocal.setWithSafeCloseable(true);
 
 			super.processAction(actionRequest, actionResponse);
 		}

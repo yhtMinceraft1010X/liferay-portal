@@ -6,6 +6,7 @@ exports[`Grid has a label 1`] = `
     class="form-group hide"
   >
     <label
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -80,7 +81,12 @@ exports[`Grid has a label 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="undefined_fieldDetails"
+    >
+      label
+    </span>
   </div>
 </div>
 `;
@@ -161,18 +167,19 @@ exports[`Grid has a tip 1`] = `
       type="hidden"
       value="false"
     />
-    <span
+    <div
       aria-hidden="true"
-      class="form-text"
+      class="form-feedback-group lfr-de__field-feedback"
     >
-      Type something
-    </span>
+      <div>
+        Type something
+      </div>
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>
@@ -424,6 +431,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
     class="form-group hide"
   >
     <label
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -498,7 +506,12 @@ exports[`Grid renders Label if showLabel is true 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="undefined_fieldDetails"
+    >
+      text
+    </span>
   </div>
 </div>
 `;

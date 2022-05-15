@@ -61,7 +61,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -70,9 +70,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -80,8 +82,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -299,6 +299,39 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryKeywordsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryKeywordsPage_getAssetLibraryId();
+
+		Keyword keyword1 = testGetAssetLibraryKeywordsPage_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword2 = testGetAssetLibraryKeywordsPage_addKeyword(
+			assetLibraryId, randomKeyword());
+
+		for (EntityField entityField : entityFields) {
+			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null,
+				getFilterString(entityField, "eq", keyword1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(keyword1),
+				(List<Keyword>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetAssetLibraryKeywordsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -378,9 +411,21 @@ public abstract class BaseKeywordResourceTestCase {
 		testGetAssetLibraryKeywordsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, keyword1, keyword2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					keyword1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryKeywordsPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryKeywordsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, keyword1, keyword2) -> {
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -391,8 +436,8 @@ public abstract class BaseKeywordResourceTestCase {
 		testGetAssetLibraryKeywordsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, keyword1, keyword2) -> {
-				BeanUtils.setProperty(keyword1, entityField.getName(), 0);
-				BeanUtils.setProperty(keyword2, entityField.getName(), 1);
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 1);
 			});
 	}
 
@@ -407,27 +452,27 @@ public abstract class BaseKeywordResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -435,12 +480,12 @@ public abstract class BaseKeywordResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -690,7 +735,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteKeyword() throws Exception {
-		Keyword keyword = testGraphQLKeyword_addKeyword();
+		Keyword keyword = testGraphQLDeleteKeyword_addKeyword();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -703,7 +748,6 @@ public abstract class BaseKeywordResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteKeyword"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -717,6 +761,10 @@ public abstract class BaseKeywordResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -736,7 +784,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGraphQLGetKeyword() throws Exception {
-		Keyword keyword = testGraphQLKeyword_addKeyword();
+		Keyword keyword = testGraphQLGetKeyword_addKeyword();
 
 		Assert.assertTrue(
 			equals(
@@ -773,6 +821,10 @@ public abstract class BaseKeywordResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Keyword testGraphQLGetKeyword_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -908,6 +960,37 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteKeywordsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteKeywordsPage_getSiteId();
+
+		Keyword keyword1 = testGetSiteKeywordsPage_addKeyword(
+			siteId, randomKeyword());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword2 = testGetSiteKeywordsPage_addKeyword(
+			siteId, randomKeyword());
+
+		for (EntityField entityField : entityFields) {
+			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
+				siteId, null, getFilterString(entityField, "eq", keyword1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(keyword1),
+				(List<Keyword>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteKeywordsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -980,9 +1063,19 @@ public abstract class BaseKeywordResourceTestCase {
 		testGetSiteKeywordsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, keyword1, keyword2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					keyword1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteKeywordsPageWithSortDouble() throws Exception {
+		testGetSiteKeywordsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, keyword1, keyword2) -> {
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -991,8 +1084,8 @@ public abstract class BaseKeywordResourceTestCase {
 		testGetSiteKeywordsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, keyword1, keyword2) -> {
-				BeanUtils.setProperty(keyword1, entityField.getName(), 0);
-				BeanUtils.setProperty(keyword2, entityField.getName(), 1);
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 1);
 			});
 	}
 
@@ -1005,27 +1098,27 @@ public abstract class BaseKeywordResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -1033,12 +1126,12 @@ public abstract class BaseKeywordResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						keyword2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -1131,8 +1224,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Assert.assertEquals(0, keywordsJSONObject.get("totalCount"));
 
-		Keyword keyword1 = testGraphQLKeyword_addKeyword();
-		Keyword keyword2 = testGraphQLKeyword_addKeyword();
+		Keyword keyword1 = testGraphQLGetSiteKeywordsPage_addKeyword();
+		Keyword keyword2 = testGraphQLGetSiteKeywordsPage_addKeyword();
 
 		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1144,6 +1237,12 @@ public abstract class BaseKeywordResourceTestCase {
 			Arrays.asList(keyword1, keyword2),
 			Arrays.asList(
 				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+	}
+
+	protected Keyword testGraphQLGetSiteKeywordsPage_addKeyword()
+		throws Exception {
+
+		return testGraphQLKeyword_addKeyword();
 	}
 
 	@Test
@@ -1828,8 +1927,9 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		if (entityFieldName.equals("keywordUsageCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(keyword.getKeywordUsageCount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -1925,6 +2025,115 @@ public abstract class BaseKeywordResourceTestCase {
 	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
+
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -1999,18 +2208,6 @@ public abstract class BaseKeywordResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseKeywordResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

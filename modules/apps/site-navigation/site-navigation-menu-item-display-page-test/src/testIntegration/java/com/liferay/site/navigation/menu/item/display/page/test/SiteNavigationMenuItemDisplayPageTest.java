@@ -15,9 +15,7 @@
 package com.liferay.site.navigation.menu.item.display.page.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -37,7 +35,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -223,12 +220,10 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				_infoItemServiceTracker.getInfoItemClassDetails(
 					DisplayPageInfoItemCapability.KEY)) {
 
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
+			Assert.assertNotNull(
 				_siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemType(
-						infoItemClassDetails.getClassName());
-
-			Assert.assertNotNull(siteNavigationMenuItemType);
+						infoItemClassDetails.getClassName()));
 		}
 	}
 
@@ -340,7 +335,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				locale,
 				JSONUtil.put(
 					LocaleUtil.toLanguageId(locale), expectedTitle
-				).toJSONString());
+				).toString());
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -381,7 +376,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 					RandomTestUtil.randomString()
 				).put(
 					LocaleUtil.toLanguageId(nondefaultLocale), expectedTitle
-				).toJSONString());
+				).toString());
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -419,7 +414,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				defaultLocale,
 				JSONUtil.put(
 					LocaleUtil.toLanguageId(defaultLocale), expectedTitle
-				).toJSONString());
+				).toString());
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -464,13 +459,11 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		Assert.assertEquals(
-			themeDisplay.getURLCurrent() + StringPool.POUND,
+			StringPool.BLANK,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, siteNavigationMenuItem));
 
@@ -524,11 +517,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = _companyLocalService.getCompany(
-			_group.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
@@ -541,14 +531,6 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetDisplayPageEntryFormProcessor
-		_assetDisplayPageEntryFormProcessor;
-
-	@Inject
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Inject
 	private AssetDisplayPageFriendlyURLProvider

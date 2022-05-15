@@ -331,6 +331,38 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.util.HttpImpl.timeout"
 		},
 		{
+			"com.liferay.portal.util.HttpImpl.max.connections.per.host",
+			"com.liferay.portal.kernel.util.Http.max.connections.per.host"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.max.total.connections",
+			"com.liferay.portal.kernel.util.Http.max.total.connections"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.auth.type",
+			"com.liferay.portal.kernel.util.Http.proxy.auth.type"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.ntlm.domain",
+			"com.liferay.portal.kernel.util.Http.proxy.ntlm.domain"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.ntlm.host",
+			"com.liferay.portal.kernel.util.Http.proxy.ntlm.host"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.password",
+			"com.liferay.portal.kernel.util.Http.proxy.password"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.username",
+			"com.liferay.portal.kernel.util.Http.proxy.username"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.timeout",
+			"com.liferay.portal.kernel.util.Http.timeout"
+		},
+		{
 			"com.liferay.util.format.PhoneNumberFormat",
 			"phone.number.format.impl"
 		},
@@ -1614,13 +1646,21 @@ public class VerifyProperties extends VerifyProcess {
 		"com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter",
 		"com.liferay.portal.upload.UploadServletRequestImpl.max.size",
 		"com.liferay.portal.upload.UploadServletRequestImpl.temp.dir",
-		"commons.pool.enabled", "company.settings.form.configuration",
+		"commons.pool.enabled", "company.security.send.password",
+		"company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"control.panel.home.portlet.id",
 		"control.panel.navigation.max.organizations",
 		"control.panel.navigation.max.sites", "convert.processes",
-		"default.guest.public.layout.column-1",
+		"data.limit.max.dl.storage.size",
+		"data.limit.max.journal.article.count",
+		"data.limit.max.journal.folder.count",
+		"data.limit.max.mail.message.count",
+		"data.limit.max.mail.message.period",
+		"data.limit.max.organization.count", "data.limit.max.role.count",
+		"data.limit.max.site.count", "data.limit.max.team.count",
+		"data.limit.max.user.count", "default.guest.public.layout.column-1",
 		"default.guest.public.layout.column-2",
 		"default.guest.public.layout.column-3",
 		"default.guest.public.layout.column-4",
@@ -1633,11 +1673,17 @@ public class VerifyProperties extends VerifyProcess {
 		"default.wap.color.scheme.id", "default.wap.theme.id",
 		"discussion.subscribe.by.default", "discussion.thread.view",
 		"dl.file.entry.image.exif.metadata.rotation.enabled",
+		"dl.file.entry.open.in.ms.office.manual.check.in.required",
+		"dl.file.entry.preview.auto.create.on.upgrade",
+		"dl.file.entry.preview.document.depth",
 		"dl.file.entry.previewable.processor.max.size",
 		"dl.file.entry.read.count.enabled",
+		"dl.file.entry.thumbnail.video.frame.percentage",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
-		"dl.file.extensions", "dl.file.max.size", "dl.file.rank.enabled",
-		"dl.folder.menu.visible", "dl.hook.cmis.credentials.password",
+		"dl.file.entry.version.policy", "dl.file.extensions",
+		"dl.file.indexing.interval", "dl.file.max.size", "dl.file.rank.enabled",
+		"dl.folder.icon.check.count", "dl.folder.menu.visible",
+		"dl.hook.cmis.credentials.password",
 		"dl.hook.cmis.credentials.username", "dl.hook.cmis.repository.url",
 		"dl.hook.cmis.system.root.dir", "dl.hook.file.system.root.dir",
 		"dl.hook.jcr.fetch.delay", "dl.hook.jcr.fetch.max.failures",
@@ -1699,14 +1745,16 @@ public class VerifyProperties extends VerifyProcess {
 		"ehcache.rmi.peer.provider.factory.class",
 		"ehcache.rmi.peer.provider.factory.properties",
 		"ehcache.socket.so.timeout", "ehcache.socket.start.port",
-		"ehcache.statistics.enabled",
+		"ehcache.statistics.enabled", "finalize.manager.thread.enabled",
 		"hot.deploy.hook.custom.jsp.verification.enabled",
 		"hot.undeploy.enabled", "hot.undeploy.interval",
 		"hot.undeploy.on.redeploy", "hibernate.cache.region.factory_class",
 		"hibernate.cache.use_minimal_puts", "hibernate.cache.use_query_cache",
 		"hibernate.cache.use_second_level_cache",
-		"hibernate.cache.use_structured_entries", "icq.jar", "icq.login",
-		"icq.password", "index.dump.compression.enabled",
+		"hibernate.cache.use_structured_entries",
+		"hibernate.connection.release_mode",
+		"hibernate.session.factory.imported.class.name.regexp", "icq.jar",
+		"icq.login", "icq.password", "index.dump.compression.enabled",
 		"index.filter.search.limit", "index.on.upgrade",
 		"index.portal.field.analyzer.enabled", "index.search.highlight.enabled",
 		"index.read.only", "index.with.thread", "intraband.impl",
@@ -1729,10 +1777,23 @@ public class VerifyProperties extends VerifyProcess {
 		"jcr.jackrabbit.credentials.username", "jcr.jackrabbit.repository.home",
 		"jcr.jackrabbit.repository.root", "jcr.node.documentlibrary",
 		"jcr.workspace.name", "jcr.wrap.session",
-		"json.deserializer.strict.mode", "journal.article.form.add",
-		"journal.article.form.default.values", "journal.article.form.update",
-		"journal.article.form.translate", "journal.article.types",
-		"journal.articles.page.delta.values",
+		"jdbc.default.liferay.pool.provider", "jdbc.default.acquireIncrement",
+		"jdbc.default.acquireRetryAttempts", "jdbc.default.acquireRetryDelay",
+		"jdbc.default.connectionCustomizerClassName",
+		"jdbc.default.defaultTransactionIsolation", "jdbc.default.fairQueue",
+		"jdbc.default.idleConnectionTestPeriod", "jdbc.default.initialPoolSize",
+		"jdbc.default.jdbcInterceptors", "jdbc.default.jmxEnabled",
+		"jdbc.default.logAbandoned", "jdbc.default.maxActive",
+		"jdbc.default.maxIdleTime", "jdbc.default.maxPoolSize",
+		"jdbc.default.minIdle", "jdbc.default.minPoolSize",
+		"jdbc.default.numHelperThreads", "jdbc.default.removeAbandonedTimeout",
+		"jdbc.default.testWhileIdle",
+		"jdbc.default.timeBetweenEvictionRunsMillis",
+		"jdbc.default.transactionIsolation", "jdbc.default.useEquals",
+		"jdbc.default.validationQuery", "json.deserializer.strict.mode",
+		"journal.article.form.add", "journal.article.form.default.values",
+		"journal.article.form.update", "journal.article.form.translate",
+		"journal.article.types", "journal.articles.page.delta.values",
 		"journal.browse.by.structures.sorted.by.name",
 		"journal.error.template[xsl]", "journal.image.extensions",
 		"journal.image.small.max.size",
@@ -1846,6 +1907,7 @@ public class VerifyProperties extends VerifyProcess {
 		"portal.fabric.server.rpc.relay.timeout",
 		"portal.fabric.server.warmup.agent.on.register",
 		"portal.fabric.shutdown.quiet.period", "portal.fabric.shutdown.timeout",
+		"portal.jaas.impl", "portal.jaas.strict.password",
 		"portal.resiliency.enabled", "portal.resiliency.portlet.show.footer",
 		"portal.resiliency.spi.agent.client.pool.max.size",
 		"portal.security.manager.enable",
@@ -1901,9 +1963,10 @@ public class VerifyProperties extends VerifyProcess {
 		"value.object.entity.blocking.cache",
 		"value.object.finder.blocking.cache", "verify.database.transactions",
 		"verify.frequency", "verify.patch.levels.disabled", "verify.processes",
-		"webdav.storage.class", "webdav.storage.show.edit.url",
-		"webdav.storage.show.view.url", "webdav.storage.tokens",
-		"wiki.email.page.added.signature", "wiki.email.page.updated.signature",
+		"verify.process.concurrency.threshold", "webdav.storage.class",
+		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
+		"webdav.storage.tokens", "wiki.email.page.added.signature",
+		"wiki.email.page.updated.signature",
 		"xsl.template.secure.processing.enabled", "xss.allow",
 		"xuggler.enabled", "xuggler.jar.file", "xuggler.jar.url",
 		"xuggler.jar.options", "xuggler.ffpreset.8x8dct", "xuggler.ffpreset.bf",
@@ -1942,6 +2005,10 @@ public class VerifyProperties extends VerifyProcess {
 		{
 			"com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter",
 			"com.liferay.portal.url.rewrite.filter.internal.URLRewriteFilter"
+		},
+		{
+			"com.liferay.portal.upload.LiferayFileItem.threshold.size",
+			"com.liferay.portal.kernel.upload.FileItem.threshold.size"
 		},
 		{
 			"default.guest.friendly.url",

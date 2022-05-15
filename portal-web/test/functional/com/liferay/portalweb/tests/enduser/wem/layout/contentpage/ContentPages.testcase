@@ -677,7 +677,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
-		task ("Add a container and 4 headings inside") {
+		task ("Add a Container and 4 elements inside") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -690,72 +690,79 @@ definition {
 				navTab = "Widgets",
 				portletName = "Blogs");
 
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "HTML",
-				navTab = "Fragments",
-				targetElementName = "Blogs");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				navTab = "Fragments",
-				targetElementName = "HTML");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments",
-				targetElementName = "Button");
+			for (var fragmentName : list "HTML,Button,Heading") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "${fragmentName}",
+					navTab = "Fragments",
+					targetElementName = "Blogs");
+			}
 		}
 
 		task ("Hide Blogs and HTML") {
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "Blogs");
+			for (var elementName : list "Blogs,HTML") {
+				PageEditor.hideFragmentViaPageStructure(fragmentName = "${elementName}");
+			}
+		}
 
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "HTML");
+		task ("View Blogs widget and HTML fragment are not shown") {
+			for (var elementName : list "Blogs,HTML") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
+			}
+		}
+
+		task ("View Button and Heading are shown") {
+			for (var fragmentName : list "Button,Heading") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Hide the container") {
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
 
-		task ("Assert no fragment or widget is shown") {
-			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+		task ("View elements are not shown") {
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("Unhide the Container and HTML ") {
+			for (var fragmentName : list "Container,HTML") {
+				PageEditor.unhideFragmentViaPageStructure(fragmentName = "${fragmentName}");
 			}
 		}
 
-		task ("From the sidebar fragment tree, show HTML and Button") {
-			PageEditor.unhideFragmentViaPageStructure(fragmentName = "HTML");
-
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "Button");
+		task ("Hide the Button and Heading fragment") {
+			for (var fragmentName : list "Button,Heading") {
+				PageEditor.hideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+			}
 		}
 
-		task ("Assert no fragment or widget is shown") {
-			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+		task ("View Blogs, Button and Heading are not shown") {
+			for (var elementName : list "Blogs,Button,Heading") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
 			}
+		}
+
+		task ("View HTML fragment is shown") {
+			PageEditor.viewFragment(fragmentName = "HTML");
+		}
+
+		task ("Hide the container") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("View elements are not shown") {
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Unhide the container") {
 			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Container");
 		}
 
-		task ("Assert only Heading and HTML fragments are shown") {
-			AssertTextNotPresent(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No entries were found.");
-
-			AssertNotVisible(
-				fragmentName = "button",
-				id = "link",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-
-			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
+		task ("Assert only HTML fragments is shown") {
+			for (var elementName : list "Blogs,Button,Heading") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
+			}
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
@@ -1081,6 +1088,53 @@ definition {
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
 				rowNumber = "1",
 				value1 = "Web Content Title");
+		}
+	}
+
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page editor."
+	@priority = "4"
+	test ViewDropdownIconsInPageEditor {
+		task ("Given a Page designer has a content page with a Collection Display fragment") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the Page designer opens the dropdown menu of Collection Display topper") {
+			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			Click.waitForMenuToggleJSClick(
+				key_fragmentName = "Collection Display",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("Then the Page designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "hidden,copy,trash");
+		}
+
+		task ("When the Page designer opens the dropdown menu of Collection after selecting a dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			Click.clickNoWaitForVisible(
+				key_fieldLabel = "Collection",
+				key_text = "ellipsis-v",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+
+		task ("Then the Page designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,list-ul,plus,password-policies,trash");
 		}
 	}
 
@@ -1515,6 +1569,45 @@ definition {
 				locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 			Alert.viewErrorMessage(errorMessage = "You do not have the roles required to access this portlet.");
+		}
+	}
+
+	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
+	@priority = "3"
+	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {
+		task ("Go to edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add Collection Display and Collection Filter frgaments to page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("View Collection Filter frgaments width and height options") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+
+			AssertVisible(
+				key_text = "Height",
+				locator1 = "TextInput#ANY_SPECIFIC");
+
+			AssertVisible(
+				key_text = "Width",
+				locator1 = "TextInput#ANY_SPECIFIC");
+		}
+
+		task ("Hide Collection Display and Collection Filter frgaments from fragment options") {
+			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Display");
+
+			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Filter");
 		}
 	}
 

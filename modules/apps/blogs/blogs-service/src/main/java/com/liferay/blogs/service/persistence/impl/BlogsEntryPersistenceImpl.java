@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -21517,6 +21517,23 @@ public class BlogsEntryPersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!productionMode || !useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode
+								};
+							}
+
+							_log.warn(
+								"BlogsEntryPersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					BlogsEntry blogsEntry = list.get(0);
 
 					result = blogsEntry;
@@ -21804,7 +21821,7 @@ public class BlogsEntryPersistenceImpl
 		blogsEntry.setNew(true);
 		blogsEntry.setPrimaryKey(entryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		blogsEntry.setUuid(uuid);
 
@@ -21921,13 +21938,8 @@ public class BlogsEntryPersistenceImpl
 		BlogsEntryModelImpl blogsEntryModelImpl =
 			(BlogsEntryModelImpl)blogsEntry;
 
-		if (Validator.isNull(blogsEntry.getExternalReferenceCode())) {
-			blogsEntry.setExternalReferenceCode(
-				String.valueOf(blogsEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(blogsEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			blogsEntry.setUuid(uuid);
 		}
@@ -22516,9 +22528,6 @@ public class BlogsEntryPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlTitle"});
-
-		_uniqueIndexColumnNames.add(
-			new String[] {"groupId", "externalReferenceCode"});
 	}
 
 	/**
@@ -23146,6 +23155,9 @@ public class BlogsEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private BlogsEntryModelArgumentsResolver _blogsEntryModelArgumentsResolver;

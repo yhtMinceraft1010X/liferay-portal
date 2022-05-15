@@ -36,8 +36,15 @@ public class CPMeasurementUnitTable extends BaseTable<CPMeasurementUnitTable> {
 	public final Column<CPMeasurementUnitTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CPMeasurementUnitTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CPMeasurementUnitTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPMeasurementUnitTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CPMeasurementUnitTable, Long> CPMeasurementUnitId =
 		createColumn(
 			"CPMeasurementUnitId", Long.class, Types.BIGINT,

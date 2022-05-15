@@ -17,6 +17,7 @@ package com.liferay.poshi.core;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.script.PoshiScriptParserUtil;
+import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
@@ -36,6 +37,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -211,6 +214,26 @@ public class PoshiValidation {
 		validateRequiredAttributeNames(poshiElement, attributes, filePath);
 	}
 
+	protected static void validateAttributeValue(
+		PoshiElement poshiElement, String attributeValue) {
+
+		if (attributeValue.contains("\"")) {
+			int escapedQuoteCount = StringUtils.countMatches(
+				attributeValue, "\\\"");
+			int quoteCount = StringUtils.countMatches(attributeValue, "\"");
+
+			if ((escapedQuoteCount != quoteCount) ||
+				!((escapedQuoteCount % 2) == 0)) {
+
+				_exceptions.add(
+					new PoshiElementException(
+						poshiElement,
+						"Unescaped quotes in parameter value: " +
+							attributeValue));
+			}
+		}
+	}
+
 	protected static void validateCommandElement(PoshiElement poshiElement) {
 		String filePath = _getFilePath(poshiElement);
 
@@ -314,6 +337,13 @@ public class PoshiValidation {
 
 		String elementName = poshiElement.getName();
 
+		if (elementName.equals("contains")) {
+			validateAttributeValue(
+				poshiElement, poshiElement.attributeValue("string"));
+			validateAttributeValue(
+				poshiElement, poshiElement.attributeValue("substring"));
+		}
+
 		if (elementName.equals("and") || elementName.equals("or")) {
 			validateHasChildElements(poshiElement, filePath);
 			validateHasNoAttributes(poshiElement);
@@ -343,9 +373,6 @@ public class PoshiValidation {
 			}
 
 			if (primaryAttributeName.equals("function")) {
-				validateRequiredAttributeNames(
-					poshiElement, Arrays.asList("locator1"), filePath);
-
 				List<String> possibleAttributeNames = Arrays.asList(
 					"function", "line-number", "locator1", "value1");
 
@@ -1463,8 +1490,19 @@ public class PoshiValidation {
 			return;
 		}
 
-		int seleniumParameterCount = PoshiContext.getSeleniumParameterCount(
-			seleniumMethodName);
+		LiferaySeleniumMethod liferaySeleniumMethod =
+			PoshiContext.getLiferaySeleniumMethod(seleniumMethodName);
+
+		if (liferaySeleniumMethod == null) {
+			_exceptions.add(
+				new PoshiElementException(
+					poshiElement, "Invalid selenium method name: \"",
+					seleniumMethodName, "\"\n"));
+
+			return;
+		}
+
+		int seleniumParameterCount = liferaySeleniumMethod.getParameterCount();
 
 		List<String> methodParameterValues =
 			PoshiScriptParserUtil.getMethodParameterValues(
@@ -1475,7 +1513,7 @@ public class PoshiValidation {
 				new PoshiElementException(
 					poshiElement, "Expected ", seleniumParameterCount,
 					" parameter(s) for method \"", seleniumMethodName,
-					"\" but found ", seleniumParameterCount));
+					"\" but found ", methodParameterValues.size()));
 		}
 
 		for (String methodParameterValue : methodParameterValues) {
@@ -1622,7 +1660,7 @@ public class PoshiValidation {
 
 		if (!PoshiContext.isRootElement("test-case", className, namespace)) {
 			_exceptions.add(
-				new PoshiElementException(
+				new ValidationException(
 					"Invalid test case class " + namespace + "." + className));
 		}
 		else if (testName.contains("#")) {
@@ -1638,7 +1676,7 @@ public class PoshiValidation {
 						getCommandNameFromNamespacedClassCommandName(testName);
 
 				_exceptions.add(
-					new PoshiElementException(
+					new ValidationException(
 						"Invalid test case command " + commandName));
 			}
 		}

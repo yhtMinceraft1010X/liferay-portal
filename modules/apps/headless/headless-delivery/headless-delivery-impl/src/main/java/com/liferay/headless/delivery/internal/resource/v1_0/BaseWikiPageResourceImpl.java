@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -788,12 +790,38 @@ public abstract class BaseWikiPageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WikiPage, Exception> wikiPageUnsafeConsumer =
-			wikiPage -> postWikiNodeWikiPage(
-				Long.parseLong((String)parameters.get("wikiNodeId")), wikiPage);
+		UnsafeConsumer<WikiPage, Exception> wikiPageUnsafeConsumer = null;
 
-		for (WikiPage wikiPage : wikiPages) {
-			wikiPageUnsafeConsumer.accept(wikiPage);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			wikiPageUnsafeConsumer = wikiPage -> postWikiNodeWikiPage(
+				Long.parseLong((String)parameters.get("wikiNodeId")), wikiPage);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			wikiPageUnsafeConsumer =
+				wikiPage -> putSiteWikiPageByExternalReferenceCode(
+					wikiPage.getSiteId() != null ? wikiPage.getSiteId() :
+						(Long)parameters.get("siteId"),
+					wikiPage.getExternalReferenceCode(), wikiPage);
+		}
+
+		if (wikiPageUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for WikiPage");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiPages, wikiPageUnsafeConsumer);
+		}
+		else {
+			for (WikiPage wikiPage : wikiPages) {
+				wikiPageUnsafeConsumer.accept(wikiPage);
+			}
 		}
 	}
 
@@ -821,6 +849,10 @@ public abstract class BaseWikiPageResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -862,11 +894,32 @@ public abstract class BaseWikiPageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WikiPage wikiPage : wikiPages) {
-			putWikiPage(
+		UnsafeConsumer<WikiPage, Exception> wikiPageUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			wikiPageUnsafeConsumer = wikiPage -> putWikiPage(
 				wikiPage.getId() != null ? wikiPage.getId() :
 					Long.parseLong((String)parameters.get("wikiPageId")),
 				wikiPage);
+		}
+
+		if (wikiPageUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for WikiPage");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiPages, wikiPageUnsafeConsumer);
+		}
+		else {
+			for (WikiPage wikiPage : wikiPages) {
+				wikiPageUnsafeConsumer.accept(wikiPage);
+			}
 		}
 	}
 
@@ -935,6 +988,15 @@ public abstract class BaseWikiPageResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<WikiPage>,
+			 UnsafeConsumer<WikiPage, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -993,6 +1055,14 @@ public abstract class BaseWikiPageResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1083,6 +1153,9 @@ public abstract class BaseWikiPageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<WikiPage>, UnsafeConsumer<WikiPage, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

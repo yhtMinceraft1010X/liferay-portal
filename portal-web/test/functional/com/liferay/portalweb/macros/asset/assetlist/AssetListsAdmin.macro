@@ -333,7 +333,17 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconList.delete(listEntry = "${assetListTitle}");
+		LexiconList.clickEllipsisItem(
+			item = "Delete",
+			listEntry = "${assetListTitle}");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting a collection is an action impossible to revert.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}
@@ -361,9 +371,11 @@ definition {
 	}
 
 	macro deprioritizeVariation {
-		Click(
-			key_variation = "${variationTitle}",
-			locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		if (IsElementNotPresent(key_menuItem = "Deprioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(
+				key_variation = "${variationTitle}",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		}
 
 		Click(
 			key_menuItem = "Deprioritize",
@@ -431,9 +443,11 @@ definition {
 	}
 
 	macro prioritizeVariation {
-		Click(
-			key_variation = "${variationTitle}",
-			locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		if (IsElementNotPresent(key_menuItem = "Prioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(
+				key_variation = "${variationTitle}",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		}
 
 		Click(
 			key_menuItem = "Prioritize",

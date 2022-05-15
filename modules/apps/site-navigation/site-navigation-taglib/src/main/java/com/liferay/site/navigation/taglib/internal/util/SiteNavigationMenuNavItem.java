@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -64,11 +67,31 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public List<NavItem> getChildren() {
-		return NavItemUtil.getChildNavItems(
-			_httpServletRequest,
-			_siteNavigationMenuItem.getSiteNavigationMenuId(),
-			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+	public List<NavItem> getChildren() throws Exception {
+		if (!_siteNavigationMenuItemType.isDynamic()) {
+			return NavItemUtil.getChildNavItems(
+				_httpServletRequest,
+				_siteNavigationMenuItem.getSiteNavigationMenuId(),
+				_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146502"))) {
+			return Collections.emptyList();
+		}
+
+		List<NavItem> children = new ArrayList<>();
+
+		for (SiteNavigationMenuItem dynamicSiteNavigationMenuItem :
+				_siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+					_httpServletRequest, _siteNavigationMenuItem)) {
+
+			children.add(
+				new SiteNavigationMenuNavItem(
+					_httpServletRequest, _themeDisplay,
+					dynamicSiteNavigationMenuItem));
+		}
+
+		return children;
 	}
 
 	@Override

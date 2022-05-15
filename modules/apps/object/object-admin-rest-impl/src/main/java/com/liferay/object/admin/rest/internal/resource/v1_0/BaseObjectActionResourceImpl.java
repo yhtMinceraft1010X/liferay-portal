@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -173,7 +175,7 @@ public abstract class BaseObjectActionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "description": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -218,6 +220,10 @@ public abstract class BaseObjectActionResourceImpl
 				objectAction.getDateModified());
 		}
 
+		if (objectAction.getDescription() != null) {
+			existingObjectAction.setDescription(objectAction.getDescription());
+		}
+
 		if (objectAction.getName() != null) {
 			existingObjectAction.setName(objectAction.getName());
 		}
@@ -244,7 +250,7 @@ public abstract class BaseObjectActionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "description": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -366,7 +372,7 @@ public abstract class BaseObjectActionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions' -d $'{"active": ___, "description": ___, "name": ___, "objectActionExecutorKey": ___, "objectActionTriggerKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -457,12 +463,33 @@ public abstract class BaseObjectActionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
-			objectAction -> postObjectDefinitionObjectAction(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectAction);
+			null;
 
-		for (ObjectAction objectAction : objectActions) {
-			objectActionUnsafeConsumer.accept(objectAction);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectActionUnsafeConsumer =
+				objectAction -> postObjectDefinitionObjectAction(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectAction);
+		}
+
+		if (objectActionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ObjectAction");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectActions, objectActionUnsafeConsumer);
+		}
+		else {
+			for (ObjectAction objectAction : objectActions) {
+				objectActionUnsafeConsumer.accept(objectAction);
+			}
 		}
 	}
 
@@ -490,6 +517,10 @@ public abstract class BaseObjectActionResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -531,16 +562,54 @@ public abstract class BaseObjectActionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectAction objectAction : objectActions) {
-			putObjectAction(
+		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectActionUnsafeConsumer = objectAction -> patchObjectAction(
 				objectAction.getId() != null ? objectAction.getId() :
 					Long.parseLong((String)parameters.get("objectActionId")),
 				objectAction);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectActionUnsafeConsumer = objectAction -> putObjectAction(
+				objectAction.getId() != null ? objectAction.getId() :
+					Long.parseLong((String)parameters.get("objectActionId")),
+				objectAction);
+		}
+
+		if (objectActionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectAction");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectActions, objectActionUnsafeConsumer);
+		}
+		else {
+			for (ObjectAction objectAction : objectActions) {
+				objectActionUnsafeConsumer.accept(objectAction);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectAction>,
+			 UnsafeConsumer<ObjectAction, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -601,6 +670,14 @@ public abstract class BaseObjectActionResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -695,6 +772,10 @@ public abstract class BaseObjectActionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectAction>,
+		 UnsafeConsumer<ObjectAction, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

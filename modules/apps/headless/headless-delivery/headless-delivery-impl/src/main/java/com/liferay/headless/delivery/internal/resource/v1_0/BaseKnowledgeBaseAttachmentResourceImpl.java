@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -340,17 +342,37 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<KnowledgeBaseAttachment, Exception>
+			knowledgeBaseAttachmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			knowledgeBaseAttachmentUnsafeConsumer = knowledgeBaseAttachment ->
 				postKnowledgeBaseArticleKnowledgeBaseAttachment(
 					Long.parseLong(
 						(String)parameters.get("knowledgeBaseArticleId")),
 					(MultipartBody)parameters.get("multipartBody"));
+		}
 
-		for (KnowledgeBaseAttachment knowledgeBaseAttachment :
-				knowledgeBaseAttachments) {
+		if (knowledgeBaseAttachmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for KnowledgeBaseAttachment");
+		}
 
-			knowledgeBaseAttachmentUnsafeConsumer.accept(
-				knowledgeBaseAttachment);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseAttachments,
+				knowledgeBaseAttachmentUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseAttachment knowledgeBaseAttachment :
+					knowledgeBaseAttachments) {
+
+				knowledgeBaseAttachmentUnsafeConsumer.accept(
+					knowledgeBaseAttachment);
+			}
 		}
 	}
 
@@ -381,6 +403,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -425,6 +451,15 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<KnowledgeBaseAttachment>,
+			 UnsafeConsumer<KnowledgeBaseAttachment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -485,6 +520,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -575,6 +618,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<KnowledgeBaseAttachment>,
+		 UnsafeConsumer<KnowledgeBaseAttachment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

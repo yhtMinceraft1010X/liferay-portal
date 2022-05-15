@@ -48,6 +48,7 @@ export default function updateFragmentConfiguration({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
+					segmentsExperienceId: getState().segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({

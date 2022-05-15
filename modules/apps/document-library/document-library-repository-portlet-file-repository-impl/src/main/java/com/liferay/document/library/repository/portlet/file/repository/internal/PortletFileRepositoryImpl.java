@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.webserver.WebServerServlet;
-import com.liferay.trash.kernel.util.Trash;
+import com.liferay.trash.TrashHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -394,9 +394,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			return getPortletFileEntry(groupId, folderId, fileName);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 
@@ -421,10 +421,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
 		boolean absoluteURL) {
 
-		String portletFileEntryURL = getPortletFileEntryURL(
-			themeDisplay, fileEntry, queryString, absoluteURL);
-
-		return _http.addParameter(portletFileEntryURL, "download", true);
+		return HttpComponentsUtil.addParameter(
+			getPortletFileEntryURL(
+				themeDisplay, fileEntry, queryString, absoluteURL),
+			"download", true);
 	}
 
 	@Override
@@ -579,7 +579,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		String fileName = fileEntry.getFileName();
 
 		if (fileEntry.isInTrash()) {
-			fileName = _trash.getOriginalTitle(fileEntry.getTitle());
+			fileName = _trashHelper.getOriginalTitle(fileEntry.getTitle());
 		}
 
 		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
@@ -797,9 +797,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference
-	private Http _http;
-
 	@Reference(
 		target = "(class.name=com.liferay.portal.repository.liferayrepository.LiferayRepository)"
 	)
@@ -820,7 +817,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	private RepositoryProvider _repositoryProvider;
 
 	@Reference
-	private Trash _trash;
+	private TrashHelper _trashHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -33,11 +33,11 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -232,12 +232,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 				_companyLocalService.fetchCompany(
 					TestPropsValues.getCompanyId()));
 
-			Layout layout = _layoutLocalService.addLayout(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-				StringPool.BLANK, serviceContext);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			themeDisplay.setLayoutSet(layout.getLayoutSet());
 
@@ -462,6 +457,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					InfoField.builder(
 					).infoFieldType(
 						DateInfoFieldType.INSTANCE
+					).namespace(
+						StringPool.BLANK
 					).name(
 						"createDate"
 					).labelInfoLocalizedValue(
@@ -473,6 +470,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					InfoField.builder(
 					).infoFieldType(
 						TextInfoFieldType.INSTANCE
+					).namespace(
+						StringPool.BLANK
 					).name(
 						"title"
 					).labelInfoLocalizedValue(

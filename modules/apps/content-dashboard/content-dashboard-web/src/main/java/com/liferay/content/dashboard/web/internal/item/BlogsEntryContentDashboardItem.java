@@ -28,8 +28,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +38,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -115,15 +112,12 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public List<Locale> getAvailableLocales() {
-		try {
-			return Arrays.asList(
-				_portal.getSiteDefaultLocale(_group.getGroupId()));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		return Collections.emptyList();
+	}
 
-			return Collections.emptyList();
-		}
+	@Override
+	public Clipboard getClipboard() {
+		return Clipboard.EMPTY;
 	}
 
 	@Override
@@ -173,13 +167,6 @@ public class BlogsEntryContentDashboardItem
 	@Override
 	public Date getCreateDate() {
 		return _blogsEntry.getCreateDate();
-	}
-
-	@Override
-	public Map<String, Object> getData(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"display-date", _blogsEntry.getDisplayDate()
-		).build();
 	}
 
 	@Override
@@ -276,6 +263,11 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
+	public Preview getPreview() {
+		return Preview.EMPTY;
+	}
+
+	@Override
 	public String getScopeName(Locale locale) {
 		return Optional.ofNullable(
 			_group
@@ -287,12 +279,10 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(Locale locale) {
-		return JSONUtil.put(
-			"creationDate", _blogsEntry.getCreateDate()
-		).put(
-			"displayDate", _blogsEntry.getDisplayDate()
-		);
+	public Map<String, Object> getSpecificInformation(Locale locale) {
+		return HashMapBuilder.<String, Object>put(
+			"display-date", _blogsEntry.getDisplayDate()
+		).build();
 	}
 
 	@Override

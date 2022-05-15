@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1025,17 +1027,48 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<KnowledgeBaseFolder, Exception>
+			knowledgeBaseFolderUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			knowledgeBaseFolderUnsafeConsumer = knowledgeBaseFolder -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			knowledgeBaseFolderUnsafeConsumer =
-				knowledgeBaseFolder -> postSiteKnowledgeBaseFolder(
-					(Long)parameters.get("siteId"), knowledgeBaseFolder);
+			if (parameters.containsKey("siteId")) {
+				knowledgeBaseFolderUnsafeConsumer =
+					knowledgeBaseFolder -> postSiteKnowledgeBaseFolder(
+						(Long)parameters.get("siteId"), knowledgeBaseFolder);
+			}
 		}
 
-		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
-			knowledgeBaseFolderUnsafeConsumer.accept(knowledgeBaseFolder);
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			knowledgeBaseFolderUnsafeConsumer = knowledgeBaseFolder ->
+				putSiteKnowledgeBaseFolderByExternalReferenceCode(
+					knowledgeBaseFolder.getSiteId() != null ?
+						knowledgeBaseFolder.getSiteId() :
+							(Long)parameters.get("siteId"),
+					knowledgeBaseFolder.getExternalReferenceCode(),
+					knowledgeBaseFolder);
+		}
+
+		if (knowledgeBaseFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for KnowledgeBaseFolder");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseFolders, knowledgeBaseFolderUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseFolder knowledgeBaseFolder :
+					knowledgeBaseFolders) {
+
+				knowledgeBaseFolderUnsafeConsumer.accept(knowledgeBaseFolder);
+			}
 		}
 	}
 
@@ -1063,6 +1096,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1108,13 +1145,50 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
-			putKnowledgeBaseFolder(
-				knowledgeBaseFolder.getId() != null ?
-					knowledgeBaseFolder.getId() :
-						Long.parseLong(
-							(String)parameters.get("knowledgeBaseFolderId")),
-				knowledgeBaseFolder);
+		UnsafeConsumer<KnowledgeBaseFolder, Exception>
+			knowledgeBaseFolderUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			knowledgeBaseFolderUnsafeConsumer =
+				knowledgeBaseFolder -> patchKnowledgeBaseFolder(
+					knowledgeBaseFolder.getId() != null ?
+						knowledgeBaseFolder.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"knowledgeBaseFolderId")),
+					knowledgeBaseFolder);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			knowledgeBaseFolderUnsafeConsumer =
+				knowledgeBaseFolder -> putKnowledgeBaseFolder(
+					knowledgeBaseFolder.getId() != null ?
+						knowledgeBaseFolder.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"knowledgeBaseFolderId")),
+					knowledgeBaseFolder);
+		}
+
+		if (knowledgeBaseFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for KnowledgeBaseFolder");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseFolders, knowledgeBaseFolderUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseFolder knowledgeBaseFolder :
+					knowledgeBaseFolders) {
+
+				knowledgeBaseFolderUnsafeConsumer.accept(knowledgeBaseFolder);
+			}
 		}
 	}
 
@@ -1183,6 +1257,15 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<KnowledgeBaseFolder>,
+			 UnsafeConsumer<KnowledgeBaseFolder, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1241,6 +1324,14 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1336,6 +1427,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<KnowledgeBaseFolder>,
+		 UnsafeConsumer<KnowledgeBaseFolder, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

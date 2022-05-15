@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -31,6 +33,8 @@ definition {
 	@description = "Feature ID: LRAC-8720 | Automation ID: LRAC-10622 | Test Summary: Modal is displayed on first access to a new workspace"
 	@priority = "5"
 	test ModalDisplayedWhenFirstAccessToWorkspace {
+		property test.name.skip.portal.instance = "Onboarding#ModalDisplayedWhenFirstAccessToWorkspace";
+
 		var supportedFPVersionList = "DXP 7.3 Fix Pack 1,DXP 7.2 Fix Pack 11,DXP 7.1 Fix Pack 22,DXP 7.0 Fix Pack 98";
 
 		task ("Check the first screen of the onboarding modal") {
@@ -55,22 +59,18 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${versionList}") {
+				for (var key_version : list "${supportedFPVersionList}") {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}
 
 			task ("Check skip button") {
-				AssertElementPresent(
-					key_buttonName = "Skip",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				ACUtils.viewGenericButton(buttonName = "Skip");
 			}
 		}
 
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
-			Click(
-				key_textValue = "Click here",
-				locator1 = "ACUtils#GENERIC_TEXT");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
 			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 
@@ -115,28 +115,22 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${versionList}") {
+				for (var key_version : list "${supportedFPVersionList}") {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}
 
 			task ("Check cancel button") {
-				AssertElementPresent(
-					key_buttonName = "Cancel",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				ACUtils.viewGenericButton(buttonName = "Cancel");
 			}
 
 			task ("Check skip button is not present") {
-				AssertElementNotPresent(
-					key_buttonName = "Skip",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				Button.viewNotPresent(button = "Skip");
 			}
 		}
 
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
-			Click(
-				key_textValue = "Click here",
-				locator1 = "ACUtils#GENERIC_TEXT");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
 			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 

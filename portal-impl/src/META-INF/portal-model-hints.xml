@@ -107,19 +107,6 @@
 		<field name="vocabularyId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.asset.kernel.model.AssetCategoryProperty">
-		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
-		<field name="categoryPropertyId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="categoryId" type="long" />
-		<field name="key" type="String" />
-		<field name="value" type="String" />
-	</model>
 	<model name="com.liferay.asset.kernel.model.AssetEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
@@ -418,6 +405,7 @@
 		<field name="ctCollectionId" type="long" />
 		<field name="columnId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
 		<field name="tableId" type="long" />
 		<field name="name" type="String">
 			<validator name="required" />
@@ -684,6 +672,7 @@
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="creatorUserId" type="long" />
+		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="parentGroupId" type="long" />

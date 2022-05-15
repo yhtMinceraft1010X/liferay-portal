@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -200,9 +199,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			layout = draftLayout;
 		}
 
-		if ((layout.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			_isLayoutPublished(layout)) {
-
+		if (!layout.isDraft() && _isLayoutPublished(layout)) {
 			return false;
 		}
 
@@ -220,12 +217,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			if (_layoutContentModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), layout.getPlid(),
 					ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE) ||
-				_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout)) {
 
 				return true;
 			}
@@ -248,11 +241,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			return false;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if ((draftLayout != null) ||
-			((layout.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			 _isLayoutPublished(layout))) {
+		if ((layout.fetchDraftLayout() != null) ||
+			(!layout.isDraft() && _isLayoutPublished(layout))) {
 
 			return false;
 		}

@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.display.context;
 
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
@@ -29,6 +30,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactory;
+import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactoryServicesTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -39,11 +42,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -62,6 +69,8 @@ public class ViewObjectEntriesDisplayContext {
 
 	public ViewObjectEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ObjectFieldFDSFilterFactoryServicesTracker
+			objectFieldFDSFilterFactoryServicesTracker,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
 		ObjectViewLocalService objectViewLocalService,
@@ -69,6 +78,8 @@ public class ViewObjectEntriesDisplayContext {
 		String restContextPath) {
 
 		_httpServletRequest = httpServletRequest;
+		_objectFieldFDSFilterFactoryServicesTracker =
+			objectFieldFDSFilterFactoryServicesTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProvider = objectScopeProvider;
 		_objectViewLocalService = objectViewLocalService;
@@ -85,11 +96,11 @@ public class ViewObjectEntriesDisplayContext {
 			if (!_objectScopeProvider.isGroupAware() ||
 				!_objectScopeProvider.isValidGroupId(groupId)) {
 
-				return _apiURL + _getNestedFieldsQueryString();
+				return _apiURL + _getQueryString();
 			}
 
 			return StringBundler.concat(
-				_apiURL, "/scopes/", groupId, _getNestedFieldsQueryString());
+				_apiURL, "/scopes/", groupId, _getQueryString());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -159,6 +170,30 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"));
+	}
+
+	public List<FDSFilter> getFDSFilters() {
+		ObjectView objectView = _objectViewLocalService.fetchDefaultObjectView(
+			_objectDefinition.getObjectDefinitionId());
+
+		if (objectView == null) {
+			return Collections.emptyList();
+		}
+
+		return TransformUtil.transform(
+			objectView.getObjectViewFilterColumns(),
+			objectViewFilterColumn -> {
+				ObjectFieldFDSFilterFactory objectFieldFDSFilterFactory =
+					_objectFieldFDSFilterFactoryServicesTracker.
+						getObjectFieldFDSFilterFactory(
+							objectView.getObjectDefinitionId(),
+							objectViewFilterColumn);
+
+				return objectFieldFDSFilterFactory.create(
+					_objectRequestHelper.getLocale(),
+					_objectDefinition.getObjectDefinitionId(),
+					objectViewFilterColumn);
+			});
 	}
 
 	public String getFDSId() {
@@ -233,14 +268,14 @@ public class ViewObjectEntriesDisplayContext {
 			}
 		).distinct(
 		).collect(
-			Collectors.joining("&nestedFields=")
+			Collectors.joining(StringPool.COMMA)
 		);
 
 		if (Validator.isNull(queryString)) {
 			return StringPool.BLANK;
 		}
 
-		return "?nestedFields=" + queryString;
+		return "nestedFields=" + queryString;
 	}
 
 	private String _getPermissionsURL() throws Exception {
@@ -268,12 +303,49 @@ public class ViewObjectEntriesDisplayContext {
 		).buildString();
 	}
 
+	private String _getQueryString() {
+		List<String> queryStrings = new ArrayList<>();
+
+		String nestedFieldsQueryString = _getNestedFieldsQueryString();
+
+		if (Validator.isNotNull(nestedFieldsQueryString)) {
+			queryStrings.add(nestedFieldsQueryString);
+		}
+
+		String searchByObjectViewQueryString =
+			_getSearchByObjectViewQueryString();
+
+		if (Validator.isNotNull(searchByObjectViewQueryString)) {
+			queryStrings.add(searchByObjectViewQueryString);
+		}
+
+		if (ListUtil.isEmpty(queryStrings)) {
+			return StringPool.BLANK;
+		}
+
+		return StringPool.QUESTION +
+			StringUtil.merge(queryStrings, StringPool.AMPERSAND);
+	}
+
+	private String _getSearchByObjectViewQueryString() {
+		ObjectView objectView = _objectViewLocalService.fetchDefaultObjectView(
+			_objectDefinition.getObjectDefinitionId());
+
+		if (objectView == null) {
+			return StringPool.BLANK;
+		}
+
+		return "searchByObjectView";
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewObjectEntriesDisplayContext.class);
 
 	private final String _apiURL;
 	private final HttpServletRequest _httpServletRequest;
 	private ObjectDefinition _objectDefinition;
+	private final ObjectFieldFDSFilterFactoryServicesTracker
+		_objectFieldFDSFilterFactoryServicesTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProvider _objectScopeProvider;

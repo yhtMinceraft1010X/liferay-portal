@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -119,7 +121,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "title",
-				value = "Document_1.jpg");
+				value = "New Document");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

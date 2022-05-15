@@ -106,13 +106,24 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 								getFileEntryFromURL(data);
 
 						if (fileEntry == null) {
-							JSONObject jsonObject =
-								JSONFactoryUtil.createJSONObject(data);
+							try {
+								JSONObject jsonObject =
+									JSONFactoryUtil.createJSONObject(data);
 
-							fileEntryId = GetterUtil.getLong(
-								jsonObject.get("fileEntryId"));
+								fileEntryId = GetterUtil.getLong(
+									jsonObject.get("fileEntryId"));
 
-							fileEntry = _getFileEntryByFileEntryId(fileEntryId);
+								fileEntry = _getFileEntryByFileEntryId(
+									fileEntryId);
+							}
+							catch (Exception exception) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Unable to get file entry " +
+											fileEntryId,
+										exception);
+								}
+							}
 						}
 					}
 				}

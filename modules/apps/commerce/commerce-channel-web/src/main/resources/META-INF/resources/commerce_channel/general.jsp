@@ -102,15 +102,13 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				<%@ include file="/commerce_channel/workflow_definition.jspf" %>
 
+				<aui:input checked="<%= commerceChannelDisplayContext.isHideShippingPriceZero() %>" helpMessage="configures-whether-an-shipping-price-of-zero-is-shown-during-the-shipping-method-selection-checkout-screen" label="shipping-price-zero" labelOff="show" labelOn="hide" name="settings--hideShippingPriceZero--" type="toggle-switch" />
+
 				<aui:input checked="<%= commerceChannelDisplayContext.isShowPurchaseOrderNumber() %>" helpMessage="configures-whether-the-purchase-order-number-is-shown-or-hidden-in-placed-and-pending-order-details" label="purchase-order-number" labelOff="hide" labelOn="show" name="settings--showPurchaseOrderNumber--" type="toggle-switch" />
 
 				<aui:input checked="<%= commerceChannelDisplayContext.isCheckoutRequestedDeliveryDateEnabled() %>" helpMessage="configures-whether-an-order-requested-delivery-date-can-be-set-during-checkout" label="requested-delivery-date-at-checkout" labelOff="disabled" labelOn="enabled" name="settings--checkoutRequestedDeliveryDateEnabled--" type="toggle-switch" />
 
 				<aui:input checked="<%= commerceChannelDisplayContext.isGuestCheckoutEnabled() %>" helpMessage="configures-whether-a-guest-may-checkout-by-providing-an-email-address-or-if-they-must-sign-in" label="guest-checkout" labelOff="disabled" labelOn="enabled" name="settings--guestCheckoutEnabled--" type="toggle-switch" />
-
-				<aui:input checked="<%= commerceChannelDisplayContext.isViewDeliveryTermCheckoutStepEnabled() %>" helpMessage="configures-whether-the-delivery-terms-checkout-step-is-shown-during-checkout" label="view-delivery-term-checkout-step" labelOff="disabled" labelOn="enabled" name="settings--viewDeliveryTermCheckoutStepEnabled--" type="toggle-switch" />
-
-				<aui:input checked="<%= commerceChannelDisplayContext.isViewPaymentTermCheckoutStepEnabled() %>" helpMessage="configures-whether-the-payment-terms-checkout-step-is-shown-during-checkout" label="view-payment-term-checkout-step" labelOff="disabled" labelOn="enabled" name="settings--viewPaymentTermCheckoutStepEnabled--" type="toggle-switch" />
 
 				<aui:input label="maximum-number-of-open-orders-per-account" name="orderSettings--accountCartMaxAllowed--" type="number" value="<%= commerceChannelDisplayContext.getAccountCartMaxAllowed() %>">
 					<aui:validator name="number" />

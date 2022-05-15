@@ -72,7 +72,7 @@ public class GetHistoricalViewsMVCResourceCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class GetHistoricalViewsMVCResourceCommandTest {
 							))
 					).put(
 						"value", 5
-					).toJSONString())));
+					).toString())));
 
 		try {
 			MockContextUtil.testWithMockContext(

@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"d3": "5.9.3"
 	},
 	"jest": {
 		"testPathIgnorePatterns": [
@@ -17,5 +16,5 @@
 		"test:watch": "liferay-npm-scripts test --watch",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "5.0.26"
+	"version": "5.0.30"
 }

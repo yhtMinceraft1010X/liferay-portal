@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -346,18 +348,37 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<BlogPostingImage, Exception>
+			blogPostingImageUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			blogPostingImageUnsafeConsumer = blogPostingImage -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			blogPostingImageUnsafeConsumer =
-				blogPostingImage -> postSiteBlogPostingImage(
-					(Long)parameters.get("siteId"),
-					(MultipartBody)parameters.get("multipartBody"));
+			if (parameters.containsKey("siteId")) {
+				blogPostingImageUnsafeConsumer =
+					blogPostingImage -> postSiteBlogPostingImage(
+						(Long)parameters.get("siteId"),
+						(MultipartBody)parameters.get("multipartBody"));
+			}
 		}
 
-		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			blogPostingImageUnsafeConsumer.accept(blogPostingImage);
+		if (blogPostingImageUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for BlogPostingImage");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				blogPostingImages, blogPostingImageUnsafeConsumer);
+		}
+		else {
+			for (BlogPostingImage blogPostingImage : blogPostingImages) {
+				blogPostingImageUnsafeConsumer.accept(blogPostingImage);
+			}
 		}
 	}
 
@@ -385,6 +406,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -434,6 +459,15 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<BlogPostingImage>,
+			 UnsafeConsumer<BlogPostingImage, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -494,6 +528,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -584,6 +626,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<BlogPostingImage>,
+		 UnsafeConsumer<BlogPostingImage, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

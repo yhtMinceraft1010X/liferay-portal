@@ -53,7 +53,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -62,9 +62,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,8 +74,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -265,6 +265,39 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetListTypeDefinitionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition1 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeDefinition listTypeDefinition2 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeDefinition> page =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null,
+					getFilterString(entityField, "eq", listTypeDefinition1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeDefinition1),
+				(List<ListTypeDefinition>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetListTypeDefinitionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -361,9 +394,23 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		testGetListTypeDefinitionsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, listTypeDefinition1, listTypeDefinition2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					listTypeDefinition1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionsPageWithSortDouble()
+		throws Exception {
+
+		testGetListTypeDefinitionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, listTypeDefinition1, listTypeDefinition2) -> {
+				BeanTestUtil.setProperty(
+					listTypeDefinition1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					listTypeDefinition2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -374,9 +421,9 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		testGetListTypeDefinitionsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, listTypeDefinition1, listTypeDefinition2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					listTypeDefinition1, entityField.getName(), 0);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					listTypeDefinition2, entityField.getName(), 1);
 			});
 	}
@@ -392,27 +439,27 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 				String entityFieldName = entityField.getName();
 
-				java.lang.reflect.Method method = clazz.getMethod(
+				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -420,12 +467,12 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						listTypeDefinition2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -514,9 +561,9 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		long totalCount = listTypeDefinitionsJSONObject.getLong("totalCount");
 
 		ListTypeDefinition listTypeDefinition1 =
-			testGraphQLListTypeDefinition_addListTypeDefinition();
+			testGraphQLGetListTypeDefinitionsPage_addListTypeDefinition();
 		ListTypeDefinition listTypeDefinition2 =
-			testGraphQLListTypeDefinition_addListTypeDefinition();
+			testGraphQLGetListTypeDefinitionsPage_addListTypeDefinition();
 
 		listTypeDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -536,6 +583,13 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			Arrays.asList(
 				ListTypeDefinitionSerDes.toDTOs(
 					listTypeDefinitionsJSONObject.getString("items"))));
+	}
+
+	protected ListTypeDefinition
+			testGraphQLGetListTypeDefinitionsPage_addListTypeDefinition()
+		throws Exception {
+
+		return testGraphQLListTypeDefinition_addListTypeDefinition();
 	}
 
 	@Test
@@ -592,7 +646,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLDeleteListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
-			testGraphQLListTypeDefinition_addListTypeDefinition();
+			testGraphQLDeleteListTypeDefinition_addListTypeDefinition();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -607,7 +661,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteListTypeDefinition"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -623,6 +676,13 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ListTypeDefinition
+			testGraphQLDeleteListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return testGraphQLListTypeDefinition_addListTypeDefinition();
 	}
 
 	@Test
@@ -649,7 +709,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLGetListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
-			testGraphQLListTypeDefinition_addListTypeDefinition();
+			testGraphQLGetListTypeDefinition_addListTypeDefinition();
 
 		Assert.assertTrue(
 			equals(
@@ -692,6 +752,13 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				"Object/code"));
 	}
 
+	protected ListTypeDefinition
+			testGraphQLGetListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return testGraphQLListTypeDefinition_addListTypeDefinition();
+	}
+
 	@Test
 	public void testPatchListTypeDefinition() throws Exception {
 		ListTypeDefinition postListTypeDefinition =
@@ -708,8 +775,8 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		ListTypeDefinition expectedPatchListTypeDefinition =
 			postListTypeDefinition.clone();
 
-		_beanUtilsBean.copyProperties(
-			expectedPatchListTypeDefinition, randomPatchListTypeDefinition);
+		BeanTestUtil.copyProperties(
+			randomPatchListTypeDefinition, expectedPatchListTypeDefinition);
 
 		ListTypeDefinition getListTypeDefinition =
 			listTypeDefinitionResource.getListTypeDefinition(
@@ -1339,6 +1406,115 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	protected Company testCompany;
 	protected Group testGroup;
 
+	protected static class BeanTestUtil {
+
+		public static void copyProperties(Object source, Object target)
+			throws Exception {
+
+			Class<?> sourceClass = _getSuperClass(source.getClass());
+
+			Class<?> targetClass = target.getClass();
+
+			for (java.lang.reflect.Field field :
+					sourceClass.getDeclaredFields()) {
+
+				if (field.isSynthetic()) {
+					continue;
+				}
+
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
+
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
+
+				setMethod.invoke(target, getMethod.invoke(source));
+			}
+		}
+
+		public static boolean hasProperty(Object bean, String name) {
+			Method setMethod = _getMethod(
+				bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public static void setProperty(Object bean, String name, Object value)
+			throws Exception {
+
+			Class<?> clazz = bean.getClass();
+
+			Method setMethod = _getMethod(
+				clazz, "set" + StringUtil.upperCaseFirstLetter(name));
+
+			if (setMethod == null) {
+				throw new NoSuchMethodException();
+			}
+
+			Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+			setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+		}
+
+		private static Method _getMethod(Class<?> clazz, String name) {
+			for (Method method : clazz.getMethods()) {
+				if (name.equals(method.getName()) &&
+					(method.getParameterCount() == 1) &&
+					_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+					return method;
+				}
+			}
+
+			return null;
+		}
+
+		private static Method _getMethod(
+				Class<?> clazz, String fieldName, String prefix,
+				Class<?>... parameterTypes)
+			throws Exception {
+
+			return clazz.getMethod(
+				prefix + StringUtil.upperCaseFirstLetter(fieldName),
+				parameterTypes);
+		}
+
+		private static Class<?> _getSuperClass(Class<?> clazz) {
+			Class<?> superClass = clazz.getSuperclass();
+
+			if ((superClass == null) || (superClass == Object.class)) {
+				return clazz;
+			}
+
+			return superClass;
+		}
+
+		private static Object _translateValue(
+			Class<?> parameterType, Object value) {
+
+			if ((value instanceof Integer) &&
+				parameterType.equals(Long.class)) {
+
+				Integer intValue = (Integer)value;
+
+				return intValue.longValue();
+			}
+
+			return value;
+		}
+
+		private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+			Arrays.asList(
+				Boolean.class, Date.class, Double.class, Integer.class,
+				Long.class, Map.class, String.class));
+
+	}
+
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -1413,18 +1589,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseListTypeDefinitionResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

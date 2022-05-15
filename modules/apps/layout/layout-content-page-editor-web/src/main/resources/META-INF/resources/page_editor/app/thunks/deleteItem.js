@@ -54,6 +54,7 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
+					segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({

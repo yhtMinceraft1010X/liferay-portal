@@ -22,8 +22,6 @@ import React, {ChangeEventHandler, FocusEventHandler, useMemo} from 'react';
 import {createNumberMask} from 'text-mask-addons';
 import {conformToMask} from 'text-mask-core';
 
-// @ts-ignore
-
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {ISymbols} from '../NumericInputMask/NumericInputMask';
 import {trimLeftZero} from '../util/numericalOperations';
@@ -298,7 +296,7 @@ const Numeric: React.FC<IProps> = ({
 					Liferay.Language.direction[editingLanguageId] === 'rtl',
 			})}
 			disabled={readOnly}
-			id={id}
+			id={id ?? name}
 			name={`${name}${inputMask ? '_masked' : ''}`}
 			onBlur={onBlur}
 			onChange={handleChange}

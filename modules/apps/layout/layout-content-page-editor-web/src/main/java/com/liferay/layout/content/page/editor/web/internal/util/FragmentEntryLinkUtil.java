@@ -14,12 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -33,14 +33,11 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -61,10 +58,8 @@ import javax.portlet.PortletResponse;
 public class FragmentEntryLinkUtil {
 
 	public static void deleteFragmentEntryLink(
-			long companyId,
 			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
-			long fragmentEntryLinkId, long plid,
-			PortletRegistry portletRegistry)
+			long fragmentEntryLinkId, long plid)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -82,39 +77,6 @@ public class FragmentEntryLinkUtil {
 
 		FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
-
-		if (fragmentEntryLink.getFragmentEntryId() == 0) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			String portletId = jsonObject.getString(
-				"portletId", StringPool.BLANK);
-
-			if (Validator.isNotNull(portletId)) {
-				String instanceId = jsonObject.getString(
-					"instanceId", StringPool.BLANK);
-
-				PortletLocalServiceUtil.deletePortlet(
-					companyId, PortletIdCodec.encode(portletId, instanceId),
-					plid);
-
-				LayoutClassedModelUsageLocalServiceUtil.
-					deleteLayoutClassedModelUsages(
-						PortletIdCodec.encode(portletId, instanceId),
-						PortalUtil.getClassNameId(Portlet.class), plid);
-			}
-		}
-
-		List<String> portletIds =
-			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
-
-		for (String portletId : portletIds) {
-			PortletLocalServiceUtil.deletePortlet(companyId, portletId, plid);
-
-			LayoutClassedModelUsageLocalServiceUtil.
-				deleteLayoutClassedModelUsages(
-					portletId, PortalUtil.getClassNameId(Portlet.class), plid);
-		}
 
 		LayoutClassedModelUsageLocalServiceUtil.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
@@ -190,11 +152,13 @@ public class FragmentEntryLinkUtil {
 				themeDisplay.getLocale());
 
 			String fragmentEntryKey = null;
+			int fragmentEntryType = FragmentConstants.TYPE_COMPONENT;
 			String icon = null;
 			String name = null;
 
 			if (fragmentEntry != null) {
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
+				fragmentEntryType = fragmentEntry.getType();
 				icon = fragmentEntry.getIcon();
 				name = fragmentEntry.getName();
 			}
@@ -210,9 +174,11 @@ public class FragmentEntryLinkUtil {
 				FragmentRenderer fragmentRenderer =
 					fragmentRendererTracker.getFragmentRenderer(rendererKey);
 
-				fragmentEntryKey = fragmentRenderer.getKey();
+				if (fragmentRenderer != null) {
+					fragmentEntryKey = fragmentRenderer.getKey();
 
-				name = fragmentRenderer.getLabel(themeDisplay.getLocale());
+					name = fragmentRenderer.getLabel(themeDisplay.getLocale());
+				}
 
 				if (Validator.isNotNull(portletId)) {
 					name = PortalUtil.getPortletTitle(
@@ -240,6 +206,10 @@ public class FragmentEntryLinkUtil {
 			).put(
 				"content", content
 			).put(
+				"cssClass",
+				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+					fragmentEntryLink)
+			).put(
 				"defaultConfigurationValues",
 				fragmentEntryConfigurationParser.
 					getConfigurationDefaultValuesJSONObject(configuration)
@@ -255,6 +225,9 @@ public class FragmentEntryLinkUtil {
 			).put(
 				"fragmentEntryLinkId",
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+			).put(
+				"fragmentEntryType",
+				FragmentConstants.getTypeLabel(fragmentEntryType)
 			).put(
 				"icon", icon
 			).put(

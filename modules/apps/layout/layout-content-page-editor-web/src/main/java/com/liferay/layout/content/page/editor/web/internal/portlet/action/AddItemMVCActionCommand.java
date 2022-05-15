@@ -16,12 +16,17 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,6 +89,22 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private LayoutStructureItem _addCollectionStyledLayoutStructureItem(
+		LayoutStructure layoutStructure, String parentItemId, int position) {
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.addCollectionStyledLayoutStructureItem(
+						parentItemId, position);
+
+		collectionStyledLayoutStructureItem.setViewportConfiguration(
+			ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+			JSONUtil.put("numberOfColumns", 1));
+
+		return collectionStyledLayoutStructureItem;
+	}
+
 	private JSONObject _addItemToLayoutData(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -110,9 +131,8 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getPlid(),
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
-							layoutStructure.
-								addCollectionStyledLayoutStructureItem(
-									parentItemId, position);
+							_addCollectionStyledLayoutStructureItem(
+								layoutStructure, parentItemId, position);
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());
@@ -127,20 +147,8 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getPlid(),
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
-							layoutStructure.addRowStyledLayoutStructureItem(
-								parentItemId, position, _DEFAULT_ROW_COLUMNS);
-
-						for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
-							ColumnLayoutStructureItem
-								columnLayoutStructureItem =
-									(ColumnLayoutStructureItem)
-										layoutStructure.
-											addColumnLayoutStructureItem(
-												layoutStructureItem.getItemId(),
-												i);
-
-							columnLayoutStructureItem.setSize(4);
-						}
+							_addRowSyledLayoutStructureItem(
+								layoutStructure, parentItemId, position);
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());
@@ -162,6 +170,34 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return jsonObject.put("layoutData", layoutDataJSONObject);
+	}
+
+	private LayoutStructureItem _addRowSyledLayoutStructureItem(
+		LayoutStructure layoutStructure, String parentItemId, int position) {
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				layoutStructure.addRowStyledLayoutStructureItem(
+					parentItemId, position, _DEFAULT_ROW_COLUMNS);
+
+		rowStyledLayoutStructureItem.setViewportConfiguration(
+			ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+			JSONUtil.put("modulesPerRow", 1));
+
+		for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+			ColumnLayoutStructureItem columnLayoutStructureItem =
+				(ColumnLayoutStructureItem)
+					layoutStructure.addColumnLayoutStructureItem(
+						rowStyledLayoutStructureItem.getItemId(), i);
+
+			columnLayoutStructureItem.setViewportConfiguration(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+				JSONUtil.put("size", 12));
+
+			columnLayoutStructureItem.setSize(4);
+		}
+
+		return rowStyledLayoutStructureItem;
 	}
 
 	private static final int _DEFAULT_ROW_COLUMNS = 3;

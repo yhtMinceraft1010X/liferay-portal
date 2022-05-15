@@ -38,6 +38,8 @@ export {default as postForm} from './liferay/util/form/post_form.es';
 // Liferay API
 
 export {default as BREAKPOINTS} from './liferay/breakpoints';
+export {default as STATUS_CODE} from './liferay/status_code';
+export {default as zIndex} from './liferay/zIndex';
 
 export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
 
@@ -50,7 +52,12 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 
 // Modal API
 
-export {openModal, openSelectionModal} from './liferay/modal/Modal';
+export {
+	openModal,
+	openAlertModal,
+	openConfirmModal,
+	openSelectionModal,
+} from './liferay/modal/Modal';
 
 export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';
 
@@ -93,11 +100,17 @@ export {default as buildFragment} from './liferay/util/build_fragment';
 export {default as fetch} from './liferay/util/fetch.es';
 export {default as focusFormField} from './liferay/util/focus_form_field';
 export {default as getPortletId} from './liferay/util/get_portlet_id';
+export {default as getWindow} from './liferay/util/get_window';
 export {default as inBrowserView} from './liferay/util/in_browser_view';
 export {default as isObject} from './liferay/util/is_object';
 export {default as isPhone} from './liferay/util/is_phone';
 export {default as isTablet} from './liferay/util/is_tablet';
+export {default as getSelectedOptionValues} from './liferay/util/get_selected_option_values';
 export {default as navigate} from './liferay/util/navigate.es';
 export {default as normalizeFriendlyURL} from './liferay/util/normalize_friendly_url';
+export {default as removeEntitySelection} from './liferay/util/remove_entity_selection';
+export {default as showCapsLock} from './liferay/util/show_caps_lock';
 export {default as runScriptsInElement} from './liferay/util/run_scripts_in_element.es';
+export {default as selectFolder} from './liferay/util/select_folder';
+export {default as toggleControls} from './liferay/util/toggle_controls';
 export {default as toggleDisabled} from './liferay/util/toggle_disabled';

@@ -64,6 +64,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -316,7 +317,7 @@ public class AssetPublisherHelperTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group1));
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group1));
 		themeDisplay.setScopeGroupId(_group1.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -537,7 +538,8 @@ public class AssetPublisherHelperTest {
 			_group1.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		Layout layout = LayoutTestUtil.addLayout(_group2.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group2.getGroupId());
 
 		String assetTagName2 = RandomTestUtil.randomString();
 
@@ -575,7 +577,7 @@ public class AssetPublisherHelperTest {
 
 		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
 
-		searchContainer.setTotal(10);
+		searchContainer.setResultsAndTotal(Collections::emptyList, 10);
 
 		List<AssetEntryResult> assetEntryResults =
 			_assetPublisherHelper.getAssetEntryResults(

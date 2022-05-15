@@ -16,7 +16,6 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -26,7 +25,9 @@ import React, {
 	useState,
 } from 'react';
 
+import LearnMessage from '../../shared/LearnMessage';
 import SearchInput from '../../shared/SearchInput';
+import Sidebar from '../../shared/Sidebar';
 import ThemeContext from '../../shared/ThemeContext';
 import {
 	CUSTOM_JSON_SXP_ELEMENT,
@@ -34,6 +35,7 @@ import {
 } from '../../utils/data';
 import {addParams, fetchData} from '../../utils/fetch';
 import {getLocalizedText} from '../../utils/language';
+import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];
@@ -139,12 +141,10 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 	);
 };
 
-function SXPElementSidebar({
+function AddSXPElement({
 	emptyMessage = Liferay.Language.get('no-query-elements-found'),
 	onAddSXPElement,
-	onClose,
 	querySXPElements,
-	visible,
 }) {
 	const {locale} = useContext(ThemeContext);
 
@@ -229,32 +229,8 @@ function SXPElementSidebar({
 	);
 
 	return (
-		<div
-			className={getCN(
-				'add-sxp-element-sidebar',
-				'sidebar',
-				'sidebar-light',
-				{open: visible}
-			)}
-		>
-			<div className="sidebar-header">
-				<h4 className="component-title">
-					<span className="text-truncate-inline">
-						<span className="text-truncate">
-							{Liferay.Language.get('add-query-elements')}
-						</span>
-					</span>
-				</h4>
-
-				<ClayButton
-					aria-label={Liferay.Language.get('close')}
-					displayType="unstyled"
-					onClick={onClose}
-					small
-				>
-					<ClayIcon symbol="times" />
-				</ClayButton>
-			</div>
+		<>
+			<LearnMessage resourceKey="query-elements" />
 
 			<nav className="component-tbar sidebar-search tbar">
 				<div className="container-fluid">
@@ -286,7 +262,7 @@ function SXPElementSidebar({
 			) : (
 				<ClayLoadingIndicator />
 			)}
-		</div>
+		</>
 	);
 }
 
@@ -301,15 +277,13 @@ function AddSXPElementSidebar({
 
 	const [querySXPElements, setQuerySXPElements] = useState(null);
 
-	// TODO check pagesize
-
 	useEffect(() => {
 		fetchData(
 			addParams('/o/search-experiences-rest/v1.0/sxp-elements', {
-				pageSize: 200,
-			}),
-			{method: 'GET'},
-			(responseContent) => {
+				pageSize: 200, // TODO check pagesize
+			})
+		)
+			.then((responseContent) => {
 				if (isMounted()) {
 					setQuerySXPElements(
 						responseContent.items.map(
@@ -331,27 +305,37 @@ function AddSXPElementSidebar({
 						)
 					);
 				}
-			},
-			() => {
+			})
+			.catch(() => {
 				if (isMounted()) {
 					setQuerySXPElements([]);
 				}
-			}
-		);
+			});
 	}, []); //eslint-disable-line
 
 	if (!querySXPElements) {
 		return null;
 	}
 
+	const _handleClose = () => {
+		setStorageAddSXPElementSidebar('closed');
+
+		onClose();
+	};
+
 	return (
-		<SXPElementSidebar
-			emptyMessage={emptyMessage}
-			onAddSXPElement={onAddSXPElement}
-			onClose={onClose}
-			querySXPElements={querySXPElements}
+		<Sidebar
+			className="add-sxp-element-sidebar"
+			onClose={_handleClose}
+			title={Liferay.Language.get('add-query-elements')}
 			visible={visible}
-		/>
+		>
+			<AddSXPElement
+				emptyMessage={emptyMessage}
+				onAddSXPElement={onAddSXPElement}
+				querySXPElements={querySXPElements}
+			/>
+		</Sidebar>
 	);
 }
 

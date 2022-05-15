@@ -38,13 +38,13 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.RolePermission;
-import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -203,7 +203,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		String redirect = actionRequest.getParameter("redirect");
 
-		String portletId = _http.getParameter(redirect, "p_p_id", false);
+		String portletId = HttpComponentsUtil.getParameter(
+			redirect, "p_p_id", false);
 
 		if (_isRedirectToAnotherPortlet(portletId)) {
 			String successMessage = ParamUtil.getString(
@@ -466,7 +467,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (User user : users) {
-			if (!UserPermissionUtil.contains(
+			if (!_userPermission.contains(
 					themeDisplay.getPermissionChecker(), user.getUserId(),
 					ActionKeys.VIEW)) {
 
@@ -545,9 +546,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	private volatile boolean _companyAdministratorCanPublish;
 
 	@Reference
-	private Http _http;
-
-	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 
@@ -562,5 +560,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserPermission _userPermission;
 
 }

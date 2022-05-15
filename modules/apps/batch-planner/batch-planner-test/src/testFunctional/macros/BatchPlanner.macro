@@ -1,0 +1,13 @@
+definition {
+
+	macro batchPlannerTearDown {
+		JSONBatchPlannerLogAPI._deleteBatchPlannerLogs();
+
+		JSONBatchPlannerPlansAPI._deleteBatchPlannerPlans();
+
+		JSONJobScheduler._deleteJobSchedulerTriggersByType(taskExecutorType = "batch-planner");
+
+		Notifications.deleteAllNotifications();
+	}
+
+}

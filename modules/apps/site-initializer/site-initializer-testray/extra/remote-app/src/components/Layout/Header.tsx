@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
@@ -29,7 +30,10 @@ type BreadCrumbTriggerProps = {
 };
 
 const Header = () => {
-	const [{dropdown, heading, tabs}] = useContext(HeaderContext);
+	const [{actions, dropdown, heading, symbol, tabs}] = useContext(
+		HeaderContext
+	);
+
 	const navigate = useNavigate();
 
 	const BreadCrumbTrigger: React.FC<BreadCrumbTriggerProps> = ({
@@ -40,7 +44,7 @@ const Header = () => {
 				className="dropdown-poll-icon mr-2"
 				color="darkblue"
 				fontSize={22}
-				symbol="polls"
+				symbol={symbol || 'polls'}
 			/>
 
 			{displayCarret && (
@@ -72,8 +76,8 @@ const Header = () => {
 					)}
 				</div>
 
-				<div className="d-flex flex-column">
-					<div className="d-flex flex-wrap">
+				<div className="d-flex flex-row justify-content-between w-100">
+					<div className="d-flex flex-1 flex-wrap">
 						{heading.map((header, index) => {
 							const isClickable =
 								header.path && index !== heading.length - 1;
@@ -103,7 +107,7 @@ const Header = () => {
 
 									<div className="d-flex flex-row">
 										<p
-											className="header-title text-paragraph-lg"
+											className="header-title text-paragraph-xl"
 											title={header.title}
 										>
 											{header.title}
@@ -118,10 +122,23 @@ const Header = () => {
 							);
 						})}
 					</div>
+
+					{!!actions.length && (
+						<DropDown
+							items={actions}
+							position={Align.BottomLeft}
+							trigger={
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					)}
 				</div>
 			</div>
 
-			<ClayTabs className="header-container-tabs ml-3" modern>
+			<ClayTabs className="header-container-tabs ml-3">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.active}

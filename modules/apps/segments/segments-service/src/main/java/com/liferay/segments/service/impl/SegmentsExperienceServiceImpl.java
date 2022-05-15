@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -52,7 +54,7 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -65,25 +67,25 @@ public class SegmentsExperienceServiceImpl
 		}
 
 		return segmentsExperienceLocalService.addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			getUserId(), groupId, segmentsEntryId, classNameId, classPK,
+			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return appendSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
+			groupId, segmentsEntryId, classNameId, classPK, nameMap, active,
 			new UnicodeProperties(true), serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -96,8 +98,8 @@ public class SegmentsExperienceServiceImpl
 		}
 
 		return segmentsExperienceLocalService.appendSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			getUserId(), groupId, segmentsEntryId, classNameId, classPK,
+			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -272,9 +274,23 @@ public class SegmentsExperienceServiceImpl
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
-		if ((layout != null) &&
-			LayoutPermissionUtil.contains(
+		if (layout == null) {
+			return false;
+		}
+
+		if (_layoutPermission.contains(
 				getPermissionChecker(), layout, ActionKeys.UPDATE)) {
+
+			return true;
+		}
+		else if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-132571")) &&
+				 (_layoutPermission.contains(
+					 getPermissionChecker(), plid,
+					 ActionKeys.UPDATE_LAYOUT_BASIC) ||
+				  _layoutPermission.contains(
+					  getPermissionChecker(), plid,
+					  ActionKeys.UPDATE_LAYOUT_LIMITED))) {
 
 			return true;
 		}
@@ -284,6 +300,9 @@ public class SegmentsExperienceServiceImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference(
 		target = "(resource.name=" + SegmentsConstants.RESOURCE_NAME + ")"

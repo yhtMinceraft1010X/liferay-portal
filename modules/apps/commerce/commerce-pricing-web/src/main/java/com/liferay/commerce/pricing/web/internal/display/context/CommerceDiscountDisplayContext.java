@@ -284,7 +284,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 					httpServletRequest, CPDefinition.class.getName(),
 					PortletProvider.Action.MANAGE)
 			).setMVCRenderCommandName(
-				"/cp_definitions/edit_cp_instance"
+				"/cp_definitions/edit_cp_definition"
 			).setRedirect(
 				commercePricingRequestHelper.getCurrentURL()
 			).setParameter(
@@ -292,7 +292,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			).setParameter(
 				"cpInstanceId", "{sku.id}"
 			).setParameter(
-				"screenNavigationCategoryKey", "details"
+				"screenNavigationCategoryKey", "skus"
 			).buildString(),
 			false);
 	}
@@ -533,13 +533,11 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
 				commercePricingRequestHelper.getCompanyId());
 
-		String localizedPercentage =
+		return StringUtil.removeSubstring(
 			_percentageFormatter.getLocalizedPercentage(
 				locale, commerceCurrency.getMaxFractionDigits(),
-				commerceCurrency.getMinFractionDigits(), percentage);
-
-		return StringUtil.removeSubstring(
-			localizedPercentage, StringPool.PERCENT);
+				commerceCurrency.getMinFractionDigits(), percentage),
+			StringPool.PERCENT);
 	}
 
 	public PortletURL getPortletDiscountRuleURL() {

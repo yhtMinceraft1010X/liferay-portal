@@ -16,6 +16,13 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
+	getAvailableInfoItemFormProviders() {
+		return serviceFetch(
+			config.getAvailableInfoItemFormProviders,
+			{},
+			() => {}
+		);
+	},
 
 	/**
 	 * Get available list item renderers for the list style
@@ -142,7 +149,15 @@ export default {
 	 * @param {object} options
 	 * @param {function} options.onNetworkStatus
 	 */
-	getPageContents({onNetworkStatus}) {
-		return serviceFetch(config.getPageContentsURL, {}, onNetworkStatus);
+	getPageContents({onNetworkStatus, segmentsExperienceId}) {
+		return serviceFetch(
+			config.getPageContentsURL,
+			{
+				body: {
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
 	},
 };

@@ -15,64 +15,37 @@
 package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.List;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Gabriel Albuquerque
  */
-public class ObjectDefinitionsViewsDisplayContext {
+public class ObjectDefinitionsViewsDisplayContext
+	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsViewsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission) {
 
-		_objectDefinitionModelResourcePermission =
-			objectDefinitionModelResourcePermission;
+		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
-	}
-
-	public String getAPIURL() {
-		return "/o/object-admin/v1.0/object-definitions/" +
-			getObjectDefinitionId() + "/object-views";
-	}
-
-	public CreationMenu getCreationMenu() throws PortalException {
-		CreationMenu creationMenu = new CreationMenu();
-
-		if (!hasUpdateObjectDefinitionPermission()) {
-			return creationMenu;
-		}
-
-		creationMenu.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref("addObjectView");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_objectRequestHelper.getRequest(), "add-object-view"));
-				dropdownItem.setTarget("event");
-			});
-
-		return creationMenu;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -90,43 +63,121 @@ public class ObjectDefinitionsViewsDisplayContext {
 					LiferayWindowState.POP_UP
 				).buildString(),
 				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
+				"/o/object-admin/v1.0/object-views/{id}/copy", "copy", "copy",
+				LanguageUtil.get(objectRequestHelper.getRequest(), "duplicate"),
+				"post", "copy", "async"),
+			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-views/{id}", "trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
 	}
 
-	public long getObjectDefinitionId() {
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		ObjectDefinition objectDefinition =
-			(ObjectDefinition)httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION);
-
-		return objectDefinition.getObjectDefinitionId();
+	public JSONArray getWorkflowStatusJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_APPROVED)
+			).put(
+				"value", WorkflowConstants.STATUS_APPROVED
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_DENIED)
+			).put(
+				"value", WorkflowConstants.STATUS_DENIED
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_DRAFT)
+			).put(
+				"value", WorkflowConstants.STATUS_DRAFT
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_EXPIRED)
+			).put(
+				"value", WorkflowConstants.STATUS_EXPIRED
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_INACTIVE)
+			).put(
+				"value", WorkflowConstants.STATUS_INACTIVE
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_INCOMPLETE)
+			).put(
+				"value", WorkflowConstants.STATUS_INCOMPLETE
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_IN_TRASH)
+			).put(
+				"value", WorkflowConstants.STATUS_IN_TRASH
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_PENDING)
+			).put(
+				"value", WorkflowConstants.STATUS_PENDING
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_SCHEDULED)
+			).put(
+				"value", WorkflowConstants.STATUS_SCHEDULED
+			)
+		);
 	}
 
-	public PortletURL getPortletURL() throws PortletException {
-		return PortletURLUtil.clone(
-			PortletURLUtil.getCurrent(
-				_objectRequestHelper.getLiferayPortletRequest(),
-				_objectRequestHelper.getLiferayPortletResponse()),
-			_objectRequestHelper.getLiferayPortletResponse());
+	@Override
+	protected String getAPIURI() {
+		return "/object-views";
 	}
 
-	public boolean hasUpdateObjectDefinitionPermission()
-		throws PortalException {
+	@Override
+	protected UnsafeConsumer<DropdownItem, Exception>
+		getCreationMenuDropdownItemUnsafeConsumer() {
 
-		return _objectDefinitionModelResourcePermission.contains(
-			_objectRequestHelper.getPermissionChecker(),
-			getObjectDefinitionId(), ActionKeys.UPDATE);
+		return dropdownItem -> {
+			dropdownItem.setHref("addObjectView");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(), "add-object-view"));
+			dropdownItem.setTarget("event");
+		};
 	}
 
-	private final ModelResourcePermission<ObjectDefinition>
-		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

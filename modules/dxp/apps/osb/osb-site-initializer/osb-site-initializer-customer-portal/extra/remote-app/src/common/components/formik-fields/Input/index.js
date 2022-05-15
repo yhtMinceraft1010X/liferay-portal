@@ -55,13 +55,15 @@ const Input = ({
 				<ClayInput {...field} {...props} />
 			</label>
 
-			{meta.error && meta.touched && !disableError ? (
+			{(typeof meta.error === 'string' || meta.error instanceof String) &&
+			meta.touched &&
+			!disableError ? (
 				<Badge>
 					<span className="pl-1">{meta.error}</span>
 				</Badge>
 			) : (
 				helper && (
-					<div className="ml-3 pl-3 text-neutral-6 text-paragraph-sm">
+					<div className="ml-3 pl-3 pr-2 text-neutral-6 text-paragraph-sm">
 						{helper}
 					</div>
 				)

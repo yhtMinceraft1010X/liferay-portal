@@ -311,6 +311,8 @@ public class DBPartitionUtil {
 			}
 		}
 		finally {
+			executorService.shutdown();
+
 			for (Future<Void> future : futures) {
 				future.get();
 			}
@@ -732,7 +734,7 @@ public class DBPartitionUtil {
 
 	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
 		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.thread.pool.enabled"), true);
+			PropsUtil.get("database.partition.thread.pool.enabled"));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);

@@ -40,6 +40,7 @@ import {showTab} from './portal/tabs.es';
 import {showTooltip} from './portal/tooltip.es';
 import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
+import statusCode from './status_code';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
@@ -54,8 +55,16 @@ import formatXML from './util/format_xml.es';
 import getCropRegion from './util/get_crop_region.es';
 import getDOM from './util/get_dom';
 import getElement from './util/get_element';
+import getGeolocation from './util/get_geolocation';
+import getLexiconIcon from './util/get_lexicon_icon';
+import getLexiconIconTpl from './util/get_lexicon_icon_template';
+import getOpener from './util/get_opener';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import getSelectedOptionValues from './util/get_selected_option_values';
+import getTop from './util/get_top';
+import getURLWithSessionId from './util/get_url_with_session_id';
+import getWindow from './util/get_window';
 import {
 	MAP_HTML_CHARS_ESCAPED,
 	escapeHTML,
@@ -72,9 +81,15 @@ import createActionURL from './util/portlet_url/create_action_url.es';
 import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';
+import removeEntitySelection from './util/remove_entity_selection';
+import selectFolder from './util/select_folder';
 import {getSessionValue, setSessionValue} from './util/session.es';
+import showCapsLock from './util/show_caps_lock';
+import sub from './util/sub';
 import toCharCode from './util/to_char_code.es';
+import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
+import zIndex from './zIndex';
 
 Liferay = window.Liferay || {};
 
@@ -82,6 +97,16 @@ Liferay = window.Liferay || {};
  * @deprecated As of Athanasius (7.3.x), replaced by `import {BREAKPOINTS} from 'frontend-js-web'`
  */
 Liferay.BREAKPOINTS = BREAKPOINTS;
+
+/**
+ * @deprecated As of Cavanaugh (7.4.x), replaced by `import {STATUS_CODE} from 'frontend-js-web'`
+ */
+Liferay.STATUS_CODE = statusCode;
+
+/**
+ * @deprecated As of Cavanaugh (7.4.x), replaced by `import {zIndex} from 'frontend-js-web'`
+ */
+Liferay.zIndex = zIndex;
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;
@@ -152,6 +177,15 @@ Liferay.Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
  */
 Liferay.Util.addParams = addParams;
 
+Liferay.Util.openAlertModal = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.openAlertModal(...args);
+		}
+	);
+};
+
 /**
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
@@ -184,7 +218,11 @@ Liferay.Util.getDOM = getDOM;
  */
 Liferay.Util.getElement = getElement;
 
+Liferay.Util.getGeolocation = getGeolocation;
 Liferay.Util.getFormElement = getFormElement;
+Liferay.Util.getLexiconIcon = getLexiconIcon;
+Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
+Liferay.Util.getOpener = getOpener;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`
@@ -192,6 +230,9 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getPortletId = getPortletId;
 
 Liferay.Util.getPortletNamespace = getPortletNamespace;
+Liferay.Util.getTop = getTop;
+Liferay.Util.getURLWithSessionId = getURLWithSessionId;
+Liferay.Util.getWindow = getWindow;
 Liferay.Util.groupBy = groupBy;
 
 /**
@@ -210,6 +251,8 @@ Liferay.Util.isPhone = isPhone;
  * @deprecated As of Athanasius (7.3.x), replaced by `import {isTablet} from 'frontend-js-web'`
  */
 Liferay.Util.isTablet = isTablet;
+
+Liferay.Util.getSelectedOptionValues = getSelectedOptionValues;
 
 Liferay.Util.navigate = navigate;
 Liferay.Util.ns = ns;
@@ -236,6 +279,15 @@ Liferay.Util.toCharCode = toCharCode;
  * @deprecated As of Athanasius (7.3.x), replaced by `import {toggleDisabled} from 'frontend-js-web'`
  */
 Liferay.Util.toggleDisabled = toggleDisabled;
+
+Liferay.Util.openConfirmModal = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.openConfirmModal(...args);
+		}
+	);
+};
 
 Liferay.Util.openModal = (...args) => {
 	Liferay.Loader.require(
@@ -264,11 +316,17 @@ Liferay.Util.openToast = (...args) => {
 	);
 };
 
+Liferay.Util.removeEntitySelection = removeEntitySelection;
+Liferay.Util.selectFolder = selectFolder;
+Liferay.Util.showCapsLock = showCapsLock;
+Liferay.Util.sub = sub;
+
 Liferay.Util.Session = {
 	get: getSessionValue,
 	set: setSessionValue,
 };
 
+Liferay.Util.toggleControls = toggleControls;
 Liferay.Util.unescape = unescape;
 Liferay.Util.unescapeHTML = unescapeHTML;
 

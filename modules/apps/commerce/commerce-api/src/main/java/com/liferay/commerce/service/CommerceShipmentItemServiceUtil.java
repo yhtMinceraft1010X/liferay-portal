@@ -42,25 +42,27 @@ public class CommerceShipmentItemServiceUtil {
 	public static CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity,
+			int quantity, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, serviceContext);
+			commerceInventoryWarehouseId, quantity, validateInventory,
+			serviceContext);
 	}
 
 	public static CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity,
+			int quantity, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, serviceContext);
+			commerceInventoryWarehouseId, quantity, validateInventory,
+			serviceContext);
 	}
 
 	/**
@@ -81,6 +83,14 @@ public class CommerceShipmentItemServiceUtil {
 			commerceShipmentItemId, restoreStockQuantity);
 	}
 
+	public static void deleteCommerceShipmentItems(
+			long commerceShipmentId, boolean restoreStockQuantity)
+		throws PortalException {
+
+		getService().deleteCommerceShipmentItems(
+			commerceShipmentId, restoreStockQuantity);
+	}
+
 	public static CommerceShipmentItem fetchCommerceShipmentItem(
 			long commerceShipmentId, long commerceOrderItemId,
 			long commerceInventoryWarehouseId)
@@ -91,11 +101,12 @@ public class CommerceShipmentItemServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
-	public static CommerceShipmentItem fetchCommerceShipmentItem(
-			long companyId, String externalReferenceCode)
+	public static CommerceShipmentItem
+			fetchCommerceShipmentItemByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
 		throws PortalException {
 
-		return getService().fetchCommerceShipmentItem(
+		return getService().fetchCommerceShipmentItemByExternalReferenceCode(
 			companyId, externalReferenceCode);
 	}
 
@@ -167,29 +178,21 @@ public class CommerceShipmentItemServiceUtil {
 	}
 
 	public static CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, int quantity)
-		throws PortalException {
-
-		return getService().updateCommerceShipmentItem(
-			commerceShipmentItemId, quantity);
-	}
-
-	public static CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			int quantity)
+			int quantity, boolean validateInventory)
 		throws PortalException {
 
 		return getService().updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
+			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
+			validateInventory);
 	}
 
-	public static CommerceShipmentItem
-			updateCommerceShipmentItemExternalReferenceCode(
-				String externalReferenceCode, long commerceShipmentItemId)
+	public static CommerceShipmentItem updateExternalReferenceCode(
+			long commerceShipmentItemId, String externalReferenceCode)
 		throws PortalException {
 
-		return getService().updateCommerceShipmentItemExternalReferenceCode(
-			externalReferenceCode, commerceShipmentItemId);
+		return getService().updateExternalReferenceCode(
+			commerceShipmentItemId, externalReferenceCode);
 	}
 
 	public static CommerceShipmentItemService getService() {

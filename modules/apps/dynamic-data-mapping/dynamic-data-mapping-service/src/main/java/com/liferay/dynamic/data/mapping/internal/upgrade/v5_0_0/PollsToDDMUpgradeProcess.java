@@ -53,6 +53,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -913,9 +915,19 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 				_availableLocales = SetUtil.fromArray(
 					LocaleUtil.fromLanguageIds(
 						LocalizationUtil.getAvailableLanguageIds(title)));
-
 				_defaultLocale = LocaleUtil.fromLanguageId(
 					LocalizationUtil.getDefaultLanguageId(title));
+
+				Timestamp lastPublishDate = null;
+
+				try {
+					lastPublishDate = resultSet.getTimestamp("lastPublishDate");
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
 
 				_upgradePollsQuestion(
 					questionId, resultSet.getLong("groupId"),
@@ -925,8 +937,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 					resultSet.getTimestamp("modifiedDate"),
 					_getName(resultSet.getString("title")),
 					resultSet.getString("description"),
-					resultSet.getTimestamp("expirationDate"),
-					resultSet.getTimestamp("lastPublishDate"),
+					resultSet.getTimestamp("expirationDate"), lastPublishDate,
 					resultSet.getTimestamp("lastVoteDate"));
 			}
 		}
@@ -1036,6 +1047,9 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 
 	private static final String _CLASS_NAME_POLLS =
 		"com.liferay.polls.model.PollsQuestion";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PollsToDDMUpgradeProcess.class);
 
 	private static final Map<String, String> _resourceActionIds =
 		ConcurrentHashMapBuilder.put(

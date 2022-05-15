@@ -43,6 +43,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + FDSSamplePortletKeys.FDS_SAMPLE,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )
@@ -76,19 +78,22 @@ public class FDSSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			_generate(_portal.getCompanyId(renderRequest));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
 		renderRequest.setAttribute(
 			FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT,
 			new FDSSampleDisplayContext(
 				_portal.getHttpServletRequest(renderRequest)));
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Activate
+	protected void activate() {
+		try {
+			_generate(_portal.getDefaultCompanyId());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	private synchronized void _generate(long companyId) throws Exception {
@@ -114,6 +119,7 @@ public class FDSSamplePortlet extends MVCPortlet {
 				"FDSSample", "100", null,
 				LocalizedMapUtil.getLocalizedMap("Frontend Data Set Samples"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "Title", "title",

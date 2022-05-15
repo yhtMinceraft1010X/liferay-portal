@@ -113,61 +113,28 @@ public abstract class BaseBuild implements Build {
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
 
 	@Override
-	public void archive(final String archiveName) {
+	public void archive() {
+		archive(getArchiveName());
+	}
+
+	@Override
+	public void archive(String archiveName) {
 		setArchiveName(archiveName);
 
-		if (!_status.equals("completed")) {
+		if (fromArchive) {
 			return;
 		}
 
 		File archiveDir = new File(getArchiveRootDir(), getArchivePath());
 
-		if (archiveDir.exists()) {
-			if (!JenkinsResultsParserUtil.isCINode()) {
-				archiveDir.delete();
-			}
-		}
-		else {
+		if (!archiveDir.exists()) {
 			archiveDir.mkdirs();
 		}
 
-		try {
-			writeArchiveFile(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				getArchivePath() + "/archive-marker");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to to write archive-marker", ioException);
-		}
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			getArchiveCallables(), getExecutorService());
 
-		archiveConsoleLog();
-		archiveJSON();
-
-		if (downstreamBuilds != null) {
-			List<Callable<Object>> callables = new ArrayList<>(
-				downstreamBuilds.size());
-
-			for (final Build downstreamBuild : downstreamBuilds) {
-				Callable<Object> callable = new Callable<Object>() {
-
-					@Override
-					public Object call() {
-						downstreamBuild.archive(archiveName);
-
-						return null;
-					}
-
-				};
-
-				callables.add(callable);
-			}
-
-			ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-				callables, getExecutorService());
-
-			parallelExecutor.execute();
-		}
+		parallelExecutor.execute();
 	}
 
 	@Override
@@ -187,6 +154,64 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return false;
+	}
+
+	@Override
+	public List<Callable<Object>> getArchiveCallables() {
+		List<Callable<Object>> archiveCallables = new ArrayList<>();
+
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveBuildJSON();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveConsoleLog();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveMarkerFile();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveTestReportJSON();
+
+					return null;
+				}
+
+			});
+
+		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				archiveCallables.addAll(downstreamBuild.getArchiveCallables());
+			}
+		}
+
+		return archiveCallables;
 	}
 
 	@Override
@@ -398,10 +423,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getBuildJSONObject() {
-		String archiveFileContent = getArchiveFileContent("api/json");
+		String urlSuffix = "api/json";
 
-		if (JenkinsResultsParserUtil.isJSONObject(archiveFileContent)) {
-			return new JSONObject(archiveFileContent);
+		if (archiveFileExists(urlSuffix)) {
+			return new JSONObject(getArchiveFileContent(urlSuffix));
 		}
 
 		try {
@@ -424,6 +449,10 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Job.BuildProfile getBuildProfile() {
 		String buildProfile = getParameterValue("TEST_PORTAL_BUILD_PROFILE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {
+			buildProfile = System.getenv("TEST_PORTAL_BUILD_PROFILE");
+		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {
 			if (buildProfile.equals("dxp")) {
@@ -483,43 +512,61 @@ public abstract class BaseBuild implements Build {
 
 			JSONArray buildResultsJSONArray = new JSONArray();
 
-			for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			for (Build build : getDownstreamBuilds(null)) {
 				JSONObject buildResultJSONObject = new JSONObject();
 
-				if (downstreamBuild instanceof AxisBuild) {
-					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+				String axisName = null;
 
-					buildResultJSONObject.put(
-						"axisName", downstreamAxisBuild.getAxisName());
+				if (build instanceof AxisBuild) {
+					AxisBuild axisBuild = (AxisBuild)build;
+
+					axisName = axisBuild.getAxisName();
+				}
+				else if (build instanceof DownstreamBuild) {
+					DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+					axisName = downstreamBuild.getAxisName();
+				}
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(axisName)) {
+					buildResultJSONObject.put("axisName", axisName);
 				}
 
 				if (dataTypesList.contains("buildURL")) {
-					buildResultJSONObject.put(
-						"buildURL", downstreamBuild.getBuildURL());
+					buildResultJSONObject.put("buildURL", build.getBuildURL());
 				}
 
 				if (dataTypesList.contains("duration")) {
-					buildResultJSONObject.put(
-						"duration", downstreamBuild.getDuration());
+					buildResultJSONObject.put("duration", build.getDuration());
 				}
 
-				buildResultJSONObject.put(
-					"result", downstreamBuild.getResult());
+				buildResultJSONObject.put("result", build.getResult());
 
-				if ((downstreamBuild instanceof AxisBuild) &&
-					dataTypesList.contains("stopWatchRecords")) {
+				if (dataTypesList.contains("stopWatchRecords")) {
+					StopWatchRecordsGroup stopWatchRecordsGroup = null;
 
-					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+					if (build instanceof AxisBuild) {
+						AxisBuild axisBuild = (AxisBuild)build;
 
-					StopWatchRecordsGroup stopWatchRecordsGroup =
-						downstreamAxisBuild.getStopWatchRecordsGroup();
+						stopWatchRecordsGroup =
+							axisBuild.getStopWatchRecordsGroup();
+					}
+					else if (build instanceof DownstreamBuild) {
+						DownstreamBuild downstreamBuild =
+							(DownstreamBuild)build;
 
-					JSONArray stopWatchRecordsGroupJSONArray =
-						stopWatchRecordsGroup.getJSONArray();
+						stopWatchRecordsGroup =
+							downstreamBuild.getStopWatchRecordsGroup();
+					}
 
-					if (stopWatchRecordsGroupJSONArray.length() > 0) {
-						buildResultJSONObject.put(
-							"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+					if (stopWatchRecordsGroup != null) {
+						JSONArray jsonArray =
+							stopWatchRecordsGroup.getJSONArray();
+
+						if (jsonArray.length() > 0) {
+							buildResultJSONObject.put(
+								"stopWatchRecords", jsonArray);
+						}
 					}
 				}
 
@@ -527,6 +574,38 @@ public abstract class BaseBuild implements Build {
 			}
 
 			buildResultsJSONObject.put("buildResults", buildResultsJSONArray);
+		}
+		else if (dataTypesList.contains("buildResults") &&
+				 (this instanceof DownstreamBuild)) {
+
+			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
+
+			buildResultsJSONObject.put(
+				"axisName", downstreamBuild.getAxisName());
+
+			if (dataTypesList.contains("buildURL")) {
+				buildResultsJSONObject.put("buildURL", getBuildURL());
+			}
+
+			if (dataTypesList.contains("duration")) {
+				buildResultsJSONObject.put("duration", getDuration());
+			}
+
+			buildResultsJSONObject.put("result", getResult());
+
+			if (dataTypesList.contains("stopWatchRecords")) {
+				StopWatchRecordsGroup stopWatchRecordsGroup =
+					downstreamBuild.getStopWatchRecordsGroup();
+
+				if (stopWatchRecordsGroup != null) {
+					JSONArray jsonArray = stopWatchRecordsGroup.getJSONArray();
+
+					if (jsonArray.length() > 0) {
+						buildResultsJSONObject.put(
+							"stopWatchRecords", jsonArray);
+					}
+				}
+			}
 		}
 
 		if (dataTypesList.contains("testResults")) {
@@ -640,10 +719,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
-		String archiveFileContent = getArchiveFileContent("consoleText");
+		String urlSuffix = "consoleText";
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
-			return archiveFileContent;
+		if (archiveFileExists(urlSuffix)) {
+			return getArchiveFileContent(urlSuffix);
 		}
 
 		String buildURL = getBuildURL();
@@ -815,9 +894,7 @@ public abstract class BaseBuild implements Build {
 
 		return Dom4JUtil.getNewAnchorElement(
 			getBuildURL(), null,
-			Dom4JUtil.getNewElement(
-				"strike", null,
-				Dom4JUtil.getNewElement("strong", null, getDisplayName())));
+			Dom4JUtil.getNewElement("strike", null, getDisplayName()));
 	}
 
 	@Override
@@ -1339,7 +1416,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<URL> getTestrayAttachmentURLs() {
+	public synchronized List<URL> getTestrayAttachmentURLs() {
 		if (_testrayAttachmentURLs != null) {
 			return _testrayAttachmentURLs;
 		}
@@ -1367,7 +1444,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<URL> getTestrayS3AttachmentURLs() {
+	public synchronized List<URL> getTestrayS3AttachmentURLs() {
 		if (_testrayS3AttachmentURLs != null) {
 			return _testrayS3AttachmentURLs;
 		}
@@ -1396,17 +1473,23 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
-		String archiveFileContent = getArchiveFileContent(
-			"testReport/api/json");
+		String result = getResult();
 
-		if (JenkinsResultsParserUtil.isJSONObject(archiveFileContent)) {
-			return new JSONObject(archiveFileContent);
+		if ((result == null) ||
+			(!result.equals("SUCCESS") && !result.equals("UNSTABLE"))) {
+
+			return null;
+		}
+
+		String urlSuffix = "testReport/api/json";
+
+		if (archiveFileExists(urlSuffix)) {
+			return new JSONObject(getArchiveFileContent(urlSuffix));
 		}
 
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL() + "testReport/api/json"),
+				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
 				checkCache);
 		}
 		catch (IOException ioException) {
@@ -1998,10 +2081,6 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException(ioException);
 			}
 		}
-
-		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
-			archive(getArchiveName());
-		}
 	}
 
 	public static class BuildDisplayNameComparator
@@ -2009,11 +2088,78 @@ public abstract class BaseBuild implements Build {
 
 		@Override
 		public int compare(Build build1, Build build2) {
-			String displayName1 = build1.getDisplayName();
-			String displayName2 = build2.getDisplayName();
+			String axisName1 = _getAxisName(build1);
+			String axisName2 = _getAxisName(build2);
 
-			return displayName1.compareTo(displayName2);
+			if (JenkinsResultsParserUtil.isNullOrEmpty(axisName1) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(axisName2)) {
+
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
+			Matcher matcher1 = _pattern.matcher(axisName1);
+			Matcher matcher2 = _pattern.matcher(axisName2);
+
+			if (!matcher1.find() || !matcher2.find()) {
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
+			String batchName1 = matcher1.group("batchName");
+			String batchName2 = matcher2.group("batchName");
+
+			if (!batchName1.equals(batchName2)) {
+				return batchName1.compareTo(batchName2);
+			}
+
+			Integer segment1 = Integer.valueOf(matcher1.group("segment"));
+			Integer segment2 = Integer.valueOf(matcher2.group("segment"));
+
+			if (!segment1.equals(segment2)) {
+				return segment1.compareTo(segment2);
+			}
+
+			String axisString1 = matcher1.group("axis");
+			String axisString2 = matcher2.group("axis");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(axisString1) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(axisString2)) {
+
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
+			Integer axis1 = Integer.valueOf(axisString1);
+			Integer axis2 = Integer.valueOf(axisString2);
+
+			return axis1.compareTo(axis2);
 		}
+
+		private String _getAxisName(Build build) {
+			if (build instanceof AxisBuild) {
+				AxisBuild axisBuild = (AxisBuild)build;
+
+				return axisBuild.getAxisNumber();
+			}
+
+			if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				return downstreamBuild.getAxisName();
+			}
+
+			return build.getJobVariant();
+		}
+
+		private static final Pattern _pattern = Pattern.compile(
+			"(?<batchName>[^/]+)/(?<segment>\\d+)(/(?<axis>\\d+))?");
 
 	}
 
@@ -2285,26 +2431,10 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void archiveConsoleLog() {
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				getArchiveFileContent("consoleText"))) {
+	protected boolean archiveFileExists(String urlSuffix) {
+		File archiveFile = getArchiveFile(urlSuffix);
 
-			return;
-		}
-
-		try {
-			writeArchiveFile(
-				JenkinsResultsParserUtil.redact(getConsoleText()),
-				getArchivePath() + "/consoleText");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to write file", ioException);
-		}
-	}
-
-	protected void archiveJSON() {
-		downloadSampleURL(true, "api/json");
-		downloadSampleURL(false, "testReport/api/json");
+		return archiveFile.exists();
 	}
 
 	protected void checkForReinvocation(String consoleText) {
@@ -2322,45 +2452,6 @@ public abstract class BaseBuild implements Build {
 			reset();
 
 			update();
-		}
-	}
-
-	protected void downloadSampleURL(boolean required, String urlSuffix) {
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				getArchiveFileContent(urlSuffix))) {
-
-			return;
-		}
-
-		String urlString = getBuildURL() + urlSuffix;
-
-		if (urlString.endsWith("json")) {
-			urlString += "?pretty";
-		}
-
-		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
-
-		String content = null;
-
-		try {
-			content = JenkinsResultsParserUtil.toString(
-				JenkinsResultsParserUtil.getLocalURL(urlString), false, 0, 0, 0,
-				true);
-		}
-		catch (IOException ioException) {
-			if (required) {
-				throw new RuntimeException(
-					"Unable to download sample " + urlString, ioException);
-			}
-
-			return;
-		}
-
-		try {
-			writeArchiveFile(content, getArchivePath() + "/" + urlSuffix);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to write file", ioException);
 		}
 	}
 
@@ -2414,16 +2505,18 @@ public abstract class BaseBuild implements Build {
 				".*/(?<buildNumber>\\d+)/?"));
 	}
 
-	protected String getArchiveFileContent(String urlSuffix) {
-		File archiveFile = new File(
+	protected File getArchiveFile(String urlSuffix) {
+		return new File(
 			getArchiveRootDir(), getArchivePath() + "/" + urlSuffix);
+	}
 
-		if (!archiveFile.exists()) {
+	protected String getArchiveFileContent(String urlSuffix) {
+		if (!archiveFileExists(urlSuffix)) {
 			return null;
 		}
 
 		try {
-			return JenkinsResultsParserUtil.read(archiveFile);
+			return JenkinsResultsParserUtil.read(getArchiveFile(urlSuffix));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -2467,6 +2560,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected JSONObject getBuildJSONObject(String tree) {
+		String urlSuffix = "api/json";
+
+		if (archiveFileExists(urlSuffix)) {
+			return new JSONObject(getArchiveFileContent(urlSuffix));
+		}
+
 		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
 	}
 
@@ -2787,21 +2886,35 @@ public abstract class BaseBuild implements Build {
 			tableRowElements.addAll(getJenkinsReportStopWatchRecordElements());
 		}
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+		List<Build> builds = getDownstreamBuilds(result, status);
 
-		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+		Collections.sort(builds, new BaseBuild.BuildDisplayNameComparator());
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (!(downstreamBuild instanceof BaseBuild)) {
+		String batchName = null;
+
+		for (Build build : builds) {
+			if (!(build instanceof BaseBuild)) {
 				continue;
 			}
 
-			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+			if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				String downstreamBatchName = downstreamBuild.getBatchName();
+
+				if (!Objects.equals(batchName, downstreamBatchName)) {
+					tableRowElements.add(
+						Dom4JUtil.getNewElement(
+							"th", null, downstreamBatchName));
+
+					batchName = downstreamBatchName;
+				}
+			}
+
+			BaseBuild baseBuild = (BaseBuild)build;
 
 			tableRowElements.addAll(
-				downstreamBaseBuild.getJenkinsReportTableRowElements(
-					result, status));
+				baseBuild.getJenkinsReportTableRowElements(result, status));
 		}
 
 		return tableRowElements;
@@ -3627,6 +3740,96 @@ public abstract class BaseBuild implements Build {
 
 		}
 
+	}
+
+	private void _archive(String content, boolean required, String urlSuffix) {
+		String status = getStatus();
+
+		File archiveFile = getArchiveFile(urlSuffix);
+
+		if (!status.equals("completed")) {
+			if (archiveFile.exists()) {
+				JenkinsResultsParserUtil.delete(archiveFile);
+			}
+
+			return;
+		}
+
+		if (archiveFile.exists()) {
+			return;
+		}
+
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		String urlString = getBuildURL() + urlSuffix;
+
+		if (urlString.endsWith("json")) {
+			urlString += "?pretty";
+		}
+
+		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+			try {
+				int maxRetries = 0;
+				int retryPeriodSeconds = 0;
+
+				if (required) {
+					maxRetries = 2;
+					retryPeriodSeconds = 5;
+				}
+
+				content = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(urlString), false,
+					maxRetries, retryPeriodSeconds, 0, true);
+			}
+			catch (IOException ioException) {
+				if (required) {
+					throw new RuntimeException(
+						"Unable to archive " + urlString, ioException);
+				}
+
+				return;
+			}
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+			return;
+		}
+
+		try {
+			writeArchiveFile(content, getArchivePath() + "/" + urlSuffix);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to write file", ioException);
+		}
+		finally {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Archived ", String.valueOf(getArchiveFile(urlSuffix)),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
+		}
+	}
+
+	private void _archiveBuildJSON() {
+		_archive(null, true, "api/json");
+	}
+
+	private void _archiveConsoleLog() {
+		_archive(getConsoleText(), true, "consoleText");
+	}
+
+	private void _archiveMarkerFile() {
+		_archive(
+			String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
+			true, "archive-marker");
+	}
+
+	private void _archiveTestReportJSON() {
+		_archive(null, false, "testReport/api/json");
 	}
 
 	private Map<String, String> _getDefaultJobParameters() {

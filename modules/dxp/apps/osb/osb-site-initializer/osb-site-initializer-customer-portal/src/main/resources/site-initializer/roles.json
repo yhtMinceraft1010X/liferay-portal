@@ -11,7 +11,7 @@
 		"actions": [
 		],
 		"description": "",
-		"name": "Requestor",
+		"name": "Requester",
 		"subtype": "",
 		"type": 6
 	},
@@ -28,6 +28,14 @@
 		],
 		"description": "",
 		"name": "Partner Member",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Provisioning",
 		"subtype": "",
 		"type": 6
 	}

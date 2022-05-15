@@ -104,10 +104,10 @@ public class PortletLayoutFinderTest {
 
 		Assert.assertEquals(_blogLayout.getPlid(), result.getPlid());
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		Assert.assertEquals(portletId, result.getPortletId());
+		Assert.assertEquals(
+			PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW),
+			result.getPortletId());
 	}
 
 	@Test(expected = NoSuchLayoutException.class)
@@ -158,14 +158,14 @@ public class PortletLayoutFinderTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_blogLayout = LayoutTestUtil.addLayout(_group);
-		_assetLayout = LayoutTestUtil.addLayout(_group);
+		_blogLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		_assetLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		if (portletExists) {
-			String portletId = PortletProviderUtil.getPortletId(
-				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-			LayoutTestUtil.addPortletToLayout(_blogLayout, portletId);
+			LayoutTestUtil.addPortletToLayout(
+				_blogLayout,
+				PortletProviderUtil.getPortletId(
+					BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
 		}
 
 		Group group = _group;

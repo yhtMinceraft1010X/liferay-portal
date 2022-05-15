@@ -14,7 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -327,7 +327,8 @@ public class PortletPreferencesFactoryImpl
 
 			try {
 				userId = GetterUtil.getLong(
-					Encryptor.decrypt(company.getKeyObj(), doAsUserId), userId);
+					EncryptorUtil.decrypt(company.getKeyObj(), doAsUserId),
+					userId);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -492,7 +493,7 @@ public class PortletPreferencesFactoryImpl
 			ownerId = PortletIdCodec.decodeUserId(originalPortletId);
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 		}
-		else if (portlet.isPreferencesUniquePerLayout()) {
+		else if (portlet.isPreferencesUniquePerLayout() && (plid != 0)) {
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 		}
 		else if (portlet.isPreferencesOwnedByGroup()) {

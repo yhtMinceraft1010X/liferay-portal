@@ -27,6 +27,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
@@ -470,7 +471,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle",
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
@@ -564,12 +566,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetPublisherHelper.getAssetEntryQuery(
 				portletPreferences, groupId, layout, null, null);
 
-		long[] classNameIds = assetPublisherHelper.getClassNameIds(
-			portletPreferences,
-			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
-
-		assetEntryQuery.setClassNameIds(classNameIds);
-
+		assetEntryQuery.setClassNameIds(
+			assetPublisherHelper.getClassNameIds(
+				portletPreferences,
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					companyId, true)));
 		assetEntryQuery.setEnablePermissions(false);
 
 		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
@@ -820,12 +821,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Layout layout = layoutLocalService.getLayout(
-			portletDataContext.getPlid());
-
 		PortletPreferences originalPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletDataContext.getPortletId());
+				layoutLocalService.getLayout(portletDataContext.getPlid()),
+				portletDataContext.getPortletId());
 
 		String[] values = originalPortletPreferences.getValues(
 			name, new String[] {StringPool.BLANK});

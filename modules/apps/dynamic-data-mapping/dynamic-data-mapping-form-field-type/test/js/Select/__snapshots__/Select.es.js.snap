@@ -629,18 +629,19 @@ exports[`Select has a help text 1`] = `
       type="hidden"
       value="false"
     />
-    <span
+    <div
       aria-hidden="true"
-      class="form-text"
+      class="form-feedback-group lfr-de__field-feedback"
     >
-      Type something
-    </span>
+      <div>
+        Type something
+      </div>
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>
@@ -735,6 +736,7 @@ exports[`Select has a label 1`] = `
     class="form-group hide"
   >
     <label
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -811,7 +813,12 @@ exports[`Select has a label 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="undefined_fieldDetails"
+    >
+      label
+    </span>
   </div>
 </div>
 `;
@@ -1497,6 +1504,8 @@ exports[`Select puts an asterisk when field is required 1`] = `
       class="sr-only"
       id="undefined_fieldDetails"
     >
+      This is the label
+      <br />
       required
     </span>
   </div>
@@ -1509,6 +1518,7 @@ exports[`Select renders Label if showLabel is true 1`] = `
     class="form-group hide"
   >
     <label
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -1585,7 +1595,12 @@ exports[`Select renders Label if showLabel is true 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="undefined_fieldDetails"
+    >
+      text
+    </span>
   </div>
 </div>
 `;

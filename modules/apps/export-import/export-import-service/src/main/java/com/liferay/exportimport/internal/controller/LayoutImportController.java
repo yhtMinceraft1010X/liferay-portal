@@ -37,7 +37,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -87,10 +86,10 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.Serializable;
@@ -156,7 +155,7 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -269,7 +268,7 @@ public class LayoutImportController implements ImportController {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -373,13 +372,12 @@ public class LayoutImportController implements ImportController {
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-		UserIdStrategy userIdStrategy = _exportImportHelper.getUserIdStrategy(
-			userId, userIdStrategyString);
-
 		PortletDataContext portletDataContext =
 			_portletDataContextFactory.createImportPortletDataContext(
 				group.getCompanyId(), targetGroupId, parameterMap,
-				userIdStrategy, ZipReaderFactoryUtil.getZipReader(file));
+				_exportImportHelper.getUserIdStrategy(
+					userId, userIdStrategyString),
+				_zipReaderFactory.getZipReader(file));
 
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
@@ -1026,7 +1024,7 @@ public class LayoutImportController implements ImportController {
 					continue;
 				}
 
-				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+				if (_sites.isLayoutModifiedSinceLastMerge(layout)) {
 					modifiedLayouts.add(layout);
 
 					continue;
@@ -1384,6 +1382,12 @@ public class LayoutImportController implements ImportController {
 	private PortletLocalService _portletLocalService;
 
 	@Reference
+	private Sites _sites;
+
+	@Reference
 	private Staging _staging;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 }

@@ -42,6 +42,8 @@ definition {
 	@description = "This is a test for LPS-141351. The site admin could find display page type items in dropdown menu."
 	@priority = "5"
 	test AddDisplayPageTypeNavigationMenuItems {
+		property portal.acceptance = "true";
+
 		task ("Add the first display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -337,8 +339,7 @@ definition {
 	@priority = "5"
 	@uitest
 	test AddPageToNavigationMenuAndViewPageStatus {
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
@@ -511,7 +512,7 @@ definition {
 		task ("Assert no checkbox for Add Page to Global navigation menu when creating a page in normal site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
 			LexiconCard.clickCard(card = "Widget Page");
 
@@ -725,19 +726,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "All");
 
-			ManagementBar.clickSelectAllCheckbox();
-
-			for (var rowEntry : list "1,2") {
-				AssertChecked(
-					key_rowEntry = "Navigation Menu Name ${rowEntry}",
-					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-			}
-
-			ClickNoError(locator1 = "Icon#DELETE");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Alert.viewSuccessMessage();
+			NavigationMenusAdmin.deleteAllCP();
 		}
 
 		task ("Assert all navigation menus were deleted") {
@@ -762,9 +751,7 @@ definition {
 		task ("Delete the navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.delete(
-				menuItem = "Delete",
-				rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.deleteCP(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Assert the navigation menu was deleted") {
@@ -995,13 +982,13 @@ definition {
 		}
 
 		task ("Add a page and automatically add it to both navigation menus") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				navigationMenus = "Navigation Menu Name 1,Navigation Menu Name 2",
 				pageName = "Page 1");
 		}
 
 		task ("Add a second page and automatically add it to the second navigation menu") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				navigationMenus = "Navigation Menu Name 2",
 				pageName = "Page 2");
 		}
@@ -1041,7 +1028,7 @@ definition {
 		task ("Add a third page and assert that while adding the new page, the checkbox to add a new page to the first navigation menu is not present") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				assertCheckboxMissing = "true",
 				navigationMenus = "Navigation Menu Name 1",
 				pageName = "Page 3");
@@ -1105,6 +1092,36 @@ definition {
 				parentItemNameList = "Category Name",
 				site = "true",
 				siteNavigationMenuName = "Navigation Menu Name");
+		}
+	}
+
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of navigation menu."
+	@priority = "4"
+	test ViewDropdownMenuIconsInNavigationAdmin {
+		task ("Given a Navigation menu creator has a new navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When the Navigation menu creator opens the dropdown menu of navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Then the Navigation menu creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
+		}
+
+		task ("When the Navigation menu creator opens the dropdown menu of management toolbar after selecting the new navigation menu") {
+			LexiconTable.checkTableCheckbox(tableEntry = "Navigation Menu Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Navigation menu creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 	}
 
@@ -1284,6 +1301,8 @@ definition {
 	@description = "This is a test for LPS-87134. View no navigation menus are automatically created after adding pages."
 	@priority = "3"
 	test ViewNoNavigationMenuAfterAddingPages {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -42,13 +42,15 @@ public class ObjectViewLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
 			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
 				objectViewSortColumns)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewLocalService.addObjectView(
 			userId, objectDefinitionId, defaultObjectView, nameMap,
-			objectViewColumns, objectViewSortColumns);
+			objectViewColumns, objectViewFilterColumns, objectViewSortColumns);
 	}
 
 	/**
@@ -383,18 +385,27 @@ public class ObjectViewLocalServiceWrapper
 	}
 
 	@Override
+	public void unassociateObjectField(
+		com.liferay.object.model.ObjectField objectField) {
+
+		_objectViewLocalService.unassociateObjectField(objectField);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectView updateObjectView(
 			long objectViewId, boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
 			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
 				objectViewSortColumns)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewLocalService.updateObjectView(
 			objectViewId, defaultObjectView, nameMap, objectViewColumns,
-			objectViewSortColumns);
+			objectViewFilterColumns, objectViewSortColumns);
 	}
 
 	/**

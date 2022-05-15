@@ -147,32 +147,20 @@ function SkuContent({
 							}}
 							cpInstance={{
 								inCart,
-								options: formatProductOptions(
-									product.options,
-									product.productOptions
-								),
 								quantity: product.quantity,
 								skuId: product.skuId,
+								skuOptions: formatProductOptions(
+									product.skuOptions,
+									product.productOptions
+								),
 							}}
 							disabled={!productPurchasable}
 							settings={{
 								alignment: 'full-width',
 								iconOnly: true,
 								inline: false,
-								quantityDetails: {
-									allowedQuantities:
-										product.productConfiguration
-											.allowedOrderQuantities,
-									maxQuantity:
-										product.productConfiguration
-											.maxOrderQuantity,
-									minQuantity:
-										product.productConfiguration
-											.minOrderQuantity,
-									multipleQuantity:
-										product.productConfiguration
-											.multipleOrderQuantity,
-								},
+								productConfiguration:
+									product.productConfiguration,
 								size: 'sm',
 							}}
 						/>

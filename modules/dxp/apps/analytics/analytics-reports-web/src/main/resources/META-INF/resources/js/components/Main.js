@@ -29,6 +29,7 @@ export default function Main({
 	author,
 	canonicalURL,
 	chartDataProviders,
+	className,
 	onSelectedLanguageClick,
 	onTrafficSourceClick,
 	pagePublishDate,
@@ -53,7 +54,7 @@ export default function Main({
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 
 	return (
-		<div className="pb-3 px-3">
+		<div className={`analytics-reports-app-main pb-3 px-3 ${className}`}>
 			<BasicInformation
 				author={author}
 				canonicalURL={canonicalURL}
@@ -120,10 +121,17 @@ export default function Main({
 	);
 }
 
+Main.defaultProps = {
+	author: null,
+	className: '',
+	totalReadsDataProvider: null,
+};
+
 Main.propTypes = {
-	author: PropTypes.object.isRequired,
+	author: PropTypes.object,
 	canonicalURL: PropTypes.string.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
+	className: PropTypes.string,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 	pagePublishDate: PropTypes.string.isRequired,
@@ -134,7 +142,7 @@ Main.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
-	totalReadsDataProvider: PropTypes.func.isRequired,
+	totalReadsDataProvider: PropTypes.func,
 	totalViewsDataProvider: PropTypes.func.isRequired,
 	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	viewURLs: PropTypes.arrayOf(

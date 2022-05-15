@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,6 +63,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1582,6 +1584,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<KnowledgeBaseArticle, Exception>
+			knowledgeBaseArticleUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			knowledgeBaseArticleUnsafeConsumer =
 				knowledgeBaseArticle ->
 					postKnowledgeBaseFolderKnowledgeBaseArticle(
@@ -1589,16 +1597,39 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 							(String)parameters.get("knowledgeBaseFolderId")),
 						knowledgeBaseArticle);
 
-		if (parameters.containsKey("siteId")) {
-			knowledgeBaseArticleUnsafeConsumer =
-				knowledgeBaseArticle -> postSiteKnowledgeBaseArticle(
-					(Long)parameters.get("siteId"), knowledgeBaseArticle);
+			if (parameters.containsKey("siteId")) {
+				knowledgeBaseArticleUnsafeConsumer =
+					knowledgeBaseArticle -> postSiteKnowledgeBaseArticle(
+						(Long)parameters.get("siteId"), knowledgeBaseArticle);
+			}
 		}
 
-		for (KnowledgeBaseArticle knowledgeBaseArticle :
-				knowledgeBaseArticles) {
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			knowledgeBaseArticleUnsafeConsumer = knowledgeBaseArticle ->
+				putSiteKnowledgeBaseArticleByExternalReferenceCode(
+					knowledgeBaseArticle.getSiteId() != null ?
+						knowledgeBaseArticle.getSiteId() :
+							(Long)parameters.get("siteId"),
+					knowledgeBaseArticle.getExternalReferenceCode(),
+					knowledgeBaseArticle);
+		}
 
-			knowledgeBaseArticleUnsafeConsumer.accept(knowledgeBaseArticle);
+		if (knowledgeBaseArticleUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for KnowledgeBaseArticle");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseArticles, knowledgeBaseArticleUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseArticle knowledgeBaseArticle :
+					knowledgeBaseArticles) {
+
+				knowledgeBaseArticleUnsafeConsumer.accept(knowledgeBaseArticle);
+			}
 		}
 	}
 
@@ -1628,6 +1659,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1678,15 +1713,50 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (KnowledgeBaseArticle knowledgeBaseArticle :
-				knowledgeBaseArticles) {
+		UnsafeConsumer<KnowledgeBaseArticle, Exception>
+			knowledgeBaseArticleUnsafeConsumer = null;
 
-			putKnowledgeBaseArticle(
-				knowledgeBaseArticle.getId() != null ?
-					knowledgeBaseArticle.getId() :
-						Long.parseLong(
-							(String)parameters.get("knowledgeBaseArticleId")),
-				knowledgeBaseArticle);
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			knowledgeBaseArticleUnsafeConsumer =
+				knowledgeBaseArticle -> patchKnowledgeBaseArticle(
+					knowledgeBaseArticle.getId() != null ?
+						knowledgeBaseArticle.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"knowledgeBaseArticleId")),
+					knowledgeBaseArticle);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			knowledgeBaseArticleUnsafeConsumer =
+				knowledgeBaseArticle -> putKnowledgeBaseArticle(
+					knowledgeBaseArticle.getId() != null ?
+						knowledgeBaseArticle.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"knowledgeBaseArticleId")),
+					knowledgeBaseArticle);
+		}
+
+		if (knowledgeBaseArticleUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for KnowledgeBaseArticle");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseArticles, knowledgeBaseArticleUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseArticle knowledgeBaseArticle :
+					knowledgeBaseArticles) {
+
+				knowledgeBaseArticleUnsafeConsumer.accept(knowledgeBaseArticle);
+			}
 		}
 	}
 
@@ -1755,6 +1825,15 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<KnowledgeBaseArticle>,
+			 UnsafeConsumer<KnowledgeBaseArticle, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1813,6 +1892,14 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1908,6 +1995,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<KnowledgeBaseArticle>,
+		 UnsafeConsumer<KnowledgeBaseArticle, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

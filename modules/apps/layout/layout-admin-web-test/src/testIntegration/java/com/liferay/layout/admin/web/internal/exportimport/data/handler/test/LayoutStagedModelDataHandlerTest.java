@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -80,7 +80,7 @@ public class LayoutStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		Layout linkedLayout = LayoutTestUtil.addLayout(stagingGroup);
+		Layout linkedLayout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		List<LayoutFriendlyURL> linkedLayoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
@@ -163,16 +163,14 @@ public class LayoutStagedModelDataHandlerTest
 
 		String fileName = "PDF_Test.pdf";
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				liveGroup.getGroupId(), TestPropsValues.getUserId());
-
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		String stagingPreviewURL = DLURLHelperUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
@@ -237,8 +235,8 @@ public class LayoutStagedModelDataHandlerTest
 			typeSettingsUnicodeProperties.getProperty("url"));
 
 		Assert.assertEquals(
-			HttpUtil.removeParameter(livePreviewURL, "t"),
-			HttpUtil.removeParameter(liveLinkedURL, "t"));
+			HttpComponentsUtil.removeParameter(livePreviewURL, "t"),
+			HttpComponentsUtil.removeParameter(liveLinkedURL, "t"));
 	}
 
 	@Override
@@ -249,7 +247,7 @@ public class LayoutStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		Layout parentLayout = LayoutTestUtil.addLayout(group);
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, Layout.class, parentLayout);
@@ -271,7 +269,8 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout parentLayout = (Layout)dependentStagedModels.get(0);
 
-		Layout layout = LayoutTestUtil.addLayout(group, parentLayout.getPlid());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			group, parentLayout.getPlid());
 
 		_addDependentFriendlyURLEntries(dependentStagedModelsMap, layout);
 		_addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);

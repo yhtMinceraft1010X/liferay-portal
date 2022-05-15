@@ -19,6 +19,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import FragmentWithControls from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/FragmentWithControls';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {
@@ -27,6 +28,8 @@ import {
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {EditableProcessorContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemTopperUniqueClassName';
+import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -52,14 +55,20 @@ jest.mock(
 	() => jest.fn(() => Promise.resolve({}))
 );
 
+const FRAGMENT_ID = 'FRAGMENT_ID';
+
+const FRAGMENT_CLASS_NAME = 'FRAGMENT_CLASS_NAME';
+
 const renderFragment = ({
-	activeItemId = 'fragment',
+	activeItemId = FRAGMENT_ID,
+	editableValues = {},
 	fragmentConfig = {styles: {}},
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 } = {}) => {
 	const fragmentEntryLink = {
-		editableValues: {},
+		cssClass: FRAGMENT_CLASS_NAME,
+		editableValues,
 		fragmentEntryLinkId: 'fragmentEntryLink',
 	};
 
@@ -69,7 +78,7 @@ const renderFragment = ({
 			...fragmentConfig,
 			fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
 		},
-		itemId: 'fragment',
+		itemId: FRAGMENT_ID,
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
@@ -155,5 +164,46 @@ describe('FragmentWithControls', () => {
 		expect(
 			document.body.querySelector('.page-editor__fragment-content')
 		).toBeVisible();
+	});
+
+	it('set classes for referencing the item', () => {
+		config.featureFlagLps132571 = true;
+
+		const {baseElement} = renderFragment();
+
+		const classes = [
+			FRAGMENT_CLASS_NAME,
+			getLayoutDataItemTopperUniqueClassName(FRAGMENT_ID),
+			getLayoutDataItemUniqueClassName(FRAGMENT_ID),
+		];
+
+		classes.forEach((className) => {
+			const item = baseElement.querySelector(`.${className}`);
+
+			expect(item).toBeVisible();
+		});
+	});
+
+	it('does not set unique classNames when it has inner common styles', () => {
+		config.featureFlagLps132571 = true;
+
+		const {baseElement} = renderFragment({
+			editableValues: {
+				['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']: {
+					hasCommonStyles: true,
+				},
+			},
+		});
+
+		const classes = [
+			getLayoutDataItemTopperUniqueClassName(FRAGMENT_ID),
+			getLayoutDataItemUniqueClassName(FRAGMENT_ID),
+		];
+
+		classes.forEach((className) => {
+			const item = baseElement.querySelector(`.${className}`);
+
+			expect(item).toBeNull();
+		});
 	});
 });

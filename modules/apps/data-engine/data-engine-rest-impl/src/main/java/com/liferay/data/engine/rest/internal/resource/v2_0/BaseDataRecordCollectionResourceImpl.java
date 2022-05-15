@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -62,6 +63,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -686,15 +688,34 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<DataRecordCollection, Exception>
+			dataRecordCollectionUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			dataRecordCollectionUnsafeConsumer =
 				dataRecordCollection -> postDataDefinitionDataRecordCollection(
 					Long.parseLong((String)parameters.get("dataDefinitionId")),
 					dataRecordCollection);
+		}
 
-		for (DataRecordCollection dataRecordCollection :
-				dataRecordCollections) {
+		if (dataRecordCollectionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for DataRecordCollection");
+		}
 
-			dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecordCollections, dataRecordCollectionUnsafeConsumer);
+		}
+		else {
+			for (DataRecordCollection dataRecordCollection :
+					dataRecordCollections) {
+
+				dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
+			}
 		}
 	}
 
@@ -724,6 +745,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override
@@ -765,15 +790,39 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataRecordCollection dataRecordCollection :
-				dataRecordCollections) {
+		UnsafeConsumer<DataRecordCollection, Exception>
+			dataRecordCollectionUnsafeConsumer = null;
 
-			putDataRecordCollection(
-				dataRecordCollection.getId() != null ?
-					dataRecordCollection.getId() :
-						Long.parseLong(
-							(String)parameters.get("dataRecordCollectionId")),
-				dataRecordCollection);
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataRecordCollectionUnsafeConsumer =
+				dataRecordCollection -> putDataRecordCollection(
+					dataRecordCollection.getId() != null ?
+						dataRecordCollection.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"dataRecordCollectionId")),
+					dataRecordCollection);
+		}
+
+		if (dataRecordCollectionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for DataRecordCollection");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecordCollections, dataRecordCollectionUnsafeConsumer);
+		}
+		else {
+			for (DataRecordCollection dataRecordCollection :
+					dataRecordCollections) {
+
+				dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
+			}
 		}
 	}
 
@@ -842,6 +891,15 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<DataRecordCollection>,
+			 UnsafeConsumer<DataRecordCollection, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -900,6 +958,14 @@ public abstract class BaseDataRecordCollectionResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -990,6 +1056,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DataRecordCollection>,
+		 UnsafeConsumer<DataRecordCollection, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

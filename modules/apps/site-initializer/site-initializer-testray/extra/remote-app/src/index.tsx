@@ -13,32 +13,43 @@
  */
 
 import {ApolloProvider} from '@apollo/client';
-import {ClayModalProvider} from '@clayui/modal';
-import ReactDOM from 'react-dom';
+import {Root, createRoot} from 'react-dom/client';
 
 import TestrayRouter from './TestrayRouter';
+import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
 import apolloClient from './graphql/apolloClient';
 
 import './styles/index.scss';
 
-class WebComponent extends HTMLElement {
+class Testray extends HTMLElement {
+	private root: Root | undefined;
+
 	connectedCallback() {
-		ReactDOM.render(
-			<ApolloProvider client={apolloClient}>
-				<ClayIconProvider>
-					<ClayModalProvider>
-						<TestrayRouter />
-					</ClayModalProvider>
-				</ClayIconProvider>
-			</ApolloProvider>,
-			this
-		);
+		if (!this.root) {
+			this.root = createRoot(this);
+
+			const properties = {
+				skipRoleCheck: this.getAttribute('skiprolecheck') === 'true',
+			};
+
+			this.root.render(
+				<ApolloProvider client={apolloClient}>
+					<AccountContextProvider
+						skipRoleCheck={properties.skipRoleCheck}
+					>
+						<ClayIconProvider>
+							<TestrayRouter />
+						</ClayIconProvider>
+					</AccountContextProvider>
+				</ApolloProvider>
+			);
+		}
 	}
 }
 
 const ELEMENT_ID = 'liferay-remote-app-testray';
 
 if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, WebComponent);
+	customElements.define(ELEMENT_ID, Testray);
 }

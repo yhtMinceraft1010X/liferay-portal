@@ -92,7 +92,7 @@ import com.liferay.social.kernel.model.SocialRequestConstants;
 import com.liferay.social.kernel.service.SocialRelationLocalService;
 import com.liferay.social.kernel.service.SocialRequestLocalService;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -509,13 +509,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			jsonObject.put(
 				"contact",
 				_getEntryJSONObject(
-					actionResponse, themeDisplay, entry, redirect));
-
-			JSONObject contactsJSONObject = _getContactsJSONObject(
-				actionRequest, actionResponse);
-
-			jsonObject.put(
-				"contactList", contactsJSONObject
+					actionResponse, themeDisplay, entry, redirect)
+			).put(
+				"contactList",
+				_getContactsJSONObject(actionRequest, actionResponse)
 			).put(
 				"success", Boolean.TRUE
 			);
@@ -773,6 +770,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		userNotificationEventLocalService;
 
 	@Reference
+	protected UsersAdmin usersAdmin;
+
+	@Reference
 	protected UserService userService;
 
 	private void _deleteEntry(ActionRequest actionRequest) throws Exception {
@@ -1006,10 +1006,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			}
 
 			for (User user : usersList) {
-				JSONObject userJSONObject = _getUserJSONObject(
-					portletResponse, themeDisplay, user);
-
-				jsonArray.put(userJSONObject);
+				jsonArray.put(
+					_getUserJSONObject(portletResponse, themeDisplay, user));
 			}
 		}
 
@@ -1176,9 +1174,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		UsersAdminUtil.updateEmailAddresses(
+		usersAdmin.updateEmailAddresses(
 			Contact.class.getName(), user.getContactId(),
-			UsersAdminUtil.getEmailAddresses(actionRequest));
+			usersAdmin.getEmailAddresses(actionRequest));
 	}
 
 	private void _updateAddresses(ActionRequest actionRequest)
@@ -1189,9 +1187,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		UsersAdminUtil.updateAddresses(
+		usersAdmin.updateAddresses(
 			Contact.class.getName(), user.getContactId(),
-			UsersAdminUtil.getAddresses(actionRequest));
+			usersAdmin.getAddresses(actionRequest));
 	}
 
 	private void _updateAsset(ActionRequest actionRequest) throws Exception {
@@ -1216,9 +1214,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		UsersAdminUtil.updatePhones(
+		usersAdmin.updatePhones(
 			Contact.class.getName(), user.getContactId(),
-			UsersAdminUtil.getPhones(actionRequest));
+			usersAdmin.getPhones(actionRequest));
 	}
 
 	private void _updateProfile(ActionRequest actionRequest) throws Exception {
@@ -1302,9 +1300,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		UsersAdminUtil.updateWebsites(
+		usersAdmin.updateWebsites(
 			Contact.class.getName(), user.getContactId(),
-			UsersAdminUtil.getWebsites(actionRequest));
+			usersAdmin.getWebsites(actionRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

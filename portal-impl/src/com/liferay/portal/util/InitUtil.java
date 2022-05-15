@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBManagerImpl;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -56,8 +56,6 @@ import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcesso
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
-
-import com.rometools.rome.io.XmlReader;
 
 import java.lang.reflect.Field;
 
@@ -95,7 +93,9 @@ public class InitUtil {
 			}
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		StopWatch stopWatch = new StopWatch();
@@ -128,7 +128,9 @@ public class InitUtil {
 			PortalClassLoaderUtil.setClassLoader(classLoader);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		// Properties
@@ -141,7 +143,9 @@ public class InitUtil {
 			LogFactoryUtil.setLogFactory(new Log4jLogFactoryImpl());
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		// Log4J
@@ -187,8 +191,6 @@ public class InitUtil {
 			new UnsecureSAXReaderUtil();
 
 		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
-
-		XmlReader.setDefaultEncoding(StringPool.UTF8);
 
 		if (_PRINT_TIME) {
 			System.out.println(
@@ -334,6 +336,8 @@ public class InitUtil {
 	}
 
 	private static final boolean _PRINT_TIME = false;
+
+	private static final Log _log = LogFactoryUtil.getLog(InitUtil.class);
 
 	private static ApplicationContext _appApplicationContext;
 	private static boolean _initialized;

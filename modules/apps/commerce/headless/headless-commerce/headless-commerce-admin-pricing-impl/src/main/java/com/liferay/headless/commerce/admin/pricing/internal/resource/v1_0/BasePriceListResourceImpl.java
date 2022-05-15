@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -423,11 +425,29 @@ public abstract class BasePriceListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer =
-			priceList -> postPriceList(priceList);
+		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer = null;
 
-		for (PriceList priceList : priceLists) {
-			priceListUnsafeConsumer.accept(priceList);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			priceListUnsafeConsumer = priceList -> postPriceList(priceList);
+		}
+
+		if (priceListUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for PriceList");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceLists, priceListUnsafeConsumer);
+		}
+		else {
+			for (PriceList priceList : priceLists) {
+				priceListUnsafeConsumer.accept(priceList);
+			}
 		}
 	}
 
@@ -455,6 +475,10 @@ public abstract class BasePriceListResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -493,10 +517,47 @@ public abstract class BasePriceListResourceImpl
 			java.util.Collection<PriceList> priceLists,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			priceListUnsafeConsumer = priceList -> patchPriceList(
+				priceList.getId() != null ? priceList.getId() :
+					Long.parseLong((String)parameters.get("priceListId")),
+				priceList);
+		}
+
+		if (priceListUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for PriceList");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceLists, priceListUnsafeConsumer);
+		}
+		else {
+			for (PriceList priceList : priceLists) {
+				priceListUnsafeConsumer.accept(priceList);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<PriceList>,
+			 UnsafeConsumer<PriceList, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -557,6 +618,14 @@ public abstract class BasePriceListResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -647,6 +716,9 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<PriceList>, UnsafeConsumer<PriceList, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

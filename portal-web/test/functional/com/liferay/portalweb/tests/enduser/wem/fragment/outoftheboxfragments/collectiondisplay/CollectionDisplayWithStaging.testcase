@@ -46,13 +46,12 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -236,7 +235,7 @@ definition {
 		task ("Add the first collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name 1",
 				tabName = "Collections");
@@ -274,7 +273,7 @@ definition {
 		task ("Add the second collection page based on Most Viewed Assets collection provider") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Most Viewed Assets",
 				pageName = "Collection Page Name 2",
 				tabName = "Collection Providers");
@@ -388,13 +387,12 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a Collection Display to a content page") {

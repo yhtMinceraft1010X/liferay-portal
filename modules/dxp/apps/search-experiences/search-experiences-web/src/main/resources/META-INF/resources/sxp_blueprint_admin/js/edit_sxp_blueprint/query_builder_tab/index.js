@@ -12,9 +12,10 @@
 import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
 import {PropTypes} from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {SIDEBARS} from '../../utils/constants';
+import {SESSION_IDS} from '../../utils/sessionStorage';
 import QuerySXPElements from './QuerySXPElements';
 import QuerySettings from './QuerySettings';
 
@@ -36,6 +37,7 @@ function QueryBuilderTab({
 	onBlur,
 	onChange,
 	onDeleteSXPElement,
+	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes = [],
 	setFieldTouched,
@@ -47,6 +49,20 @@ function QueryBuilderTab({
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS
 	);
+
+	/**
+	 * Opens the add sxp element sidebar if it was previously open.
+	 */
+	useEffect(() => {
+		if (
+			activeVerticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
+			!openSidebar &&
+			sessionStorage.getItem(SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR) ===
+				'open'
+		) {
+			setOpenSidebar(SIDEBARS.ADD_SXP_ELEMENT);
+		}
+	}, [activeVerticalNavKey, openSidebar, setOpenSidebar]);
 
 	/**
 	 * Handles sidebar visibility. If 'visible' is not provided, sidebar
@@ -76,6 +92,8 @@ function QueryBuilderTab({
 		if (
 			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
 				openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS) ||
+			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
+				openSidebar === SIDEBARS.INDEXER_CLAUSES) ||
 			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SETTINGS &&
 				openSidebar === SIDEBARS.ADD_SXP_ELEMENT)
 		) {
@@ -156,6 +174,12 @@ function QueryBuilderTab({
 									onChangeClauseContributorsVisibility={_handleChangeSidebarVisibility(
 										SIDEBARS.CLAUSE_CONTRIBUTORS
 									)}
+									onChangeIndexerClausesVisibility={_handleChangeSidebarVisibility(
+										SIDEBARS.INDEXER_CLAUSES
+									)}
+									onFetchSearchableTypes={
+										onFetchSearchableTypes
+									}
 									onFrameworkConfigChange={
 										onFrameworkConfigChange
 									}
@@ -183,6 +207,7 @@ QueryBuilderTab.propTypes = {
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,
 	onDeleteSXPElement: PropTypes.func,
+	onFetchSearchableTypes: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,
 	openSidebar: PropTypes.string,
 	searchableTypes: PropTypes.arrayOf(PropTypes.object),

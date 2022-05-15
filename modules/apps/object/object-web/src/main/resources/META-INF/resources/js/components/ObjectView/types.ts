@@ -18,9 +18,21 @@ export type TName = {
 	[key: string]: string;
 };
 
+export type TWorkflowStatus = {
+	label: string;
+	value: string;
+};
+
+export type TLabelValueObject = {
+	label: string;
+	value: string;
+};
+
 export type TObjectField = {
+	businessType: string;
 	checked: boolean;
-	filtered?: boolean | undefined;
+	filtered?: boolean;
+	hasFilter?: boolean;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
@@ -32,16 +44,54 @@ export type TObjectField = {
 	type: string;
 };
 
-export type TObjectViewColumn = {
-	label: string;
+export type TObjectColumn = {
+	fieldLabel?: string;
+	filterBy?: string;
+	isDefaultSort?: boolean;
+	label: TName;
+	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;
+	sortOrder?: string;
+	type?: string;
+	value?: string;
+	valueList?: TLabelValueObject[];
+};
+
+export type TObjectViewColumn = {
+	fieldLabel: string;
+	isDefaultSort: boolean;
+	label: TName;
+	objectFieldName: string;
+	priority?: number;
+};
+
+export type TObjectViewSortColumn = {
+	fieldLabel: string;
+	label: TName;
+	objectFieldName: string;
+	priority?: number;
+	sortOrder?: string;
+};
+
+export type TObjectViewFilterColumn = {
+	definition: {[key: string]: string[]};
+	fieldLabel: string;
+	filterBy: string;
+	filterType: string;
+	label: TName;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	value?: string;
+	valueList?: TLabelValueObject[];
 };
 
 export type TObjectView = {
 	defaultObjectView: boolean;
 	name: TName;
 	objectViewColumns: TObjectViewColumn[];
+	objectViewFilterColumns: TObjectViewFilterColumn[];
+	objectViewSortColumns: TObjectViewSortColumn[];
 };
 
 export type TState = {
@@ -49,6 +99,7 @@ export type TState = {
 	objectFields: TObjectField[];
 	objectView: TObjectView;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 };
 
 export type TAction = {

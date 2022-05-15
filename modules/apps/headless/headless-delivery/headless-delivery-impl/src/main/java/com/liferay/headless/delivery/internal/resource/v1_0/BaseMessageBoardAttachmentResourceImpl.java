@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -480,16 +482,36 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<MessageBoardAttachment, Exception>
+			messageBoardAttachmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
 				postMessageBoardMessageMessageBoardAttachment(
 					Long.parseLong(
 						(String)parameters.get("messageBoardMessageId")),
 					(MultipartBody)parameters.get("multipartBody"));
+		}
 
-		for (MessageBoardAttachment messageBoardAttachment :
-				messageBoardAttachments) {
+		if (messageBoardAttachmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for MessageBoardAttachment");
+		}
 
-			messageBoardAttachmentUnsafeConsumer.accept(messageBoardAttachment);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardAttachments, messageBoardAttachmentUnsafeConsumer);
+		}
+		else {
+			for (MessageBoardAttachment messageBoardAttachment :
+					messageBoardAttachments) {
+
+				messageBoardAttachmentUnsafeConsumer.accept(
+					messageBoardAttachment);
+			}
 		}
 	}
 
@@ -520,6 +542,10 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -564,6 +590,15 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<MessageBoardAttachment>,
+			 UnsafeConsumer<MessageBoardAttachment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -624,6 +659,14 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -714,6 +757,10 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<MessageBoardAttachment>,
+		 UnsafeConsumer<MessageBoardAttachment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

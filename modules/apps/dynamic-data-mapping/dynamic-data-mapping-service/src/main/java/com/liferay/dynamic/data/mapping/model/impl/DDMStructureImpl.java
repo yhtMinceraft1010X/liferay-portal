@@ -92,8 +92,21 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMStructureLayout fetchDDMStructureLayout() {
-		return DDMStructureLayoutLocalServiceUtil.fetchStructureLayout(
-			getGroupId(), getClassNameId(), getStructureKey());
+		try {
+			DDMStructureVersion ddmStructureVersion =
+				getLatestStructureVersion();
+
+			return DDMStructureLayoutLocalServiceUtil.
+				getStructureLayoutByStructureVersionId(
+					ddmStructureVersion.getStructureVersionId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -394,11 +407,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			secure = true;
 		}
 
-		String portalURL = PortalUtil.getPortalURL(
-			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
-
-		sb.append(portalURL);
-
+		sb.append(
+			PortalUtil.getPortalURL(
+				themeDisplay.getServerName(), themeDisplay.getServerPort(),
+				secure));
 		sb.append(themeDisplay.getPathContext());
 		sb.append("/webdav");
 

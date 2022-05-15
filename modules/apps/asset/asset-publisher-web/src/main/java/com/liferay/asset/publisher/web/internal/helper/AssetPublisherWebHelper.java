@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
@@ -71,7 +72,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.IOException;
@@ -118,11 +119,10 @@ public class AssetPublisherWebHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, portletId);
+				_layoutLocalService.fetchLayout(themeDisplay.getPlid()),
+				portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
 			return;
@@ -130,7 +130,8 @@ public class AssetPublisherWebHelper {
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle",
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
@@ -475,7 +476,7 @@ public class AssetPublisherWebHelper {
 
 			Group group = _groupLocalService.getGroup(groupId);
 
-			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+			if (_sites.isContentSharingWithChildrenEnabled(group)) {
 				return true;
 			}
 
@@ -528,11 +529,9 @@ public class AssetPublisherWebHelper {
 			String portletId)
 		throws PortalException {
 
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
 		PortletPermissionUtil.check(
-			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
-			false, false);
+			permissionChecker, 0, _layoutLocalService.fetchLayout(plid),
+			portletId, ActionKeys.SUBSCRIBE, false, false);
 
 		_subscriptionLocalService.addSubscription(
 			permissionChecker.getUserId(), groupId,
@@ -544,11 +543,9 @@ public class AssetPublisherWebHelper {
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException {
 
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
 		PortletPermissionUtil.check(
-			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
-			false, false);
+			permissionChecker, 0, _layoutLocalService.fetchLayout(plid),
+			portletId, ActionKeys.SUBSCRIBE, false, false);
 
 		_subscriptionLocalService.deleteSubscription(
 			permissionChecker.getUserId(),
@@ -687,6 +684,9 @@ public class AssetPublisherWebHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

@@ -1966,6 +1966,145 @@ definition {
 		}
 	}
 
+	@description = "LPS-147454 Validate if the user can use a custom field as criteria to create a segment"
+	@priority = "4"
+	test AddSegmentUsingCustomFields {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentUsingCustomFields";
+
+		task ("Add custom field in User") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Business Unit",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "User",
+				startingValue = "COIN");
+		}
+
+		task ("Add a new user and view the Custom Fields") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "usersn");
+
+			User.viewUserCustomFieldsCP(
+				customFieldName = "Business Unit",
+				customFieldType = "Text Area",
+				startingValue = "COIN");
+		}
+
+		task ("Create a segment using the custom field") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Business Unit");
+
+			Segmentation.fillProperty(propertyField = "COIN");
+
+			Segmentation.fillTitle(titleField = "COINers");
+
+			Segmentation.viewMembers(memberName = "userfn userln");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "COINers");
+
+			Segmentation.viewSegment(propertyField = "COIN");
+		}
+	}
+
+	@description = "LPS-146550 Bug: Apostrophe in segment property value breaks filter"
+	@priority = "4"
+	test AddSegmentWithApostrophe {
+		task ("Create an User with an apostrophe") {
+			JSONUser.addUser(
+				userEmailAddress = "shaquille@liferay.com",
+				userFirstName = "Shaquille",
+				userLastName = "O'Neal",
+				userScreenName = "shaquille");
+		}
+
+		task ("Create a Segment that includes user created") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "Segment with Apostrophe");
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.fillProperty(propertyField = "O'Neal");
+		}
+
+		task ("Check that segment includes user") {
+			AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "1 Member");
+
+			Segmentation.viewMembers(memberName = "Shaquille O'Neal");
+		}
+
+		task ("Save segment") {
+			Button.clickSave();
+		}
+
+		task ("Go to edit segment") {
+			Segmentation.editSegment(entry = "Segment with Apostrophe");
+		}
+
+		task ("Check that segment still includes user") {
+			AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "1 Member");
+
+			Segmentation.viewMembers(memberName = "Shaquille O'Neal");
+		}
+	}
+
+	@description = "LPS-130917 Given Instance Settings > Segments
+	When the user clicks on Analytics Cloud Segments tab
+	Then help text of Anonymous User Segments Cache Expiration Time will be: Define the time (in seconds) before clearing the Anonymous Segment cache."
+	@priority = "3"
+	test AnonymousUserSegmentsCacheExpirationCheckText {
+		task ("Go to Instance Settings > Segments") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Analytics Cloud Segments",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Assert the text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Anonymous Segment cache.");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {
@@ -2064,6 +2203,205 @@ definition {
 		}
 	}
 
+	@description = "LPS-152077 Bug: Error updating segment which contains a non-existing segment"
+	@priority = "4"
+	test DeleteUnavailableSegmentCriteria {
+		task ("Create a first segment with any criteria") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Guest",
+				operator = "contains",
+				segmentName = "First Segment",
+				text = "test");
+		}
+
+		task ("Create a second segment usign two criterias, one being the first segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "Second Segment");
+
+			Segmentation.gotoSidebar(fieldType = "Segments");
+
+			Segmentation.addProperties(propertyOption = "Segment");
+
+			Segmentation.fillProperty(selectLink = "First Segment");
+
+			Segmentation.gotoSidebar(fieldType = "User");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(propertyField = "liferay");
+
+			Button.clickSave();
+		}
+
+		task ("Delete the first criteria") {
+			Segmentation.deleteSegment(entry = "First Segment");
+		}
+
+		task ("Remove from second segment criteria related to the first segment") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			Button.clickDelete();
+
+			Button.clickSave();
+		}
+
+		task ("Check that the segment was actually updated") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			AssertElementNotPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Segment");
+		}
+	}
+
+	@description = "LPS-130919 Given the Session Property Vocabularies in Instance Settings
+	When the user is adding a vocabulary to a session property
+	Then the breadcrumb to go to Segments, or Instance Settings is available"
+	@priority = "3"
+	test InstanceSettingsSessionPropertyVocabulariesBreadcrumb {
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesBreadcrumb";
+
+		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Click on add") {
+			Button.click(button = "Add");
+		}
+
+		task ("Click on the breadcrumb at Segments") {
+			Click(
+				key_breadcrumbName = "Segments",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+		}
+
+		task ("Check the user is lead to Instance Settings > Segments > Analytics Cloud Segments ") {
+			AssertElementPresent(
+				key_title = "Analytics Cloud Segments",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
+	@description = "LPS-130919 Given the adding a vocabulary to a session property view
+	When the user clicks on Cancel button
+	Then the user is lead to the main tab Session Property Vocabularies"
+	@priority = "3"
+	test InstanceSettingsSessionPropertyVocabulariesCancelButton {
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesCancelButton";
+
+		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Click on add") {
+			Button.click(button = "Add");
+		}
+
+		task ("Click on Cancel") {
+			Button.click(button = "Cancel");
+		}
+
+		task ("Check the user is lead to the main tab Session Property Vocabularies") {
+			AssertTextPresent(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries for Session Property Vocabularies have been added yet.");
+		}
+	}
+
+	@description = "LPS-130919 Given the Segment Editor
+	When the user adds a Session Property Vocabulary in the Instance Settings
+	Then the associated Categories must be available when selecting the session property"
+	@priority = "5"
+	test InstanceSettingsSessionPropertyVocabularyInSegmentsEditor {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabularyInSegmentsEditor";
+
+		task ("Set Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+
+			Button.click(button = "Add");
+
+			Segmentation.setVocabularySessionPropertyDropdown(
+				propertyName = "Browser",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create categories for Audience Vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience Category 1",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create Segment with Vocabulary") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Browser");
+
+			Segmentation.fillTitle(titleField = "Segment Test");
+
+			Segmentation.fillProperty(optionsValue = "Audience Category 1");
+
+			Button.clickSave();
+		}
+	}
+
+	@description = "LPS-130917 Given Instance Settings > Segments
+	When the user clicks on Analytics Cloud Segments tab
+	Then help text of Interest Terms Cache Expiration Time will be: Define the time (in seconds) before clearing the Interest Terms cache."
+	@priority = "3"
+	test InterestTermsCacheCacheExpirationCheckText {
+		task ("Go to Instance Settings > Segments") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Analytics Cloud Segments",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Assert the text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
+		}
+	}
+
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {
@@ -2095,12 +2433,19 @@ definition {
 		}
 
 		task ("Create Segment with Vocabulary") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Browser",
-				groupName = "Guest",
-				operator = "equals",
-				segmentName = "KeepInfomationOfDeleteVocabularyInSegment Test",
-				text = "Audience Category 1");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Browser");
+
+			Segmentation.fillTitle(titleField = "KeepInfomationOfDeleteVocabularyInSegment Test");
+
+			Segmentation.fillProperty(optionsValue = "Audience Category 1");
+
+			Button.clickSave();
 		}
 
 		task ("Delete category of vocabulary") {
@@ -2118,6 +2463,42 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#PROPERTY_FIELD",
 				value1 = "Audience Category 1");
+		}
+	}
+
+	@description = "LPS-150511 Bug: Can't scroll down in segments editor sidebar"
+	@priority = "4"
+	test ScrollDownSegmentsEditor {
+		property portal.acceptance = "true";
+
+		task ("Go to segments editor page") {
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Scroll down User session") {
+			ScrollWebElementIntoView(
+				key_propertyOption = "User Name",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+
+		task ("Scroll down Organization session") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			ScrollWebElementIntoView(
+				key_propertyOption = "Type",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+
+		task ("Scroll down Session session") {
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			ScrollWebElementIntoView(
+				key_propertyOption = "User Agent",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
 	}
 

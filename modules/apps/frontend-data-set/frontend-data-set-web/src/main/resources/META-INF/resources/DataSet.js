@@ -25,11 +25,17 @@ import React, {
 } from 'react';
 
 import './styles/main.scss';
+
+import ClayEmptyState from '@clayui/empty-state';
+
 import {AppContext} from './AppContext';
 import DataSetContext from './DataSetContext';
-import EmptyResultMessage from './EmptyResultMessage';
 import {updateViewComponent} from './actions/updateViewComponent';
 import ManagementBar from './management_bar/ManagementBar';
+import {
+	getFilterSelectedItemsLabel,
+	getOdataFilterString,
+} from './management_bar/components/filters/Filter';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import {
@@ -42,7 +48,6 @@ import {
 } from './utils/eventsDefinitions';
 import {
 	delay,
-	executeAsyncAction,
 	formatItemChanges,
 	getCurrentItemUpdates,
 	getRandomId,
@@ -53,27 +58,31 @@ import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
 
+const DEFAULT_PAGINATION_DELTA = 20;
+const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
+
 const DataSet = ({
 	actionParameterName,
 	bulkActions,
 	creationMenu,
 	currentURL,
 	customDataRenderers,
-	filters: filtersProp,
+	filters: initialFilters,
 	formId,
 	formName,
 	id,
 	inlineAddingSettings,
 	inlineEditingSettings,
-	items: itemsProp,
+	items: itemsProp = [],
 	itemsActions,
 	namespace,
 	nestedItemsKey,
 	nestedItemsReferenceKey,
 	onActionDropdownItemClick,
+	onBulkActionItemClick,
 	overrideEmptyResultView,
 	pagination,
-	selectedItems,
+	selectedItems: initialSelectedItemsValues,
 	selectedItemsKey,
 	selectionType,
 	showManagementBar,
@@ -93,18 +102,37 @@ const DataSet = ({
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 	const [delta, setDelta] = useState(
-		showPagination &&
-			(pagination.initialDelta || pagination.deltas[0].label)
+		showPagination && (pagination?.initialDelta || DEFAULT_PAGINATION_DELTA)
 	);
-	const [filters, setFilters] = useState(filtersProp);
+
+	const [filters, setFilters] = useState(() => {
+		return initialFilters.map((filter) => {
+			const preloadedData = filter.preloadedData;
+
+			if (preloadedData) {
+				filter.active = true;
+				filter.selectedData = preloadedData;
+
+				filter.odataFilterString = getOdataFilterString(filter);
+				filter.selectedItemsLabel = getFilterSelectedItemsLabel(filter);
+			}
+
+			return filter;
+		});
+	});
+
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [items, setItems] = useState(itemsProp);
+	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState({});
-	const [pageNumber, setPageNumber] = useState(1);
+	const [pageNumber, setPageNumber] = useState(
+		showPagination &&
+			(pagination?.initialPageNumber || DEFAULT_PAGINATION_PAGE_NUMBER)
+	);
 	const [searchParam, setSearchParam] = useState('');
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
-		selectedItems || []
+		initialSelectedItemsValues || []
 	);
+	const [selectedItems, setSelectedItems] = useState([]);
 	const [sorting, setSorting] = useState(sortingProp);
 	const [total, setTotal] = useState(0);
 	const [{activeView}, dispatch] = useContext(ViewsContext);
@@ -122,7 +150,7 @@ const DataSet = ({
 	const requestData = useCallback(() => {
 		const activeFiltersOdataStrings = filters.reduce(
 			(activeFilters, filter) =>
-				filter.odataFilterString
+				filter.active && filter.odataFilterString
 					? [...activeFilters, filter.odataFilterString]
 					: activeFilters,
 			[]
@@ -136,15 +164,7 @@ const DataSet = ({
 			delta,
 			pageNumber,
 			sorting
-		).catch((error) => {
-			logError(error);
-			openToast({
-				message: Liferay.Language.get('unexpected-error'),
-				type: 'danger',
-			});
-
-			throw error;
-		});
+		);
 	}, [apiURL, currentURL, delta, filters, pageNumber, searchParam, sorting]);
 
 	const requestComponent = useCallback(() => {
@@ -234,7 +254,7 @@ const DataSet = ({
 		setDataLoading(true);
 
 		return requestData()
-			.then((data) => {
+			.then(({data}) => {
 				if (successNotification?.showSuccessNotification) {
 					openToast({
 						message:
@@ -271,6 +291,24 @@ const DataSet = ({
 	}
 
 	useEffect(() => {
+		setSelectedItems((selectedItems) => {
+			return selectedItemsValue.map((value) => {
+				let selectedItem = items.find(
+					(item) => item[selectedItemsKey] === value
+				);
+
+				if (!selectedItem) {
+					selectedItem = selectedItems.find(
+						(item) => item[selectedItemsKey] === value
+					);
+				}
+
+				return selectedItem;
+			});
+		});
+	}, [selectedItemsValue, items, selectedItemsKey]);
+
+	useEffect(() => {
 		setComponentLoading(true);
 
 		requestComponent().then((component) => {
@@ -287,13 +325,29 @@ const DataSet = ({
 		setComponentLoading,
 	]);
 
+	const handleApiError = ({data, statusCode}) => {
+		const apiErrorMessage = `${data.status}, ${data.title}`;
+
+		logError(apiErrorMessage);
+
+		openToast({
+			message: apiErrorMessage,
+			title: `${Liferay.Language.get('error')} ${statusCode}`,
+			type: 'danger',
+		});
+	};
+
 	useEffect(() => {
 		setDataLoading(true);
 
-		requestData().then((data) => {
+		requestData().then(({data, ok, status: statusCode}) => {
 			if (isMounted()) {
-				updateDataSetItems(data);
-
+				if (!ok) {
+					handleApiError({data, statusCode});
+				}
+				else {
+					updateDataSetItems(data);
+				}
 				setDataLoading(false);
 			}
 		});
@@ -335,12 +389,11 @@ const DataSet = ({
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
-				filters={filters}
 				fluid={style === 'fluid'}
-				onFiltersChange={setFilters}
 				selectAllItems={() =>
 					selectItems(items.map((item) => item[selectedItemsKey]))
 				}
+				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={selectionType}
@@ -374,20 +427,21 @@ const DataSet = ({
 						{...currentViewProps}
 					/>
 				) : (
-					<EmptyResultMessage />
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'sorry,-no-results-were-found'
+						)}
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+						title={Liferay.Language.get('no-results-found')}
+					/>
 				)}
 			</div>
 		) : (
 			<span aria-hidden="true" className="loading-animation my-7" />
 		);
 
-	const formRef = useRef(null);
-
-	const wrappedView =
-		formId || formName ? view : <form ref={formRef}>{view}</form>;
-
 	const paginationComponent =
-		showPagination && pagination && items?.length ? (
+		showPagination && pagination && items?.length && total ? (
 			<div className="data-set-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					activeDelta={delta}
@@ -404,8 +458,15 @@ const DataSet = ({
 			</div>
 		) : null;
 
-	function executeAsyncItemAction(url, method) {
-		return executeAsyncAction(url, method)
+	function executeAsyncItemAction(url, method = 'GET') {
+		return fetch(url, {
+			headers: {
+				'Accept': 'application/json',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
+			method,
+		})
 			.then((_) => {
 				return delay(500).then(() => {
 					if (isMounted()) {
@@ -581,9 +642,9 @@ const DataSet = ({
 				createInlineItem,
 				customDataRenderers,
 				executeAsyncItemAction,
+				filters,
 				formId,
 				formName,
-				formRef,
 				highlightItems,
 				highlightedItemsValue,
 				id,
@@ -597,6 +658,7 @@ const DataSet = ({
 				nestedItemsKey,
 				nestedItemsReferenceKey,
 				onActionDropdownItemClick,
+				onBulkActionItemClick,
 				openModal,
 				openSidePanel,
 				searchParam,
@@ -605,6 +667,7 @@ const DataSet = ({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
+				setFilters,
 				sidePanelId: dataSetSupportSidePanelId,
 				sorting,
 				style,
@@ -615,47 +678,49 @@ const DataSet = ({
 				updateSorting: setSorting,
 			}}
 		>
-			<Modal id={dataSetSupportModalId} onClose={refreshData} />
+			<div className="fds">
+				<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
-			{!sidePanelId && (
-				<SidePanel
-					id={dataSetSupportSidePanelId}
-					onAfterSubmit={refreshData}
-				/>
-			)}
-
-			<div className="data-set-wrapper" ref={wrapperRef}>
-				{style === 'default' && (
-					<div className="data-set data-set-inline">
-						{managementBar}
-
-						{wrappedView}
-
-						{paginationComponent}
-					</div>
+				{!sidePanelId && (
+					<SidePanel
+						id={dataSetSupportSidePanelId}
+						onAfterSubmit={refreshData}
+					/>
 				)}
 
-				{style === 'stacked' && (
-					<div className="data-set data-set-stacked">
-						{managementBar}
+				<div className="data-set-wrapper" ref={wrapperRef}>
+					{style === 'default' && (
+						<div className="data-set data-set-inline">
+							{managementBar}
 
-						{wrappedView}
-
-						{paginationComponent}
-					</div>
-				)}
-
-				{style === 'fluid' && (
-					<div className="data-set data-set-fluid">
-						{managementBar}
-
-						<div className="container-fluid container-xl mt-3">
-							{wrappedView}
+							{view}
 
 							{paginationComponent}
 						</div>
-					</div>
-				)}
+					)}
+
+					{style === 'stacked' && (
+						<div className="data-set data-set-stacked">
+							{managementBar}
+
+							{view}
+
+							{paginationComponent}
+						</div>
+					)}
+
+					{style === 'fluid' && (
+						<div className="data-set data-set-fluid">
+							{managementBar}
+
+							<div className="container-fluid container-xl mt-3">
+								{view}
+
+								{paginationComponent}
+							</div>
+						</div>
+					)}
+				</div>
 			</div>
 		</DataSetContext.Provider>
 	);
@@ -676,6 +741,7 @@ DataSet.propTypes = {
 	formId: PropTypes.string,
 	formName: PropTypes.string,
 	id: PropTypes.string.isRequired,
+	initialSelectedItemsValues: PropTypes.array,
 	inlineAddingSettings: PropTypes.shape({
 		apiURL: PropTypes.string.isRequired,
 		defaultBodyContent: PropTypes.object,
@@ -702,7 +768,6 @@ DataSet.propTypes = {
 		),
 		initialDelta: PropTypes.number.isRequired,
 	}),
-	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
 	selectionType: PropTypes.oneOf(['single', 'multiple']),
 	showManagementBar: PropTypes.bool,
@@ -724,9 +789,6 @@ DataSet.defaultProps = {
 	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
-	pagination: {
-		initialDelta: 10,
-	},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showManagementBar: true,

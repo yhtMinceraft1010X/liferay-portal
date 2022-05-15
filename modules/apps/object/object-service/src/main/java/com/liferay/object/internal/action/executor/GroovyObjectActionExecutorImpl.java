@@ -16,7 +16,6 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.internal.action.settings.GroovyObjectActionSettings;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -31,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = ObjectActionExecutor.class)
+@Component(service = ObjectActionExecutor.class)
 public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 
 	@Override
@@ -40,17 +39,18 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		_execute(new HashMap<>(), parametersUnicodeProperties.get("script"));
+		Map<String, Object> inputObjects = new HashMap<>();
+
+		for (String key : payloadJSONObject.keySet()) {
+			inputObjects.put(key, payloadJSONObject.get(key));
+		}
+
+		_execute(inputObjects, parametersUnicodeProperties.get("script"));
 	}
 
 	@Override
 	public String getKey() {
 		return ObjectActionExecutorConstants.KEY_GROOVY;
-	}
-
-	@Override
-	public Class<?> getSettings() {
-		return GroovyObjectActionSettings.class;
 	}
 
 	private void _execute(Map<String, Object> inputObjects, String script)

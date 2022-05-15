@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1376,13 +1378,37 @@ public abstract class BaseUserAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<UserAccount, Exception> userAccountUnsafeConsumer =
-			userAccount -> postAccountUserAccount(
+		UnsafeConsumer<UserAccount, Exception> userAccountUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			userAccountUnsafeConsumer = userAccount -> postAccountUserAccount(
 				Long.parseLong((String)parameters.get("accountId")),
 				userAccount);
+		}
 
-		for (UserAccount userAccount : userAccounts) {
-			userAccountUnsafeConsumer.accept(userAccount);
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			userAccountUnsafeConsumer =
+				userAccount -> putUserAccountByExternalReferenceCode(
+					userAccount.getExternalReferenceCode(), userAccount);
+		}
+
+		if (userAccountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for UserAccount");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userAccounts, userAccountUnsafeConsumer);
+		}
+		else {
+			for (UserAccount userAccount : userAccounts) {
+				userAccountUnsafeConsumer.accept(userAccount);
+			}
 		}
 	}
 
@@ -1410,6 +1436,10 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1458,16 +1488,53 @@ public abstract class BaseUserAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (UserAccount userAccount : userAccounts) {
-			putUserAccount(
+		UnsafeConsumer<UserAccount, Exception> userAccountUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			userAccountUnsafeConsumer = userAccount -> patchUserAccount(
 				userAccount.getId() != null ? userAccount.getId() :
 					Long.parseLong((String)parameters.get("userAccountId")),
 				userAccount);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			userAccountUnsafeConsumer = userAccount -> putUserAccount(
+				userAccount.getId() != null ? userAccount.getId() :
+					Long.parseLong((String)parameters.get("userAccountId")),
+				userAccount);
+		}
+
+		if (userAccountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for UserAccount");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userAccounts, userAccountUnsafeConsumer);
+		}
+		else {
+			for (UserAccount userAccount : userAccounts) {
+				userAccountUnsafeConsumer.accept(userAccount);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<UserAccount>,
+			 UnsafeConsumer<UserAccount, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1528,6 +1595,14 @@ public abstract class BaseUserAccountResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1622,6 +1697,10 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<UserAccount>,
+		 UnsafeConsumer<UserAccount, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

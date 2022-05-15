@@ -66,18 +66,19 @@ exports[`Field Radio has a helptext 1`] = `
       type="hidden"
       value="false"
     />
-    <span
+    <div
       aria-hidden="true"
-      class="form-text"
+      class="form-feedback-group lfr-de__field-feedback"
     >
-      Type something
-    </span>
+      <div>
+        Type something
+      </div>
+    </div>
     <span
       class="sr-only"
       id="radioField_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>
@@ -90,8 +91,8 @@ exports[`Field Radio has a label 1`] = `
     data-field-name="radioField"
   >
     <label
+      aria-labelledby="radioField_fieldDetails"
       class="ddm-label"
-      for="radioField"
       tabindex="0"
     >
       label
@@ -154,7 +155,12 @@ exports[`Field Radio has a label 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="radioField_fieldDetails"
+    >
+      label
+    </span>
   </div>
 </div>
 `;
@@ -523,8 +529,8 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
     data-field-name="radioField"
   >
     <label
+      aria-labelledby="radioField_fieldDetails"
       class="ddm-label"
-      for="radioField"
       tabindex="0"
     >
       text
@@ -587,7 +593,12 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="radioField_fieldDetails"
+    >
+      text
+    </span>
   </div>
 </div>
 `;

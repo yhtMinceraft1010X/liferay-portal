@@ -18,25 +18,18 @@ const getFieldsFromSchema = (schema) => {
 		required: [],
 	};
 
-	for (const [label, property] of Object.entries(schema)) {
-		if (property.writeOnly || property.readOnly || label.startsWith('x-')) {
-			continue;
-		}
-
-		let name = label;
-
-		if (property.extensions && property.extensions['x-parent-map']) {
-			name = property.extensions['x-parent-map'] + '_' + label;
-		}
-
-		const field = {
-			description: property.description,
-			label,
-			name,
-		};
-
-		dbFields[property.required ? 'required' : 'optional'].push(field);
+	if (!schema) {
+		return dbFields;
 	}
+
+	schema.forEach((field) => {
+		if (field.required) {
+			dbFields.required.push(field);
+		}
+		else {
+			dbFields.optional.push(field);
+		}
+	});
 
 	return dbFields;
 };

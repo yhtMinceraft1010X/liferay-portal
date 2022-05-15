@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -40,6 +43,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -70,6 +74,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -134,6 +139,74 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryCollectionDisplayBeforePaginationImprovements()
+		throws Exception {
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				AssetListEntry assetListEntry = _addAssetListEntry(
+					_group1.getGroupId());
+
+				return String.valueOf(assetListEntry.getAssetListEntryId());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"collection_display/before_pagination_improvements/expected",
+			numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"collection_display/before_pagination_improvements/input",
+			numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryCollectionDisplayComplete()
+		throws Exception {
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				AssetListEntry assetListEntry = _addAssetListEntry(
+					_group1.getGroupId());
+
+				return String.valueOf(assetListEntry.getAssetListEntryId());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"collection_display/complete/expected", numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"collection_display/complete/input", numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryCollectionDisplayDefault()
+		throws Exception {
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				AssetListEntry assetListEntry = _addAssetListEntry(
+					_group1.getGroupId());
+
+				return String.valueOf(assetListEntry.getAssetListEntryId());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"collection_display/default/expected", numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"collection_display/default/input", numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerBackgroundFragmentImage()
 		throws Exception {
 
@@ -174,6 +247,18 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"container/background_image/expected", numberValuesMap, null);
 		File inputFile = _generateZipFile(
 			"container/background_image/input", numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerComplete()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"container/complete/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/complete/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -256,7 +341,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithFriendlyURL()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
@@ -278,7 +363,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithFriendlyURLSiteKeyDifferentGroup()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
@@ -302,7 +387,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithPlid()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
@@ -332,6 +417,101 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		File inputFile = _generateZipFile("fragment/hidden/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentImageFieldImageMappedAndLinkMapped()
+		throws Exception {
+
+		_addImageFragmentEntry();
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_group1.getGroupId());
+
+				return String.valueOf(journalArticle.getResourcePrimKey());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_mapped/expected",
+			numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_mapped/input",
+			numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentImageFieldImageMappedAndLinkPage()
+		throws Exception {
+
+		_addImageFragmentEntry();
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_group1.getGroupId());
+
+				return String.valueOf(journalArticle.getResourcePrimKey());
+			}
+		).build();
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"FRIENDLY_URL",
+			() -> {
+				Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+				return layout.getFriendlyURL();
+			}
+		).put(
+			"SITE_KEY", String.valueOf(_group1.getGroupKey())
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_page/expected",
+			numberValuesMap, stringValuesMap);
+		File inputFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_page/input",
+			numberValuesMap, stringValuesMap);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentImageFieldImageURLAndLinkURL()
+		throws Exception {
+
+		_addImageFragmentEntry();
+
+		File expectedFile = _generateZipFile(
+			"fragment/image_field/image_url_and_link_url/expected", null, null);
+		File inputFile = _generateZipFile(
+			"fragment/image_field/image_url_and_link_url/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentResponsiveStyles()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
+
+			_addTextFragmentEntry();
+
+			File expectedFile = _generateZipFile(
+				"fragment/responsive/expected", null, null);
+			File inputFile = _generateZipFile(
+				"fragment/responsive/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
 	}
 
 	@Test
@@ -576,6 +756,15 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
+	private AssetListEntry _addAssetListEntry(long groupId)
+		throws PortalException {
+
+		return _assetListEntryLocalService.addAssetListEntry(
+			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_MANUAL,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
 	private void _addDisplayPageTemplate(JournalArticle journalArticle)
 		throws Exception {
 
@@ -620,6 +809,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private void _addImageFragmentEntry() throws Exception {
+		String html =
+			"<img data-lfr-editable-id=\"image-id\" " +
+				"data-lfr-editable-type=\"image\" " +
+					"src=\"https://example.com/image.jpeg\"/>";
+
+		_addFragmentEntry(
+			_group1.getGroupId(), "test-image-fragment", "Test Image Fragment",
+			html);
 	}
 
 	private JournalArticle _addJournalArticle(long groupId) throws Exception {
@@ -941,6 +1141,9 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	private Bundle _bundle;
 	private Company _company;

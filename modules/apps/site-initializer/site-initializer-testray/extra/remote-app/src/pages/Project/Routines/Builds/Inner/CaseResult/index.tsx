@@ -12,72 +12,170 @@
  * details.
  */
 
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayButtonGroup from '@clayui/button/lib/Group';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {Link} from 'react-router-dom';
+import {useState} from 'react';
+import {Link, useOutletContext} from 'react-router-dom';
 
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../../../components/Code';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
+import {
+	CTypePagination,
+	TestrayAttachment,
+	TestrayCaseResult,
+	TestrayWarning,
+	getAttachments,
+	getWarnings,
+} from '../../../../../../graphql/queries';
 import i18n from '../../../../../../i18n';
+import {getStatusLabel} from '../../../../../../util/constants';
+import {getTimeFromNow} from '../../../../../../util/date';
+
+type CollapsableItemProps = {
+	count: number;
+	title: string;
+};
+
+const CollapsableItem: React.FC<CollapsableItemProps> = ({
+	children,
+	count,
+	title,
+}) => {
+	const [visible, setVisible] = useState(false);
+
+	return (
+		<>
+			<span className="custom-link" onClick={() => setVisible(!visible)}>
+				{`${visible ? 'Hide' : 'Show'} ${count} ${title}`}
+			</span>
+
+			{visible && <div>{children}</div>}
+		</>
+	);
+};
 
 const CaseResult = () => {
+	const {caseResult}: {caseResult: TestrayCaseResult} = useOutletContext();
+
+	const {data} = useQuery<CTypePagination<'warnings', TestrayWarning>>(
+		getWarnings
+	);
+
+	const {data: attachmentData} = useQuery<
+		CTypePagination<'attachments', TestrayAttachment>
+	>(getAttachments);
+
+	const {totalCount: warningTotalCount = 0, items: warnings = []} =
+		data?.c.warnings || {};
+
+	const {totalCount: attachmentTotalCount = 0, items: attachments = []} =
+		attachmentData?.c.attachments || {};
+
 	return (
 		<ClayLayout.Row>
-			<ClayButtonGroup className="ml-3" spaced>
-				<ClayButton>{i18n.translate('assign')}</ClayButton>
+			<ClayLayout.Col className="p-0" xs={12}>
+				<ClayButton.Group className="mb-3 ml-3" spaced>
+					<ClayButton>{i18n.translate('assign')}</ClayButton>
 
-				<ClayButton displayType="secondary">
-					{i18n.translate('assign-to-me')}
-				</ClayButton>
+					<ClayButton displayType="secondary">
+						{i18n.translate('assign-to-me')}
+					</ClayButton>
 
-				<ClayButton disabled displayType="unstyled">
-					{i18n.translate('start-test')}
-				</ClayButton>
+					<ClayButton disabled displayType="unstyled">
+						{i18n.translate('start-test')}
+					</ClayButton>
 
-				<ClayButton disabled displayType="unstyled">
-					{i18n.translate('complete-test')}
-				</ClayButton>
+					<ClayButton disabled displayType="unstyled">
+						{i18n.translate('complete-test')}
+					</ClayButton>
 
-				<ClayButton disabled displayType="unstyled">
-					{i18n.translate('reopen-test')}
-				</ClayButton>
+					<ClayButton disabled displayType="unstyled">
+						{i18n.translate('reopen-test')}
+					</ClayButton>
 
-				<ClayButton displayType="secondary">
-					{i18n.translate('edit')}
-				</ClayButton>
-			</ClayButtonGroup>
+					<ClayButton displayType="secondary">
+						{i18n.translate('edit')}
+					</ClayButton>
+				</ClayButton.Group>
+			</ClayLayout.Col>
 
 			<ClayLayout.Col xs={9}>
-				<Container className="mt-4" title="Test Details">
+				<Container className="mt-4" collapsable title="Test Details">
 					<QATable
 						items={[
 							{
 								title: i18n.translate('status'),
 								value: (
-									<StatusBadge type="failed">
-										FAILED
+									<StatusBadge
+										type={getStatusLabel(
+											caseResult.dueStatus
+										)?.toLowerCase()}
+									>
+										{getStatusLabel(caseResult.dueStatus)}
 									</StatusBadge>
 								),
 							},
 							{
 								title: i18n.translate('errors'),
+								value: <Code>{caseResult.errors}</Code>,
+							},
+							{
+								flexHeading: true,
+								title: i18n.sub(
+									'warnings-x',
+									warningTotalCount.toString()
+								),
 								value: (
-									<Code>{`
-							java.lang.Exception: Element is present at "//*[contains(@class,'btn')][normalize-space(text())='Sign In']"
-						`}</Code>
+									<CollapsableItem
+										count={warningTotalCount}
+										title={i18n.translate('warning')}
+									>
+										{warnings.map((warning, index) => (
+											<Code className="mt-2" key={index}>
+												{warning.content}
+											</Code>
+										))}
+									</CollapsableItem>
 								),
 							},
 							{
-								title: i18n.sub('warnings-x', '16'),
-								value: 'Show 16 Warnings',
-							},
-							{
-								title: i18n.translate('attachments'),
-								value: '',
+								flexHeading: true,
+								title: i18n.sub(
+									'attachments-x',
+									attachmentTotalCount.toString()
+								),
+								value: (
+									<CollapsableItem
+										count={attachments.length}
+										title={i18n.translate('attachment')}
+									>
+										<div className="d-flex flex-column">
+											{attachments.map(
+												(attachment, index) => (
+													<a
+														href={attachment.url}
+														key={index}
+														rel="noopener noreferrer"
+														target="_blank"
+													>
+														{attachment.name}
+
+														<ClayIcon
+															className="ml-2"
+															fontSize={12}
+															symbol="shortcut"
+														/>
+													</a>
+												)
+											)}
+										</div>
+									</CollapsableItem>
+								),
 							},
 							{
 								title: i18n.translate('git-hash'),
@@ -91,16 +189,16 @@ const CaseResult = () => {
 					/>
 				</Container>
 
-				<Container className="mt-4" title="Case Details">
+				<Container className="mt-4" collapsable title="Case Details">
 					<QATable
 						items={[
 							{
 								title: i18n.translate('priority'),
-								value: 5,
+								value: caseResult.case?.priority,
 							},
 							{
 								title: i18n.translate('main-component'),
-								value: 'Tags',
+								value: caseResult.case?.component?.name,
 							},
 							{
 								title: i18n.translate('subcomponents'),
@@ -108,36 +206,40 @@ const CaseResult = () => {
 							},
 							{
 								title: i18n.translate('Type'),
-								value: 'Automated Functional Test',
+								value: caseResult.case?.caseType?.name,
 							},
 							{
 								title: i18n.translate('estimated-duration'),
-								value: '0',
+								value: caseResult.case?.estimatedDuration,
 							},
 							{
 								title: i18n.translate('description'),
-								value: '',
+								value: caseResult.case?.description,
 							},
 							{
 								title: i18n.translate('steps'),
-								value: '',
+								value: caseResult.case?.steps,
 							},
 						]}
 					/>
 
-					<Link to="project/1234/case/1234">
+					<Link to="/project/1234/case/1234">
 						{i18n.translate('view-case')}
 					</Link>
 				</Container>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col>
-				<Container className="mt-4" title={i18n.translate('dates')}>
+			<ClayLayout.Col xs={3}>
+				<Container
+					className=""
+					collapsable
+					title={i18n.translate('dates')}
+				>
 					<QATable
 						items={[
 							{
 								title: i18n.translate('Updated'),
-								value: '2 days ago',
+								value: getTimeFromNow(caseResult.dateModified),
 							},
 							{
 								title: '',

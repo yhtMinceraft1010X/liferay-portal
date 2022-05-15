@@ -76,8 +76,13 @@ SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarR
 				label="advanced-configuration"
 			>
 				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= similarResultsPortletPreferences.getSearchScope() %>">
-					<aui:option label="this-site" value="this-site" />
-					<aui:option label="everything" value="everything" />
+					<aui:option label="this-site" />
+					<aui:option label="everything" />
+				</aui:select>
+
+				<aui:select label="link-behavior" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_LINK_BEHAVIOR) %>" value="<%= similarResultsPortletPreferences.getLinkBehavior() %>">
+					<aui:option label="show-content" />
+					<aui:option label="view-in-context" />
 				</aui:select>
 
 				<aui:input helpMessage="fields-help" label="fields" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="text" value="<%= similarResultsPortletPreferences.getFields() %>" />

@@ -73,11 +73,10 @@ public class CommerceOrderItemServiceImpl
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		CommerceOrder commerceOrder = commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
 		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			commerceOrderService.getCommerceOrder(commerceOrderId),
+			ActionKeys.UPDATE);
 
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
@@ -144,6 +143,19 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		commerceOrderItemLocalService.deleteCommerceOrderItems(commerceOrderId);
+	}
+
+	@Override
+	public void deleteMissingCommerceOrderItems(
+			long commerceOrderId, Long[] commerceOrderItemIds,
+			String[] externalReferenceCodes)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+
+		commerceOrderItemLocalService.deleteMissingCommerceOrderItems(
+			commerceOrderId, commerceOrderItemIds, externalReferenceCodes);
 	}
 
 	@Override
@@ -318,17 +330,19 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem importCommerceOrderItem(
+			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.importCommerceOrderItem(
-			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
-			decimalQuantity, shippedQuantity, serviceContext);
+			externalReferenceCode, commerceOrderItemId, commerceOrderId,
+			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
+			shippedQuantity, serviceContext);
 	}
 
 	@Override
@@ -406,6 +420,24 @@ public class CommerceOrderItemServiceImpl
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
 			commerceOrderItemId, cpMeasurementUnitId, quantity, commerceContext,
 			serviceContext);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext);
 	}
 
 	@Override
@@ -674,6 +706,23 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.updateCustomFields(
 			commerceOrderItemId, serviceContext);
+	}
+
+	@Override
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		return commerceOrderItemLocalService.updateExternalReferenceCode(
+			commerceOrderItemId, externalReferenceCode);
 	}
 
 	@ServiceReference(type = CommerceAccountPermission.class)

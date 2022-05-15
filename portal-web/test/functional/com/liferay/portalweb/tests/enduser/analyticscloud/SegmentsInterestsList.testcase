@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -67,6 +69,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
 	@priority = "3"
 	test AssertNoInterestFoundInSegment {
+		property analytics.cloud.upstream = "false";
+
 		task ("Add new user") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",
@@ -128,7 +132,7 @@ definition {
 		}
 
 		task ("View no interest results") {
-			ACInterests.viewNoInterestResults();
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 
@@ -136,7 +140,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertTopInterestShownInSegmentProfile {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9165
@@ -201,7 +204,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
 	@ignore = "true"
 	test CanSearchTopInterestsListSegments {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9156
@@ -295,7 +297,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentInterestDetails {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9157
@@ -511,7 +512,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test OrderSegmentProfileEngagementScoreList {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9166
@@ -645,7 +645,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileInterests {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9158
@@ -787,7 +786,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test PaginateSegmentProfileInterestDetail {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9159
@@ -1084,7 +1082,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SearchSegmentProfilesInterest {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9160
@@ -1176,7 +1173,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsActivePages {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9161
@@ -1254,7 +1250,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsInactivePages {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9163
@@ -1356,7 +1351,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test ViewInterestDetails {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9162
@@ -1444,7 +1438,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewSegmentsTopInterestsList {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
 		// AC Refactor ticket: LRAC-9155

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -56,17 +55,13 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
 			_getContentDashboardItemSubtypeFactory(contentDashboardItemSubtype);
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype,
-					contentDashboardItemSubtypeFactory);
-
 		Optional<ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker,
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype,
+							contentDashboardItemSubtypeFactory),
 						contentDashboardItemSubtype.getInfoItemReference());
 
 		Assert.assertEquals(
@@ -79,16 +74,12 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtype contentDashboardItemSubtype =
 			_getContentDashboardItemSubtype();
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype, null);
-
 		Optional<ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker,
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype, null),
 						contentDashboardItemSubtype.getInfoItemReference());
 
 		Assert.assertFalse(contentDashboardItemSubtypeOptional.isPresent());
@@ -121,17 +112,14 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
 			_getContentDashboardItemSubtypeFactory(contentDashboardItemSubtype);
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype,
-					contentDashboardItemSubtypeFactory);
-
 		Optional<ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker, document);
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype,
+							contentDashboardItemSubtypeFactory),
+						document);
 
 		Assert.assertEquals(
 			contentDashboardItemSubtype,
@@ -148,17 +136,13 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
 			_getContentDashboardItemSubtypeFactory(contentDashboardItemSubtype);
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype,
-					contentDashboardItemSubtypeFactory);
-
 		Optional<? extends ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker,
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype,
+							contentDashboardItemSubtypeFactory),
 						JSONFactoryUtil.createJSONObject(
 							contentDashboardItemSubtype.toJSONString(
 								LocaleUtil.US)));
@@ -175,16 +159,12 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtype contentDashboardItemSubtype =
 			_getContentDashboardItemSubtype();
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype, null);
-
 		Optional<ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker,
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype, null),
 						JSONFactoryUtil.createJSONObject(
 							contentDashboardItemSubtype.toJSONString(
 								LocaleUtil.US)));
@@ -199,16 +179,12 @@ public class ContentDashboardItemSubtypeUtilTest {
 		ContentDashboardItemSubtype contentDashboardItemSubtype =
 			_getContentDashboardItemSubtype();
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker =
-				_getContentDashboardItemSubtypeFactoryTracker(
-					contentDashboardItemSubtype, null);
-
 		Optional<ContentDashboardItemSubtype>
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						contentDashboardItemSubtypeFactoryTracker,
+						_getContentDashboardItemSubtypeFactoryTracker(
+							contentDashboardItemSubtype, null),
 						contentDashboardItemSubtype.toJSONString(
 							LocaleUtil.US));
 
@@ -237,22 +213,12 @@ public class ContentDashboardItemSubtypeUtilTest {
 			}
 
 			@Override
-			public Date getModifiedDate() {
-				return new Date();
-			}
-
-			@Override
-			public long getUserId() {
-				return 0;
-			}
-
-			@Override
 			public String toJSONString(Locale locale) {
 				return JSONUtil.put(
 					"className", className
 				).put(
 					"classPK", classPK
-				).toJSONString();
+				).toString();
 			}
 
 		};

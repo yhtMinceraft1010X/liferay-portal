@@ -162,10 +162,6 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		// Workaround LPS-115320
-
-		Refresh();
-
 		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
@@ -403,7 +399,11 @@ definition {
 	macro workOnProduction {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
-		MenuItem.click(menuItem = "Work on Production");
+		ClickNoError(
+			key_menuItem = "Work on Production",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertConfirm(value1 = "Any changes made in production will immediately be live. Continue to production?");
 	}
 
 }

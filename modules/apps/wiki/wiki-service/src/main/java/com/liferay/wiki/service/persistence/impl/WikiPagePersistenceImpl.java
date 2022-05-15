@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageTable;
@@ -62,6 +62,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9900,6 +9901,23 @@ public class WikiPagePersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode, version
+								};
+							}
+
+							_log.warn(
+								"WikiPagePersistenceImpl.fetchByG_ERC_V(long, String, double, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					WikiPage wikiPage = list.get(0);
 
 					result = wikiPage;
@@ -23632,7 +23650,7 @@ public class WikiPagePersistenceImpl
 		wikiPage.setNew(true);
 		wikiPage.setPrimaryKey(pageId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		wikiPage.setUuid(uuid);
 
@@ -23744,13 +23762,8 @@ public class WikiPagePersistenceImpl
 
 		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
 
-		if (Validator.isNull(wikiPage.getExternalReferenceCode())) {
-			wikiPage.setExternalReferenceCode(
-				String.valueOf(wikiPage.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(wikiPage.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			wikiPage.setUuid(uuid);
 		}
@@ -25001,6 +25014,9 @@ public class WikiPagePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private WikiPageModelArgumentsResolver _wikiPageModelArgumentsResolver;

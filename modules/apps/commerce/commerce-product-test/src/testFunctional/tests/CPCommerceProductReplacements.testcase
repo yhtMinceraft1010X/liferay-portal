@@ -3,26 +3,150 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {
-		Navigator.openURL();
+		CommerceConfiguration.commerceTearDown();
+	}
 
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
+	@description = "Verify users can view the end of life date for a discontinued product in the product details page"
+	@priority = "3"
+	test AssertEndOfLifeDateIsVisibleInProductDetailsPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 		}
 
-		User.firstLoginPG();
+		task ("And given a discontinued product with an End of Life date") {
+			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
 
-		CommerceConfiguration.commerceAdminTearDown();
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SKU1002");
+		}
 
-		CommerceConfiguration.commerceInitializersTearDown();
+		task ("When the product details page is reached") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+		}
+
+		task ("Then the product is labeled as Discontinued and the End of Life date is shown") {
+			FrontStore.assertProductDetails(
+				endOfLifeDate = "${endOfLifeDate}",
+				productAvailability = "Discontinued");
+		}
+	}
+
+	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
+	@priority = "3"
+	test CreateNewSKUWithReplacement {
+		task ("Given a simple replacement product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product Replacement",
+				productType = "Simple",
+				sku = "SKU1001");
+		}
+
+		task ("And given a simple product") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product",
+				productType = "Simple");
+		}
+
+		task ("When the product specialist is creating a new SKU") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				locator1 = "CommerceEntry#SKU_FIELD",
+				value1 = "SKU1002");
+		}
+
+		task ("And the SKU is set as Discontinued") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+		}
+
+		task ("And a replacement product is set") {
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1001");
+		}
+
+		task ("Then the new SKU is created") {
+			Button.clickPublish();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			IFrame.selectTopFrame();
+
+			AssertElementPresent(
+				key_entryName = "SKU1002",
+				locator1 = "CommerceNavigation#DATA_SET_ENTRY_NAME");
+		}
+
+		task ("And the SKU is marked as Discontinued") {
+			CommerceNavigator.gotoEntry(entryName = "SKU1002");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Mark the SKU as Discontinued",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And the replacement product fields are saved") {
+			AssertTextEquals(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1001");
+		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EditReplacementProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8165 EditReplacementProduct pending implementation
+
 	}
 
 	@description = "Verify a replacement product can be removed"
@@ -33,7 +157,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -42,7 +166,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				replacementSKU = "SKU1001",
 				sku = "SKU1002");
 		}
@@ -82,7 +206,7 @@ definition {
 				catalogName = "Test Catalog",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -91,7 +215,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1002");
 
 			CommerceProducts.openProductsAdmin();
@@ -120,6 +244,16 @@ definition {
 		}
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ReplacementLoopIsPrevented {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8164 ReplacementLoopIsPrevented pending implementation
+
+	}
+
 	@description = "Verify a product can be set as discontinued"
 	@priority = "3"
 	test SetProductAsDiscontinued {
@@ -127,7 +261,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "MIN70291");
 		}
 
@@ -176,7 +310,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -184,7 +318,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1002");
 		}
 
@@ -223,7 +357,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 

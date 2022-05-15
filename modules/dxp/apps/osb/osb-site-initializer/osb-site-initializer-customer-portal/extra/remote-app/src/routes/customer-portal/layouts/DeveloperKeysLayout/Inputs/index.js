@@ -14,6 +14,7 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getListTypeDefinitions} from '../../../../../common/services/liferay/graphql/queries';
@@ -23,7 +24,6 @@ import {
 	ALERT_DOWNLOAD_TYPE,
 	AUTO_CLOSE_ALERT_TIME,
 	EXTENSION_FILE_TYPES,
-	LIST_TYPES,
 	STATUS_CODE,
 } from '../../../utils/constants';
 
@@ -36,6 +36,8 @@ const DeveloperKeysInputs = ({
 	accountKey,
 	downloadTextHelper,
 	dxpVersion,
+	listType,
+	productName,
 	projectName,
 	sessionId,
 }) => {
@@ -44,7 +46,7 @@ const DeveloperKeysInputs = ({
 		licenseKeyDownloadURL,
 	} = useApplicationProvider();
 	const [dxpVersions, setDxpVersions] = useState([]);
-	const [selectedVersion, setSelectedVersion] = useState(dxpVersion);
+	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
 	const [
 		developerKeysDownloadStatus,
 		setDeveloperKeysDownloadStatus,
@@ -55,32 +57,34 @@ const DeveloperKeysInputs = ({
 			const {data} = await client.query({
 				query: getListTypeDefinitions,
 				variables: {
-					filter: `name eq '${LIST_TYPES.dxpVersion}'`,
+					filter: `name eq '${listType}'`,
 				},
 			});
 
-			if (data) {
-				const items = data.listTypeDefinitions.items[0].listTypeEntries;
-				const orderedItems = [...items].sort((a, b) => b.name - a.name);
+			const items = data?.listTypeDefinitions?.items[0]?.listTypeEntries;
 
-				setDxpVersions(orderedItems);
+			if (items?.length) {
+				const sortedItems = [...items].sort();
+				setDxpVersions(sortedItems);
 
 				setSelectedVersion(
-					orderedItems.find((item) => item.name === dxpVersion)
-						?.name || orderedItems[0]?.name
+					sortedItems.find((item) => item.name === dxpVersion)
+						?.name || sortedItems[0].name
 				);
 			}
 		};
 
 		fetchListTypeDefinitions();
-	}, [dxpVersion]);
+	}, [dxpVersion, listType]);
 
 	const developerKeyDownload = async () => {
+		const [selectedVersionSplitted] = selectedVersion.split(' ');
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			licenseKeyDownloadURL,
 			sessionId,
-			selectedVersion
+			encodeURI(selectedVersionSplitted),
+			productName
 		);
 
 		if (license.status === STATUS_CODE.success) {
@@ -96,7 +100,7 @@ const DeveloperKeysInputs = ({
 
 			return downloadFromBlob(
 				licenseBlob,
-				`activation-key-dxpdevelopment-${selectedVersion}-${projectFileName}${extensionFile}`
+				`activation-key-${productName.toLowerCase()}development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
 			);
 		}
 
@@ -117,24 +121,21 @@ const DeveloperKeysInputs = ({
 							symbol="caret-bottom"
 						/>
 
-						{selectedVersion && (
-							<ClaySelect
-								className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
-								onChange={({target}) => {
-									setSelectedVersion(target.value);
-								}}
-								value={selectedVersion}
-							>
-								{selectedVersion &&
-									dxpVersions.map((version) => (
-										<ClaySelect.Option
-											className="font-weight-bold options"
-											key={version.key}
-											label={version.name}
-										/>
-									))}
-							</ClaySelect>
-						)}
+						<ClaySelect
+							className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
+							onChange={({target}) => {
+								setSelectedVersion(target.value);
+							}}
+							value={selectedVersion}
+						>
+							{dxpVersions.map((version) => (
+								<ClaySelect.Option
+									className="font-weight-bold options"
+									key={version.key}
+									label={version.name}
+								/>
+							))}
+						</ClaySelect>
 					</div>
 				</label>
 
@@ -144,13 +145,14 @@ const DeveloperKeysInputs = ({
 					prependIcon="download"
 					type="button"
 				>
-					Download Key
+					{i18n.translate('download-key')}
 				</Button>
 			</div>
 
 			<p className="text-neutral-7">
-				{`For instructions on how to activate your Liferay DXP or Liferay
-				Portal instance, please read the `}
+				{`${i18n.translate(
+					'for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the'
+				)} `}
 
 				<a
 					href={deployingActivationKeysURL}
@@ -158,7 +160,7 @@ const DeveloperKeysInputs = ({
 					target="_blank"
 				>
 					<u className="font-weight-semi-bold text-neutral-7">
-						Deploying Activation Keys article.
+						{i18n.translate('deploying-activation-keys-article')}
 					</u>
 				</a>
 			</p>

@@ -12,7 +12,7 @@
 <tbody>
 	<tr>
 		<td>ANY_TAB_ON_ENTRY</td>
-		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td>//span[contains(text(),'${key_tabName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -42,17 +42,12 @@
 	</tr>
 	<tr>
 		<td>LAYOUT_BASIC_INFO_NAME_FIELD</td>
-		<td>//input[@id='objectLayoutName']</td>
+		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>BASIC_INFO_NAME_FIELD</td>
-		<td>//input[contains(@id,'objectLayoutName')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -82,7 +77,7 @@
 	</tr>
 	<tr>
 		<td>DROPDOWN_LANGUAGEM</td>
-		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'labelMenu')]</td>
+		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'labelMenu')] | //button[contains(@class,'dropdown-toggle btn btn-monospaced btn-secondary')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -102,7 +97,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_CHOOSE_OPTION</td>
-		<td>//div[contains(text(),'Choose an Option')]</td>
+		<td>//div[contains(text(),'Choose an Option') or contains(text(),'Escolha uma Opção')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -122,7 +117,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_RELATIONSHIP_TAB</td>
-		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_tabName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -171,6 +166,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_IMPORT_FIELDS</td>
+		<td>//label[contains(text(),'${fieldName}')]/following::input[@class='form-control' and @value='${valueName}']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LAYOUT_ENTRY_CHOOSE_OPTION</td>
 		<td>//span[contains(text(),'Choose an Option')]</td>
 		<td></td>
@@ -202,7 +202,7 @@
 	</tr>
 	<tr>
 		<td>NAME_OBJECT_RELATIONSHIP_REQUIRED</td>
-		<td>//input[@id ='objectRelationshipName']/..//div//span[contains(text(),'Required')]</td>
+		<td>//input[@id ='objectRelationshipName']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -222,7 +222,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_SEARCHABLE_SECTION_DISABLED</td>
-		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Searchable')]</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']/../..//label[contains(@class,'toggle-switch simple-toggle-switch disabled')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -232,22 +232,22 @@
 	</tr>
 	<tr>
 		<td>SEARCHABLE_SECTION_TITLE</td>
-		<td>//h2[contains (text(), 'Searchable')]</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_DETAILS_TAB</td>
-		<td>//a[contains(text(), 'Details')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Details')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE</td>
-		<td>//div[contains(@class,'form-group has-error')]//span[contains(text(),'Required')]</td>
+		<td>REQUIRED_ERROR_MESSAGE</td>
+		<td>//div[contains(@class,'form-group has-error')]//div[@class='form-feedback-item' and contains (.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
-		<td>//a[contains(text(),'Fields')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -262,42 +262,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LAYOUTS_TAB</td>
-		<td>//a[contains(text(), 'Layouts')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Layouts')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_RELATIONSHIPS_TAB</td>
-		<td>//a[contains(text(),'Relationship')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_LABEL_INPUT</td>
-		<td>//input[contains(@id,'objectFieldLabel')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_NAME_INPUT</td>
-		<td>//input[contains(@id,'objectFieldName')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH</td>
-		<td>//input[contains(@class,'toggle-switch-check')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH_DISABLED</td>
-		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Mandatory')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_TYPE</td>
-		<td>//input[@placeholder='Choose an Option']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_TYPE_OPTION</td>
-		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_fieldType}')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Relationship')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -312,7 +282,7 @@
 	</tr>
 	<tr>
 		<td>RELATIONSHIPS_TYPE_FORM_REQUIRED</td>
-		<td>//input[contains(@class, 'form-control')]/../following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//label[contains(.,'Type')]/..//div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -377,7 +347,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_LANGUAGE</td>
-		<td>//span[contains(text(),'${key_newLanguage}')]</td>
+		<td>//span[contains(text(),'${key_newLanguage}')] | //button[contains(@class,'dropdown-item')]//div[text()='${key_newLanguage}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -387,7 +357,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_RELATIONSHIP_REQUIRED</td>
-		<td>//select[@class = 'form-control']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//select[@class = 'form-control']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -406,13 +376,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_DETAILS_IFRAME</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]</td>
+		<td>SIDE_PANEL</td>
+		<td>//div[contains(@class, 'lfr-objects__side-panel-content')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_DETAILS_TITLE</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]//h3[contains(@class, 'mb-0')]</td>
+		<td>SIDE_PANEL_TITLE</td>
+		<td>//div[contains(@class, 'lfr-objects__side-panel-content-header')]//h3[contains(@class, 'mb-0')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -423,16 +393,6 @@
 	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELD_SEARCHABLE_LANGUAGE_LABEL</td>
-		<td>//div[contains(@class,'form-group input-select-wrapper')]//label[contains (., 'Language')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELD_SEARCHABLE_LANGUAGE_OPTION</td>
-		<td>//div[contains(@class,'form-group input-select-wrapper')]//option[contains(@value, 'en_US')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -462,7 +422,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_KEBAB_MENU</td>
-		<td>//a[contains(text(),'${key_objectLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+		<td>//*[contains(text(),'${key_objectLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -476,23 +436,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>TYPE_FIELD_REQUIRED</td>
-		<td>//input[@placeholder='Choose an Option']/ancestor::div//span[contains(text(),'Required')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>LABEL_FIELD_REQUIRED</td>
-		<td>//input[@id='objectFieldLabel']/following-sibling::div//span[contains(text(),'Required')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>OBJECT_LABEL_FIELD_REQUIRED</td>
-		<td>//input[@id='objectDefinitionLabel']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//input[@id='objectDefinitionLabel']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_NAME_FIELD_REQUIRED</td>
-		<td>//input[@id='objectDefinitionName']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//input[@id='objectDefinitionName']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -507,12 +457,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_ACTIONS_TAB</td>
-		<td>//a[contains(text(),'Actions')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Actions')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_ACTION_NAME_FIELD</td>
-		<td>//input[@id='objectActionName']</td>
+		<td>ACTION_NAME_FIELD</td>
+		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -526,13 +476,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_URL_ACTION_FIELD</td>
-		<td>//input[@id='objectActionExecutorUrl']</td>
+		<td>ACTION_URL_FIELD</td>
+		<td>//input[@name='url']</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_SECRET_ACTION_FIELD</td>
-		<td>//input[@id='objectActionExecutorSecret']</td>
+		<td>ACTION_SECRET_FIELD</td>
+		<td>//input[@name='secret']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -543,11 +493,6 @@
 	<tr>
 		<td>VIEW_SIMPLE_TEXT_GENERIC</td>
 		<td>//div[contains(text(),'${key_labelName}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>VIEW_ACTION_NAME_ON_SIDE_PANEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -592,7 +537,12 @@
 	</tr>
 	<tr>
 		<td>LABEL_OBJECT_RELATIONSHIP_REQUIRED</td>
-		<td>//input[@id ='objectRelationshipLabel']/..//div//span[contains(text(),'Required')]</td>
+		<td>//input[@id ='objectRelationshipLabel']/following-sibling::div[contains(.,'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_OPTIONS</td>
+		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

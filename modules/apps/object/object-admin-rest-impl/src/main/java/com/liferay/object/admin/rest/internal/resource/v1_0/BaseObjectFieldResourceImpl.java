@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -473,13 +475,33 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer =
-			objectField -> postObjectDefinitionObjectField(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectField);
+		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
 
-		for (ObjectField objectField : objectFields) {
-			objectFieldUnsafeConsumer.accept(objectField);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectFieldUnsafeConsumer =
+				objectField -> postObjectDefinitionObjectField(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectField);
+		}
+
+		if (objectFieldUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ObjectField");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFields, objectFieldUnsafeConsumer);
+		}
+		else {
+			for (ObjectField objectField : objectFields) {
+				objectFieldUnsafeConsumer.accept(objectField);
+			}
 		}
 	}
 
@@ -507,6 +529,10 @@ public abstract class BaseObjectFieldResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -548,16 +574,53 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectField objectField : objectFields) {
-			putObjectField(
+		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectFieldUnsafeConsumer = objectField -> patchObjectField(
 				objectField.getId() != null ? objectField.getId() :
 					Long.parseLong((String)parameters.get("objectFieldId")),
 				objectField);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectFieldUnsafeConsumer = objectField -> putObjectField(
+				objectField.getId() != null ? objectField.getId() :
+					Long.parseLong((String)parameters.get("objectFieldId")),
+				objectField);
+		}
+
+		if (objectFieldUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectField");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFields, objectFieldUnsafeConsumer);
+		}
+		else {
+			for (ObjectField objectField : objectFields) {
+				objectFieldUnsafeConsumer.accept(objectField);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectField>,
+			 UnsafeConsumer<ObjectField, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -618,6 +681,14 @@ public abstract class BaseObjectFieldResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -712,6 +783,10 @@ public abstract class BaseObjectFieldResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectField>,
+		 UnsafeConsumer<ObjectField, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

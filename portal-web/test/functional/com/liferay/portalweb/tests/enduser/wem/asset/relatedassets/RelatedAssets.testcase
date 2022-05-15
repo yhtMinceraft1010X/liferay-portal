@@ -71,7 +71,7 @@ definition {
 				pageName = "Test Page 1",
 				siteName = "Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
@@ -238,6 +238,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test ShouldBeDisplayWithCategory {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		task ("Add a public page with JSON") {

@@ -21,7 +21,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
@@ -30,17 +29,16 @@ import {
 	Collection,
 	Column,
 	Container,
-	OldCollection,
+	Form,
 	Row,
 } from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
-	[LAYOUT_DATA_ITEM_TYPES.collection]: config.paginationImprovementsEnabled
-		? Collection
-		: OldCollection,
+	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItem,
 	[LAYOUT_DATA_ITEM_TYPES.column]: MasterColumn,
 	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
+	[LAYOUT_DATA_ITEM_TYPES.form]: Form,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,

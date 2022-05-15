@@ -11,13 +11,13 @@
 
 import React, {useEffect, useState} from 'react';
 
+import useClipboardJS from '../hooks/useClipboardJS';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {fetchData} from '../utils/fetch';
 import {renameKeys} from '../utils/language';
 import {openInitialSuccessToast} from '../utils/toasts';
-import useClipboardJS from '../utils/useClipboardJS';
 import EditSXPElementForm from './EditSXPElementForm';
 
 /**
@@ -74,6 +74,7 @@ const transformToSXPElementExportFormat = (
 
 export default function ({
 	defaultLocale,
+	jsonAutocompleteEnabled,
 	learnMessages,
 	locale,
 	namespace,
@@ -89,22 +90,18 @@ export default function ({
 		openInitialSuccessToast();
 
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
-			{
-				method: 'GET',
-			},
-			(responseContent) => setSXPElementResponse(responseContent),
-			() => setSXPElementResponse({})
-		);
+			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`
+		)
+			.then((responseContent) => setSXPElementResponse(responseContent))
+			.catch(() => setSXPElementResponse({}));
 
 		fetchData(
-			'/o/search-experiences-rest/v1.0/sxp-parameter-contributor-definitions',
-			{
-				method: 'GET',
-			},
-			(responseContent) => setPredefinedVariables(responseContent.items),
-			() => setPredefinedVariables([])
-		);
+			'/o/search-experiences-rest/v1.0/sxp-parameter-contributor-definitions'
+		)
+			.then((responseContent) =>
+				setPredefinedVariables(responseContent.items)
+			)
+			.catch(() => setPredefinedVariables([]));
 	}, []); //eslint-disable-line
 
 	if (!sxpElementResponse || !predefinedVariables) {
@@ -116,6 +113,7 @@ export default function ({
 			value={{
 				availableLanguages: Liferay.Language.available,
 				defaultLocale,
+				jsonAutocompleteEnabled,
 				learnMessages,
 				locale,
 				namespace,

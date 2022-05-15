@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -386,12 +388,33 @@ public abstract class BaseObjectLayoutResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
-			objectLayout -> postObjectDefinitionObjectLayout(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectLayout);
+			null;
 
-		for (ObjectLayout objectLayout : objectLayouts) {
-			objectLayoutUnsafeConsumer.accept(objectLayout);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectLayoutUnsafeConsumer =
+				objectLayout -> postObjectDefinitionObjectLayout(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectLayout);
+		}
+
+		if (objectLayoutUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ObjectLayout");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectLayouts, objectLayoutUnsafeConsumer);
+		}
+		else {
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutUnsafeConsumer.accept(objectLayout);
+			}
 		}
 	}
 
@@ -419,6 +442,10 @@ public abstract class BaseObjectLayoutResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -460,16 +487,47 @@ public abstract class BaseObjectLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectLayout objectLayout : objectLayouts) {
-			putObjectLayout(
+		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectLayoutUnsafeConsumer = objectLayout -> putObjectLayout(
 				objectLayout.getId() != null ? objectLayout.getId() :
 					Long.parseLong((String)parameters.get("objectLayoutId")),
 				objectLayout);
+		}
+
+		if (objectLayoutUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectLayout");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectLayouts, objectLayoutUnsafeConsumer);
+		}
+		else {
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutUnsafeConsumer.accept(objectLayout);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectLayout>,
+			 UnsafeConsumer<ObjectLayout, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -530,6 +588,14 @@ public abstract class BaseObjectLayoutResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -620,6 +686,10 @@ public abstract class BaseObjectLayoutResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectLayout>,
+		 UnsafeConsumer<ObjectLayout, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

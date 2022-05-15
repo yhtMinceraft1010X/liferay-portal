@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -78,8 +80,14 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10512 | Test Summary: Individual activities chart tooltip events and sessions shown"
+	@ignore = "true"
 	@priority = "5"
 	test AssertChartTooltipEventsAndSessions {
+
+		// AC Bug ticket: LRAC-10734
+
+		var username = "ac1 ac1";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -104,10 +112,13 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Navigate to the individuals page of new user") {
-			ACUtils.searchBar(searchItem = "ac1 ac1");
+		task ("Get the total number of user activities and navigate to the new individual's page") {
+			ACUtils.viewNameList(nameList = "${username}");
 
-			ACNavigation.openItem(itemName = "ac1 ac1");
+			var key_userName = "${username}";
+			var currentTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
+
+			ACNavigation.openItem(itemName = "${username}");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -119,7 +130,7 @@ definition {
 		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
 			ACIndividualsDashboard.viewActivitiesOnGraph(
 				typeList = "Events,Sessions",
-				valueList = "12,1");
+				valueList = "${currentTotalActivities},1");
 		}
 
 		task ("Go to DXP and create a new custom event") {
@@ -152,10 +163,11 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Navigate to the individuals page of new user") {
-			ACUtils.searchBar(searchItem = "ac1 ac1");
+		task ("Get the total number of user activities and navigate to the new individual's page") {
+			var key_userName = "${username}";
+			var newTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
-			ACNavigation.openItem(itemName = "ac1 ac1");
+			ACNavigation.openItem(itemName = "${username}");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -166,14 +178,17 @@ definition {
 
 		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
 			ACIndividualsDashboard.viewActivitiesOnGraph(
+				notEquals = "${currentTotalActivities}",
 				typeList = "Events,Sessions",
-				valueList = "24,2");
+				valueList = "${newTotalActivities},2");
 		}
 	}
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10513 | Test Summary: Empty individual events state"
 	@priority = "3"
 	test AssertEmptyIndividualEvents {
+		property analytics.cloud.upstream = "false";
+
 		task ("Fill fields and create custom event") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -207,7 +222,7 @@ definition {
 		}
 
 		task ("Assert empty state") {
-			ACUtils.viewGenericText(textValueList = "No Events Found,Try a different date range or search term.");
+			ACUtils.viewGenericText(textValueList = "There are no events found.,Check back later to verify if data has been received from your data sources.Learn more about individuals.");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -226,6 +241,8 @@ definition {
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10509 | Test Summary: Individual activities with session attributes"
 	@priority = "5"
 	test ViewIndividualActivitiesWithSessionAttributes {
+		property analytics.cloud.upstream = "false";
+
 		task ("Fill fields and create custom event") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 

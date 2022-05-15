@@ -53,7 +53,9 @@ describe('SidebarPanelInfoView', () => {
 		);
 
 		expect(getByText('Basic Web Content Title')).toBeInTheDocument();
-		expect(getByText('Basic Web Content')).toBeInTheDocument();
+		expect(
+			getByText('Web Content Article - Basic Web Content')
+		).toBeInTheDocument();
 		expect(getByText('version 1.6')).toBeInTheDocument();
 		expect(getByText('Approved')).toBeInTheDocument();
 		expect(getByText('version 1.7')).toBeInTheDocument();
@@ -73,7 +75,7 @@ describe('SidebarPanelInfoView', () => {
 	it('renders sidebar panel with proper dates for a basic web content', () => {
 		const {getByText} = render(_getSidebarComponent(mockedProps));
 
-		expect(getByText('display-date')).toBeInTheDocument();
+		expect(getByText('Display Date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 10:53 AM')).toBeInTheDocument();
 
 		expect(getByText('creation-date')).toBeInTheDocument();
@@ -82,10 +84,10 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('modified-date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 10:50 AM')).toBeInTheDocument();
 
-		expect(getByText('expiration-date')).toBeInTheDocument();
+		expect(getByText('Expiration Date')).toBeInTheDocument();
 		expect(getByText('Jul 28, 2020, 10:00 AM')).toBeInTheDocument();
 
-		expect(getByText('review-date')).toBeInTheDocument();
+		expect(getByText('Review Date')).toBeInTheDocument();
 		expect(getByText('Jul 27, 2020, 2:14 PM')).toBeInTheDocument();
 	});
 
@@ -230,10 +232,10 @@ describe('SidebarPanelInfoView', () => {
 			previewFigureTag.classList.contains('document-preview-figure')
 		).toBe(true);
 
-		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('Mocked description')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
-		expect(getByText('size')).toBeInTheDocument();
+		expect(getByText('Size')).toBeInTheDocument();
 
 		expect(
 			queryByText('languages-translated-into')
@@ -254,7 +256,9 @@ describe('SidebarPanelInfoView', () => {
 		).toBe(true);
 
 		expect(getByText('Mocked description')).toBeInTheDocument();
-		expect(getByText('External Video Shortcut')).toBeInTheDocument();
+		expect(
+			getByText('Document - External Video Shortcut')
+		).toBeInTheDocument();
 
 		expect(queryByText('download')).not.toBeInTheDocument();
 		expect(queryByText('size')).not.toBeInTheDocument();
@@ -280,7 +284,7 @@ describe('SidebarPanelInfoView', () => {
 			container.getElementsByClassName('lexicon-icon-copy').length
 		).toBe(1);
 
-		expect(getByText('Basic Document')).toBeInTheDocument();
+		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();
 
 		expect(

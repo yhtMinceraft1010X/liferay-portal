@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -3595,6 +3595,23 @@ public class KBFolderPersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode
+								};
+							}
+
+							_log.warn(
+								"KBFolderPersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					KBFolder kbFolder = list.get(0);
 
 					result = kbFolder;
@@ -3881,7 +3898,7 @@ public class KBFolderPersistenceImpl
 		kbFolder.setNew(true);
 		kbFolder.setPrimaryKey(kbFolderId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		kbFolder.setUuid(uuid);
 
@@ -3995,13 +4012,8 @@ public class KBFolderPersistenceImpl
 
 		KBFolderModelImpl kbFolderModelImpl = (KBFolderModelImpl)kbFolder;
 
-		if (Validator.isNull(kbFolder.getExternalReferenceCode())) {
-			kbFolder.setExternalReferenceCode(
-				String.valueOf(kbFolder.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(kbFolder.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			kbFolder.setUuid(uuid);
 		}
@@ -4572,6 +4584,9 @@ public class KBFolderPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private KBFolderModelArgumentsResolver _kbFolderModelArgumentsResolver;

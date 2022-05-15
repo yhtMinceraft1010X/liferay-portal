@@ -96,9 +96,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.staging.configuration.StagingConfiguration;
 
@@ -108,7 +108,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -142,10 +141,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, privateLayout);
-
-		return getLayoutIds(layouts);
+		return getLayoutIds(
+			_layoutLocalService.getLayouts(groupId, privateLayout));
 	}
 
 	@Override
@@ -482,7 +479,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String userIdStrategy = MapUtil.getString(
 				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			PortletDataContext portletDataContext =
 				_portletDataContextFactory.createImportPortletDataContext(
@@ -1135,10 +1132,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			(_stagingConfiguration.stagingDeleteTempLAROnFailure() &&
 			 _stagingConfiguration.stagingDeleteTempLAROnSuccess())) {
 
-			return ZipWriterFactoryUtil.getZipWriter();
+			return _zipWriterFactory.getZipWriter();
 		}
 
-		return ZipWriterFactoryUtil.getZipWriter(
+		return _zipWriterFactory.getZipWriter(
 			new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +
 					StringPool.SLASH + fileName));
@@ -1510,11 +1507,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Group.class);
 
-			long groupId = MapUtil.getLong(
-				groupIds,
-				GetterUtil.getLong(element.attributeValue("group-id")));
-
-			missingReference.setGroupId(groupId);
+			missingReference.setGroupId(
+				MapUtil.getLong(
+					groupIds,
+					GetterUtil.getLong(element.attributeValue("group-id"))));
 
 			return missingReference;
 		}
@@ -1545,6 +1541,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private SystemEventLocalService _systemEventLocalService;
 	private UserLocalService _userLocalService;
 
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
+
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 
 		public ManifestSummaryElementProcessor(
@@ -1561,12 +1563,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			if (elementName.equals("header")) {
 				String exportDateString = element.attributeValue("export-date");
 
-				Date exportDate = GetterUtil.getDate(
-					exportDateString,
-					DateFormatFactoryUtil.getSimpleDateFormat(
-						Time.RFC822_FORMAT));
-
-				_manifestSummary.setExportDate(exportDate);
+				_manifestSummary.setExportDate(
+					GetterUtil.getDate(
+						exportDateString,
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							Time.RFC822_FORMAT)));
 			}
 			else if (elementName.equals("portlet")) {
 				String portletId = element.attributeValue("portlet-id");

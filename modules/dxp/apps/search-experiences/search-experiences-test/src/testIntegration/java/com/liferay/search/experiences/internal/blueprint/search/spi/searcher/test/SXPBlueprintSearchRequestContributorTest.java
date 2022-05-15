@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -46,13 +48,11 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import java.io.IOException;
-
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -116,23 +116,23 @@ public class SXPBlueprintSearchRequestContributorTest {
 		_test(
 			new String[] {"diamond bar city", "walnut city"},
 			() -> {
-				HttpUtil httpUtil = new HttpUtil();
-
 				try (ConfigurationTemporarySwapper
 						configurationTemporarySwapper =
 							_getConfigurationTemporarySwapper(
 								"2345", "34.94.32.240", "true")) {
 
-					httpUtil.setHttp(
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http",
 						_getHttp(
 							JSONUtil.put(
 								"city", "diamond bar"
-							).toJSONString()));
+							).toString()));
 
 					_assertSearch("[diamond bar city]", "34.94.32.240", "city");
 				}
 				finally {
-					httpUtil.setHttp(_http);
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http", _http);
 				}
 
 				try (ConfigurationTemporarySwapper
@@ -140,16 +140,18 @@ public class SXPBlueprintSearchRequestContributorTest {
 							_getConfigurationTemporarySwapper(
 								"2345", "91.233.116.229", "true")) {
 
-					httpUtil.setHttp(
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http",
 						_getHttp(
 							JSONUtil.put(
 								"city", "walnut"
-							).toJSONString()));
+							).toString()));
 
 					_assertSearch("[walnut city]", "91.233.116.229", "city");
 				}
 				finally {
-					httpUtil.setHttp(_http);
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http", _http);
 				}
 			});
 	}
@@ -219,15 +221,18 @@ public class SXPBlueprintSearchRequestContributorTest {
 			).build());
 	}
 
-	private Http _getHttp(String urlResponse) throws Exception {
-		return new HttpImpl() {
+	private Http _getHttp(String urlResponse) {
+		return (Http)ProxyUtil.newProxyInstance(
+			Http.class.getClassLoader(), new Class<?>[] {Http.class},
+			(proxy, method, args) -> {
+				if (!Objects.equals("URLtoString", method.getName()) ||
+					(args.length != 1) || !(args[0] instanceof String)) {
 
-			@Override
-			public String URLtoString(String url) throws IOException {
+					return method.invoke(_http, args);
+				}
+
 				return urlResponse;
-			}
-
-		};
+			});
 	}
 
 	private void _test(

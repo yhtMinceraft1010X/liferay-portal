@@ -247,6 +247,21 @@ definition {
 					locator1 = "AlloyEditor#EDITOR",
 					value1 = "${captionField}");
 			}
+
+			if (isSet(captionFieldLink)) {
+				SelectFieldText(
+					key_editor = "coverImageCaption",
+					locator1 = "AlloyEditor#EDITOR",
+					value1 = "Caption");
+
+				Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_ICON");
+
+				Type(
+					locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_INPUT",
+					value1 = "${captionFieldLink}");
+
+				Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_CHECK_ICON");
+			}
 		}
 
 		BlogsEntry.addEntryContent(
@@ -659,7 +674,9 @@ definition {
 		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
 			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
 
-			Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

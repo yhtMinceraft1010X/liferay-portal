@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -69,6 +71,54 @@ definition {
 				key_tooltipMessage = "AC Properties",
 				locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP_MESSAGE",
 				value1 = "AC Properties");
+		}
+	}
+
+	@description = "Bug: LRAC-8557 | Automation ID: LRAC-11056 | Test Summary: Search using special characters shown in search overview"
+	@priority = "4"
+	test SearchTermWithSpecialCharacters {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Search keywords on DXP Search Bar") {
+			Navigator.openURL();
+
+			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
+				ContentDashboard.searchValue(webContentTitle = "${keyword}");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Switch to new property in AC") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACSites.viewSiteOverviewDashboardCards();
+		}
+
+		task ("View the new report") {
+			ACCards.viewCards(cardTitle = "Search Terms");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Search Terms");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert Keywords Searched") {
+			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
+				ACUtils.viewGenericText(textValueList = "${keyword}");
+			}
 		}
 	}
 

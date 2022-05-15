@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -46,6 +48,9 @@ definition {
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
 		property portal.upstream = "quarantine";
 
+		// AC Quarantine reason: CSV data source takes too long to update individual details
+		// AC Quarantine: Maybe it is possible to validate in personas
+
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -87,9 +92,9 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
+			ACUtils.viewNameList(nameList = "ac@liferay.com");
 
-			ACIndividualsDashboard.assertIndividualAttributeNotPresent(individualAttribute = "Farmer");
+			ACUtils.viewNameListIsNotPresent(nameList = "Farmer");
 		}
 
 		task ("Add a CSV Data Source") {
@@ -113,9 +118,7 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
-
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Farmer");
+			ACUtils.viewNameList(nameList = "ac@liferay.com,Farmer");
 		}
 	}
 

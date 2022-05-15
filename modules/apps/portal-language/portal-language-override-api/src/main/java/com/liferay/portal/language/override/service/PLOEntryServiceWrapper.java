@@ -35,6 +35,14 @@ public class PLOEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.language.override.model.PLOEntry
+			addOrUpdatePLOEntry(String key, String languageId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ploEntryService.addOrUpdatePLOEntry(key, languageId, value);
+	}
+
+	@Override
 	public void deletePLOEntries(String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -57,6 +65,21 @@ public class PLOEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _ploEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.language.override.model.PLOEntry>
+			getPLOEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ploEntryService.getPLOEntries(companyId);
+	}
+
+	@Override
+	public int getPLOEntriesCount(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ploEntryService.getPLOEntriesCount(companyId);
 	}
 
 	@Override

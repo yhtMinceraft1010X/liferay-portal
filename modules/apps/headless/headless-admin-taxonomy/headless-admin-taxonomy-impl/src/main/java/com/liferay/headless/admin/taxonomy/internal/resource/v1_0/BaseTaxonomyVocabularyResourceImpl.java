@@ -16,6 +16,7 @@ package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1202,22 +1204,52 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<TaxonomyVocabulary, Exception>
+			taxonomyVocabularyUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			taxonomyVocabularyUnsafeConsumer = taxonomyVocabulary -> {
 			};
 
-		if (parameters.containsKey("assetLibraryId")) {
-			taxonomyVocabularyUnsafeConsumer =
-				taxonomyVocabulary -> postAssetLibraryTaxonomyVocabulary(
-					(Long)parameters.get("assetLibraryId"), taxonomyVocabulary);
-		}
-		else if (parameters.containsKey("siteId")) {
-			taxonomyVocabularyUnsafeConsumer =
-				taxonomyVocabulary -> postSiteTaxonomyVocabulary(
-					(Long)parameters.get("siteId"), taxonomyVocabulary);
+			if (parameters.containsKey("assetLibraryId")) {
+				taxonomyVocabularyUnsafeConsumer =
+					taxonomyVocabulary -> postAssetLibraryTaxonomyVocabulary(
+						(Long)parameters.get("assetLibraryId"),
+						taxonomyVocabulary);
+			}
+			else if (parameters.containsKey("siteId")) {
+				taxonomyVocabularyUnsafeConsumer =
+					taxonomyVocabulary -> postSiteTaxonomyVocabulary(
+						(Long)parameters.get("siteId"), taxonomyVocabulary);
+			}
 		}
 
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			taxonomyVocabularyUnsafeConsumer.accept(taxonomyVocabulary);
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			taxonomyVocabularyUnsafeConsumer = taxonomyVocabulary ->
+				putSiteTaxonomyVocabularyByExternalReferenceCode(
+					taxonomyVocabulary.getSiteId() != null ?
+						taxonomyVocabulary.getSiteId() :
+							(Long)parameters.get("siteId"),
+					taxonomyVocabulary.getExternalReferenceCode(),
+					taxonomyVocabulary);
+		}
+
+		if (taxonomyVocabularyUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for TaxonomyVocabulary");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxonomyVocabularies, taxonomyVocabularyUnsafeConsumer);
+		}
+		else {
+			for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
+				taxonomyVocabularyUnsafeConsumer.accept(taxonomyVocabulary);
+			}
 		}
 	}
 
@@ -1245,6 +1277,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1284,13 +1320,46 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			putTaxonomyVocabulary(
-				taxonomyVocabulary.getId() != null ?
-					taxonomyVocabulary.getId() :
-						Long.parseLong(
-							(String)parameters.get("taxonomyVocabularyId")),
-				taxonomyVocabulary);
+		UnsafeConsumer<TaxonomyVocabulary, Exception>
+			taxonomyVocabularyUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxonomyVocabularyUnsafeConsumer =
+				taxonomyVocabulary -> patchTaxonomyVocabulary(
+					taxonomyVocabulary.getId() != null ?
+						taxonomyVocabulary.getId() :
+							Long.parseLong(
+								(String)parameters.get("taxonomyVocabularyId")),
+					taxonomyVocabulary);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxonomyVocabularyUnsafeConsumer =
+				taxonomyVocabulary -> putTaxonomyVocabulary(
+					taxonomyVocabulary.getId() != null ?
+						taxonomyVocabulary.getId() :
+							Long.parseLong(
+								(String)parameters.get("taxonomyVocabularyId")),
+					taxonomyVocabulary);
+		}
+
+		if (taxonomyVocabularyUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for TaxonomyVocabulary");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxonomyVocabularies, taxonomyVocabularyUnsafeConsumer);
+		}
+		else {
+			for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
+				taxonomyVocabularyUnsafeConsumer.accept(taxonomyVocabulary);
+			}
 		}
 	}
 
@@ -1359,6 +1428,15 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<TaxonomyVocabulary>,
+			 UnsafeConsumer<TaxonomyVocabulary, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1417,6 +1495,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1512,6 +1598,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<TaxonomyVocabulary>,
+		 UnsafeConsumer<TaxonomyVocabulary, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

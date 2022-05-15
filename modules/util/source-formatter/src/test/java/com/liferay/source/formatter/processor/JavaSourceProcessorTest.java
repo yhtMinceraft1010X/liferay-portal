@@ -73,6 +73,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testCommentStyling() throws Exception {
+		test("CommentStyling.testjava");
+	}
+
+	@Test
 	public void testConstructorParameterOrder() throws Exception {
 		test("ConstructorParameterOrder.testjava");
 	}
@@ -119,6 +124,21 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testExceedMaxLineLength() throws Exception {
 		test("ExceedMaxLineLength.testjava", "> 80", 37);
+	}
+
+	@Test
+	public void testExceptionMapper() throws Exception {
+		test(
+			"ExceptionMapperService.testjava",
+				"The value of 'osgi.jaxrs.name' should end with " +
+					"'ExceptionMapper'", 30);
+	}
+
+	@Test
+	public void testExceptionPrintStackTrace() throws Exception {
+		test(
+			"ExceptionPrintStackTrace.testjava",
+			"Avoid using method 'printStackTrace'" ,31);
 	}
 
 	@Test
@@ -304,6 +324,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testToJSONStringMethodCalls() throws Exception {
+		test("ToJSONStringMethodCalls.testjava",
+			new String[] {
+				"Use 'toString' instead of 'toJSONString'",
+				"Use 'toString' instead of 'toJSONString'",
+				"Use 'toString' instead of 'toJSONString'",
+				"Use 'toString' instead of 'toJSONString'"
+			},
+			new Integer[] {30, 39, 43, 67});
+	}
+
+	@Test
 	public void testListUtilUsages() throws Exception {
 		test(
 				"ListUtilUsages.testjava",
@@ -320,6 +352,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use _log.isTraceEnabled()", "Use _log.isWarnEnabled()"
 			},
 			new Integer[] {27, 36, 41, 53, 58, 68});
+	}
+
+	@Test
+	public void testLogParameters() throws Exception {
+		test("LogParameters.testjava");
 	}
 
 	@Test
@@ -342,6 +379,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be an empty line after 'registry.register'"
 			},
 			new Integer[] {23, 24, 34});
+	}
+
+	@Test
+	public void testMissingEmptyLinesBeforeMethodCalls() throws Exception {
+		test(
+			"MissingEmptyLinesBeforeMethodCalls.testjava",
+			"There should be an empty line before 'portletPreferences.store'",
+			26);
 	}
 
 	@Test
@@ -435,6 +480,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testServiceProxyFactoryNewServiceTrackedInstance() throws Exception {
+		test(
+			"ServiceProxyFactoryNewServiceTrackedInstance.testjava",
+			"Pass 'ServiceProxyFactoryNewServiceTrackedInstance.class' as " +
+				"the second parameter when calling method " +
+					"'ServiceProxyFactory.newServiceTrackedInstance'",
+			30);
+	}
+
+	@Test
 	public void testSingleStatementClause() throws Exception {
 		test(
 			"SingleStatementClause.testjava",
@@ -513,18 +568,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Method '_getString' is unused"
 			},
 			new Integer[] {33, 41});
-	}
-	
-	
-	@Test
-	public void testExceptionMapper() throws Exception {
-		test(
-			"ExceptionMapperService.testjava",
-			new String[] {
-				"The value of 'osgi.jaxrs.name' should end with " +
-					"'ExceptionMapper'"
-			},
-			new Integer[] {30});
 	}
 
 	@Test

@@ -15,7 +15,6 @@
 package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.core.PoshiContext;
-import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.PoshiVariablesUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
@@ -111,11 +110,8 @@ public final class CommandLogger {
 	public void logNamespacedClassCommandName(
 		String namespacedClassCommandName) {
 
-		LoggerElement dividerLineLoggerElement = _getDividerLineLoggerElement(
-			namespacedClassCommandName);
-
 		_commandLogLoggerElement.addChildLoggerElement(
-			dividerLineLoggerElement);
+			_getDividerLineLoggerElement(namespacedClassCommandName));
 	}
 
 	public void logSeleniumCommand(Element element, List<String> arguments) {
@@ -374,21 +370,7 @@ public final class CommandLogger {
 
 		sb.append(_getLineItemText("command-name", namespacedClassCommandName));
 
-		String classCommandName =
-			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
-				namespacedClassCommandName);
-
-		String className =
-			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
-				classCommandName);
-
-		String namespace = PoshiStackTraceUtil.getCurrentNamespace(
-			namespacedClassCommandName);
-
-		int functionLocatorCount = PoshiContext.getFunctionLocatorCount(
-			className, namespace);
-
-		for (int i = 0; i < functionLocatorCount; i++) {
+		for (int i = 0; i < PoshiContext.getFunctionMaxArgumentCount(); i++) {
 			String locatorKey = "locator" + (i + 1);
 
 			if (PoshiVariablesUtil.containsKeyInExecuteMap(locatorKey)) {

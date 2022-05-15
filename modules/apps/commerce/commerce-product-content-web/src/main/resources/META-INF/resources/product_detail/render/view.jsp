@@ -17,6 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
+
+CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
@@ -35,7 +40,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 			/>
 		</div>
 
-		<div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+		<div class="col-12 col-md-6">
 			<header>
 				<div class="availability d-flex mb-4">
 					<div>
@@ -45,7 +50,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 						/>
 					</div>
 
-					<div class="col stock-quantity text-truncate-inline">
+					<div class="ml-3 stock-quantity text-truncate-inline">
 						<span class="text-truncate" data-text-cp-instance-stock-quantity>
 							<span class="<%= ((cpSku != null) && cpSku.isDiscontinued()) ? StringPool.BLANK : "hide" %>">
 								<span class="text-danger">
@@ -66,6 +71,22 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
 
 					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" value="replacement-product" />
+				</c:if>
+
+				<c:if test="<%= (cpSku != null) && (cpSku.getDiscontinuedDate() != null) %>">
+
+					<%
+					Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM dd, yyyy", locale, timeZone);
+					%>
+
+					<p class="my-2">
+						<span class="font-weight-semi-bold">
+							<%= LanguageUtil.get(request, "end-of-life") %>
+						</span>
+						<span>
+							<%= format.format(cpSku.getDiscontinuedDate()) %>
+						</span>
+					</p>
 				</c:if>
 
 				<%
@@ -108,7 +129,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 			<p class="mt-3 product-description"><%= cpCatalogEntry.getDescription() %></p>
 
-			<h4 class="commerce-subscription-info mt-3 w-100">
+			<h4 class="commerce-subscription-info mt-3">
 				<c:if test="<%= cpSku != null %>">
 					<commerce-ui:product-subscription-info
 						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
@@ -151,8 +172,10 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				</c:otherwise>
 			</c:choose>
 
+			<liferay-util:dynamic-include key="com.liferay.commerce.product.type.grouped.web#/grouped_product_type.jsp#" />
+
 			<div class="mt-3 price-container row">
-				<div class="col-lg-9 col-sm-12 col-xl-6">
+				<div class="col col-lg-9 col-xl-6">
 					<commerce-ui:price
 						CPCatalogEntry="<%= cpCatalogEntry %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
@@ -173,14 +196,16 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					inline="<%= true %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					options='<%= "[]" %>'
 					size="lg"
+					skuOptions="[]"
 				/>
 
 				<commerce-ui:add-to-wish-list
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					large="<%= true %>"
 				/>
+
+				<liferay-util:dynamic-include key="com.liferay.commerce.product.type.virtual.web#/virtual_product_type.jsp#" />
 			</div>
 
 			<div class="mt-3">
@@ -303,6 +328,12 @@ List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategorie
 		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
+					"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
+				).put(
+					"commerceChannelGroupId", String.valueOf(commerceContext.getCommerceChannelGroupId())
+				).put(
+					"commerceOrderId", (commerceOrder == null) ? "0" : String.valueOf(commerceOrder.getCommerceOrderId())
+				).put(
 					"cpInstanceUuid", cpSku.getCPInstanceUuid()
 				).put(
 					"cProductId", String.valueOf(cpCatalogEntry.getCProductId())

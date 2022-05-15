@@ -17,52 +17,34 @@ import {gql} from '@apollo/client';
 import {TestrayBuild} from './testrayBuild';
 
 export type TestrayTask = {
+	build?: TestrayBuild;
+	dateCreated: string;
 	dueStatus: number;
+	id: number;
 	name: string;
-	testrayBuild?: TestrayBuild;
 };
 
-const testrayTaskFragment = gql`
-	fragment TestrayTaskFragment on C_TestrayTask {
-		dueStatus
-		name
-		testrayBuild
-	}
-`;
-
-export const getTestrayTask = gql`
-	${testrayTaskFragment}
-
-	query getTestrayTask($testrayTaskId: Long!) {
-		c {
-			testrayTask(testrayTaskId: $testrayTaskId) {
-				...TestrayTaskFragment
-			}
-		}
-	}
-`;
-
-export const getTestrayTasks = gql`
-	query getTestrayTasks(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		testrayTasks(filter: $filter, page: $page, pageSize: $pageSize)
+export const getTasks = gql`
+	query getTasks($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+		tasks(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
-				type: "C_TestrayTask"
-				path: "testraytasks?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
+				type: "C_Task"
+				path: "tasks?page={args.page}&pageSize={args.pageSize}&nestedFields=build.project,build.routine&nestedFieldsDepth=2"
 			) {
 			items {
+				dateCreated
 				dueStatus
 				name
-				testrayBuild {
-					dueDate
+				build: r_buildToTasks_c_build {
+					dueDate: dateCreated
+					id
 					name
-					testrayProject {
+					project: r_projectToBuilds_c_project {
+						id
 						name
 					}
-					testrayRoutine {
+					routine: r_routineToBuilds_c_routine {
+						id
 						name
 					}
 				}
@@ -76,46 +58,30 @@ export const getTestrayTasks = gql`
 	}
 `;
 
-export const getTestrayTaskRest = gql`
-	query getTestrayTask($testrayTaskId: Long!) {
-		testrayTask(testrayTaskId: $testrayTaskId)
+export const getTask = gql`
+	query getTask($taskId: Long!) {
+		task(taskId: $taskId)
 			@rest(
-				type: "C_TestrayTask"
-				path: "testraytasks/{args.testrayTaskId}?nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
+				type: "C_Task"
+				path: "tasks/{args.taskId}?nestedFields=build.project,build.routine&nestedFieldsDepth=2"
 			) {
+			dateCreated
 			dueStatus
 			name
-			testrayBuild {
+			build: r_buildToTasks_c_build {
+				id
 				dueDate
 				name
-				testrayProject {
+				project: r_projectToBuilds_c_project {
+					id
 					name
 				}
-				testrayRoutine {
+				routine: r_routineToBuilds_c_routine {
+					id
 					name
 				}
 			}
 			id
-		}
-	}
-`;
-
-export const getTestrayTasksXXX = gql`
-	query getTestrayTasks(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		c {
-			testrayTasks(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					...TestrayTaskFragment
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
-			}
 		}
 	}
 `;

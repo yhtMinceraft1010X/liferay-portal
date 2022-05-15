@@ -45,12 +45,14 @@ export {PagesVisitor} from './utils/visitors.es';
 
 export {EVENT_TYPES} from './core/actions/eventTypes.es';
 export {Field} from './core/components/Field/Field.es';
+export {FieldFeedback} from './core/components/FieldFeedback';
 export {FieldStateless} from './core/components/Field/FieldStateless.es';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';
 export {default as Pages} from './core/components/Pages.es';
 export * from './core/config/index.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
+export {useFeatureFlag} from './core/hooks/useFeatureFlag';
 export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
 export {useFieldTypesResource} from './core/hooks/useResource.es';

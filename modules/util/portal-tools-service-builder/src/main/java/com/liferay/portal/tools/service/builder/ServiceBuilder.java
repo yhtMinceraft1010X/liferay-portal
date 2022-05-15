@@ -2316,16 +2316,15 @@ public class ServiceBuilder {
 	private void _createBaseUADAnonymizer(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/impl/", entity.getName(),
-				_getSessionTypeName(_SESSION_TYPE_LOCAL), "ServiceImpl.java"));
-
-		String deleteUADEntityMethodName = _getDeleteUADEntityMethodName(
-			javaClass, entity.getName());
-
-		context.put("deleteUADEntityMethodName", deleteUADEntityMethodName);
-
+		context.put(
+			"deleteUADEntityMethodName",
+			_getDeleteUADEntityMethodName(
+				_getJavaClass(
+					StringBundler.concat(
+						_outputPath, "/service/impl/", entity.getName(),
+						_getSessionTypeName(_SESSION_TYPE_LOCAL),
+						"ServiceImpl.java")),
+				entity.getName()));
 		context.put("entity", entity);
 
 		String content = _processTemplate(_TPL_BASE_UAD_ANONYMIZER, context);
@@ -2987,11 +2986,16 @@ public class ServiceBuilder {
 		content = content.substring(lastImportEnd + 1);
 
 		if (!xmlFile.exists()) {
+			String hbmNamespace = _HIBERNATE_3_HBM_NAMESPACE;
+
+			if (isVersionGTE_7_4_0()) {
+				hbmNamespace = _HIBERNATE_5_HBM_NAMESPACE;
+			}
+
 			String xml = StringBundler.concat(
 				"<?xml version=\"1.0\"?>\n",
 				"<!DOCTYPE hibernate-mapping PUBLIC \"-//Hibernate/Hibernate ",
-				"Mapping DTD 3.0//EN\" \"http://hibernate.sourceforge.net",
-				"/hibernate-mapping-3.0.dtd\">\n\n",
+				"Mapping DTD 3.0//EN\" ", hbmNamespace, ">\n\n",
 				"<hibernate-mapping auto-import=\"false\" default-lazy=",
 				"\"false\">\n", "</hibernate-mapping>");
 
@@ -4623,7 +4627,15 @@ public class ServiceBuilder {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("\t<class name=\"")) {
+				if (isVersionGTE_7_4_0() &&
+					line.startsWith("<!DOCTYPE hibernate-mapping") &&
+					line.contains(_HIBERNATE_3_HBM_NAMESPACE)) {
+
+					line = StringUtil.replace(
+						line, _HIBERNATE_3_HBM_NAMESPACE,
+						_HIBERNATE_5_HBM_NAMESPACE);
+				}
+				else if (line.startsWith("\t<class name=\"")) {
 					line = StringUtil.replace(
 						line,
 						new String[] {
@@ -6543,7 +6555,6 @@ public class ServiceBuilder {
 				"name", externalReferenceCodeUpperCase.charAt(0) + "_ERC");
 
 			finderElement.addAttribute("return-type", entityName);
-			finderElement.addAttribute("unique", "true");
 
 			Element finderColumnElement = finderElement.addElement(
 				"finder-column");
@@ -7878,6 +7889,12 @@ public class ServiceBuilder {
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
+
+	private static final String _HIBERNATE_3_HBM_NAMESPACE =
+		"\"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\"";
+
+	private static final String _HIBERNATE_5_HBM_NAMESPACE =
+		"\"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd\"";
 
 	private static final int _MAX_LINE_LENGTH = 80;
 

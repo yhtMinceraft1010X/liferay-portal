@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -61,6 +63,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
 	@priority = "5"
 	test CanDistributionChartFilteredDateProperty {
+		property analytics.cloud.upstream = "false";
+
 		task ("View AC Page as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -104,11 +108,37 @@ definition {
 		task ("Filter Attribute") {
 			ACNavigation.switchTab(tabName = "Distribution");
 
-			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
+			ACSegments.selectDistributionByAttribute(attribute = "createDate");
+		}
+
+		task ("Get current date") {
+			var dayNum = DateUtil.getDate("0");
+			var tomorrowNum = DateUtil.getDate("1");
+			var monthNum = DateUtil.getCurrentMonth();
+			var yearNum = DateUtil.getCurrentYear();
+
+			if (("${monthNum}" != "10") && ("${monthNum}" != "11") && ("${monthNum}" != "12")) {
+				var monthNum = "0${monthNum}";
+			}
+
+			var i = ${dayNum} / 10;
+			var j = ${tomorrowNum} / 10;
+
+			if ("${i}" == "0") {
+				var dayNum = "0${dayNum}";
+			}
+
+			if ("${j}" == "0") {
+				var tomorrowNum = "0${tomorrowNum}";
+			}
 		}
 
 		task ("View Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "1986-05-31T00:00:00.000Z - 100.0%");
+			if (!(IsTextEqual.isPartialText(locator1 = "ACSegments#BREAKDOWN_CHART", value1 = "${yearNum}-${monthNum}-${dayNum}"))) {
+				ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${tomorrowNum}");
+			}
+
+			ACSegments.viewBreakdownChartsEntry(key_entry = "100.0%");
 		}
 	}
 
@@ -116,7 +146,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanDistributionChartFilteredNumber {
-		property portal.upstream = "quarantine";
 
 		// AC Refactor: Chart fails to appear when filtering with a number property.
 		// AC Refactor ticket: LRAC-9328
@@ -193,6 +222,9 @@ definition {
 	test CanDistributionChartFilteredText {
 		property portal.upstream = "quarantine";
 
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		task ("View AC Page as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -247,7 +279,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
-		property portal.upstream = "quarantine";
+		property analytics.cloud.upstream = "false";
 
 		var userList = "ac,dxp";
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
@@ -322,13 +354,15 @@ definition {
 		task ("Assert that a wrong word will be not found") {
 			ACSegments.searchTheSegmentProfile(searchTerm = "userfn");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
 	@priority = "3"
 	test OrderSegmentProfileDistribution {
+		property analytics.cloud.upstream = "false";
+
 		var userList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

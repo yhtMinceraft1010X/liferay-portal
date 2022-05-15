@@ -182,8 +182,8 @@ public class ContentDashboardAdminPortletTest {
 						audienceAssetVocabulary, childAssetVocabulary)));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
-			_assetCategoryLocalService.deleteAssetCategory(childAssetCategory);
+			_assetCategoryLocalService.deleteCategory(assetCategory);
+			_assetCategoryLocalService.deleteCategory(childAssetCategory);
 		}
 	}
 
@@ -230,7 +230,7 @@ public class ContentDashboardAdminPortletTest {
 				_getAuditGraphTitle(_getMockLiferayPortletRenderRequest()));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
+			_assetCategoryLocalService.deleteCategory(assetCategory);
 		}
 	}
 
@@ -248,11 +248,9 @@ public class ContentDashboardAdminPortletTest {
 
 	@Test
 	public void testGetContextWithRtlLanguageDirection() throws Exception {
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+		Map<String, Object> data = _getData(
 			_getMockLiferayPortletRenderRequest(
-				LocaleUtil.fromLanguageId("ar_SA"));
-
-		Map<String, Object> data = _getData(mockLiferayPortletRenderRequest);
+				LocaleUtil.fromLanguageId("ar_SA")));
 
 		Map<String, Object> context = (Map<String, Object>)data.get("context");
 
@@ -367,7 +365,7 @@ public class ContentDashboardAdminPortletTest {
 					LocaleUtil.US));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory.getCategoryId());
 		}
 	}
@@ -454,18 +452,16 @@ public class ContentDashboardAdminPortletTest {
 			TemplateConstants.LANG_TYPE_VM,
 			JournalTestUtil.getSampleTemplateVM(), LocaleUtil.getSiteDefault());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
-
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				DDMStructureTestUtil.getSampleStructuredContent(),
 				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
-				LocaleUtil.getSiteDefault(), null, serviceContext);
+				LocaleUtil.getSiteDefault(), null,
+				ServiceContextTestUtil.getServiceContext(
+					_company.getCompanyId(), _group.getGroupId(),
+					_user.getUserId()));
 
 		JournalTestUtil.addArticle(_user.getUserId(), _group.getGroupId(), 0);
 
@@ -698,7 +694,7 @@ public class ContentDashboardAdminPortletTest {
 					LocaleUtil.US));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory.getCategoryId());
 		}
 	}
@@ -793,9 +789,9 @@ public class ContentDashboardAdminPortletTest {
 					LocaleUtil.US));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory1.getCategoryId());
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory2.getCategoryId());
 		}
 	}
@@ -901,18 +897,16 @@ public class ContentDashboardAdminPortletTest {
 			TemplateConstants.LANG_TYPE_VM,
 			JournalTestUtil.getSampleTemplateVM(), LocaleUtil.getSiteDefault());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
-
 		JournalArticle journalArticle1 =
 			JournalTestUtil.addArticleWithXMLContent(
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				DDMStructureTestUtil.getSampleStructuredContent(),
 				ddmStructure1.getStructureKey(), ddmTemplate.getTemplateKey(),
-				LocaleUtil.getSiteDefault(), null, serviceContext);
+				LocaleUtil.getSiteDefault(), null,
+				ServiceContextTestUtil.getServiceContext(
+					_company.getCompanyId(), _group.getGroupId(),
+					_user.getUserId()));
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
@@ -1028,9 +1022,9 @@ public class ContentDashboardAdminPortletTest {
 					LocaleUtil.US));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory1.getCategoryId());
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory2.getCategoryId());
 		}
 	}
@@ -1319,7 +1313,7 @@ public class ContentDashboardAdminPortletTest {
 			Assert.assertEquals(assetCategory, assetCategories.get(0));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(
+			_assetCategoryLocalService.deleteCategory(
 				assetCategory.getCategoryId());
 		}
 	}
@@ -1331,14 +1325,12 @@ public class ContentDashboardAdminPortletTest {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
-
 		JournalTestUtil.updateArticle(
 			journalArticle, RandomTestUtil.randomString(),
-			journalArticle.getContent(), true, false, serviceContext);
+			journalArticle.getContent(), true, false,
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _group.getGroupId(),
+				_user.getUserId()));
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
@@ -1459,8 +1451,8 @@ public class ContentDashboardAdminPortletTest {
 					String.valueOf(childAssetVocabulary.getVocabularyId())));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
-			_assetCategoryLocalService.deleteAssetCategory(childAssetCategory);
+			_assetCategoryLocalService.deleteCategory(assetCategory);
+			_assetCategoryLocalService.deleteCategory(childAssetCategory);
 		}
 	}
 
@@ -1499,7 +1491,7 @@ public class ContentDashboardAdminPortletTest {
 					String.valueOf(stageAssetVocabulary.getVocabularyId())));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
+			_assetCategoryLocalService.deleteCategory(assetCategory);
 		}
 	}
 
@@ -1546,8 +1538,8 @@ public class ContentDashboardAdminPortletTest {
 					String.valueOf(assetVocabulary.getVocabularyId())));
 		}
 		finally {
-			_assetCategoryLocalService.deleteAssetCategory(assetCategory);
-			_assetCategoryLocalService.deleteAssetCategory(childAssetCategory);
+			_assetCategoryLocalService.deleteCategory(assetCategory);
+			_assetCategoryLocalService.deleteCategory(childAssetCategory);
 		}
 	}
 

@@ -560,13 +560,13 @@ definition {
 				AssertElementPresent(locator1 = "//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][${n}]");
 			}
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'col-4')][1]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'col-md-4')][1]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][2]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-md-4')][2]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][3]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-md-4')][3]");
 
-			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][3]");
+			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col-12')][3]");
 
 			TestUtils.assertNotEquals(
 				actual = "${thirdModuleWidth}",
@@ -587,6 +587,59 @@ definition {
 				fragmentName = "button",
 				size = "lg",
 				type = "link");
+		}
+	}
+
+	@description = "This is a use case for LPS-146029. View the defined layout style of Grid in the non-desktop viewport."
+	@priority = "4"
+	test ViewDefinedGridLayoutStyleInNonDesktopViewport {
+		property test.name.skip.portal.instance = "Grid#ViewDefinedGridLayoutStyleInNonDesktopViewport";
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 6") {
+			PageEditor.editLayoutGrid(
+				columnCount = "6",
+				panel = "General");
+		}
+
+		task ("Change to the Landscape Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+		}
+
+		task ("View Grid styles in Landscape Phone viewport") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "12",
+				position = "1");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("Change the Layout to 2 Modules per Row") {
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "2 Modules per Row");
+		}
+
+		task ("View edited Grid styles in shown") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "6",
+				position = "1");
 		}
 	}
 

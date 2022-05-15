@@ -57,7 +57,7 @@ public class DXPCloudClientTestrayImporter {
 				_getTestCasePropertiesElement(testCaseResultElement));
 		}
 
-		if (!_isGoogleApplicationCredentialsSet()) {
+		if (!TestrayS3Bucket.googleCredentialsAvailable()) {
 			JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization = null;
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
@@ -98,20 +98,17 @@ public class DXPCloudClientTestrayImporter {
 		JenkinsResultsParserUtil.write(
 			resultsFile, Dom4JUtil.format(rootElement));
 
-		File resultsTarGzFile = new File("results.tar.gz");
+		File resultsTarGzFile = new File(
+			JenkinsResultsParserUtil.combine(
+				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
+				"-", String.valueOf(testrayBuild.getID()), "-results.tar.gz"));
 
 		JenkinsResultsParserUtil.tarGzip(testrayResultsDir, resultsTarGzFile);
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
-			JenkinsResultsParserUtil.combine(
-				_getRelativeURLPath(), "/", resultsTarGzFile.getName()),
-			resultsTarGzFile);
-		testrayS3Bucket.createTestrayS3Object(
-			JenkinsResultsParserUtil.combine(
-				_getRelativeURLPath(), "/.lfr-testray-completed"),
-			"");
+			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 
 		JenkinsResultsParserUtil.delete(testrayResultsDir);
 		JenkinsResultsParserUtil.delete(resultsTarGzFile);
@@ -188,7 +185,7 @@ public class DXPCloudClientTestrayImporter {
 
 		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
 
-		if (!_isGoogleApplicationCredentialsSet()) {
+		if (!TestrayS3Bucket.googleCredentialsAvailable()) {
 			return attachmentsElement;
 		}
 
@@ -499,19 +496,6 @@ public class DXPCloudClientTestrayImporter {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayUserPassword)) {
 			_testrayUserPassword = testrayUserPassword;
 		}
-	}
-
-	private static boolean _isGoogleApplicationCredentialsSet() {
-		String googleApplicationCredentials = System.getenv(
-			"GOOGLE_APPLICATION_CREDENTIALS");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				googleApplicationCredentials)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static void _removeUnreferencedImages(File htmlFile) {

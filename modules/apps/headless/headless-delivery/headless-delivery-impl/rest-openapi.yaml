@@ -308,6 +308,41 @@ components:
                 - className
                 - classPK
             type: object
+        ClassTypeReference:
+            properties:
+                className:
+                    type: string
+                subtypeId:
+                    format: int64
+                    type: integer
+            required:
+                - className
+            type: object
+        CollectionViewport:
+            # @review
+            description:
+                Represents a collection viewport.
+            properties:
+                collectionViewportDefinition:
+                    # @review
+                    description:
+                        The definition of the collection viewport.
+                    properties:
+                        numberOfColumns:
+                            # @review
+                            description:
+                                The number of columns of the collection viewport.
+                            type: integer
+                    type: object
+                id:
+                    # @review
+                    description:
+                        The collection viewport's ID.
+                    type: string
+            required:
+                - id
+                - collectionViewportDefinition
+            type: object
         ColumnViewport:
             properties:
                 columnViewportDefinition:
@@ -354,6 +389,11 @@ components:
                         The comment's latest modification date.
                     format: date-time
                     readOnly: true
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The comment's external reference code.
                     type: string
                 id:
                     description:
@@ -1958,6 +1998,46 @@ components:
                     description:
                         The fragment's viewport style.
                     properties:
+                        backgroundColor:
+                            # @review
+                            description:
+                                The fragment viewport's background color.
+                            type: string
+                        borderColor:
+                            # @review
+                            description:
+                                The fragment viewport's border color.
+                            type: string
+                        borderRadius:
+                            # @review
+                            description:
+                                The fragment viewport's background radius.
+                            type: string
+                        borderWidth:
+                            # @review
+                            description:
+                                The fragment viewport's border width.
+                            type: string
+                        fontFamily:
+                            # @review
+                            description:
+                                The fragment viewport's font family.
+                            type: string
+                        fontSize:
+                            # @review
+                            description:
+                                The fragment viewport's font size.
+                            type: string
+                        fontWeight:
+                            # @review
+                            description:
+                                The fragment viewport's font weight.
+                            type: string
+                        height:
+                            # @review
+                            description:
+                                The fragment viewport's height.
+                            type: string
                         hidden:
                             # @review
                             description:
@@ -1983,6 +2063,36 @@ components:
                             description:
                                 The fragment viewport's margin top.
                             type: string
+                        maxHeight:
+                            # @review
+                            description:
+                                The fragment viewport's max height.
+                            type: string
+                        maxWidth:
+                            # @review
+                            description:
+                                The fragment viewport's max width.
+                            type: string
+                        minHeight:
+                            # @review
+                            description:
+                                The fragment viewport's min height.
+                            type: string
+                        minWidth:
+                            # @review
+                            description:
+                                The fragment viewport's min width.
+                            type: string
+                        opacity:
+                            # @review
+                            description:
+                                The fragment viewport's opacity.
+                            type: string
+                        overflow:
+                            # @review
+                            description:
+                                The fragment viewport's overflow behavior.
+                            type: string
                         paddingBottom:
                             # @review
                             description:
@@ -2003,9 +2113,25 @@ components:
                             description:
                                 The fragment viewport's padding top.
                             type: string
+                        shadow:
+                            # @review
+                            description:
+                                The fragment viewport's shadow effect.
+                            type: string
                         textAlign:
+                            # @review
                             description:
                                 The fragment viewport's text align.
+                            type: string
+                        textColor:
+                            # @review
+                            description:
+                                The fragment viewport's text color.
+                            type: string
+                        width:
+                            # @review
+                            description:
+                                The fragment viewport's width.
                             type: string
                     type: object
                 id:
@@ -3088,6 +3214,13 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                collectionViewports:
+                    # @review
+                    description:
+                        A list of viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CollectionViewport"
+                    type: array
                 displayAllItems:
                     # @review
                     description:
@@ -3129,7 +3262,7 @@ components:
                 numberOfItems:
                     # @review
                     description:
-                        The number of items in the page collection.
+                        The maximum number of items to display in the page collection when pagination is disabled.
                     type: integer
                 numberOfItemsPerPage:
                     # @review
@@ -3153,9 +3286,11 @@ components:
                         Simple]
                     type: string
                 showAllItems:
+                    deprecated: true
                     # @review
                     description:
-                        Whether to show all items when pagination is enabled.
+                        Whether to show all items when pagination is enabled. Deprecated as of Cavanaugh (7.4.x),
+                        replaced by displayAllPages
                     type: boolean
                 templateKey:
                     # @review
@@ -3272,6 +3407,7 @@ components:
                         - $ref: "#/components/schemas/PageCollectionItemDefinition"
                         - $ref: "#/components/schemas/PageColumnDefinition"
                         - $ref: "#/components/schemas/PageDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFormDefinition"
                         - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
                         - $ref: "#/components/schemas/PageRootDefinition"
                         - $ref: "#/components/schemas/PageRowDefinition"
@@ -3287,11 +3423,48 @@ components:
                 type:
                     # @review
                     description:
-                        The page element's type (collection, collection item,, column, drop zone, fragment, fragment
-                        drop zone, root, row, section or widget).
-                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, FragmentDropZone, Root, Row, Section,
+                        The page element's type (collection, collection item, column, drop zone, form, fragment,
+                        fragment drop zone, root, row, section or widget).
+                    enum: [Collection, CollectionItem, Column, DropZone, Form, Fragment, FragmentDropZone, Root, Row, Section,
                         Widget]
                     type: string
+        PageFormDefinition:
+            # @review
+            description:
+                Represent a definition of a Page form.
+            properties:
+                formConfig:
+                    # @review
+                    description:
+                        The page form's configuration.
+                    properties:
+                        formReference:
+                            # @review
+                            description:
+                                The form reference.
+                            oneOf:
+                                - $ref: "#/components/schemas/ClassTypeReference"
+                                - $ref: "#/components/schemas/ContextReference"
+                    type: object
+                fragmentStyle:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a Page form.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a Page form.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexed or not.
+                    type: boolean
+            type: object
         PageFragmentInstanceDefinition:
             # @review
             description:
@@ -3330,6 +3503,11 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexed or not.
+                    type: boolean
                 widgetInstances:
                     # @review
                     description:
@@ -3365,6 +3543,11 @@ components:
                     # @review
                     description:
                         A flag that indicates whether the page row has gutters.
+                    type: boolean
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row is indexed or not.
                     type: boolean
                 modulesPerRow:
                     # @review
@@ -3476,6 +3659,20 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                htmlProperties:
+                    # @review
+                    description:
+                        The page section's html properties
+                    properties:
+                        htmlTag:
+                            enum: [Article, Aside, Div, Footer, Header, Main, Nav, Section]
+                            type: string
+                    type: object
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page section is indexed or not.
+                    type: boolean
                 layout:
                     # @review
                     description:
@@ -3504,6 +3701,9 @@ components:
                         contentDisplay:
                             deprecated: true
                             enum: [Block, FlexColumn, FlexRow]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
                             type: string
                         justify:
                             deprecated: true
@@ -3896,12 +4096,12 @@ components:
                 id:
                     # @review
                     description:
-                        The row vieport's ID.
+                        The row viewport's ID.
                     type: string
                 rowViewportDefinition:
                     # @review
                     description:
-                        The definition of the row vieport.
+                        The definition of the row viewport.
                     properties:
                         modulesPerRow:
                             # @review
@@ -4842,7 +5042,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.21'."
+        'com.liferay.headless.delivery.client', and version '4.0.27'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -9201,6 +9401,108 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/BlogPosting"
             tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the blog posting's comment by blog posting's and comment's external reference codes.
+            operationId: deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: blogPostingExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Comment"]
+        get:
+            # @review
+            description:
+                Retrieves the blog posting's comment by blog posting's and comment's external reference codes.
+            operationId: getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: blogPostingExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
+        put:
+            # @review
+            description:
+                Updates the blog posting's comment given the blog posting's and comment's external reference codes, or
+                creates it if it not exists.
+            operationId: putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: blogPostingExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
     "/sites/{siteId}/blog-postings/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
@@ -9354,6 +9656,108 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["BlogPosting"]
+    "/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the parent comment's comment by its parent comment's and comment's external reference codes.
+            operationId: deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: parentCommentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Comment"]
+        get:
+            # @review
+            description:
+                Retrieves the parent comment's comment by its parent comment's and comment's external reference codes.
+            operationId: getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: parentCommentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
+        put:
+            # @review
+            description:
+                Updates the parent comment's comment given the parent comment's and comment's external reference codes,
+                or creates it if it not exists.
+            operationId: putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: parentCommentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
     "/sites/{siteId}/content-elements":
         get:
             operationId: getSiteContentElementsPage
@@ -9855,6 +10259,108 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Document"
             tags: ["Document"]
+    "/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the document's comment by document's and comment's external reference codes.
+            operationId: deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: documentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Comment"]
+        get:
+            # @review
+            description:
+                Retrieves the document's comment by document's and comment's external reference codes.
+            operationId: getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: documentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
+        put:
+            # @review
+            description:
+                Updates the document's comment given the document's and comment's external reference codes, or creates
+                it if it not exists.
+            operationId: putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: documentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
     "/sites/{siteId}/documents/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
@@ -11523,6 +12029,109 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
             tags: ["StructuredContent"]
+    "/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the structured content's comment by structured content's and comment's external reference codes.
+            operationId: deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Comment"]
+        get:
+            # @review
+            description:
+                Retrieves the structured content's comment by structured content's and comment's external reference
+                codes.
+            operationId: getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
+        put:
+            # @review
+            description:
+                Updates the structured content's comment given the structured content's and comment's external reference
+                codes, or creates it if it not exists.
+            operationId: putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+            tags: ["Comment"]
     "/sites/{siteId}/structured-contents/by-key/{key}":
         get:
             description:

@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -35,6 +37,8 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
+			CustomFields.tearDownCP();
+
 			JSONUser.tearDownNonAdminUsers();
 		}
 
@@ -44,6 +48,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
 	@priority = "3"
 	test CanDeleteCriteria {
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteCriteria";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -104,6 +111,8 @@ definition {
 	@description = "Delete a dynamic segment"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
+		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteDynamicSegment";
+
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -158,6 +167,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8597 | Test Summary: Delete a Segment via the Segment List"
 	@priority = "4"
 	test CanDeleteSegmentViaSegmentList {
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteSegmentViaSegmentList";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -218,7 +230,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8138 | Test Summary: Delete a static segment"
 	@priority = "5"
 	test CanDeleteStaticSegment {
-		property portal.upstream = "quarantine";
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteStaticSegment";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -270,6 +283,9 @@ definition {
 	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "DeleteSegments#CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment";
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -356,17 +372,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
-		property portal.upstream = "quarantine";
+		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "DeleteSegments#DeleteCustomFieldUsedSegmentResetData";
 
-		// AC Refactor: This testcase fails due to a bug. Known User numbers do not appear.
-		// AC Refactor ticket: LRAC-9300
-		// Blocked by bug: LRAC-9350
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add a user custom field") {
@@ -379,8 +391,7 @@ definition {
 				customFieldName = "Hobby",
 				customFieldType = "Input Field",
 				customInputDataType = "Text",
-				resourceName = "User",
-				startingValue = "reading");
+				resourceName = "User");
 		}
 
 		task ("Add a new user in DXP and View the Custom Fields") {
@@ -397,14 +408,30 @@ definition {
 
 			User.gotoEditCP(userScreenName = "ac");
 
-			User.viewUserCustomFieldsCP(
-				customFieldName = "Hobby",
-				customFieldType = "Input Field",
-				startingValue = "reading");
+			User.editUserInformation(
+				userCustomField = "reading",
+				userCustomFieldLabel = "Hobby");
 		}
 
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewUserData(fieldNameList = "hobby");
+		}
+
+		task ("Redefine the value of the custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "ac");
+
+			User.editUserInformation(
+				userCustomField = "writing",
+				userCustomFieldLabel = "Hobby");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
@@ -422,7 +449,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Add a new dynamic segment") {
@@ -440,22 +467,13 @@ definition {
 
 			ACSegments.selectOperator(operator = "contains");
 
-			ACSegments.editTextCriterion(textInput = "reading");
+			ACSegments.editTextCriterion(textInput = "writing");
 		}
 
-		task ("Save the segment") {
-			ACSegments.saveSegment();
-		}
+		task ("View the user shown on the Preview mode") {
+			ACSegments.previewSegmentMembership();
 
-		task ("View the segment membership") {
-			ACNavigation.goToSegments();
-
-			ACSegments.accessSegment(segmentName = "New Segment Test");
-
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 
 		task ("Sign in DXP") {
@@ -480,18 +498,33 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("View the segment membership") {
+		task ("Add a new dynamic segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.accessSegment(segmentName = "New Segment Test");
+			ACSegments.createDynamicSegment();
 
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "0",
-				totalNumber = "0");
+			ACUtils.setItemName(itemName = "New Segment Test");
+		}
+
+		task ("Add a Hobby Custom Fields field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "hobby");
+
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "writing");
+		}
+
+		task ("View that there's no user in the preview") {
+			ACSegments.previewSegmentMembership();
+
+			AssertTextEquals(
+				locator1 = "ACSegments#NO_MEMBER_TITLE",
+				value1 = "There are no Individuals found.");
 		}
 	}
 
@@ -499,6 +532,8 @@ definition {
 	@priority = "4"
 	test DeleteDataSourceIndividualsRemovedSegment {
 		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Segment membership takes long time to load LRAC-10769
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

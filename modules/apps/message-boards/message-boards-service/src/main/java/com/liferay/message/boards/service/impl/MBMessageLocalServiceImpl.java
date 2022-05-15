@@ -117,8 +117,9 @@ import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -205,7 +206,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		try {
 			return addDiscussionMessage(
-				userId, userName, groupId, className, classPK, threadId,
+				null, userId, userName, groupId, className, classPK, threadId,
 				parentMessageId, subject, body, serviceContext);
 		}
 		finally {
@@ -215,9 +216,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public MBMessage addDiscussionMessage(
-			long userId, String userName, long groupId, String className,
-			long classPK, long threadId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Message
@@ -248,10 +250,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		MBMessage message = addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+			externalReferenceCode, userId, userName, groupId, categoryId,
+			threadId, parentMessageId, subject, body,
+			PropsValues.DISCUSSION_COMMENTS_FORMAT, inputStreamOVPs, anonymous,
+			priority, allowPingbacks, serviceContext);
 
 		// Discussion
 
@@ -406,15 +408,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			format = "html";
 		}
 
-		MBGroupServiceSettings mbGroupServiceSettings =
-			MBGroupServiceSettings.getInstance(groupId);
+		if (anonymous || user.isDefaultUser()) {
+			MBGroupServiceSettings mbGroupServiceSettings =
+				MBGroupServiceSettings.getInstance(groupId);
 
-		if ((mbGroupServiceSettings != null) &&
-			!mbGroupServiceSettings.isAllowAnonymousPosting() &&
-			(anonymous || user.isDefaultUser())) {
+			if ((mbGroupServiceSettings != null) &&
+				!mbGroupServiceSettings.isAllowAnonymousPosting()) {
 
-			throw new PrincipalException.MustHavePermission(
-				userId, ActionKeys.ADD_MESSAGE);
+				throw new PrincipalException.MustHavePermission(
+					userId, ActionKeys.ADD_MESSAGE);
+			}
 		}
 
 		if (user.isDefaultUser()) {
@@ -426,6 +429,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Date modifiedDate = serviceContext.getModifiedDate(date);
 
 		long messageId = counterLocalService.increment();
+
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(messageId);
+		}
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
@@ -1129,7 +1136,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				//String body = subject;
 
 				message = mbMessageLocalService.addDiscussionMessage(
-					userId, null, groupId, className, classPK, 0,
+					null, userId, null, groupId, className, classPK, 0,
 					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, subject,
 					subject, new ServiceContext());
 			}
@@ -1414,10 +1421,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		long rootDiscussionMessageId = _getRootDiscussionMessageId(
-			className, classPK);
-
-		return getChildMessages(rootDiscussionMessageId, status, start, end);
+		return getChildMessages(
+			_getRootDiscussionMessageId(className, classPK), status, start,
+			end);
 	}
 
 	@Override
@@ -1427,10 +1433,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = 0;
 
 		try {
-			long rootDiscussionMessageId = _getRootDiscussionMessageId(
-				className, classPK);
-
-			count = getChildMessagesCount(rootDiscussionMessageId, status);
+			count = getChildMessagesCount(
+				_getRootDiscussionMessageId(className, classPK), status);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -1898,7 +1902,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			throw new MessageBodyException("Body is null");
 		}
 
-		subject = HtmlUtil.extractText(body);
+		subject = _htmlParser.extractText(body);
 
 		if (subject.length() <= MBMessageConstants.MESSAGE_SUBJECT_MAX_LENGTH) {
 			return subject;
@@ -1954,13 +1958,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Group group = _groupLocalService.fetchGroup(message.getGroupId());
 
-		portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.MANAGE);
-
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				httpServletRequest, group, portletId, 0, 0,
-				PortletRequest.RENDER_PHASE)
+				httpServletRequest, group,
+				PortletProviderUtil.getPortletId(
+					MBMessage.class.getName(), PortletProvider.Action.MANAGE),
+				0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
@@ -2059,12 +2062,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
-
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.VIEW));
 		subscriptionSender.setReplyToAddress(replyToAddress);
 		subscriptionSender.setScopeGroupId(groupId);
 		subscriptionSender.setServiceContext(serviceContext);
@@ -2106,7 +2106,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
-		contentURL = _http.addParameter(
+		contentURL = HttpComponentsUtil.addParameter(
 			contentURL, serviceContext.getAttribute("namespace") + "messageId",
 			message.getMessageId());
 
@@ -2181,12 +2181,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			Comment.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
-
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				Comment.class.getName(), PortletProvider.Action.VIEW));
 		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUniqueMailId(false);
@@ -2607,6 +2604,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage message, String portletId, ServiceContext serviceContext)
 		throws PortalException {
 
+		List<Layout> layouts = _layoutLocalService.getPublishedLayouts(
+			message.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Layout curLayout : layouts) {
+			PortletPreferences portletPreferences =
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, curLayout.getPlid(),
+					portletId);
+
+			if (portletPreferences != null) {
+				return _portal.getLayoutFullURL(
+					curLayout, serviceContext.getThemeDisplay(), false);
+			}
+		}
+
 		String layoutFullURL = StringPool.BLANK;
 
 		Layout layout = _layoutLocalService.fetchLayout(
@@ -2624,22 +2637,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL;
-		}
-
-		List<Layout> layouts = _layoutLocalService.getPublishedLayouts(
-			message.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		for (Layout curLayout : layouts) {
-			PortletPreferences portletPreferences =
-				_portletPreferencesLocalService.fetchPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, curLayout.getPlid(),
-					portletId);
-
-			if (portletPreferences != null) {
-				return _portal.getLayoutFullURL(
-					curLayout, serviceContext.getThemeDisplay(), false);
-			}
 		}
 
 		return null;
@@ -2871,10 +2868,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
 		MBMessage message = mbMessagePersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);
 
@@ -2919,7 +2912,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private Http _http;
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

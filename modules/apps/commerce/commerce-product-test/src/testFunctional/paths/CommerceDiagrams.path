@@ -38,8 +38,23 @@
 </tr>
 <!--DIAGRAM_MAPPING-->
 <tr>
+	<td>DIAGRAM_EXPAND</td>
+	<td>//*[@id="wkbq___collapse"]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_FILE</td>
+	<td>//div[contains(@class,'image-wrapper cropper')]/img[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_IMAGE</td>
 	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_IMAGE_SPECIFIC</td>
+	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='image' and contains(@href,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,6 +85,33 @@
 <tr>
 	<td>DIAGRAM_PIN_TYPE_SELECT</td>
 	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
+	<td></td>
+</tr>
+<!--DIAGRAM_PRODUCT_DETAIL-->
+<tr>
+	<td>DIAGRAM_PRODUCT_DETAIL_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//h4[contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_DETAIL_DESCRIPTION</td>
+	<td>//div[contains(@class,'portlet-content')]//p[contains(text(),'${key_productDescription}')]</td>
+	<td></td>
+</tr>
+<!--DIAGRAM_PRODUCT_TOOLTIP-->
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP</td>
+	<td>//div[contains(@class,'diagram-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//h4//a[contains(text(),'${key_sku}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//p//a[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
 <!--DIAGRAM_SETTINGS-->

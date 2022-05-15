@@ -14,8 +14,7 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
-import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentCollectionResourceActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -72,12 +71,6 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return FragmentWebKeys.
-			FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER;
-	}
-
-	@Override
 	public String getIcon() {
 		return "document-image";
 	}
@@ -87,7 +80,7 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 		String imageSrc = StringPool.BLANK;
 
 		try {
-			imageSrc = DLUtil.getPreviewURL(
+			imageSrc = DLURLHelperUtil.getPreviewURL(
 				_fileEntry, _fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false);
 		}

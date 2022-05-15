@@ -80,21 +80,9 @@ public class BlogEntriesManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
-
-				boolean trashEnabled = _trashHelper.isTrashEnabled(
-					_themeDisplay.getScopeGroupId());
-
-				dropdownItem.setIcon(trashEnabled ? "trash" : "times-circle");
-
-				String label = "delete";
-
-				if (trashEnabled) {
-					label = "move-to-recycle-bin";
-				}
-
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, label));
-
+					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -169,26 +157,22 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "owner"),
-					user.getFullName());
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "owner"),
+						user.getFullName()));
 			}
 		).build();
 	}
 
 	@Override
 	public String getSearchActionURL() {
-		String navigation = ParamUtil.getString(
-			httpServletRequest, "navigation", "entries");
-
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/blogs/search"
 		).setNavigation(
-			navigation
+			ParamUtil.getString(httpServletRequest, "navigation", "entries")
 		).setParameter(
 			"orderByCol",
 			() -> {

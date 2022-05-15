@@ -1,6 +1,7 @@
 @component-name = "portal-publications"
 definition {
 
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";
@@ -211,6 +212,11 @@ definition {
 
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
+
+		// Workaround LPS-140997 and LPS-129369
+
+		property database.types = "hypersonic,mariadb,mysql,postgresql";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
@@ -436,6 +442,10 @@ definition {
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications and discard the changes"
 	@priority = "5"
 	test ResolveDeletionModificationConflictPublicationsByDiscarding {
+
+		// Workaround LPS-140997
+
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

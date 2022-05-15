@@ -35,16 +35,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,6 +63,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -170,13 +176,27 @@ public class DLReferencesExportImportContentProcessor
 				return map;
 			}
 
-			if (Objects.equals(pathArray[2], "portlet_file_entry")) {
+			if (Objects.equals(
+					pathArray[2],
+					FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY)) {
+
+				map.put(
+					"friendlyURL",
+					new String[] {
+						StringUtils.substringBefore(
+							HttpComponentsUtil.decodeURL(pathArray[4]),
+							StringPool.POUND)
+					});
+				map.put("groupName", new String[] {pathArray[3]});
+			}
+			else if (Objects.equals(pathArray[2], "portlet_file_entry")) {
 				map.put("groupId", new String[] {pathArray[3]});
 				map.put(
 					"title",
 					new String[] {
 						StringUtils.substringBefore(
-							_http.decodeURL(pathArray[4]), StringPool.POUND)
+							HttpComponentsUtil.decodeURL(pathArray[4]),
+							StringPool.POUND)
 					});
 			}
 			else {
@@ -188,7 +208,8 @@ public class DLReferencesExportImportContentProcessor
 						"title",
 						new String[] {
 							StringUtils.substringBefore(
-								_http.decodeURL(pathArray[4]), StringPool.POUND)
+								HttpComponentsUtil.decodeURL(pathArray[4]),
+								StringPool.POUND)
 						});
 				}
 			}
@@ -203,7 +224,7 @@ public class DLReferencesExportImportContentProcessor
 			dlReference = dlReference.substring(
 				dlReference.indexOf(CharPool.QUESTION) + 1);
 
-			map = _http.parameterMapFromString(dlReference);
+			map = HttpComponentsUtil.parameterMapFromString(dlReference);
 
 			String[] imageIds = null;
 
@@ -250,7 +271,18 @@ public class DLReferencesExportImportContentProcessor
 					uuid, groupId);
 			}
 			else {
-				if (map.containsKey("folderId")) {
+				if (map.containsKey("friendlyURL")) {
+					String friendlyURL = MapUtil.getString(map, "friendlyURL");
+
+					Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+						MapUtil.getString(map, "groupName"), friendlyURL);
+
+					fileEntry = fileEntryOptional.orElseThrow(
+						() -> new NoSuchFileEntryException(
+							"No file entry found for friendly URL " +
+								friendlyURL));
+				}
+				else if (map.containsKey("folderId")) {
 					long folderId = MapUtil.getLong(map, "folderId");
 					String name = MapUtil.getString(map, "name");
 					String title = MapUtil.getString(map, "title");
@@ -305,6 +337,20 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return fileEntry;
+	}
+
+	private Group _getGroup(String name) throws Exception {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			CompanyThreadLocal.getCompanyId(), StringPool.SLASH + name);
+
+		if (group != null) {
+			return group;
+		}
+
+		User user = _userLocalService.getUserByScreenName(
+			CompanyThreadLocal.getCompanyId(), name);
+
+		return user.getGroup();
 	}
 
 	private String _getUuid(String s) {
@@ -427,9 +473,16 @@ public class DLReferencesExportImportContentProcessor
 
 				exportedReferenceSB.append("[$dl-reference=");
 				exportedReferenceSB.append(path);
-				exportedReferenceSB.append("$,$include-uuid=");
-				exportedReferenceSB.append(
-					dlReferenceParameters.containsKey("uuid"));
+
+				if (dlReferenceParameters.containsKey("friendlyURL")) {
+					exportedReferenceSB.append("$,$include-friendly-url=true");
+				}
+				else {
+					exportedReferenceSB.append("$,$include-uuid=");
+					exportedReferenceSB.append(
+						dlReferenceParameters.containsKey("uuid"));
+				}
+
 				exportedReferenceSB.append("$]");
 
 				if (fileEntry.isInTrash()) {
@@ -437,9 +490,17 @@ public class DLReferencesExportImportContentProcessor
 
 					exportedReferenceSB.append("[#dl-reference=");
 					exportedReferenceSB.append(originalReference);
-					exportedReferenceSB.append("#,#include-uuid=");
-					exportedReferenceSB.append(
-						dlReferenceParameters.containsKey("uuid"));
+
+					if (dlReferenceParameters.containsKey("friendlyURL")) {
+						exportedReferenceSB.append(
+							"#,#include-friendly-url=true");
+					}
+					else {
+						exportedReferenceSB.append("#,#include-uuid=");
+						exportedReferenceSB.append(
+							dlReferenceParameters.containsKey("uuid"));
+					}
+
 					exportedReferenceSB.append("#]");
 				}
 
@@ -510,7 +571,10 @@ public class DLReferencesExportImportContentProcessor
 			}
 
 			while (content.contains(
-						"[$dl-reference=" + path + "$,$include-uuid=false$]") ||
+						"[$dl-reference=" + path +
+							"$,$include-friendly-url=true$]") ||
+				   content.contains(
+					   "[$dl-reference=" + path + "$,$include-uuid=false$]") ||
 				   content.contains(
 					   "[$dl-reference=" + path + "$,$include-uuid=true$]")) {
 
@@ -602,14 +666,28 @@ public class DLReferencesExportImportContentProcessor
 				String urlWithoutUUID = url.substring(
 					0, url.lastIndexOf(StringPool.SLASH));
 
+				String exportedReferenceFriendlyURL =
+					"[$dl-reference=" + path + "$,$include-friendly-url=true$]";
 				String exportedReferenceWithoutUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=false$]";
 				String exportedReferenceWithUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=true$]";
 
 				if (content.startsWith("[#dl-reference=", endPos)) {
-					endPos = content.indexOf("#,#include-uuid=", beginPos) + 2;
+					if (content.contains("include-friendly-url=true")) {
+						int friendlyURLPosition = content.indexOf(
+							"#,#include-friendly-url=true", beginPos);
 
+						endPos = friendlyURLPosition + 2;
+					}
+					else {
+						endPos =
+							content.indexOf("#,#include-uuid=", beginPos) + 2;
+					}
+
+					exportedReferenceFriendlyURL =
+						content.substring(beginPos, endPos) +
+							"#include-friendly-url=true#]";
 					exportedReferenceWithoutUUID =
 						content.substring(beginPos, endPos) +
 							"#include-uuid=false#]";
@@ -619,6 +697,8 @@ public class DLReferencesExportImportContentProcessor
 				}
 
 				content = StringUtil.replace(
+					content, exportedReferenceFriendlyURL, url);
+				content = StringUtil.replace(
 					content, exportedReferenceWithUUID, url);
 				content = StringUtil.replace(
 					content, exportedReferenceWithoutUUID, urlWithoutUUID);
@@ -626,6 +706,20 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return content;
+	}
+
+	private Optional<FileEntry> _resolveFileEntry(
+			String groupName, String friendlyURL)
+		throws Exception {
+
+		if (_fileEntryFriendlyURLResolver == null) {
+			return Optional.empty();
+		}
+
+		Group group = _getGroup(groupName);
+
+		return _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			group.getGroupId(), friendlyURL);
 	}
 
 	private void _validateDLReferences(long groupId, String content)
@@ -801,12 +895,15 @@ public class DLReferencesExportImportContentProcessor
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
+	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private Http _http;
+	private Portal _portal;
 
 	@Reference
-	private Portal _portal;
+	private UserLocalService _userLocalService;
 
 }

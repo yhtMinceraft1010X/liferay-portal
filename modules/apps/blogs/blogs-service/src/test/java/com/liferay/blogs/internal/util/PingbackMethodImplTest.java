@@ -428,6 +428,8 @@ public class PingbackMethodImplTest {
 			pingbackMethodImpl, "_portletLocalService", _portletLocalService);
 		ReflectionTestUtil.setFieldValue(
 			pingbackMethodImpl, "_userLocalService", _userLocalService);
+		ReflectionTestUtil.setFieldValue(
+			pingbackMethodImpl, "_xmlRpc", _xmlRpc);
 
 		return pingbackMethodImpl;
 	}
@@ -471,9 +473,7 @@ public class PingbackMethodImplTest {
 				"<body><a href='http://", _TARGET_URI, "'>", _EXCERPT_BODY,
 				"</a></body>"));
 
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(_http);
+		ReflectionTestUtil.setFieldValue(HttpUtil.class, "_http", _http);
 	}
 
 	private void _setUpInetAddressLookup() throws Exception {

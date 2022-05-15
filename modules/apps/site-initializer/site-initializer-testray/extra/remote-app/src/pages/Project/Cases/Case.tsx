@@ -12,26 +12,31 @@
  * details.
  */
 
-import {useOutletContext} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
+import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
-import {getTestrayCases} from '../../../graphql/queries/testrayCase';
+import {TestrayCase, getCaseResults} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {getStatusLabel} from '../../../util/constants';
+import dayjs from '../../../util/date';
+import useCaseActions from './useCaseActions';
 
 const Case = () => {
-	const {testrayCase}: any = useOutletContext();
+	const {caseId, projectId} = useParams();
+	const {testrayCase}: {testrayCase: TestrayCase} = useOutletContext();
+	const {actions, formModal} = useCaseActions();
 
 	return (
 		<>
-			<Container title={i18n.translate('details')}>
+			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
 						{
 							title: i18n.translate('type'),
-							value:
-								testrayCase.type || 'Automated Functional Test',
+							value: testrayCase.caseType?.name,
 						},
 						{
 							title: i18n.translate('priority'),
@@ -39,7 +44,7 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('main-component'),
-							value: testrayCase.component || 'A/B Test',
+							value: testrayCase.component?.name,
 						},
 						{
 							title: i18n.translate('description'),
@@ -55,11 +60,13 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('date-created'),
-							value: 'dez 13, 2021 12:00 PM',
+							value: dayjs(testrayCase.dateCreated).format('lll'),
 						},
 						{
 							title: i18n.translate('date-modified'),
-							value: 'dez 13, 2021 12:00 PM',
+							value: dayjs(testrayCase.dateModified).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('all-issues-found'),
@@ -71,21 +78,90 @@ const Case = () => {
 
 			<Container className="mt-3" title={i18n.translate('test-history')}>
 				<ListView
-					query={getTestrayCases}
+					forceRefetch={formModal.forceRefetch}
+					initialContext={{
+						filters: {
+							columns: {
+								caseType: false,
+								dateCreated: false,
+								dateModified: false,
+								issues: false,
+								team: false,
+							},
+						},
+					}}
+					managementToolbarProps={{
+						visible: true,
+					}}
+					query={getCaseResults}
 					tableProps={{
+						actions,
 						columns: [
 							{
-								key: 'priority',
-								value: i18n.translate('priority'),
+								clickable: true,
+								key: 'dateCreated',
+								render: (date) => dayjs(date).format('lll'),
+								size: 'sm',
+								value: i18n.translate('create-date'),
 							},
-							{key: 'name', value: i18n.translate('case-name')},
 							{
-								key: 'component',
-								value: i18n.translate('component'),
+								clickable: true,
+								key: 'build',
+								render: (build) => {
+									return build?.gitHash;
+								},
+								value: i18n.translate('git-hash'),
 							},
+							{
+								clickable: true,
+								key: 'product-version',
+								render: (_, {build}) => {
+									return build?.productVersion?.name;
+								},
+								value: i18n.translate('product-version'),
+							},
+							{
+								clickable: true,
+								key: 'run',
+								render: (run) => {
+									return run?.externalReferencePK;
+								},
+								size: 'lg',
+								value: i18n.translate('environment'),
+							},
+							{
+								clickable: true,
+								key: 'routine',
+								render: (_, {build}) => build?.routine?.name,
+								value: i18n.translate('routine'),
+							},
+							{
+								key: 'dueStatus',
+								render: (dueStatus) => {
+									return (
+										<StatusBadge
+											type={getStatusLabel(
+												dueStatus
+											)?.toLowerCase()}
+										>
+											{getStatusLabel(dueStatus)}
+										</StatusBadge>
+									);
+								},
+								value: i18n.translate('status'),
+							},
+							{
+								key: 'warnings',
+								value: i18n.translate('warnings'),
+							},
+							{key: 'issues', value: i18n.translate('issues')},
+							{key: 'errors', value: i18n.translate('errors')},
 						],
+						navigateTo: ({build, id}) =>
+							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
-					transformData={(data) => data?.c?.testrayCases}
+					transformData={(data) => data?.caseResults}
+					variables={{filter: `caseId eq ${caseId}`}}
 				/>
 			</Container>
 		</>

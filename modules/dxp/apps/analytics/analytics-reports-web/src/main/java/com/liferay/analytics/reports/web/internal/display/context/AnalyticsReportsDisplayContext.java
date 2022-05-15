@@ -15,14 +15,12 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
-import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.Props;
 
 import java.util.Collections;
 import java.util.Map;
@@ -39,12 +37,11 @@ public class AnalyticsReportsDisplayContext<T> {
 
 	public AnalyticsReportsDisplayContext(
 		InfoItemReference infoItemReference, RenderRequest renderRequest,
-		RenderResponse renderResponse, ThemeDisplay themeDisplay) {
+		RenderResponse renderResponse) {
 
 		_infoItemReference = infoItemReference;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_themeDisplay = themeDisplay;
 	}
 
 	public Map<String, Object> getData() {
@@ -52,52 +49,25 @@ public class AnalyticsReportsDisplayContext<T> {
 			return _data;
 		}
 
-		_data = Collections.singletonMap(
+		_data = HashMapBuilder.<String, Object>put(
 			"context",
 			Collections.singletonMap(
 				"analyticsReportsDataURL",
-				String.valueOf(
-					_getResourceURL("/analytics_reports/get_data"))));
+				String.valueOf(_getResourceURL("/analytics_reports/get_data")))
+		).put(
+			"featureFlag",
+			Boolean.valueOf(
+				GetterUtil.getBoolean(_props.get("feature.flag.LPS-149256")))
+		).build();
 
 		return _data;
-	}
-
-	public String getHideAnalyticsReportsPanelURL() {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/analytics_reports/hide_panel"
-		).setRedirect(
-			() -> {
-				String redirect = ParamUtil.getString(
-					_renderRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					return redirect;
-				}
-
-				return _themeDisplay.getLayoutFriendlyURL(
-					_themeDisplay.getLayout());
-			}
-		).buildString();
-	}
-
-	public String getLiferayAnalyticsURL() {
-		return PrefsPropsUtil.getString(
-			_themeDisplay.getCompanyId(), "liferayAnalyticsURL");
-	}
-
-	public boolean isAnalyticsSynced() {
-		long groupId = ParamUtil.getLong(
-			_renderRequest, "groupId", _themeDisplay.getScopeGroupId());
-
-		return AnalyticsReportsUtil.isAnalyticsSynced(
-			_themeDisplay.getCompanyId(), groupId);
 	}
 
 	private ResourceURL _getResourceURL(String resourceID) {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 
+		resourceURL.setParameter(
+			"redirect", ParamUtil.getString(_renderRequest, "redirect"));
 		resourceURL.setParameter(
 			"className", _infoItemReference.getClassName());
 
@@ -136,8 +106,8 @@ public class AnalyticsReportsDisplayContext<T> {
 
 	private Map<String, Object> _data;
 	private final InfoItemReference _infoItemReference;
+	private Props _props;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final ThemeDisplay _themeDisplay;
 
 }

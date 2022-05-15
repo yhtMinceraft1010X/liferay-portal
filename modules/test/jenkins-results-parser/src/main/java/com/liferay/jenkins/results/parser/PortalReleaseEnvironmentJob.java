@@ -18,15 +18,22 @@ import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalReleaseEnvironmentJob extends PortalEnvironmentJob {
 
 	protected PortalReleaseEnvironmentJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName) {
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
 
-		super(jobName, buildProfile, portalBranchName);
+		super(buildProfile, jobName, portalUpstreamBranchName);
+	}
+
+	protected PortalReleaseEnvironmentJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	@Override

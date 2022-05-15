@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -235,8 +237,8 @@ public class DocumentResourceImpl
 		return new DocumentEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(DLFileEntry.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
-				_expandoTableLocalService));
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -304,6 +306,7 @@ public class DocumentResourceImpl
 				).orElse(
 					existingFileEntry.getTitle()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(
@@ -449,6 +452,7 @@ public class DocumentResourceImpl
 				).orElse(
 					binaryFile.getFileName()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(
@@ -537,9 +541,11 @@ public class DocumentResourceImpl
 					modelDDMStructure = _ddmStructureService.getStructure(
 						ddmStructure.getStructureId());
 
+				DDMForm ddmForm = modelDDMStructure.getDDMForm();
+
 				com.liferay.dynamic.data.mapping.storage.DDMFormValues
 					ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-						contentFields, modelDDMStructure.getDDMForm(),
+						ddmForm.getAvailableLocales(), contentFields, ddmForm,
 						_dlAppService, groupId, _journalArticleService,
 						_layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
@@ -802,6 +808,7 @@ public class DocumentResourceImpl
 				).orElse(
 					fileEntry.getTitle()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(
@@ -854,6 +861,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

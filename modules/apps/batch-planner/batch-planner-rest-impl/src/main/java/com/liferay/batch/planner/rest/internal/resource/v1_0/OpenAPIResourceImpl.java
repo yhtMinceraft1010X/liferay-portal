@@ -80,7 +80,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(LogResourceImpl.class);
+			add(FieldResourceImpl.class);
 
 			add(PlanResourceImpl.class);
 

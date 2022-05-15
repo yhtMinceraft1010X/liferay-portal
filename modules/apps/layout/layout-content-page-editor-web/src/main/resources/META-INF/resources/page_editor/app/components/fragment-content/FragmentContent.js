@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {config} from '../../config/index';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -32,11 +33,14 @@ import {
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import checkStylesFF from '../../utils/checkStylesFF';
 import resolveEditableConfig from '../../utils/editable-value/resolveEditableConfig';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
@@ -294,6 +298,10 @@ const FragmentContent = ({
 						className,
 						'page-editor__fragment-content',
 						{
+							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
+							[getLayoutDataItemUniqueClassName(item.itemId)]:
+								config.featureFlagLps132571 &&
+								!hasInnerCommonStyles(fragmentEntryLink),
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 							[`mb-${marginBottom}`]:
 								isValidSpacingOption(marginBottom) &&
@@ -323,7 +331,9 @@ const FragmentContent = ({
 								? textAlign.startsWith('text-')
 									? textAlign
 									: `text-${textAlign}`
-								: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
+								: `text-${textAlignDefaultValue}`]:
+								!config.featureFlagLps132571 &&
+								textAlignDefaultValue,
 						}
 					)}
 					contentRef={elementRef}
@@ -333,7 +343,7 @@ const FragmentContent = ({
 					id={elementId}
 					markup={content}
 					onRender={withinTopper ? onRender : () => {}}
-					style={style}
+					style={checkStylesFF(item.itemId, style)}
 				/>
 
 				{backgroundImageValue.mediaQueries ? (

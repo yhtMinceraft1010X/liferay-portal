@@ -46,6 +46,28 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	@summary = "Set an invalid quantity for a product from its product card, click on add to cart button and assert that the product is not added to cart"
+	macro addToCartProductWithInvalidQuantityValue {
+		var currentCartItemCount = FrontStore.getCurrentCartDataBadgeCount();
+
+		Type(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+			value1 = "${productQuantity}");
+
+		Click(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+		AssertElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_INVALID");
+
+		AssertElementPresent(
+			key_itemCount = "${currentCartItemCount}",
+			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+	}
+
 	macro assertProductDetails {
 		if (isSet(productName)) {
 			AssertElementPresent(
@@ -60,9 +82,21 @@ definition {
 		}
 
 		if (isSet(productAvailability)) {
+			if ("${productAvailability}" == "Discontinued") {
+				AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY_DISCONTINUED");
+			}
+			else {
+				AssertElementPresent(
+					key_availability = "${productAvailability}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+			}
+		}
+
+		if (isSet(endOfLifeDate)) {
 			AssertElementPresent(
-				key_availability = "${productAvailability}",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+				key_detail = "End of Life",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
+				value1 = "${endOfLifeDate}");
 		}
 
 		if (isSet(productSKU)) {
@@ -90,10 +124,28 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 	}
 
+	macro assertPromoPrice {
+		AssertTextEquals.assertPartialText(
+			key_productName = "${productName}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
+			value1 = "${promoPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_productName = "${productName}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
+			value1 = "${basePrice}");
+	}
+
+	macro getCurrentCartDataBadgeCount {
+		var dataBadgeCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
+
+		return "${dataBadgeCount}";
+	}
+
 	macro getCurrentCartItemCount {
 		CommerceNavigator.gotoMiniCart();
 
-		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
+		var currentItemCount = FrontStore.getCurrentCartDataBadgeCount();
 
 		if (IsElementPresent(key_cartItemName = "${productName}", locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME")) {
 			var newItemCount = "${currentItemCount}";
@@ -113,6 +165,28 @@ definition {
 		Click(
 			key_optionValue = "${fsOptionValue}",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+	}
+
+	@summary = "Depending on what value is passed as product configuration(min,max or multiple), return the corresponding expected text"
+	macro setQuantitySelectorPopoverListItemText {
+		if ("${quantityConfiguration}" == "min") {
+			var quantityConfigurationText = "Min quantity per order is ";
+		}
+		else {
+			if ("${quantityConfiguration}" == "max") {
+				var quantityConfigurationText = "Maximum quantity per order is ";
+			}
+			else {
+				if ("${quantityConfiguration}" == "multiple") {
+					var quantityConfigurationText = "Quantity must be a multiple of ";
+				}
+				else {
+					TestUtils.fail(message = "Selected quantity configuration is not valid.");
+				}
+			}
+		}
+
+		return "${quantityConfigurationText}";
 	}
 
 	macro viewMiniCart {
@@ -243,6 +317,30 @@ definition {
 					locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE",
 					value1 = "${fsOptionValue}");
 			}
+		}
+	}
+
+	@summary = "Assert that the product configuration set is correctly shown on the quantity selector popover"
+	macro viewQuantitySelectorPopoverListItem {
+		Variables.assertDefined(parameterList = "${quantityConfiguration},${quantity}");
+
+		if (!(isSet(conditionNotSatisfied))) {
+			var conditionNotSatisfied = "false";
+		}
+
+		var quantityConfigurationText = FrontStore.setQuantitySelectorPopoverListItemText(quantityConfiguration = "${quantityConfiguration}");
+
+		if ("${conditionNotSatisfied}" == "true") {
+			AssertElementPresent(
+				key_quantity = "${quantity}",
+				key_quantityConfigurationText = "${quantityConfigurationText}",
+				locator1 = "CommerceFrontStore#QUANTITY_SELECTOR_POPOVER_LIST_ITEM_ERROR");
+		}
+		else {
+			AssertElementPresent(
+				key_quantity = "${quantity}",
+				key_quantityConfigurationText = "${quantityConfigurationText}",
+				locator1 = "CommerceFrontStore#QUANTITY_SELECTOR_POPOVER_LIST_ITEM");
 		}
 	}
 

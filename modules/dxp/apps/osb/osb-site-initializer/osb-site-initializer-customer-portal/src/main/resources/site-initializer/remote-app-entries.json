@@ -1,12 +1,13 @@
 [
 	{
+		"clientExtensionEntryKey": "CUSTOMER-PORTAL",
 		"cssURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.css$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/main.css$]"
 		],
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/runtime-main.js$]"
 		],
 		"externalReferenceCode": "ERC-001",
 		"htmlElementName": "liferay-remote-app-customer-portal",
@@ -14,7 +15,6 @@
 			"en_US": "Customer Portal"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"remoteAppEntryKey": "CUSTOMER-PORTAL",
-		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL$]"
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
 	}
 ]

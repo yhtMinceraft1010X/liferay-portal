@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -36,6 +38,9 @@ definition {
 	@priority = "4"
 	test DeleteDXPDataSourceViaTokenAuth {
 		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Data sources take some time to be deleted it will remain in progress during automation run
+		// AC refactor ticket: LRAC-10820
 
 		task ("Site creation and connection with AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();

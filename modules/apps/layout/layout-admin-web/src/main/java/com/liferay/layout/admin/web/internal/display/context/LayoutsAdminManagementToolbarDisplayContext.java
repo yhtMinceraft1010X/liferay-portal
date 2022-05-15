@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,9 +62,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 
-		_ffBulkTranslationConfiguration =
-			(FFBulkTranslationConfiguration)httpServletRequest.getAttribute(
-				FFBulkTranslationConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_translationURLProvider =
@@ -78,7 +74,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "convertSelectedPages");
-
 				dropdownItem.putData(
 					"convertLayoutURL",
 					PortletURLBuilder.createActionURL(
@@ -88,15 +83,13 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).buildString());
-
-				dropdownItem.setIcon("change");
+				dropdownItem.setIcon("page");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "convert-to-content-page"));
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			_ffBulkTranslationConfiguration::bulkTranslationEnabled,
 			dropdownItem -> {
 				dropdownItem.putData("action", "exportTranslation");
 				dropdownItem.putData(
@@ -111,7 +104,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 						_themeDisplay.getURLCurrent()
 					).buildString());
 				dropdownItem.setDisabled(false);
-				dropdownItem.setIcon("import-export");
+				dropdownItem.setIcon("upload");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "export-for-translations"));
@@ -120,7 +113,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedPages");
-
 				dropdownItem.putData(
 					"deleteLayoutURL",
 					PortletURLBuilder.createActionURL(
@@ -130,8 +122,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).buildString());
-
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
@@ -382,8 +373,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsAdminManagementToolbarDisplayContext.class);
 
-	private final FFBulkTranslationConfiguration
-		_ffBulkTranslationConfiguration;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 	private final TranslationURLProvider _translationURLProvider;

@@ -484,18 +484,6 @@ jdbc.default.minimumIdle=0
 jdbc.counter.maximumPoolSize=5
 jdbc.counter.minimumIdle=0
 
-// Tomcat
-
-jdbc.default.initialSize=0
-jdbc.default.maxActive=20
-jdbc.default.maxIdle=0
-jdbc.default.minIdle=0
-
-jdbc.counter.initialSize=0
-jdbc.counter.maxActive=5
-jdbc.counter.maxIdle=0
-jdbc.counter.minIdle=0
-
 counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 			<if>
@@ -1232,21 +1220,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+					import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 					import com.liferay.jenkins.results.parser.Job;
 					import com.liferay.jenkins.results.parser.JobFactory;
+					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
-
-					public String getBranchName() {
-						String branchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
-
-						if ((branchName == null) || branchName.isEmpty()) {
-							branchName = project.getProperty("liferay.portal.branch");
-						}
-
-						return branchName;
-					}
 
 					public Job.BuildProfile getBuildProfile() {
 						String buildProfile = project.getProperty("build.profile");
@@ -1258,6 +1240,36 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return Job.BuildProfile.PORTAL;
 					}
 
+					public String getJobName() {
+						String jobName = project.getProperty("job.name");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
+						}
+
+						return jobName;
+					}
+
+					public GitWorkingDirectory getPortalGitWorkingDirectory() {
+						File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
+
+						GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
+
+						if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+							return (PortalGitWorkingDirectory)gitWorkingDirectory;
+						}
+
+						return null;
+					}
+
 					public String getRepositoryName() {
 						String repositoryName = project.getProperty("env.REPOSITORY_NAME");
 
@@ -1265,9 +1277,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							return repositoryName;
 						}
 
-						String branchName = getBranchName();
+						String upstreamBranchName = getUpstreamBranchName();
 
-						if (branchName.equals("master")) {
+						if (upstreamBranchName.equals("master")) {
 							return "liferay-portal";
 						}
 
@@ -1286,34 +1298,43 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return Integer.valueOf(jobVariant.replaceAll(jobVariantRegex, "$1"));
 					}
 
-					public String getTestSuite() {
-						String testSuite = project.getProperty("env.CI_TEST_SUITE");
+					public String getTestSuiteName() {
+						String testSuiteName = project.getProperty("env.CI_TEST_SUITE");
 
-						if ((testSuite == null) || testSuite.isEmpty()) {
-							testSuite = "default";
+						if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+							testSuiteName = "default";
 						}
 
-						return testSuite;
+						return testSuiteName;
 					}
 
-					public String getTopLevelJobName() {
-						String topLevelJobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+					public String getUpstreamBranchName() {
+						String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
 
-						if ((topLevelJobName == null) || topLevelJobName.isEmpty()) {
-							topLevelJobName = "default";
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("liferay.portal.branch");
 						}
 
-						return topLevelJobName;
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("git.working.branch.name");
+						}
+
+						return upstreamBranchName.replace("-private", "");
 					}
 
-					Job job = JobFactory.newJob(getTopLevelJobName(), getTestSuite(), getBranchName(), getRepositoryName(), getBuildProfile());
+					Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
 					if (job.isSegmentEnabled()) {
 						SegmentTestClassGroup segmentTestClassGroup = batchTestClassGroup.getSegmentTestClassGroup(getSegmentID());
 
-						project.setProperty("test.case.properties.content", segmentTestClassGroup.getTestCasePropertiesContent());
+						if (segmentTestClassGroup != null) {
+							project.setProperty("test.case.properties.content", segmentTestClassGroup.getTestCasePropertiesContent());
+						}
+						else {
+							project.setProperty("test.case.properties.content", batchTestClassGroup.getTestCasePropertiesContent());
+						}
 					}
 					else {
 						project.setProperty("test.case.properties.content", batchTestClassGroup.getTestCasePropertiesContent());
@@ -1705,31 +1726,36 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<delete file="@{patching.tool.dir}/default.properties" />
 
-			<if>
-				<available file="${app.server.parent.dir}/.liferay-home" />
-				<then>
-					<execute dir="@{patching.tool.dir}" failonerror="true">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-					</execute>
-				</then>
-				<else>
-					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.lib.global.dir}
+			<trycatch>
+				<try>
+					<if>
+						<available file="${app.server.parent.dir}/.liferay-home" />
+						<then>
+							<execute dir="@{patching.tool.dir}" failonerror="true">
+								patching-tool${file.suffix.bat} auto-discovery
+								patching-tool${file.suffix.bat} install -force
+							</execute>
+						</then>
+						<else>
+							<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.lib.global.dir}
 liferay.home=${liferay.home}
 patching.mode=binary
 war.path=${app.server.portal.dir}/</echo>
 
-					<execute dir="@{patching.tool.dir}" failonerror="true">
-						patching-tool${file.suffix.bat} install -force
+							<execute dir="@{patching.tool.dir}" failonerror="true">
+								patching-tool${file.suffix.bat} install -force
+							</execute>
+						</else>
+					</if>
+				</try>
+				<finally>
+					<execute dir="@{patching.tool.dir}/logs">
+						<![CDATA[
+							tail -n 100 "patching-tool.log"
+						]]>
 					</execute>
-				</else>
-			</if>
-
-			<execute>
-				<![CDATA[
-					tail -n 100 "${patching.tool.dir}/logs/patching-tool.log"
-				]]>
-			</execute>
+				</finally>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -2286,25 +2312,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 								<if>
 									<equals arg1="${database.type}" arg2="mysql" />
 									<then>
-										<copy
-											file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}"
-											tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
-										/>
-
-										<replace
-											file="${app.server.lib.global.dir}/module.xml"
-										>
-											<replacetoken><![CDATA[<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">]]></replacetoken>
-											<replacevalue>
-												<![CDATA[
-													<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
-														<resources>
-															<resource-root path="mysql.jar" />
-														</resources>
-												]]>
-											</replacevalue>
-										</replace>
-
 										<replace
 											file="${app.server.dir}/standalone/configuration/standalone.xml"
 										>
@@ -2327,25 +2334,6 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									<elseif>
 										<equals arg1="${database.type}" arg2="mariadb" />
 										<then>
-											<copy
-												file="${test.app.server.lib.portal.dir}/${jdbc.mariadb.driver}"
-												tofile="${app.server.lib.global.dir}/${jdbc.mariadb.driver}"
-											/>
-
-											<replace
-												file="${app.server.lib.global.dir}/module.xml"
-											>
-												<replacetoken><![CDATA[<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">]]></replacetoken>
-												<replacevalue>
-													<![CDATA[
-														<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
-															<resources>
-																<resource-root path="mysql.jar" />
-															</resources>
-													]]>
-												</replacevalue>
-											</replace>
-
 											<replace
 												file="${app.server.dir}/standalone/configuration/standalone.xml"
 											>
@@ -2697,73 +2685,11 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-jboss-module-configuration">
-		<sequential>
-			<local name="module.configuration.path" />
-
-			<if>
-				<not>
-					<available file="${app.server.lib.global.dir}/module.xml" />
-				</not>
-				<then>
-					<property name="module.configuration.path" value="tools/servers/jboss/modules/module.xml" />
-				</then>
-				<else>
-					<property name="module.configuration.path" value="${app.server.lib.global.dir}/module.xml" />
-				</else>
-			</if>
-
-			<local name="module.configuration.content" />
-
-			<loadfile
-				property="module.configuration.content"
-				srcFile="${module.configuration.path}"
-			>
-				<filterchain>
-					<filterreader classname="org.apache.tools.ant.filters.LineContains">
-						<param type="contains" value="resource-root" />
-						<param type="contains" value="petra" />
-					</filterreader>
-				</filterchain>
-			</loadfile>
-
-			<local name="petra.jar.files" />
-
-			<antelope:stringutil if:set="module.configuration.content" property="petra.jar.files" string="${module.configuration.content}">
-				<antelope:replace regex="\s*&lt;resource-root path=&quot;" replacement="" />
-			</antelope:stringutil>
-
-			<antelope:stringutil if:set="petra.jar.files" property="petra.jar.files" string="${petra.jar.files}">
-				<antelope:replace regex="&quot;\s/&gt;[\n\r]*" replacement="," />
-			</antelope:stringutil>
-
-			<for if:set="petra.jar.files" list="${petra.jar.files}" param="petra.jar.file">
-				<sequential>
-					<if>
-						<not>
-							<available file="${app.server.lib.global.dir}/@{petra.jar.file}" />
-						</not>
-						<then>
-							<local name="regex" />
-
-							<property name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar.file}&quot;\s/&gt;" />
-
-							<replaceregexp
-								file="${module.configuration.path}"
-								match="${regex}"
-								replace=""
-							/>
-						</then>
-					</if>
-				</sequential>
-			</for>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
-include-and-override=portal-liferay-online.properties
+include-and-override=portal-liferay-online-config.properties
+include-and-override=portal-liferay-online-database-partition.properties
 include-and-override=portal-liferay-online-limit.properties</echo>
 
 			<replace
@@ -2950,6 +2876,1357 @@ tell application "Safari" to quit
 			<print-file file.name="${liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config" />
 
 			<print-file file.name="${test.app.server.liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-analytics-cloud-properties">
+		<sequential>
+			<get-testcase-property property.name="analytics.cloud.enabled" />
+
+			<if>
+				<isset property="test.analytics.cloud.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.url=${test.analytics.cloud.url}
+					</echo>
+				</then>
+				<elseif>
+					<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.url=${analytics.cloud.faro.frontend.url}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="test.analytics.cloud.publisher.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.publisher.url=${test.analytics.cloud.publisher.url}
+					</echo>
+				</then>
+				<elseif>
+					<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.publisher.url=${analytics.cloud.asah.publisher.url}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<echo append="true" file="${test.ext.properties.file}">
+				analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
+				analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
+				analytics.cloud.asah.curator.stream.url=${analytics.cloud.asah.curator.stream.url}
+				analytics.cloud.asah.publisher.url=${analytics.cloud.asah.publisher.url}
+				analytics.cloud.faro.frontend.url=${analytics.cloud.faro.frontend.url}
+			</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-app-server-properties">
+		<sequential>
+			<if>
+				<isset property="app.server.type" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						app.server.type=${app.server.type}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-aws-translation-properties">
+		<sequential>
+			<if>
+				<isset property="aws.translation.access.key.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						aws.translation.access.key.id=${aws.translation.access.key.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="aws.translation.secret.access.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						aws.translation.secret.access.key=${aws.translation.secret.access.key}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-azure-translation-properties">
+		<sequential>
+			<if>
+				<isset property="azure.translation.subscription.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						azure.translation.subscription.key=${azure.translation.subscription.key}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="azure.translation.resource.location" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						azure.translation.resource.location=${azure.translation.resource.location}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-browser">
+		<sequential>
+			<get-testcase-property property.name="browser.type" />
+			<get-testcase-property property.name="browser.${browser.type}.version" />
+
+			<propertycopy from="browser.${browser.type}.version" name="browser.version" override="true" />
+
+			<echo append="true" file="${test.ext.properties.file}">
+				browser.type=${browser.type}
+				browser.version=${browser.version}
+			</echo>
+
+			<if>
+				<equals arg1="${browser.type}" arg2="chrome" />
+				<then>
+					<get-testcase-property append="true" delimiter=" " property.name="browser.chrome.bin.args" />
+
+					<if>
+						<isset property="browser.chrome.bin.args" />
+						<then>
+							<echo append="true" file="${test.ext.properties.file}">
+								browser.chrome.bin.args=${browser.chrome.bin.args}
+							</echo>
+						</then>
+					</if>
+
+					<propertycopy from="browser.chrome.bin.file[${browser.chrome.version}]" name="browser.chrome.bin.file" silent="true" />
+
+					<if>
+						<isset property="browser.chrome.bin.file" />
+						<then>
+							<echo append="true" file="${test.ext.properties.file}">
+								browser.chrome.bin.file=${browser.chrome.bin.file}
+							</echo>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${browser.type}" arg2="edge" />
+				<then>
+					<prepare-edge-driver />
+
+					<echo append="true" file="${test.ext.properties.file}">
+						selenium.edge.driver.executable=${selenium.edge.driver.executable}
+						selenium.executable.dir.name=${selenium.executable.dir.name}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${browser.firefox.version}" arg2="52.0" />
+					<equals arg1="${browser.type}" arg2="firefox" />
+				</and>
+				<then>
+					<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
+
+					<if>
+						<isset property="browser.firefox.bin.file" />
+						<then>
+							<echo append="true" file="${test.ext.properties.file}">
+								browser.firefox.bin.file=${browser.firefox.bin.file}
+							</echo>
+						</then>
+					</if>
+
+					<prepare-gecko-driver />
+
+					<echo append="true" file="${test.ext.properties.file}">
+						selenium.executable.dir.name=${selenium.executable.dir.name}
+						selenium.gecko.driver.executable=${selenium.gecko.driver.executable}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${browser.type}" arg2="internetexplorer" />
+				<then>
+					<prepare-ie-driver />
+
+					<echo append="true" file="${test.ext.properties.file}">
+						selenium.executable.dir.name=${selenium.executable.dir.name}
+						selenium.ie.driver.executable=${selenium.ie.driver.executable}
+						selenium.ie.driver.version=${selenium.ie.driver.version}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${browser.type}" arg2="safari" />
+				<then>
+					<prepare-safari-driver />
+				</then>
+			</if>
+
+			<get-browser-property property.name="browser.docker.image" />
+
+			<if>
+				<isset property="browser.docker.image" />
+				<then>
+					<get-browser-property property.name="browser.host" />
+
+					<echo append="true" file="${test.ext.properties.file}">
+						selenium.remote.driver.url=http://${browser.host}:4444
+					</echo>
+				</then>
+				<elseif>
+					<isset property="selenium.remote.driver.url" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
+							selenium.remote.driver.url=${selenium.remote.driver.url}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-click-to-chat-properties">
+		<sequential>
+			<if>
+				<isset property="click.to.chat.chatwoot.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.chatwoot.password=${click.to.chat.chatwoot.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.hubspot.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.hubspot.password=${click.to.chat.hubspot.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.jivochat.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.jivochat.password=${click.to.chat.jivochat.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.liveperson.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.liveperson.password=${click.to.chat.liveperson.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.smartsupp.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.smartsupp.password=${click.to.chat.smartsupp.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.tawkto.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.tawkto.password=${click.to.chat.tawkto.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.tidio.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.tidio.password=${click.to.chat.tidio.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.tolvnow.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.tolvnow.password=${click.to.chat.tolvnow.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="click.to.chat.zendesk.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						click.to.chat.zendesk.password=${click.to.chat.zendesk.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-database-properties">
+		<sequential>
+			<for list="${database.types}" param="database.type">
+				<sequential>
+					<if>
+						<isset property="database.@{database.type}.driver" />
+						<then>
+							<local name="database.driver" />
+
+							<propertycopy from="database.@{database.type}.driver" name="database.driver" />
+
+							<echo append="true" file="${test.ext.properties.file}">
+								database.@{database.type}.driver=${database.driver}
+							</echo>
+						</then>
+					</if>
+
+					<if>
+						<isset property="database.@{database.type}.password" />
+						<then>
+							<local name="database.password" />
+
+							<propertycopy from="database.@{database.type}.password" name="database.password" />
+
+							<echo append="true" file="${test.ext.properties.file}">
+								database.@{database.type}.password=${database.password}
+							</echo>
+						</then>
+					</if>
+
+					<if>
+						<isset property="database.@{database.type}.schema" />
+						<then>
+							<local name="database.schema" />
+
+							<propertycopy from="database.@{database.type}.schema" name="database.schema" />
+
+							<echo append="true" file="${test.ext.properties.file}">
+								database.@{database.type}.schema=${database.schema}
+							</echo>
+						</then>
+					</if>
+
+					<if>
+						<isset property="database.@{database.type}.url" />
+						<then>
+							<local name="database.url" />
+
+							<propertycopy from="database.@{database.type}.url" name="database.url" />
+
+							<echo append="true" file="${test.ext.properties.file}">
+								database.@{database.type}.url=${database.url}
+							</echo>
+						</then>
+					</if>
+
+					<if>
+						<isset property="database.@{database.type}.username" />
+						<then>
+							<local name="database.username" />
+
+							<propertycopy from="database.@{database.type}.username" name="database.username" />
+
+							<echo append="true" file="${test.ext.properties.file}">
+								database.@{database.type}.username=${database.username}
+							</echo>
+						</then>
+					</if>
+				</sequential>
+			</for>
+
+			<if>
+				<isset property="database.type" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						database.type=${database.type}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-digital-signature-properties">
+		<sequential>
+			<if>
+				<isset property="digital.signature.account.base.uri" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						digital.signature.account.base.uri=${digital.signature.account.base.uri}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="digital.signature.api.accountId" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						digital.signature.api.accountId=${digital.signature.api.accountId}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="digital.signature.api.username" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						digital.signature.api.username=${digital.signature.api.username}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="digital.signature.integration.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						digital.signature.integration.key=${digital.signature.integration.key}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="digital.signature.rsa.private.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-email-properties">
+		<sequential>
+			<if>
+				<isset property="email.address.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.address.1=${email.address.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.address.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.address.2=${email.address.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.address.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.address.3=${email.address.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.address.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.address.4=${email.address.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.address.5" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.address.5=${email.address.5}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.password.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.password.1=${email.password.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.password.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.password.2=${email.password.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.password.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.password.3=${email.password.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.password.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.password.4=${email.password.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="email.password.5" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						email.password.5=${email.password.5}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.1=${marketplace.email.address.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.2=${marketplace.email.address.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.3=${marketplace.email.address.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.4=${marketplace.email.address.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.5" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.5=${marketplace.email.address.5}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.address.6" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.address.6=${marketplace.email.address.6}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.1=${marketplace.email.password.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.2=${marketplace.email.password.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.3=${marketplace.email.password.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.4=${marketplace.email.password.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.5" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.5=${marketplace.email.password.5}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="marketplace.email.password.6" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						marketplace.email.password.6=${marketplace.email.password.6}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-facebook-properties">
+		<sequential>
+			<if>
+				<isset property="facebook.application.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						facebook.application.id=${facebook.application.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="facebook.application.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						facebook.application.secret=${facebook.application.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="facebook.email" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						facebook.email=${facebook.email}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="facebook.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						facebook.password=${facebook.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-google-cloud-autotagging-properties">
+		<sequential>
+			<if>
+				<isset property="google.cloud.autotagging.service.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.autotagging.service.key=${google.cloud.autotagging.service.key}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-google-cloud-translation-properties">
+		<sequential>
+			<if>
+				<isset property="google.cloud.translation.service.key.type" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.type=${google.cloud.translation.service.key.type}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.project.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.project.id=${google.cloud.translation.service.key.project.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.private.key.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.private.key.id=${google.cloud.translation.service.key.private.key.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.private.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.private.key=${google.cloud.translation.service.key.private.key}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.client.email" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.client.email=${google.cloud.translation.service.key.client.email}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.client.id=${google.cloud.translation.service.key.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.auth.uri" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.auth.uri=${google.cloud.translation.service.key.auth.uri}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.token.uri" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.token.uri=${google.cloud.translation.service.key.token.uri}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.auth.provider.x509.cert.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.auth.provider.x509.cert.url=${google.cloud.translation.service.key.auth.provider.x509.cert.url}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.cloud.translation.service.key.client.x509.cert.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.cloud.translation.service.key.client.x509.cert.url=${google.cloud.translation.service.key.client.x509.cert.url}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-google-properties">
+		<sequential>
+			<if>
+				<isset property="google.api.key.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.api.key.1=${google.api.key.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.api.key.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.api.key.2=${google.api.key.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.api.key.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.api.key.3=${google.api.key.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.api.key.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.api.key.4=${google.api.key.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.id.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.id.1=${google.client.id.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.id.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.id.2=${google.client.id.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.id.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.id.3=${google.client.id.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.id.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.id.4=${google.client.id.4}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.secret.1" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.secret.1=${google.client.secret.1}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.secret.2" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.secret.2=${google.client.secret.2}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.secret.3" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.secret.3=${google.client.secret.3}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="google.client.secret.4" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						google.client.secret.4=${google.client.secret.4}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-login-config">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config" force="true">enabled="true"
+	tokenLocation="REQUEST"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-onedrive-properties">
+		<sequential>
+			<if>
+				<isset property="onedrive.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						onedrive.client.id=${onedrive.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="onedrive.client.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						onedrive.client.secret=${onedrive.client.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="onedrive.tenant" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						onedrive.tenant=${onedrive.tenant}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-openid-properties">
+		<sequential>
+			<if>
+				<isset property="openid.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.password=${openid.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.auth0.test.account.email.address" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.auth0.test.account.email.address=${openid.provider.auth0.test.account.email.address}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.auth0.test.account.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.auth0.test.account.password=${openid.provider.auth0.test.account.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.okta.test.account.email.address" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.okta.test.account.email.address=${openid.provider.okta.test.account.email.address}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.okta.test.account.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.okta.test.account.password=${openid.provider.okta.test.account.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.pingone.test.account.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.pingone.test.account.password=${openid.provider.pingone.test.account.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.provider.pingone.test.account.username" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.provider.pingone.test.account.username=${openid.provider.pingone.test.account.username}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="openid.username" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						openid.username=${openid.username}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-recaptcha-properties">
+		<sequential>
+			<if>
+				<isset property="recaptcha.private.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						recaptcha.private.key=${recaptcha.private.key}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="recaptcha.public.key" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						recaptcha.public.key=${recaptcha.public.key}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-required-properties">
+		<sequential>
+			<get-test-url />
+
+			<echo append="true" file="${test.ext.properties.file}">
+				portal.url=${test.url}
+				selenium.executable.dir=${basedir.unix}/tools/selenium/
+				test.class.command.name=${test.class}
+			</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-sharepoint-properties">
+		<sequential>
+			<if>
+				<isset property="sharepoint.oauth.authorization.grant.endpoint" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.authorization.grant.endpoint=${sharepoint.oauth.authorization.grant.endpoint}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.authorization.token.endpoint" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.authorization.token.endpoint=${sharepoint.oauth.authorization.token.endpoint}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.client.id=${sharepoint.oauth.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.client.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.client.secret=${sharepoint.oauth.client.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.configuration.name" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.configuration.name=${sharepoint.oauth.configuration.name}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.configuration.resource" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.configuration.resource=${sharepoint.oauth.configuration.resource}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.configuration.scope" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.configuration.scope=${sharepoint.oauth.configuration.scope}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.site.domain" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.site.domain=${sharepoint.oauth.site.domain}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.tenant.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.tenant.id=${sharepoint.oauth.tenant.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.user.name" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.user.name=${sharepoint.oauth.user.name}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="sharepoint.oauth.user.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						sharepoint.oauth.user.password=${sharepoint.oauth.user.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-site-initializer-raylife-d2c-paypal-properties">
+		<sequential>
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.client.id=${site.initializer.raylife.d2c.paypal.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.client.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.client.secret=${site.initializer.raylife.d2c.paypal.client.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.email" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.email=${site.initializer.raylife.d2c.paypal.email}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.password=${site.initializer.raylife.d2c.paypal.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-selenium-testcase-properties">
+		<sequential>
+			<get-testcase-property property.name="asset.publisher.selection.style" />
+
+			<if>
+				<not>
+					<isset property="asset.publisher.selection.style" />
+				</not>
+				<then>
+					<property name="asset.publisher.selection.style" value="dynamic" />
+				</then>
+			</if>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration.config">defaultSelectionStyle="${asset.publisher.selection.style}"</echo>
+
+			<get-testcase-property property.name="cmis.repository.type" />
+
+			<if>
+				<or>
+					<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+					<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
+				</or>
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="ignore.errors" />
+
+			<if>
+				<isset property="ignore.errors" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						ignore.errors=${ignore.errors}
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="ignore.errors.delimiter" />
+
+			<if>
+				<isset property="ignore.errors.delimiter" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						ignore.errors.delimiter=${ignore.errors.delimiter}
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="proxy.server.enabled" />
+
+			<if>
+				<equals arg1="${proxy.server.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						proxy.server.enabled=true
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS" />
+
+			<if>
+				<equals arg1="${release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS}" arg2="true" />
+				<then>
+					<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=["DISABLE_PRIVATE_LAYOUTS"]</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="test.assert.javascript.errors" />
+
+			<if>
+				<equals arg1="${test.assert.javascript.errors}" arg2="false" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.assert.javascript.errors=false
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="test.assert.warning.exceptions" />
+
+			<if>
+				<isset property="test.assert.warning.exceptions" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.assert.warning.exceptions=${test.assert.warning.exceptions}
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="test.name.skip.portal.instance" />
+
+			<if>
+				<isset property="test.name.skip.portal.instance" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.name.skip.portal.instance=${test.name.skip.portal.instance}
+					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="theme.file.name" />
+
+			<if>
+				<isset property="theme.file.name" />
+				<then>
+					<propertyregex
+						input="${theme.file.name}"
+						override="true"
+						property="zipfileset.includes"
+						regexp="([^\.]+)(\.[^\s]+)"
+						replace="\1*\2"
+					/>
+
+					<if>
+						<resourcecount count="0" when="greater">
+							<zipfileset
+								dir="${liferay.home}/osgi/war"
+								includes="${zipfileset.includes}"
+							>
+								<patternset>
+									<include name="**/private.lar" />
+								</patternset>
+							</zipfileset>
+						</resourcecount>
+						<then>
+							<echo append="true" file="${test.ext.properties.file}">
+								theme.contains.resources=true
+							</echo>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<property name="default.timeout.explicit.wait" value="${timeout.explicit.wait}" />
+
+			<get-testcase-property property.name="timeout.explicit.wait" />
+
+			<if>
+				<isset property="timeout.explicit.wait" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						timeout.explicit.wait=${timeout.explicit.wait}
+					</echo>
+				</then>
+				<else>
+					<echo append="true" file="${test.ext.properties.file}">
+						timeout.explicit.wait=${default.timeout.explicit.wait}
+					</echo>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -3471,7 +4748,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/ant-gc.log</echo>
+					<echo>Unable to read /tmp/ant-gc.log.</echo>
 				</else>
 			</if>
 
@@ -3511,7 +4788,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/tomcat-gc.log</echo>
+					<echo>Unable to read /tmp/tomcat-gc.log.</echo>
 				</else>
 			</if>
 
@@ -3551,7 +4828,7 @@ tell application "Safari" to quit
 					</if>
 				</then>
 				<else>
-					<echo>Unable to read /tmp/tsant-gc.log</echo>
+					<echo>Unable to read /tmp/tsant-gc.log.</echo>
 				</else>
 			</if>
 		</sequential>
@@ -3651,6 +4928,354 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="rebuild-database">
+		<sequential>
+			<if>
+				<not>
+					<isset property="skip.rebuild-database" />
+				</not>
+				<then>
+					<get-testcase-property property.name="database.hypersonic.embedded" />
+
+					<antcall target="delete-liferay-home">
+						<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
+					</antcall>
+
+					<get-database-property property.name="database.docker.image" />
+
+					<if>
+						<isset property="database.docker.image" />
+						<then>
+							<get-database-property property.name="database.host" />
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.schema" />
+							<get-database-property property.name="database.username" />
+							<get-database-property property.name="database.version" />
+
+							<property location="create.sh" name="create.sh.file.path" />
+							<property location="create.sql" name="create.sql.file.path" />
+
+							<if>
+								<and>
+									<equals arg1="${database.type}" arg2="db2" />
+									<equals arg1="${database.version}" arg2="11.5.6" />
+								</and>
+								<then>
+									<get-testcase-property property.name="databases.size" />
+
+									<echo file="${create.sh.file.path}">
+										<![CDATA[
+											#!/bin/bash
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 disconnect lportal'
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal'
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 -f/tmp/create.sql -st'
+										]]>
+									</echo>
+
+									<if>
+										<isset property="databases.size" />
+										<then>
+											<echo file="${create.sh.file.path}">
+												<![CDATA[
+													su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal${databases.size}'
+												]]>
+											</echo>
+										</then>
+									</if>
+								</then>
+								<elseif>
+									<equals arg1="${database.type}" arg2="db2" />
+									<then>
+										<get-testcase-property property.name="databases.size" />
+
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												db2 disconnect lportal
+
+												db2 drop db lportal
+
+												db2 -f/tmp/create.sql -st
+											]]>
+										</echo>
+
+										<if>
+											<isset property="databases.size" />
+											<then>
+												<echo file="${create.sh.file.path}">
+													<![CDATA[
+														db2 drop db lportal${databases.size}
+													]]>
+												</echo>
+											</then>
+										</if>
+									</then>
+								</elseif>
+								<elseif>
+									<or>
+										<equals arg1="${database.type}" arg2="mariadb" />
+										<equals arg1="${database.type}" arg2="mysql" />
+									</or>
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												mysql --host=${database.host} --password=${database.password} --user=${database.username} < /tmp/create.sql
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="oracle" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/create.sql ${database.username} ${database.password}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="postgresql" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												export PGPASSWORD=${database.password}
+
+												psql --file=/tmp/create.sql --username=${database.username}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sqlserver" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												/opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -i /tmp/create.sql
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sybase" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												isql -i /tmp/create.sql -P ${database.password} -S ${database.schema} -U ${database.username}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+							</if>
+
+							<execute>
+								<![CDATA[
+									chmod 755 ${create.sh.file.path} ${create.sql.file.path}
+
+									docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
+									docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
+
+									docker exec ${database.host} /bin/bash /tmp/create.sh
+								]]>
+							</execute>
+
+							<delete file="${create.sh.file.path}" />
+						</then>
+						<else>
+							<if>
+								<equals arg1="${database.type}" arg2="db2" />
+								<then>
+									<get-testcase-property property.name="databases.size" />
+
+									<if>
+										<os family="windows" />
+										<then>
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 disconnect lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 drop db lportal" />
+											</exec>
+
+											<if>
+												<isset property="databases.size" />
+												<then>
+													<exec executable="${db2.executable}">
+														<arg line="/c /w db2 drop db lportal${databases.size}" />
+													</exec>
+												</then>
+											</if>
+
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 -fcreate.sql -td;" />
+											</exec>
+										</then>
+										<else>
+											<exec executable="${db2.executable}">
+												<arg line="disconnect lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}">
+												<arg line="drop db lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}" if:set="databases.size">
+												<arg line="drop db lportal${databases.size}" />
+											</exec>
+
+											<exec executable="${db2.executable}" failonerror="true">
+												<arg value="-fcreate.sql" />
+												<arg value="-t" />
+											</exec>
+										</else>
+									</if>
+								</then>
+								<elseif>
+									<or>
+										<equals arg1="${database.type}" arg2="mariadb" />
+										<equals arg1="${database.type}" arg2="mysql" />
+									</or>
+									<then>
+										<var name="arg.line" value="" />
+
+										<get-database-property property.name="database.host" />
+
+										<local name="mysql.host" />
+
+										<if>
+											<and>
+												<equals arg1="${database.host}" arg2="localhost" />
+												<istrue value="${test.docker.environment}" />
+											</and>
+											<then>
+												<property name="mysql.host" value="127.0.0.1" />
+											</then>
+											<else>
+												<property name="mysql.host" value="" />
+											</else>
+										</if>
+
+										<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
+
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
+										<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
+
+										<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${database.executable}" failonerror="true" input="create.sql">
+												<arg line="${arg.line}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="oracle" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<if>
+											<os family="windows" />
+											<then>
+												<exec executable="${oracle.sqlplus.executable}" failonerror="true">
+													<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
+													<arg value="@create.sql" />
+													<arg value="${database.username}" />
+													<arg value="${database.password}" />
+												</exec>
+											</then>
+											<else>
+												<retry retrycount="10" retrydelay="60000">
+													<exec executable="${oracle.sqlplus.executable}" failonerror="true">
+														<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+														<arg value="@create.sql" />
+														<arg value="${database.username}" />
+														<arg value="${database.password}" />
+													</exec>
+												</retry>
+											</else>
+										</if>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="postgresql" />
+									<then>
+										<get-database-property property.name="database.username" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${postgresql.executable}" failonerror="true">
+												<arg value="-f" />
+												<arg value="create.sql" />
+												<arg value="-U" />
+												<arg value="${database.username}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sqlserver" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<exec executable="${sqlserver.executable}" failonerror="true">
+											<arg value="-U" />
+											<arg value="${database.username}" />
+											<arg value="-P" />
+											<arg value="${database.password}" />
+											<arg value="-i" />
+											<arg value="create.sql" />
+										</exec>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sybase" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.schema" />
+										<get-database-property property.name="database.username" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${sybase.executable}" failonerror="true">
+												<arg value="-i" />
+												<arg value="create.sql" />
+												<arg value="-P" />
+												<arg value="${database.password}" />
+												<arg value="-S" />
+												<arg value="${database.schema}" />
+												<arg value="-U" />
+												<arg value="${database.username}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+							</if>
+						</else>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="record-git-commit-portal">
 		<sequential>
 			<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
@@ -3693,12 +5318,6 @@ tell application "Safari" to quit
 				<isset property="test.batch.name" />
 			</condition>
 
-			<local name="top.level.job.name" />
-
-			<condition else="@{test.type}-test-csv-report" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
-				<isset property="env.TOP_LEVEL_JOB_NAME" />
-			</condition>
-
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.GitWorkingDirectory;
@@ -3720,6 +5339,24 @@ tell application "Safari" to quit
 						}
 
 						return Job.BuildProfile.PORTAL;
+					}
+
+					public String getJobName() {
+						String jobName = project.getProperty("job.name");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = "@{test.type}-test-csv-report";
+						}
+
+						return jobName;
 					}
 
 					public GitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -3744,18 +5381,36 @@ tell application "Safari" to quit
 						return "liferay-portal-ee";
 					}
 
+					public String getTestSuiteName() {
+						String testSuiteName = project.getProperty("env.CI_TEST_SUITE");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+							testSuiteName = "default";
+						}
+
+						return testSuiteName;
+					}
+
 					public String getUpstreamBranchName() {
-						return project.getProperty("git.working.branch.name");
+						String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("liferay.portal.branch");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("git.working.branch.name");
+						}
+
+						return upstreamBranchName.replace("-private", "");
 					}
 
 					try {
-						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"), null, getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
+						Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
-						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup ||
-							batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
-
+						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup || batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
 							batchTestClassGroup.writeTestCSVReportFile();
 						}
 					}
@@ -4387,6 +6042,7 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.3" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10.3" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.2.0" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.2.1" />
@@ -4453,6 +6109,7 @@ go</echo>
 				<elseif>
 					<or>
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10.4" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13" />
 					</or>
 					<then>
@@ -4460,7 +6117,10 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u1" />
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.3.21" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u1" />
+					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="9.0.56" />
 					</then>
@@ -4507,8 +6167,18 @@ go</echo>
 			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -4949,10 +6619,30 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-docker-database">
 		<sequential>
+			<trycatch property="start.docker.database.error">
+				<try>
+					<retry retrycount="2">
+						<sequential>
+							<start-docker-database-cmd />
+						</sequential>
+					</retry>
+				</try>
+				<catch>
+					<echo>Unable to start the Docker database container.</echo>
+
+					<fail>${start.docker.database.error}</fail>
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-docker-database-cmd">
+		<sequential>
 			<get-database-property property.name="database.host" />
 			<get-database-property property.name="database.docker.database.options" />
 			<get-database-property property.name="database.docker.image" />
 			<get-database-property property.name="database.docker.run.options" />
+			<get-database-property property.name="database.version" />
 
 			<property name="database.docker.database.options" value="" />
 			<property name="database.docker.run.options" value="" />
@@ -4962,10 +6652,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</start-docker-container>
 
 			<if>
-				<equals arg1="${database.type}" arg2="db2" />
+				<and>
+					<equals arg1="${database.type}" arg2="db2" />
+					<equals arg1="${database.version}" arg2="11.5.6" />
+				</and>
 				<then>
-					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '/opt/ibm/db2/V11.1/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2set DB2COMM=tcpip')" =~ "" ]]</property>
+					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
 				</then>
+				<elseif>
+					<equals arg1="${database.type}" arg2="db2" />
+					<then>
+						<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '/opt/ibm/db2/V11.1/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+					</then>
+				</elseif>
 				<elseif>
 					<or>
 						<equals arg1="${database.type}" arg2="mariadb" />
@@ -5355,6 +7055,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-docker-database">
 		<sequential>
+			<trycatch property="stop.docker.database.error">
+				<try>
+					<retry retrycount="2">
+						<sequential>
+							<stop-docker-database-cmd />
+						</sequential>
+					</retry>
+				</try>
+				<catch>
+					<echo>Unable to stop the Docker database container.</echo>
+
+					<fail>${stop.docker.database.error}</fail>
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-database-cmd">
+		<sequential>
 			<get-database-property property.name="database.host" />
 
 			<stop-docker-container name="${database.host}" />
@@ -5465,8 +7184,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -5847,7 +7576,8 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<beanshell>
 						<![CDATA[
-							import org.apache.commons.io.FileUtils;
+							import java.nio.file.Files;
+
 							import org.apache.tools.ant.DirectoryScanner;
 
 							public String getCatalinaLogFilesContent() {
@@ -5882,7 +7612,7 @@ war.path=${app.server.portal.dir}/</echo>
 								for (String key : keys) {
 									File file = catalinaLogFiles.get(key);
 
-									sb.append(FileUtils.readFileToString(file));
+									sb.append(new String(Files.readAllBytes(file.toPath())));
 								}
 
 								return sb.toString();
@@ -5944,7 +7674,8 @@ war.path=${app.server.portal.dir}/</echo>
 				<![CDATA[
 					import java.io.File;
 
-					import org.apache.commons.io.FileUtils;
+					import java.nio.file.Files;
+
 					import org.apache.tools.ant.DirectoryScanner;
 
 					public boolean isContainedInCatalinaLogFiles(String searchString) {
@@ -5969,7 +7700,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 							File file = new File(filePath);
 
-							String fileContent = FileUtils.readFileToString(file);
+							String fileContent = new String(Files.readAllBytes(file.toPath()));
 
 							if (fileContent.contains(searchString)) {
 								return true;
@@ -6139,6 +7870,12 @@ war.path=${app.server.portal.dir}/</echo>
 							<property name="portal.version.url.path" value="7.4.1-ga2" />
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${portal.version}" arg2="7.4.3.21" />
+						<then>
+							<property name="portal.version.url.path" value="7.4.3.21-ga21" />
+						</then>
+					</elseif>
 					<else>
 						<property name="portal.version.url.path" value="${portal.version}" />
 					</else>
@@ -6159,6 +7896,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<equals arg1="${portal.version}" arg2="7.3.5" />
 						<equals arg1="${portal.version}" arg2="7.4.0" />
 						<equals arg1="${portal.version}" arg2="7.4.1" />
+						<equals arg1="${portal.version}" arg2="7.4.3.21" />
 					</or>
 					<then>
 						<propertycopy from="sql.legacy.base.url[ce]" name="sql.legacy.base.url" />
@@ -6862,7 +8600,7 @@ org.apache.catalina.tribes.level = FINE]]>
 					<sequential>
 						<mirrors-get
 							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/${database.version}/@{jdbc.driver}"
+							src="${test.jdbc.drivers.url}/db2/11.1.3/@{jdbc.driver}"
 						/>
 
 						<tstamp>
@@ -7441,6 +9179,17 @@ virtualHostname="localhost"
 					src="${test.build.license.xml.zip.url}"
 				/>
 			</then>
+			<elseif>
+				<contains string="${test.build.license.xml.zip.url}" substring="${project.dir}" />
+				<then>
+					<mkdir dir="${liferay.home}/deploy" />
+
+					<copy
+						file="${test.build.license.xml.zip.url}"
+						tofile="${liferay.home}/deploy/license.xml"
+					/>
+				</then>
+			</elseif>
 		</if>
 	</target>
 
@@ -8751,7 +10500,7 @@ ${update.properties}</echo>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
 
-		<antcall target="prepare-selenium-login-config" />
+		<prepare-selenium-login-config />
 	</target>
 
 	<target name="prepare-patching-tool">
@@ -8799,18 +10548,6 @@ jdbc.default.minimumIdle=0
 
 jdbc.counter.maximumPoolSize=5
 jdbc.counter.minimumIdle=0
-
-// Tomcat
-
-jdbc.default.initialSize=0
-jdbc.default.maxActive=20
-jdbc.default.maxIdle=0
-jdbc.default.minIdle=0
-
-jdbc.counter.initialSize=0
-jdbc.counter.maxActive=5
-jdbc.counter.maxIdle=0
-jdbc.counter.minIdle=0
 
 enterprise.product.notification.enabled=false
 
@@ -9574,6 +11311,42 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.client.id=${site.initializer.raylife.d2c.paypal.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.client.secret=${site.initializer.raylife.d2c.paypal.client.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.email" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.email=${site.initializer.raylife.d2c.paypal.email}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.password=${site.initializer.raylife.d2c.paypal.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="print.java.process.on.fail" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -9589,11 +11362,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
-			<else>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
-				</echo>
-			</else>
 		</if>
 
 		<if>
@@ -9707,6 +11475,18 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<or>
+				<equals arg1="${test.dirs}" arg2="" />
+				<isset property="test.dirs" />
+			</or>
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.dirs=${test.dirs}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.include.dir.names" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -9725,19 +11505,28 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="test.run.environment" />
+			<isset property="test.released.release.bundle.version" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					test.run.environment=${test.run.environment}
+					test.released.release.bundle.version=${test.released.release.bundle.version}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="test.subrepo.dirs" />
+			<isset property="test.released.test.portal.bundle.zip.url" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					test.subrepo.dirs=${test.subrepo.dirs}
+					test.released.test.portal.bundle.zip.url=${test.released.test.portal.bundle.zip.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.run.environment" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.run.environment=${test.run.environment}
 				</echo>
 			</then>
 		</if>
@@ -9793,27 +11582,28 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
-		<antcall target="prepare-selenium-login-config" />
+		<prepare-selenium-login-config />
 
-		<antcall target="prepare-selenium-analytics-cloud-properties" />
-		<antcall target="prepare-selenium-app-server-properties" />
-		<antcall target="prepare-selenium-aws-translation-properties" />
-		<antcall target="prepare-selenium-azure-translation-properties" />
-		<antcall target="prepare-selenium-browser" />
-		<antcall target="prepare-selenium-click-to-chat-properties" />
-		<antcall target="prepare-selenium-database-properties" />
-		<antcall target="prepare-selenium-digital-signature-properties" />
-		<antcall target="prepare-selenium-email-properties" />
-		<antcall target="prepare-selenium-facebook-properties" />
-		<antcall target="prepare-selenium-google-cloud-autotagging-properties" />
-		<antcall target="prepare-selenium-google-cloud-translation-properties" />
-		<antcall target="prepare-selenium-google-properties" />
-		<antcall target="prepare-selenium-onedrive-properties" />
-		<antcall target="prepare-selenium-openid-properties" />
-		<antcall target="prepare-selenium-recaptcha-properties" />
-		<antcall target="prepare-selenium-required-properties" />
-		<antcall target="prepare-selenium-sharepoint-properties" />
-		<antcall target="prepare-selenium-testcase-properties" />
+		<prepare-selenium-analytics-cloud-properties />
+		<prepare-selenium-app-server-properties />
+		<prepare-selenium-aws-translation-properties />
+		<prepare-selenium-azure-translation-properties />
+		<prepare-selenium-browser />
+		<prepare-selenium-click-to-chat-properties />
+		<prepare-selenium-database-properties />
+		<prepare-selenium-digital-signature-properties />
+		<prepare-selenium-email-properties />
+		<prepare-selenium-facebook-properties />
+		<prepare-selenium-google-cloud-autotagging-properties />
+		<prepare-selenium-google-cloud-translation-properties />
+		<prepare-selenium-google-properties />
+		<prepare-selenium-onedrive-properties />
+		<prepare-selenium-openid-properties />
+		<prepare-selenium-recaptcha-properties />
+		<prepare-selenium-required-properties />
+		<prepare-selenium-sharepoint-properties />
+		<prepare-selenium-site-initializer-raylife-d2c-paypal-properties />
+		<prepare-selenium-testcase-properties />
 
 		<get-browser-property property.name="browser.docker.image" />
 		<get-operating-system-property property.name="operating.system.docker.image" />
@@ -9938,11 +11728,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
-			<else>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
-				</echo>
-			</else>
 		</if>
 
 		<get-testcase-property property.name="test.skip.tear.down" />
@@ -10010,1237 +11795,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					test.testcase.max.retries=${test.testcase.max.retries}
 				</echo>
 			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-analytics-cloud-properties">
-		<get-testcase-property property.name="analytics.cloud.enabled" />
-
-		<if>
-			<isset property="test.analytics.cloud.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					analytics.cloud.url=${test.analytics.cloud.url}
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${analytics.cloud.enabled}" arg2="true" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						analytics.cloud.url=${analytics.cloud.faro.frontend.url}
-					</echo>
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<isset property="test.analytics.cloud.publisher.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					analytics.cloud.publisher.url=${test.analytics.cloud.publisher.url}
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${analytics.cloud.enabled}" arg2="true" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						analytics.cloud.publisher.url=${analytics.cloud.asah.publisher.url}
-					</echo>
-				</then>
-			</elseif>
-		</if>
-
-		<echo append="true" file="${test.ext.properties.file}">
-			analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
-			analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
-			analytics.cloud.asah.curator.stream.url=${analytics.cloud.asah.curator.stream.url}
-			analytics.cloud.asah.publisher.url=${analytics.cloud.asah.publisher.url}
-			analytics.cloud.faro.frontend.url=${analytics.cloud.faro.frontend.url}
-		</echo>
-	</target>
-
-	<target name="prepare-selenium-app-server-properties">
-		<if>
-			<isset property="app.server.type" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					app.server.type=${app.server.type}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-aws-translation-properties">
-		<if>
-			<isset property="aws.translation.access.key.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					aws.translation.access.key.id=${aws.translation.access.key.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="aws.translation.secret.access.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					aws.translation.secret.access.key=${aws.translation.secret.access.key}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-azure-translation-properties">
-		<if>
-			<isset property="azure.translation.subscription.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					azure.translation.subscription.key=${azure.translation.subscription.key}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="azure.translation.resource.location" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					azure.translation.resource.location=${azure.translation.resource.location}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-browser">
-		<get-testcase-property property.name="browser.type" />
-		<get-testcase-property property.name="browser.${browser.type}.version" />
-
-		<propertycopy from="browser.${browser.type}.version" name="browser.version" override="true" />
-
-		<echo append="true" file="${test.ext.properties.file}">
-			browser.type=${browser.type}
-			browser.version=${browser.version}
-		</echo>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="chrome" />
-			<then>
-				<get-testcase-property append="true" delimiter=" " property.name="browser.chrome.bin.args" />
-
-				<if>
-					<isset property="browser.chrome.bin.args" />
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							browser.chrome.bin.args=${browser.chrome.bin.args}
-						</echo>
-					</then>
-				</if>
-
-				<propertycopy from="browser.chrome.bin.file[${browser.chrome.version}]" name="browser.chrome.bin.file" silent="true" />
-
-				<if>
-					<isset property="browser.chrome.bin.file" />
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							browser.chrome.bin.file=${browser.chrome.bin.file}
-						</echo>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="edge" />
-			<then>
-				<prepare-edge-driver />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.edge.driver.executable=${selenium.edge.driver.executable}
-					selenium.executable.dir.name=${selenium.executable.dir.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${browser.firefox.version}" arg2="52.0" />
-				<equals arg1="${browser.type}" arg2="firefox" />
-			</and>
-			<then>
-				<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
-
-				<if>
-					<isset property="browser.firefox.bin.file" />
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							browser.firefox.bin.file=${browser.firefox.bin.file}
-						</echo>
-					</then>
-				</if>
-
-				<prepare-gecko-driver />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.executable.dir.name=${selenium.executable.dir.name}
-					selenium.gecko.driver.executable=${selenium.gecko.driver.executable}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="internetexplorer" />
-			<then>
-				<prepare-ie-driver />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.executable.dir.name=${selenium.executable.dir.name}
-					selenium.ie.driver.executable=${selenium.ie.driver.executable}
-					selenium.ie.driver.version=${selenium.ie.driver.version}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
-
-		<get-browser-property property.name="browser.docker.image" />
-
-		<if>
-			<isset property="browser.docker.image" />
-			<then>
-				<get-browser-property property.name="browser.host" />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.remote.driver.url=http://${browser.host}:4444
-				</echo>
-			</then>
-			<elseif>
-				<isset property="selenium.remote.driver.url" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-						selenium.remote.driver.url=${selenium.remote.driver.url}
-					</echo>
-				</then>
-			</elseif>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-click-to-chat-properties">
-		<if>
-			<isset property="click.to.chat.chatwoot.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.chatwoot.password=${click.to.chat.chatwoot.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.hubspot.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.hubspot.password=${click.to.chat.hubspot.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.jivochat.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.jivochat.password=${click.to.chat.jivochat.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.liveperson.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.liveperson.password=${click.to.chat.liveperson.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.smartsupp.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.smartsupp.password=${click.to.chat.smartsupp.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tawkto.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tawkto.password=${click.to.chat.tawkto.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tidio.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tidio.password=${click.to.chat.tidio.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tolvnow.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tolvnow.password=${click.to.chat.tolvnow.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.zendesk.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.zendesk.password=${click.to.chat.zendesk.password}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-database-properties">
-		<for list="${database.types}" param="database.type">
-			<sequential>
-				<if>
-					<isset property="database.@{database.type}.driver" />
-					<then>
-						<local name="database.driver" />
-
-						<propertycopy from="database.@{database.type}.driver" name="database.driver" />
-
-						<echo append="true" file="${test.ext.properties.file}">
-							database.@{database.type}.driver=${database.driver}
-						</echo>
-					</then>
-				</if>
-
-				<if>
-					<isset property="database.@{database.type}.password" />
-					<then>
-						<local name="database.password" />
-
-						<propertycopy from="database.@{database.type}.password" name="database.password" />
-
-						<echo append="true" file="${test.ext.properties.file}">
-							database.@{database.type}.password=${database.password}
-						</echo>
-					</then>
-				</if>
-
-				<if>
-					<isset property="database.@{database.type}.schema" />
-					<then>
-						<local name="database.schema" />
-
-						<propertycopy from="database.@{database.type}.schema" name="database.schema" />
-
-						<echo append="true" file="${test.ext.properties.file}">
-							database.@{database.type}.schema=${database.schema}
-						</echo>
-					</then>
-				</if>
-
-				<if>
-					<isset property="database.@{database.type}.url" />
-					<then>
-						<local name="database.url" />
-
-						<propertycopy from="database.@{database.type}.url" name="database.url" />
-
-						<echo append="true" file="${test.ext.properties.file}">
-							database.@{database.type}.url=${database.url}
-						</echo>
-					</then>
-				</if>
-
-				<if>
-					<isset property="database.@{database.type}.username" />
-					<then>
-						<local name="database.username" />
-
-						<propertycopy from="database.@{database.type}.username" name="database.username" />
-
-						<echo append="true" file="${test.ext.properties.file}">
-							database.@{database.type}.username=${database.username}
-						</echo>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<if>
-			<isset property="database.type" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.type=${database.type}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-digital-signature-properties">
-		<if>
-			<isset property="digital.signature.account.base.uri" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.account.base.uri=${digital.signature.account.base.uri}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="digital.signature.api.accountId" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.api.accountId=${digital.signature.api.accountId}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="digital.signature.api.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.api.username=${digital.signature.api.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="digital.signature.integration.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.integration.key=${digital.signature.integration.key}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="digital.signature.rsa.private.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-email-properties">
-		<if>
-			<isset property="email.address.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.address.1=${email.address.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.address.2=${email.address.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.address.3=${email.address.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.address.4=${email.address.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.5" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.address.5=${email.address.5}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.password.1=${email.password.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.password.2=${email.password.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.password.3=${email.password.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.password.4=${email.password.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.5" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					email.password.5=${email.password.5}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.address.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.address.1=${marketplace.email.address.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.address.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.address.2=${marketplace.email.address.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.address.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.address.3=${marketplace.email.address.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.address.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.address.4=${marketplace.email.address.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.address.5" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.address.5=${marketplace.email.address.5}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.password.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.password.1=${marketplace.email.password.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.password.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.password.2=${marketplace.email.password.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.password.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.password.3=${marketplace.email.password.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.password.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.password.4=${marketplace.email.password.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="marketplace.email.password.5" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					marketplace.email.password.5=${marketplace.email.password.5}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-facebook-properties">
-		<if>
-			<isset property="facebook.application.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					facebook.application.id=${facebook.application.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="facebook.application.secret" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					facebook.application.secret=${facebook.application.secret}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="facebook.email" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					facebook.email=${facebook.email}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="facebook.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					facebook.password=${facebook.password}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-google-cloud-autotagging-properties">
-		<if>
-			<isset property="google.cloud.autotagging.service.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.autotagging.service.key=${google.cloud.autotagging.service.key}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-google-cloud-translation-properties">
-		<if>
-			<isset property="google.cloud.translation.service.key.type" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.type=${google.cloud.translation.service.key.type}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.project.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.project.id=${google.cloud.translation.service.key.project.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.private.key.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.private.key.id=${google.cloud.translation.service.key.private.key.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.private.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.private.key=${google.cloud.translation.service.key.private.key}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.client.email" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.client.email=${google.cloud.translation.service.key.client.email}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.client.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.client.id=${google.cloud.translation.service.key.client.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.auth.uri" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.auth.uri=${google.cloud.translation.service.key.auth.uri}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.token.uri" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.token.uri=${google.cloud.translation.service.key.token.uri}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.auth.provider.x509.cert.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.auth.provider.x509.cert.url=${google.cloud.translation.service.key.auth.provider.x509.cert.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.cloud.translation.service.key.client.x509.cert.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.cloud.translation.service.key.client.x509.cert.url=${google.cloud.translation.service.key.client.x509.cert.url}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-google-properties">
-		<if>
-			<isset property="google.api.key.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.api.key.1=${google.api.key.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.api.key.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.api.key.2=${google.api.key.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.api.key.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.api.key.3=${google.api.key.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.api.key.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.api.key.4=${google.api.key.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.id.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.id.1=${google.client.id.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.id.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.id.2=${google.client.id.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.id.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.id.3=${google.client.id.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.id.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.id.4=${google.client.id.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.secret.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.secret.1=${google.client.secret.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.secret.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.secret.2=${google.client.secret.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.secret.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.secret.3=${google.client.secret.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="google.client.secret.4" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					google.client.secret.4=${google.client.secret.4}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-login-config">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config" force="true">enabled="true"
-tokenLocation="REQUEST"</echo>
-	</target>
-
-	<target name="prepare-selenium-onedrive-properties">
-		<if>
-			<isset property="onedrive.client.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					onedrive.client.id=${onedrive.client.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="onedrive.client.secret" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					onedrive.client.secret=${onedrive.client.secret}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="onedrive.tenant" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					onedrive.tenant=${onedrive.tenant}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-openid-properties">
-		<if>
-			<isset property="openid.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.password=${openid.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.auth0.test.account.email.address" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.auth0.test.account.email.address=${openid.provider.auth0.test.account.email.address}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.auth0.test.account.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.auth0.test.account.password=${openid.provider.auth0.test.account.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.okta.test.account.email.address" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.okta.test.account.email.address=${openid.provider.okta.test.account.email.address}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.okta.test.account.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.okta.test.account.password=${openid.provider.okta.test.account.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.pingone.test.account.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.pingone.test.account.password=${openid.provider.pingone.test.account.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.provider.pingone.test.account.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.provider.pingone.test.account.username=${openid.provider.pingone.test.account.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="openid.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					openid.username=${openid.username}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-recaptcha-properties">
-		<if>
-			<isset property="recaptcha.private.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					recaptcha.private.key=${recaptcha.private.key}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="recaptcha.public.key" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					recaptcha.public.key=${recaptcha.public.key}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-required-properties">
-		<get-test-url />
-
-		<echo append="true" file="${test.ext.properties.file}">
-			portal.url=${test.url}
-			selenium.executable.dir=${basedir.unix}/tools/selenium/
-			test.class.command.name=${test.class}
-		</echo>
-	</target>
-
-	<target name="prepare-selenium-sharepoint-properties">
-		<if>
-			<isset property="sharepoint.oauth.authorization.grant.endpoint" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.authorization.grant.endpoint=${sharepoint.oauth.authorization.grant.endpoint}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.authorization.token.endpoint" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.authorization.token.endpoint=${sharepoint.oauth.authorization.token.endpoint}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.client.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.client.id=${sharepoint.oauth.client.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.client.secret" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.client.secret=${sharepoint.oauth.client.secret}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.configuration.name" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.configuration.name=${sharepoint.oauth.configuration.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.configuration.resource" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.configuration.resource=${sharepoint.oauth.configuration.resource}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.configuration.scope" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.configuration.scope=${sharepoint.oauth.configuration.scope}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.site.domain" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.site.domain=${sharepoint.oauth.site.domain}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.tenant.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.tenant.id=${sharepoint.oauth.tenant.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.user.name" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.user.name=${sharepoint.oauth.user.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="sharepoint.oauth.user.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					sharepoint.oauth.user.password=${sharepoint.oauth.user.password}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-testcase-properties">
-		<get-testcase-property property.name="cmis.repository.type" />
-
-		<if>
-			<or>
-				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
-				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
-			</or>
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="ignore.errors" />
-
-		<if>
-			<isset property="ignore.errors" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					ignore.errors=${ignore.errors}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="ignore.errors.delimiter" />
-
-		<if>
-			<isset property="ignore.errors.delimiter" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					ignore.errors.delimiter=${ignore.errors.delimiter}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="proxy.server.enabled" />
-
-		<if>
-			<equals arg1="${proxy.server.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					proxy.server.enabled=true
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="test.assert.javascript.errors" />
-
-		<if>
-			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.assert.javascript.errors=false
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="test.assert.warning.exceptions" />
-
-		<if>
-			<isset property="test.assert.warning.exceptions" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.assert.warning.exceptions=${test.assert.warning.exceptions}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="test.name.skip.portal.instance" />
-
-		<if>
-			<isset property="test.name.skip.portal.instance" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.name.skip.portal.instance=${test.name.skip.portal.instance}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="theme.file.name" />
-
-		<if>
-			<isset property="theme.file.name" />
-			<then>
-				<propertyregex
-					input="${theme.file.name}"
-					override="true"
-					property="zipfileset.includes"
-					regexp="([^\.]+)(\.[^\s]+)"
-					replace="\1*\2"
-				/>
-
-				<if>
-					<resourcecount count="0" when="greater">
-						<zipfileset
-							dir="${liferay.home}/osgi/war"
-							includes="${zipfileset.includes}"
-						>
-							<patternset>
-								<include name="**/private.lar" />
-							</patternset>
-						</zipfileset>
-					</resourcecount>
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							theme.contains.resources=true
-						</echo>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<property name="default.timeout.explicit.wait" value="${timeout.explicit.wait}" />
-
-		<get-testcase-property property.name="timeout.explicit.wait" />
-
-		<if>
-			<isset property="timeout.explicit.wait" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					timeout.explicit.wait=${timeout.explicit.wait}
-				</echo>
-			</then>
-			<else>
-				<echo append="true" file="${test.ext.properties.file}">
-					timeout.explicit.wait=${default.timeout.explicit.wait}
-				</echo>
-			</else>
 		</if>
 	</target>
 
@@ -11317,10 +11871,6 @@ log.sanitizer.enabled=false</echo>
 		</if>
 
 		<antcall inheritAll="false" target="compile-test" />
-
-		<record-test-class-file-names />
-
-		<antcall inheritAll="false" target="record-test-plugin-names" />
 
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
@@ -11804,28 +12354,75 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<equals arg1="${app.server.type}" arg2="wildfly" />
-			</or>
-			<then>
-				<prepare-jboss-module-configuration />
-
-				<print-file file.name="${app.server.lib.global.dir}/module.xml" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="weblogic" />
 			<then>
 				<ant antfile="build-test-elasticsearch7.xml" target="get-sidecar-binaries" />
 			</then>
 		</if>
 
 		<lstopwatch action="total" name="prepare.bundles.${app.server.name}" />
+	</target>
+
+	<target name="prepare-upgrade-original-bundle-test-environment">
+		<property location="${app.server.parent.dir}/../" name="test.release.bundle.parent.dir" />
+
+		<delete dir="${test.release.bundle.parent.dir}/bundles-original/data" />
+
+		<move
+			file="${test.release.bundle.parent.dir}/bundles/data"
+			tofile="${test.release.bundle.parent.dir}/bundles-original/data"
+		/>
+
+		<delete dir="${test.release.bundle.parent.dir}/bundles-original/data/elasticsearch7" />
+
+		<delete dir="${test.release.bundle.parent.dir}/bundles" />
+
+		<move
+			file="${test.release.bundle.parent.dir}/bundles-original"
+			tofile="${test.release.bundle.parent.dir}/bundles"
+		/>
+
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
+
+		<prepare-custom-properties
+			custom.properties="upgrade.database.auto.run=true"
+			properties.file="${app.server.tomcat.classes.portal.dir}/portal-ext.properties"
+		/>
+	</target>
+
+	<target name="prepare-upgrade-released-bundle-test-environment">
+		<property location="${app.server.parent.dir}/../" name="test.release.bundle.parent.dir" />
+
+		<delete dir="${test.release.bundle.parent.dir}/bundles-original" />
+
+		<move
+			file="${test.release.bundle.parent.dir}/bundles"
+			tofile="${test.release.bundle.parent.dir}/bundles-original"
+		/>
+
+		<set-tomcat-version-number liferay.portal.bundle="${test.released.release.bundle.version}" />
+
+		<antcall inheritAll="false" target="prepare-test-bundle">
+			<param name="app.server.type" value="tomcat" />
+			<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+			<param name="test.build.bundle.zip.url" value="${test.released.test.portal.bundle.zip.url}" />
+		</antcall>
+
+		<antcall target="deploy-license-xml">
+			<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
+		</antcall>
+
+		<get-test-app-server-lib-portal-dir />
+
+		<antcall inheritAll="false" target="copy-optional-jars">
+			<param name="todir" value="${test.app.server.lib.portal.dir}" />
+		</antcall>
+
+		<antcall target="prepare-osgi-module-configurations" />
+		<antcall target="prepare-portal-properties" />
+		<antcall target="prepare-portal-ext-properties" />
+		<antcall target="prepare-portlet-ext-properties" />
+		<antcall target="prepare-system-ext-properties" />
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">
@@ -11891,7 +12488,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	<target name="print-jstack-logs">
 		<fail message="Please set the property ${process.name}." unless="process.name" />
 
-		<print-jstack-logs process.name="${process.name}" />
+		<trycatch property="exception.message">
+			<try>
+				<print-jstack-logs process.name="${process.name}" />
+			</try>
+			<catch>
+				<echo>Unable to print JStack log.</echo>
+
+				<echo>${exception.message}</echo>
+			</catch>
+		</trycatch>
 	</target>
 
 	<target name="print-scm-revision">
@@ -11914,318 +12520,23 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target depends="build-sql-file" name="rebuild-database">
-		<if>
-			<not>
-				<isset property="skip.rebuild-database" />
-			</not>
-			<then>
-				<get-testcase-property property.name="database.hypersonic.embedded" />
+		<trycatch property="rebuild.database.error">
+			<try>
+				<retry retrycount="2">
+					<sequential>
+						<rebuild-database />
+					</sequential>
+				</retry>
+			</try>
+			<catch>
+				<echo>Failed to rebuild the database</echo>
 
-				<antcall target="delete-liferay-home">
-					<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
-				</antcall>
-
-				<get-database-property property.name="database.docker.image" />
-
-				<if>
-					<isset property="database.docker.image" />
-					<then>
-						<get-database-property property.name="database.host" />
-						<get-database-property property.name="database.password" />
-						<get-database-property property.name="database.schema" />
-						<get-database-property property.name="database.username" />
-
-						<property location="create.sh" name="create.sh.file.path" />
-						<property location="create.sql" name="create.sql.file.path" />
-
-						<if>
-							<equals arg1="${database.type}" arg2="db2" />
-							<then>
-								<get-testcase-property property.name="databases.size" />
-
-								<echo file="${create.sh.file.path}">
-									<![CDATA[
-										#!/bin/bash
-
-										db2 disconnect lportal
-
-										db2 drop db lportal
-
-										db2 -f/tmp/create.sql -st
-									]]>
-								</echo>
-
-								<if>
-									<isset property="databases.size" />
-									<then>
-										<echo file="${create.sh.file.path}">
-											<![CDATA[
-												db2 drop db lportal${databases.size}
-											]]>
-										</echo>
-									</then>
-								</if>
-							</then>
-							<elseif>
-								<or>
-									<equals arg1="${database.type}" arg2="mariadb" />
-									<equals arg1="${database.type}" arg2="mysql" />
-								</or>
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											mysql --host=${database.host} --password=${database.password} --user=${database.username} < /tmp/create.sql
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="oracle" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/create.sql ${database.username} ${database.password}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="postgresql" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											export PGPASSWORD=${database.password}
-
-											psql --file=/tmp/create.sql --username=${database.username}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sqlserver" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											/opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -i /tmp/create.sql
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sybase" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											isql -i /tmp/create.sql -P ${database.password} -S ${database.schema} -U ${database.username}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-						</if>
-
-						<execute>
-							<![CDATA[
-								chmod 755 ${create.sh.file.path} ${create.sql.file.path}
-
-								docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
-								docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
-
-								docker exec ${database.host} /bin/bash /tmp/create.sh
-							]]>
-						</execute>
-
-						<delete file="${create.sh.file.path}" />
-					</then>
-					<else>
-						<if>
-							<equals arg1="${database.type}" arg2="db2" />
-							<then>
-								<get-testcase-property property.name="databases.size" />
-
-								<if>
-									<os family="windows" />
-									<then>
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 disconnect lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 drop db lportal" />
-										</exec>
-
-										<if>
-											<isset property="databases.size" />
-											<then>
-												<exec executable="${db2.executable}">
-													<arg line="/c /w db2 drop db lportal${databases.size}" />
-												</exec>
-											</then>
-										</if>
-
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 -fcreate.sql -td;" />
-										</exec>
-									</then>
-									<else>
-										<exec executable="${db2.executable}">
-											<arg line="disconnect lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}">
-											<arg line="drop db lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}" if:set="databases.size">
-											<arg line="drop db lportal${databases.size}" />
-										</exec>
-
-										<exec executable="${db2.executable}" failonerror="true">
-											<arg value="-fcreate.sql" />
-											<arg value="-t" />
-										</exec>
-									</else>
-								</if>
-							</then>
-							<elseif>
-								<or>
-									<equals arg1="${database.type}" arg2="mariadb" />
-									<equals arg1="${database.type}" arg2="mysql" />
-								</or>
-								<then>
-									<var name="arg.line" value="" />
-
-									<get-database-property property.name="database.host" />
-
-									<local name="mysql.host" />
-
-									<if>
-										<and>
-											<equals arg1="${database.host}" arg2="localhost" />
-											<istrue value="${test.docker.environment}" />
-										</and>
-										<then>
-											<property name="mysql.host" value="127.0.0.1" />
-										</then>
-										<else>
-											<property name="mysql.host" value="" />
-										</else>
-									</if>
-
-									<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
-
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
-									<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
-
-									<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${database.executable}" failonerror="true" input="create.sql">
-											<arg line="${arg.line}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="oracle" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<if>
-										<os family="windows" />
-										<then>
-											<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-												<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
-												<arg value="@create.sql" />
-												<arg value="${database.username}" />
-												<arg value="${database.password}" />
-											</exec>
-										</then>
-										<else>
-											<retry retrycount="10" retrydelay="60000">
-												<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-													<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-													<arg value="@create.sql" />
-													<arg value="${database.username}" />
-													<arg value="${database.password}" />
-												</exec>
-											</retry>
-										</else>
-									</if>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="postgresql" />
-								<then>
-									<get-database-property property.name="database.username" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${postgresql.executable}" failonerror="true">
-											<arg value="-f" />
-											<arg value="create.sql" />
-											<arg value="-U" />
-											<arg value="${database.username}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sqlserver" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<exec executable="${sqlserver.executable}" failonerror="true">
-										<arg value="-U" />
-										<arg value="${database.username}" />
-										<arg value="-P" />
-										<arg value="${database.password}" />
-										<arg value="-i" />
-										<arg value="create.sql" />
-									</exec>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sybase" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.schema" />
-									<get-database-property property.name="database.username" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${sybase.executable}" failonerror="true">
-											<arg value="-i" />
-											<arg value="create.sql" />
-											<arg value="-P" />
-											<arg value="${database.password}" />
-											<arg value="-S" />
-											<arg value="${database.schema}" />
-											<arg value="-U" />
-											<arg value="${database.username}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-						</if>
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<delete file="create.sql" />
+				<fail>${rebuild.database.error}</fail>
+			</catch>
+			<finally>
+				<delete file="create.sql" />
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="rebuild-legacy-database">
@@ -12267,38 +12578,70 @@ database.partition.enabled=true</echo>
 				<get-database-property property.name="database.password" />
 				<get-database-property property.name="database.schema" />
 				<get-database-property property.name="database.username" />
+				<get-database-property property.name="database.version" />
 
 				<property location="import-database.sh" name="import.database.sh.file.path" />
 
 				<if>
-					<equals arg1="${database.type}" arg2="db2" />
+					<and>
+						<equals arg1="${database.type}" arg2="db2" />
+						<equals arg1="${database.version}" arg2="11.5.6" />
+					</and>
 					<then>
 						<echo file="${import.database.sh.file.path}">
 							<![CDATA[
 								#!/bin/bash
 
-								echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
+								echo "db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing"
 
-								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing)
+								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing)
 
 								exit_code=$?
 
+								echo "${output}"
+
 								if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
 								then
-									echo "$output"
-
 									exit 0
 								else
-									echo "$output"
-
 									exit ${exit_code}
 								fi
 							]]>
 						</echo>
 
-						<property name="docker.database.dest.path" value="/opt/ibm/db2" />
+						<property name="docker.database.dest.path" value="/sqllib/bin/db2" />
 						<property name="import.database.src.path" value="${liferay.home}/." />
 					</then>
+					<elseif>
+						<equals arg1="${database.type}" arg2="db2" />
+						<then>
+							<echo file="${import.database.sh.file.path}">
+								<![CDATA[
+									#!/bin/bash
+
+									echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
+
+									output=$(db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing)
+
+									exit_code=$?
+
+									if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
+									then
+										echo "$output"
+
+										exit 0
+									else
+										echo "$output"
+
+										exit ${exit_code}
+									fi
+								]]>
+							</echo>
+
+							<property name="docker.database.dest.path" value="/opt/ibm/db2" />
+							<property name="import.database.src.path" value="${liferay.home}/." />
+						</then>
+					</elseif>
 					<elseif>
 						<equals arg1="${database.type}" arg2="mariadb" />
 						<then>
@@ -12769,10 +13112,6 @@ if (ppstate.equals("normal")) {
 	<target name="record-job-summary">
 		<fail message="Please set the property ${test.suite.name}." unless="test.suite.name" />
 
-		<condition else="test-portal-acceptance-pullrequest(${git.working.branch.name})" property="job.name" value="${job.name}">
-			<isset property="job.name" />
-		</condition>
-
 		<beanshell>
 			<![CDATA[
 				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
@@ -12794,7 +13133,21 @@ if (ppstate.equals("normal")) {
 				}
 
 				public String getJobName() {
-					return project.getProperty("job.name");
+					String jobName = project.getProperty("job.name");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = project.getProperty("env.JOB_NAME");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
+					}
+
+					return jobName;
 				}
 
 				public GitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -12832,10 +13185,20 @@ if (ppstate.equals("normal")) {
 				}
 
 				public String getUpstreamBranchName() {
-					return project.getProperty("git.working.branch.name");
+					String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+						upstreamBranchName = project.getProperty("liferay.portal.branch");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+						upstreamBranchName = project.getProperty("git.working.branch.name");
+					}
+
+					return upstreamBranchName.replace("-private", "");
 				}
 
-				Job job = JobFactory.newJob(getJobName(), getTestSuiteName(), getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
+				Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
 
@@ -13157,6 +13520,14 @@ if (ppstate.equals("normal")) {
 				value="${value}"
 			/>
 		</replace>
+	</target>
+
+	<target name="restart-docker-container">
+		<fail message="Please set the property ${docker.container}." unless="docker.container" />
+
+		<execute>
+			docker restart ${docker.container}
+		</execute>
 	</target>
 
 	<target name="run-poshi-evaluate-console">
@@ -13760,6 +14131,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="keystore.enabled" />
+
+		<if>
+			<equals arg1="${keystore.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-saml.xml" target="deploy-keystore-file" />
+			</then>
+		</if>
+
 		<remake-dir dir="${selenium.output.dir.name}" />
 
 		<prepare-portal-licenses />
@@ -13856,7 +14236,16 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<antcall target="start-app-server-preserve-liferay-home" />
+		<get-testcase-property property.name="skip.start.app.server" />
+
+		<if>
+			<not>
+				<equals arg1="${skip.start.app.server}" arg2="true" />
+			</not>
+			<then>
+				<antcall target="start-app-server-preserve-liferay-home" />
+			</then>
+		</if>
 
 		<get-testcase-property property.name="app.server.bundles.size" />
 
@@ -14379,133 +14768,6 @@ url=${short.hostname}:8080</echo>
 		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
 	</target>
 
-	<target name="update-translation-file">
-		<var name="translation.file.type" value="xlf" />
-
-		<if>
-			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
-			<then>
-				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${operation}" arg2="unzip" />
-			<then>
-				<unzip
-					dest="${selenium.output.dir.name}/${translation.zip.file.name}"
-					src="${selenium.output.dir.name}/${translation.zip.file.name}.zip"
-				/>
-			</then>
-		</if>
-		<if>
-			<equals arg1="${translation.file.rename}" arg2="true" />
-			<then>
-				<move
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					tofile="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.xliff"
-				/>
-
-				<var name="translation.file.type" value="xliff" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${contentpage.translation.file}" arg2="true" />
-			<then>
-				<pathconvert property="translation.file.path">
-					<path>
-						<fileset
-							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
-							includes="*${translation.file.name}.${translation.file.type}"
-						/>
-					</path>
-				</pathconvert>
-				<replace
-					file="${translation.file.path}"
-					token="${contentpage.translation.title.target.original}"
-					value="${contentpage.translation.title.target}"
-				/>
-				<replace
-					file="${translation.file.path}"
-					token="${contentpage.translation.fragment.target.original}"
-					value="${contentpage.translation.fragment.target}"
-				/>
-			</then>
-			<else>
-				<replace
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					token="${translation.title.target.original}"
-					value="${translation.title.target}"
-				/>
-				<replace
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					token="${translation.content.target.original}"
-					value="${translation.content.target}"
-				/>
-				<replace
-					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-					token="${translation.description.target.original}"
-					value="${translation.description.target}"
-				/>
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${translation.file.encoding}" arg2="utf8" />
-			<then>
-				<pathconvert property="translation.file.path">
-					<path>
-						<fileset
-							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
-							includes="*${translation.file.name}.${translation.file.type}"
-						/>
-					</path>
-				</pathconvert>
-
-				<propertyregex
-					input="${translation.file.path}"
-					property="translation.utf8.file.path"
-					regexp=".xlf"
-					replace="_utf8.xlf"
-				/>
-
-				<copy
-					file="${translation.file.path}"
-					outputencoding="UTF-8"
-					tofile="${translation.utf8.file.path}"
-				/>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${operation}" arg2="zip" />
-			<then>
-				<zip
-					basedir="${selenium.output.dir.name}/${translation.zip.file.name}"
-					destfile="${selenium.output.dir.name}/${translation.zip.file.name}_translated.zip"
-				/>
-			</then>
-		</if>
-	</target>
-
-	<target name="update-translation-file-id">
-		<var name="translation.file.type" value="xlf" />
-
-		<if>
-			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
-			<then>
-				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
-			</then>
-		</if>
-
-		<replace
-			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-			token="${translation.entry.type}:"
-			value="${translation.entry.type}:1"
-		/>
-	</target>
-
 	<target name="upgrade-legacy-database">
 		<prepare-database-upgrade-configuration />
 
@@ -14660,7 +14922,7 @@ diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |
 
 				<beanshell>
 					<![CDATA[
-						import org.apache.commons.io.FileUtils;
+						import java.nio.file.Files;
 
 						Set requiredPluginNamesSet = new HashSet();
 
@@ -14692,7 +14954,7 @@ diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |
 								try {
 									File file = new File(logFilePath);
 
-									String content = FileUtils.readFileToString(file);
+									String content = new String(Files.readAllBytes(file.toPath()));
 
 									if (content.contains(pluginName + " is available for use") ||
 										content.contains(pluginName + " are available for use")) {

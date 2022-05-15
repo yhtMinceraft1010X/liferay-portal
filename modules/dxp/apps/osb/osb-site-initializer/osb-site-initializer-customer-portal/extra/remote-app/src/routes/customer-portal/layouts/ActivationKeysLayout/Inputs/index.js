@@ -11,8 +11,9 @@
 
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {
@@ -20,9 +21,12 @@ import {
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
 import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {ROLE_TYPES} from '../../../../../common/utils/constants';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import {useCustomerPortal} from '../../../context';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
+import getKebabCase from '../../../utils/getKebabCase';
 import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 
 const ActivationKeysInputs = ({
@@ -31,6 +35,8 @@ const ActivationKeysInputs = ({
 	productTitle,
 	sessionId,
 }) => {
+	const [{project, userAccount}] = useCustomerPortal();
+
 	const {
 		createSupportRequest,
 		licenseKeyDownloadURL,
@@ -132,16 +138,68 @@ const ActivationKeysInputs = ({
 		setLicenseDownloadError(true);
 	};
 
+	const accountBrief = userAccount.accountBriefs?.find(
+		(accountBrief) =>
+			accountBrief.externalReferenceCode === project?.accountKey
+	);
+
+	const errorDownloadMessage = useMemo(
+		() => ({
+			messageRequestersAdministrators: (
+				<p className="mt-3 text-neutral-7 text-paragraph">
+					{i18n.sub(
+						'the-requested-activation-key-is-not-yet-available-for-more-information-about-the-availability-of-your-x-activation-keys-please',
+						[getKebabCase(productTitle)]
+					)}
+
+					<a
+						href={createSupportRequest}
+						rel="noreferrer"
+						target="_blank"
+					>
+						<u className="font-weight-bold text-neutral-9">
+							{i18n.translate('contact-the-support-team')}
+						</u>
+					</a>
+				</p>
+			),
+			messageUsers: (
+				<p className="mt-3 text-neutral-7 text-paragraph">
+					{i18n.sub(
+						'the-requested-activation-key-is-not-yet-available-if-you-need-more-information-about-the-availability-of-your-x-activation-keys-please-ask-one-of-your-administrator-team-members-to-update-your-permissions-so-you-can-contact-liferay-support-alternatively-team-members-with-administrator-or-requester-role-can-submit-a-support-ticket-on-your-behalf',
+						[getKebabCase(productTitle)]
+					)}
+				</p>
+			),
+		}),
+		[createSupportRequest, productTitle]
+	);
+
+	const currentEnterpriseMessage = useMemo(() => {
+		const isRequester = accountBrief?.roleBriefs?.some(
+			({name}) => name === ROLE_TYPES.requester.key
+		);
+		if (userAccount.isAdmin || isRequester) {
+			return errorDownloadMessage.messageRequestersAdministrators;
+		}
+
+		return errorDownloadMessage.messageUsers;
+	}, [accountBrief, errorDownloadMessage, userAccount]);
+
 	return (
 		<div className="mt-3">
 			<p className="text-paragraph">
-				Select an active Liferay {productTitle} subscription to download
-				the activation key.
+				{i18n.sub(
+					'select-an-active-liferay-x-subscription-to-download-the-activation-key',
+					[getKebabCase(productTitle)]
+				)}
+				.
 			</p>
 
 			<div className="d-flex mb-3">
 				<label className="cp-subscription-select mr-3">
-					Subscription
+					{i18n.sub('subscription')}
+
 					<div className="position-relative">
 						<ClayIcon
 							className="select-icon"
@@ -161,7 +219,9 @@ const ActivationKeysInputs = ({
 									key={
 										accountSubscription.accountSubscriptionId
 									}
-									label={accountSubscription.name}
+									label={i18n.translate(
+										getKebabCase(accountSubscription.name)
+									)}
 									value={accountSubscription.name}
 								/>
 							))}
@@ -170,7 +230,8 @@ const ActivationKeysInputs = ({
 				</label>
 
 				<label className="cp-subscription-term-select">
-					Subscription Term
+					{i18n.translate('subscription-term')}
+
 					<div className="position-relative">
 						<ClayIcon
 							className="select-icon"
@@ -219,26 +280,10 @@ const ActivationKeysInputs = ({
 				prependIcon="download"
 				type="button"
 			>
-				Download Key
+				{i18n.translate('download-key')}
 			</Button>
 
-			{hasLicenseDownloadError && (
-				<p className="mt-3 text-neutral-7 text-paragraph">
-					{`The requested activation key is not yet available. For more
-					information about the availability of your Enterprise Search
-					activation keys, please `}
-
-					<a
-						href={createSupportRequest}
-						rel="noreferrer"
-						target="_blank"
-					>
-						<u className="font-weight-bold text-neutral-9">
-							contact the Support team
-						</u>
-					</a>
-				</p>
-			)}
+			{hasLicenseDownloadError && currentEnterpriseMessage}
 		</div>
 	);
 };

@@ -3,26 +3,15 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {
-		Navigator.openURL();
-
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
-		}
-
-		User.firstLoginPG();
-
-		CommerceConfiguration.commerceAdminTearDown();
-
-		CommerceConfiguration.commerceInitializersTearDown();
+		CommerceConfiguration.commerceTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
@@ -161,6 +150,16 @@ definition {
 		AssertElementPresent(
 			key_entryName = "Fixed Tax Rate",
 			locator1 = "CommerceEntry#CHANNELS_GENERAL_ACTIVE_STATUS");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddANewDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8534 AddANewDefaultPaymentMethod pending implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
@@ -542,6 +541,56 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8539 CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8536 CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8537 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8538 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWithDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8535 CompleteCheckoutWithDefaultPaymentMethod pending implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-6195. CreateCategoryDisplayPage"
 	@ignore = "true"
 	@priority = "3"
@@ -794,6 +843,16 @@ definition {
 		AssertElementPresent(
 			key_entryName = "ABS Sensor",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DeactivatePaymentMethodLinkedToAnAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8545 DeactivatePaymentMethodLinkedToAnAccount pending implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6109. EditAuthorizePaymentMethod"
@@ -1503,11 +1562,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -1580,6 +1635,16 @@ definition {
 		AssertElementNotPresent(
 			key_value = "Test Notification Template",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test RemoveOfflinePaymentLinkedAsDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8542 RemoveOfflinePaymentLinkedAsDefaultPaymentMethod pending implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
@@ -2025,6 +2090,72 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
+	@priority = "3"
+	test SearchProductDisplayPage {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+
+		CommerceNavigator.gotoEntry(entryName = "Turbocharger");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		for (var number : list "106,107,108") {
+			CommerceEntry.checkImageName(uploadFileName = "Minium_ProductImage_${number}.png");
+		}
+
+		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+		for (var nameList : list "Channels,Account Groups") {
+			CommerceEntry.assertCheckedSpecificToggle(name = "${nameList}");
+		}
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+
+		AssertElementPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+
+		CommerceNavigator.clearSearchBar();
+
+		AssertElementNotPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+
+		Click(
+			key_pageNumber = "3",
+			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
+
+		AssertElementPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+	}
+
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
 	@priority = "3"
@@ -2145,11 +2276,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -2176,6 +2303,70 @@ definition {
 			key_name = "Test",
 			key_order = "1",
 			locator1 = "CommerceEntry#ASSERT_NOTIFICATION_QUEUE");
+	}
+
+	@description = "Verify users can view the priority of shipping options"
+	@priority = "3"
+	test VerifyPriorityColumnForShippingOption {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the Sales Manager goes into the Minium channel and opens the Flat Rate shipping method's options tab") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.clickTableEntryEditButton(
+				entryName = "Flat Rate",
+				table = "Shipping Methods");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+		}
+
+		task ("And the Sales Manager edits the priority for Standard Delivery to 1 and Expedited Delivery to 2") {
+			CommerceChannels.editShippingOption(
+				priority = "1",
+				shippingOption = "Standard Delivery");
+
+			CommerceChannels.editShippingOption(
+				priority = "2",
+				shippingOption = "Expedited Delivery");
+		}
+
+		task ("Then the priority values will be shown in the priority column") {
+			AssertElementPresent(
+				key_text = "Priority",
+				locator1 = "Button#ANY");
+
+			AssertTextEquals(
+				key_columnNumber = "3",
+				key_entryName = "Standard Delivery",
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+				value1 = "1");
+
+			AssertTextEquals(
+				key_columnNumber = "3",
+				key_entryName = "Expedited Delivery",
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+				value1 = "2");
+		}
+
+		task ("And the shipping options will be re-ordered based on the priority") {
+			AssertTextEquals(
+				key_rowNumber = "1",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
+				value1 = "Standard Delivery");
+
+			AssertTextEquals(
+				key_rowNumber = "2",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
+				value1 = "Expedited Delivery");
+		}
 	}
 
 }

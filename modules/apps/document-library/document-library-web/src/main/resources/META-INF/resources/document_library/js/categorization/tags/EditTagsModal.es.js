@@ -57,7 +57,7 @@ const EditTagsModal = ({
 	// ones.
 
 	const [initialSelectedItems, setInitialSelectedItems] = useState([]);
-	const [inputValue, setInputValue] = useState();
+	const [inputValue, setInputValue] = useState('');
 
 	// Current selected items.
 
@@ -220,10 +220,8 @@ const EditTagsModal = ({
 					{multiple && (
 						<ClayRadioGroup
 							name="add-replace"
-							onSelectedValueChange={
-								handleMultipleSelectedOptionChange
-							}
-							selectedValue={selectedRadioGroupValue}
+							onChange={handleMultipleSelectedOptionChange}
+							value={selectedRadioGroupValue}
 						>
 							<ClayRadio
 								label={Liferay.Language.get('edit')}

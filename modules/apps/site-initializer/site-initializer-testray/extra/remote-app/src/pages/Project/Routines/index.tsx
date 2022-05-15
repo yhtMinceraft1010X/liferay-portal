@@ -12,99 +12,89 @@
  * details.
  */
 
-import ClayChart from '@clayui/charts';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import {getTestrayBuilds} from '../../../graphql/queries';
+import {getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
-import {DATA_COLORS} from '../../../util/constants';
-import {getRandomMaximumValue} from '../../../util/mock';
+import {getTimeFromNow} from '../../../util/date';
+import RoutineModal from './RoutineModal';
+import useRoutineActions from './useRoutineActions';
 
-const Routine = () => (
-	<Container title={i18n.translate('build-history')}>
-		<ClayChart
-			axis={{
-				y: {
-					label: {
-						position: 'outer-middle',
-						text: i18n.translate('tests').toUpperCase(),
-					},
-				},
-			}}
-			data={{
-				colors: {
-					blocked: DATA_COLORS['metrics.blocked'],
-					failed: DATA_COLORS['metrics.failed'],
-					incomplete: DATA_COLORS['metrics.incomplete'],
-					passed: DATA_COLORS['metrics.passed'],
-					test_fix: DATA_COLORS['metrics.test-fix'],
-				},
-				columns: [
-					['passed', ...getRandomMaximumValue(20, 1500)],
-					['failed', ...getRandomMaximumValue(20, 100)],
-					['blocked', ...getRandomMaximumValue(20, 100)],
-					['incomplete', ...getRandomMaximumValue(20, 100)],
-					['test_fix', ...getRandomMaximumValue(20, 100)],
-				],
-				stack: {
-					normalize: true,
-				},
-				type: 'area',
-			}}
-			legend={{position: 'top-right'}}
-		/>
+const Routines = () => {
+	const {projectId} = useParams();
+	const {actions, formModal} = useRoutineActions();
 
-		<ListView
-			query={getTestrayBuilds}
-			tableProps={{
-				columns: [
-					{key: 'dateCreated', size: 'sm', value: 'Create Date'},
-					{key: 'gitHash', value: 'Git Hash'},
-					{
-						key: 'product_version',
-						render: (_, {testrayProductVersion}) =>
-							testrayProductVersion?.name,
-						value: 'Product Version',
-					},
-					{
-						key: 'dateCreated',
-						size: 'sm',
-						value: i18n.translate('create-date'),
-					},
-					{key: 'gitHash', value: i18n.translate('git-hash')},
-					{
-						clickable: true,
-						key: 'name',
-						size: 'md',
-						value: i18n.translate('build'),
-					},
-					{key: 'failed', value: i18n.translate('failed')},
-					{key: 'blocked', value: i18n.translate('blocked')},
-					{key: 'test_fix', value: i18n.translate('test-fix')},
-					{
-						key: 'metrics',
-						render: () => (
-							<ProgressBar
-								items={{
-									blocked: 0,
-									failed: 2,
-									incomplete: 0,
-									passed: 30,
-									test_fix: 0,
-								}}
-							/>
-						),
-						size: 'md',
-						value: i18n.translate('metrics'),
-					},
-				],
-				navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
-			}}
-			transformData={(data) => data?.testrayBuilds || {}}
-		/>
-	</Container>
-);
+	return (
+		<Container title={i18n.translate('routines')}>
+			<ListView
+				forceRefetch={formModal.forceRefetch}
+				managementToolbarProps={{
+					addButton: () => formModal.modal.open(),
+				}}
+				query={getRoutines}
+				tableProps={{
+					actions,
+					columns: [
+						{
+							clickable: true,
+							key: 'name',
+							value: i18n.translate('routine'),
+						},
+						{
+							clickable: true,
+							key: 'dateCreated',
+							render: getTimeFromNow,
+							value: i18n.translate('execution-date'),
+						},
+						{
+							clickable: true,
+							key: 'failed',
+							render: () => 0,
+							value: i18n.translate('failed'),
+						},
+						{
+							clickable: true,
+							key: 'blocked',
+							render: () => 0,
+							value: i18n.translate('blocked'),
+						},
+						{
+							clickable: true,
+							key: 'test_fix',
+							render: () => 0,
+							value: i18n.translate('test-fix'),
+						},
+						{
+							clickable: true,
+							key: 'metrics',
+							render: () => (
+								<ProgressBar
+									items={{
+										blocked: 0,
+										failed: 1,
+										passed: 70,
+									}}
+								/>
+							),
+							size: 'sm',
+							value: i18n.translate('metrics'),
+						},
+					],
+					navigateTo: ({id}) => id?.toString(),
+				}}
+				transformData={(data) => data?.c?.routines}
+				variables={{filter: `projectId eq ${projectId}`}}
+			/>
 
-export default Routine;
+			<RoutineModal
+				modal={formModal.modal}
+				projectId={Number(projectId)}
+			/>
+		</Container>
+	);
+};
+
+export default Routines;

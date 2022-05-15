@@ -12,40 +12,56 @@
  * details.
  */
 
-import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView/ListView';
-import {getTestrayCases} from '../../../graphql/queries/testrayCase';
-import i18n from '../../../i18n';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
-const Cases = () => (
-	<Container title={i18n.translate('cases')}>
+import Container from '../../../components/Layout/Container';
+import ListView, {ListViewProps} from '../../../components/ListView/ListView';
+import {TableProps} from '../../../components/Table';
+import {getCases} from '../../../graphql/queries';
+import {FormModal} from '../../../hooks/useFormModal';
+import i18n from '../../../i18n';
+import CaseModal from './CaseModal';
+import useCaseActions from './useCaseActions';
+
+type CaseListViewProps = {
+	actions?: any[];
+	formModal?: FormModal;
+	projectId?: number | string;
+	variables?: any;
+} & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
+
+const CaseListView: React.FC<CaseListViewProps> = ({
+	actions,
+	formModal,
+	listViewProps,
+	tableProps,
+	variables,
+}) => {
+	const {pathname} = useLocation();
+	const navigate = useNavigate();
+
+	return (
 		<ListView
-			query={getTestrayCases}
+			forceRefetch={formModal?.forceRefetch}
+			initialContext={{
+				filters: {
+					columns: {
+						caseType: false,
+						dateCreated: false,
+						dateModified: false,
+						issues: false,
+						team: false,
+					},
+				},
+			}}
+			managementToolbarProps={{
+				addButton: () => navigate(`create`, {state: {back: pathname}}),
+				visible: true,
+			}}
+			query={getCases}
 			tableProps={{
+				actions,
 				columns: [
-					{
-						clickable: true,
-						key: 'name',
-						sorteable: true,
-						value: i18n.translate('case-name'),
-					},
-					{
-						key: 'priority',
-						sorteable: true,
-						value: i18n.translate('priority'),
-					},
-					{
-						key: 'testrayCaseType',
-						render: (testrayCaseType) => testrayCaseType?.name,
-						value: i18n.translate('case-type'),
-					},
-					{key: 'team', value: i18n.translate('team')},
-					{
-						key: 'testrayComponent',
-						render: (testrayComponent) => testrayComponent?.name,
-						value: i18n.translate('component'),
-					},
-					{key: 'issues', value: i18n.translate('issues')},
 					{
 						key: 'dateCreated',
 						value: i18n.translate('create-date'),
@@ -54,12 +70,65 @@ const Cases = () => (
 						key: 'dateModified',
 						value: i18n.translate('modified-date'),
 					},
+					{
+						key: 'priority',
+						sorteable: true,
+						value: i18n.translate('priority'),
+					},
+					{
+						key: 'caseType',
+						render: (caseType) => caseType?.name,
+						value: i18n.translate('case-type'),
+					},
+					{
+						clickable: true,
+						key: 'name',
+						size: 'md',
+						sorteable: true,
+						value: i18n.translate('case-name'),
+					},
+					{
+						key: 'team',
+						render: (_, {component}) => component?.team?.name,
+						value: i18n.translate('team'),
+					},
+					{
+						key: 'component',
+						render: (component) => component?.name,
+						value: i18n.translate('component'),
+					},
+					{key: 'issues', value: i18n.translate('issues')},
 				],
-				navigateTo: ({testrayCaseId}) => testrayCaseId?.toString(),
+				navigateTo: ({id}) => id?.toString(),
+				...tableProps,
 			}}
-			transformData={(data) => data?.testrayCases}
+			transformData={(data) => data?.cases}
+			variables={variables}
+			{...listViewProps}
 		/>
-	</Container>
-);
+	);
+};
+
+const Cases = () => {
+	const {projectId} = useParams();
+
+	const {actions, formModal} = useCaseActions();
+
+	return (
+		<>
+			<Container title={i18n.translate('cases')}>
+				<CaseListView
+					actions={actions}
+					formModal={formModal}
+					variables={{filter: `projectId eq ${projectId}`}}
+				/>
+			</Container>
+
+			<CaseModal modal={formModal.modal} projectId={Number(projectId)} />
+		</>
+	);
+};
+
+export {CaseListView};
 
 export default Cases;

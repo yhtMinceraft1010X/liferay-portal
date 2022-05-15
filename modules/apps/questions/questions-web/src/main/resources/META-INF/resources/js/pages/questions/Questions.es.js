@@ -590,6 +590,13 @@ export default withRouter(
 										/>
 									)
 								}
+								hrefConstructor={(page) =>
+									`${getFullPath('questions')}${
+										context.historyRouterBasePath
+											? ''
+											: '#/'
+									}questions/${sectionTitle}?page=${page}&pagesize=${pageSize}`
+								}
 								loading={loading}
 								totalCount={totalCount}
 							>
@@ -792,7 +799,7 @@ export default withRouter(
 							<link
 								href={`${getFullPath('questions')}${
 									context.historyRouterBasePath ? '' : '#/'
-								}questions/${sectionTitle}`}
+								}questions/${sectionTitle}?page=${page}&pagesize=${pageSize}`}
 								rel="canonical"
 							/>
 						</Helmet>

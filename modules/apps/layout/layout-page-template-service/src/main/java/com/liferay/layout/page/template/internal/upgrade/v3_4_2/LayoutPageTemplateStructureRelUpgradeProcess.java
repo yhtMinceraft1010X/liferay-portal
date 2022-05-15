@@ -186,19 +186,21 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				ColumnLayoutStructureItem columnLayoutStructureItem =
 					(ColumnLayoutStructureItem)layoutStructureItem;
 
-				Map<String, JSONObject> viewportConfigurations =
-					columnLayoutStructureItem.getViewportConfigurations();
+				Map<String, JSONObject> viewportConfigurationJSONObjects =
+					columnLayoutStructureItem.
+						getViewportConfigurationJSONObjects();
 
 				JSONObject mobileLandscapeJSONObject =
-					viewportConfigurations.get(
+					viewportConfigurationJSONObjects.get(
 						ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId());
 
 				JSONObject portraitMobileJSONObject =
-					viewportConfigurations.get(
+					viewportConfigurationJSONObjects.get(
 						ViewportSize.PORTRAIT_MOBILE.getViewportSizeId());
 
-				JSONObject tabletJSONObject = viewportConfigurations.get(
-					ViewportSize.TABLET.getViewportSizeId());
+				JSONObject tabletJSONObject =
+					viewportConfigurationJSONObjects.get(
+						ViewportSize.TABLET.getViewportSizeId());
 
 				if (_isEmpty(mobileLandscapeJSONObject) &&
 					_isEmpty(portraitMobileJSONObject) &&
@@ -247,7 +249,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 						"com.liferay.fragment.entry.processor.freemarker." +
 							"FreeMarkerFragmentEntryProcessor");
 
-				if (_isEmpty(fragmentConfigValuesJSONObject)) {
+				if (fragmentConfigValuesJSONObject == null) {
 					continue;
 				}
 
@@ -256,6 +258,10 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 						getConfigurationDefaultValuesJSONObject(
 							fragmentEntryLink.getConfiguration()),
 					fragmentConfigValuesJSONObject, stylesJSONObject);
+
+				if (_isEmpty(fragmentConfigValuesJSONObject)) {
+					continue;
+				}
 
 				_replaceAlign(fragmentConfigValuesJSONObject, stylesJSONObject);
 				_replaceBorderRadius(

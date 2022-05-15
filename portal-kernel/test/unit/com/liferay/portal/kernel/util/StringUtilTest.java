@@ -99,28 +99,6 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testBytesToHexString() {
-		Random random = new Random();
-
-		byte[] data = new byte[1024];
-
-		random.nextBytes(data);
-
-		String hexString = StringUtil.bytesToHexString(data);
-
-		Assert.assertEquals(data.length * 2, hexString.length());
-
-		for (int i = 0; i < data.length; i++) {
-			Assert.assertEquals(
-				hexString.charAt(i * 2),
-				StringUtil.HEX_DIGITS[(data[i] & 0xFF) >> 4]);
-			Assert.assertEquals(
-				hexString.charAt((i * 2) + 1),
-				StringUtil.HEX_DIGITS[data[i] & 0x0F]);
-		}
-	}
-
-	@Test
 	public void testContainsIgnoreCase() {
 		Assert.assertFalse(StringUtil.containsIgnoreCase(null, null));
 		Assert.assertFalse(StringUtil.containsIgnoreCase("one,two", null));
@@ -184,6 +162,30 @@ public class StringUtilTest {
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", ""));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", null));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("!", "A"));
+	}
+
+	@Test
+	public void testHexCodec() {
+		Random random = new Random();
+
+		byte[] data = new byte[1024];
+
+		random.nextBytes(data);
+
+		String hexString = StringUtil.bytesToHexString(data);
+
+		Assert.assertEquals(data.length * 2, hexString.length());
+
+		for (int i = 0; i < data.length; i++) {
+			Assert.assertEquals(
+				hexString.charAt(i * 2),
+				StringUtil.HEX_DIGITS[(data[i] & 0xFF) >> 4]);
+			Assert.assertEquals(
+				hexString.charAt((i * 2) + 1),
+				StringUtil.HEX_DIGITS[data[i] & 0x0F]);
+		}
+
+		Assert.assertArrayEquals(data, StringUtil.hexStringToBytes(hexString));
 	}
 
 	@Test
@@ -1094,6 +1096,14 @@ public class StringUtilTest {
 		Assert.assertEquals(
 			"Hello World", StringUtil.unquote("\"Hello World\""));
 		Assert.assertEquals("Hello World", StringUtil.unquote("Hello World"));
+	}
+
+	@Test
+	public void testUpperCaseFirstLetter() {
+		Assert.assertEquals("", StringUtil.upperCaseFirstLetter(""));
+		Assert.assertEquals(
+			"Hello World", StringUtil.upperCaseFirstLetter("hello World"));
+		Assert.assertNull(StringUtil.upperCaseFirstLetter(null));
 	}
 
 	@Test

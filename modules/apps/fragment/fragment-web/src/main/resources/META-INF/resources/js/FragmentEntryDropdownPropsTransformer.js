@@ -14,6 +14,8 @@
 
 import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteFragmentModal from './openDeleteFragmentModal';
+
 const ACTIONS = {
 	copyFragmentEntry(
 		{copyFragmentEntryURL, fragmentCollectionId, fragmentEntryId},
@@ -71,13 +73,11 @@ const ACTIONS = {
 	},
 
 	deleteFragmentEntry({deleteFragmentEntryURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteFragmentEntryURL);
-		}
+		openDeleteFragmentModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteFragmentEntryURL);
+			},
+		});
 	},
 
 	deleteFragmentEntryPreview({deleteFragmentEntryPreviewURL}) {

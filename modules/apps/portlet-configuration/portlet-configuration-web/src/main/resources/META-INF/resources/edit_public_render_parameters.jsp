@@ -66,14 +66,15 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 					<liferay-ui:error key="duplicateMapping" message="several-shared-parameters-are-mapped-to-the-same-parameter" />
 
 					<div class="alert alert-info">
-						<liferay-ui:message arguments='<%= "https://dev.liferay.com/en/discover/portal/-/knowledge_base/7-0/communication-between-apps" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="https://dev.liferay.com/en/discover/portal/-/knowledge_base/7-0/communication-between-apps" key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
 					</div>
 
 					<liferay-ui:search-container
 						total="<%= publicRenderParameterConfigurations.size() %>"
 					>
 						<liferay-ui:search-container-results
-							results="<%= ListUtil.subList(publicRenderParameterConfigurations, searchContainer.getStart(), searchContainer.getEnd()) %>"
+							calculateStartAndEnd="<%= true %>"
+							results="<%= publicRenderParameterConfigurations %>"
 						/>
 
 						<liferay-ui:search-container-row
@@ -139,11 +140,20 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 	for (PublicRenderParameterConfiguration publicRenderParameterConfiguration : publicRenderParameterConfigurations) {
 	%>
 
-		Liferay.Util.disableToggleBoxes(
-			'<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
-			'<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
-			true
+		var ignoreInput = document.getElementById(
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>'
 		);
+		var mappingInput = document.getElementById(
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>'
+		);
+
+		if (ignoreInput && mappingInput) {
+			mappingInput.disabled = ignoreInput.checked;
+
+			ignoreInput.addEventListener('click', () => {
+				Liferay.Util.toggleDisabled(mappingInput, !mappingInput.disabled);
+			});
+		}
 
 	<%
 	}

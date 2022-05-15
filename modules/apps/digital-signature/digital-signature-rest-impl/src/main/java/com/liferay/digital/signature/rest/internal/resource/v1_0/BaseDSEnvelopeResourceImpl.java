@@ -16,6 +16,7 @@ package com.liferay.digital.signature.rest.internal.resource.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -237,17 +239,35 @@ public abstract class BaseDSEnvelopeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DSEnvelope, Exception> dsEnvelopeUnsafeConsumer =
-			dsEnvelope -> {
+		UnsafeConsumer<DSEnvelope, Exception> dsEnvelopeUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			dsEnvelopeUnsafeConsumer = dsEnvelope -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			dsEnvelopeUnsafeConsumer = dsEnvelope -> postSiteDSEnvelope(
-				(Long)parameters.get("siteId"), dsEnvelope);
+			if (parameters.containsKey("siteId")) {
+				dsEnvelopeUnsafeConsumer = dsEnvelope -> postSiteDSEnvelope(
+					(Long)parameters.get("siteId"), dsEnvelope);
+			}
 		}
 
-		for (DSEnvelope dsEnvelope : dsEnvelopes) {
-			dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
+		if (dsEnvelopeUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for DsEnvelope");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dsEnvelopes, dsEnvelopeUnsafeConsumer);
+		}
+		else {
+			for (DSEnvelope dsEnvelope : dsEnvelopes) {
+				dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
+			}
 		}
 	}
 
@@ -271,6 +291,10 @@ public abstract class BaseDSEnvelopeResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -319,6 +343,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<DSEnvelope>,
+			 UnsafeConsumer<DSEnvelope, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -379,6 +412,14 @@ public abstract class BaseDSEnvelopeResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -469,6 +510,10 @@ public abstract class BaseDSEnvelopeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DSEnvelope>,
+		 UnsafeConsumer<DSEnvelope, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

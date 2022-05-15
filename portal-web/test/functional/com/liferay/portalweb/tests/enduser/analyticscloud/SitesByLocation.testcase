@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -34,13 +36,11 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6637 | Automation ID: LRAC-8309 | Test Summary: Private IPs reported as Local Network"
-	@ignore = "true"
 	@priority = "4"
 	test CanprivateIpsReportedAsLocalNetwork {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: data doesn't appear on time
-		// AC Refactor ticket: LRAC-9011
+		// AC Quarantine Reason: Not finding local network under geolocation
 
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

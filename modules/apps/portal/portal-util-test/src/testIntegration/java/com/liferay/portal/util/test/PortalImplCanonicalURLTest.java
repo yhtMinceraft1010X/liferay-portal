@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -125,7 +126,7 @@ public class PortalImplCanonicalURLTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout1 = LayoutTestUtil.addLayout(
+		_layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, "Zuhause1"
@@ -142,7 +143,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, "/home1"
 			).build());
 
-		_layout2 = LayoutTestUtil.addLayout(
+		_layout2 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, "Zuhause2"
@@ -159,7 +160,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, "/home2"
 			).build());
 
-		_layout3 = LayoutTestUtil.addLayout(
+		_layout3 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, _group.getName(LocaleUtil.GERMANY)
@@ -172,7 +173,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, _group.getFriendlyURL()
 			).build());
 
-		_layout4 = LayoutTestUtil.addLayout(
+		_layout4 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.US, "weben"
@@ -196,10 +197,11 @@ public class PortalImplCanonicalURLTest {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (_defaultGrouplayout1 == null) {
-				_defaultGrouplayout1 = LayoutTestUtil.addLayout(_defaultGroup);
+				_defaultGrouplayout1 = LayoutTestUtil.addTypePortletLayout(
+					_defaultGroup);
 			}
 
-			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
+			_defaultGrouplayout2 = LayoutTestUtil.addTypePortletLayout(
 				_defaultGroup.getGroupId());
 		}
 	}
@@ -240,7 +242,7 @@ public class PortalImplCanonicalURLTest {
 		Assert.assertEquals(
 			completeURL,
 			_portal.getCanonicalURL(
-				_http.addParameter(
+				HttpComponentsUtil.addParameter(
 					completeURL, "_ga",
 					"2.237928582.786466685.1515402734-1365236376"),
 				themeDisplay, _layout4, false, false));
@@ -263,14 +265,14 @@ public class PortalImplCanonicalURLTest {
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpComponentsUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout1, false, false));
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpComponentsUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout3, false, false));
@@ -308,7 +310,7 @@ public class PortalImplCanonicalURLTest {
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpComponentsUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout1, false, false));
@@ -319,7 +321,7 @@ public class PortalImplCanonicalURLTest {
 	public void testCanonicalURLWithoutQueryString() throws Exception {
 		String portalDomain = "localhost";
 
-		String completeURL = _http.addParameter(
+		String completeURL = HttpComponentsUtil.addParameter(
 			_generateURL(
 				portalDomain, "8080", "/en", _group.getFriendlyURL(),
 				_layout1.getFriendlyURL(), false),
@@ -329,7 +331,7 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, _group, 8080, false);
 
 		Assert.assertEquals(
-			_http.removeParameter(
+			HttpComponentsUtil.removeParameter(
 				_portal.getCanonicalURL(
 					completeURL, themeDisplay, _layout1, true, true),
 				"_ga"),
@@ -733,9 +735,6 @@ public class PortalImplCanonicalURLTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private Http _http;
 
 	private Layout _layout1;
 	private Layout _layout2;

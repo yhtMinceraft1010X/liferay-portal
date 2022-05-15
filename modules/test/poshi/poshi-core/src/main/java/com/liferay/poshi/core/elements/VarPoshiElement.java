@@ -22,6 +22,7 @@ import com.liferay.poshi.core.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,17 +76,25 @@ public class VarPoshiElement extends PoshiElement {
 
 	public String getVarValue() {
 		if (valueAttributeName == null) {
+			List<Node> cdataNodes = new ArrayList<>();
+
 			for (Node node : Dom4JUtil.toNodeList(content())) {
 				if (node instanceof CDATA) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("\'\'\'");
-					sb.append(node.getText());
-					sb.append("\'\'\'");
-
-					return sb.toString();
+					cdataNodes.add(node);
 				}
 			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("\'\'\'");
+
+			for (Node cdataNode : cdataNodes) {
+				sb.append(cdataNode.getText());
+			}
+
+			sb.append("\'\'\'");
+
+			return sb.toString();
 		}
 
 		return attributeValue(valueAttributeName);
@@ -118,7 +127,24 @@ public class VarPoshiElement extends PoshiElement {
 		String value = getValueFromAssignment(poshiScript);
 
 		if (value.startsWith("\'\'\'")) {
-			add(new PoshiCDATA(getPoshiScriptEscapedContent(value)));
+			value = getPoshiScriptEscapedContent(value);
+
+			if (value.contains("CDATA")) {
+				Matcher nestedCDATAMatcher = _nestedCDATAPattern.matcher(value);
+
+				nestedCDATAMatcher.find();
+
+				String cdata1 = nestedCDATAMatcher.group("cdata1");
+				String cdata2 = nestedCDATAMatcher.group("cdata2");
+
+				add(new PoshiCDATA(cdata1));
+
+				add(new PoshiCDATA(cdata2));
+
+				return;
+			}
+
+			add(new PoshiCDATA(value));
 
 			return;
 		}
@@ -505,6 +531,8 @@ public class VarPoshiElement extends PoshiElement {
 		};
 	private static final Pattern _mathUtilMethodCallPattern = Pattern.compile(
 		"MathUtil\\.(\\w+)\\('(.+)', '(.+)'\\)");
+	private static final Pattern _nestedCDATAPattern = Pattern.compile(
+		"(?<cdata1><.+]])(?<cdata2>>.*>?)");
 	private static final Pattern _statementPattern;
 	private static final Pattern _varValueMathExpressionPattern;
 

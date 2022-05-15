@@ -16,16 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-</style>
-
 <%
 CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = (CPOptionsSearchFacetDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfiguration = cpOptionsSearchFacetDisplayContext.getCPOptionFacetsPortletInstanceConfiguration();
 %>
 
 <c:choose>
@@ -71,12 +63,12 @@ CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfigur
 									).put(
 										"namespace", liferayPortletResponse.getNamespace()
 									).put(
-										"showFrequencies", GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), cpOptionFacetsPortletInstanceConfiguration.showFrequencies())
+										"showFrequencies", GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true)
 									).put(
 										"title", HtmlUtil.escape(cpOptionsSearchFacetDisplayContext.getCPOptionName(companyId, facet.getFieldId()))
 									).build()
 								%>'
-								displayStyle="<%= cpOptionFacetsPortletInstanceConfiguration.displayStyle() %>"
+								displayStyle='<%= portletPreferences.getValue("displayStyle", "") %>'
 								displayStyleGroupId="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 								entries="<%= cpOptionsSearchFacetDisplayContext.getTermDisplayContexts() %>"
 							>
@@ -97,7 +89,7 @@ CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfigur
 							>
 
 							<aui:fieldset>
-								<ul class="list-unstyled">
+								<ul class="list-unstyled" data-qa-id="<%= HtmlUtil.escape(cpOptionsSearchFacetDisplayContext.getCPOptionName(companyId, facet.getFieldId())) %>">
 
 								<%
 								int i = 0;
@@ -108,7 +100,7 @@ CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfigur
 
 								<li class="facet-value">
 									<div class="custom-checkbox custom-control">
-										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
+										<label for="<portlet:namespace />term_<%= facet.getFieldName() + i %>">
 											<input
 												class="custom-control-input facet-term"
 												data-term-id="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>"
@@ -123,7 +115,7 @@ CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfigur
 												<span class="custom-control-label-text"><%= HtmlUtil.escape(termCollector.getTerm()) %></span>
 											</span>
 
-											<c:if test='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), cpOptionFacetsPortletInstanceConfiguration.showFrequencies()) %>'>
+											<c:if test='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>'>
 												<small class="term-count">
 													(<%= termCollector.getFrequency() %>)
 												</small>
@@ -154,7 +146,5 @@ CPOptionFacetsPortletInstanceConfiguration cpOptionFacetsPortletInstanceConfigur
 				</div>
 			</c:otherwise>
 		</c:choose>
-
-		<aui:script use="liferay-search-facet-util"></aui:script>
 	</c:otherwise>
 </c:choose>

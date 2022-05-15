@@ -1,11 +1,13 @@
 Bundle-Name: Liferay Sharepoint SOAP Repository
 Bundle-SymbolicName: com.liferay.sharepoint.soap.repository
-Bundle-Version: 5.0.5
+Bundle-Version: 5.0.8
 Import-Package:\
 	!com.ibm.wsdl.util.xml.*,\
 	\
 	!com.sun.javadoc.*,\
 	!com.sun.tools.javadoc.*,\
+	\
+	!javax.rmi,\
 	\
 	!net.sf.saxon.*,\
 	\

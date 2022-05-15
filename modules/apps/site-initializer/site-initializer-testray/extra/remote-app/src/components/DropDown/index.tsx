@@ -43,13 +43,7 @@ const DropDown: React.FC<DropDownProps> = ({
 			<ClayDropDown.ItemList>
 				{items.map((section, index) => (
 					<div key={index}>
-						<ClayDropDown.Group>
-							{section.title && (
-								<ClayDropDown.Caption>
-									{section.title}
-								</ClayDropDown.Caption>
-							)}
-
+						<ClayDropDown.Group header={section.title}>
 							{section.items.map(
 								(
 									{divider, icon, label, onClick, path},
@@ -64,6 +58,10 @@ const DropDown: React.FC<DropDownProps> = ({
 													return onClick();
 												}
 
+												if (!path) {
+													return;
+												}
+
 												const isHttpUrl = path.startsWith(
 													'http'
 												);
@@ -73,6 +71,8 @@ const DropDown: React.FC<DropDownProps> = ({
 
 													return;
 												}
+
+												setActive(false);
 
 												navigate(path);
 											}}

@@ -11,15 +11,37 @@ $productMenuWidth: 320px;
 	$component: &;
 
 	&-edit {
-		.languages-selector .autofit-col:not(:last-child) {
-			margin-right: 1em;
+		.experience-selector select {
+			max-width: 6.5rem;
+		}
+
+		.languages-selector {
+			color: $black;
+			font-size: 0.875rem;
+
+			.autofit-col:not(:last-child) {
+				margin-right: 1em;
+			}
+		}
+
+		.autotranslate-feedback {
+			flex-shrink: 1;
+			font-size: 0.875rem;
+
+			@include media-breakpoint-up(xl) {
+				max-width: 18rem;
+			}
 		}
 	}
 
 	&-import {
-		.list-group-icon .lexicon-icon {
-			font-size: 1rem;
-			margin-top: 0;
+		.list-group-no-bordered .list-group-item {
+			border-width: 0 0 1px;
+			margin-bottom: 0;
+
+			&:last-child {
+				border-width: 0;
+			}
 		}
 	}
 
@@ -59,15 +81,6 @@ $productMenuWidth: 320px;
 						order: 1;
 						width: 100%;
 					}
-
-					> .tbar-item:last-child {
-						flex-grow: 1;
-
-						> .tbar-section {
-							display: flex;
-							justify-content: flex-end;
-						}
-					}
 				}
 			}
 
@@ -77,10 +90,6 @@ $productMenuWidth: 320px;
 						border-top: none;
 						order: 0;
 						width: auto;
-					}
-
-					> .tbar-item:last-child {
-						flex-grow: 0;
 					}
 				}
 			}
@@ -155,7 +164,7 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.separator {
+		hr {
 			border-color: $secondary;
 			margin-bottom: 2rem;
 			margin-top: 0.25rem;
@@ -163,6 +172,18 @@ $productMenuWidth: 320px;
 	}
 
 	&-export {
+		.custom-radio {
+			.custom-control {
+				margin-bottom: 0;
+			}
+
+			.form-text {
+				font-weight: normal;
+				margin-bottom: 1rem;
+				padding-left: 1.5rem;
+			}
+		}
+
 		.translation-experiences-wrapper {
 			margin-bottom: 1.5rem;
 			max-height: 40rem;

@@ -17,11 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
+
+EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
 renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : LanguageUtil.get(request, "export"));
 %>
@@ -36,11 +39,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			<h4 class="card-header"><%= LanguageUtil.get(request, "export-settings") %></h4>
 
 			<div class="card-body">
-
-				<%
-				EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-				%>
-
 				<liferay-frontend:edit-form-body>
 					<div id="<portlet:namespace />templateSelect"></div>
 
@@ -49,10 +47,10 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							md="6"
 						>
 							<clay:select
-								id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
-								label="headless-endpoint"
-								name="headlessEndpoint"
-								options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
+								id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+								label="entity-type"
+								name="internalClassName"
+								options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameSelectOptions() %>"
 							/>
 						</clay:col>
 
@@ -60,42 +58,24 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							md="6"
 						>
 							<clay:select
-								disabled="<%= true %>"
-								id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
-								label="entity-type"
-								name="internalClassName"
-								options="<%= Arrays.asList(new SelectOption(StringPool.BLANK, StringPool.BLANK)) %>"
+								id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
+								label="export-file-format"
+								name="externalType"
+								options="<%=
+									editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()
+								%>"
 							/>
 						</clay:col>
 					</clay:row>
 
-					<clay:content-section>
-						<clay:row>
-							<clay:col>
-								<clay:select
-									id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
-									label="export-file-format"
-									name="externalType"
-									options="<%=
-										editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()
-									%>"
-								/>
-							</clay:col>
-						</clay:row>
-
-						<clay:row>
-							<clay:col
-								md="6"
-							>
-								<clay:checkbox
-									checked="<%= true %>"
-									id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-									label="contains-headers"
-									name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-								/>
-							</clay:col>
-						</clay:row>
-					</clay:content-section>
+					<div class="contains-headers-wrapper">
+						<clay:checkbox
+							checked="<%= true %>"
+							id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+							label="include-headers"
+							name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+						/>
+					</div>
 				</liferay-frontend:edit-form-body>
 			</div>
 		</div>
@@ -131,15 +111,8 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			</div>
 		</liferay-frontend:edit-form-body>
 
-		<div class="mt-4" id="<portlet:namespace />formButtons">
+		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
-				<clay:link
-					displayType="secondary"
-					href="<%= backURL %>"
-					label="cancel"
-					type="button"
-				/>
-
 				<span>
 					<react:component
 						module="js/SaveTemplate"
@@ -151,7 +124,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								ActionURLBuilder.createActionURL(
 									renderResponse
 								).setActionName(
-									"/batch_planner/edit_export_batch_planner_plan"
+									"/batch_planner/edit_export_batch_planner_plan_template"
 								).setCMD(
 									Constants.ADD
 								).setParameter(
@@ -196,9 +169,9 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		).put(
 			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
 		).put(
-			"initialTemplateHeadlessEndpoint", editBatchPlannerPlanDisplayContext.getSelectedHeadlessEndpoint()
-		).put(
 			"initialTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
+		).put(
+			"isExport", true
 		).put(
 			"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
 		).build()

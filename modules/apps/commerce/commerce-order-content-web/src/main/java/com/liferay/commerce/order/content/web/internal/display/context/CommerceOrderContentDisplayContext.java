@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -455,7 +456,8 @@ public class CommerceOrderContentDisplayContext {
 				_cpRequestHelper.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "csv_template.csv",
 				MimeTypesUtil.getContentType(file), "csv_template",
-				StringPool.BLANK, StringPool.BLANK, file, null, null,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, file,
+				null, null,
 				ServiceContextFactory.getInstance(
 					_cpRequestHelper.getRequest()));
 
@@ -666,6 +668,24 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getScopeGroupId(), actionId);
 	}
 
+	public boolean hasViewBillingAddressPermission(
+			PermissionChecker permissionChecker,
+			CommerceAccount commerceAccount)
+		throws PortalException {
+
+		if ((commerceAccount.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
+			commerceAccount.isPersonalAccount() ||
+			_portletResourcePermission.contains(
+				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isCommerceSiteTypeB2C() {
 		if (_commerceContext.getCommerceSiteType() ==
 				CommerceAccountConstants.SITE_TYPE_B2C) {
@@ -681,6 +701,16 @@ public class CommerceOrderContentDisplayContext {
 
 		return portletName.equals(
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
+	}
+
+	public boolean isShowCommerceOrderCreateTime() throws PortalException {
+		CommerceOrderContentPortletInstanceConfiguration
+			commerceOrderContentPortletInstanceConfiguration =
+				_portletDisplay.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class);
+
+		return commerceOrderContentPortletInstanceConfiguration.
+			showCommerceOrderCreateTime();
 	}
 
 	public boolean isShowPurchaseOrderNumber() throws PortalException {

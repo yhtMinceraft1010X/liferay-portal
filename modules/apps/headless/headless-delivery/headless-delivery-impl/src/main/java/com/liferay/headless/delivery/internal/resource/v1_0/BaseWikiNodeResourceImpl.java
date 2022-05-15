@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -834,17 +836,43 @@ public abstract class BaseWikiNodeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WikiNode, Exception> wikiNodeUnsafeConsumer =
-			wikiNode -> {
+		UnsafeConsumer<WikiNode, Exception> wikiNodeUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			wikiNodeUnsafeConsumer = wikiNode -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			wikiNodeUnsafeConsumer = wikiNode -> postSiteWikiNode(
-				(Long)parameters.get("siteId"), wikiNode);
+			if (parameters.containsKey("siteId")) {
+				wikiNodeUnsafeConsumer = wikiNode -> postSiteWikiNode(
+					(Long)parameters.get("siteId"), wikiNode);
+			}
 		}
 
-		for (WikiNode wikiNode : wikiNodes) {
-			wikiNodeUnsafeConsumer.accept(wikiNode);
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			wikiNodeUnsafeConsumer =
+				wikiNode -> putSiteWikiNodeByExternalReferenceCode(
+					wikiNode.getSiteId() != null ? wikiNode.getSiteId() :
+						(Long)parameters.get("siteId"),
+					wikiNode.getExternalReferenceCode(), wikiNode);
+		}
+
+		if (wikiNodeUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for WikiNode");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiNodes, wikiNodeUnsafeConsumer);
+		}
+		else {
+			for (WikiNode wikiNode : wikiNodes) {
+				wikiNodeUnsafeConsumer.accept(wikiNode);
+			}
 		}
 	}
 
@@ -872,6 +900,10 @@ public abstract class BaseWikiNodeResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -918,11 +950,32 @@ public abstract class BaseWikiNodeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WikiNode wikiNode : wikiNodes) {
-			putWikiNode(
+		UnsafeConsumer<WikiNode, Exception> wikiNodeUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			wikiNodeUnsafeConsumer = wikiNode -> putWikiNode(
 				wikiNode.getId() != null ? wikiNode.getId() :
 					Long.parseLong((String)parameters.get("wikiNodeId")),
 				wikiNode);
+		}
+
+		if (wikiNodeUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for WikiNode");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiNodes, wikiNodeUnsafeConsumer);
+		}
+		else {
+			for (WikiNode wikiNode : wikiNodes) {
+				wikiNodeUnsafeConsumer.accept(wikiNode);
+			}
 		}
 	}
 
@@ -991,6 +1044,15 @@ public abstract class BaseWikiNodeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<WikiNode>,
+			 UnsafeConsumer<WikiNode, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1049,6 +1111,14 @@ public abstract class BaseWikiNodeResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1139,6 +1209,9 @@ public abstract class BaseWikiNodeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<WikiNode>, UnsafeConsumer<WikiNode, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

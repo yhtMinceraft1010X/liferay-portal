@@ -13,21 +13,34 @@
  */
 
 export default function ({namespace}) {
-	const addButton = document.getElementById(`${namespace}addButton`);
-	const loading = addButton.querySelector('.loading-animation');
-
+	const loading = document.querySelector('.add-group-loading');
+	const content = document.querySelector(
+		'.add-group-form .add-group-content'
+	);
+	const footer = document.querySelector('.add-group-form .sheet-footer');
 	const form = document.getElementById(`${namespace}fm`);
+	const formInput = document.getElementById(`${namespace}name`);
+
+	setTimeout(() => {
+		formInput.focus();
+	}, 100);
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (addButton.disabled) {
-			return;
+		const alertContainer = document.querySelector(
+			'.add-group-alert-container'
+		);
+
+		if (alertContainer.hasChildNodes()) {
+			alertContainer.firstChild.remove();
 		}
 
-		addButton.disabled = true;
+		content.classList.toggle('d-none');
+		loading.classList.add('d-flex');
 		loading.classList.remove('d-none');
+		footer.classList.toggle('d-none');
 
 		const formData = new FormData(form);
 
@@ -56,12 +69,20 @@ export default function ({namespace}) {
 				}
 				else {
 					Liferay.Util.openToast({
+						autoClose: false,
+						container: alertContainer,
 						message: response.error,
+						toastProps: {
+							onClose: null,
+						},
 						type: 'danger',
+						variant: 'stripe',
 					});
 
-					addButton.disabled = false;
+					content.classList.toggle('d-none');
+					loading.classList.remove('d-flex');
 					loading.classList.add('d-none');
+					footer.classList.toggle('d-none');
 				}
 			});
 	});

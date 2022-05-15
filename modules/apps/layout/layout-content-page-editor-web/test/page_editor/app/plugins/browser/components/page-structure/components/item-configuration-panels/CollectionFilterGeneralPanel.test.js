@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
@@ -92,6 +92,7 @@ const renderComponent = (
 					deletedItems: [],
 					items: collectionFilterItems,
 				},
+				permissions: {UPDATE: true},
 			}}
 			reducer={(state) => state}
 		>
@@ -104,7 +105,6 @@ const renderComponent = (
 
 describe('CollectionFilterGeneralPanel', () => {
 	afterEach(() => {
-		cleanup();
 		CollectionService.getCollectionFilters.mockClear();
 		CollectionService.getCollectionSupportedFilters.mockClear();
 	});

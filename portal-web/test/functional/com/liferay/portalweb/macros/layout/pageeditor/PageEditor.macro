@@ -1165,6 +1165,14 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if ("${hideFromSiteSearchResults}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Hide from Site Search Results",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(height)) {
 			Select(
 				key_fieldLabel = "Height",
@@ -1184,41 +1192,41 @@ definition {
 		}
 
 		if (isSet(marginBottom)) {
-			Select(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Bottom",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${marginBottom}");
+			Click(
+				ariaLabel = "Margin Bottom",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${marginBottom}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(marginLeft)) {
-			Select(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Left",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${marginLeft}");
+			Click(
+				ariaLabel = "Margin Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${marginLeft}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(marginRight)) {
-			Select(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Right",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${marginRight}");
+			Click(
+				ariaLabel = "Margin Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${marginRight}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(marginTop)) {
-			Select(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Top",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${marginTop}");
+			Click(
+				ariaLabel = "Margin Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${marginTop}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1260,41 +1268,41 @@ definition {
 		}
 
 		if (isSet(paddingBottom)) {
-			Select(
-				key_borderBottom = "Padding",
-				key_fieldLabel = "Bottom",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${paddingBottom}");
+			Click(
+				ariaLabel = "Padding Bottom",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${paddingBottom}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(paddingLeft)) {
-			Select(
-				key_borderBottom = "Padding",
-				key_fieldLabel = "Left",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${paddingLeft}");
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${paddingLeft}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(paddingRight)) {
-			Select(
-				key_borderBottom = "Padding",
-				key_fieldLabel = "Right",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${paddingRight}");
+			Click(
+				ariaLabel = "Padding Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${paddingRight}");
 
 			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(paddingTop)) {
-			Select(
-				key_borderBottom = "Padding",
-				key_fieldLabel = "Top",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
-				value1 = "${paddingTop}");
+			Click(
+				ariaLabel = "Padding Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DropdownMenuItem.click(menuItem = "${paddingTop}");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1514,6 +1522,10 @@ definition {
 		var key_fragmentName = "${fragmentName}";
 		var key_index = "${index}";
 
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+		}
+
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
@@ -1525,6 +1537,10 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "${fragmentName}",
 				index = "${index}");
+		}
+
+		if (isSet(deviceType) && ("${deviceType}" != "Desktop")) {
+			SelectFrame(value1 = "relative=top");
 		}
 
 		AssertVisible(
@@ -1541,7 +1557,7 @@ definition {
 			if (isSet(filterCollection)) {
 				PageEditor.gotoEllipsisMenuItemInItemSelector(
 					fieldLabel = "Collection",
-					menuItem = "Filter Collection");
+					menuItem = "Prefilter Collection");
 
 				if (isSet(clearFilter)) {
 					Click(
@@ -1576,10 +1592,17 @@ definition {
 						value1 = "${filterResults}");
 				}
 
+				if (isSet(fieldLabel)) {
+					Select(
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "Select#GENERIC_SELECT_FIELD",
+						value1 = "${option}");
+				}
+
 				Button.clickApply();
 			}
 		}
-		else {
+		else if (!(isSet(deviceType)) || ("${deviceType}" == "Desktop")) {
 			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
 					key_fieldLabel = "Collection",
@@ -1630,38 +1653,24 @@ definition {
 			}
 		}
 
-		if (isSet(layout)) {
-			Select(
-				key_fieldLabel = "Layout",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${layout}");
-
-			PageEditor.waitForAutoSave();
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Layout",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${layout}");
-		}
-
-		if (isSet(listStyle)) {
+		if (isSet(styleDisplay)) {
 			AssertElementPresent(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				key_groupLabel = "Templates",
-				key_value = "${listStyle}",
+				key_value = "${styleDisplay}",
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
 			Select(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${listStyle}");
+				value1 = "${styleDisplay}");
 
 			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${listStyle}");
+				value1 = "${styleDisplay}");
 
 			if (isSet(listItemStyle)) {
 				Select(
@@ -1678,6 +1687,36 @@ definition {
 			}
 		}
 
+		if (isSet(layout)) {
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+		}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Show Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if ("${spaceBetweenColumns}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(pagination)) {
 			Select(
 				key_fieldLabel = "Pagination",
@@ -1692,11 +1731,33 @@ definition {
 				value1 = "${pagination}");
 		}
 
-		if (isSet(maxNumberOfItems)) {
+		if ("${displayAllPages}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Display All Pages",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if ("${displayAllPages}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Display All Pages",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${displayAllCollectionItems}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Display All Collection Items",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if ("${displayAllCollectionItems}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Display All Collection Items",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(maxNumberOfItemsToDisplay)) {
 			Type(
-				key_fieldLabel = "Maximum Number of Items",
+				key_fieldLabel = "Maximum Number of Items to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "${maxNumberOfItems}");
+				value1 = "${maxNumberOfItemsToDisplay}");
 
 			Click(
 				key_sidebarButton = "Browser",
@@ -1705,9 +1766,27 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertTextEquals(
-				key_fieldLabel = "Maximum Number of Items",
+				key_fieldLabel = "Maximum Number of Items to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "${maxNumberOfItems}");
+				value1 = "${maxNumberOfItemsToDisplay}");
+		}
+
+		if (isSet(maxNumberOfPagesToDisplay)) {
+			Type(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfPagesToDisplay}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfPagesToDisplay}");
 		}
 
 		if (isSet(maxNumberOfItemsPerPage)) {
@@ -2576,6 +2655,27 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 		}
+
+		if ("${panel}" == "Advanced") {
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			if (isSet(htmlTag)) {
+				Select(
+					key_fieldLabel = "HTML Tag",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${htmlTag}");
+
+				PageEditor.waitForAutoSave();
+			}
+
+			if ("${hideFromSiteSearchResults}" == "true") {
+				Check.checkNotVisible(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				PageEditor.waitForAutoSave();
+			}
+		}
 	}
 
 	macro editLayoutGrid {
@@ -2952,17 +3052,17 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
-	macro filterCollection {
-		PageEditor.gotoEllipsisMenuItemInItemSelector(
-			fieldLabel = "Collection",
-			menuItem = "Filter Collection");
+	macro getCommonStylesClass {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
 
-		Select(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${option}");
+		var class = selenium.getAttribute("xpath=(//div[@aria-label='${fragmentName}'])[${index}]@class");
+		var class = StringUtil.extractFirst("${class}", " page-editor__topper");
+		var class = StringUtil.extractLast("${class}", "lfr-layout-structure-item-topper-");
+		var commonStylesClass = StringUtil.add("lfr-layout-structure-item-", "${class}", "");
 
-		Button.click(button = "Apply");
+		return "${commonStylesClass}";
 	}
 
 	macro getFileSizeOfSelectedImageResolution {
@@ -2986,6 +3086,18 @@ definition {
 		var width = StringUtil.extractDigits("${width}");
 
 		return "${width}";
+	}
+
+	macro gotoAdvanced {
+		PageEditor.clickConfigurableField(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
 	}
 
 	macro gotoCommentList {
@@ -3256,6 +3368,14 @@ definition {
 
 	macro openExperienceMenu {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+	}
+
+	macro openNewExperienceEditor {
+		PageEditor.openExperienceMenu();
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
 	}
 
 	macro openPreviewMode {
@@ -3557,6 +3677,52 @@ definition {
 		PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
 	}
 
+	macro viewCollectionDisplayStyle {
+		if (!(isSet(rowNumber))) {
+			var rowNumer = "1";
+		}
+
+		if (isSet(columnCount)) {
+			var i = "0";
+
+			while ("${i}" != "${columnCount}") {
+				var columnNumber = ${i} + 1;
+
+				AssertElementPresent(
+					key_columnNumber = "${columnNumber}",
+					key_position = "${position}",
+					key_rowNumber = "${rowNumer}",
+					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
+			}
+
+			var columnNumber = ${columnCount} + 1;
+
+			AssertElementNotPresent(
+				key_columnNumber = "${columnNumber}",
+				key_position = "${position}",
+				key_rowNumber = "${rowNumer}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
+		}
+
+		if (isSet(layout)) {
+			AssertElementPresent(
+				key_layout = "${layout}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_LAYOUT");
+		}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			AssertElementNotPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMNS_NO_GUTTER");
+		}
+		else if ("${spaceBetweenColumns}" == "false") {
+			AssertElementPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMNS_NO_GUTTER");
+		}
+	}
+
 	macro viewCollectionItem {
 		if (!(isSet(column))) {
 			var column = "1";
@@ -3615,7 +3781,7 @@ definition {
 				value1 = "There are no comments yet.");
 
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_STATE_TEXT",
 				value1 = "Select a fragment to add a comment.");
 		}
 
@@ -3899,6 +4065,24 @@ definition {
 			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
+	macro viewFragmentCommonStyle {
+		var commonStylesClass = PageEditor.getCommonStylesClass(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
+		var actualStyleValue = Css.getStyleValue(
+			className = "${commonStylesClass}",
+			id = "layout-common-styles",
+			styleName = "${styleName}");
+
+		if (contains("${actualStyleValue}", "${styleValue}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: expected '${styleValue}', actual was '${actualStyleValue}'");
+		}
+	}
+
 	macro viewFragmentEditableImage {
 		if ("${contributed}" == "false") {
 			AssertVisible(
@@ -4023,6 +4207,17 @@ definition {
 		}
 
 		AssertElementNotPresent(
+			index = "${position}",
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_LABEL");
+	}
+
+	macro viewFragmentNotVisible {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		AssertNotVisible(
 			index = "${position}",
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_LABEL");
@@ -4257,17 +4452,15 @@ definition {
 				locator1 = "PageEditor#GRID_CONFIGURATION_LAYOUT");
 		}
 
-		if (isSet(spaceBetweenColumns)) {
-			if ("${spaceBetweenColumns}" == "true") {
-				AssertElementNotPresent(
-					key_position = "${position}",
-					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
-			}
-			else if ("${spaceBetweenColumns}" == "false") {
-				AssertElementPresent(
-					key_position = "${position}",
-					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
-			}
+		if ("${spaceBetweenColumns}" == "true") {
+			AssertElementNotPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
+		}
+		else if ("${spaceBetweenColumns}" == "false") {
+			AssertElementPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 		}
 
 		if ("${verticalAlignment}" == "Top") {

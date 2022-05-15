@@ -97,11 +97,13 @@ describe('ColorPicker', () => {
 	});
 
 	it('clears the value and sets "default"', async () => {
-		const {getByLabelText, getByTitle} = renderColorPicker({});
+		const onValueSelect = jest.fn();
+
+		const {getByTitle} = renderColorPicker({onValueSelect});
 
 		fireEvent.click(getByTitle('clear-selection'));
 
-		expect(getByLabelText('default')).toBeInTheDocument();
+		expect(onValueSelect).toBeCalledWith('Color Picker', null);
 	});
 
 	it('clears the value and sets the default value of the field if it exists', async () => {
@@ -324,6 +326,20 @@ describe('ColorPicker', () => {
 				expect(
 					getByText('this-token-does-not-exist')
 				).toBeInTheDocument();
+			});
+
+			it('Clears an error when the clear selection button is clicked', async () => {
+				const {getByRole, getByTitle, queryByText} = renderColorPicker({
+					value: '#fff',
+				});
+
+				onTypeValue(getByRole('combobox'), 'prim');
+
+				fireEvent.click(getByTitle('clear-selection'));
+
+				expect(
+					queryByText('this-token-does-not-exist')
+				).not.toBeInTheDocument();
 			});
 
 			it('renders an error when the written token is the same that the name field', async () => {

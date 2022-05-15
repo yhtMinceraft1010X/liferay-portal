@@ -287,13 +287,13 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Form Page");
+		PagesAdmin.addPage(pageName = "Form Page");
 
 		Navigator.gotoPage(pageName = "Form Page");
 

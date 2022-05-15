@@ -31,43 +31,16 @@ definition {
 	}
 
 	macro addObjectActionViaUI {
-		LexiconEntry.gotoAdd();
+		ObjectAdmin.gotoAddObjectAction();
 
-		Type(
-			locator1 = "ObjectAdmin#ADD_ACTION_NAME_FIELD",
-			value1 = "${actionName}");
-
-		if (isSet(whenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
-
-			Click(
-				key_type = "${whenAction}",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-		}
-
-		if (isSet(thenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
-
-			Click(
-				key_type = "${thenAction}",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-		}
-
-		if (isSet(urlAction)) {
-			Type(
-				locator1 = "ObjectAdmin#ADD_URL_ACTION_FIELD",
-				value1 = "${urlAction}");
-		}
-
-		if (isSet(secretAction)) {
-			Type(
-				locator1 = "ObjectAdmin#ADD_SECRET_ACTION_FIELD",
-				value1 = "${secretAction}");
-		}
-
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		ObjectAdmin.fillObjectAction(
+			actionName = "${actionName}",
+			active = "${active}",
+			click = "save",
+			secretAction = "${secretAction}",
+			thenAction = "${thenAction}",
+			urlAction = "${urlAction}",
+			whenAction = "${whenAction}");
 	}
 
 	macro addObjectBoleanFieldEntryViaUI {
@@ -106,6 +79,7 @@ definition {
 			fieldType = "${fieldType}",
 			indexed = "${indexed}",
 			indexedAsKeyword = "${indexedAsKeyword}",
+			indexedLanguageId = "${indexedLanguageId}",
 			isRequired = "${isRequired}",
 			objectName = "${objectName}",
 			picklistName = "${picklistName}",
@@ -117,25 +91,29 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
+			locator1 = "ObjectField#LABEL_INPUT",
 			value1 = "${fieldLabel}");
 
 		if (isSet(fieldName)) {
 			Type(
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_NAME_INPUT",
+				locator1 = "ObjectField#NAME_FIELD",
 				value1 = "${fieldName}");
 		}
 
 		if (isSet(fieldType)) {
-			Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
+			ObjectField.selectType(fieldType = "${fieldType}");
 
-			Click(
-				key_fieldType = "${fieldType}",
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE_OPTION");
+			if ("${fieldType}" == "Attachment") {
+				Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+
+				Click(
+					key_fieldType = "${fieldAttachment}",
+					locator1 = "ObjectField#TYPE_OPTION");
+			}
 		}
 
 		if ("${isMandatory}" == "true") {
-			Check.checkToggleSwitch(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
+			ObjectField.checkToggleMandatory();
 		}
 
 		if (isSet(fieldPicklist)) {
@@ -188,7 +166,14 @@ definition {
 			key_picklistOption = "${picklistOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
-		Button.clickSave();
+		if (IsElementPresent(key_text = "${saveName}", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "${saveName}",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Button.clickSave();
+		}
 
 		WaitForSPARefresh();
 	}
@@ -425,23 +410,29 @@ definition {
 	}
 
 	macro assertKeywordAndTextNotPresent {
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_radioOption = "Keyword",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_radioOption = "Text",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
 	macro assertLabelFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
+		AssertElementPresent(locator1 = "ObjectField#LABEL_ERROR_REQUIRED");
 	}
 
 	macro assertNoItemsWereFound {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
+	}
+
+	macro assertNoResultsWereFound {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	macro assertNotPossibleAddFieldOnBlockWithoutChooseOptionField {
@@ -453,7 +444,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_FIELD_INPUT_HAS_REQUIRED_ERROR");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	macro assertObjectActions {
@@ -543,7 +534,7 @@ definition {
 	macro assertObjectLayoutRelationshipFieldRequiredError {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	macro assertObjectNameFieldRequired {
@@ -576,8 +567,14 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
+	macro assertRequiredErrorPresent {
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required");
+	}
+
 	macro assertTypeFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
+		AssertElementPresent(locator1 = "ObjectField#TYPE_ERROR_REQUIRED");
 	}
 
 	macro assertUpdateEntryModalIsNotPresent {
@@ -765,14 +762,73 @@ definition {
 	macro editObjectAction {
 		ObjectAdmin.goToActionDetails(viewEntry = "${viewEntry}");
 
-		ObjectAdmin.viewFieldDetails();
+		ObjectAdmin.viewDetails();
 
-		if (isSet(newActionName)) {
+		ObjectAdmin.fillObjectAction(
+			actionName = "${actionName}",
+			active = "${active}",
+			click = "save",
+			secretAction = "${secretAction}",
+			thenAction = "${thenAction}",
+			urlAction = "${urlAction}",
+			whenAction = "${whenAction}");
+	}
+
+	macro fillObjectAction {
+		if (isSet(actionName)) {
 			Type(
-				locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
-				value1 = "${newActionName}");
+				locator1 = "ObjectAdmin#ACTION_NAME_FIELD",
+				value1 = "${actionName}");
+		}
 
-			Button.clickSave();
+		if (isSet(active)) {
+			if ("${active}" == "true") {
+				CreateObject.checkToggleActive();
+			}
+			else if ("${active}" == "false") {
+				CreateObject.checkToggleInactive();
+			}
+		}
+
+		if (isSet(whenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
+
+			Click(
+				key_type = "${whenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		ScrollWebElementIntoView(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
+		if (isSet(thenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
+
+			Click(
+				key_type = "${thenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		if (isSet(urlAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_URL_FIELD",
+				value1 = "${urlAction}");
+		}
+
+		if (isSet(secretAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_SECRET_FIELD",
+				value1 = "${secretAction}");
+		}
+
+		if (isSet(click)) {
+			if ("${click}" == "cancel") {
+				Button.clickCancel();
+			}
+			else if ("${click}" == "save") {
+				Button.clickSave();
+			}
 
 			Refresh();
 		}
@@ -788,6 +844,12 @@ definition {
 
 	macro goToActionsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_ACTIONS_TAB");
+	}
+
+	macro gotoAddObjectAction {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro goToCustomObject {
@@ -831,6 +893,8 @@ definition {
 		Click(
 			key_name = "${fieldName}",
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro gotoRelationshipsTab {
@@ -970,24 +1034,50 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
-	macro viewFieldDetails {
+	macro viewDescriptionForEachFieldType {
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a long integer up to 16 digits.",
+			type = "Long Integer");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add text up to 280 characters.",
+			type = "Text");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Choose from a picklist.",
+			type = "Picklist");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a date.",
+			type = "Date");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add an integer up to nine digits.",
+			type = "Integer");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a high precision decimal number without rounding.",
+			type = "Precision Decimal");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a decimal number that supports fractional portions.",
+			type = "Decimal");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Select between true or false.",
+			type = "Boolean");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add text up to 65,000 characters.",
+			type = "Long Text");
+	}
+
+	macro viewDetails {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_TITLE");
-	}
-
-	macro viewFieldErrorMessage {
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "${message}");
-	}
-
-	macro viewFieldSearchableSectionLanguage {
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL_TITLE");
 	}
 
 	macro viewFieldValueDisabled {
@@ -1020,10 +1110,10 @@ definition {
 		}
 	}
 
-	macro viewRequiredAlert {
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "${requiredAlert}");
+	macro viewPicklistOptionsOnFields {
+		AssertElementPresent(
+			key_optionName = "${optionName}",
+			locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
 	}
 
 	macro viewSystemObject {

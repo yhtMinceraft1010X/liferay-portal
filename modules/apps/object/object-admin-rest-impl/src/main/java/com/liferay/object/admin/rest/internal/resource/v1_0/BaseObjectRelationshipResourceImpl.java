@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -411,14 +413,33 @@ public abstract class BaseObjectRelationshipResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectRelationship, Exception>
+			objectRelationshipUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			objectRelationshipUnsafeConsumer =
 				objectRelationship -> postObjectDefinitionObjectRelationship(
 					Long.parseLong(
 						(String)parameters.get("objectDefinitionId")),
 					objectRelationship);
+		}
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			objectRelationshipUnsafeConsumer.accept(objectRelationship);
+		if (objectRelationshipUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for ObjectRelationship");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeConsumer);
+		}
+		else {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipUnsafeConsumer.accept(objectRelationship);
+			}
 		}
 	}
 
@@ -446,6 +467,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -487,18 +512,50 @@ public abstract class BaseObjectRelationshipResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			putObjectRelationship(
-				objectRelationship.getId() != null ?
-					objectRelationship.getId() :
-						Long.parseLong(
-							(String)parameters.get("objectRelationshipId")),
-				objectRelationship);
+		UnsafeConsumer<ObjectRelationship, Exception>
+			objectRelationshipUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectRelationshipUnsafeConsumer =
+				objectRelationship -> putObjectRelationship(
+					objectRelationship.getId() != null ?
+						objectRelationship.getId() :
+							Long.parseLong(
+								(String)parameters.get("objectRelationshipId")),
+					objectRelationship);
+		}
+
+		if (objectRelationshipUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectRelationship");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeConsumer);
+		}
+		else {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipUnsafeConsumer.accept(objectRelationship);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectRelationship>,
+			 UnsafeConsumer<ObjectRelationship, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -559,6 +616,14 @@ public abstract class BaseObjectRelationshipResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -649,6 +714,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectRelationship>,
+		 UnsafeConsumer<ObjectRelationship, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

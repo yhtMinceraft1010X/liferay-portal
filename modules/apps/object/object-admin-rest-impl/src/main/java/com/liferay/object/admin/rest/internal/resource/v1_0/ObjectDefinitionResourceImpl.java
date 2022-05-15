@@ -20,18 +20,19 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
-import com.liferay.object.admin.rest.internal.configuration.activator.FFObjectDefinitionPermissionsActionConfigurationActivator;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
-import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectViewUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -42,10 +43,13 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -129,6 +133,12 @@ public class ObjectDefinitionResourceImpl
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+
+			throw new ObjectDefinitionStorageTypeException();
+		}
+
 		return _toObjectDefinition(
 			_objectDefinitionService.addCustomObjectDefinition(
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
@@ -136,11 +146,12 @@ public class ObjectDefinitionResourceImpl
 				objectDefinition.getPanelCategoryKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope(),
+				objectDefinition.getScope(), objectDefinition.getStorageType(),
 				transformToList(
 					objectDefinition.getObjectFields(),
 					objectField -> ObjectFieldUtil.toObjectField(
-						objectField, _objectFieldLocalService))));
+						objectField, _objectFieldLocalService,
+						_objectFieldSettingLocalService))));
 	}
 
 	@Override
@@ -155,6 +166,10 @@ public class ObjectDefinitionResourceImpl
 	public ObjectDefinition putObjectDefinition(
 			Long objectDefinitionId, ObjectDefinition objectDefinition)
 		throws Exception {
+
+		if (!Validator.isBlank(objectDefinition.getStorageType())) {
+			throw new ObjectDefinitionStorageTypeException();
+		}
 
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
@@ -211,18 +226,10 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getObjectDefinitionId())
 				).put(
 					"permissions",
-					() -> {
-						if (!_ffObjectDefinitionPermissionsActionConfigurationActivator.
-								enabled()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.PERMISSIONS, "patchObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
+					addAction(
+						ActionKeys.PERMISSIONS, "patchObjectDefinition",
+						permissionName,
+						objectDefinition.getObjectDefinitionId())
 				).put(
 					"publish",
 					() -> {
@@ -276,7 +283,12 @@ public class ObjectDefinitionResourceImpl
 				objectViews = transformToArray(
 					_objectViewLocalService.getObjectViews(
 						objectDefinition.getObjectDefinitionId()),
-					objectView -> ObjectViewUtil.toObjectView(null, objectView),
+					objectView -> _objectViewDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							false, null, null, null,
+							contextAcceptLanguage.getPreferredLocale(), null,
+							null),
+						objectView),
 					ObjectView.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
@@ -305,10 +317,6 @@ public class ObjectDefinitionResourceImpl
 		new ObjectDefinitionEntityModel();
 
 	@Reference
-	private FFObjectDefinitionPermissionsActionConfigurationActivator
-		_ffObjectDefinitionPermissionsActionConfigurationActivator;
-
-	@Reference
 	private ObjectActionLocalService _objectActionLocalService;
 
 	@Reference
@@ -318,7 +326,13 @@ public class ObjectDefinitionResourceImpl
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;
+
+	@Reference
+	private ObjectViewDTOConverter _objectViewDTOConverter;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;

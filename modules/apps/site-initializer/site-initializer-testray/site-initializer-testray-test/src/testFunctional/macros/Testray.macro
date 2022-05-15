@@ -1,0 +1,220 @@
+definition {
+
+	macro assertCreatedRoutine {
+		AssertElementPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro assertItemsPerPageValue {
+		AssertElementPresent(
+			key_value = "${itemValue}",
+			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
+	}
+
+	macro assertNameTitle {
+		AssertElementPresent(
+			key_title = "${key_name}",
+			locator1 = "Testray#NAME_TITLE");
+	}
+
+	macro assertPageNumber {
+		AssertElementPresent(
+			key_pageNumber = "${pageNumber}",
+			locator1 = "Testray#NUMBER_PAGE_BUTTON");
+	}
+
+	macro assertProjectDescription {
+		AssertElementPresent(
+			key_value = "${value}",
+			locator1 = "Testray#DESCRIPTION_PROJECT");
+	}
+
+	macro assertProjectName {
+		AssertElementPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro assertProjectTitleHeader {
+		AssertElementPresent(
+			key_projectName = "${projectName}",
+			locator1 = "Testray#PROJECT_NAME_HEADER");
+	}
+
+	macro assertShowedItems {
+		AssertElementPresent(
+			key_text = "${itemsText}",
+			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
+	}
+
+	macro changeItemsPerPage {
+		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+
+		Click(
+			key_itemvalue = "${itemValue}",
+			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
+	}
+
+	macro clickOnPageNumber {
+		Click(
+			key_pageNumber = "${pageNumber}",
+			locator1 = "Testray#NUMBER_PAGE_BUTTON");
+	}
+
+	macro createProjectTestray {
+		Click(locator1 = "Testray#ADD_PROJECT");
+
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${key_name}");
+
+		Type(
+			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
+			value1 = "ci:test");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro createTestraySite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
+
+		SelectFrame(
+			key_title = "Add Site",
+			locator1 = "IFrame#MODAL_ANY");
+
+		PortletEntry.inputName(name = "${siteName}");
+
+		Click(locator1 = "Button#ADD");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro createTestrayTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TestrayTestflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_NAME_TASKS",
+			value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
+			value1 = "43015");
+
+		Type(
+			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+			value1 = "04/01/2022");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
+	macro enableTestrayTasksInPortlet {
+		Refresh();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		Click(
+			key_pageNumber = "2",
+			locator1 = "Pagination#ANY_PAGE");
+
+		ObjectPortlet.selectCustomObject(label = "Testray Task");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+	}
+
+	macro goToNextAndPreviousPage {
+		Click(
+			key_pageDirection = "${pageDirection}",
+			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
+	}
+
+	macro goToProjectPage {
+		Click(
+			key_projectName = "${projectName}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro goToTestflow {
+		Click(locator1 = "Testray#TESTFLOW_SIDEBAR");
+	}
+
+	macro projectTabNavigator {
+		Click(
+			key_navTabName = "${navTabName}",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+	}
+
+	macro signOutTestray {
+		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
+
+		Click(locator1 = "TestrayUser#SIGN_OUT");
+	}
+
+	macro statusChangeTestray {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.click(menuItem = "View");
+
+		Type(
+			locator1 = "TestrayTestflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
+	macro tearDownCP {
+		Refresh();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Refresh();
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Click(locator1 = "Button#MODAL_DELETE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewOverviewTab {
+		AssertElementPresent(
+			key_rowValue = "${rowValue}",
+			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+	}
+
+}

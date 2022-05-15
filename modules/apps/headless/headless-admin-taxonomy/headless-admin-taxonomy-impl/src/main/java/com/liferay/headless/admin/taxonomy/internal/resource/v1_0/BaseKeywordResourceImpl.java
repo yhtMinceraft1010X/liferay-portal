@@ -16,6 +16,7 @@ package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -889,20 +891,38 @@ public abstract class BaseKeywordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = keyword -> {
-		};
+		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
 
-		if (parameters.containsKey("assetLibraryId")) {
-			keywordUnsafeConsumer = keyword -> postAssetLibraryKeyword(
-				(Long)parameters.get("assetLibraryId"), keyword);
-		}
-		else if (parameters.containsKey("siteId")) {
-			keywordUnsafeConsumer = keyword -> postSiteKeyword(
-				(Long)parameters.get("siteId"), keyword);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			keywordUnsafeConsumer = keyword -> {
+			};
+
+			if (parameters.containsKey("assetLibraryId")) {
+				keywordUnsafeConsumer = keyword -> postAssetLibraryKeyword(
+					(Long)parameters.get("assetLibraryId"), keyword);
+			}
+			else if (parameters.containsKey("siteId")) {
+				keywordUnsafeConsumer = keyword -> postSiteKeyword(
+					(Long)parameters.get("siteId"), keyword);
+			}
 		}
 
-		for (Keyword keyword : keywords) {
-			keywordUnsafeConsumer.accept(keyword);
+		if (keywordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Keyword");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(keywords, keywordUnsafeConsumer);
+		}
+		else {
+			for (Keyword keyword : keywords) {
+				keywordUnsafeConsumer.accept(keyword);
+			}
 		}
 	}
 
@@ -930,6 +950,10 @@ public abstract class BaseKeywordResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -981,11 +1005,31 @@ public abstract class BaseKeywordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Keyword keyword : keywords) {
-			putKeyword(
+		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			keywordUnsafeConsumer = keyword -> putKeyword(
 				keyword.getId() != null ? keyword.getId() :
 					Long.parseLong((String)parameters.get("keywordId")),
 				keyword);
+		}
+
+		if (keywordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for Keyword");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(keywords, keywordUnsafeConsumer);
+		}
+		else {
+			for (Keyword keyword : keywords) {
+				keywordUnsafeConsumer.accept(keyword);
+			}
 		}
 	}
 
@@ -1054,6 +1098,14 @@ public abstract class BaseKeywordResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Keyword>, UnsafeConsumer<Keyword, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1112,6 +1164,14 @@ public abstract class BaseKeywordResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -1202,6 +1262,9 @@ public abstract class BaseKeywordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Keyword>, UnsafeConsumer<Keyword, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

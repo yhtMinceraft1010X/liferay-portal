@@ -3,26 +3,66 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {
-		Navigator.openURL();
+		CommerceConfiguration.commerceTearDown();
+	}
 
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
+	@description = "Verify all products sharing a partial sku are populated in the catalog when the user searches products by partial sku"
+	@priority = "3"
+	test AssertMultipleProductsPopulatedSharingSamePartialSKUThatIsSearchedFor {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 		}
 
-		User.firstLoginPG();
+		task ("When buyer goes to the catalog and searches a partial SKU used by multiple products") {
+			User.logoutPG();
 
-		CommerceConfiguration.commerceAdminTearDown();
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		CommerceConfiguration.commerceInitializersTearDown();
+			CommerceNavigator.searchEntry(entryName = "MIN77");
+		}
+
+		task ("Then all of the products sharing same partial SKU that is searched are populated") {
+			for (var product : list "Lift Support:MIN77825,Muffler/Resonators:MIN77824,Exhaust Clamps:MIN77823,Catalytic Converters:MIN77822") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productSku = StringUtil.extractLast("${product}", ":");
+
+				AssertElementPresent(
+					key_productName = "${productName}",
+					key_productSku = "${productSku}",
+					locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+			}
+
+			AssertElementPresent(
+				key_productCount = "4",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
 	}
 
 	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
@@ -738,6 +778,60 @@ definition {
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
+	@description = "Verify users can search products by partial SKU in the catalog"
+	@priority = "3"
+	test SearchProductsByPartialSKU {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "ProductSku1001");
+		}
+
+		task ("When the buyer goes to the catalog and searches the product by partial SKU") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.searchEntry(entryName = "Sku1001");
+		}
+
+		task ("Then the product related to that SKU is populated") {
+			AssertElementPresent(
+				key_productName = "Test Simple Product",
+				key_productSku = "ProductSku1001",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+
+			AssertElementPresent(
+				key_productCount = "1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+		}
+	}
+
 	@description = "COMMERCE-6145. As a buyer, I want to change the number of items to display for every page from Search Results widget pagination bar"
 	@priority = "3"
 	test SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar {
@@ -791,7 +885,7 @@ definition {
 
 		Click(
 			key_pageNumber = "2",
-			locator1 = "Pagination#ANY_PAGE");
+			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 		var iterator = "1";
 
@@ -835,9 +929,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		AssertTextEquals(
-			locator1 = "Dropdown#ENTRIES",
-			value1 = "4 Entries Per Page");
+		AssertElementPresent(
+			key_numberEntries = "4 Entries",
+			locator1 = "Dropdown#ENTRIES_NUMBER");
 	}
 
 	@description = "COMMERCE-6663. I want to be able to use ADT to render Search Results widget and I want to be able to select a Display Template and see it applied to the widget"

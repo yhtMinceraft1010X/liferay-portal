@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -54,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -635,13 +637,32 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer =
-			dataRecord -> postDataDefinitionDataRecord(
-				Long.parseLong((String)parameters.get("dataDefinitionId")),
-				dataRecord);
+		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer = null;
 
-		for (DataRecord dataRecord : dataRecords) {
-			dataRecordUnsafeConsumer.accept(dataRecord);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			dataRecordUnsafeConsumer =
+				dataRecord -> postDataDefinitionDataRecord(
+					Long.parseLong((String)parameters.get("dataDefinitionId")),
+					dataRecord);
+		}
+
+		if (dataRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for DataRecord");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecords, dataRecordUnsafeConsumer);
+		}
+		else {
+			for (DataRecord dataRecord : dataRecords) {
+				dataRecordUnsafeConsumer.accept(dataRecord);
+			}
 		}
 	}
 
@@ -669,6 +690,10 @@ public abstract class BaseDataRecordResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override
@@ -711,16 +736,53 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataRecord dataRecord : dataRecords) {
-			putDataRecord(
+		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataRecordUnsafeConsumer = dataRecord -> patchDataRecord(
 				dataRecord.getId() != null ? dataRecord.getId() :
 					Long.parseLong((String)parameters.get("dataRecordId")),
 				dataRecord);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataRecordUnsafeConsumer = dataRecord -> putDataRecord(
+				dataRecord.getId() != null ? dataRecord.getId() :
+					Long.parseLong((String)parameters.get("dataRecordId")),
+				dataRecord);
+		}
+
+		if (dataRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for DataRecord");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecords, dataRecordUnsafeConsumer);
+		}
+		else {
+			for (DataRecord dataRecord : dataRecords) {
+				dataRecordUnsafeConsumer.accept(dataRecord);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<DataRecord>,
+			 UnsafeConsumer<DataRecord, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -781,6 +843,14 @@ public abstract class BaseDataRecordResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -875,6 +945,10 @@ public abstract class BaseDataRecordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DataRecord>,
+		 UnsafeConsumer<DataRecord, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

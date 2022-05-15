@@ -14,47 +14,37 @@
 
 import {gql} from '@apollo/client';
 
-const testrayCaseTypeFragment = gql`
-	fragment TestrayCaseTypeFragment on C_TestrayCaseType {
-		dateCreated
-		dateModified
-		externalReferenceCode
-		name
-		status
-		testrayCaseTypeId
-		testrayTask
-		testrayTaskId
-	}
-`;
+import {testrayCaseTypeFragment} from '../fragments';
 
-export const getTestrayCaseType = gql`
+export type TestrayCaseType = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	status: string;
+};
+
+export const getCaseType = gql`
 	${testrayCaseTypeFragment}
 
-	query getTestrayCaseType($testrayCaseTypeId: Long!) {
+	query getCaseType($caseTypeId: Long!) {
 		c {
-			testrayCaseType(testrayCaseTypeId: $testrayCaseTypeId) {
-				...TestrayCaseTypeFragment
+			caseType(caseTypeId: $caseTypeId) {
+				...CaseTypeFragment
 			}
 		}
 	}
 `;
 
-export const getTestrayCaseTypes = gql`
+export const getCaseTypes = gql`
 	${testrayCaseTypeFragment}
 
-	query getTestrayCaseTypes(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+	query getCaseTypes($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testrayCaseTypes(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			caseTypes(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestrayCaseTypeFragment
+					...CaseTypeFragment
 				}
 				lastPage
 				page

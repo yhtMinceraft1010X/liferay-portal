@@ -31,7 +31,9 @@ function AddToCartButton({
 	cpInstances,
 	disabled,
 	hideIcon,
+	invalid,
 	onAdd,
+	onClick,
 	onError,
 	settings,
 }) {
@@ -42,13 +44,24 @@ function AddToCartButton({
 				[`btn-${settings.size}`]: settings.size,
 				'btn-add-to-cart': true,
 				'icon-only': settings.iconOnly,
+				invalid,
 				'is-added': cpInstances.length === 1 && cpInstances[0].inCart,
 			})}
 			disabled={disabled}
 			displayType="primary"
 			monospaced={settings.iconOnly && settings.inline}
-			onClick={() =>
-				addToCart(cpInstances, cartId, channel, accountId)
+			onClick={(event) => {
+				if (onClick) {
+					return onClick(
+						event,
+						cpInstances,
+						cartId,
+						channel,
+						accountId
+					);
+				}
+
+				return addToCart(cpInstances, cartId, channel, accountId)
 					.then(onAdd)
 					.catch((error) => {
 						console.error(error);
@@ -65,8 +78,8 @@ function AddToCartButton({
 						showErrorNotification(errorMessage);
 
 						onError(error);
-					})
-			}
+					});
+			}}
 		>
 			{!settings.iconOnly && (
 				<span className="text-truncate-inline">
@@ -92,7 +105,7 @@ AddToCartButton.defaultProps = {
 	cpInstances: [
 		{
 			inCart: false,
-			options: '[]',
+			skuOptions: '[]',
 		},
 	],
 	hideIcon: false,
@@ -120,9 +133,12 @@ AddToCartButton.propTypes = {
 	cpInstances: PropTypes.arrayOf(
 		PropTypes.shape({
 			inCart: PropTypes.bool,
-			options: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 			quantity: PropTypes.number,
 			skuId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			skuOptions: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.array,
+			]),
 		})
 	).isRequired,
 	disabled: PropTypes.bool,

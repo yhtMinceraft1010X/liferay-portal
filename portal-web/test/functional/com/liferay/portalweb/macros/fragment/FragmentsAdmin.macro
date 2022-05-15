@@ -41,7 +41,31 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconCard.delete(card = "${entry}");
+		LexiconCard.clickEllipsisItem(
+			card = "${entry}",
+			item = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting a fragment is an action impossible to revert. It will be removed from the fragments set and it will not be possible to recover it.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
+	macro deleteResource {
+		LexiconCard.clickEllipsisItem(
+			card = "${entry}",
+			item = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
 	macro exportCollection {
@@ -142,6 +166,25 @@ definition {
 
 	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
+	}
+
+	macro propagateChanges {
+		if (isSet(itemNameList)) {
+			for (var itemName : list "${itemNameList}") {
+				Check(
+					key_tableEntry = "${itemName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+		}
+		else {
+			PortletEntry.selectAll();
+		}
+
+		Click(
+			key_text = "propagation",
+			locator1 = "Icon#ANY");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro selectCollection {

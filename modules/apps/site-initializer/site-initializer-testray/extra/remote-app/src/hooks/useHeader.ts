@@ -26,8 +26,10 @@ import {
 type UseHeader = {
 	shouldUpdate?: boolean;
 	timeout?: number;
+	useAction?: Dropdown;
 	useDropdown?: Dropdown;
 	useHeading?: HeaderTitle[];
+	useIcon?: string;
 	useTabs?: HeaderTabs[];
 };
 
@@ -37,18 +39,39 @@ const useHeader = ({
 	shouldUpdate = true,
 	timeout = DEFAULT_TIMEOUT,
 	useHeading = initialState.heading,
+	useAction,
+	useIcon = initialState.symbol,
 	useDropdown,
 	useTabs = initialState.tabs,
 }: UseHeader = {}) => {
 	const [, dispatch] = useContext(HeaderContext);
 
+	const useActionString = JSON.stringify(useAction);
 	const useDropdownString = JSON.stringify(useDropdown);
 	const useHeadingString = JSON.stringify(useHeading);
 	const useTabsString = JSON.stringify(useTabs);
+	const useDropdownIcon = JSON.stringify(useIcon);
+
+	const setActions = useCallback(
+		(newActions: Dropdown) => {
+			dispatch({payload: newActions, type: HeaderTypes.SET_ACTIONS});
+		},
+		[dispatch]
+	);
 
 	const setDropdown = useCallback(
 		(newDropdown: Dropdown) => {
 			dispatch({payload: newDropdown, type: HeaderTypes.SET_DROPDOWN});
+		},
+		[dispatch]
+	);
+
+	const setDropdownIcon = useCallback(
+		(newSymbol: string) => {
+			dispatch({
+				payload: newSymbol,
+				type: HeaderTypes.SET_SYMBOL,
+			});
 		},
 		[dispatch]
 	);
@@ -78,12 +101,26 @@ const useHeader = ({
 	}, [setHeading, shouldUpdate, timeout, useHeadingString]);
 
 	useEffect(() => {
+		if (shouldUpdate && useIcon) {
+			setTimeout(() => {
+				setDropdownIcon(JSON.parse(useDropdownIcon));
+			}, timeout);
+		}
+	}, [setDropdownIcon, shouldUpdate, timeout, useDropdownIcon, useIcon]);
+
+	useEffect(() => {
 		if (shouldUpdate && useTabsString) {
 			setTimeout(() => {
 				setTabs(JSON.parse(useTabsString));
 			}, timeout);
 		}
 	}, [setTabs, shouldUpdate, timeout, useTabsString]);
+
+	useEffect(() => {
+		if (useActionString) {
+			setActions(JSON.parse(useActionString));
+		}
+	}, [setActions, useActionString]);
 
 	useEffect(() => {
 		if (useDropdownString) {
@@ -93,10 +130,14 @@ const useHeader = ({
 
 	return {
 		dispatch,
+		setActions,
 		setDropdown,
+		setDropdownIcon,
 		setHeading,
 		setTabs,
 	};
 };
+
+export {useHeader};
 
 export default useHeader;

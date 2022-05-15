@@ -53,14 +53,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Sergio González
  */
-public class AMBlogsEditorConfigContributorTest extends PowerMockito {
+public class AMBlogsEditorConfigContributorTest {
 
 	@ClassRule
 	@Rule
@@ -79,15 +77,15 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 	public void testAdaptiveMediaFileEntryAttributeNameIsAdded()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -95,13 +93,13 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -113,7 +111,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -132,15 +130,15 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 
 	@Test
 	public void testAdaptiveMediaIsAddedToExtraPlugins() throws Exception {
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -148,13 +146,13 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -166,7 +164,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -184,15 +182,15 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 
 	@Test
 	public void testAdaptiveMediaIsExtraPlugins() throws Exception {
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -200,28 +198,26 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONUtil.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
-		).put(
-			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType"
-		);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			JSONUtil.put(
+				"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
+			).put(
+				"filebrowserImageBrowseLinkUrl",
+				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType"
+			).toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -283,19 +279,19 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		JSONObject jsonObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", RandomTestUtil.randomString());
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(Mockito.anyString())
 		).thenReturn(
 			Arrays.asList(itemSelectorCriteria)
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.<ItemSelectorCriterion>anyVararg())
@@ -303,7 +299,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			_portletURL
 		);
 
-		when(
+		Mockito.when(
 			_portletURL.toString()
 		).thenReturn(
 			RandomTestUtil.randomString()
@@ -341,7 +337,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", "a[*](*); div(*);");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -354,7 +350,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", "a[*](*); div(*); img[*](*){*};");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -362,7 +358,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -374,7 +370,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -385,7 +381,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", "a[*](*); div(*); img[*](*){*};");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -398,7 +394,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", "a[*](*); div(*); img[*](*){*};");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -409,7 +405,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", Boolean.TRUE.toString());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -422,7 +418,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"allowedContent", Boolean.TRUE.toString());
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -433,7 +429,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"filebrowserImageBrowseLinkUrl", StringPool.BLANK);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -453,17 +449,17 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
 	public void testItemSelectorURLWithAudioItemSelectorCriterion()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"audioItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -475,7 +471,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"audioItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -495,25 +491,25 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
 	public void testItemSelectorURLWithBlogsItemSelectorCriterion()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -521,13 +517,13 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -539,7 +535,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();
@@ -563,15 +559,15 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 	public void testItemSelectorURLWithFileItemSelectorCriterion()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -579,13 +575,13 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"fileItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -597,7 +593,7 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 			"fileItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
 			new AMBlogsEditorConfigContributor();

@@ -15,6 +15,7 @@ import getCN from 'classnames';
 import React from 'react';
 
 import CodeMirrorEditor from '../../shared/CodeMirrorEditor';
+import LearnMessage from '../../shared/LearnMessage';
 
 function ConfigurationTab({
 	advancedConfig,
@@ -60,15 +61,29 @@ function ConfigurationTab({
 					</h2>
 
 					<div className="sheet-text">
-						{Liferay.Language.get(
-							'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
-						)}
+						<span className="help-text">
+							{Liferay.Language.get(
+								'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
+							)}
+						</span>
+
+						<LearnMessage resourceKey="search-blueprint-configuration" />
 					</div>
 
 					<ClayForm.Group>
 						<label>
 							{Liferay.Language.get('aggregation-configuration')}
 						</label>
+
+						<div className="sheet-text">
+							<span className="help-text">
+								{Liferay.Language.get(
+									'aggregation-configuration-description'
+								)}
+							</span>
+
+							<LearnMessage resourceKey="aggregation-configuration" />
+						</div>
 
 						{_renderEditor('aggregationConfig', aggregationConfig)}
 					</ClayForm.Group>
@@ -78,6 +93,16 @@ function ConfigurationTab({
 							{Liferay.Language.get('highlight-configuration')}
 						</label>
 
+						<div className="sheet-text">
+							<span className="help-text">
+								{Liferay.Language.get(
+									'highlight-configuration-description'
+								)}
+							</span>
+
+							<LearnMessage resourceKey="highlight-configuration" />
+						</div>
+
 						{_renderEditor('highlightConfig', highlightConfig)}
 					</ClayForm.Group>
 
@@ -85,6 +110,16 @@ function ConfigurationTab({
 						<label>
 							{Liferay.Language.get('sort-configuration')}
 						</label>
+
+						<div className="sheet-text">
+							<span className="help-text">
+								{Liferay.Language.get(
+									'sort-configuration-description'
+								)}
+							</span>
+
+							<LearnMessage resourceKey="sort-configuration" />
+						</div>
 
 						{_renderEditor('sortConfig', sortConfig)}
 					</ClayForm.Group>
@@ -94,6 +129,16 @@ function ConfigurationTab({
 							{Liferay.Language.get('parameter-configuration')}
 						</label>
 
+						<div className="sheet-text">
+							<span className="help-text">
+								{Liferay.Language.get(
+									'parameter-configuration-description'
+								)}
+							</span>
+
+							<LearnMessage resourceKey="parameter-configuration" />
+						</div>
+
 						{_renderEditor('parameterConfig', parameterConfig)}
 					</ClayForm.Group>
 
@@ -101,6 +146,16 @@ function ConfigurationTab({
 						<label>
 							{Liferay.Language.get('advanced-configuration')}
 						</label>
+
+						<div className="sheet-text">
+							<span className="help-text">
+								{Liferay.Language.get(
+									'advanced-configuration-description'
+								)}
+							</span>
+
+							<LearnMessage resourceKey="advanced-configuration" />
+						</div>
 
 						{_renderEditor('advancedConfig', advancedConfig)}
 					</ClayForm.Group>

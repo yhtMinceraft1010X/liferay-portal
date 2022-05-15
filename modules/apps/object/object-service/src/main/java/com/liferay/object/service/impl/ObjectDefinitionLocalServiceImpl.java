@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
@@ -35,16 +36,19 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -130,12 +134,12 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, Map<Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
-			List<ObjectField> objectFields)
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			userId, null, null, labelMap, name, panelAppOrder, panelCategoryKey,
-			null, null, pluralLabelMap, scope, false, 0,
+			null, null, pluralLabelMap, scope, storageType, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -239,7 +243,8 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(
 			userId, className, dbTableName, labelMap, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			true, version, WorkflowConstants.STATUS_APPROVED, objectFields);
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true, version,
+			WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 	@Override
@@ -289,11 +294,27 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		_objectFieldPersistence.removeByObjectDefinitionId(
+		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 
-		// TODO Deleting an object definition should delete related object
-		// relationships
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId1(
+					objectDefinition.getObjectDefinitionId())) {
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId2(
+					objectDefinition.getObjectDefinitionId())) {
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
+
+		_objectValidationRuleLocalService.deleteObjectValidationRules(
+			objectDefinition.getObjectDefinitionId());
 
 		objectDefinitionPersistence.remove(objectDefinition);
 
@@ -399,6 +420,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return objectDefinitionPersistence.findByC_A_S_S(
 			companyId, active, system, status);
+	}
+
+	@Override
+	public List<ObjectDefinition> getObjectDefinitions(
+		long companyId, boolean active, int status) {
+
+		return objectDefinitionPersistence.findByC_A_S(
+			companyId, active, status);
 	}
 
 	@Override
@@ -631,8 +660,8 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, boolean system, int version, int status,
-			List<ObjectField> objectFields)
+			String scope, String storageType, boolean system, int version,
+			int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -676,6 +705,9 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 		objectDefinition.setScope(scope);
+		objectDefinition.setStorageType(
+			Validator.isNotNull(storageType) ? storageType :
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 		objectDefinition.setStatus(status);
@@ -709,7 +741,8 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), Collections.emptyList());
+						objectField.isRequired(),
+						objectField.getObjectFieldSettings());
 				}
 			}
 		}
@@ -1197,7 +1230,13 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+
+	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;

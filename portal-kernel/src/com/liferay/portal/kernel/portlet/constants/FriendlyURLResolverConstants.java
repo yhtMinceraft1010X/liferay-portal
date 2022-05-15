@@ -32,6 +32,32 @@ public class FriendlyURLResolverConstants {
 	public static final String URL_SEPARATOR_OBJECT_ENTRY = "/l/";
 
 	public static final String URL_SEPARATOR_PORTAL_RESERVED =
+		Portal.PATH_MODULE + "/";
+
+	public static final String URL_SEPARATOR_X_ASSET_CATEGORY = "/v";
+
+	public static final String URL_SEPARATOR_X_BLOGS_ENTRY = "/b";
+
+	public static final String URL_SEPARATOR_X_FILE_ENTRY = "/d";
+
+	public static final String URL_SEPARATOR_X_JOURNAL_ARTICLE = "/w";
+
+	public static final String URL_SEPARATOR_X_OBJECT_ENTRY = "/l";
+
+	public static final String URL_SEPARATOR_X_PORTAL_RESERVED =
 		Portal.PATH_MODULE;
+
+	public static final String URL_SEPARATOR_Y_ASSET_CATEGORY = "v";
+
+	public static final String URL_SEPARATOR_Y_BLOGS_ENTRY = "b";
+
+	public static final String URL_SEPARATOR_Y_FILE_ENTRY = "d";
+
+	public static final String URL_SEPARATOR_Y_JOURNAL_ARTICLE = "w";
+
+	public static final String URL_SEPARATOR_Y_OBJECT_ENTRY = "l";
+
+	public static final String URL_SEPARATOR_Y_PORTAL_RESERVED =
+		URL_SEPARATOR_X_PORTAL_RESERVED.substring(1);
 
 }

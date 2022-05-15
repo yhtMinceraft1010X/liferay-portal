@@ -83,15 +83,15 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlEscapableObject;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -511,10 +511,10 @@ public class JournalArticleStagedModelDataHandler
 			ExportImportPathUtil.getModelPath(article, "journal-content-path"),
 			content);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			article.getCompanyId());
+		if (_isPreloadedArticle(
+				_userLocalService.getDefaultUserId(article.getCompanyId()),
+				article)) {
 
-		if (_isPreloadedArticle(defaultUserId, article)) {
 			articleElement.addAttribute("preloaded", "true");
 		}
 
@@ -869,7 +869,7 @@ public class JournalArticleStagedModelDataHandler
 
 			friendlyURLMap.forEach(
 				(locale, url) -> friendlyURLMap.replace(
-					locale, _http.decodeURL(url)));
+					locale, HttpComponentsUtil.decodeURL(url)));
 
 			String articleURL = null;
 
@@ -888,10 +888,6 @@ public class JournalArticleStagedModelDataHandler
 			}
 
 			JournalArticle importedArticle = null;
-
-			// Used when importing LARs with journal schemas under 1.1.0
-
-			_setLegacyValues(article);
 
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setUuid(article.getUuid());
@@ -1160,7 +1156,8 @@ public class JournalArticleStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingArticle.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			JournalArticle.class.getName());
 
 		if (trashHandler.isRestorable(existingArticle.getResourcePrimKey())) {
 			trashHandler.restoreTrashEntry(
@@ -1722,28 +1719,6 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), only used for backwards compatibility
-	 *             with LARs that use journal schema under 1.1.0
-	 */
-	@Deprecated
-	private void _setLegacyValues(JournalArticle article) {
-		if (MapUtil.isEmpty(article.getTitleMap()) &&
-			Validator.isNotNull(article.getLegacyTitle())) {
-
-			article.setTitleMap(
-				LocalizationUtil.getLocalizationMap(article.getLegacyTitle()));
-		}
-
-		if (MapUtil.isEmpty(article.getDescriptionMap()) &&
-			Validator.isNotNull(article.getLegacyDescription())) {
-
-			article.setDescriptionMap(
-				LocalizationUtil.getLocalizationMap(
-					article.getLegacyDescription()));
-		}
-	}
-
 	private void _updateArticleVersions(JournalArticle article)
 		throws PortalException {
 
@@ -1822,9 +1797,6 @@ public class JournalArticleStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	private ImageLocalService _imageLocalService;
 

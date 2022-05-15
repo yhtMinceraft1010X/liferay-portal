@@ -20,6 +20,101 @@
 	<td>//div[(@class='dnd-tbody') and contains(., '${value}') and contains(., 'Approved')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CERTIFICATE</td>
+	<td>//button[contains(@onclick, 'replace') and contains(@onclick, '${value}') and contains(., 'Replace')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_USERNAME</td>
+	<td>//input[contains(@id, 'okta-signin-username')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_PASSWORD</td>
+	<td>//input[contains(@id, 'okta-signin-password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKIP_TO_CONTENT</td>
+	<td>//*[contains(text(),'Skip to Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_COOKIES</td>
+	<td>//div[@class='banner-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_SUBMIT</td>
+	<td>//input[contains(@id, 'okta-signin-submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_TABLE_NAME</td>
+	<td>//div[contains(@class,'card-body')]//h4[contains(@title,'${key_projectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_NAME</td>
+	<td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GETTING_STARTED_MODAL</td>
+	<td>//header[contains(@class,'p-4')]//h2[contains(text(),'Let’s set up your project')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCRIPTIONS_PROJECT_INSIDE_PAGE</td>
+	<td>//div[contains(@class,'d-flex')]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_PROJECT_SETUP_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_TEAM_MEMBERS_TITLE</td>
+	<td>//div[contains(@class,'d-flex')]//h2[contains(text(),'Invite Your Team Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKIP_FOR_NOW_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-outline-borderless')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_TITLE_MAIN_PAGE</td>
+	<td>//div//h2[contains(@id,'project-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_MEMBERS_MAIN_PAGE</td>
+	<td>//h1[contains(@class,'m-0') and contains(text(),'Team Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_FIELD</td>
+	<td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_SELECT</td>
+	<td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MORE_MEMBERS</td>
+	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_BUTTON</td>
+	<td>//button[contains(@class,'invite-button')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

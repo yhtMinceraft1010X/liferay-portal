@@ -85,7 +85,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -93,7 +93,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -219,7 +219,7 @@ public class CalendarBookingLocalServiceImpl
 		String vEventUid = (String)serviceContext.getAttribute("vEventUid");
 
 		if (vEventUid == null) {
-			vEventUid = PortalUUIDUtil.generate();
+			vEventUid = _portalUUID.generate();
 		}
 
 		calendarBooking.setVEventUid(vEventUid);
@@ -1070,8 +1070,8 @@ public class CalendarBookingLocalServiceImpl
 	public List<CalendarBooking> search(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
-		String keywords, long startTime, long endTime, boolean recurring,
-		int[] statuses, int start, int end,
+		String keywords, long startTime, long endTime, TimeZone displayTimeZone,
+		boolean recurring, int[] statuses, int start, int end,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
 		List<CalendarBooking> calendarBookings =
@@ -1081,8 +1081,14 @@ public class CalendarBookingLocalServiceImpl
 				recurring, statuses, start, end, orderByComparator);
 
 		if (recurring) {
-			calendarBookings = RecurrenceUtil.expandCalendarBookings(
-				calendarBookings, startTime, endTime);
+			if (displayTimeZone == null) {
+				calendarBookings = RecurrenceUtil.expandCalendarBookings(
+					calendarBookings, startTime, endTime);
+			}
+			else {
+				calendarBookings = RecurrenceUtil.expandCalendarBookings(
+					calendarBookings, startTime, endTime, displayTimeZone);
+			}
 		}
 
 		return calendarBookings;
@@ -1152,7 +1158,7 @@ public class CalendarBookingLocalServiceImpl
 			publishDate = calendarBooking.getCreateDate();
 		}
 
-		String summary = HtmlUtil.extractText(
+		String summary = _htmlParser.extractText(
 			StringUtil.shorten(calendarBooking.getDescription(), 500));
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
@@ -2205,11 +2211,10 @@ public class CalendarBookingLocalServiceImpl
 		if (Validator.isNull(calendarBooking.getRecurrence())) {
 			singleInstance = true;
 
-			TimeZone timeZone = getTimeZone(
-				calendarBooking.getCalendar(), calendarBooking.isAllDay());
-
 			splitJCalendar = JCalendarUtil.getJCalendar(
-				calendarBooking.getStartTime(), timeZone);
+				calendarBooking.getStartTime(),
+				getTimeZone(
+					calendarBooking.getCalendar(), calendarBooking.isAllDay()));
 
 			splitJCalendar.add(java.util.Calendar.DATE, 1);
 		}
@@ -2723,6 +2728,12 @@ public class CalendarBookingLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private HtmlParser _htmlParser;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

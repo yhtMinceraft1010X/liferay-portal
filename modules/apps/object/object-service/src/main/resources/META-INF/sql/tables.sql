@@ -9,6 +9,7 @@ create table ObjectAction (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	active_ BOOLEAN,
+	description VARCHAR(75) null,
 	name VARCHAR(75) null,
 	objectActionExecutorKey VARCHAR(75) null,
 	objectActionTriggerKey VARCHAR(75) null,
@@ -38,6 +39,7 @@ create table ObjectDefinition (
 	pluralLabel STRING null,
 	portlet BOOLEAN,
 	scope VARCHAR(75) null,
+	storageType VARCHAR(75) null,
 	system_ BOOLEAN,
 	version INTEGER,
 	status INTEGER
@@ -97,7 +99,6 @@ create table ObjectFieldSetting (
 	modifiedDate DATE null,
 	objectFieldId LONG,
 	name VARCHAR(75) null,
-	required BOOLEAN,
 	value VARCHAR(75) null
 );
 
@@ -204,9 +205,10 @@ create table ObjectValidationRule (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	active_ BOOLEAN,
-	errorLabel STRING null,
 	engine VARCHAR(75) null,
-	script VARCHAR(75) null
+	errorLabel STRING null,
+	name STRING null,
+	script TEXT null
 );
 
 create table ObjectView (
@@ -233,8 +235,24 @@ create table ObjectViewColumn (
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectViewId LONG,
+	label STRING null,
 	objectFieldName VARCHAR(75) null,
 	priority INTEGER
+);
+
+create table ObjectViewFilterColumn (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectViewFilterColumnId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectViewId LONG,
+	filterType VARCHAR(75) null,
+	json VARCHAR(75) null,
+	objectFieldName VARCHAR(75) null
 );
 
 create table ObjectViewSortColumn (

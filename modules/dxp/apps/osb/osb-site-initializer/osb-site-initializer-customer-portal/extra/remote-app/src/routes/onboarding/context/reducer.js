@@ -11,6 +11,9 @@
 
 export const actionTypes = {
 	CHANGE_STEP: 'CHANGE_STEP',
+	UPDATE_ANALYTICS_CLOUD_ACTIVATION_SUBMITTED_STATUS:
+		'UPDATE_ANALYTICS_CLOUD_ACTIVATION_SUBMITTED_STATUS',
+	UPDATE_CURRENT_TOTAL_ADMINISTRATORS: 'UPDATE_CURRENT_TOTAL_ADMINISTRATORS',
 	UPDATE_DXP_CLOUD_ACTIVATION_SUBMITTED_STATUS:
 		'UPDATE_DXP_CLOUD_ACTIVATION_SUBMITTED_STATUS',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
@@ -25,6 +28,12 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				step: action.payload,
+			};
+		}
+		case actionTypes.UPDATE_CURRENT_TOTAL_ADMINISTRATORS: {
+			return {
+				...state,
+				totalAdministratorAccounts: action.payload,
 			};
 		}
 		case actionTypes.UPDATE_PROJECT: {
@@ -55,6 +64,12 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				dxpCloudActivationSubmittedStatus: action.payload,
+			};
+		}
+		case actionTypes.UPDATE_ANALYTICS_CLOUD_ACTIVATION_SUBMITTED_STATUS: {
+			return {
+				...state,
+				analyticsCloudActivationSubmittedStatus: action.payload,
 			};
 		}
 		default: {

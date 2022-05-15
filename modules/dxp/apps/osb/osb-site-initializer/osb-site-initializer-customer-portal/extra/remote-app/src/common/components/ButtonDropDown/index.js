@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 
 const ButtonDropDown = ({
+	customDropDownButton,
 	label,
 	align = Align.BottomRight,
 	items,
@@ -27,34 +28,49 @@ const ButtonDropDown = ({
 			alignmentPosition={align}
 			onActiveChange={setActive}
 			trigger={
-				<Button appendIcon="caret-bottom" className="btn btn-primary">
-					{label}
-				</Button>
+				customDropDownButton || (
+					<Button
+						appendIcon="caret-bottom"
+						className="btn btn-primary"
+					>
+						{label}
+					</Button>
+				)
 			}
 			{...props}
 		>
 			<ClayDropDown.ItemList>
-				{items.map(({disabled, icon, label, onClick, tooltip}) => (
-					<ClayDropDown.Item
-						className={classNames(
-							'font-weight-semi-bold px-3 rounded-xs',
-							{
-								'cp-common-drop-down-item text-neutral-8': !disabled,
-								'text-neutral-5': disabled,
-							}
-						)}
-						disabled={disabled}
-						key={label}
-						onClick={onClick}
-						title={disabled ? tooltip : null}
-					>
-						<div className="d-flex">
-							{icon && <div className="mr-1">{icon}</div>}
+				{items.map(
+					({
+						customOptionStyle,
+						disabled,
+						icon,
+						label,
+						onClick,
+						tooltip,
+					}) => (
+						<ClayDropDown.Item
+							className={classNames(
+								'font-weight-semi-bold text-paragraph-sm px-3 rounded-xs',
+								customOptionStyle,
+								{
+									'cp-common-drop-down-item text-neutral-8': !disabled,
+									'text-neutral-5': disabled,
+								}
+							)}
+							disabled={disabled}
+							key={label}
+							onClick={onClick}
+							title={disabled ? tooltip : null}
+						>
+							<div className="d-flex">
+								{icon && <div className="mr-1">{icon}</div>}
 
-							{label}
-						</div>
-					</ClayDropDown.Item>
-				))}
+								{label}
+							</div>
+						</ClayDropDown.Item>
+					)
+				)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

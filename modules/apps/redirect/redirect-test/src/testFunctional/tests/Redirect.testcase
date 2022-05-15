@@ -29,6 +29,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
 			User.logoutPG();
 		}
 	}
@@ -920,16 +922,24 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
 	}
 
-	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled."
+	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled. Also covers LPS-121346, it ensures that the home page is not shown when accessing a not existing page."
 	@priority = "5"
 	test CannotView404ByDefault {
 		property test.name.skip.portal.instance = "Redirect#CannotView404ByDefault";
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/my-url-that-does-not-exist");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+
+		AssertElementNotPresent(
+			key_title = "Welcome to Liferay",
+			locator1 = "Masterclass#FRAGMENT_HEADING");
+
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.view404URLsTab(disabled404Tracking = "true");
 
@@ -939,7 +949,7 @@ definition {
 
 		PortletEntry.save();
 
-		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+		Redirect.open404URLsAdmin(siteURLKey = "guest");
 
 		Redirect.view404URLsDefault();
 	}
@@ -957,7 +967,7 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
-		PortletEntry.save();
+		SystemSettings.saveConfiguration();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -981,6 +991,8 @@ definition {
 
 		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
+		TestUtils.hardRefresh();
+
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
@@ -989,15 +1001,11 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
 			requestNumber = "2");
 
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
 		Redirect.viewOrderedURLs(
 			entry1 = "1",
 			entry2 = "2");
-
-		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
-
-		Redirect.viewOrderedURLs(
-			entry1 = "2",
-			entry2 = "1");
 	}
 
 	@description = "This ensures that accessing a nonexistent URL redirects the user to the home of the current site."

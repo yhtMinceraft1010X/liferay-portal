@@ -36,7 +36,7 @@ const ImportMappingItem = ({
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell>
-				<label htmlFor={inputId}>{dbField.label}</label>
+				<label htmlFor={inputId}>{dbField.name}</label>
 
 				{dbField.description && (
 					<p className="mb-0">{dbField.description}</p>
@@ -62,6 +62,7 @@ const ImportMappingItem = ({
 
 					<ClaySelect
 						aria-required={required}
+						disabled={!fileFields}
 						id={inputId}
 						name={
 							selectedFileField &&
@@ -74,24 +75,25 @@ const ImportMappingItem = ({
 					>
 						<ClaySelect.Option label="" value="" />
 
-						{fileFields.map((fileField) => {
-							const columnHasNoName =
-								typeof fileField === 'number';
+						{fileFields &&
+							fileFields.map((fileField) => {
+								const columnHasNoName =
+									typeof fileField === 'number';
 
-							const label = columnHasNoName
-								? `${Liferay.Language.get('column')} ${
-										fileField + 1
-								  }`
-								: fileField;
+								const label = columnHasNoName
+									? `${Liferay.Language.get('column')} ${
+											fileField + 1
+									  }`
+									: fileField;
 
-							return (
-								<ClaySelect.Option
-									key={fileField}
-									label={label}
-									value={String(fileField)}
-								/>
-							);
-						})}
+								return (
+									<ClaySelect.Option
+										key={fileField}
+										label={label}
+										value={String(fileField)}
+									/>
+								);
+							})}
 					</ClaySelect>
 				</ClayForm.Group>
 			</ClayTable.Cell>
@@ -104,12 +106,11 @@ const ImportMappingItem = ({
 ImportMappingItem.propTypes = {
 	dbField: PropTypes.shape({
 		description: PropTypes.string,
-		label: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
-	}).isRequired,
+	}),
 	fileFields: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-	).isRequired,
+	),
 	formEvaluated: PropTypes.bool.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	previewValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

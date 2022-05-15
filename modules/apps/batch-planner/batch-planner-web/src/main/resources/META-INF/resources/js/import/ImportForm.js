@@ -12,10 +12,10 @@
  * details.
  */
 
-import ClayLink from '@clayui/link';
 import ClayTable from '@clayui/table';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
@@ -47,7 +47,6 @@ const TableFieldsHeader = () => (
 	</ClayTable.Head>
 );
 function ImportForm({
-	backUrl,
 	formDataQuerySelector,
 	formImportURL,
 	formSaveAsTemplateURL,
@@ -60,7 +59,7 @@ function ImportForm({
 	});
 	const [formEvaluated, setFormEvaluated] = useState(false);
 	const [fileFields, setFileFields] = useState();
-	const [demoFileValues, setDemoFileValues] = useState({});
+	const [fileContent, setFileContent] = useState();
 	const [fieldsSelections, setFieldsSelections] = useState({});
 	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] = useState(
 		mappedFields
@@ -83,10 +82,20 @@ function ImportForm({
 	}, [fieldsSelections, dbFields]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {
-		setFieldsSelections((prevSelections) => ({
-			...prevSelections,
-			[dbFieldName]: fileField,
-		}));
+		setFieldsSelections((prevSelections) => {
+			if (fileField) {
+				return {
+					...prevSelections,
+					[dbFieldName]: fileField,
+				};
+			}
+
+			const updatedDbFields = {...prevSelections};
+
+			delete updatedDbFields[dbFieldName];
+
+			return updatedDbFields;
+		});
 
 		Liferay.fire(TEMPLATE_SOILED_EVENT);
 	};
@@ -95,8 +104,7 @@ function ImportForm({
 		const dbFieldsUnordered = [...dbFields.optional, ...dbFields.required];
 
 		if (
-			dbFields.optional.length &&
-			dbFields.required.length &&
+			dbFields.optional.length + dbFields.required.length &&
 			fileFields &&
 			!useTemplateMappingRef.current
 		) {
@@ -112,17 +120,15 @@ function ImportForm({
 
 	useEffect(() => {
 		function handleSchemaUpdated({schema}) {
-			if (schema) {
-				const newDBFields = getFieldsFromSchema(schema);
+			const newDBFields = getFieldsFromSchema(schema);
 
-				setDbFields(newDBFields);
-			}
+			setDbFields(newDBFields);
 		}
 
-		function handleFileSchemaUpdate({firstItemDetails, schema}) {
-			setFileFields(schema);
+		function handleFileSchemaUpdate({fileContent, schema}) {
+			setFileContent(fileContent);
 
-			setDemoFileValues(firstItemDetails);
+			setFileFields(schema);
 		}
 
 		function handleTemplateSelect({template}) {
@@ -143,9 +149,33 @@ function ImportForm({
 	}, []);
 
 	const formIsVisible = !!(
-		fileFields?.length > 0 &&
-		!!(dbFields.optional.length + dbFields.required.length)
+		dbFields.optional.length + dbFields.required.length
 	);
+
+	const handleEvaluateForm = useCallback(() => {
+		setFormEvaluated(true);
+
+		if (!formIsVisible) {
+			openToast({
+				message: Liferay.Language.get(
+					'please-upload-a-file-and-select-the-required-columns-before-continuing'
+				),
+				type: 'danger',
+			});
+
+			return;
+		}
+
+		if (!formIsValid) {
+			openToast({
+				message: Liferay.Language.get(
+					'you-must-map-all-required-fields-before-continuing'
+				),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+		}
+	}, [formIsValid, formIsVisible]);
 
 	return (
 		<>
@@ -156,7 +186,7 @@ function ImportForm({
 					</h4>
 
 					<div className="card-body p-0">
-						<ClayTable borderless>
+						<ClayTable borderless hover={false}>
 							<TableFieldsHeader />
 
 							<ClayTable.Body>
@@ -186,7 +216,8 @@ function ImportForm({
 													fieldsSelections[
 														dbField.name
 													] &&
-													demoFileValues[
+													fileContent?.length &&
+													fileContent[0][
 														fieldsSelections[
 															dbField.name
 														]
@@ -237,7 +268,8 @@ function ImportForm({
 													fieldsSelections[
 														dbField.name
 													] &&
-													demoFileValues[
+													fileContent?.length &&
+													fileContent[0][
 														fieldsSelections[
 															dbField.name
 														]
@@ -267,33 +299,26 @@ function ImportForm({
 				</div>
 			)}
 
-			<div className="mt-4" id="formButtons">
-				<div className="sheet-footer">
-					<ClayLink className="btn btn-secondary" href={backUrl}>
-						{Liferay.Language.get('cancel')}
-					</ClayLink>
+			<div className="mt-4 sheet-footer">
+				<SaveTemplate
+					evaluateForm={handleEvaluateForm}
+					formIsValid={formIsValid}
+					formIsVisible={formIsVisible}
+					formSaveAsTemplateDataQuerySelector={formDataQuerySelector}
+					formSaveAsTemplateURL={formSaveAsTemplateURL}
+					portletNamespace={portletNamespace}
+					type="import"
+				/>
 
-					<SaveTemplate
-						evaluateForm={() => setFormEvaluated(true)}
-						formIsValid={formIsValid}
-						formIsVisible={formIsVisible}
-						formSaveAsTemplateDataQuerySelector={
-							formDataQuerySelector
-						}
-						formSaveAsTemplateURL={formSaveAsTemplateURL}
-						portletNamespace={portletNamespace}
-						type="import"
-					/>
-
-					<ImportSubmit
-						evaluateForm={() => setFormEvaluated(true)}
-						formDataQuerySelector={formDataQuerySelector}
-						formImportURL={formImportURL}
-						formIsValid={formIsValid}
-						formIsVisible={formIsVisible}
-						portletNamespace={portletNamespace}
-					/>
-				</div>
+				<ImportSubmit
+					evaluateForm={handleEvaluateForm}
+					fieldsSelections={fieldsSelections}
+					fileContent={fileContent}
+					formDataQuerySelector={formDataQuerySelector}
+					formImportURL={formImportURL}
+					formIsValid={formIsValid}
+					formIsVisible={formIsVisible}
+				/>
 			</div>
 		</>
 	);
@@ -304,7 +329,6 @@ ImportForm.defaultProps = {
 };
 
 ImportForm.propTypes = {
-	backUrl: PropTypes.string.isRequired,
 	formDataQuerySelector: PropTypes.string.isRequired,
 	formImportURL: PropTypes.string.isRequired,
 	formSaveAsTemplateURL: PropTypes.string.isRequired,

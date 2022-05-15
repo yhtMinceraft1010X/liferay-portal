@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -178,7 +180,7 @@ definition {
 		var statusSyncSite = ListUtil.newListFromString("Active,Configured,Unconfigured");
 		var statusSyncContact = ListUtil.newListFromString("Active,Configured,Configured");
 		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");
-		var size = ListUtil.size("${list1}");
+		var size = ListUtil.size("${sectionTitleList}");
 
 		task ("Connect DXP to AC, create a property, and sync the site only") {
 			ACDXPSettings.goToInstanceSettingsAC();
@@ -218,7 +220,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusSyncSite}", "${i}");
 
 				ACSettings.assertDataSourceStatus(
@@ -256,7 +258,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusSyncContact}", "${i}");
 
 				ACSettings.assertDataSourceStatus(
@@ -274,7 +276,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusDisconnect}", "${i}");
 
 				ACSettings.assertDataSourceStatus(
@@ -338,6 +340,7 @@ definition {
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
+		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		JSONUser.addUser(
@@ -405,9 +408,7 @@ definition {
 		task ("Assert that a data source that doesn't exist is not found") {
 			ACUtils.searchBar(searchItem = "Analytics Cloud");
 
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "There are no Data Sources found.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 
@@ -530,6 +531,7 @@ definition {
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
+		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		task ("Add user, group and assign user to group") {
@@ -593,6 +595,7 @@ definition {
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
+		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		task ("Create a new user, a new organization and assign the organization for the created user") {
@@ -737,105 +740,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW",
 				value1 = "${newEntrieGrup}");
-		}
-	}
-
-	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
-	@priority = "5"
-	test ViewAssetAddedByDXPDataSource {
-		property portal.release = "true";
-
-		task ("Create site, page and add a blog to the page") {
-			ACUtils.addSiteAndPage();
-
-			ACUtils.createBlogsAndAddToPage();
-		}
-
-		task ("Connect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("View the blog") {
-			ACUtils.navigateToSitePage(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close DXP, launch AC and switch the propety") {
-			ACUtils.closeAllSessionsAndWait();
-
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Go to Blogs assets") {
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Blogs");
-		}
-
-		task ("Assert blog on the Last 24 hours") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACUtils.viewNameList(nameList = "Blogs AC Title");
-		}
-	}
-
-	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
-	@priority = "5"
-	test ViewPageAddedByDXPDataSource {
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-		}
-
-		task ("Connect DXP to AC and extract the data source name") {
-			ACUtils.addSiteAndPage();
-
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-			var dataSourceName = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
-		}
-
-		task ("Visit the page with the new user and get data") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close all sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Go to AC and switch property") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to Pages tab in Sites") {
-			ACNavigation.goToSites();
-
-			ACNavigation.switchTab(tabName = "Pages");
-		}
-
-		task ("Set time filter to 24 hours") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Assert that the page is shown in the list") {
-			ACUtils.assertItemsName(itemList = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}
 

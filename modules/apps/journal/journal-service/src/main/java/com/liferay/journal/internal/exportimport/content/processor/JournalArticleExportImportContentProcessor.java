@@ -431,10 +431,10 @@ public class JournalArticleExportImportContentProcessor
 					_log.debug(
 						StringBundler.concat(
 							"Replacing ", json, " with ",
-							newArticleJSONObject.toJSONString()));
+							newArticleJSONObject.toString()));
 				}
 
-				field.setValue(locale, newArticleJSONObject.toJSONString());
+				field.setValue(locale, newArticleJSONObject.toString());
 
 				if (exportReferencedContent) {
 					try {
@@ -534,19 +534,19 @@ public class JournalArticleExportImportContentProcessor
 					continue;
 				}
 
-				JSONObject newArticleJSONObject = JSONUtil.put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classPK", journalArticle.getResourcePrimKey()
-				).put(
-					"title",
-					journalArticle.getTitle(
-						journalArticle.getDefaultLanguageId())
-				).put(
-					"titleMap", journalArticle.getTitleMap()
-				);
-
-				field.setValue(locale, newArticleJSONObject.toJSONString());
+				field.setValue(
+					locale,
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"title",
+						journalArticle.getTitle(
+							journalArticle.getDefaultLanguageId())
+					).put(
+						"titleMap", journalArticle.getTitleMap()
+					).toString());
 			}
 		}
 

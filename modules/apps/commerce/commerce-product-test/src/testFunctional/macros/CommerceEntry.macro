@@ -126,6 +126,8 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY");
 
+		WaitForPageLoad();
+
 		if (isSet(siteName)) {
 			Click(
 				key_menuTab = "Type",
@@ -417,6 +419,18 @@ definition {
 			value1 = "${price}");
 	}
 
+	macro addProductDescription {
+		Type(
+			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			value1 = "${productShortDescription}");
+
+		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
+
+		Click(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+	}
+
 	macro addProductsEntry {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
@@ -434,6 +448,10 @@ definition {
 
 		WaitForPageLoad();
 
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
 		AssertSelectedLabel(
 			key_fieldLabel = "Catalog",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -443,11 +461,27 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
-		Type(
-			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-			value1 = "${productShortDescription}");
+		if (!(isSet(compileDescription))) {
+			var compileDescription = "true";
+		}
 
-		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
+		if ("${compileDescription}" == "true") {
+			echo("compileDescription enabled");
+
+			CommerceEntry.addProductDescription(
+				productFullDescription = "${productFullDescription}",
+				productShortDescription = "${productShortDescription}");
+		}
+
+		if (!(isSet(publishProduct))) {
+			var publishProduct = "true";
+		}
+
+		if ("${publishProduct}" == "true") {
+			echo("publishProduct enabled");
+
+			CommerceEntry.publishEntry(status = "Approved");
+		}
 	}
 
 	macro AddShippingOptionSettingsVariableRate {
@@ -581,6 +615,16 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro assertCheckedSpecificToggle {
+		task ("Check if the Toggle is checked") {
+			AssertElementPresent(
+				key_name = "${name}",
+				locator1 = "CommerceEntry#CHECK_SPECIFIC_TOGGLE_SWITCH");
+
+			echo("The toggle for the ${name} is active");
+		}
+	}
+
 	macro assertDefaultDisplayPage {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(
@@ -622,14 +666,18 @@ definition {
 	}
 
 	macro checkImageName {
-		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
+		if (isSet(number)) {
+			if ("${number}" != "") {
+				echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
 
-		if ("${number}" != "") {
-			AssertElementPresent(
-				key_entry = "Commerce_${image} (${number}).jpg",
-				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
+				AssertElementPresent(
+					key_entry = "Commerce_${image} (${number}).jpg",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
+			}
 		}
 		else {
+			echo("uploadFileName is: ${uploadFileName}");
+
 			AssertElementPresent(
 				key_entry = "${uploadFileName}",
 				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
@@ -834,6 +882,53 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro editWarehousesQuantity {
+		Search.searchCP(searchTerm = "${productName}");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "${productName}");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "${productSku}");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		if (isSet(italyQuantity)) {
+			Type(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${italyQuantity}");
+
+			Click(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(northeastQuantity)) {
+			Type(
+				key_value1 = "1",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${northeastQuantity}");
+
+			Click(
+				key_value1 = "1",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(southwestQuantity)) {
+			Type(
+				key_value1 = "2",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${southwestQuantity}");
+
+			Click(
+				key_value1 = "2",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+	}
+
 	macro getFileEntryIDFromProductMedia {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -870,17 +965,9 @@ definition {
 	macro publishEntry {
 		Button.clickPublish();
 
-		if (IsElementPresent(locator1 = "Message#SUCCESS")) {
-			AssertElementPresent(locator1 = "Message#SUCCESS");
-		}
-		else {
-			AssertTextEquals(
-				key_status = "${status}",
-				locator1 = "CommerceEntry#WORKFLOW_STATUS",
-				value1 = "${status}");
-		}
-
-		Pause(locator1 = "3000");
+		AssertElementPresent(
+			key_status = "${status}",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
 	macro publishProductImage {
@@ -1014,6 +1101,80 @@ definition {
 		else {
 			Button.clickPublish();
 		}
+	}
+
+	macro setExpirationTime {
+		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+		var minutesToExpire = "${minutesToExpire}";
+		var minutes = ${minutes} + ${minutesToExpire};
+		var changeHour = MathUtil.isGreaterThan("${minutes}", "59");
+
+		if ("${changeHour}" == "true") {
+			var minutes = ${minutes} - 60;
+
+			if ("${hours}" == "11") {
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Never Expire",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			inputFieldId = "expirationDateTime",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+	}
+
+	macro setPublishTime {
+		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+		var minutesToPublish = "${minutesToPublish}";
+		var minutes = ${minutes} + ${minutesToPublish};
+		var changeHour = MathUtil.isGreaterThan("${minutes}", "59");
+
+		if ("${changeHour}" == "true") {
+			var minutes = ${minutes} - 60;
+
+			if ("${hours}" == "11") {
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+
+		Type(
+			inputFieldId = "displayDateTime",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
 	}
 
 	macro uploadCatalogEntrySingleImage {

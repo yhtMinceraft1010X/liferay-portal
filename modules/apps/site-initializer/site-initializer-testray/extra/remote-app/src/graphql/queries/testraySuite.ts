@@ -14,50 +14,40 @@
 
 import {gql} from '@apollo/client';
 
+import {testraySuiteFragment} from '../fragments';
+
 export type TestraySuite = {
+	creator: {
+		name: string;
+	};
 	dateCreated: string;
 	dateModified: string;
 	description: string;
+	id: number;
 	name: string;
-	testraySuiteId: number;
 	type: string;
 };
 
-const testraySuiteFragment = gql`
-	fragment TestraySuiteFragment on C_TestraySuite {
-		dateCreated
-		dateModified
-		description
-		name
-		testraySuiteId
-		type
-	}
-`;
-
-export const getTestraySuite = gql`
+export const getSuite = gql`
 	${testraySuiteFragment}
 
-	query getTestraySuite($testraySuiteId: Long!) {
+	query getSuite($suiteId: Long!) {
 		c {
-			testraySuite(testraySuiteId: $testraySuiteId) {
-				...TestraySuiteFragment
+			suite(suiteId: $suiteId) {
+				...SuiteFragment
 			}
 		}
 	}
 `;
 
-export const getTestraySuites = gql`
+export const getSuites = gql`
 	${testraySuiteFragment}
 
-	query getTestraySuites(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+	query getSuites($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testraySuites(filter: $filter, page: $page, pageSize: $pageSize) {
+			suites(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestraySuiteFragment
+					...SuiteFragment
 				}
 				lastPage
 				page

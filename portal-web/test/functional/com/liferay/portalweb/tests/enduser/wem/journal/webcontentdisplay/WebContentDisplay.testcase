@@ -49,7 +49,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addDraftPGViaWCD(
+			WebContentDisplayPortlet.addDraft(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
@@ -107,7 +107,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
@@ -145,7 +145,7 @@ definition {
 					pageName = "Test Page Name ${i}",
 					siteName = "Test Site Name");
 
-				WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name 1");
+				WebContentDisplayPortlet.configureScope(scopeSelection = "Test Page Name 1");
 			}
 		}
 
@@ -155,7 +155,7 @@ definition {
 					pageName = "Test Page Name ${i}",
 					siteName = "Test Site Name");
 
-				WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Test Page Name 1");
+				WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Test Page Name 1");
 			}
 		}
 
@@ -164,7 +164,7 @@ definition {
 				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				portletNameScoped = "Web Content Display (Test Page Name 1)",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -281,11 +281,11 @@ definition {
 			var content = '''Hello World
 Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
-			WebContent.addStructuredPGViaWCD(
+			WebContentDisplayPortlet.add(
 				fieldLabelList = "Text,Text Box",
 				structureName = "WC Structure Name",
-				text = "WC WebContent Text",
-				textBox = "${content}",
+				webContentTextMultipleLines = "${content}",
+				webContentTextSingleLine = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 		}
 
@@ -333,7 +333,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				templateName = "Second Basic Template",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -354,7 +354,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				structureName = "Basic Web Content",
 				templateName = "Basic Web Content");
 
-			WebContent.publishViaWCD();
+			PortletEntry.publish();
 		}
 
 		task ("View web content is shown in Web Content Display") {
@@ -492,7 +492,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
 
-			WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Related Assets");
+			WebContentDisplayPortlet.configureSetup(metadataNameList = "Related Assets");
 
 			WebContentDisplayPortlet.saveConfiguration();
 
@@ -787,7 +787,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				menuItem = "Edit Web Content",
 				webContentTitle = "Web Content Title");
 
-			WebContent.editPGViaWCD(
+			WebContentDisplayPortlet.edit(
 				webContentContentEdit = "Web Content Content Edit",
 				webContentTitleEdit = "Web Content Title Edit");
 		}
@@ -887,13 +887,13 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Global");
+			WebContentDisplayPortlet.configureScope(scopeSelection = "Global");
 
 			IFrame.closeFrame();
 		}
 
 		task ("View Global site is selected") {
-			WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Global");
+			WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Global");
 
 			IFrame.closeFrame();
 		}
@@ -976,6 +976,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "This is a test for LPS-64814. Validate remote code execution via untrusted Java Deserialization in templates cannot cause out of memory errors."
 	@priority = "5"
 	test ValidateRemoteCodeViaTemplatesCannotCauseOutOfMemoryErrors {
+		property portal.acceptance = "true";
+
 		task ("Add a text field to web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1035,6 +1037,8 @@ ${company.getKeyObj()}
 	@description = "This is a test for LPS-58698. Validate remote code execution can't privilege escalation in templates."
 	@priority = "5"
 	test ValidateTemplateRCEReturnsNoRuntimeClasses {
+		property portal.acceptance = "true";
+
 		task ("Add a text field to web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1151,7 +1155,7 @@ ${runtimeInstance}
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
 
-			WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Download as DOC,Download as ODT,Download as PDF,Download as TXT");
+			WebContentDisplayPortlet.configureSetup(userToolNameList = "Download as DOC,Download as ODT,Download as PDF,Download as TXT");
 
 			WebContentDisplayPortlet.saveConfiguration();
 
@@ -1215,7 +1219,7 @@ ${runtimeInstance}
 		}
 
 		task ("Enable assets types in Web Content Display") {
-			WebContentDisplayPortlet.configureSetupPG(
+			WebContentDisplayPortlet.configureSetup(
 				enableViewCountIncrement = "true",
 				metadataNameList = "Related Assets,Ratings,Comments,Comment Ratings",
 				userToolNameList = "Translations,Print");
@@ -1224,7 +1228,7 @@ ${runtimeInstance}
 		}
 
 		task ("View all settings are shown in Web Content Display") {
-			WebContentDisplayPortlet.viewAllSettingsEnabledPG(
+			WebContentDisplayPortlet.viewAllSettingsEnabled(
 				locale = "español-España",
 				relatedAssetTitle = "Web Content Title 2",
 				webContentContentLocalized = "Web Contenido Contenido 1",
@@ -1495,6 +1499,8 @@ ${runtimeInstance}
 	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
 	@priority = "5"
 	test ViewNoFileSystemAccessViaJournalTemplates {
+		property portal.acceptance = "true";
+
 		task ("Add a web content structure with a text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1553,6 +1559,69 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 		task ("View an error is shown in Web Content Display") {
 			AssertTextPresent(value1 = "An error occurred while processing the template.");
+		}
+	}
+
+	@description = "View pagination in related assets within a web content."
+	@priority = "3"
+	test ViewRelatedAssetsAfterChangePagination {
+		property testray.component.names = "Related Assets,Web Content Administration";
+
+		task ("Add six web conents") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "Web Contetn Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("View web contents are shown") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			for (var i : list "1,2,3,4,5,6") {
+				WebContent.viewTitle(webContentTitle = "Web Content Title ${i}");
+			}
+		}
+
+		task ("Change the pagination of Related Assets to 4") {
+			WebContent.paginateRelatedAssets(
+				assetType = "Basic Web Content",
+				itemsPerPage = "4",
+				webContentTitle = "Web Content Title 3");
+
+			WebContent.viewPaginateRelatedAssets(
+				itemsPerPage = "4 Entries",
+				numberOfPages = "Showing 1 to 4 of 6 entries.");
+		}
+
+		task ("Add a related web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 3");
+
+			WebContent.addExistingRelatedAssetCP(
+				assetTitle = "Web Content Title 5",
+				assetType = "Basic Web Content",
+				siteName = "Test Site Name");
+		}
+
+		task ("Select the web content in Web Content Display then enable Related Assets") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title 3");
+
+			WebContentDisplayPortlet.configureSetup(metadataNameList = "Related Assets");
+
+			WebContentDisplayPortlet.saveConfiguration();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View related asset is shown in Web Content Display") {
+			WebContentDisplayPortlet.viewRelatedAssets(relatedAssetTitleList = "Web Content Title 5");
 		}
 	}
 

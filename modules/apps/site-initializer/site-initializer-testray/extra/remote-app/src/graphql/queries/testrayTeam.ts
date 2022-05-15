@@ -14,42 +14,36 @@
 
 import {gql} from '@apollo/client';
 
-const testrayTeamFragment = gql`
-	fragment TestrayTeamFragment on C_TestrayTeam {
-		dateCreated
-		dateModified
-		externalReferenceCode
-		name
-		status
-		testrayProjectId
-		testrayTeamId
-	}
-`;
+import {testrayTeamFragment} from '../fragments';
 
-export const getTestrayTeam = gql`
+export type TestrayTeam = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
+export const getTeam = gql`
 	${testrayTeamFragment}
 
-	query getTestrayTeam($testrayTeamId: Long!) {
+	query getTeam($teamId: Long!) {
 		c {
-			testrayTeam(testrayTeamId: $testrayTeamId) {
-				...TestrayTeamFragment
+			team(teamId: $teamId) {
+				...TeamFragment
 			}
 		}
 	}
 `;
 
-export const getTestrayTeams = gql`
+export const getTeams = gql`
 	${testrayTeamFragment}
 
-	query getTestrayTeams(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+	query getTeams($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testrayTeams(filter: $filter, page: $page, pageSize: $pageSize) {
+			teams(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestrayTeamFragment
+					...TeamFragment
 				}
 				lastPage
 				page

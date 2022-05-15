@@ -337,13 +337,10 @@ public class CommerceTestUtil {
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commerceOrder.getGroupId());
-
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, null, quantity, 0, commerceContext,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId()));
 	}
 
 	public static CommercePaymentMethodGroupRel
@@ -378,10 +375,10 @@ public class CommerceTestUtil {
 
 		return CommerceShippingFixedOptionLocalServiceUtil.
 			addCommerceShippingFixedOption(
-				commerceShippingMethod.getCommerceShippingMethodId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), value, 1,
-				serviceContext);
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				commerceShippingMethod.getCommerceShippingMethodId(), value,
+				RandomTestUtil.randomLocaleStringMap(), null,
+				RandomTestUtil.randomLocaleStringMap(), 1);
 	}
 
 	public static CommerceShippingMethod addCommerceShippingMethod(
@@ -434,13 +431,11 @@ public class CommerceTestUtil {
 			CommerceChannelLocalServiceUtil.getCommerceChannel(
 				commerceChannelId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commerceChannel.getGroupId());
-
 		return CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
 			CommerceInventoryWarehouse.class.getName(), warehouseId,
-			commerceChannelId, serviceContext);
+			commerceChannelId,
+			ServiceContextTestUtil.getServiceContext(
+				commerceChannel.getGroupId()));
 	}
 
 	public static CommerceOrder createCommerceOrderForShipping(

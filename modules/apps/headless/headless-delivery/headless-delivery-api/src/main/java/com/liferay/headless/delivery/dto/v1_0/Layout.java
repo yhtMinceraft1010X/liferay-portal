@@ -272,6 +272,44 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDisplay contentDisplay;
 
+	@Schema
+	@Valid
+	public FlexWrap getFlexWrap() {
+		return flexWrap;
+	}
+
+	@JsonIgnore
+	public String getFlexWrapAsString() {
+		if (flexWrap == null) {
+			return null;
+		}
+
+		return flexWrap.toString();
+	}
+
+	public void setFlexWrap(FlexWrap flexWrap) {
+		this.flexWrap = flexWrap;
+	}
+
+	@JsonIgnore
+	public void setFlexWrap(
+		UnsafeSupplier<FlexWrap, Exception> flexWrapUnsafeSupplier) {
+
+		try {
+			flexWrap = flexWrapUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FlexWrap flexWrap;
+
 	@Schema(deprecated = true)
 	@Valid
 	public Justify getJustify() {
@@ -785,6 +823,20 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
+		if (flexWrap != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"flexWrap\": ");
+
+			sb.append("\"");
+
+			sb.append(flexWrap);
+
+			sb.append("\"");
+		}
+
 		if (justify != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1086,6 +1138,44 @@ public class Layout implements Serializable {
 		}
 
 		private ContentDisplay(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("FlexWrap")
+	public static enum FlexWrap {
+
+		NO_WRAP("NoWrap"), WRAP("Wrap"), WRAP_REVERSE("WrapReverse");
+
+		@JsonCreator
+		public static FlexWrap create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (FlexWrap flexWrap : values()) {
+				if (Objects.equals(flexWrap.getValue(), value)) {
+					return flexWrap;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FlexWrap(String value) {
 			_value = value;
 		}
 

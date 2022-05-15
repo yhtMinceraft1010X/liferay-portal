@@ -778,6 +778,30 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static byte[] hexStringToBytes(String hexString) {
+		if ((hexString.length() % 2) != 0) {
+			throw new IllegalArgumentException("Odd number of characters");
+		}
+
+		byte[] bytes = new byte[hexString.length() / 2];
+
+		for (int i = 0; i < hexString.length(); i = i + 2) {
+			String s = hexString.substring(i, i + 2);
+
+			try {
+				bytes[i / 2] = (byte)Integer.parseInt(s, 16);
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Illegal hexadecimal characters ", s, " at index ", i),
+					numberFormatException);
+			}
+		}
+
+		return bytes;
+	}
+
 	/**
 	 * Returns the index within the string of the first occurrence of any
 	 * character from the array.
@@ -4671,6 +4695,10 @@ public class StringUtil {
 	 * @return the string, with its first character converted to upper-case
 	 */
 	public static String upperCaseFirstLetter(String s) {
+		if ((s == null) || s.isEmpty()) {
+			return s;
+		}
+
 		char[] chars = s.toCharArray();
 
 		if ((chars[0] >= 97) && (chars[0] <= 122)) {

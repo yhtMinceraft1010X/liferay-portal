@@ -3,26 +3,15 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {
-		Navigator.openURL();
-
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
-		}
-
-		User.firstLoginPG();
-
-		CommerceConfiguration.commerceAdminTearDown();
-
-		CommerceConfiguration.commerceInitializersTearDown();
+		CommerceConfiguration.commerceTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
@@ -331,11 +320,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -487,11 +472,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "2");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -855,6 +836,13 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
+		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
+
+		for (var commerceChannelId : list "${commerceChannelIds}") {
+			var commerceChannel1 = StringUtil.extractFirst("${commerceChannelIds}", ",");
+			var commerceChannel2 = StringUtil.extractLast("${commerceChannelIds}", ",");
+		}
+
 		Click(
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
@@ -866,7 +854,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Minium2 Portal",
+			key_toggleSwitchLabel = "${commerceChannel2}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();
@@ -882,7 +870,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Minium Portal",
+			key_toggleSwitchLabel = "${commerceChannel1}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();

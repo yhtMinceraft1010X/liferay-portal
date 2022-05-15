@@ -40,14 +40,13 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.taglib.util.ThemeUtil;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
@@ -84,14 +83,11 @@ public class DisplayPageRendererUtil {
 
 		UriInfo uriInfo = uriInfoOptional.get();
 
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+		return TransformUtil.transformToArray(
 			layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				groupId, PortalUtil.getClassNameId(itemClassName),
 				itemClassTypeId,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		return TransformUtil.transformToArray(
-			layoutPageTemplateEntries,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE),
 			layoutPageTemplateEntry -> new RenderedContent() {
 				{
 					contentTemplateId =

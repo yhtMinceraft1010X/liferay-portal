@@ -26,12 +26,16 @@ import ManagementToolbarResultsBar from './ManagementToolbarResultsBar';
 import ManagementToolbarRight from './ManagementToolbarRight';
 import ManagementToolbarSearch from './ManagementToolbarSearch';
 
-type ManagementToolbarProps = {
+export type ManagementToolbarProps = {
+	addButton?: () => void;
+	onSelectAllRows: () => void;
 	tableProps: Omit<TableProps, 'items'>;
 	totalItems: number;
 };
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
+	addButton,
+	onSelectAllRows,
 	tableProps,
 	totalItems,
 }) => {
@@ -39,6 +43,8 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 		ListViewContext
 	);
 	const [showMobile, setShowMobile] = useState(false);
+
+	const disabled = totalItems === 0;
 
 	const viewTypes = [
 		{
@@ -127,7 +133,9 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 		<>
 			<ClayManagementToolbar>
 				<ManagementToolbarFilterAndOrder
+					disabled={disabled}
 					filterItems={filterItems}
+					onSelectAllRows={onSelectAllRows}
 					onSort={() =>
 						dispatch({
 							payload: {
@@ -144,7 +152,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 
 				<ManagementToolbarSearch
-					disabled={false}
+					disabled={disabled}
 					onSubmit={(searchText: string) => onSearch(searchText)}
 					searchText={keywords}
 					setShowMobile={setShowMobile}
@@ -152,7 +160,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 
 				<ManagementToolbarRight
-					addButton={() => null}
+					addButton={addButton}
 					setShowMobile={setShowMobile}
 					viewTypes={viewTypes}
 				/>

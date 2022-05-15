@@ -207,12 +207,17 @@
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS</td>
-	<td>//h4[contains(@class,'text-danger')]</td>
+	<td>//div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE</td>
 	<td>//*[contains(@class,'list-group-item')]//div[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE_N</td>
+	<td>//*[contains(@class,'list-group-item')][${key_indexNumber}]//div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -222,7 +227,12 @@
 </tr>
 <tr>
 	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_N</td>
-	<td>xpath=(//div[contains(@class,'text-danger')]/preceding-sibling::div[contains(@class,'title')])[${key_indexNumber}]</td>
+	<td>//ul//li[contains(@class,'list-group-item')][${key_indexNumber}]//div[contains(@class,'text-danger')]/preceding-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_ZIP</td>
+	<td>//div[contains(@class,'text-danger')]/preceding-sibling::div//div[contains(@class,'text-right')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -263,6 +273,11 @@
 <tr>
 	<td>ERROR_MOVE_DUPLICATE_CONTENT</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'The folder you selected already has an entry with this name. Please select a different folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MULTIPLE_UPLOAD_INVALID</td>
+	<td>//div[contains(@class,'card-horizontal') and contains(.,'${dmDocumentFile}')]//div[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -402,17 +417,17 @@
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS</td>
-	<td>//h4[contains(@class,'text-success')]</td>
+	<td>//div[contains(@class,'text-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM</td>
-	<td>//div[contains(@class,'text-success')]/preceding-sibling::div</td>
+	<td>//div[contains(@class,'translation-import-body-form')]//div[contains(@class,'panel-body')]//ul//li/p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM_N</td>
-	<td>xpath=(//div[contains(@class,'text-success')]/preceding-sibling::div)[${key_indexNumber}]</td>
+	<td>//div[contains(@class,'translation-import-body-form')]//div[contains(@class,'panel-body')]//ul//li[${key_indexNumber}]/p</td>
 	<td></td>
 </tr>
 <tr>
@@ -468,6 +483,11 @@
 <tr>
 	<td>WORKFLOW_UNAPPROVED</td>
 	<td>//div[@class='portlet-body']/div[contains(@class,'alert-warning')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_STATE_INFO</td>
+	<td>//div[(@class='c-empty-state-title')]</td>
 	<td></td>
 </tr>
 </tbody>

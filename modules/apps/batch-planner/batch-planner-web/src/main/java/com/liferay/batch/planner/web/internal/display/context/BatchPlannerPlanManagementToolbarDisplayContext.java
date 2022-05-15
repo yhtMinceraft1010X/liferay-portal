@@ -14,9 +14,8 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -24,12 +23,13 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,32 +51,38 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemList.of(
-			DropdownItemBuilder.putData(
-				"action", "deleteBatchPlannerPlans"
-			).putData(
-				"deleteBatchPlannerPlansURL",
-				PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/batch_planner/delete_batch_planner_plan"
-				).setCMD(
-					Constants.DELETE
-				).setNavigation(
-					getNavigation()
-				).buildString()
-			).setIcon(
-				"trash"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "delete")
-			).setQuickAction(
-				true
-			).build());
-	}
-
-	public List<String> getAvailableActions() {
-		return Arrays.asList("deleteBatchPlannerPlans");
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/edit_export_batch_planner_plan"
+					).setBackURL(
+						PortalUtil.getCurrentURL(httpServletRequest)
+					).setNavigation(
+						"export"
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export-file"));
+			}
+		).addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/edit_import_batch_planner_plan"
+					).setBackURL(
+						PortalUtil.getCurrentURL(httpServletRequest)
+					).setNavigation(
+						"import"
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "import-file"));
+			}
+		).build();
 	}
 
 	@Override
@@ -109,7 +115,19 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	@Override
 	public Boolean isDisabled() {
+		return false;
+	}
+
+	@Override
+	public Boolean isSelectable() {
 		return false;
 	}
 
@@ -126,7 +144,7 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name"};
+		return new String[] {"createDate"};
 	}
 
 }

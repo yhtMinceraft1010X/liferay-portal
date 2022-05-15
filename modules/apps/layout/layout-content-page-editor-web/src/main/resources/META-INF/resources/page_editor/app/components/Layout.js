@@ -23,7 +23,6 @@ import {
 } from '../../prop-types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {useSetCollectionActiveItemContext} from '../contexts/CollectionActiveItemContext';
 import {
@@ -40,6 +39,7 @@ import {
 	ColumnWithControls,
 	ContainerWithControls,
 	DropZoneWithControls,
+	FormWithControls,
 	Root,
 	RowWithControls,
 } from './layout-data-items/index';
@@ -50,6 +50,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: ColumnWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.container]: ContainerWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneWithControls,
+	[LAYOUT_DATA_ITEM_TYPES.form]: FormWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: FragmentWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
@@ -94,15 +95,14 @@ export default function Layout({mainItemId}) {
 		};
 	}, [layoutRef]);
 
-	const isPageConversion = config.layoutType === LAYOUT_TYPES.conversion;
 	const hasWarningMessages =
-		isPageConversion &&
+		config.isConversionDraft &&
 		config.layoutConversionWarningMessages &&
 		config.layoutConversionWarningMessages.length > 0;
 
 	return (
 		<>
-			{isPageConversion && (
+			{config.isConversionDraft && (
 				<div className="page-editor__conversion-messages">
 					<ClayAlert
 						displayType="info"

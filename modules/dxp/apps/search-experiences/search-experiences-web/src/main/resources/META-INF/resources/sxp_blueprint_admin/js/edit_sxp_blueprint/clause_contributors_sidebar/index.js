@@ -9,14 +9,13 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
-import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 
+import Sidebar from '../../shared/Sidebar';
 import {
 	ACTIVE,
 	ALL,
@@ -25,6 +24,7 @@ import {
 	INACTIVE,
 } from '../../utils/constants';
 import {removeDuplicates} from '../../utils/utils';
+import LearnMessage from './../../shared/LearnMessage';
 import ManagementToolbar from './ManagementToolbar';
 
 /**
@@ -49,6 +49,7 @@ export default function ({
 	frameworkConfig,
 	initialClauseContributorsList = [],
 	onClose,
+	onFetchContributors,
 	onFrameworkConfigChange,
 	visible,
 }) {
@@ -216,40 +217,23 @@ export default function ({
 	};
 
 	return (
-		<div
-			className={getCN(
-				'clause-contributors-sidebar',
-				'sidebar',
-				'sidebar-light',
-				{
-					open: visible,
-				}
-			)}
+		<Sidebar
+			className="clause-contributors-sidebar"
+			onClose={onClose}
+			title={Liferay.Language.get('clause-contributors')}
+			visible={visible}
 		>
-			<div className="sidebar-header">
-				<h4 className="component-title">
-					<span className="text-truncate-inline">
-						<span className="text-truncate">
-							{Liferay.Language.get('clause-contributors')}
-						</span>
+			<div className="sidebar-body">
+				<div className="clause-contributors-description">
+					<span className="help-text text-secondary">
+						{Liferay.Language.get(
+							'clause-contributors-description'
+						)}
 					</span>
-				</h4>
 
-				<span>
-					<ClayButton
-						aria-label={Liferay.Language.get('close')}
-						borderless
-						displayType="secondary"
-						monospaced
-						onClick={onClose}
-						small
-					>
-						<ClayIcon symbol="times" />
-					</ClayButton>
-				</span>
-			</div>
+					<LearnMessage resourceKey="query-clause-contributors-configuration" />
+				</div>
 
-			<ClayLayout.ContainerFluid className="clause-contributors-list">
 				<ManagementToolbar
 					allItems={contributors.reduce(
 						(acc, curr) => [...curr.value, ...acc],
@@ -274,6 +258,30 @@ export default function ({
 				/>
 
 				<ClayList>
+					{initialClauseContributorsList.some(
+						({value}) => value.length === 0
+					) && (
+						<ClayAlert
+							actions={
+								<ClayButton.Group>
+									<ClayButton
+										alert
+										onClick={onFetchContributors}
+									>
+										{Liferay.Language.get('refresh')}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+							displayType="danger"
+							title={Liferay.Language.get('error')}
+							variant="inline"
+						>
+							{Liferay.Language.get(
+								'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+							)}
+						</ClayAlert>
+					)}
+
 					{contributors.map((contributor) => (
 						<React.Fragment key={contributor.label}>
 							<ClayList.Header>
@@ -334,7 +342,7 @@ export default function ({
 						</React.Fragment>
 					))}
 				</ClayList>
-			</ClayLayout.ContainerFluid>
-		</div>
+			</div>
+		</Sidebar>
 	);
 }

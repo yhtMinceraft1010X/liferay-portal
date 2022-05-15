@@ -1,5 +1,74 @@
 definition {
 
+	macro checkout {
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "${newAddressName}");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "${newAddressAddress}");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "${newAddressCountry}");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "${newAddressZipCode}");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "${newAddressCity}");
+
+		if (isSet(guestEmail)) {
+			Type(
+				locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
+				value1 = "${guestEmail}");
+		}
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "${shippingMethod}",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		if (isSet(paymentMethod) && (IsElementPresent(key_radioOption = "", locator1 = "CommerceEntry#RADIO_BUTTON"))) {
+			Click(
+				key_radioOption = "${paymentMethod}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		Click(locator1 = "Button#CONTINUE");
+	}
+
+	macro gotoCheckout {
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+	}
+
+	macro gotoCheckoutViaMiniCart {
+		ScrollBy(value1 = "0, 1000");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+	}
+
 	macro initializersCheckout {
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -40,7 +109,26 @@ definition {
 
 		var subtotal = ${productUnitPrice} * ${productQuantity};
 
-		if (isSet(shippingMethod)) {
+		if (isSet(singleShippingOption)) {
+			if (isSet(shippingMethod)) {
+				if ("${shippingMethod}" == "Standard") {
+					var total = ${subtotal} + 15;
+				}
+				else if ("${shippingMethod}" == "Expedited") {
+					var total = ${subtotal} + 25;
+				}
+				else if (isSet(customDeliveryValue)) {
+					var total = ${subtotal} + ${customDeliveryValue};
+				}
+				else {
+					var total = "${subtotal}";
+				}
+			}
+			else {
+				var total = "${subtotal}";
+			}
+		}
+		else if (isSet(shippingMethod)) {
 			if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 				Click(
 					key_radioOption = "${shippingMethod}",
@@ -50,18 +138,28 @@ definition {
 			}
 
 			if ("${shippingMethod}" == "Standard") {
-				var deliveryValue = "15";
+				var total = ${subtotal} + 15;
+			}
+			else if ("${shippingMethod}" == "Expedited") {
+				var total = ${subtotal} + 25;
+			}
+			else if (isSet(customDeliveryValue)) {
+				var total = ${subtotal} + ${customDeliveryValue};
 			}
 			else {
-				if ("${shippingMethod}" == "Expedited") {
-					var deliveryValue = "25";
-				}
+				var total = "${subtotal}";
 			}
-
-			var total = ${subtotal} + ${deliveryValue};
 		}
 		else {
 			var total = "${subtotal}";
+		}
+
+		if (isSet(paymentMethod) && (IsElementPresent(key_radioOption = "", locator1 = "CommerceEntry#RADIO_BUTTON"))) {
+			Click(
+				key_radioOption = "${paymentMethod}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
 		}
 
 		CommerceCheckout.viewCheckoutOrderSummary(
@@ -78,6 +176,43 @@ definition {
 			totalValue = "${total}");
 
 		Click(locator1 = "Button#CONTINUE");
+	}
+
+	macro setAddress {
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+
+		if (isSet(newAddressName)) {
+			Type(
+				key_fieldName = "Name",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressName}");
+
+			Type(
+				key_fieldName = "Address",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressAddress}");
+
+			Select(
+				key_fieldName = "Country",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+				value1 = "${newAddressCountry}");
+
+			Type(
+				key_fieldName = "Zip",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressZipCode}");
+
+			Type(
+				key_fieldName = "City",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressCity}");
+
+			if (isSet(guestEmail)) {
+				Type(
+					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
+					value1 = "${guestEmail}");
+			}
+		}
 	}
 
 	macro viewCheckoutOrderSummary {

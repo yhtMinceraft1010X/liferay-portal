@@ -79,7 +79,7 @@ public class DLFileVersionLocalServiceTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), null, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, (byte[])null,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, (byte[])null,
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			serviceContext);
 
@@ -91,9 +91,8 @@ public class DLFileVersionLocalServiceTest {
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), "1.0"));
 
-		_dlFileVersionLocalService.deleteDLFileVersion(
-			_dlFileVersionLocalService.getFileVersion(
-				fileEntry.getFileEntryId(), "1.0"));
+		_dlFileEntryLocalService.deleteFileVersion(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "1.0");
 
 		Assert.assertFalse(
 			DLStoreUtil.hasFile(

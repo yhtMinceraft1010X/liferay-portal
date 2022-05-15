@@ -16,6 +16,7 @@ package com.liferay.headless.form.internal.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -344,12 +346,30 @@ public abstract class BaseFormRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<FormRecord, Exception> formRecordUnsafeConsumer =
-			formRecord -> postFormFormRecord(
-				Long.parseLong((String)parameters.get("formId")), formRecord);
+		UnsafeConsumer<FormRecord, Exception> formRecordUnsafeConsumer = null;
 
-		for (FormRecord formRecord : formRecords) {
-			formRecordUnsafeConsumer.accept(formRecord);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			formRecordUnsafeConsumer = formRecord -> postFormFormRecord(
+				Long.parseLong((String)parameters.get("formId")), formRecord);
+		}
+
+		if (formRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for FormRecord");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				formRecords, formRecordUnsafeConsumer);
+		}
+		else {
+			for (FormRecord formRecord : formRecords) {
+				formRecordUnsafeConsumer.accept(formRecord);
+			}
 		}
 	}
 
@@ -373,6 +393,10 @@ public abstract class BaseFormRecordResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -413,16 +437,46 @@ public abstract class BaseFormRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (FormRecord formRecord : formRecords) {
-			putFormRecord(
+		UnsafeConsumer<FormRecord, Exception> formRecordUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			formRecordUnsafeConsumer = formRecord -> putFormRecord(
 				formRecord.getId() != null ? formRecord.getId() :
 					Long.parseLong((String)parameters.get("formRecordId")),
 				formRecord);
+		}
+
+		if (formRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for FormRecord");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				formRecords, formRecordUnsafeConsumer);
+		}
+		else {
+			for (FormRecord formRecord : formRecords) {
+				formRecordUnsafeConsumer.accept(formRecord);
+			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<FormRecord>,
+			 UnsafeConsumer<FormRecord, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -483,6 +537,14 @@ public abstract class BaseFormRecordResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -573,6 +635,10 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<FormRecord>,
+		 UnsafeConsumer<FormRecord, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

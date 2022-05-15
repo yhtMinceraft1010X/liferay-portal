@@ -12,59 +12,28 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import {useEffect} from 'react';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {LoadingWrapper} from '../../../components/Loading';
 import QATable from '../../../components/Table/QATable';
 import {
-	CType,
+	TestrayComponent,
 	TestraySuite,
-	getTestrayCases,
-	getTestraySuite,
+	getCases,
 } from '../../../graphql/queries';
-import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import dayjs from '../../../util/date';
 
 const Suite = () => {
-	const {testraySuiteId} = useParams();
-	const {testrayProject}: any = useOutletContext();
-
-	const {data, loading} = useQuery<CType<'testraySuite', TestraySuite>>(
-		getTestraySuite,
-		{
-			variables: {
-				testraySuiteId,
-			},
-		}
-	);
-
-	const testraySuite = data?.c.testraySuite;
-
-	const {setHeading} = useHeader({shouldUpdate: false});
-
-	useEffect(() => {
-		if (testraySuite && testrayProject) {
-			setHeading([
-				{
-					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.testrayProjectId}/suites`,
-					title: testrayProject.name,
-				},
-				{
-					category: i18n.translate('case').toUpperCase(),
-					title: testraySuite.name,
-				},
-			]);
-		}
-	}, [testraySuite, testrayProject, setHeading]);
+	const {
+		projectId,
+		testraySuite,
+	}: {projectId: number; testraySuite: TestraySuite} = useOutletContext();
 
 	return (
-		<LoadingWrapper isLoading={loading}>
-			<Container title={i18n.translate('details')}>
+		<>
+			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
 						{
@@ -73,15 +42,19 @@ const Suite = () => {
 						},
 						{
 							title: i18n.translate('create-date'),
-							value: testraySuite?.dateCreated,
+							value: dayjs(testraySuite?.dateCreated).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('date-last-modified'),
-							value: testraySuite?.dateModified,
+							value: dayjs(testraySuite?.dateModified).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('created-by'),
-							value: 'John Doe',
+							value: testraySuite.creator.name,
 						},
 					]}
 				/>
@@ -89,6 +62,7 @@ const Suite = () => {
 
 			<Container
 				className="mt-4"
+				collapsable
 				title={i18n.translate('case-parameters')}
 			>
 				<QATable
@@ -113,7 +87,7 @@ const Suite = () => {
 
 			<Container className="mt-4">
 				<ListView
-					query={getTestrayCases}
+					query={getCases}
 					tableProps={{
 						columns: [
 							{
@@ -122,6 +96,8 @@ const Suite = () => {
 							},
 							{
 								key: 'component',
+								render: (component: TestrayComponent) =>
+									component?.name,
 								value: i18n.translate('component'),
 							},
 							{
@@ -130,13 +106,13 @@ const Suite = () => {
 								value: i18n.translate('case-name'),
 							},
 						],
-						navigateTo: ({testrayCaseId}) =>
-							testrayCaseId?.toString(),
+						navigateTo: ({id}) =>
+							`/project/${projectId}/cases/${id}`,
 					}}
-					transformData={(data) => data?.c?.testrayCases}
+					transformData={(data) => data?.cases}
 				/>
 			</Container>
-		</LoadingWrapper>
+		</>
 	);
 };
 

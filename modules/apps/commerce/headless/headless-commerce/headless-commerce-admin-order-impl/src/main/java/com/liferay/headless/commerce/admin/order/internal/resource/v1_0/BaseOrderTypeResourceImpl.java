@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -480,11 +482,29 @@ public abstract class BaseOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer =
-			orderType -> postOrderType(orderType);
+		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer = null;
 
-		for (OrderType orderType : orderTypes) {
-			orderTypeUnsafeConsumer.accept(orderType);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			orderTypeUnsafeConsumer = orderType -> postOrderType(orderType);
+		}
+
+		if (orderTypeUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for OrderType");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderTypes, orderTypeUnsafeConsumer);
+		}
+		else {
+			for (OrderType orderType : orderTypes) {
+				orderTypeUnsafeConsumer.accept(orderType);
+			}
 		}
 	}
 
@@ -512,6 +532,10 @@ public abstract class BaseOrderTypeResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -550,10 +574,47 @@ public abstract class BaseOrderTypeResourceImpl
 			java.util.Collection<OrderType> orderTypes,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			orderTypeUnsafeConsumer = orderType -> patchOrderType(
+				orderType.getId() != null ? orderType.getId() :
+					Long.parseLong((String)parameters.get("orderTypeId")),
+				orderType);
+		}
+
+		if (orderTypeUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for OrderType");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderTypes, orderTypeUnsafeConsumer);
+		}
+		else {
+			for (OrderType orderType : orderTypes) {
+				orderTypeUnsafeConsumer.accept(orderType);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<OrderType>,
+			 UnsafeConsumer<OrderType, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -614,6 +675,14 @@ public abstract class BaseOrderTypeResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource) {
+
+		this.vulcanBatchEngineImportTaskResource =
+			vulcanBatchEngineImportTaskResource;
 	}
 
 	@Override
@@ -704,6 +773,9 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<OrderType>, UnsafeConsumer<OrderType, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

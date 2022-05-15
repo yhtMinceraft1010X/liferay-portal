@@ -55,6 +55,13 @@ public class TestrayS3Bucket {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(
 				googleApplicationCredentials)) {
 
+			try {
+				_testrayS3Bucket._getBucket();
+			}
+			catch (Exception exception) {
+				return false;
+			}
+
 			return true;
 		}
 
@@ -231,14 +238,6 @@ public class TestrayS3Bucket {
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
-		}
-	}
-
-	private TestrayS3Bucket() {
-		if (!googleCredentialsAvailable()) {
-			throw new RuntimeException(
-				"Please set the environment variable " +
-					"\"GOOGLE_APPLICATION_CREDENTIALS\"");
 		}
 	}
 

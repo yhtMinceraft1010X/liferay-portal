@@ -150,6 +150,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERFORMANCE_SIDEBAR</td>
+	<td>//div[contains(@class, 'sidebar ') and descendant-or-self::p[contains(.,'Content Performance')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERFORMANCE_TITLE_PANEL</td>
 	<td>//*[contains(@class, 'font-weight-bold mb-0 pr-2') and contains(text(), 'Content Performance')]</td>
 	<td></td>
@@ -201,7 +206,7 @@
 </tr>
 <tr>
 	<td>FILTER_CATEGORY_NAME</td>
-	<td>//*[contains(@class,'label') and contains(text(),'Category:${categoryName}')]</td>
+	<td>//*[contains(@class,'label') and contains(text(),'Category: ${categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -255,8 +260,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SITE_CARD</td>
-	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, 'Global')]</td>
+	<td>SITE_CARD</td>
+	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, '${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,13 +280,53 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL_AUTHOR</td>
+	<td>//span[contains(@class,'text-secondary') and contains (.,'${assetAuthor}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_AVATAR</td>
+	<td>//*[contains(@class,'sidebar-section')]//*[contains(@class,'lexicon-icon-user')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TYPE_OF_DATE</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'${typeOfDate}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_VOCABULARY_NAME</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TAGS_TITLE</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_ID</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'ID')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains (.,'${assetStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PANEL_TITLE</td>
 	<td>//section[contains(@class,'sidebar-header')]/descendant-or-self::p</td>
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL_VERSION</td>
+	<td>//span[contains(@class,'label-item') and contains (.,'${assetVersion}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MY_SITES_TAB</td>
-	<td>//*[contains(@class, 'nav-link') and contains(text(),'My Sites')]</td>
+	<td>//*[contains(@class, 'nav-link')]//*[contains(text(),'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -355,13 +400,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG_LABEL_INFO_PANEL</td>
+	<td>//*[contains(@class, 'sidebar-light')]//span[contains(@class,'label-secondary') and contains (.,'${tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_COLUMN_CONTENT</td>
 	<td>//td[contains(@class,'lfr-title-column')]//a[contains(@title,'${title}')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>TREEVIEW_OPTION_CHECKBOX</td>
+	<td>//div[(@class='autofit-row') and contains (normalize-space(.),'${key_optionName}')] //input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TREEVIEW_OPTION_ROW</td>
+	<td>//div[(@class='autofit-row') and contains (normalize-space(.),'${optionName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TYPE_COLUMN_VALUE</td>
 	<td>//td[contains(@class,'lfr-type-column') and contains(text(),'${assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_METRICS_OPTION</td>
+	<td>//*[contains(@data-action, 'showMetrics')]</td>
 	<td></td>
 </tr>
 <tr>

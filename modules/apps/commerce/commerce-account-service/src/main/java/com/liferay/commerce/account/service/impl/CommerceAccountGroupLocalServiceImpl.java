@@ -175,7 +175,7 @@ public class CommerceAccountGroupLocalServiceImpl
 		long companyId, String externalReferenceCode) {
 
 		return CommerceAccountGroupImpl.fromAccountGroup(
-			_accountGroupLocalService.fetchAccountGroupByReferenceCode(
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
 				companyId, externalReferenceCode));
 	}
 
@@ -225,13 +225,14 @@ public class CommerceAccountGroupLocalServiceImpl
 
 	@Override
 	public List<CommerceAccountGroup>
-		getCommerceAccountGroupsByCommerceAccountId(long commerceAccountId) {
+		getCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId, int start, int end) {
 
 		List<CommerceAccountGroupCommerceAccountRel>
 			commerceAccountGroupCommerceAccountRels =
 				commerceAccountGroupCommerceAccountRelLocalService.
-					getCommerceAccountGroupCommerceAccountRels(
-						commerceAccountId);
+					getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+						commerceAccountId, start, end);
 
 		if (commerceAccountGroupCommerceAccountRels.isEmpty()) {
 			return new ArrayList<>();
@@ -248,6 +249,15 @@ public class CommerceAccountGroupLocalServiceImpl
 			_accountGroupLocalService.getAccountGroupsByAccountGroupId(
 				commerceAccountGroupIds),
 			CommerceAccountGroupImpl::fromAccountGroup);
+	}
+
+	@Override
+	public int getCommerceAccountGroupsByCommerceAccountIdCount(
+		long commerceAccountId) {
+
+		return commerceAccountGroupCommerceAccountRelLocalService.
+			getCommerceAccountGroupCommerceAccountRelsCountByCommerceAccountId(
+				commerceAccountId);
 	}
 
 	@Override
@@ -361,8 +371,9 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		CommerceAccountGroup commerceAccountGroup =
 			CommerceAccountGroupImpl.fromAccountGroup(
-				_accountGroupLocalService.fetchAccountGroupByReferenceCode(
-					companyId, externalReferenceCode));
+				_accountGroupLocalService.
+					fetchAccountGroupByExternalReferenceCode(
+						companyId, externalReferenceCode));
 
 		if ((commerceAccountGroup != null) &&
 			(commerceAccountGroup.getCommerceAccountGroupId() !=

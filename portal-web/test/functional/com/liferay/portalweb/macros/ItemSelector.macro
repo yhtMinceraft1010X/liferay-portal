@@ -287,6 +287,8 @@ definition {
 	macro previewEmbeddedVideo {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
+		WaitForPageLoad();
+
 		if (isSet(invalidURL)) {
 			if (contains("${invalidURL}", "youtube")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
@@ -395,7 +397,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for ${imageFileName}");
+			value1 = "1 Result for &quot;${imageFileName}&quot;");
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
@@ -432,7 +434,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Search#SEARCH_INFO",
-			value1 = "1 Results for ${imageFileName}");
+			value1 = "1 Result for &quot;${imageFileName}&quot;");
 
 		LexiconCard.viewCardPresent(card = "${imageFileName}");
 

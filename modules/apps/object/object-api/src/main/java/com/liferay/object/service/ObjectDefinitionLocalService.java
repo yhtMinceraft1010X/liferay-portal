@@ -74,7 +74,7 @@ public interface ObjectDefinitionLocalService
 			long userId, Map<Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
-			List<ObjectField> objectFields)
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -313,6 +313,10 @@ public interface ObjectDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectDefinition> getObjectDefinitions(
 		long companyId, boolean active, boolean system, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getObjectDefinitions(
+		long companyId, boolean active, int status);
 
 	/**
 	 * Returns the number of object definitions.

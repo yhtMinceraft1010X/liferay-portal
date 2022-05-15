@@ -43,7 +43,15 @@ const Avatar: React.FC<AvatarProps> = ({
 	url,
 }) => (
 	<div className="align-items-center d-flex">
-		<ClaySticker className={className} shape="circle" size="lg">
+		<ClaySticker
+			className={classNames(
+				className,
+				'text-brand-secondary-lighten-6',
+				getRandomColor(getInitials(name))
+			)}
+			shape="circle"
+			size="lg"
+		>
 			{url ? (
 				<ClaySticker.Image alt={name} src={url} title={name} />
 			) : (
@@ -55,22 +63,21 @@ const Avatar: React.FC<AvatarProps> = ({
 	</div>
 );
 
-function getRandomColor() {
-	const colors = [
-		'bg-accent-1',
-		'bg-accent-1-lighten',
-		'bg-accent-2',
-		'bg-accent-2-lighten',
-		'bg-accent-3',
-		'bg-accent-3-lighten',
-		'bg-accent-4',
-		'bg-accent-4-lighten',
-		'bg-accent-5',
-		'bg-accent-5-lighten',
-		'bg-accent-6',
-	];
+function getRandomColor(name: string) {
+	const backgroundAccentColorsRegex = {
+		'bg-accent-1': /^[A-Fa-f]/g,
+		'bg-accent-2': /^[G-Lg-l]/g,
+		'bg-accent-3': /^[M-Tm-t]/g,
+		'bg-accent-4': /^[U-Zu-z]/g,
+	};
 
-	return colors[Math.floor(Math.random() * colors.length)];
+	for (const bgAccent in backgroundAccentColorsRegex) {
+		const value = (backgroundAccentColorsRegex as any)[bgAccent];
+
+		if (new RegExp(value).test(name)) {
+			return bgAccent;
+		}
+	}
 }
 
 const AvatarGroup: React.FC<AvatarGroupProps> = ({
@@ -87,10 +94,7 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({
 					.map((user, index) => (
 						<div className="avatar-group-item" key={index}>
 							<Avatar
-								className={classNames(
-									'avatar avatar-skeleton-loader shadow-lg',
-									getRandomColor()
-								)}
+								className="avatar avatar-skeleton-loader shadow-lg"
 								name={user.name}
 								url={user.url}
 							/>

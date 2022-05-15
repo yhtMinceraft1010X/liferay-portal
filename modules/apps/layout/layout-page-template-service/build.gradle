@@ -4,9 +4,9 @@ buildService {
 }
 
 dependencies {
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
+	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:info:info-api")

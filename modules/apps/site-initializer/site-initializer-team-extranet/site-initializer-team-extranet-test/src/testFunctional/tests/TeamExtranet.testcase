@@ -4,6 +4,7 @@ definition {
 	property osgi.modules.includes = "site-initializer-team-extranet";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Team Extranet";
 
 	var testSiteName = "Test Site Team Extranet Name";
@@ -52,6 +53,71 @@ definition {
 			AssertElementPresent(
 				key_title = "Welcome to the team!",
 				locator1 = "TeamExtranet#FRAGMENT_HEADER");
+		}
+	}
+
+	@description = "This is a test for LPS-148459. Background image changed from the page editor"
+	@priority = "3"
+	test BackgroundImageChangedFromPageEditor {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Change the Image of Parallax Container") {
+			TeamExtranet.editFragmentImage(
+				container = "parallaxContainerImage",
+				id = "parallaxContainerImage",
+				imageFileName = "entry_01.jpg");
+		}
+
+		task ("Assert the Image presence") {
+			SelectFrameTop();
+
+			AssertElementPresent(
+				id = "parallaxContainerImage",
+				key_image = "entry_01.jpg",
+				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+	}
+
+	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Desktop Size"
+	@priority = "4"
+	test BlogEntryDPTOnDesktopSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Go to Display Page Templates and Blog Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
 		}
 	}
 
@@ -230,6 +296,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144161. Can do a search in the Search bar in Mobile Size"
+	@priority = "3"
+	test CanDoASearchInMobileSize {
+		task ("Go to Blog Page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Blog",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Search for Careers in Search Bar") {
+			Click(locator1 = "NavBar#TOGGLE_NAVIGATION");
+
+			SearchPortlets.searchEmbedded(searchTerm = "careers");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Careers",
+				searchAssetType = "Page");
+		}
+	}
+
+	@description = "This is a test for LPS-144161. Can do a search in the Search bar"
+	@priority = "3"
+	test CanDoASearchInTeamExtranetSearchBar {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Search for Careers in Search Bar") {
+			SearchPortlets.searchEmbedded(searchTerm = "careers");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Careers",
+				searchAssetType = "Page");
+		}
+	}
+
 	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
 	@priority = "4"
 	test CanSetAHostedVideoURL {
@@ -313,8 +419,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection Test");
+				selectedName = "Dynamic Collection Test",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Preview the Page and Assert the list of Blog Entries") {
@@ -346,8 +452,8 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection Test");
+				selectedName = "Dynamic Collection Test",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Preview the Page and Assert the list of Members") {
@@ -887,6 +993,22 @@ definition {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 	}
 
+	@description = "This is a test for LPS-144161. Verify the Search Bar on Team Extranet Pages"
+	@priority = "4"
+	test VerifySearchBarOnPages {
+		task ("Go to Team Extranet Site Pages and Assert the Search Bar presence") {
+			for (var pageName : list "Home,Team,Careers,Blog,Resources,Privacy Policy,Cookie Settings,Search,404") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "View",
+					pageName = "${pageName}");
+
+				AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-143303. Verify the 'All articles' in Blog Entry link to Blog page"
 	@priority = "3"
 	test VerifyTheAllArticlesLinkInBlogEntryLinkToItsPage {
@@ -1049,8 +1171,8 @@ definition {
 
 		task ("Click on the Careers Card Title and Assert it is redirected to Careers Page") {
 			Click(
-				key_title = "Browse all the open job positions",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Browse all the open job positions",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_description = "Careers",
@@ -1063,8 +1185,8 @@ definition {
 
 		task ("Click on the Team Card Title and Assert it is redirected to Team Page") {
 			Click(
-				key_title = "Meet the members of the team",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Meet the members of the team",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_description = "Team",
@@ -1077,8 +1199,8 @@ definition {
 
 		task ("Click on the Blog Card Title and Assert it is redirected to Blog Page") {
 			Click(
-				key_title = "Stay on top of the latest news",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Stay on top of the latest news",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_title = "20 gifts you can give to your marketing boss",

@@ -1,6 +1,8 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
@@ -95,11 +97,63 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
+	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
+	@priority = "2"
+	test DeletedPropertiesNotAppearAsOptionInSyncSites {
+		task ("Go to properties page and add 2 new properties") {
+			var propertyList = "Property Name 1,Property Name 2";
+
+			ACNavigation.goToSettings();
+
+			for (var propertyName : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${propertyName}");
+			}
+		}
+
+		task ("Delete a property") {
+			ACSettings.goToProperties();
+
+			ACSettings.deletePropertyByCheckbox(propertyName = "Property Name 2");
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to Synced Sites") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Check that the existing properties in the AC appear in the list") {
+			ACUtils.assertItemsName(itemList = "Property Name 1");
+		}
+
+		task ("Check that the deleted AC properties do not appear in the list") {
+			ACUtils.assertItemsNameNotPresent(itemList = "Property Name 2");
+		}
+
+		task ("Disconnect the DXP to AC") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test ViewPropertyListDefault {
-		var propertyNameList = "New property 1,New property 2";
-
 		task ("Go to properties") {
 			ACNavigation.goToSettings();
 
@@ -107,21 +161,19 @@ definition {
 		}
 
 		task ("Assert empty state on properties page") {
-			ACProperties.assertNoProperties();
-		}
-
-		task ("Create two new properties") {
-			for (var propertyName : list "${propertyNameList}") {
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
-
-				ACSettings.goToProperties();
+			if (IsElementNotPresent(key_textValue = "No Properties Found", locator1 = "ACUtils#GENERIC_TEXT")) {
+				ACSettings.deleteAllProperties();
 			}
-		}
-
-		task ("Assert empty state on properties page") {
-			ACSettings.deleteAllProperties();
 
 			ACProperties.assertNoProperties();
+		}
+
+		task ("Assert that there are no more properties on the sites page") {
+			Navigator.gotoBack();
+
+			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");
+
+			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
 		}
 	}
 

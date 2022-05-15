@@ -13,6 +13,9 @@ import ClayCard from '@clayui/card';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
+import i18n from '../../../../../common/I18n';
+import {SLA_TYPES} from '../../../../../common/utils/constants';
+import getKebabCase from '../../../utils/getKebabCase';
 
 const SlaCardLayout = ({
 	slaDateEnd,
@@ -22,11 +25,6 @@ const SlaCardLayout = ({
 	slaTitle,
 }) => {
 	const slaDate = `${slaDateStart} - ${slaDateEnd}`;
-	const slaCardTitle = {
-		gold: 'Gold',
-		limited: 'Limited',
-		platinum: 'Platinum',
-	};
 
 	return (
 		<div
@@ -38,24 +36,23 @@ const SlaCardLayout = ({
 			<ClayCard
 				className={classNames('m-0 p-3 rounded-lg', {
 					'bg-brand-secondary-lighten-6 cp-sla-gold':
-						slaTitle === slaCardTitle.gold,
+						slaTitle === SLA_TYPES.gold,
 					'bg-neutral-0 cp-sla-limited':
-						slaTitle === slaCardTitle.limited,
-					'cp-sla-platinum': slaTitle === slaCardTitle.platinum,
+						slaTitle === SLA_TYPES.limited,
+					'cp-sla-platinum': slaTitle === SLA_TYPES.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<div
 						className={classNames('h5 mb-0', {
 							'text-brand-primary-darken-2':
-								slaTitle === slaCardTitle.limited,
+								slaTitle === SLA_TYPES.limited,
 							'text-brand-secondary-darken-3':
-								slaTitle === slaCardTitle.gold,
-							'text-neutral-7':
-								slaTitle === slaCardTitle.platinum,
+								slaTitle === SLA_TYPES.gold,
+							'text-neutral-7': slaTitle === SLA_TYPES.platinum,
 						})}
 					>
-						{slaTitle}
+						{i18n.translate(getKebabCase(slaTitle))}
 					</div>
 
 					<div>
@@ -65,16 +62,16 @@ const SlaCardLayout = ({
 									'mr-0 p-0 text-small-caps cp-sla-label',
 									{
 										'label-borderless-dark text-neutral-7':
-											slaTitle === slaCardTitle.platinum,
+											slaTitle === SLA_TYPES.platinum,
 										'label-borderless-primary text-brand-primary-darken-2':
-											slaTitle === slaCardTitle.limited,
+											slaTitle === SLA_TYPES.limited,
 										'label-borderless-secondary text-brand-secondary-darken-3':
-											slaTitle === slaCardTitle.gold,
+											slaTitle === SLA_TYPES.gold,
 									}
 								)}
 								displayType="secundary"
 							>
-								{slaLabel}
+								{i18n.translate(getKebabCase(slaLabel))}
 							</ClayLabel>
 						</ClayCard.Caption>
 					</div>
@@ -83,10 +80,10 @@ const SlaCardLayout = ({
 				<ClayCard.Description
 					className={classNames('', {
 						'text-brand-primary-darken-2':
-							slaTitle === slaCardTitle.limited,
+							slaTitle === SLA_TYPES.limited,
 						'text-brand-secondary-darken-3':
-							slaTitle === slaCardTitle.gold,
-						'text-neutral-6': slaTitle === slaCardTitle.platinum,
+							slaTitle === SLA_TYPES.gold,
+						'text-neutral-6': slaTitle === SLA_TYPES.platinum,
 					})}
 					displayType="text"
 					truncate={false}

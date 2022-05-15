@@ -16,17 +16,16 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {MISSING_FIELD_DATA} from '../config/constants/formModalData';
 import {config} from '../config/index';
 import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
+import openWarningModal from '../utils/openWarningModal';
+import useIsSomeFormIncomplete from '../utils/useIsSomeFormIncomplete';
 import {StyleErrorsModal} from './StyleErrorsModal';
 
-export default function PublishButton({
-	canPublish,
-	formRef,
-	handleSubmit,
-	label,
-}) {
+export default function PublishButton({canPublish, formRef, label, onPublish}) {
 	const hasStyleErrors = useHasStyleErrors();
+	const isSomeFormIncomplete = useIsSomeFormIncomplete();
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
 	return (
@@ -42,13 +41,21 @@ export default function PublishButton({
 					aria-label={label}
 					disabled={config.pending || !canPublish}
 					displayType="primary"
-					onClick={
-						hasStyleErrors
-							? () => setOpenStyleErrorsModal(true)
-							: handleSubmit
-					}
+					onClick={() => {
+						if (hasStyleErrors) {
+							setOpenStyleErrorsModal(true);
+						}
+						else if (isSomeFormIncomplete()) {
+							openWarningModal({
+								action: onPublish,
+								...MISSING_FIELD_DATA,
+							});
+						}
+						else {
+							onPublish();
+						}
+					}}
 					small
-					type={hasStyleErrors ? 'button' : 'submit'}
 				>
 					{label}
 				</ClayButton>
@@ -57,7 +64,7 @@ export default function PublishButton({
 			{openStyleErrorsModal && hasStyleErrors && (
 				<StyleErrorsModal
 					onCloseModal={() => setOpenStyleErrorsModal(false)}
-					onSubmit={handleSubmit}
+					onPublish={onPublish}
 				/>
 			)}
 		</>
@@ -67,6 +74,6 @@ export default function PublishButton({
 PublishButton.propTypes = {
 	canPublish: PropTypes.bool,
 	formRef: PropTypes.object,
-	handleSubmit: PropTypes.func,
 	label: PropTypes.string,
+	onPublish: PropTypes.func,
 };

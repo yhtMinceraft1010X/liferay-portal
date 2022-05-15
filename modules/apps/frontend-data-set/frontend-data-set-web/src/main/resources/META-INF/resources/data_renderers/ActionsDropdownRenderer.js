@@ -219,9 +219,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			/>
 
 			{loading ? (
-				<ClayButton disabled monospaced small>
-					<ClayLoadingIndicator small />
-				</ClayButton>
+				<ClayLoadingIndicator small />
 			) : (
 				<ClayButtonWithIcon
 					disabled={!itemChanges}
@@ -293,11 +291,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		}
 
 		if (loading) {
-			return (
-				<ClayButton className="btn-sm" disabled monospaced>
-					<ClayLoadingIndicator small />
-				</ClayButton>
-			);
+			return <ClayLoadingIndicator small />;
 		}
 
 		const content = action.icon ? (
@@ -362,11 +356,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	}
 
 	if (loading && !inlineEditingAlwaysOn) {
-		return (
-			<ClayButton disabled displayType="secondary" monospaced small>
-				<ClayLoadingIndicator small />
-			</ClayButton>
-		);
+		return <ClayLoadingIndicator small />;
 	}
 
 	const renderItems = (items) =>
@@ -430,22 +420,26 @@ ActionsDropdownRenderer.propTypes = {
 		PropTypes.shape({
 			data: PropTypes.shape({
 				confirmationMessage: PropTypes.string,
-				method: PropTypes.oneOf(['get', 'delete']),
+				method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 				permissionKey: PropTypes.string,
 				successMessage: PropTypes.string,
 			}),
 			href: PropTypes.string,
 			icon: PropTypes.string,
 			label: PropTypes.string.isRequired,
-			method: PropTypes.oneOf(['get', 'delete']),
+			method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 			onClick: PropTypes.string,
 			target: PropTypes.oneOf([
-				'modal',
-				'sidePanel',
-				'link',
 				'async',
 				'headless',
 				'inlineEdit',
+				'link',
+				'modal',
+				'modal-full-screen',
+				'modal-lg',
+				'modal-permissions',
+				'modal-sm',
+				'sidePanel',
 			]),
 		})
 	),

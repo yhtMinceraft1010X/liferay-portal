@@ -192,10 +192,9 @@ public class KnowledgeBaseFolderResourceImpl
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
-			knowledgeBaseFolderId);
-
-		return _updateKnowledgeBaseFolder(kbFolder, knowledgeBaseFolder);
+		return _updateKnowledgeBaseFolder(
+			_kbFolderLocalService.getKBFolder(knowledgeBaseFolderId),
+			knowledgeBaseFolder);
 	}
 
 	@Override
@@ -293,7 +292,7 @@ public class KnowledgeBaseFolderResourceImpl
 						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, Optional.of(contextUriInfo),
+					_portal, Optional.ofNullable(contextUriInfo),
 					_userLocalService.fetchUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),

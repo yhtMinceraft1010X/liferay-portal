@@ -44,10 +44,9 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	@Override
 	public String getComponentName() {
-		String componentName = JenkinsResultsParserUtil.getProperty(
-			_jUnitTestClass.getTestProperties(), "testray.main.component.name");
+		String componentName = _jUnitTestClass.getTestrayMainComponentName();
 
-		if ((componentName == null) || componentName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
 		}
 
@@ -169,6 +168,36 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		}
 
 		return Status.PASSED;
+	}
+
+	@Override
+	public String[] getWarnings() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return null;
+		}
+
+		TestClassResult testClassResult = build.getTestClassResult(
+			"com.liferay.portal.log.assertor.PortalLogAssertorTest");
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		List<String> warnings = new ArrayList<>();
+
+		for (TestResult testResult : testClassResult.getTestResults()) {
+			String errorDetails = testResult.getErrorDetails();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+				continue;
+			}
+
+			warnings.add(errorDetails);
+		}
+
+		return warnings.toArray(new String[0]);
 	}
 
 	private List<TestClassResult> _getTestClassResults() {

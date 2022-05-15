@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -23,11 +24,12 @@ export type Sort = {
 	key: string;
 };
 
-type InitialState = {
+export type InitialState = {
 	filters: any;
 	keywords: string;
 	page: number;
 	pageSize: number;
+	selectedRows: number[];
 	sort: Sort;
 	viewType: ViewType;
 };
@@ -37,22 +39,25 @@ const initialState: InitialState = {
 	keywords: '',
 	page: 1,
 	pageSize: 20,
+	selectedRows: [],
 	sort: {direction: SortOption.ASC, key: ''},
 	viewType: 'table',
 };
 
 export enum ListViewTypes {
+	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
+	SET_CLEAR = 'SET_CLEAR',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
-	SET_CLEAR = 'SET_CLEAR',
 	SET_REMOVE_FILTER = 'SET_REMOVE_FILTER',
-	SET_VIEW_TYPE = 'SET_VIEW_TYPE',
 	SET_SEARCH = 'SET_SEARCH',
 	SET_SORT = 'SET_SORT',
 	SET_UPDATE_FILTERS_AND_SORT = 'SET_UPDATE_FILTERS_AND_SORT',
+	SET_VIEW_TYPE = 'SET_VIEW_TYPE',
 }
 
 type ListViewPayload = {
+	[ListViewTypes.SET_CHECKED_ROW]: number;
 	[ListViewTypes.SET_CLEAR]: null;
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
@@ -110,6 +115,23 @@ const reducer = (state: InitialState, action: AppActions) => {
 				page: 1,
 			};
 
+		case ListViewTypes.SET_CHECKED_ROW:
+			const rowId = action.payload;
+			const rowAlreadyInserted = state.selectedRows.includes(rowId);
+			let selectedRows = [...state.selectedRows];
+
+			if (rowAlreadyInserted) {
+				selectedRows = selectedRows.filter((row) => row !== rowId);
+			}
+			else {
+				selectedRows = [...selectedRows, rowId];
+			}
+
+			return {
+				...state,
+				selectedRows,
+			};
+
 		case ListViewTypes.SET_SORT:
 			return {
 				...state,
@@ -134,8 +156,16 @@ const reducer = (state: InitialState, action: AppActions) => {
 	}
 };
 
-const ListViewContextProvider: React.FC = ({children}) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+export type ListViewContextProviderProps = Partial<InitialState>;
+
+const ListViewContextProvider: React.FC<ListViewContextProviderProps> = ({
+	children,
+	...initialStateProps
+}) => {
+	const [state, dispatch] = useReducer(reducer, {
+		...initialState,
+		...initialStateProps,
+	});
 
 	return (
 		<ListViewContext.Provider value={[state, dispatch]}>
